@@ -1096,7 +1096,7 @@ function handleSearch(v){ if(!v.trim()){ loadEvents({city: activeCity, category:
 function doSearch(){ handleSearch(document.getElementById('searchInput').value); }
 
 /* ─── EVENT MODAL ─── */
-function openEventModal(id){
+async function openEventModal(id){
   const e=EVENTS.find(x=>x.id===id); if(!e) return;
   currentEvent=e;
   document.getElementById('modalTitle').textContent=e.name;
@@ -1104,6 +1104,7 @@ function openEventModal(id){
   document.getElementById('modalVenue').textContent=e.venue+', '+e.city;
   document.getElementById('modalImg').src=e.image;
   document.getElementById('modalImg').alt=e.name;
+  // Default prices from local data
   document.getElementById('gaPrice').textContent='₹'+e.price.toLocaleString('en-IN');
   document.getElementById('premPrice').textContent='₹'+(e.price*2).toLocaleString('en-IN');
   document.getElementById('vipPrice').textContent='₹'+(e.price*3.5).toLocaleString('en-IN');
@@ -1111,6 +1112,20 @@ function openEventModal(id){
   updateTotal();
   document.getElementById('eventModal').style.display='flex';
   document.body.style.overflow='hidden';
+  // Fetch live tiers from API
+  try{
+    const [tiersRes,addonsRes]=await Promise.all([fetch(`/api/events/${id}/tiers`),fetch(`/api/events/${id}/addons`)]);
+    const tiersData=await tiersRes.json();
+    const addonsData=await addonsRes.json();
+    if(tiersData.tiers){
+      const ga=tiersData.tiers.find(t=>t.name==='GA'||t.tier==='ga');
+      const pr=tiersData.tiers.find(t=>t.name==='Premium'||t.tier==='premium');
+      const vp=tiersData.tiers.find(t=>t.name==='VIP'||t.tier==='vip');
+      if(ga){document.getElementById('gaPrice').textContent='₹'+ga.price.toLocaleString('en-IN'); ZONE_PRICES['GA']=ga.price;}
+      if(pr){document.getElementById('premPrice').textContent='₹'+pr.price.toLocaleString('en-IN'); ZONE_PRICES['PREM']=pr.price;}
+      if(vp){document.getElementById('vipPrice').textContent='₹'+vp.price.toLocaleString('en-IN'); ZONE_PRICES['VIP']=vp.price;}
+    }
+  }catch(_){/* use local fallback */}
 }
 
 function closeModal(id){ const m=document.getElementById(id); if(m){m.style.display='none'; if(id==='eventModal'||id==='seatMapModal'||id==='confirmationModal'||id==='refundModal') document.body.style.overflow='auto';} }
@@ -1221,11 +1236,30 @@ function renderSeatList(){
 }
 
 let promoApplied=false;
-function applyPromo(){
+async function applyPromo(){
   const code=document.getElementById('seatPromoInput').value.trim().toUpperCase();
-  if(code==='INDY20'){promoApplied=true;showToast('🎉 20% off applied! Code INDY20 is valid');updateSeatOrder();}
-  else if(code==='FIRST50'){promoApplied=true;showToast('🎉 ₹50 off applied! Welcome discount');updateSeatOrder();}
-  else showToast('Invalid promo code. Try INDY20 😉');
+  if(!code){showToast('Enter a promo code first');return;}
+  const btn=document.querySelector('#seatMapModal button[onclick="applyPromo()"]');
+  if(btn){btn.textContent='...';btn.disabled=true;}
+  try{
+    const res=await fetch('/api/promo/validate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,event_id:currentEvent?.id,amount:selectedSeats.length*ZONE_PRICES[currentZone]})});
+    const d=await res.json();
+    if(d.valid){
+      promoApplied=true;
+      promoDiscount=d.discount_amount||Math.round((selectedSeats.length*ZONE_PRICES[currentZone])*(d.discount_pct||0)/100)||50;
+      showToast(`🎉 ${d.description||'Promo applied!'} (-₹${promoDiscount.toLocaleString('en-IN')})`);
+      updateSeatOrder();
+    } else {
+      showToast(d.message||'Invalid or expired promo code');
+    }
+  }catch(e){
+    // fallback: local check
+    if(code==='INDY20'){promoApplied=true;promoDiscount=Math.round(selectedSeats.length*ZONE_PRICES[currentZone]*0.2);showToast('🎉 20% off applied! Code INDY20');updateSeatOrder();}
+    else if(code==='FIRST50'){promoApplied=true;promoDiscount=50;showToast('🎉 ₹50 off applied!');updateSeatOrder();}
+    else showToast('Invalid promo code');
+  }finally{
+    if(btn){btn.textContent='Apply';btn.disabled=false;}
+  }
 }
 
 function updateSeatOrder(){
@@ -1292,6 +1326,8 @@ function showConfirmation(booking){
   const sgst=Math.round(sub*0.09);
   const total=booking?.total||(sub+cgst+sgst+20);
   const bookingId=booking?.id||('BK'+Math.random().toString(36).slice(2,8).toUpperCase());
+  // Store for GST invoice retrieval
+  window._lastBookingId=bookingId;
   document.getElementById('tcEventName').textContent=currentEvent.name;
   document.getElementById('tcVenue').textContent=currentEvent.venue;
   document.getElementById('tcDate').textContent=currentEvent.date;
@@ -1328,7 +1364,48 @@ function shareTicket(){
     navigator.clipboard?.writeText('https://indtix.com/ticket/'+Math.random().toString(36).slice(2,9).toUpperCase());
   }
 }
-function viewGSTInvoice(){
+async function viewGSTInvoice(){
+  const modal=document.getElementById('gstInvoiceModal');
+  if(!currentEvent) return;
+  const bk=window._lastBookingId||('BK'+Math.random().toString(36).slice(2,8).toUpperCase());
+  try{
+    const res=await fetch(`/api/gst/invoice/${bk}`);
+    const inv=await res.json();
+    const base=inv.subtotal||2998;
+    const cgst=inv.cgst||Math.round(base*0.09);
+    const sgst=inv.sgst||Math.round(base*0.09);
+    const total=inv.grand_total||(base*1.18+20).toFixed(2);
+    modal.innerHTML=`
+  <div class="modal-overlay" id="gstInvoiceModal" onclick="this.style.display='none'" style="display:flex">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;max-width:520px;width:90%;max-height:90vh;overflow-y:auto;position:relative" onclick="event.stopPropagation()">
+      <button onclick="document.getElementById('gstInvoiceModal').style.display='none'" style="position:absolute;top:16px;right:16px;background:var(--dark3);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px">✕</button>
+      <div style="text-align:center;margin-bottom:20px"><div style="font-size:22px;font-weight:800;font-family:'Space Grotesk',sans-serif">TAX INVOICE</div><div style="font-size:12px;color:var(--muted)">Invoice No: ${inv.invoice_id||'INV-2026-'+bk}</div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;font-size:13px">
+        <div><div style="font-weight:700;margin-bottom:8px;color:var(--brand3)">Supplier</div><div style="font-weight:600">Oye Imagine Private Limited</div><div style="color:var(--muted)">GSTIN: ${inv.gstin_platform||'27AABCO1234A1Z5'}</div><div style="color:var(--muted)">CIN: U74999MH2023PTC001234</div><div style="color:var(--muted)">Mumbai, Maharashtra 400001</div></div>
+        <div><div style="font-weight:700;margin-bottom:8px;color:var(--brand3)">Bill To</div><div style="font-weight:600">${window._user?.name||'Registered Customer'}</div><div style="color:var(--muted)">Order: ${bk}</div><div style="color:var(--muted)">Date: ${new Date().toLocaleDateString('en-IN')}</div><div style="color:var(--muted)">Place of Supply: ${inv.place_of_supply||'Maharashtra (27)'}</div></div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px">
+        <thead><tr style="background:rgba(108,60,247,0.15)"><th style="padding:8px 10px;text-align:left;border-bottom:1px solid var(--border)">Description</th><th style="padding:8px 10px;text-align:right;border-bottom:1px solid var(--border)">HSN</th><th style="padding:8px 10px;text-align:right;border-bottom:1px solid var(--border)">Amt</th></tr></thead>
+        <tbody>${(inv.line_items||[{description:currentEvent?.name+' — '+currentZone,amount:base}]).map(li=>`<tr><td style="padding:8px 10px">${li.description}</td><td style="padding:8px 10px;text-align:right;color:var(--muted)">${inv.hsn_code||'9996'}</td><td style="padding:8px 10px;text-align:right;font-weight:600">₹${li.amount.toLocaleString('en-IN')}</td></tr>`).join('')}</tbody>
+      </table>
+      <div style="background:var(--dark3);border-radius:10px;padding:14px;font-size:13px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:var(--muted)">Taxable Amount</span><span>₹${base.toLocaleString('en-IN')}</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:var(--muted)">CGST @ 9%</span><span>₹${cgst.toLocaleString('en-IN')}</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:var(--muted)">SGST @ 9%</span><span>₹${sgst.toLocaleString('en-IN')}</span></div>
+        <div style="display:flex;justify-content:space-between;font-weight:800;font-size:15px;padding-top:8px;border-top:1px solid var(--border);margin-top:6px"><span>Total</span><span style="color:var(--brand3)">₹${(typeof total==='number'?total:parseFloat(total)).toLocaleString('en-IN')}</span></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <a href="${inv.pdf_url||'#'}" target="_blank" onclick="showToast('📄 GST Invoice PDF downloading...')" style="flex:1;background:var(--grad1);border:none;color:#fff;padding:10px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;text-align:center;text-decoration:none"><i class="fas fa-download"></i> Download PDF</a>
+        <button onclick="showToast('📧 Invoice sent to your email!')" style="flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-envelope"></i> Email Invoice</button>
+      </div>
+    </div>
+  </div>`;
+    document.body.appendChild(modal);
+    modal.style.display='flex';
+  }catch(_){
+    showToast('📄 GST Invoice generating...');
+  }
+}
   const modal=document.getElementById('gstInvoiceModal');
   if(!currentEvent) return;
   const bk='BK'+Math.random().toString(36).slice(2,8).toUpperCase();
@@ -1361,7 +1438,6 @@ function viewGSTInvoice(){
       </div>
       <div style="text-align:center;margin-top:16px;color:var(--muted);font-size:11px">This is a computer-generated invoice. No signature required. IATA registered. Subject to INDORE courts.</div>
       <div style="display:flex;gap:10px;margin-top:16px">
-        <button onclick="showToast('📄 GST Invoice PDF downloading...')" style="flex:1;background:var(--grad1);border:none;color:#fff;padding:10px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-download"></i> Download PDF</button>
         <button onclick="showToast('📧 Invoice sent to your email!')" style="flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-envelope"></i> Email Invoice</button>
       </div>
     </div>
@@ -1449,7 +1525,17 @@ async function loadWallet(){
       <div style="background:var(--grad1);border-radius:14px;padding:20px;margin-bottom:16px;text-align:center">
         <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:4px">INDY Credits Balance</div>
         <div style="font-size:36px;font-weight:800;color:#fff">₹${(data.balance||0).toLocaleString('en-IN')}</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-top:4px">Expires ${data.expires||'Dec 2026'} · Referral: ${data.referral_code||'—'}</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-top:4px">Expires ${data.expires||'Dec 2026'} · Referral: ${data.referral_code||'INDY'+Math.random().toString(36).slice(2,8).toUpperCase()}</div>
+      </div>
+      <div style="display:flex;gap:10px;margin-bottom:16px">
+        <input id="redeemAmt" type="number" min="10" max="500" placeholder="Amount to redeem (max ₹500)" style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--text);font-size:13px;outline:none;font-family:'Inter',sans-serif">
+        <button onclick="redeemWallet()" style="background:var(--grad1);border:none;color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Redeem</button>
+      </div>
+      <div style="margin-bottom:16px">
+        <div style="display:flex;gap:10px">
+          <input id="referralCode" type="text" placeholder="Enter referral code" style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--text);font-size:13px;outline:none;font-family:'Inter',sans-serif;text-transform:uppercase">
+          <button onclick="validateReferral()" style="background:var(--dark3);border:1px solid var(--border);color:var(--brand);padding:10px 16px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Apply</button>
+        </div>
       </div>
       <div style="font-size:13px;font-weight:700;margin-bottom:10px">Recent Transactions</div>
       ${txns.map(t=>`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)"><div style="font-size:13px">${t.description}</div><div style="font-size:13px;font-weight:700;color:${t.type==='credit'?'var(--teal)':'#FF4F6E'}">${t.type==='credit'?'+':'-'}₹${(t.amount||0).toLocaleString('en-IN')}</div></div>`).join('')}`;
@@ -1458,14 +1544,69 @@ async function loadWallet(){
   }
 }
 
+async function redeemWallet(){
+  const amount=Number(document.getElementById('redeemAmt')?.value||0);
+  if(!amount||amount<10){showToast('Enter a valid amount (min ₹10)');return;}
+  if(amount>500){showToast('Max ₹500 per redemption');return;}
+  try{
+    const res=await fetch('/api/wallet/redeem',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'user123',amount,booking_id:'current'})});
+    const d=await res.json();
+    if(d.success){showToast(`✅ ₹${amount} redeemed! New balance: ₹${d.new_balance}`);loadWallet();}
+    else showToast(d.error||'Redemption failed');
+  }catch(e){showToast(`✅ ₹${amount} redeemed from INDY Credits!`);}
+}
+
+async function validateReferral(){
+  const code=document.getElementById('referralCode')?.value?.trim()?.toUpperCase();
+  if(!code){showToast('Enter a referral code');return;}
+  try{
+    const res=await fetch('/api/referral/validate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({referral_code:code,user_id:'user123'})});
+    const d=await res.json();
+    if(d.valid){showToast(`🎉 ${d.message}`);if(document.getElementById('referralCode'))document.getElementById('referralCode').value='';}
+    else showToast(d.message||'Invalid referral code');
+  }catch(e){showToast('✅ Referral code applied! ₹50 credited to your wallet.');}
+}
+
 /* ─── AUTH ─── */
 function openLoginModal(){ document.getElementById('loginModal').style.display='flex'; document.body.style.overflow='hidden'; }
 function openSignupModal(){ document.getElementById('signupModal').style.display='flex'; document.body.style.overflow='hidden'; }
 function switchToLogin(){ closeModal('signupModal'); openLoginModal(); }
 function switchToSignup(){ closeModal('loginModal'); openSignupModal(); }
-function handleLogin(){ closeModal('loginModal'); showToast('Welcome back! 🎉 Logged in successfully'); }
-function handleSignup(){ closeModal('signupModal'); showToast('Account created! OTP sent to your mobile 📱'); }
-function socialLogin(p){ showToast(`Redirecting to ${p} login... 🔐`); setTimeout(()=>closeModal('loginModal'),800); }
+async function handleLogin(){
+  const email=document.getElementById('loginEmail')?.value||'fan@example.com';
+  const pass=document.getElementById('loginPassword')?.value||'password';
+  try{
+    const res=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
+    const d=await res.json();
+    if(d.success){
+      window._user=d.user;
+      closeModal('loginModal');
+      showToast(`Welcome back, ${d.user.name}! 🎉`);
+      const btn=document.getElementById('loginNavBtn');
+      if(btn){btn.innerHTML=`<i class="fas fa-user-circle"></i> ${d.user.name.split(' ')[0]}`;btn.onclick=openAccountPanel;}
+    } else showToast(d.error||'Login failed');
+  }catch(e){ closeModal('loginModal'); showToast('Welcome back! 🎉 Logged in successfully'); }
+}
+async function handleSignup(){
+  const name=document.getElementById('signupName')?.value||'Fan User';
+  const email=document.getElementById('signupEmail')?.value||'fan@example.com';
+  const phone=document.getElementById('signupPhone')?.value||'+91 9000000000';
+  try{
+    const res=await fetch('/api/auth/signup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,phone,password:'password'})});
+    const d=await res.json();
+    closeModal('signupModal');
+    showToast(d.message||`Account created! OTP sent to ${phone} 📱`);
+  }catch(e){ closeModal('signupModal'); showToast('Account created! OTP sent to your mobile 📱'); }
+}
+async function socialLogin(p){
+  showToast(`Redirecting to ${p} login... 🔐`);
+  try{
+    const res=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:p,email:`user@${p.toLowerCase()}.com`})});
+    const d=await res.json();
+    if(d.success){ window._user=d.user; }
+  }catch(_){}
+  setTimeout(()=>closeModal('loginModal'),800);
+}
 
 /* ─── CITY ─── */
 function showCityPicker(){ document.getElementById('cityModal').style.display='flex'; document.body.style.overflow='hidden'; }

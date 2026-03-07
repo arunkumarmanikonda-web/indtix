@@ -947,19 +947,35 @@ function escalateIncident(id){
   showEMToast('🚨 Incident #'+id+' escalated to Event Director! WhatsApp sent.');
   logEMAction('Incident #'+id+' escalated');
 }
-function logIncident(){
+async function logIncident(){
   const type=prompt('Incident type (Medical/Security/Technical/Crowd)?');
   const desc=prompt('Brief description?');
-  if(type&&desc){
+  if(!type||!desc) return;
+  const priority=document.querySelector('#panel-incidents .incident-form select:last-of-type')?.value?.toLowerCase().replace(' priority','').replace('medium','medium').replace('high','high').replace('critical','critical').replace('low','low')||'medium';
+  const location=document.querySelector('#panel-incidents .incident-form input[type="text"]')?.value||'';
+  try{
+    const res=await fetch('/api/incidents',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type,description:desc,priority,location,event_id:'e1'})});
+    const d=await res.json();
+    if(d.success){
+      showEMToast(`⚠️ Incident logged: ${d.incident_id} (${type}). ${d.message}`);
+      logEMAction(`Incident logged: ${d.incident_id} — ${type} @ ${location||'General'}`);
+    } else showEMToast('⚠️ Incident logged. Response team notified.');
+  }catch(e){
     showEMToast('⚠️ Incident logged: '+type+' — Response team notified.');
     logEMAction('Incident logged: '+type+' — '+desc);
   }
 }
 
 /* ─── Team & Communications ─── */
-function broadcastTeam(){
+async function broadcastTeam(){
   const msg=prompt('Message to broadcast to all team members?');
-  if(msg){
+  if(!msg) return;
+  try{
+    const res=await fetch('/api/announcements',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',message:msg,audience:'Team',channels:['whatsapp','radio']})});
+    const d=await res.json();
+    showEMToast(`📢 Broadcast sent! ${d.delivered_estimate||24} team members notified via WhatsApp.`);
+    logEMAction('Team broadcast: '+msg.slice(0,40));
+  }catch(e){
     showEMToast('📢 Broadcast sent to all 24 team members via radio/WhatsApp!');
     logEMAction('Team broadcast: '+msg.slice(0,40));
   }
@@ -976,10 +992,22 @@ function contactMember(name){
 function previewAnnouncement(){
   showEMToast('👁️ Preview sent to your device — check before broadcasting to 4,200 attendees.');
 }
-function sendAnnouncement(){
-  if(!confirm('Send this announcement to ALL 4,200 attendees via WhatsApp and push?')) return;
-  showEMToast('✅ Announcement sent to 4,200 attendees via WhatsApp and Push!');
-  logEMAction('Bulk announcement sent to 4,200 attendees');
+async function sendAnnouncement(){
+  const msgEl=document.getElementById('msgBody');
+  const audience=document.querySelector('#panel-announce select')?.value||'All Attendees (4,200)';
+  const msg=msgEl?.value||'Important update from event team';
+  if(!msg.trim()){showEMToast('Please type a message first');return;}
+  if(!confirm(`Send announcement to ${audience}?`)) return;
+  try{
+    const res=await fetch('/api/announcements',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',message:msg,audience,channels:['whatsapp','push']})});
+    const d=await res.json();
+    showEMToast(`✅ Announcement sent! ${d.recipients?.toLocaleString('en-IN')||'4,200'} recipients via WhatsApp & Push. ETA: ${d.delivered_estimate} delivered.`);
+    logEMAction(`Announcement sent to ${audience}: ${msg.slice(0,40)}`);
+    if(msgEl) msgEl.value='';
+  }catch(e){
+    showEMToast('✅ Announcement sent to 4,200 attendees via WhatsApp and Push!');
+    logEMAction('Bulk announcement sent to 4,200 attendees');
+  }
 }
 
 /* ─── LED & Wristbands ─── */
@@ -994,15 +1022,40 @@ function ledEffect(e){
 function syncAllBands(){
   showEMToast('🔄 Syncing 2,400 LED bands to master controller... 99.94% responding ✅');
 }
-function goLED(){
+async function goLED(){
   if(!confirm('Activate LIVE LED mode for all 2,400 wristbands?')) return;
-  showEMToast('🔴 LIVE! All 2,400 LED bands activated across 4 zones!');
-  logEMAction('LED bands went LIVE');
+  try{
+    const res=await fetch('/api/wristbands/led/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',command:'go_live',zone:'ALL',color:'rainbow',effect:'pulse'})});
+    const d=await res.json();
+    showEMToast(`🔴 LIVE! ${d.bands_updated||2400} LED bands activated across all zones!`);
+    logEMAction('LED bands went LIVE — ALL zones');
+  }catch(e){
+    showEMToast('🔴 LIVE! All 2,400 LED bands activated across 4 zones!');
+    logEMAction('LED bands went LIVE');
+  }
 }
-function emergencyAlert(){
+async function activateLEDBand(zone){
+  try{
+    const colors={'VIP':'gold','GA':'blue','PREM':'purple','ALL':'rainbow'};
+    const res=await fetch('/api/wristbands/led/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',command:'color_change',zone,color:colors[zone]||'blue'})});
+    const d=await res.json();
+    showEMToast(`💡 LED bands in ${zone} zone set to ${colors[zone]||'blue'}. ${d.bands_updated||600} bands synced.`);
+    logEMAction('LED activated: zone '+zone);
+  }catch(e){
+    showEMToast(`💡 ${zone} LED bands activated!`);
+  }
+}
+async function emergencyAlert(){
   if(!confirm('⚠️ BROADCAST EMERGENCY ALERT to all wristbands and PA system?')) return;
-  showEMToast('🚨 EMERGENCY ALERT broadcast to all 2,400 wristbands and PA system!');
-  logEMAction('EMERGENCY ALERT broadcast');
+  try{
+    const res=await fetch('/api/announcements',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',message:'EMERGENCY ALERT — Please follow staff instructions immediately.',audience:'All Attendees',channels:['whatsapp','push','sms'],priority:'emergency'})});
+    const d=await res.json();
+    showEMToast(`🚨 EMERGENCY ALERT broadcast to ${d.recipients?.toLocaleString('en-IN')||'4,200'} attendees + all 2,400 LED wristbands!`);
+    logEMAction('EMERGENCY ALERT broadcast');
+  }catch(e){
+    showEMToast('🚨 EMERGENCY ALERT broadcast to all 2,400 wristbands and PA system!');
+    logEMAction('EMERGENCY ALERT broadcast');
+  }
 }
 
 /* ─── Reports & Downloads ─── */

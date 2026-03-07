@@ -18,7 +18,7 @@ app.get('/api/health', (c) => {
     ts: new Date().toISOString(),
     portals: ['fan','organiser','venue','event-manager','admin','ops','brand','architecture-spec'],
     api_version: 'v4',
-    total_endpoints: 58,
+    total_endpoints: 77,
     uptime: 'operational',
     region: 'edge-global',
     built_with: 'Hono + Cloudflare Workers + TypeScript',
@@ -406,17 +406,20 @@ app.post('/api/wristbands/issue', async (c) => {
 })
 
 app.post('/api/wristbands/led/command', async (c) => {
-  const { event_id, command, color, effect, zones } = await c.req.json().catch(() => ({}))
+  const { event_id, command, color, effect, zones, zone } = await c.req.json().catch(() => ({}))
+  const targetZone = zone || (zones ? (Array.isArray(zones) ? zones[0] : zones) : 'ALL')
   return c.json({
     success: true,
     command_id: 'LED-CMD-' + Math.random().toString(36).substring(2, 9).toUpperCase(),
     event_id,
     command: command || 'color_change',
+    zone: targetZone,
     color,
     effect,
-    zones: zones || ['all'],
-    bands_targeted: 2400,
-    bands_responded: 2397,
+    zones: Array.isArray(zones) ? zones : [targetZone],
+    bands_updated: targetZone === 'ALL' ? 2400 : 600,
+    bands_targeted: targetZone === 'ALL' ? 2400 : 600,
+    bands_responded: targetZone === 'ALL' ? 2397 : 598,
     latency_ms: 12,
     broadcast_at: new Date().toISOString()
   })
@@ -922,29 +925,35 @@ app.get('/api/wallet/:user_id', (c) => {
 app.post('/api/wallet/redeem', async (c) => {
   const { user_id, amount, booking_id } = await c.req.json().catch(() => ({}))
   if (!amount || amount <= 0) return c.json({ error: 'valid amount required' }, 400)
-  if (amount > 250) return c.json({ error: 'Insufficient INDY Credits balance' }, 400)
+  if (amount > 500) return c.json({ error: 'Cannot redeem more than ₹500 per transaction' }, 400)
+  const newBalance = Math.max(0, 500 - amount)
   return c.json({
     success: true,
-    redeemed: amount,
-    new_balance: 250 - amount,
+    user_id,
+    amount_redeemed: amount,
+    new_balance: newBalance,
     booking_id,
+    transaction_id: 'WLT-' + Date.now(),
+    message: `₹${amount} redeemed from wallet successfully. New balance: ₹${newBalance}`,
     applied_at: new Date().toISOString()
   })
 })
 
 // ─── API: Referral ───────────────────────────────────────
 app.post('/api/referral/validate', async (c) => {
-  const { code } = await c.req.json().catch(() => ({}))
-  if (!code) return c.json({ error: 'code required' }, 400)
-  const valid = code.startsWith('INDY-REF-')
+  const { referral_code, code, user_id } = await c.req.json().catch(() => ({}))
+  const ref = referral_code || code
+  if (!ref) return c.json({ error: 'referral_code required' }, 400)
+  const valid = ref.startsWith('IND') || ref.startsWith('INDY-REF-') || ref.length === 8
   return c.json({
     valid,
-    code,
-    reward_for_referrer: 100,
-    reward_for_new_user: 100,
+    referral_code: ref,
+    reward_for_referrer: valid ? 100 : 0,
+    reward_for_referee: valid ? 50 : 0,
+    reward_for_new_user: valid ? 50 : 0,
     currency: 'INDY Credits',
     expires: '2026-12-31',
-    message: valid ? '🎁 Referral code valid! Both you and your friend get ₹100 INDY Credits.' : 'Invalid referral code.'
+    message: valid ? `Valid referral! ₹50 credit added to your wallet. Your friend gets ₹100.` : 'Invalid or expired referral code.'
   })
 })
 
@@ -1132,5 +1141,229 @@ app.get('/api/affiliate/stats', (c) => {
   })
 })
 
-// ─── Update health to reflect 58 endpoints ───────────────
+// ─── Phase 4 Endpoints ───────────────────────────────────
+
+// AUTH: Login
+app.post('/api/auth/login', async (c) => {
+  const { email, password, provider } = await c.req.json()
+  if (provider) {
+    return c.json({ success: true, token: `tok_${Date.now()}`, user: { id: 'USR-' + Math.random().toString(36).slice(2,9).toUpperCase(), name: 'Fan User', email: email || 'user@indtix.com', provider, avatar: 'https://ui-avatars.com/api/?name=Fan+User&background=6C3CF7&color=fff', wallet_balance: 500, kyc_verified: false } })
+  }
+  if (!email || !password) return c.json({ error: 'Email and password required' }, 400)
+  return c.json({ success: true, token: `tok_${Date.now()}`, user: { id: 'USR-' + Math.random().toString(36).slice(2,9).toUpperCase(), name: email.split('@')[0].replace(/[._]/g,' ').replace(/\b\w/g,l=>l.toUpperCase()), email, avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(email.split('@')[0])}&background=6C3CF7&color=fff`, wallet_balance: 500, kyc_verified: false, bookings_count: 3 } })
+})
+
+// AUTH: Signup
+app.post('/api/auth/signup', async (c) => {
+  const { name, email, phone, password } = await c.req.json()
+  if (!name || !email || !phone) return c.json({ error: 'Name, email and phone required' }, 400)
+  const otp = Math.floor(100000 + Math.random() * 900000)
+  return c.json({ success: true, message: `OTP ${otp} sent to ${phone}`, user_id: 'USR-' + Math.random().toString(36).slice(2,9).toUpperCase(), verify_required: true })
+})
+
+// AUTH: OTP Verify
+app.post('/api/auth/verify-otp', async (c) => {
+  const { user_id, otp } = await c.req.json()
+  return c.json({ success: true, token: `tok_${Date.now()}`, message: 'Account verified! Welcome to INDTIX 🎉' })
+})
+
+// EVENTS: Create (Organiser)
+app.post('/api/events', async (c) => {
+  const body = await c.req.json()
+  const { title, category, date, time, city, venue, capacity, description, ticket_tiers } = body
+  if (!title || !date || !city) return c.json({ error: 'Title, date and city are required' }, 400)
+  const eventId = 'EVT-' + Math.random().toString(36).slice(2,8).toUpperCase()
+  return c.json({ success: true, event_id: eventId, title, category: category || 'Music', status: 'pending_review', message: 'Event submitted for review. Approval within 24-48 hours via WhatsApp.', estimated_approval: new Date(Date.now() + 48*3600000).toISOString() })
+})
+
+// EVENTS: Update
+app.put('/api/events/:id', async (c) => {
+  const id = c.req.param('id')
+  const body = await c.req.json()
+  return c.json({ success: true, event_id: id, ...body, updated_at: new Date().toISOString(), message: 'Event updated successfully.' })
+})
+
+// PROMOS: List all
+app.get('/api/promos', (c) => {
+  return c.json({ promos: [
+    { code: 'INDTIX20', type: 'percentage', value: 20, max_uses: 5000, used: 3240, expires: '2026-04-30', categories: ['all'], status: 'active' },
+    { code: 'FIRSTTIX', type: 'flat', value: 100, max_uses: 10000, used: 4180, expires: null, categories: ['all'], min_order: 299, status: 'active' },
+    { code: 'SUMMER25', type: 'percentage', value: 25, max_uses: 2000, used: 1000, expires: '2026-05-31', categories: ['Music'], status: 'active' },
+    { code: 'FEST20', type: 'percentage', value: 20, max_uses: 1000, used: 420, expires: '2026-06-30', categories: ['Music','Festival'], status: 'active' },
+    { code: 'MUSIC10', type: 'percentage', value: 10, max_uses: 2000, used: 840, expires: '2026-06-30', categories: ['Music'], status: 'active' },
+    { code: 'INDY20', type: 'percentage', value: 20, max_uses: 3000, used: 1200, expires: '2026-05-15', categories: ['all'], status: 'active' },
+    { code: 'FIRST50', type: 'flat', value: 50, max_uses: 5000, used: 2100, expires: null, categories: ['all'], first_order_only: true, status: 'active' },
+  ], total: 7, updated_at: new Date().toISOString() })
+})
+
+// PROMOS: Create
+app.post('/api/promos', async (c) => {
+  const { code, type, value, max_uses, expires, categories } = await c.req.json()
+  if (!code || !type || !value) return c.json({ error: 'code, type and value are required' }, 400)
+  if (!/^[A-Z0-9]{3,15}$/.test(code.toUpperCase())) return c.json({ error: 'Code must be 3-15 alphanumeric characters (uppercase)' }, 400)
+  return c.json({ success: true, promo: { code: code.toUpperCase(), type, value: Number(value), max_uses: Number(max_uses) || 1000, used: 0, expires: expires || null, categories: categories || ['all'], status: 'active', created_at: new Date().toISOString() }, message: `Promo code ${code.toUpperCase()} created successfully!` })
+})
+
+// PROMOS: Delete
+app.delete('/api/promos/:code', (c) => {
+  const code = c.req.param('code')
+  return c.json({ success: true, message: `Promo code ${code} deactivated. 0 new redemptions will be accepted.` })
+})
+
+// CONFIG: Get platform config
+app.get('/api/admin/config', (c) => {
+  return c.json({ config: {
+    ticket_cap_default: 10, ticket_cap_max_override: 100,
+    platform_commission_pct: 10, convenience_fee_flat: 20,
+    gst_on_fee_pct: 18, gstin: '27AABCO1234A1Z5',
+    settlement_window_days: 7, tds_pct: 5,
+    min_ticket_price: 1, refund_window_hours: 48,
+    refund_pct_within_window: 50, kyc_sla_hours: 24,
+    cancellation_notice_hours: 48, age_verification: 'aadhaar_otp',
+    maintenance_mode: false, max_bulk_tickets: 50,
+    ai_chat_enabled: true, waitlist_enabled: true,
+    promo_stacking_allowed: false, wallet_enabled: true,
+  }, updated_at: new Date().toISOString() })
+})
+
+// CONFIG: Update
+app.post('/api/admin/config', async (c) => {
+  const updates = await c.req.json()
+  return c.json({ success: true, updated: Object.keys(updates), message: 'Platform configuration saved. Changes propagate within 2 minutes.', updated_at: new Date().toISOString() })
+})
+
+// USERS: List
+app.get('/api/admin/users', (c) => {
+  const q = c.req.query('q') || ''
+  const users = [
+    { id: 'USR-001', name: 'Priya Sharma', email: 'priya.s@gmail.com', city: 'Mumbai', joined: '2024-01', bookings: 18, spend: 42600, status: 'active', kyc: true },
+    { id: 'USR-002', name: 'Rahul Kumar', email: 'rahul.k@outlook.com', city: 'Delhi', joined: '2024-03', bookings: 14, spend: 18200, status: 'active', kyc: true },
+    { id: 'USR-003', name: 'Ananya Iyer', email: 'ananya.i@gmail.com', city: 'Bengaluru', joined: '2024-06', bookings: 9, spend: 27300, status: 'active', kyc: false },
+    { id: 'USR-FRAUD-12842', name: 'Unknown User #12842', email: 'bot-12842@tempmail.com', city: '—', joined: '2025-04', bookings: 8, spend: 0, status: 'fraud', kyc: false },
+  ].filter(u => !q || u.name.toLowerCase().includes(q.toLowerCase()) || u.email.toLowerCase().includes(q.toLowerCase()))
+  return c.json({ users, total: users.length, updated_at: new Date().toISOString() })
+})
+
+// USERS: Block/Unblock
+app.post('/api/admin/users/:id/block', async (c) => {
+  const id = c.req.param('id')
+  const { reason } = await c.req.json().catch(() => ({ reason: 'Policy violation' }))
+  return c.json({ success: true, user_id: id, status: 'blocked', reason, sessions_terminated: 3, message: `User ${id} blocked. All active sessions terminated. Fraud team notified.` })
+})
+
+// USERS: Export
+app.get('/api/admin/users/export', (c) => {
+  return c.json({ success: true, message: 'User export queued. CSV will be emailed to admin@indtix.com within 5 minutes.', records: 84200, format: 'CSV' })
+})
+
+// EVENTS: Approval queue (admin)
+app.get('/api/admin/events/queue', (c) => {
+  return c.json({ pending: [
+    { id: 'EVT-P001', title: 'Sunburn Arena Mumbai', organiser: 'Percept Live', city: 'Mumbai', date: '2026-04-15', capacity: 8500, category: 'Music', submitted: '2026-03-05T10:00:00Z', docs_complete: true, status: 'pending' },
+    { id: 'EVT-P002', title: 'Tech Summit 2026', organiser: 'TechConf India', city: 'Hyderabad', date: '2026-06-10', capacity: 1200, category: 'Conference', submitted: '2026-03-06T09:00:00Z', docs_complete: false, status: 'pending_docs' },
+    { id: 'EVT-P003', title: 'Comedy Gig — Bengaluru', organiser: 'Laughing Stock', city: 'Bengaluru', date: '2026-04-28', capacity: 500, category: 'Comedy', submitted: '2026-03-07T08:30:00Z', docs_complete: true, status: 'pending' },
+  ], stats: { pending: 3, pending_docs: 1, approved_today: 2, rejected_today: 0 }, updated_at: new Date().toISOString() })
+})
+
+// EVENTS: Approve/Reject
+app.post('/api/admin/events/:id/approve', async (c) => {
+  const id = c.req.param('id')
+  const { action, reason } = await c.req.json().catch(() => ({ action: 'approve' }))
+  const approved = action !== 'reject'
+  return c.json({ success: true, event_id: id, status: approved ? 'approved' : 'rejected', message: approved ? `Event ${id} approved! Organiser notified via WhatsApp.` : `Event ${id} rejected. Reason sent to organiser.`, notified_at: new Date().toISOString() })
+})
+
+// INCIDENTS: Log new
+app.post('/api/incidents', async (c) => {
+  const { type, location, description, priority, event_id } = await c.req.json()
+  if (!type || !description) return c.json({ error: 'type and description are required' }, 400)
+  const incidentId = 'INC-' + Math.random().toString(36).slice(2,7).toUpperCase()
+  return c.json({ success: true, incident_id: incidentId, type, location: location || 'General', priority: priority || 'medium', status: 'open', event_id: event_id || 'e1', created_at: new Date().toISOString(), message: `Incident ${incidentId} logged. Control room and safety team notified.` })
+})
+
+// INCIDENTS: List for event
+app.get('/api/events/:id/incidents', (c) => {
+  return c.json({ incidents: [
+    { id: 'INC-001', type: 'Technical Failure', location: 'Gate 4', description: 'Gate 4 scanner down', priority: 'high', status: 'in_progress', logged_at: new Date(Date.now()-7200000).toISOString() },
+    { id: 'INC-002', type: 'Medical', location: 'Main Floor', description: 'Minor heat exhaustion — fan assisted', priority: 'medium', status: 'resolved', logged_at: new Date(Date.now()-3600000).toISOString() },
+  ], total: 2, open: 1, resolved: 1 })
+})
+
+// ANNOUNCEMENTS: Send
+app.post('/api/announcements', async (c) => {
+  const { event_id, message, audience, channels } = await c.req.json()
+  if (!message) return c.json({ error: 'message is required' }, 400)
+  const sizes = { 'All Attendees': 4200, 'VIP Only': 342, 'General Admission': 3858, 'Not Yet Checked In': 1359 }
+  const count = sizes[audience as keyof typeof sizes] || 4200
+  return c.json({ success: true, announcement_id: 'ANN-' + Date.now(), message, audience: audience || 'All Attendees', recipients: count, channels: channels || ['whatsapp', 'push'], status: 'sent', sent_at: new Date().toISOString(), delivered_estimate: Math.round(count * 0.97) })
+})
+
+// SETTLEMENTS: Process one
+app.post('/api/settlements/:id/process', async (c) => {
+  const id = c.req.param('id')
+  const utr = 'UTR' + Date.now().toString().slice(-10)
+  return c.json({ success: true, settlement_id: id, utr_reference: utr, status: 'processed', amount_transferred: 324500, bank: 'HDFC Bank ****4521', processed_at: new Date().toISOString(), message: `Settlement ${id} processed. UTR: ${utr}. Credit within 2 hours.` })
+})
+
+// ORGANISER: KYC Status check
+app.get('/api/kyc/:id', (c) => {
+  const id = c.req.param('id')
+  return c.json({ kyc_id: id, status: 'under_review', submitted_at: new Date(Date.now()-86400000).toISOString(), expected_completion: new Date(Date.now()+86400000).toISOString(), documents: [{ type: 'GST Certificate', status: 'verified' }, { type: 'PAN Card', status: 'under_review' }, { type: 'Bank Statement', status: 'pending' }], reviewer: 'Compliance Team', notes: 'PAN verification in progress. Please ensure document is clear and unblurred.' })
+})
+
+// GST INVOICE: Get by booking
+app.get('/api/gst/invoice/:booking_id', (c) => {
+  const id = c.req.param('booking_id')
+  const base = 2999
+  const gst = Math.round(base * 0.18)
+  return c.json({ invoice_id: 'INV-' + id, booking_id: id, gstin_platform: '27AABCO1234A1Z5', gstin_organiser: '27BBCPL9876B1Z2', invoice_date: new Date().toISOString().split('T')[0], line_items: [{ description: 'Event Ticket — Sunburn Arena Mumbai (GA)', qty: 2, unit_price: base/2, amount: base }, { description: 'Platform Convenience Fee', qty: 1, unit_price: 20, amount: 20 }], subtotal: base + 20, cgst: Math.round((base+20)*0.09), sgst: Math.round((base+20)*0.09), total_gst: gst + 4, grand_total: base + 20 + gst + 4, pdf_url: `https://invoice.indtix.com/${id}.pdf`, hsn_code: '998554', place_of_supply: 'Maharashtra (27)' })
+})
+
+// WAITLIST: Join
+app.post('/api/events/:id/waitlist', async (c) => {
+  const id = c.req.param('id')
+  const { user_id, email, tier } = await c.req.json()
+  const position = Math.floor(50 + Math.random() * 200)
+  return c.json({ success: true, waitlist_id: 'WL-' + Date.now(), event_id: id, position, tier: tier || 'GA', email_confirmation: email, message: `You're #${position} on the waitlist for ${tier || 'GA'} tickets. We'll notify you when tickets become available!` })
+})
+
+// SEARCH: Enhanced with suggestions
+app.get('/api/search', (c) => {
+  const q = (c.req.query('q') || '').toLowerCase()
+  const city = c.req.query('city') || ''
+  const allEvents = [
+    { id: 'e1', name: 'Sunburn Arena Mumbai', category: 'Music', city: 'Mumbai', date: '2026-04-15', price: 1499, sold_pct: 72, venue: 'NSCI Dome', image: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600' },
+    { id: 'e2', name: 'NH7 Weekender', category: 'Music', city: 'Pune', date: '2026-05-20', price: 2999, sold_pct: 58, venue: 'Mahalaxmi Grounds', image: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600' },
+    { id: 'e3', name: 'Comedy Central Live', category: 'Comedy', city: 'Bengaluru', date: '2026-04-28', price: 899, sold_pct: 45, venue: 'JW Marriott Ballroom', image: 'https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=600' },
+    { id: 'e4', name: 'Tech Summit 2026', category: 'Conference', city: 'Hyderabad', date: '2026-06-10', price: 4999, sold_pct: 85, venue: 'HITEX Exhibition Centre', image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600' },
+    { id: 'e5', name: 'Lollapalooza India', category: 'Music', city: 'Mumbai', date: '2026-03-22', price: 5999, sold_pct: 92, venue: 'Mahalaxmi Racecourse', image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600' },
+    { id: 'e6', name: 'BITS Pilani Oasis', category: 'College Fest', city: 'Pilani', date: '2026-10-01', price: 299, sold_pct: 34, venue: 'BITS Campus', image: 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600' },
+    { id: 'e7', name: 'Bollywood Night Out', category: 'Music', city: 'Delhi', date: '2026-05-05', price: 1999, sold_pct: 61, venue: 'Jawaharlal Nehru Stadium', image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600' },
+    { id: 'e8', name: 'Startup Summit India', category: 'Conference', city: 'Bengaluru', date: '2026-07-20', price: 3499, sold_pct: 40, venue: 'KTPO Trade Centre', image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600' },
+  ]
+  const results = allEvents.filter(e => (!q || e.name.toLowerCase().includes(q) || e.category.toLowerCase().includes(q) || e.city.toLowerCase().includes(q) || e.venue.toLowerCase().includes(q)) && (!city || e.city.toLowerCase() === city.toLowerCase()))
+  const suggestions = q ? ['Live music in ' + (city||'Mumbai'), q + ' tickets', q + ' 2026'].slice(0,3) : []
+  return c.json({ query: q, results, total: results.length, suggestions, updated_at: new Date().toISOString() })
+})
+
+// ORGANISER: Create team member
+app.post('/api/organiser/team', async (c) => {
+  const { name, email, role } = await c.req.json()
+  if (!name || !email || !role) return c.json({ error: 'name, email and role required' }, 400)
+  return c.json({ success: true, team_member: { id: 'TM-' + Date.now(), name, email, role, status: 'invited', invited_at: new Date().toISOString() }, message: `Invite sent to ${email}. They can join with the link in their email.` })
+})
+
+// VENUE: Dashboard (enhanced)
+app.get('/api/venue/dashboard', (c) => {
+  return c.json({ venue: { id: 'VEN-001', name: 'NSCI Dome, Worli', city: 'Mumbai', capacity: 8500, rating: 4.8, verified: true }, stats: { upcoming_events: 3, revenue_mtd: 1280000, bookings_confirmed: 2, pending_enquiries: 4, occupancy_rate_avg: 0.82 }, upcoming: [{ event_id: 'e1', title: 'Sunburn Arena Mumbai', date: '2026-04-15', organiser: 'Percept Live', revenue: 320000, status: 'confirmed' }, { event_id: 'e5', title: 'Lollapalooza India', date: '2026-03-22', organiser: 'BookMyShow Live', revenue: 580000, status: 'confirmed' }, { event_id: 'evp1', title: 'Corporate Gala — Tech Corp', date: '2026-04-02', organiser: 'TechCorp India', revenue: 90000, status: 'pending_payment' }], updated_at: new Date().toISOString() })
+})
+
+// NOTIFICATIONS: Send
+app.post('/api/notifications/send', async (c) => {
+  const { template, recipients, channel, params } = await c.req.json()
+  if (!template || !recipients) return c.json({ error: 'template and recipients required' }, 400)
+  const count = Array.isArray(recipients) ? recipients.length : recipients
+  return c.json({ success: true, notification_id: 'NOTIF-' + Date.now(), template, channel: channel || 'whatsapp', queued_for: count, estimated_delivery_minutes: Math.ceil(count / 10000), message: `${count} ${channel || 'WhatsApp'} notifications queued. ETA: ${Math.ceil(count/10000)} min.` })
+})
+
 export default app

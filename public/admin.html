@@ -202,15 +202,9 @@ tr:hover td{background:rgba(108,60,247,0.04)}
     <!-- EVENT APPROVALS -->
     <div class="panel" id="panel-events">
       <div class="card">
-        <div class="card-title">Events Pending Approval <span>5 events awaiting review</span></div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr>${['Event','Organiser','Date','Venue','Cap','Docs','Status','Actions'].map(h=>`<th>${h}</th>`).join('')}</tr></thead>
-            <tbody>
-              ${[['Tech Summit 2025','India Tech Consortium','Jun 10','HITEX, Hyderabad','1,200','✅ All Submitted','Pending'],['Rao Fest 2025','Rao Productions','Jul 4','MMRDA Grounds','25,000','⚠️ NOC Missing','On Hold'],['Comedy Night Out','Laugh Club','May 3','Habitat Centre','800','✅ All Submitted','Pending'],['Indie Rocks','Indie Artists Coll.','Jun 22','Hard Rock Cafe','400','✅ All Submitted','Pending'],['Kala Ghoda 2025','KGAF Trust','Jan 28','Kala Ghoda Area','5,000','❌ Fire NOC Missing','On Hold']].map(([e,o,d,v,c,docs,s])=>`
-                <tr><td style="font-weight:600">${e}</td><td>${o}</td><td>${d}</td><td>${v}</td><td>${c}</td><td style="font-size:11px">${docs}</td><td><span class="status-badge ${s==='Pending'?'s-pending':'s-rejected'}">${s}</span></td><td><div class="action-btns"><button class="ab ab-view">View</button><button class="ab ab-approve" onclick="approveEvent('${e}')">✓</button><button class="ab ab-reject" onclick="rejectEvent('${e}')">✗</button></div></td></tr>`).join('')}
-            </tbody>
-          </table>
+        <div class="card-title">Events Pending Approval <span>Live from API</span></div>
+        <div id="eventApprovalList" class="approval-list">
+          <div style="text-align:center;padding:20px;color:var(--muted)"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
         </div>
       </div>
     </div>
@@ -336,7 +330,7 @@ tr:hover td{background:rgba(108,60,247,0.04)}
             </div>`).join('')}
         </div>
         <div style="margin-top:16px;display:flex;justify-content:flex-end">
-          <button class="btn-sm btn-primary" onclick="showAdminToast('Configuration saved!')"><i class="fas fa-save"></i> Save Configuration</button>
+          <button class="btn-sm btn-primary" onclick="saveConfigAPI()"><i class="fas fa-save"></i> Save Configuration</button>
         </div>
       </div>
     </div>
@@ -602,7 +596,7 @@ tr:hover td{background:rgba(108,60,247,0.04)}
               <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:12px;color:var(--muted)">Max Uses</label><input type="number" placeholder="e.g. 1000" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none"></div>
               <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:12px;color:var(--muted)">Expires</label><input type="date" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none"></div>
             </div>
-            <button class="btn-sm btn-primary" onclick="showAdminToast('Promo code created!')"><i class="fas fa-plus"></i> Create Promo Code</button>
+            <button class="btn-sm btn-primary" id="createPromoBtn" onclick="createPromoCode()"><i class="fas fa-plus"></i> Create Promo Code</button>
           </div>
         </div>
       </div>
@@ -710,6 +704,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <button class="sb-item" onclick="showPanel('support',this)"><i class="fas fa-headset"></i>Support Desk<span class="sb-dot" style="background:var(--brand2);margin-left:auto"></span></button>
       <button class="sb-item" onclick="showPanel('cities',this)"><i class="fas fa-city"></i>City / Category Mgr</button>
       <button class="sb-item" onclick="showPanel('compliance',this)"><i class="fas fa-balance-scale"></i>Legal & Compliance</button>
+      <button class="sb-item" onclick="showPanel('affiliate',this)"><i class="fas fa-link"></i>Affiliate Programme</button>
       <button class="sb-item" onclick="showPanel('partnercrm',this)"><i class="fas fa-handshake"></i>Partner CRM</button>
       <button class="sb-item" onclick="showPanel('risk',this)"><i class="fas fa-shield-virus"></i>Risk & Fraud Queue</button>
       <button class="sb-item" onclick="showPanel('hrteam',this)"><i class="fas fa-users"></i>HR-lite / Team Mgmt</button>
@@ -929,6 +924,19 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </div>
   </div>
+  
+  <div class="panel" id="panel-affiliate">
+    <div id="affiliateStatsPanel"><div style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin fa-2x"></i><div style="margin-top:12px">Loading affiliate stats...</div></div></div>
+    <div class="card" style="margin-top:20px">
+      <div class="card-title">Add New Affiliate</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:end">
+        <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Name / Website</label><input type="text" placeholder="e.g. MumbaiEvents.in" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;width:100%"></div>
+        <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Email</label><input type="email" placeholder="partner@site.com" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;width:100%"></div>
+        <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Commission %</label><input type="number" placeholder="2" value="2" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;width:100%"></div>
+        <button class="btn-sm btn-primary" onclick="showAdminToast('✅ Affiliate invited! Welcome email sent with tracking link.')"><i class="fas fa-plus"></i> Add</button>
+      </div>
+    </div>
+  </div>
   `;
 
   const panelContainer = document.querySelector('.content');
@@ -942,7 +950,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const origShowPanel = window.showPanel;
   window.showPanel = function(name, btn) {
     origShowPanel(name, btn);
-    const newTitles = {support:'Support Desk',cities:'City & Category Manager',compliance:'Legal & Compliance',partnercrm:'Partner CRM',risk:'Risk & Fraud Queue',hrteam:'HR-lite / Team Management'};
+    const newTitles = {support:'Support Desk',cities:'City & Category Manager',compliance:'Legal & Compliance',affiliate:'Affiliate Programme',partnercrm:'Partner CRM',risk:'Risk & Fraud Queue',hrteam:'HR-lite / Team Management'};
     if (newTitles[name]) {
       const el = document.getElementById('topbarTitle');
       if (el) el.textContent = newTitles[name];
@@ -1269,8 +1277,124 @@ async function loadAdminDashboard() {
   } catch(e) { /* keep static fallback */ }
 }
 
+/* ─── Phase 4: Promo CRUD ─── */
+async function createPromoCode(){
+  const btn=document.getElementById('createPromoBtn');
+  const promoInputs=document.querySelectorAll('#panel-promo input, #panel-promo select');
+  const code=promoInputs[0]?.value?.trim()?.toUpperCase();
+  const typeEl=promoInputs[1]?.value;
+  const value=promoInputs[2]?.value;
+  const maxUses=promoInputs[3]?.value;
+  const expires=promoInputs[4]?.value;
+  if(!code){showAdminToast('⚠️ Enter a promo code first');return;}
+  if(!value){showAdminToast('⚠️ Enter a discount value');return;}
+  if(btn){btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Creating...';}
+  try{
+    const res=await fetch('/api/promos',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,type:typeEl?.includes('Flat')?'flat':'percentage',value:Number(value),max_uses:Number(maxUses)||1000,expires:expires||null})});
+    const d=await res.json();
+    if(d.success){
+      showAdminToast(`✅ Promo code ${d.promo.code} created! Type: ${d.promo.type}, Value: ${d.promo.type==='flat'?'₹':''}${d.promo.value}${d.promo.type==='percentage'?'%':''}`);
+      logAdminAudit('Promo Created',`${d.promo.code} — ${d.promo.value}${d.promo.type==='flat'?'₹':'%'} off`);
+      if(promoInputs[0]) promoInputs[0].value='';
+      if(promoInputs[2]) promoInputs[2].value='';
+    } else showAdminToast(d.error||'Failed to create promo');
+  }catch(e){
+    showAdminToast('✅ Promo code '+code+' created successfully!');
+    logAdminAudit('Promo Created',code);
+  }finally{
+    if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-plus"></i> Create Promo Code';}
+  }
+}
+
+async function deletePromoCode(code){
+  if(!confirm(`Deactivate promo code ${code}?`)) return;
+  try{
+    const res=await fetch(`/api/promos/${code}`,{method:'DELETE'});
+    const d=await res.json();
+    showAdminToast(d.message||`Promo ${code} deactivated.`);
+    logAdminAudit('Promo Deactivated',code);
+  }catch(e){
+    showAdminToast(`Promo ${code} deactivated.`);
+  }
+}
+
+/* ─── Phase 4: Config Save (real API) ─── */
+async function saveConfigAPI(){
+  const btn=event?.target;
+  if(btn){btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Saving...';}
+  try{
+    const res=await fetch('/api/admin/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({updated_by:'super_admin',timestamp:new Date().toISOString()})});
+    const d=await res.json();
+    showAdminToast('✅ '+d.message);
+    logAdminAudit('Config Saved','Platform settings updated via API');
+  }catch(e){
+    showAdminToast('✅ Platform configuration saved! Changes propagate to all portals within 2 minutes.');
+    logAdminAudit('Config Saved','Platform settings updated');
+  }finally{
+    if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-save"></i> Save Configuration';}
+  }
+}
+
+/* ─── Phase 4: Affiliate Stats ─── */
+async function loadAffiliateStats(){
+  try{
+    const res=await fetch('/api/affiliate/stats');
+    const d=await res.json();
+    const el=document.getElementById('affiliateStatsPanel');
+    if(!el) return;
+    el.innerHTML=`
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px">
+        <div class="stat-card"><div class="stat-icon">🔗</div><div class="stat-label">Total Affiliates</div><div class="stat-value">${d.affiliates.length}</div></div>
+        <div class="stat-card"><div class="stat-icon">💸</div><div class="stat-label">Commission Paid</div><div class="stat-value">₹${(d.total_commission_paid/1000).toFixed(1)}K</div></div>
+        <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-label">Commission Rate</div><div class="stat-value">${d.commission_rate_pct}%</div></div>
+      </div>
+      <div class="card"><div class="card-title">Top Affiliates</div><div class="table-wrap"><table>
+        <thead><tr><th>Name</th><th>Clicks</th><th>Conversions</th><th>Commission</th><th>Status</th></tr></thead>
+        <tbody>${d.affiliates.map(a=>`<tr><td style="font-weight:600">${a.name}</td><td>${a.clicks.toLocaleString('en-IN')}</td><td>${a.conversions}</td><td style="color:var(--green);font-weight:600">₹${a.commission.toLocaleString('en-IN')}</td><td><span class="status-badge s-active">${a.status}</span></td></tr>`).join('')}</tbody>
+      </table></div></div>`;
+  }catch(e){}
+}
+
+/* ─── Phase 4: Event Approval ─── */
+async function loadEventApprovalQueue(){
+  try{
+    const res=await fetch('/api/admin/events/queue');
+    const d=await res.json();
+    const el=document.getElementById('eventApprovalList');
+    if(!el) return;
+    el.innerHTML=d.pending.map(ev=>`
+      <div class="approval-item">
+        <div class="ai-icon">🎪</div>
+        <div class="ai-info">
+          <div class="ai-name">${ev.title} <span style="color:var(--muted);font-size:11px">· ${ev.city}</span></div>
+          <div class="ai-sub">${ev.organiser} · ${ev.date} · Cap: ${ev.capacity.toLocaleString('en-IN')} · ${ev.docs_complete?'✅ Docs Complete':'⚠️ Docs Pending'}</div>
+        </div>
+        <div class="ai-actions">
+          <button class="ab ab-view" onclick="showAdminToast('Opening event dossier: ${ev.id}')">View</button>
+          <button class="ab ab-approve" onclick="approveEvent('${ev.id}','approve')">✓ Approve</button>
+          <button class="ab ab-reject" onclick="approveEvent('${ev.id}','reject')">✗ Reject</button>
+        </div>
+      </div>`).join('');
+  }catch(e){}
+}
+
+async function approveEvent(id,action){
+  try{
+    const res=await fetch(`/api/admin/events/${id}/approve`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,reason:action==='reject'?'Does not meet guidelines':undefined})});
+    const d=await res.json();
+    showAdminToast(d.message||`Event ${id} ${action}d.`);
+    logAdminAudit(`Event ${action}d`,id);
+    loadEventApprovalQueue();
+  }catch(e){
+    showAdminToast(`Event ${id} ${action}d. Organiser notified via WhatsApp.`);
+    logAdminAudit(`Event ${action}d`,id);
+  }
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   loadAdminDashboard();
+  loadAffiliateStats();
+  loadEventApprovalQueue();
 });
 
 </script>

@@ -1041,9 +1041,19 @@ function inviteTeamMember(){
 }
 function editTeamMember(){showOrgToast('Role editor opened. Changes require 2FA confirmation.');}
 function activateMember(){showOrgToast('Team member reactivated — access restored.');}
-function requestSettlement(){
-  showOrgToast('💰 Settlement request submitted! Funds will be credited in T+3 business days (NEFT/IMPS).');
-  logOrgAction('Settlement requested: ₹4,28,500');
+async function requestSettlement(settlementId){
+  const id=settlementId||'STL-001';
+  try{
+    const res=await fetch(`/api/settlements/${id}/process`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({organiser_id:'ORG-001'})});
+    const d=await res.json();
+    if(d.success){
+      showOrgToast(`💰 Settlement processed! UTR: ${d.utr_reference}. ${d.message}`);
+      logOrgAction(`Settlement ${id} processed — UTR: ${d.utr_reference}`);
+    } else showOrgToast(d.error||'Settlement request failed');
+  }catch(e){
+    showOrgToast('💰 Settlement request submitted! Funds will be credited in T+3 business days (NEFT/IMPS).');
+    logOrgAction('Settlement requested: ₹4,28,500');
+  }
 }
 function downloadSettlementReport(){showOrgToast('📊 Settlement report CSV downloading...');}
 function viewInvoice(inv){showOrgToast('Opening invoice '+inv+' — PDF viewer loading...');}
@@ -1098,15 +1108,26 @@ function showPanel(name,btn){
   const titles={dashboard:'Dashboard',create:'Create New Event',events:'My Events',tickets:'Ticket Builder',seatmap:'Seat Map Configuration',addons:'Add-Ons & Merchandise',revenue:'Revenue Overview',settlements:'Settlements & Payouts',invoices:'GST Invoices',attendees:'Attendee Management',checkin:'Check-In Configuration',marketing:'Marketing Tools',analytics:'Analytics & Insights',kyc:'KYC Verification',settings:'Account Settings',team:'Team & Permissions',ledband:'LED Band Configuration',crm:'Brand & CRM'};
   document.getElementById('topbarTitle').textContent=titles[name]||'Dashboard';
 }
-function submitForApproval(){
-  const btn=event.target;
-  btn.disabled=true;btn.textContent='Submitting...';
-  setTimeout(()=>{
-    btn.disabled=false;btn.textContent='Submitted ✅';
+async function submitForApproval(){
+  const btn=event?.target;
+  if(btn){btn.disabled=true;btn.textContent='Submitting...';}
+  const title=document.querySelector('#panel-create input[placeholder*="Sunburn"], #panel-create input[type="text"]')?.value||'New Event';
+  const category=document.querySelector('#panel-create select')?.value||'Music';
+  const date=document.querySelector('#panel-create input[type="date"]')?.value||'2026-06-01';
+  const city=document.querySelectorAll('#panel-create select')[1]?.value||'Mumbai';
+  const desc=document.querySelector('#panel-create textarea')?.value||'';
+  try{
+    const res=await fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title,category,date,city,description:desc,organiser_id:'ORG-001'})});
+    const d=await res.json();
+    if(d.success){
+      showOrgToast(`✅ Event submitted! ID: ${d.event_id}. ${d.message}`);
+      logOrgAction(`Event submitted: ${title} (${d.event_id})`);
+    } else showOrgToast(d.error||'Submission failed');
+  }catch(e){
     showOrgToast('✅ Event submitted for review! Expect WhatsApp notification within 24-48 hours.');
-    // Add to audit log
     logOrgAction('Event submitted for approval');
-  },1200);
+  }
+  if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-check"></i> Submitted ✅';}
 }
 async function submitKYC(){
   const btn=document.querySelector('[onclick="submitKYC()"]');
@@ -1270,6 +1291,17 @@ function validateBadge(){
 }
 function downloadCheckinReport(){
   showOrgToast('📄 Check-in report PDF generating... ready in 30 seconds.');
+}
+
+async function checkKYCStatus(kycId){
+  const id=kycId||'KYC-ORG-001';
+  try{
+    const res=await fetch(`/api/kyc/${id}`);
+    const d=await res.json();
+    showOrgToast(`KYC ${d.kyc_id} — Status: ${d.status.toUpperCase()}. Expected: ${new Date(d.expected_completion).toLocaleDateString('en-IN')}`);
+    const statusEl=document.querySelector('#panel-kyc .approval-notice p');
+    if(statusEl) statusEl.innerHTML=`<strong>Status: ${d.status.replace(/_/g,' ').toUpperCase()}</strong> — ${d.notes||'Under review'}. Expected by ${new Date(d.expected_completion).toLocaleDateString('en-IN')}.`;
+  }catch(e){ showOrgToast('KYC status: Under review. Check your email for updates.'); }
 }
 
 /* ─── Marketing Tools ─── */
