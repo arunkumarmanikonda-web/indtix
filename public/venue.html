@@ -209,18 +209,15 @@ textarea{resize:vertical;min-height:80px}
     <!-- FLOOR PLAN -->
     <div class="panel" id="panel-floorplan">
       <div class="card">
-        <div class="card-title">Floor Plan Builder</div>
-        <p style="color:var(--muted);font-size:13px;margin-bottom:16px">Drag and configure venue sections to build your floor plan. Organisers will use this to assign seats.</p>
-        <div class="floor-plan">
-          <div class="floor-section" style="background:rgba(108,60,247,0.3);border:1px solid rgba(108,60,247,0.5);width:60%;height:40%;top:5%;left:20%;color:var(--brand)">🎤 Main Stage Area</div>
-          <div class="floor-section" style="background:rgba(255,60,172,0.2);border:1px solid rgba(255,60,172,0.4);width:80%;height:25%;top:45%;left:10%;color:var(--brand2)">🟣 Premium Standing Floor</div>
-          <div class="floor-section" style="background:rgba(0,245,196,0.15);border:1px solid rgba(0,245,196,0.35);width:20%;height:25%;top:45%;left:0;color:var(--brand3)">VIP L</div>
-          <div class="floor-section" style="background:rgba(0,245,196,0.15);border:1px solid rgba(0,245,196,0.35);width:20%;height:25%;top:45%;right:0;color:var(--brand3)">VIP R</div>
-          <div class="floor-section" style="background:rgba(255,180,0,0.15);border:1px solid rgba(255,180,0,0.35);width:80%;height:20%;bottom:0;left:10%;color:#FFB300">🍕 F&B Zone — General Entry</div>
+        <div class="card-title">Floor Plan Builder <span style="font-size:12px;color:var(--muted);font-weight:400">Click zones to edit · Drag to rearrange</span></div>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:16px">Build your venue layout zone-by-zone. Organisers will see this when assigning sections.</p>
+        <div id="floorPlanCanvas" style="display:flex;flex-wrap:wrap;gap:14px;min-height:180px;padding:14px;background:var(--dark);border:2px dashed var(--border);border-radius:12px;margin-bottom:16px;align-content:flex-start">
+          <!-- JS seeded via initFloorPlan() on DOMContentLoaded -->
         </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          ${[['Main Stage','rgba(108,60,247,0.3)'],['Standing Floor','rgba(255,60,172,0.2)'],['VIP Section','rgba(0,245,196,0.15)'],['Seated Area','rgba(100,200,255,0.15)'],['F&B Zone','rgba(255,180,0,0.15)'],['Entry/Exit','rgba(255,100,100,0.15)']].map(([n,c])=>`
-            <div style="background:${c};border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:6px 14px;font-size:12px;cursor:pointer">${n}</div>`).join('')}
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px">
+          <button class="btn-sm btn-primary" onclick="addFloorZone()"><i class="fas fa-plus"></i> Add Zone</button>
+          <button class="btn-sm btn-ghost" onclick="saveFloorPlan()"><i class="fas fa-save"></i> Save Plan</button>
+          <button class="btn-sm btn-ghost" onclick="exportFloorPlan()"><i class="fas fa-download"></i> Export PDF</button>
         </div>
       </div>
     </div>
@@ -247,7 +244,7 @@ textarea{resize:vertical;min-height:80px}
             <div style="font-size:24px">${icon}</div>
             <div class="br-info"><div class="br-event">${name}</div></div>
             <span class="br-status ${cls}" style="font-size:11px">${status}</span>
-            <button class="btn-sm btn-ghost" style="font-size:11px"><i class="fas fa-upload"></i> Update</button>
+            <button class="btn-sm btn-ghost" style="font-size:11px" onclick="uploadDocModal('${name}')"><i class="fas fa-upload"></i> Update</button>
           </div>`).join('')}
       </div>
     </div>
@@ -673,7 +670,7 @@ function viewHireContract(id){showVenueToast('📄 Hire contract #'+id+' opening
 function generateMonthlySummary(){showVenueToast('📊 Monthly revenue summary generating — available in 30 seconds...');}
 
 window.addEventListener('DOMContentLoaded',function(){
-  renderFloorPlan();
+  initFloorPlan();
   loadVenueDashboard();
   // Revenue trend
   setInterval(function(){
@@ -876,10 +873,164 @@ function sendQuote(orgName) {
   document.body.appendChild(modal);
 }
 
-function submitQuote(orgName) {
-  const amt = document.getElementById('quoteAmt')?.value || '500000';
-  showVenueToast(`✅ Quote of ₹${parseInt(amt).toLocaleString('en-IN')} sent to ${orgName} via WhatsApp & email!`);
-  logVenueAction(`Quote sent to ${orgName}: ₹${amt}`);
+// ─── REAL MODAL IMPLEMENTATIONS ──────────────────────────────────────────────
+
+/* ── Add Staff Modal ── */
+function openAddStaffModal() {
+  const modal = document.createElement('div');
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  modal.innerHTML = `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;width:460px;max-width:95vw">
+      <div style="font-weight:800;font-size:16px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center">
+        <span>👤 Add Staff Member</span>
+        <button onclick="this.closest('[style*=fixed]').remove()" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer">✕</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px">
+        <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Full Name *</label>
+          <input id="staffName" type="text" placeholder="e.g. Ravi Kumar" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;width:100%;font-family:inherit"></div>
+        <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Role *</label>
+          <select id="staffRole" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;width:100%;font-family:inherit">
+            <option>Gate Supervisor</option><option>Floor Manager</option><option>Security</option>
+            <option>Medical First Aid</option><option>Ticketing Staff</option><option>F&B Supervisor</option><option>Technical Crew</option><option>VIP Host</option>
+          </select></div>
+        <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Gate Assignment</label>
+          <input id="staffGate" type="text" placeholder="e.g. Gate A, VIP Gate, All Gates" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;width:100%;font-family:inherit"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Shift Start</label>
+            <input id="staffShiftStart" type="time" value="17:00" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;width:100%;font-family:inherit"></div>
+          <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Shift End</label>
+            <input id="staffShiftEnd" type="time" value="02:00" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;width:100%;font-family:inherit"></div>
+        </div>
+        <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Phone Number</label>
+          <input id="staffPhone" type="tel" placeholder="+91 98765 43210" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;width:100%;font-family:inherit"></div>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button onclick="submitAddStaff()" style="flex:1;background:var(--grad1);border:none;color:#fff;padding:11px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-user-plus"></i> Add to Team</button>
+        <button onclick="this.closest('[style*=fixed]').remove()" style="flex:1;background:var(--card);border:1px solid var(--border);color:var(--muted);padding:11px;border-radius:10px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif">Cancel</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+}
+function submitAddStaff() {
+  const name = document.getElementById('staffName')?.value?.trim();
+  const role = document.getElementById('staffRole')?.value;
+  const gate = document.getElementById('staffGate')?.value || 'TBD';
+  const start = document.getElementById('staffShiftStart')?.value || '17:00';
+  const end = document.getElementById('staffShiftEnd')?.value || '02:00';
+  if (!name) { showVenueToast('Please enter staff member name', 'warning'); return; }
+  // Add row to staff table
+  const tbody = document.querySelector('#panel-staff table tbody');
+  if (tbody) {
+    const tr = document.createElement('tr');
+    tr.style.borderBottom = '1px solid rgba(255,255,255,0.04)';
+    tr.innerHTML = `<td style="padding:10px;font-weight:600">${name}</td><td style="padding:10px;font-size:12px">${role}</td><td style="padding:10px">${gate}</td><td style="padding:10px">${start}–${end}</td><td style="padding:10px"><span class="br-status s-confirmed">On Duty</span></td>`;
+    tbody.appendChild(tr);
+  }
+  document.querySelector('[style*=fixed]')?.remove();
+  showVenueToast(`✅ ${name} (${role}) added to team! Access pass generated.`);
+  logVenueAction(`Staff added: ${name} — ${role}`);
+}
+
+/* ── Incident Log Modal ── */
+function openIncidentForm() {
+  const modal = document.createElement('div');
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  modal.innerHTML = `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;width:480px;max-width:95vw">
+      <div style="font-weight:800;font-size:16px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center">
+        <span>🚨 Log New Incident</span>
+        <button onclick="this.closest('[style*=fixed]').remove()" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer">✕</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Event *</label>
+            <input id="incEvent" type="text" placeholder="Sunburn Arena" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;width:100%;font-family:inherit"></div>
+          <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Incident Type *</label>
+            <select id="incType" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;width:100%;font-family:inherit">
+              <option>Medical</option><option>Security</option><option>Technical</option><option>Fire</option><option>Crowd Control</option><option>Theft</option><option>Structural</option><option>Other</option>
+            </select></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Priority</label>
+            <select id="incPriority" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;width:100%;font-family:inherit">
+              <option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option><option value="critical">🔴 Critical</option>
+            </select></div>
+          <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Location / Zone</label>
+            <input id="incLocation" type="text" placeholder="e.g. Gate A, VIP Zone" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;width:100%;font-family:inherit"></div>
+        </div>
+        <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Description *</label>
+          <textarea id="incDesc" placeholder="Describe the incident in detail..." style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;width:100%;height:80px;resize:none;font-family:inherit"></textarea></div>
+        <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Action Taken</label>
+          <input id="incAction" type="text" placeholder="e.g. First aid administered, Security alerted" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;width:100%;font-family:inherit"></div>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button onclick="submitIncident()" style="flex:1;background:linear-gradient(135deg,#FF3CAC,#6C3CF7);border:none;color:#fff;padding:11px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-exclamation-triangle"></i> Submit Report</button>
+        <button onclick="this.closest('[style*=fixed]').remove()" style="flex:1;background:var(--card);border:1px solid var(--border);color:var(--muted);padding:11px;border-radius:10px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif">Cancel</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+}
+function submitIncident() {
+  const event = document.getElementById('incEvent')?.value?.trim();
+  const type = document.getElementById('incType')?.value;
+  const desc = document.getElementById('incDesc')?.value?.trim();
+  const location = document.getElementById('incLocation')?.value || 'Venue';
+  const priority = document.getElementById('incPriority')?.value || 'medium';
+  if (!event || !desc) { showVenueToast('Please fill in Event and Description', 'warning'); return; }
+  // Add to incident log table
+  const tbody = document.querySelector('#panel-incidents table tbody');
+  if (tbody) {
+    const now = new Date().toLocaleString('en-IN', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hour12:false});
+    const colors = {Medical:'s-pending', Security:'', Technical:''};
+    const colorStyle = type==='Security'?'background:rgba(255,68,68,0.15);color:var(--red)':type==='Technical'?'background:rgba(255,180,0,0.15);color:#FFB300':'';
+    const tr = document.createElement('tr');
+    tr.style.borderBottom = '1px solid rgba(255,255,255,0.04)';
+    tr.innerHTML = `<td style="padding:10px;font-size:11px;color:var(--muted)">${now}</td><td style="padding:10px">${event}</td><td style="padding:10px"><span class="br-status ${colors[type]||''}" style="font-size:11px;${colorStyle}">${type}</span></td><td style="padding:10px;font-size:12px">${desc.slice(0,60)}${desc.length>60?'…':''}</td><td style="padding:10px"><span class="br-status s-pending" style="font-size:11px">Open</span></td>`;
+    tbody.insertBefore(tr, tbody.firstChild);
+  }
+  document.querySelector('[style*=fixed]')?.remove();
+  const priorityEmoji = {critical:'🔴',high:'🟠',medium:'🟡',low:'🟢'}[priority]||'⚠️';
+  showVenueToast(`${priorityEmoji} Incident logged: ${type} at ${event}. Control room notified.`, priority === 'critical' ? 'warning' : 'success');
+  logVenueAction(`Incident logged: ${type} — ${event}`);
+  // In production: POST /api/incidents
+  fetch('/api/incidents', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:type.toLowerCase(),description:desc,priority,location,event_name:event})}).catch(()=>{});
+}
+
+/* ── Document Upload Modal ── */
+function uploadDocModal(docName) {
+  const modal = document.createElement('div');
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  modal.innerHTML = `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;width:440px;max-width:95vw">
+      <div style="font-weight:800;font-size:16px;margin-bottom:6px">📄 Update Document</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:20px">${docName}</div>
+      <div style="border:2px dashed var(--border);border-radius:12px;padding:36px;text-align:center;margin-bottom:16px;cursor:pointer;transition:border-color 0.2s" onclick="showVenueToast('File picker opened — select PDF/JPG/PNG up to 10 MB')">
+        <div style="font-size:36px;margin-bottom:8px">📁</div>
+        <div style="font-weight:600;font-size:14px;margin-bottom:4px">Click to upload or drag & drop</div>
+        <div style="font-size:12px;color:var(--muted)">PDF, JPG, PNG • Max 10 MB</div>
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Expiry Date (if applicable)</label>
+        <input type="date" id="docExpiry" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;width:100%;font-family:inherit">
+      </div>
+      <div style="display:flex;gap:10px">
+        <button onclick="this.closest('[style*=fixed]').remove();showVenueToast('✅ ${docName} uploaded! Under INDTIX review — approval in 2–4 hrs.');" style="flex:1;background:var(--grad1);border:none;color:#fff;padding:11px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+        <button onclick="this.closest('[style*=fixed]').remove()" style="flex:1;background:var(--card);border:1px solid var(--border);color:var(--muted);padding:11px;border-radius:10px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif">Cancel</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+}
+
+/* ── Floor Plan seed on init ── */
+function initFloorPlan() {
+  floorPlanZones = [
+    {name:'🎤 Main Stage',capacity:5000,color:'#6C3CF7'},
+    {name:'🟣 Standing Floor',capacity:3000,color:'#FF3CAC'},
+    {name:'👑 VIP Lounge',capacity:500,color:'#00F5C4'},
+    {name:'🍕 F&B Zone',capacity:800,color:'#FFB300'},
+    {name:'🅿️ Entry / Exit',capacity:0,color:'#64C8FF'},
+  ];
+  renderFloorPlan();
 }
 
 </script>

@@ -17,6 +17,8 @@
   <meta name="twitter:title" content="INDTIX – Your Ticket to Unforgettable Experiences">
   <meta name="twitter:description" content="Book tickets for concerts, sports, comedy shows, festivals & more across 50+ cities. Instant digital tickets, AI-powered discovery, transparent GST pricing.">
 <link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
@@ -310,7 +312,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
     "url": "https://indtix.pages.dev",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://picsum.photos/seed/indtix/200/200"
+      "url": "https://indtix.pages.dev/favicon.ico"
     },
     "contactPoint": {
       "@type": "ContactPoint",
@@ -430,7 +432,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
       <p class="hero-sub">Discover concerts, festivals, comedy shows, sports, theatre, and more — powered by AI, built for the youth of India.</p>
       <div class="hero-cta">
         <a href="#events" class="btn-xl btn-xl-primary"><i class="fas fa-compass"></i> Explore Events</a>
-        <a href="#" class="btn-xl btn-xl-ghost" onclick="openSignupModal()"><i class="fas fa-user-plus"></i> Join Free</a>
+        <a href="javascript:void(0)" class="btn-xl btn-xl-ghost" onclick="openSignupModal()"><i class="fas fa-user-plus"></i> Join Free</a>
       </div>
       <div class="hero-stats">
         <div class="stat"><div class="stat-num">50K+</div><div class="stat-label">Events Listed</div></div>
@@ -442,7 +444,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
       <div class="hero-card-stack">
         <div class="event-card-hero ec1">
           <div class="live-badge"><div class="live-dot"></div>LIVE NOW</div>
-          <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400" class="ec-img" alt="Event">
+          <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400" class="ec-img" alt="Event" onerror="this.style.background='linear-gradient(135deg,#6C3CF7,#FF3CAC)';this.removeAttribute('src')">
           <div class="ec-body">
             <div class="ec-cat">🎵 Music Festival</div>
             <div class="ec-name">Sunburn Arena Mumbai</div>
@@ -450,7 +452,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
           </div>
         </div>
         <div class="event-card-hero ec2">
-          <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=400" class="ec-img" alt="Event">
+          <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=400" class="ec-img" alt="Event" onerror="this.style.background='linear-gradient(135deg,#6C3CF7,#FF3CAC)';this.removeAttribute('src')">
           <div class="ec-body">
             <div class="ec-cat">🎪 Outdoor Festival</div>
             <div class="ec-name">NH7 Weekender Pune</div>
@@ -458,7 +460,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
           </div>
         </div>
         <div class="event-card-hero ec3">
-          <img src="https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=400" class="ec-img" alt="Event">
+          <img src="https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=400" class="ec-img" alt="Event" onerror="this.style.background='linear-gradient(135deg,#6C3CF7,#FF3CAC)';this.removeAttribute('src')">
           <div class="ec-body">
             <div class="ec-cat">😂 Comedy</div>
             <div class="ec-name">Comedy Central Live</div>
@@ -562,12 +564,12 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
       </div>
     </div>
     <div class="cities-grid">
-      <div class="city-card" onclick="selectCity('Mumbai')"><img src="https://images.unsplash.com/photo-1529253355930-ddbe423a2ac7?w=400" class="city-img" alt="Mumbai"><div class="city-overlay"></div><div class="city-events">1,240 events</div><div class="city-name">Mumbai</div></div>
-      <div class="city-card" onclick="selectCity('Delhi')"><img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=400" class="city-img" alt="Delhi"><div class="city-overlay"></div><div class="city-events">980 events</div><div class="city-name">Delhi</div></div>
-      <div class="city-card" onclick="selectCity('Bengaluru')"><img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?w=400" class="city-img" alt="Bengaluru"><div class="city-overlay"></div><div class="city-events">870 events</div><div class="city-name">Bengaluru</div></div>
-      <div class="city-card" onclick="selectCity('Pune')"><img src="https://images.unsplash.com/photo-1567878729230-0a2d5c1b9b36?w=400" class="city-img" alt="Pune"><div class="city-overlay"></div><div class="city-events">540 events</div><div class="city-name">Pune</div></div>
-      <div class="city-card" onclick="selectCity('Hyderabad')"><img src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=400" class="city-img" alt="Hyderabad"><div class="city-overlay"></div><div class="city-events">460 events</div><div class="city-name">Hyderabad</div></div>
-      <div class="city-card" onclick="selectCity('Chennai')"><img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=400" class="city-img" alt="Chennai"><div class="city-overlay"></div><div class="city-events">380 events</div><div class="city-name">Chennai</div></div>
+      <div class="city-card" onclick="selectCity('Mumbai')"><img src="https://images.unsplash.com/photo-1529253355930-ddbe423a2ac7?w=400" class="city-img" alt="Mumbai" onerror="this.style.background='linear-gradient(135deg,#6C3CF7,#FF3CAC)';this.removeAttribute('src')"><div class="city-overlay"></div><div class="city-events">1,240 events</div><div class="city-name">Mumbai</div></div>
+      <div class="city-card" onclick="selectCity('Delhi')"><img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=400" class="city-img" alt="Delhi" onerror="this.style.background='linear-gradient(135deg,#6C3CF7,#FF3CAC)';this.removeAttribute('src')"><div class="city-overlay"></div><div class="city-events">980 events</div><div class="city-name">Delhi</div></div>
+      <div class="city-card" onclick="selectCity('Bengaluru')"><img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?w=400" class="city-img" alt="Bengaluru" onerror="this.style.background='linear-gradient(135deg,#6C3CF7,#FF3CAC)';this.removeAttribute('src')"><div class="city-overlay"></div><div class="city-events">870 events</div><div class="city-name">Bengaluru</div></div>
+      <div class="city-card" onclick="selectCity('Pune')"><img src="https://images.unsplash.com/photo-1567878729230-0a2d5c1b9b36?w=400" class="city-img" alt="Pune" onerror="this.style.background='linear-gradient(135deg,#6C3CF7,#FF3CAC)';this.removeAttribute('src')"><div class="city-overlay"></div><div class="city-events">540 events</div><div class="city-name">Pune</div></div>
+      <div class="city-card" onclick="selectCity('Hyderabad')"><img src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=400" class="city-img" alt="Hyderabad" onerror="this.style.background='linear-gradient(135deg,#6C3CF7,#FF3CAC)';this.removeAttribute('src')"><div class="city-overlay"></div><div class="city-events">460 events</div><div class="city-name">Hyderabad</div></div>
+      <div class="city-card" onclick="selectCity('Chennai')"><img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=400" class="city-img" alt="Chennai" onerror="this.style.background='linear-gradient(135deg,#6C3CF7,#FF3CAC)';this.removeAttribute('src')"><div class="city-overlay"></div><div class="city-events">380 events</div><div class="city-name">Chennai</div></div>
     </div>
   </div>
 </section>
@@ -674,11 +676,11 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
         <div class="logo"><div class="logo-mark">IX</div><span class="logo-text" style="font-size:22px">IND<span>TIX</span></span></div>
         <p class="footer-desc">India's next-generation event commerce platform. Discover, book, and experience more — powered by AI, built for the youth.</p>
         <div class="footer-socials">
-          <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
-          <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
-          <a href="#" class="social-btn"><i class="fab fa-linkedin"></i></a>
+          <a href="https://instagram.com/indtix" target="_blank" rel="noopener" class="social-btn" title="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://twitter.com/indtix" target="_blank" rel="noopener" class="social-btn" title="Follow us on X (Twitter)"><i class="fab fa-twitter"></i></a>
+          <a href="https://youtube.com/@indtix" target="_blank" rel="noopener" class="social-btn" title="Subscribe on YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="https://wa.me/918000INDTIX" target="_blank" rel="noopener" class="social-btn" title="WhatsApp Support"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://linkedin.com/company/oye-imagine" target="_blank" rel="noopener" class="social-btn" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
         </div>
       </div>
       <div class="footer-col"><h4>Discover</h4><ul>
@@ -718,7 +720,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
 <div class="modal-overlay" id="eventModal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('eventModal')"><i class="fas fa-times"></i></button>
-    <img id="modalImg" src="" class="modal-img" alt="Event">
+    <img id="modalImg" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400'%3E%3Crect width='800' height='400' fill='%236C3CF7' opacity='0.3'/%3E%3C/svg%3E" class="modal-img" alt="Event">
     <div class="modal-body">
       <div id="modalCat" class="card-cat"></div>
       <div class="modal-title" id="modalTitle"></div>
@@ -782,7 +784,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
         <button type="submit" class="btn-primary" style="padding:12px;font-size:15px;border-radius:12px">Sign In <i class="fas fa-arrow-right"></i></button>
       </form>
       <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--muted)">New to INDTIX? <a href="#" onclick="switchToSignup()" style="color:var(--brand);text-decoration:none;font-weight:600">Create account</a></p>
-      <p style="text-align:center;margin-top:8px;font-size:12px;color:var(--muted)"><a href="#" style="color:var(--muted)">Forgot password?</a></p>
+      <p style="text-align:center;margin-top:8px;font-size:12px;color:var(--muted)"><a href="javascript:void(0)" onclick="showFanToast('Password reset link sent to your email!','success')" style="color:var(--muted);cursor:pointer">Forgot password?</a></p>
     </div>
   </div>
 </div>
@@ -807,7 +809,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
         <input id="signupPassword" type="password" placeholder="Create password" autocomplete="new-password" style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
         <button type="submit" class="btn-primary" style="padding:12px;font-size:15px;border-radius:12px">Create Account <i class="fas fa-arrow-right"></i></button>
       </form>
-      <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--muted)">By signing up, you agree to our <a href="#" style="color:var(--brand)">Terms</a> and <a href="#" style="color:var(--brand)">Privacy Policy</a>. GST invoice available for business bookings.</p>
+      <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--muted)">By signing up, you agree to our <a href="javascript:showTermsModal()" style="color:var(--brand)">Terms</a> and <a href="javascript:showPrivacyModal()" style="color:var(--brand)">Privacy Policy</a>. GST invoice available for business bookings.</p>
       <p style="text-align:center;margin-top:10px;font-size:13px;color:var(--muted)">Already have an account? <a href="#" onclick="switchToLogin()" style="color:var(--brand);text-decoration:none;font-weight:600">Sign in</a></p>
     </div>
   </div>
@@ -1054,17 +1056,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
   </div>
   <!-- Wishlist panel -->
   <div id="acc-wishlist" style="padding:16px;display:none">
-    ${[{name:'Lollapalooza India',date:'Mar 22, 2026',price:'₹5,999',img:'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200'},{name:'Zakir Hussain Live',date:'Apr 20, 2026',price:'₹999',img:'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200'}].map(w=>`
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:center">
-      <img src="${w.img}" style="width:60px;height:60px;border-radius:8px;object-fit:cover">
-      <div style="flex:1">
-        <div style="font-weight:600;font-size:13px">${w.name}</div>
-        <div style="font-size:11px;color:var(--muted)">${w.date} · From ${w.price}</div>
-        <button onclick="showToast('Added to cart!')" style="margin-top:6px;background:var(--grad1);border:none;color:#fff;padding:5px 14px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Book Now</button>
-      </div>
-      <button onclick="this.closest('div[style*=flex]').remove();showToast('Removed from wishlist')" style="background:transparent;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px">×</button>
-    </div>
-    `).join('')}
+    <!-- rendered by initWishlist() -->
   </div>
   <!-- Wallet panel -->
   <div id="acc-wallet" style="padding:16px;display:none">
@@ -2837,6 +2829,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 2000);
 });
+
+// ─── Global image error handler — silences 404s from external CDNs ────────────
+// Any <img> that fails to load gets a gradient placeholder instead of a console 404
+document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('error', (e) => {
+    const el = e.target;
+    if (el && el.tagName === 'IMG') {
+      el.onerror = null; // prevent infinite loop
+      el.style.background = 'linear-gradient(135deg, rgba(108,60,247,0.3), rgba(255,60,172,0.3))';
+      el.removeAttribute('src');
+    }
+  }, true /* capture phase so it fires before bubble */);
+  
+  // Render wishlist panel via JS (prevents literal ${} placeholders in HTML from making 404 requests)
+  initWishlist();
+});
+
+function initWishlist() {
+  const panel = document.getElementById('acc-wishlist');
+  if (!panel) return;
+  const items = [
+    { name: 'Lollapalooza India', date: 'Mar 22, 2026', price: '₹5,999', img: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200' },
+    { name: 'Zakir Hussain Live', date: 'Apr 20, 2026', price: '₹999',   img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200' }
+  ];
+  panel.innerHTML = items.map(w => `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:center">
+      <img src="${w.img}" style="width:60px;height:60px;border-radius:8px;object-fit:cover" onerror="this.style.background='linear-gradient(135deg,#6C3CF7,#FF3CAC)';this.removeAttribute('src')">
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:13px">${w.name}</div>
+        <div style="font-size:11px;color:var(--muted)">${w.date} · From ${w.price}</div>
+        <button onclick="showToast('Added to cart!')" style="margin-top:6px;background:var(--grad1);border:none;color:#fff;padding:5px 14px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Book Now</button>
+      </div>
+      <button onclick="this.closest('div[style*=flex]').remove();showToast('Removed from wishlist')" style="background:transparent;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px">×</button>
+    </div>`).join('');
+}
 </script>
 </body>
 </html>

@@ -138,7 +138,13 @@
   <div class="topbar">
     <div class="topbar-title" id="topbarTitle">Event Dashboard</div>
     <div class="topbar-actions">
-      <span style="background:rgba(255,60,172,0.15);border:1px solid rgba(255,60,172,0.4);color:var(--brand2);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;background:var(--brand2);border-radius:50%;animation:pulse 1s infinite;display:inline-block"></span>LIVE · Sunburn Arena Mumbai</span>
+      <div style="position:relative">
+        <select id="activeEventSelect" onchange="switchActiveEvent(this.value)" style="background:var(--dark3);border:1px solid rgba(255,180,0,0.4);border-radius:10px;color:#FFB300;font-size:12px;font-weight:600;padding:6px 32px 6px 12px;cursor:pointer;outline:none;font-family:'Inter',sans-serif;appearance:none;-webkit-appearance:none">
+          <option value="">⏳ Loading events...</option>
+        </select>
+        <i class="fas fa-chevron-down" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#FFB300;font-size:10px;pointer-events:none"></i>
+      </div>
+      <span id="liveEventBadge" style="background:rgba(255,60,172,0.15);border:1px solid rgba(255,60,172,0.4);color:var(--brand2);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;background:var(--brand2);border-radius:50%;animation:pulse 1s infinite;display:inline-block"></span><span id="liveEventLabel">LIVE · Sunburn Arena Mumbai</span></span>
       <button class="btn-sm btn-ghost"><i class="fas fa-walkie-talkie"></i> Radio</button>
       <button class="btn-sm btn-danger" onclick="emergencyAlert()"><i class="fas fa-siren"></i> Emergency</button>
     </div>
@@ -891,7 +897,7 @@ async function logIncident(){
   const priority=document.querySelector('#panel-incidents .incident-form select:last-of-type')?.value?.toLowerCase().replace(' priority','').replace('medium','medium').replace('high','high').replace('critical','critical').replace('low','low')||'medium';
   const location=document.querySelector('#panel-incidents .incident-form input[type="text"]')?.value||'';
   try{
-    const res=await fetch('/api/incidents',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type,description:desc,priority,location,event_id:'e1'})});
+    const res=await fetch('/api/incidents',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type,description:desc,priority,location,event_id:activeEventId})});
     const d=await res.json();
     if(d.success){
       showEMToast(`⚠️ Incident logged: ${d.incident_id} (${type}). ${d.message}`);
@@ -908,7 +914,7 @@ async function broadcastTeam(){
   const msg=prompt('Message to broadcast to all team members?');
   if(!msg) return;
   try{
-    const res=await fetch('/api/announcements',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',message:msg,audience:'Team',channels:['whatsapp','radio']})});
+    const res=await fetch('/api/announcements',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:activeEventId,message:msg,audience:'Team',channels:['whatsapp','radio']})});
     const d=await res.json();
     showEMToast(`📢 Broadcast sent! ${d.delivered_estimate||24} team members notified via WhatsApp.`);
     logEMAction('Team broadcast: '+msg.slice(0,40));
@@ -936,7 +942,7 @@ async function sendAnnouncement(){
   if(!msg.trim()){showEMToast('Please type a message first');return;}
   if(!confirm(`Send announcement to ${audience}?`)) return;
   try{
-    const res=await fetch('/api/announcements',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',message:msg,audience,channels:['whatsapp','push']})});
+    const res=await fetch('/api/announcements',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:activeEventId,message:msg,audience,channels:['whatsapp','push']})});
     const d=await res.json();
     showEMToast(`✅ Announcement sent! ${d.recipients?.toLocaleString('en-IN')||'4,200'} recipients via WhatsApp & Push. ETA: ${d.delivered_estimate} delivered.`);
     logEMAction(`Announcement sent to ${audience}: ${msg.slice(0,40)}`);
@@ -962,7 +968,7 @@ function syncAllBands(){
 async function goLED(){
   if(!confirm('Activate LIVE LED mode for all 2,400 wristbands?')) return;
   try{
-    const res=await fetch('/api/wristbands/led/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',command:'go_live',zone:'ALL',color:'rainbow',effect:'pulse'})});
+    const res=await fetch('/api/wristbands/led/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:activeEventId,command:'go_live',zone:'ALL',color:'rainbow',effect:'pulse'})});
     const d=await res.json();
     showEMToast(`🔴 LIVE! ${d.bands_updated||2400} LED bands activated across all zones!`);
     logEMAction('LED bands went LIVE — ALL zones');
@@ -974,7 +980,7 @@ async function goLED(){
 async function activateLEDBand(zone){
   try{
     const colors={'VIP':'gold','GA':'blue','PREM':'purple','ALL':'rainbow'};
-    const res=await fetch('/api/wristbands/led/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',command:'color_change',zone,color:colors[zone]||'blue'})});
+    const res=await fetch('/api/wristbands/led/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:activeEventId,command:'color_change',zone,color:colors[zone]||'blue'})});
     const d=await res.json();
     showEMToast(`💡 LED bands in ${zone} zone set to ${colors[zone]||'blue'}. ${d.bands_updated||600} bands synced.`);
     logEMAction('LED activated: zone '+zone);
@@ -985,7 +991,7 @@ async function activateLEDBand(zone){
 async function emergencyAlert(){
   if(!confirm('⚠️ BROADCAST EMERGENCY ALERT to all wristbands and PA system?')) return;
   try{
-    const res=await fetch('/api/announcements',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',message:'EMERGENCY ALERT — Please follow staff instructions immediately.',audience:'All Attendees',channels:['whatsapp','push','sms'],priority:'emergency'})});
+    const res=await fetch('/api/announcements',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:activeEventId,message:'EMERGENCY ALERT — Please follow staff instructions immediately.',audience:'All Attendees',channels:['whatsapp','push','sms'],priority:'emergency'})});
     const d=await res.json();
     showEMToast(`🚨 EMERGENCY ALERT broadcast to ${d.recipients?.toLocaleString('en-IN')||'4,200'} attendees + all 2,400 LED wristbands!`);
     logEMAction('EMERGENCY ALERT broadcast');
@@ -1023,8 +1029,8 @@ async function loadEMDashboard() {
   try {
     const [dashRes, checkinRes, wristRes] = await Promise.all([
       fetch('/api/event-manager/dashboard'),
-      fetch('/api/events/e1/checkin-stats'),
-      fetch('/api/wristbands/status?event_id=e1')
+      fetch('/api/events/'+activeEventId+'/checkin-stats'),
+      fetch('/api/wristbands/status?event_id='+activeEventId)
     ]);
     const dash = await dashRes.json();
     const checkin = await checkinRes.json();
@@ -1062,8 +1068,61 @@ async function loadEMDashboard() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  loadEventsList();
   loadEMDashboard();
 });
+
+// ─── Event Selector: load real events from API ─────────────────────────────
+let activeEventId = 'e1';
+let activeEventName = 'Sunburn Arena Mumbai';
+
+async function loadEventsList() {
+  try {
+    const res = await fetch('/api/events');
+    const data = await res.json();
+    const events = data.events || [];
+    const select = document.getElementById('activeEventSelect');
+    if (!select || !events.length) return;
+    select.innerHTML = events.map(e =>
+      `<option value="${e.id}" ${e.id === 'e1' ? 'selected' : ''}>${e.name} · ${e.city}</option>`
+    ).join('');
+    // Set initial state
+    const first = events.find(e => e.id === 'e1') || events[0];
+    if (first) setActiveEvent(first.id, first.name);
+  } catch(err) {
+    // Fallback to static list
+    const select = document.getElementById('activeEventSelect');
+    if (select) select.innerHTML = `
+      <option value="e1" selected>Sunburn Arena – Mumbai</option>
+      <option value="e2">NH7 Weekender · Pune</option>
+      <option value="e3">Zakir Hussain Live · Delhi</option>
+      <option value="e4">IPL: MI vs CSK · Mumbai</option>
+      <option value="e5">Diljit Dosanjh World Tour · Bangalore</option>
+      <option value="e6">TEDx Mumbai 2026</option>
+      <option value="e7">Comedy Central Live · Chennai</option>
+      <option value="e8">Lollapalooza India · Mumbai</option>`;
+  }
+}
+
+function switchActiveEvent(eventId) {
+  if (!eventId) return;
+  const select = document.getElementById('activeEventSelect');
+  const option = select?.querySelector(`option[value="${eventId}"]`);
+  const name = option ? option.textContent.split('·')[0].trim() : eventId;
+  setActiveEvent(eventId, name);
+  loadEMDashboard();
+}
+
+function setActiveEvent(id, name) {
+  activeEventId = id;
+  activeEventName = name;
+  const badge = document.getElementById('liveEventLabel');
+  if (badge) badge.textContent = `LIVE · ${name}`;
+  // Update live-bar text
+  const liveText = document.querySelector('.live-text');
+  if (liveText) liveText.textContent = `LIVE EVENT — ${name}`;
+}
+
 
 function showPanel(name, btn) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));

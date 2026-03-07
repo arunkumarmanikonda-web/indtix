@@ -1,11 +1,12 @@
-// INDTIX Service Worker v5.0
-const CACHE_NAME = 'indtix-v5';
-const STATIC_CACHE = 'indtix-static-v5';
-const API_CACHE = 'indtix-api-v5';
+// INDTIX Service Worker v5.1
+const CACHE_NAME = 'indtix-v5.1';
+const STATIC_CACHE = 'indtix-static-v5.1';
+const API_CACHE = 'indtix-api-v5.1';
 
 const STATIC_ASSETS = [
   '/fan',
-  '/manifest.json'
+  '/manifest.json',
+  '/favicon.ico'
 ];
 
 const API_CACHE_ROUTES = [
@@ -77,9 +78,9 @@ self.addEventListener('fetch', event => {
         }
         return response;
       }).catch(() => {
-        // Offline fallback for navigation
+        // Offline fallback for navigation — use /fan (not /fan.html)
         if (request.mode === 'navigate') {
-          return caches.match('/fan.html');
+          return caches.match('/fan');
         }
       });
     })
@@ -98,14 +99,14 @@ async function syncPendingBookings() {
   console.log('[SW] Syncing pending bookings...');
 }
 
-// Push notifications
+// Push notifications — use /favicon.ico (inline SVG, always 200) for icon/badge
 self.addEventListener('push', event => {
   if (!event.data) return;
   const data = event.data.json();
   const options = {
     body: data.body || 'You have a new notification from INDTIX',
-    icon: 'https://picsum.photos/seed/indtix/192/192',
-    badge: 'https://picsum.photos/seed/badge/72/72',
+    icon: '/favicon.ico',
+    badge: '/favicon.ico',
     data: { url: data.url || '/fan' },
     actions: [
       { action: 'view', title: 'View' },

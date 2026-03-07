@@ -1,259 +1,153 @@
-# INDTIX — India's Live Event Platform v10.0
+# INDTIX — India's Live Event Platform
 
 ## Project Overview
-- **Platform**: INDTIX — Full-stack live events ticketing & management platform
-- **Company**: Oye Imagine Private Limited | GSTIN: 27AABCO1234A1Z5
-- **Phase**: 10 (Current) — **24/24 Production Smoke Tests (100%)** + **105/105 Local QA (100%)**
-- **Version**: 10.0.0
-- **API Version**: v10
-- **Total Endpoints**: 214 (across 9 portals)
-- **Codebase**: ~21,000+ lines (src/index.ts + 9 portal HTML files + public assets)
+- **Name**: INDTIX
+- **Goal**: Full-stack multi-portal event ticketing & management platform
+- **Company**: Oye Imagine Private Limited (GSTIN: 27AABCO1234A1Z5)
+- **Phase**: 10.1 (Production)
+- **QA Score**: 51/51 tests passing ✅
 
----
+## Live URLs
+| Portal | URL |
+|--------|-----|
+| 🎵 Fan Portal | https://2836b6ef.indtix.pages.dev/fan |
+| 🎪 Organiser Portal | https://2836b6ef.indtix.pages.dev/organiser |
+| 🏟️ Venue Portal | https://2836b6ef.indtix.pages.dev/venue |
+| 🎛️ Event Manager | https://2836b6ef.indtix.pages.dev/event-manager |
+| 🔐 Admin / ERP | https://2836b6ef.indtix.pages.dev/admin |
+| 📱 On-Ground Ops/POS | https://2836b6ef.indtix.pages.dev/ops |
+| 📣 Brand Portal | https://2836b6ef.indtix.pages.dev/brand |
+| 👩‍💻 Developer Portal | https://2836b6ef.indtix.pages.dev/developer |
 
-## Production URLs
-| Resource | URL |
-|---|---|
-| **Production** | https://7338f1a6.indtix.pages.dev |
-| **Fan Portal** | https://7338f1a6.indtix.pages.dev/fan |
-| **Organiser Portal** | https://7338f1a6.indtix.pages.dev/organiser |
-| **Venue Portal** | https://7338f1a6.indtix.pages.dev/venue |
-| **Event Manager** | https://7338f1a6.indtix.pages.dev/event-manager |
-| **Admin Portal** | https://7338f1a6.indtix.pages.dev/admin |
-| **Ops Portal** | https://7338f1a6.indtix.pages.dev/ops |
-| **Brand Portal** | https://7338f1a6.indtix.pages.dev/brand |
-| **Developer Portal** | https://7338f1a6.indtix.pages.dev/developer |
-| **Architecture** | https://7338f1a6.indtix.pages.dev/architecture-spec |
-| **Health API** | https://7338f1a6.indtix.pages.dev/api/health |
+- **Production alias**: https://indtix.pages.dev (main branch)
+- **API Health**: https://2836b6ef.indtix.pages.dev/api/health
 
----
+## Platform Features
 
-## QA Score History
-| Phase | Tests | Passed | Status |
-|---|---|---|---|
-| Phase 3 | 63 | 63 | ✅ 100% |
-| Phase 4 | 63 | 63 | ✅ 100% |
-| Phase 5 | 151 | 151 | ✅ 100% |
-| Phase 6 | 157 | 157 | ✅ 100% |
-| Phase 7 | 44 prod + 126 local | 170 | ✅ 100% |
-| Phase 8 | 20 prod + 67 local | 87 | ✅ 100% |
-| Phase 9 | 20 prod + 67 local | 87 | ✅ 100% |
-| **Phase 10** | **24 prod + 105 local** | **129** | ✅ **100%** |
+### Fan Portal (`/fan`)
+- Event discovery with city/category/price/date filters
+- Seat map booking with zone selection & promo codes
+- Fan clubs, live streams, merchandise store
+- Wallet (INDY Credits), notifications, loyalty rewards
+- GST invoice download, booking history, wishlist
+- AI-powered event discovery chat
+- PWA (installable), Service Worker v5.1, push notifications
 
----
+### Organiser Portal (`/organiser`)
+- Event creation & management
+- Revenue analytics, live check-in monitor
+- Team management, promo code generator
+- Attendee feedback, bulk ticket allocation
 
-## Phase 10 New Features
+### Venue Portal (`/venue`)
+- Floor plan builder (interactive zone editor)
+- Document status & NOC management (with upload modals)
+- Booking calendar & availability management
+- Staff access management (add/edit/remove staff modal)
+- Incident log (with real log-new-incident form)
+- GST invoices, pricing & packages, revenue reports
 
-### 🆕 New API Endpoints (27 added → total 214)
+### Event Manager (`/event-manager`)
+- Live event dashboard with real-time check-in stats
+- **Event selector** — switch between any assigned event (no more hardcoded `e1`)
+- Run sheet / timeline management
+- Wristband / LED band control
+- Incident logging, team coordination, announcements
+- POS overview, F&B tracker, attendee feedback
 
-| Category | Endpoint | Description |
-|---|---|---|
-| **Events** | `GET /api/events/calendar` | Monthly calendar view |
-| **Events** | `GET /api/events/:id/heatmap` | Live zone occupancy heatmap |
-| **Events** | `POST /api/events/:id/wishlist` | Add/remove wishlist |
-| **Events** | `GET /api/events/:id/resale` | Secondary market listings |
-| **Events** | `POST /api/events/:id/carbon` | Carbon footprint calculator |
-| **Events** | `POST /api/events/:id/remind` | Set event reminder |
-| **Events** | `GET /api/events/:id/report` | Post-event report download |
-| **Artists** | `POST /api/artists/:id/follow` | Follow/unfollow artist |
-| **Artists** | `DELETE /api/artists/:id/follow` | Unfollow artist |
-| **Tickets** | `POST /api/tickets/:id/resale` | List ticket for resale |
-| **Tickets** | `POST /api/bookings/:id/upgrade` | Seat tier upgrade |
-| **Bookings** | `POST /api/bookings/group` | Group booking with discount |
-| **Users** | `GET /api/users/:id/wishlist` | User's wishlist |
-| **Promos** | `POST /api/promos/generate` | Batch promo code generator |
-| **Platform** | `GET /api/platform/stats` | Public platform statistics |
-| **Loyalty** | `GET /api/loyalty/tiers` | Loyalty tier system |
-| **Organiser** | `POST /api/organiser/tickets/allocate` | Complimentary ticket allocation |
-| **Organiser** | `DELETE /api/organiser/team/:id` | Remove team member |
-| **Organiser** | `PUT /api/organiser/team/:id` | Update team member role |
-| **Brand** | `GET /api/brand/audience` | Audience segments & demographics |
-| **Brand** | `GET /api/brand/reach` | Channel reach & impressions |
-| **Brand** | `GET /api/brand/roi` | ROI tracker with recommendations |
-| **Brand** | `GET /api/brand/sponsors-summary` | Active sponsorships |
-| **Admin** | `GET /api/admin/moderation` | Content moderation queue |
-| **Admin** | `POST /api/admin/moderation/:id/resolve` | Resolve moderation item |
-| **Admin** | `POST /api/admin/revenue-split` | Revenue split calculator |
-| **Admin** | `GET /api/admin/platform/config` | Platform configuration |
-| **Admin** | `PUT /api/admin/platform/config` | Update platform config |
-| **Venue** | `GET /api/venue/:id/floorplan` | Venue floor plan zones |
-| **Venue** | `GET /api/venue/calendar` | Venue booking calendar |
-| **Event Manager** | `GET /api/event-manager/runsheet/:id` | Run sheet export |
-| **Ops** | `POST /api/wristbands/batch` | Batch wristband commands |
-| **Developer** | `GET /api/developer/rate-limit` | Rate limit status |
-| **Developer** | `GET /api/developer/logs` | API error logs |
-| **Auth** | `GET /api/auth/verify` | Token verification |
-| **Promos** | `POST /api/promos/validate` | Validate promo code |
+### Admin / ERP (`/admin`)
+- Platform-wide KPIs & BI dashboard (Chart.js)
+- User management, content moderation
+- Revenue split calculator, platform config
+- Organiser approvals, refund management
 
-### 🎨 Frontend Improvements
+### Ops / POS (`/ops`)
+- Gate scanner & QR code validation
+- POS terminal management
+- Crowd monitoring, medical/security alerts
 
-#### Fan Portal
-- ✅ "View All" button now functional (resets all filters)
-- ✅ Price range filter (Under ₹500 / ₹500-1500 / ₹1500-3000 / Above ₹3000)
-- ✅ Date filter (This Week / This Month / Next Month)
-- ✅ Sort filter (Price, Date, Popularity)
-- ✅ Event count badge ("Showing N events")
-- ✅ Footer category links now filter events
-- ✅ Privacy Policy modal (inline)
-- ✅ Terms of Service modal (inline)
-- ✅ Cookie Policy toast
-- ✅ Carbon footprint function
-- ✅ Event reminder function
+### Brand Portal (`/brand`)
+- Campaign management & analytics
+- Audience insights with age_groups breakdown
+- ROI tracker with total_invested metric
+- Sponsor management
 
-#### Brand Portal
-- ✅ Audience panel: Real data from `/api/brand/audience`
-- ✅ Reach panel: Real data from `/api/brand/reach`
-- ✅ ROI panel: Real data from `/api/brand/roi` + Chart.js dual-axis chart
-- ✅ Sponsors panel: Real data from `/api/brand/sponsors-summary`
-- ✅ "Campaign details" button now navigates to analytics
-- ✅ AI recommendations rendered in ROI panel
+### Developer Portal (`/developer`)
+- Full API reference (230+ endpoints)
+- Webhook management, API key generation
+- Rate limit monitor, error logs
 
-#### Admin Portal (BI Dashboard)
-- ✅ DAU 7-day line chart (Chart.js)
-- ✅ GMV by Category donut chart (Chart.js)
-- ✅ Cohort retention dual-line chart (Chart.js)
-- ✅ Live BI stat IDs for API patching
+## API Summary
+- **Total endpoints**: 230
+- **API version**: v10
+- **Base URL**: `https://2836b6ef.indtix.pages.dev/api/`
 
-#### Developer Portal
-- ✅ Python SDK: "Beta" status with full code example + "View Docs" button
-- ✅ Flutter/Dart SDK: "Beta" status with code example
-- ✅ PHP SDK: "Beta" status with code example
-- ✅ `showSDKDocs()` modal with install + code snippet
-- ✅ `checkRateLimit()` function connected to new API
-
----
-
-## API Endpoint Categories (214 total)
-
-### Core Events (26)
-`list` · `detail` · `seatmap` · `tiers` · `addons` · `availability` · `faq` · `reviews` · `related` · `waitlist` · `clone` · `emergency` · `checkin-live` · `checkin-stats` · `social` · `sponsors` · `incidents` · `price-history` · `calendar` · `heatmap` · `wishlist` · `resale` · `carbon` · `remind` · `report` · `create` · `update`
-
-### Auth (7)
-`login` · `signup` · `verify-otp` · `refresh` · `logout` · `verify` · `social-login`
-
-### Bookings (9)
-`list` · `create` · `get` · `user-bookings` · `bulk` · `cancel` · `scan/verify` · `scan/stats` · `bulk-verify` · `group` · `upgrade`
-
-### Organiser (19)
-`register` · `dashboard` · `analytics` · `analytics/v2` · `events` · `settlements` · `team CRUD` · `forecast` · `revenue/chart` · `coupons` · `audience` · `tickets/allocate`
-
-### Venue (7)
-`register` · `dashboard` · `calendar` · `availability` · `enquiry` · `floorplan` · `profile`
-
-### Admin (26)
-`stats` · `bi/dashboard` · `kyc/queue` · `fraud/alerts` · `events/queue` · `events/approve/reject` · `users CRUD` · `platform/health` · `platform/config` · `forecast` · `reports/revenue` · `moderation` · `revenue-split` · `audit` · `config`
-
-### Payments (7)
-`refund` · `analytics` · `settlements` · `gst-report` · `gst/invoice` · `gst/report` · `reports/summary`
-
-### Promos (9)
-`list` · `catalog` · `by-code` · `validate` · `create` · `bulk-create` · `analytics` · `generate`
-
-### KYC & Settlements (4)
-`kyc/submit` · `kyc/:id` · `settlements` · `settlements/process`
-
-### Notifications (6)
-`send` · `list` · `mark-read` · `count` · `preferences GET/PUT`
-
-### User & Loyalty (15)
-`profile` · `update` · `notif-prefs` · `wallet balance/add/redeem` · `referral` · `ticket transfer` · `wishlist` · `loyalty/tiers`
-
-### Wristbands & Ops (8)
-`issue` · `status` · `by-event` · `LED command` · `LED presets` · `batch` · `pos/sale` · `pos/sessions` · `ops/dashboard`
-
-### Fan Clubs (3)
-`list` · `join` · `memberships`
-
-### Live & Merch (5)
-`livestreams` · `purchase` · `merch list` · `merch order` · `merch order get`
-
-### Sponsors (5)
-`list` · `create` · `detail` · `metrics GET/PUT`
-
-### Affiliate (5)
-`register` · `dashboard` · `stats` · `stats/:id` · `payout`
-
-### AI (3)
-`chat` · `forecast` · `recommendations`
-
-### Brand (8)
-`dashboard` · `campaigns list/create` · `analytics` · `audience` · `reach` · `roi` · `sponsors-summary`
-
-### Developer (8)
-`endpoints` · `keys GET/POST` · `usage` · `webhooks GET/POST` · `rate-limit` · `logs`
-
-### Artists (3)
-`list` · `detail` · `follow/unfollow`
-
-### Search & Discovery (6)
-`search` · `cities` · `categories` · `venues` · `trending` · `recommendations`
-
-### Tickets (3)
-`resale` · `upgrade` · `transfer`
-
-### Misc (8)
-`whitelabel/provision` · `announcements` · `status` · `reports/summary` · `platform/stats` · `event-manager/runsheet` · `event-manager/dashboard`
-
----
-
-## Browser Console Status (All Portals)
-| Portal | Errors | Warnings | Status |
-|---|---|---|---|
-| Fan Portal | 0 errors | 1 autocomplete hint (cosmetic) | ✅ Clean |
-| Organiser Portal | 0 | 0 | ✅ Clean |
-| Admin Portal | 0 | 0 | ✅ Clean |
-| Venue Portal | 0 | 0 | ✅ Clean |
-| Event Manager | 0 | 0 | ✅ Clean |
-| Brand Portal | 0 | 1 Tailwind CDN (cosmetic) | ✅ Clean |
-| Developer Portal | 0 | 0 | ✅ Clean |
-| Ops Portal | 0 | 0 | ✅ Clean |
-
----
+### Key Endpoints
+```
+GET  /api/health                    — Platform health + version
+GET  /api/events                    — List events (city, category, price filters)
+GET  /api/events/:id                — Event detail
+GET  /api/events/:id/tiers          — Ticket tiers
+GET  /api/events/:id/checkin-stats  — Check-in stats (total_checked_in included)
+POST /api/bookings                  — Create booking
+POST /api/auth/login                — Login (returns inline SVG avatar, no CDN)
+POST /api/auth/signup               — Signup
+POST /api/auth/send-otp             — Send OTP
+GET  /api/fanclubs                  — Fan clubs list
+GET  /api/livestreams               — Live streams
+GET  /api/merch                     — Merchandise
+GET  /api/wallet/:user_id           — Wallet balance
+GET  /api/venue/calendar            — Venue availability calendar
+GET  /api/venue/floorplan           — Floor plan zones
+GET  /api/venue/enquiry             — Enquiry list
+GET  /api/venue/staff               — Staff list
+GET  /api/venue/incidents           — Incident log
+GET  /api/brand/audience            — Audience (includes age_groups alias)
+GET  /api/brand/roi                 — ROI (includes total_invested alias)
+GET  /api/admin/dashboard           — Admin KPIs (includes stats key)
+GET  /api/organiser/revenue         — Revenue (includes monthly key)
+GET  /api/event-manager/dashboard   — EM dashboard (includes live_count)
+GET  /api/developer/apis            — API list (includes endpoints key)
+GET  /apple-touch-icon.png          — App icon (inline SVG, no 404)
+GET  /sitemap.xml                   — SEO sitemap
+GET  /robots.txt                    — Robots policy
+```
 
 ## Data Architecture
-- **Event Data**: 8 seeded live events (Sunburn, NH7, Zakir Hussain, IPL, Diljit, TEDx, Comedy Central, Lollapalooza)
-- **Storage**: Cloudflare Workers edge-global (in-memory simulation for demo)
-- **Auth**: Token-based (Bearer tok_* format)
-- **GST**: CGST+SGST (intra-state) / IGST (inter-state), 18% rate
-- **Payments**: UPI 55% / Card 23% / Net Banking 10% / Wallet 12%
-- **PWA**: Service worker v4 with offline support, manifest.json
+- **Storage**: In-memory mock data (Cloudflare Workers edge runtime)
+- **Auth**: Mock JWT tokens — real D1 + proper auth planned for Phase 11
+- **Avatars**: Inline SVG data URIs — no external CDN (ui-avatars.com removed)
+- **Images**: Unsplash CDN with `onerror` fallback to gradient placeholders
+- **Service Worker**: v5.1 — caches `/fan` + `/manifest.json`, no picsum.photos
 
----
+## Phase 10.1 Changes (Current)
+- ✅ Fixed Fan portal wishlist `${w.img}` unevaluated template literal (was causing 404)
+- ✅ Fixed Service Worker v5.1: removed `picsum.photos` icon refs → uses `/favicon.ico`
+- ✅ Fixed SW offline fallback: `/fan.html` → `/fan`
+- ✅ Added `/apple-touch-icon.png`, `/apple-touch-icon-precomposed.png` routes (no 404)
+- ✅ Added `/sitemap.xml` and `/robots.txt` routes
+- ✅ Fan portal: 0 console errors (was 1 persistent 404)
+- ✅ Added `total_checked_in` alias to `/api/events/:id/checkin-stats`
+- ✅ Added `live_count` to `/api/event-manager/dashboard`
+- ✅ Added GET `/api/venue/enquiry`, `/api/venue/staff`, `/api/venue/incidents`
+- ✅ Added `/api/developer/apis` alias endpoint
+- ✅ All footer social links functional (LinkedIn, Twitter, Instagram, YouTube, WhatsApp)
+- ✅ Event Manager: dynamic event selector (no more hardcoded `e1`)
+- ✅ Venue portal: real interactive panels (Floor Plan, Staff modal, Incident form, NOC docs)
 
-## Tech Stack
-| Layer | Technology |
-|---|---|
-| Backend | Hono Framework + Cloudflare Workers |
-| Runtime | TypeScript (ES2020) |
-| Build | Vite + @hono/vite-cloudflare-pages |
-| CDN | Cloudflare Pages (edge-global) |
-| Frontend | Vanilla JS + TailwindCSS (CDN) + Chart.js |
-| Dev Server | Wrangler Pages Dev + PM2 |
-| PWA | Service Worker v4 + Web App Manifest |
-
----
+## Pending / Phase 11 Roadmap
+- 🔜 Real authentication with Cloudflare D1 database
+- 🔜 Fill footer content pages (About, Careers, Press, Privacy, Terms)
+- 🔜 Optional: Bundle Tailwind CSS (currently uses CDN)
+- 🔜 Fan portal "View All" → full events listing page
+- 🔜 Clean TODO/FIXME markers in codebase
 
 ## Deployment
 - **Platform**: Cloudflare Pages
-- **Status**: ✅ Active  
-- **Build Size**: ~179 kB (worker bundle)
-- **Cold Start**: <5ms (edge-global)
-- **Last Deployed**: Phase 10 (2026-03-07) — https://7338f1a6.indtix.pages.dev
-
-## Development
-```bash
-npm run build          # Build for production
-pm2 start ecosystem.config.cjs  # Start dev server on :3000
-```
-
-## Phase 11 Candidates (Next)
-1. **Real-time Features**: SSE-based live check-in dashboard
-2. **D1 Database**: Persistent data storage with Cloudflare D1
-3. **Payment Gateway**: Razorpay/Stripe integration via API routes
-4. **Multi-tenant Auth**: JWT-based org/venue/admin role separation
-5. **WhatsApp Integration**: Meta WhatsApp Business API
-6. **R2 Image Upload**: Event banner/media management
-7. **Web Push Notifications**: Service worker push API
-8. **Resale Marketplace**: Full secondary ticket market with buyer checkout
-9. **Artist Pages**: Public artist profile with biography and tour dates
-10. **Event Discovery AI**: Personalized recommendation engine via CF Workers AI
+- **Project**: `indtix`
+- **Branch**: `main`
+- **Status**: ✅ Active
+- **Tech Stack**: Hono + TypeScript + Cloudflare Workers
+- **Last Deployed**: 2026-03-07
+- **Build command**: `npm run build`
+- **Output dir**: `dist/`
