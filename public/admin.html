@@ -3,6 +3,18 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Super Admin / ERP – INDTIX</title>
+  <meta name="description" content="INDTIX Super Admin dashboard for platform-wide GMV, user management, KYC approvals, fraud detection, GST compliance and BI analytics.">
+  <meta name="keywords" content="INDTIX, event tickets, book tickets online, India events, concert tickets, sports tickets">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#FF4F6E">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="INDTIX Super Admin – Platform ERP & Command Centre">
+  <meta property="og:description" content="INDTIX Super Admin dashboard for platform-wide GMV, user management, KYC approvals, fraud detection, GST compliance and BI analytics.">
+  <meta property="og:url" content="https://indtix.pages.dev/admin">
+  <meta property="og:site_name" content="INDTIX">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="INDTIX Super Admin – Platform ERP & Command Centre">
+  <meta name="twitter:description" content="INDTIX Super Admin dashboard for platform-wide GMV, user management, KYC approvals, fraud detection, GST compliance and BI analytics.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
 <style>
@@ -970,8 +982,24 @@ function featuredEvent(name){showAdminToast('⭐ "'+name+'" marked as FEATURED o
 function processSettlement(name,amt){if(confirm('Process settlement of '+amt+' to '+name+'?')){showAdminToast('💰 Settlement of '+amt+' processed. UTR sent via WhatsApp.');logAdminAudit('Settlement Processed',name+' — '+amt);}}
 function holdSettlement(name){showAdminToast('⛔ Settlement for '+name+' held. Compliance notified.','warning');}
 function downloadFinanceReport(){showAdminToast('📊 Finance report CSV downloading...');}
-function generateGSTR(){showAdminToast('📄 GSTR-1 report generating for current month...');}
-function downloadGSTR(){showAdminToast('📥 GSTR file downloading in JSON + Excel...');}
+async function generateGSTR(){
+  showAdminToast('📄 Fetching GST report from API…');
+  try {
+    const month = new Date().toISOString().slice(0,7);
+    const res=await fetch(`/api/admin/gst/monthly?month=${month}`);
+    const data=await res.json();
+    const g=data.gstr1||{};
+    showAdminToast(`✅ GSTR-1 ${g.status||'ready'} · ${(g.b2c_invoices||0).toLocaleString('en-IN')} invoices · GST collected ₹${((g.total_gst||0)/100000).toFixed(1)}L`);
+    logAdminAudit('GST Report',`GSTR-1 ${g.status} for ${data.period}`);
+  } catch(e) { showAdminToast('📄 GSTR-1 report generating for current month…'); }
+}
+async function downloadGSTR(){
+  try {
+    const res=await fetch('/api/admin/gst/monthly');
+    const data=await res.json();
+    showAdminToast(`📥 GST report ready — formats: ${(data.download_formats||['JSON','Excel']).join(', ')}`);
+  } catch(e){ showAdminToast('📥 GSTR file downloading in JSON + Excel…'); }
+}
 function filingStatus(){showAdminToast('📋 GSTR-1: Filed ✅ · GSTR-3B: Due in 5 days ⚠️');}
 function addAdminUser(){showAdminToast('Invite dialog: enter email and assign role.');}
 function editRole(role){showAdminToast('Role editor for: '+role+'. Changes require Super Admin confirmation.');}

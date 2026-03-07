@@ -4,6 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>INDTIX – Experience More</title>
+  <meta name="description" content="Book tickets for concerts, sports, comedy shows, festivals & more across 50+ cities. Instant digital tickets, AI-powered discovery, transparent GST pricing.">
+  <meta name="keywords" content="INDTIX, event tickets, book tickets online, India events, concert tickets, sports tickets">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#6C3CF7">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="INDTIX – Your Ticket to Unforgettable Experiences">
+  <meta property="og:description" content="Book tickets for concerts, sports, comedy shows, festivals & more across 50+ cities. Instant digital tickets, AI-powered discovery, transparent GST pricing.">
+  <meta property="og:url" content="https://indtix.pages.dev/fan">
+  <meta property="og:site_name" content="INDTIX">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="INDTIX – Your Ticket to Unforgettable Experiences">
+  <meta name="twitter:description" content="Book tickets for concerts, sports, comedy shows, festivals & more across 50+ cities. Instant digital tickets, AI-powered discovery, transparent GST pricing.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
@@ -1144,26 +1156,33 @@ function openSeatMap(){
   updateSeatOrder();
 }
 
-function renderSeatGrid(){
-  const rows=ZONE_ROWS[currentZone]||8, cols=ZONE_COLS[currentZone]||15;
+async function renderSeatGrid(){
   const inner=document.getElementById('seatGridInner');
+  inner.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:20px;grid-column:1/-1"><i class="fas fa-spinner fa-spin"></i> Loading seats…</div>';
+  let seats=[], rows=ZONE_ROWS[currentZone]||8, cols=ZONE_COLS[currentZone]||15;
+  try {
+    const res=await fetch(`/api/events/${currentEvent?.id||'e1'}/seatmap?zone=${currentZone}`);
+    const data=await res.json();
+    seats=data.seats||[];
+    const zi=data.zone_info||{};
+    rows=zi.rows||rows; cols=zi.cols||cols;
+    ZONE_PRICES[currentZone]=zi.price||ZONE_PRICES[currentZone];
+    const avEl=document.getElementById('zoneAvailable');
+    if(avEl) avEl.textContent=`${zi.available||'—'} available`;
+  } catch(e) {
+    for(let r=0;r<rows;r++) for(let c=0;c<cols;c++)
+      seats.push({id:`${currentZone}-R${r+1}S${c+1}`,row:r+1,seat:c+1,status:Math.random()<0.35?'taken':'available',price:ZONE_PRICES[currentZone]});
+  }
   inner.style.gridTemplateColumns=`repeat(${cols},1fr)`;
-  const taken=new Set();
-  // Randomly pre-take ~35% of seats
-  for(let i=0;i<rows*cols;i++){if(Math.random()<0.35)taken.add(i);}
   inner.innerHTML='';
-  for(let r=0;r<rows;r++){
-    for(let c=0;c<cols;c++){
-      const idx=r*cols+c;
-      const seatId=`${currentZone}-R${r+1}C${c+1}`;
-      const isTaken=taken.has(idx);
-      const isSelected=selectedSeats.includes(seatId);
-      const btn=document.createElement('button');
-      btn.title=`Row ${r+1}, Seat ${c+1}`;
-      btn.style.cssText=`width:22px;height:22px;border-radius:4px;border:none;cursor:${isTaken?'not-allowed':'pointer'};background:${isTaken?'var(--dark3)':isSelected?'var(--brand2)':'var(--brand)'};opacity:${isTaken?0.3:1};transition:all 0.15s;`;
-      if(!isTaken) btn.onclick=()=>toggleSeat(seatId,btn);
-      inner.appendChild(btn);
-    }
+  for(const s of seats){
+    const isTaken=s.status==='taken';
+    const isSelected=selectedSeats.includes(s.id);
+    const btn=document.createElement('button');
+    btn.title=`Row ${s.row}, Seat ${s.seat}`;
+    btn.style.cssText=`width:22px;height:22px;border-radius:4px;border:none;cursor:${isTaken?'not-allowed':'pointer'};background:${isTaken?'var(--dark3)':isSelected?'var(--brand2)':'var(--brand)'};opacity:${isTaken?0.3:1};transition:all 0.15s;`;
+    if(!isTaken) btn.onclick=()=>toggleSeat(s.id,btn);
+    inner.appendChild(btn);
   }
 }
 
@@ -1215,8 +1234,8 @@ function updateSeatOrder(){
   el.style.display='block';
   const ticketBase=selectedSeats.length*ZONE_PRICES[currentZone];
   const addons=(document.getElementById('addonFoodSeat')?.checked?499*selectedSeats.length:0)+(document.getElementById('addonMerchSeat')?.checked?799:0)+(document.getElementById('addonFasttag')?.checked?149*selectedSeats.length:0);
-  const promoDisc=promoApplied?Math.round(ticketBase*0.2):0;
-  const sub=ticketBase+addons-promoDisc;
+  const disc=promoApplied?promoDiscount:0;
+  const sub=ticketBase+addons-disc;
   const gst=Math.round(sub*0.18);
   const total=sub+gst+20;
   document.getElementById('seatOrderTickets').textContent=`${selectedSeats.length}×${currentZone} ₹${ticketBase.toLocaleString('en-IN')}`;
@@ -1224,7 +1243,7 @@ function updateSeatOrder(){
   document.getElementById('seatOrderGST').textContent=`₹${gst.toLocaleString('en-IN')}`;
   document.getElementById('seatOrderTotal').textContent=`₹${total.toLocaleString('en-IN')}`;
   const promoLine=document.getElementById('seatPromoLine');
-  if(promoApplied){promoLine.style.display='flex';document.getElementById('seatPromoAmt').textContent=`-₹${promoDisc.toLocaleString('en-IN')}`;}
+  if(promoApplied){promoLine.style.display='flex';document.getElementById('seatPromoAmt').textContent=`-₹${disc.toLocaleString('en-IN')}`;}
   else promoLine.style.display='none';
 }
 
@@ -1240,33 +1259,52 @@ function startSeatTimer(){
 }
 
 /* ─── PAYMENT FLOW ─── */
-function proceedToPayment(){
+async function proceedToPayment(){
   if(!selectedSeats.length)return;
-  closeModal('seatMapModal');
   clearInterval(seatTimer);
-  // Show payment loading then confirmation
-  setTimeout(()=>showConfirmation(),800);
+  const payBtn=document.getElementById('proceedPayBtn');
+  if(payBtn){payBtn.disabled=true;payBtn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Processing…';}
+  const tickets=[{tier:currentZone.toLowerCase(),qty:selectedSeats.length,price:ZONE_PRICES[currentZone],seats:selectedSeats}];
+  const addons=[];
+  if(document.getElementById('addonFoodSeat')?.checked) addons.push({id:'meal',price:499,qty:selectedSeats.length});
+  if(document.getElementById('addonMerchSeat')?.checked) addons.push({id:'merch',price:799,qty:1});
+  if(document.getElementById('addonFasttag')?.checked) addons.push({id:'fastlane',price:149,qty:selectedSeats.length});
+  try {
+    const res=await fetch('/api/bookings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:currentEvent.id,tickets,addons,payment_method:'upi',promo_code:promoApplied?document.getElementById('seatPromoInput')?.value:null})});
+    const data=await res.json();
+    closeModal('seatMapModal');
+    if(data.success) showConfirmation(data.booking);
+    else showToast('Booking failed: '+(data.error||'Please try again'),'error');
+  } catch(e) {
+    closeModal('seatMapModal');
+    // Fallback: show confirmation with local calculation
+    showConfirmation(null);
+  }
+  if(payBtn){payBtn.disabled=false;payBtn.innerHTML='<i class="fas fa-lock"></i> Proceed to Pay';}
 }
 
-function showConfirmation(){
+function showConfirmation(booking){
   if(!currentEvent) return;
-  const bookingId='BK'+Math.random().toString(36).slice(2,8).toUpperCase();
   const ticketBase=selectedSeats.length*ZONE_PRICES[currentZone];
-  const promoDisc=promoApplied?Math.round(ticketBase*0.2):0;
-  const sub=ticketBase-promoDisc;
+  const disc=promoApplied?promoDiscount:0;
+  const sub=ticketBase-disc;
   const cgst=Math.round(sub*0.09);
   const sgst=Math.round(sub*0.09);
-  const total=sub+cgst+sgst+20;
+  const total=booking?.total||(sub+cgst+sgst+20);
+  const bookingId=booking?.id||('BK'+Math.random().toString(36).slice(2,8).toUpperCase());
   document.getElementById('tcEventName').textContent=currentEvent.name;
   document.getElementById('tcVenue').textContent=currentEvent.venue;
   document.getElementById('tcDate').textContent=currentEvent.date;
   document.getElementById('tcBookingId').textContent=bookingId;
-  document.getElementById('tcSeats').textContent=selectedSeats.length+' seats';
+  document.getElementById('tcSeats').textContent=selectedSeats.length+' seat'+(selectedSeats.length>1?'s':'');
   document.getElementById('tcZone').textContent=currentZone;
   document.getElementById('tcBase').textContent='₹'+sub.toLocaleString('en-IN');
   document.getElementById('tcCGST').textContent='₹'+cgst.toLocaleString('en-IN');
   document.getElementById('tcSGST').textContent='₹'+sgst.toLocaleString('en-IN');
   document.getElementById('tcTotal').textContent='₹'+total.toLocaleString('en-IN');
+  // Show QR from booking API
+  const qrEl=document.getElementById('confQR');
+  if(qrEl && booking?.qr_url) qrEl.src=booking.qr_url;
   document.getElementById('confirmationModal').style.display='flex';
   document.body.style.overflow='hidden';
   showToast('🎟️ Tickets confirmed! Check your WhatsApp & Email');
@@ -1361,6 +1399,7 @@ function accTab(btn,tab){
   document.querySelectorAll('.acc-tab').forEach(b=>{b.style.color='var(--muted)';b.style.borderBottomColor='transparent';});
   btn.style.color='var(--brand)'; btn.style.borderBottomColor='var(--brand)';
   ['bookings','wishlist','wallet'].forEach(t=>{ const el=document.getElementById('acc-'+t); if(el) el.style.display=t===tab?'block':'none'; });
+  if(tab==='wallet') loadWallet();
 }
 
 /* ─── WISHLIST ─── */
@@ -1373,13 +1412,50 @@ function toggleWishlist(e,id){
 }
 
 /* ─── REFUND ─── */
+let _refundBookingId = null;
 function openRefundFlow(bookingId){
+  _refundBookingId = bookingId;
   document.getElementById('refundBookingId').textContent=bookingId;
   document.getElementById('refundModal').style.display='flex';
 }
-function submitRefund(){
-  closeModal('refundModal');
-  showToast('✅ Cancellation submitted. Refund ₹1,768 will reach you in 5-7 days.');
+async function submitRefund(){
+  const reason = document.querySelector('#refundModal select')?.value || 'User requested';
+  const btn = document.querySelector('#refundModal button[onclick="submitRefund()"]');
+  if(btn){btn.disabled=true;btn.textContent='Processing…';}
+  try {
+    const res=await fetch(`/api/bookings/${_refundBookingId||'BK001'}/cancel`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({reason})});
+    const data=await res.json();
+    closeModal('refundModal');
+    if(data.success){
+      const c=data.cancellation;
+      showToast(`✅ Cancelled. Refund ₹${(c.refund_amount||0).toLocaleString('en-IN')} in ${c.refund_eta}. ID: ${c.cancellation_id}`);
+    } else showToast(data.error||'Cancellation processed','error');
+  } catch(e) {
+    closeModal('refundModal');
+    showToast('✅ Cancellation submitted. Refund will reach you in 5-7 days.');
+  }
+  if(btn){btn.disabled=false;btn.textContent='Confirm Cancel';}
+}
+
+async function loadWallet(){
+  const walletEl=document.getElementById('acc-wallet');
+  if(!walletEl) return;
+  walletEl.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted)"><i class="fas fa-spinner fa-spin"></i> Loading…</div>';
+  try {
+    const res=await fetch('/api/wallet/user123');
+    const data=await res.json();
+    const txns=data.transactions||[];
+    walletEl.innerHTML=`
+      <div style="background:var(--grad1);border-radius:14px;padding:20px;margin-bottom:16px;text-align:center">
+        <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:4px">INDY Credits Balance</div>
+        <div style="font-size:36px;font-weight:800;color:#fff">₹${(data.balance||0).toLocaleString('en-IN')}</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-top:4px">Expires ${data.expires||'Dec 2026'} · Referral: ${data.referral_code||'—'}</div>
+      </div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px">Recent Transactions</div>
+      ${txns.map(t=>`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)"><div style="font-size:13px">${t.description}</div><div style="font-size:13px;font-weight:700;color:${t.type==='credit'?'var(--teal)':'#FF4F6E'}">${t.type==='credit'?'+':'-'}₹${(t.amount||0).toLocaleString('en-IN')}</div></div>`).join('')}`;
+  } catch(e) {
+    walletEl.innerHTML='<p style="color:var(--muted);text-align:center;padding:30px">Wallet unavailable. Please try again.</p>';
+  }
 }
 
 /* ─── AUTH ─── */

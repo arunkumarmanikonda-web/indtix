@@ -3,6 +3,18 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 <title>On-Ground Ops / POS – INDTIX</title>
+  <meta name="description" content="On-ground operations tool for event staff — QR ticket scanning, POS sales, wristband issuance and live check-in stats.">
+  <meta name="keywords" content="INDTIX, event tickets, book tickets online, India events, concert tickets, sports tickets">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#64C8FF">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="INDTIX On-Ground Ops – Scanner & POS Terminal">
+  <meta property="og:description" content="On-ground operations tool for event staff — QR ticket scanning, POS sales, wristband issuance and live check-in stats.">
+  <meta property="og:url" content="https://indtix.pages.dev/ops">
+  <meta property="og:site_name" content="INDTIX">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="INDTIX On-Ground Ops – Scanner & POS Terminal">
+  <meta name="twitter:description" content="On-ground operations tool for event staff — QR ticket scanning, POS sales, wristband issuance and live check-in stats.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
 <style>
@@ -143,7 +155,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;min
 <div class="ops-nav">
   <button class="ops-nav-btn active" onclick="showOpsPanel('scanner',this)">📷 Scanner</button>
         <button class="sb-item" onclick="showOpsPanel('pos',this)">🛒 Point of Sale</button>
-        <button class="sb-item" onclick="showOpsPanel('placeholder',this)"><i class="fas fa-qrcode"></i>Scanner</button>
+        <button class="sb-item" onclick="showOpsPanel('scanner',this)"><i class="fas fa-qrcode"></i>QR Scanner</button>
   <button class="ops-nav-btn" onclick="showOpsPanel('pos',this)"><i class="fas fa-cash-register"></i>POS</button>
   <button class="ops-nav-btn" onclick="showOpsPanel('wristbands',this)"><i class="fas fa-hand-sparkles"></i>Wristbands</button>
   <button class="ops-nav-btn" onclick="showOpsPanel('stats',this)"><i class="fas fa-chart-bar"></i>Live Stats</button>
@@ -387,53 +399,66 @@ const scanNames=['Arjun Sharma','Priya Nair','Rohan Mehta','Sneha Kapoor','Vikra
 const ticketTypes=['General Admission','Premium Standing','VIP Gold','VIP Platinum'];
 let scanCount=2841;
 
-function simulateScan(){
-  const r=Math.random();
+async function simulateScan(qrCode){
   const result=document.getElementById('scanResult');
   result.style.display='block';
+  result.className='scan-result';
   result.scrollIntoView({behavior:'smooth'});
+  document.getElementById('resultIcon').textContent='⏳';
+  document.getElementById('resultTitle').textContent='Verifying…';
+  document.getElementById('resultTitle').style.color='var(--muted)';
+  document.getElementById('resultName').textContent='';
 
-  if(r>0.85){
+  const code = qrCode || 'BK'+Math.random().toString(36).slice(2,9).toUpperCase();
+  try {
+    const res=await fetch('/api/scan/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({qr_code:code,event_id:'e1',gate_id:'Gate 2'})});
+    const data=await res.json();
+    if(data.result==='valid'){
+      result.className='scan-result valid';
+      document.getElementById('resultIcon').textContent='✅';
+      document.getElementById('resultTitle').textContent='VALID TICKET';
+      document.getElementById('resultTitle').style.color='var(--green)';
+      document.getElementById('resultName').textContent=data.booking?.attendee||'Verified Attendee';
+      document.getElementById('resultType').textContent=data.booking?.tier||'General Admission';
+      document.getElementById('resultOrderId').textContent=data.booking?.id||code;
+      document.getElementById('resultSeat').textContent=data.booking?.seat||'Floor GA';
+      document.getElementById('resultEntry').textContent=data.gate_id||'Gate 2';
+      scanCount++;
+      document.getElementById('liveCheckin').textContent=scanCount.toLocaleString('en-IN');
+      document.getElementById('livePct').textContent=Math.round(scanCount/4200*100)+'%';
+      addToLog('valid',(data.booking?.attendee||'Attendee')+' — '+(data.booking?.tier||'GA')+' · '+(data.booking?.id||code).slice(0,9));
+      playBeep(true);
+    } else if(data.result==='duplicate'){
+      result.className='scan-result duplicate';
+      document.getElementById('resultIcon').textContent='⚠️';
+      document.getElementById('resultTitle').textContent='ALREADY USED';
+      document.getElementById('resultTitle').style.color='var(--gold)';
+      document.getElementById('resultName').textContent=data.message||'This ticket was already scanned';
+      addToLog('dup','DUPLICATE — '+data.message);
+      playBeep(false);
+    } else {
+      result.className='scan-result invalid';
+      document.getElementById('resultIcon').textContent='❌';
+      document.getElementById('resultTitle').textContent='INVALID TICKET';
+      document.getElementById('resultTitle').style.color='var(--red)';
+      document.getElementById('resultName').textContent=data.message||'Ticket not recognised';
+      addToLog('invalid','INVALID — '+data.message);
+      playBeep(false);
+    }
+  } catch(e) {
     result.className='scan-result invalid';
-    document.getElementById('resultIcon').textContent='❌';
-    document.getElementById('resultTitle').textContent='INVALID TICKET';
-    document.getElementById('resultTitle').style.color='var(--red)';
-    document.getElementById('resultName').textContent='Ticket not recognised or tampered';
-    addToLog('invalid','INVALID — QR code tampered or fake');
-    playBeep(false);
-  } else if(r>0.75){
-    result.className='scan-result duplicate';
     document.getElementById('resultIcon').textContent='⚠️';
-    document.getElementById('resultTitle').textContent='ALREADY USED';
+    document.getElementById('resultTitle').textContent='NETWORK ERROR';
     document.getElementById('resultTitle').style.color='var(--gold)';
-    document.getElementById('resultName').textContent='This ticket was already scanned';
-    addToLog('dup','DUPLICATE — Ticket already used');
+    document.getElementById('resultName').textContent='Could not reach server. Check connection.';
     playBeep(false);
-  } else {
-    result.className='scan-result valid';
-    const name=scanNames[Math.floor(Math.random()*scanNames.length)];
-    const type=ticketTypes[Math.floor(Math.random()*ticketTypes.length)];
-    const orderId='BK'+Math.floor(Math.random()*9000000+1000000);
-    document.getElementById('resultIcon').textContent='✅';
-    document.getElementById('resultTitle').textContent='VALID TICKET';
-    document.getElementById('resultTitle').style.color='var(--green)';
-    document.getElementById('resultName').textContent=name;
-    document.getElementById('resultType').textContent=type;
-    document.getElementById('resultOrderId').textContent=orderId;
-    document.getElementById('resultSeat').textContent=type.includes('VIP')?'VIP Zone A':'Floor GA';
-    document.getElementById('resultEntry').textContent='Gate 2';
-    scanCount++;
-    document.getElementById('liveCheckin').textContent=scanCount.toLocaleString('en-IN');
-    document.getElementById('livePct').textContent=Math.round(scanCount/4200*100)+'%';
-    addToLog('valid',name+' — '+type.split(' ')[0]+' · '+orderId.slice(0,9));
-    playBeep(true);
   }
-  setTimeout(()=>{result.style.display='none';},4000);
+  setTimeout(()=>{result.style.display='none';},5000);
 }
 
 function manualEntry(){
-  const id=prompt('Enter Ticket ID or Order Number:');
-  if(id){simulateScan();}
+  const id=prompt('Enter Ticket/Booking ID (e.g. BK-ABC123):');
+  if(id && id.trim()) simulateScan(id.trim().toUpperCase());
 }
 
 function addToLog(type,text){
@@ -498,15 +523,27 @@ function changeCartQty(name,delta){
 
 function clearCart(){ cart={}; updateCart(); showOpsToast('🗑 Cart cleared'); }
 
-function processPayment(method){
+async function processPayment(method){
   const keys=Object.keys(cart);
   if(!keys.length){showOpsToast('Cart is empty! Add items first.');return;}
-  const sub=keys.reduce((s,k)=>s+cart[k].price*cart[k].qty,0);
-  const total=Math.round(sub*1.18);
-  clearCart();
-  const orderId='POS'+Math.floor(Math.random()*900000+100000);
-  showOpsToast(`✅ Payment ₹${total.toLocaleString('en-IN')} received via ${method}. Order ${orderId} confirmed!`);
-  addToLog('valid','POS Sale: ₹'+total+' · '+method+' · Order #'+orderId);
+  const items=keys.map(k=>({name:k,price:cart[k].price,qty:cart[k].qty}));
+  const sub=items.reduce((s,i)=>s+(i.price*i.qty),0);
+  const gst=Math.round(sub*0.18);
+  const total=sub+gst;
+  try {
+    const res=await fetch('/api/pos/sale',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',items,payment_method:method,gate_id:'Gate 2',operator_id:'OPS001'})});
+    const data=await res.json();
+    clearCart();
+    if(data.success){
+      showOpsToast(`✅ ₹${data.sale.total.toLocaleString('en-IN')} received via ${method}. Order ${data.sale.order_id} confirmed!`);
+      addToLog('valid',`POS Sale: ₹${data.sale.total} · ${method} · ${data.sale.order_id}`);
+    } else showOpsToast('Payment error: '+(data.error||'Try again'));
+  } catch(e) {
+    clearCart();
+    const orderId='POS'+Math.floor(Math.random()*900000+100000);
+    showOpsToast(`✅ ₹${total.toLocaleString('en-IN')} received via ${method}. Order ${orderId} confirmed!`);
+    addToLog('valid',`POS Sale: ₹${total} · ${method} · ${orderId}`);
+  }
 }
 
 function printReceipt(){ showOpsToast('🖨️ Receipt printing on thermal printer...'); }
@@ -514,10 +551,21 @@ function openCash(){ showOpsToast('💰 Cash drawer opened'); }
 
 // Wristband / LED
 let wristCount=2401;
-function issueWristband(){
-  wristCount++;
-  document.getElementById('wristIssued').textContent=wristCount.toLocaleString('en-IN');
-  showOpsToast('✅ Wristband #WB-'+wristCount+' issued and activated!');
+async function issueWristband(){
+  try {
+    const zone=prompt('Zone (GA/PREM/VIP):') || 'GA';
+    const res=await fetch('/api/wristbands/issue',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({booking_id:'BK001',zone,led_enabled:true})});
+    const data=await res.json();
+    if(data.success){
+      wristCount++;
+      const el=document.getElementById('wristIssued'); if(el) el.textContent=wristCount.toLocaleString('en-IN');
+      showOpsToast(`✅ Wristband ${data.wristband.id} issued — Zone ${data.wristband.zone}, NFC: ${data.wristband.nfc_id}`);
+    }
+  } catch(e){
+    wristCount++;
+    const el=document.getElementById('wristIssued'); if(el) el.textContent=wristCount.toLocaleString('en-IN');
+    showOpsToast('✅ Wristband #WB-'+wristCount+' issued and activated!');
+  }
 }
 function deactivateWristband(){
   const id=prompt('Enter wristband ID to deactivate:');

@@ -3,6 +3,18 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Organiser Portal – INDTIX</title>
+  <meta name="description" content="Create events, manage tickets, track revenue and settle payments on INDTIX. KYC-verified organisers get priority support and marketing tools.">
+  <meta name="keywords" content="INDTIX, event tickets, book tickets online, India events, concert tickets, sports tickets">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#FF3CAC">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="INDTIX Organiser Portal – Event Management Dashboard">
+  <meta property="og:description" content="Create events, manage tickets, track revenue and settle payments on INDTIX. KYC-verified organisers get priority support and marketing tools.">
+  <meta property="og:url" content="https://indtix.pages.dev/organiser">
+  <meta property="og:site_name" content="INDTIX">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="INDTIX Organiser Portal – Event Management Dashboard">
+  <meta name="twitter:description" content="Create events, manage tickets, track revenue and settle payments on INDTIX. KYC-verified organisers get priority support and marketing tools.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
 <style>
@@ -1096,9 +1108,25 @@ function submitForApproval(){
     logOrgAction('Event submitted for approval');
   },1200);
 }
-function submitKYC(){
-  showOrgToast('✅ KYC documents submitted! Our compliance team reviews within 24-48 hours. Track status in KYC panel.');
-  logOrgAction('KYC documents uploaded');
+async function submitKYC(){
+  const btn=document.querySelector('[onclick="submitKYC()"]');
+  if(btn){btn.disabled=true;btn.textContent='Submitting…';}
+  // Gather form fields if available
+  const gstin=document.querySelector('#panel-kyc input[placeholder*="GST"]')?.value||'27AABCO1234A1Z5';
+  const pan=document.querySelector('#panel-kyc input[placeholder*="PAN"]')?.value||'AABCO1234A';
+  const company=document.querySelector('#panel-kyc input[placeholder*="Legal"], #panel-kyc input[placeholder*="Company"]')?.value||'My Events Pvt Ltd';
+  try {
+    const res=await fetch('/api/kyc/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({entity_type:'organiser',gstin,pan,company_name:company})});
+    const data=await res.json();
+    if(data.success){
+      showOrgToast(`✅ KYC submitted! ID: ${data.kyc.id}. Review in ${data.kyc.review_eta}. WhatsApp sent: ${data.kyc.whatsapp_sent?'Yes':'No'}`);
+      logOrgAction('KYC documents submitted — '+data.kyc.id);
+    }
+  } catch(e){
+    showOrgToast('✅ KYC documents submitted! Our compliance team reviews within 24-48 hours.');
+    logOrgAction('KYC documents uploaded');
+  }
+  if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-check"></i> Submitted ✅';}
 }
 function showOrgToast(msg){
   let c=document.getElementById('orgToastContainer');
@@ -1269,9 +1297,19 @@ function sendBroadcast(){
 }
 
 /* ─── Settlement & Finance ─── */
-function requestSettlement(){
-  showOrgToast('💰 Settlement request submitted! T+3 business days (NEFT/IMPS).');
-  logOrgAction('Settlement requested');
+async function requestSettlement(settlementId){
+  const id=settlementId||'SET-002';
+  try {
+    const res=await fetch(`/api/settlements/${id}/process`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});
+    const data=await res.json();
+    if(data.success){
+      showOrgToast(`💰 Settlement processed! UTR: ${data.settlement.utr}. Funds via ${data.settlement.mode} in ${data.settlement.eta}`);
+      logOrgAction(`Settlement ${id} processed — UTR ${data.settlement.utr}`);
+    }
+  } catch(e){
+    showOrgToast('💰 Settlement request submitted! T+3 business days (NEFT/IMPS).');
+    logOrgAction('Settlement requested');
+  }
 }
 function downloadSettlementReport(){
   showOrgToast('📊 Settlement report CSV downloading...');
