@@ -16,6 +16,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="INDTIX – Your Ticket to Unforgettable Experiences">
   <meta name="twitter:description" content="Book tickets for concerts, sports, comedy shows, festivals & more across 50+ cities. Instant digital tickets, AI-powered discovery, transparent GST pricing.">
+<link rel="manifest" href="/manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
@@ -289,6 +290,103 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
   .nav-links{display:none}
 }
 </style>
+<!-- Structured Data / JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "INDTIX",
+  "url": "https://indtix.pages.dev",
+  "description": "India's premier live event ticketing platform – concerts, sports, comedy, festivals and more",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://indtix.pages.dev/fan?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Oye Imagine Private Limited",
+    "legalName": "Oye Imagine Private Limited",
+    "url": "https://indtix.pages.dev",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://picsum.photos/seed/indtix/200/200"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-9999-INDTIX",
+      "contactType": "customer service",
+      "areaServed": "IN",
+      "availableLanguage": ["English", "Hindi"]
+    },
+    "sameAs": [
+      "https://twitter.com/INDTIX",
+      "https://www.instagram.com/INDTIX",
+      "https://www.facebook.com/INDTIX"
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Upcoming Events on INDTIX",
+  "description": "Top live events happening across India",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@type": "Event",
+        "name": "Diljit Dosanjh – Dil-Luminati World Tour",
+        "startDate": "2026-04-12T18:00:00+05:30",
+        "endDate": "2026-04-12T23:00:00+05:30",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+          "@type": "Place",
+          "name": "MMRDA Grounds, BKC",
+          "address": { "@type": "PostalAddress", "addressLocality": "Mumbai", "addressCountry": "IN" }
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "1499",
+          "priceCurrency": "INR",
+          "availability": "https://schema.org/InStock",
+          "url": "https://indtix.pages.dev/fan"
+        },
+        "performer": { "@type": "MusicGroup", "name": "Diljit Dosanjh" },
+        "organizer": { "@type": "Organization", "name": "BANTAI Entertainment" }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@type": "Event",
+        "name": "Coldplay – Music of the Spheres World Tour",
+        "startDate": "2026-05-10T19:00:00+05:30",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+          "@type": "Place",
+          "name": "DY Patil Stadium",
+          "address": { "@type": "PostalAddress", "addressLocality": "Mumbai", "addressCountry": "IN" }
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "2999",
+          "priceCurrency": "INR",
+          "availability": "https://schema.org/LimitedAvailability",
+          "url": "https://indtix.pages.dev/fan"
+        },
+        "performer": { "@type": "MusicGroup", "name": "Coldplay" }
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -897,6 +995,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
     <button onclick="accTab(this,'bookings')" class="acc-tab active" style="flex:1;padding:12px;background:transparent;border:none;color:var(--brand);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border-bottom:2px solid var(--brand)">My Bookings</button>
     <button onclick="accTab(this,'wishlist')" class="acc-tab" style="flex:1;padding:12px;background:transparent;border:none;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border-bottom:2px solid transparent">Wishlist</button>
     <button onclick="accTab(this,'wallet')" class="acc-tab" style="flex:1;padding:12px;background:transparent;border:none;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border-bottom:2px solid transparent">Wallet</button>
+    <button onclick="accTab(this,'notifications')" class="acc-tab" id="notif-tab-btn" style="flex:1;padding:12px;background:transparent;border:none;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border-bottom:2px solid transparent">🔔 <span id="notif-badge" style="display:none;background:#FF4444;color:#fff;border-radius:50%;padding:1px 5px;font-size:10px;margin-left:2px">0</span>Alerts</button>
     <button onclick="accTab(this,'fanclubs')" class="acc-tab" style="flex:1;padding:12px;background:transparent;border:none;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border-bottom:2px solid transparent">🎤 Fan Clubs</button>
   </div>
   <!-- Bookings panel -->
@@ -937,19 +1036,84 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
   </div>
   <!-- Wallet panel -->
   <div id="acc-wallet" style="padding:16px;display:none">
-    <div style="background:var(--grad1);border-radius:14px;padding:20px;margin-bottom:16px;text-align:center">
+    <!-- Balance Card -->
+    <div id="wallet-balance-card" style="background:var(--grad1);border-radius:14px;padding:20px;margin-bottom:16px;text-align:center">
       <div style="font-size:12px;font-weight:600;opacity:0.8;text-transform:uppercase;letter-spacing:1px">INDY Credits Balance</div>
-      <div style="font-size:40px;font-weight:800;margin:8px 0;font-family:'Space Grotesk',sans-serif">₹250</div>
-      <div style="font-size:11px;opacity:0.7">Expires: Dec 31, 2026 · Referral credits</div>
+      <div id="wallet-balance-amt" style="font-size:40px;font-weight:800;margin:8px 0;font-family:'Space Grotesk',sans-serif">₹—</div>
+      <div id="wallet-lifetime" style="font-size:11px;opacity:0.7">Loading wallet…</div>
     </div>
+    <!-- Quick Actions -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <button onclick="openAddMoneyModal()" style="padding:12px;background:rgba(108,60,247,0.2);border:1px solid rgba(108,60,247,0.4);border-radius:12px;color:var(--text);cursor:pointer;font-size:12px;font-weight:600;font-family:'Inter',sans-serif">
+        <i class="fas fa-plus-circle" style="color:var(--brand);margin-right:6px"></i>Add Money
+      </button>
+      <button onclick="redeemWallet()" style="padding:12px;background:rgba(0,245,196,0.1);border:1px solid rgba(0,245,196,0.3);border-radius:12px;color:var(--text);cursor:pointer;font-size:12px;font-weight:600;font-family:'Inter',sans-serif">
+        <i class="fas fa-bolt" style="color:var(--brand3);margin-right:6px"></i>Redeem at Checkout
+      </button>
+    </div>
+    <!-- Stats row -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <div style="background:var(--card);border-radius:12px;padding:14px;text-align:center">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Lifetime Earned</div>
+        <div id="wallet-earned" style="font-size:20px;font-weight:700;color:var(--brand3)">₹—</div>
+      </div>
+      <div style="background:var(--card);border-radius:12px;padding:14px;text-align:center">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Lifetime Spent</div>
+        <div id="wallet-spent" style="font-size:20px;font-weight:700;color:#FF4444">₹—</div>
+      </div>
+    </div>
+    <!-- Refer & Earn banner -->
+    <div style="background:linear-gradient(135deg,#2d1b69,#1a1a3e);border:1px solid rgba(108,60,247,0.4);border-radius:14px;padding:16px;margin-bottom:16px;display:flex;align-items:center;gap:12px">
+      <div style="font-size:28px">🎁</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:700">Refer a Friend — Earn ₹100!</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">Share your code and earn ₹100 when they book their first event</div>
+        <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+          <code id="referral-code-display" style="background:rgba(108,60,247,0.2);padding:4px 10px;border-radius:8px;font-size:12px;font-weight:700;color:var(--brand)">INDT-REF-001</code>
+          <button onclick="copyReferralCode()" style="padding:4px 10px;background:var(--brand);border:none;border-radius:8px;color:#fff;cursor:pointer;font-size:11px;font-family:'Inter',sans-serif">Copy</button>
+        </div>
+      </div>
+    </div>
+    <!-- Transaction History -->
     <div style="font-size:13px;font-weight:600;margin-bottom:10px">Transaction History</div>
-    ${[{type:'credit',desc:'Referral bonus — Priya joined',amt:'+₹100',date:'Feb 28'},{type:'credit',desc:'Welcome bonus',amt:'+₹150',date:'Jan 15'},{type:'debit',desc:'Used at checkout — NH7',amt:'-₹150',date:'Jan 20'}].map(t=>`
-    <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--card);border-radius:10px;margin-bottom:8px">
-      <div style="width:36px;height:36px;border-radius:50%;background:${t.type==='credit'?'rgba(0,245,196,0.15)':'rgba(255,68,68,0.15)'};display:flex;align-items:center;justify-content:center;font-size:16px">${t.type==='credit'?'⬆️':'⬇️'}</div>
-      <div style="flex:1"><div style="font-size:12px;font-weight:600">${t.desc}</div><div style="font-size:11px;color:var(--muted)">${t.date}</div></div>
-      <span style="font-weight:700;font-size:13px;color:${t.type==='credit'?'var(--brand3)':'#FF4444'}">${t.amt}</span>
+    <div id="wallet-transactions">
+      <div style="text-align:center;padding:20px;color:var(--muted)"><i class="fas fa-spinner fa-spin"></i> Loading transactions…</div>
     </div>
-    `).join('')}
+  </div>
+  <!-- Notifications panel -->
+  <div id="acc-notifications" style="padding:16px;display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div style="font-size:13px;font-weight:700">🔔 Notifications</div>
+      <div style="display:flex;gap:8px">
+        <button onclick="markAllRead()" style="padding:6px 12px;background:var(--dark3);border:1px solid var(--border);border-radius:8px;color:var(--muted);cursor:pointer;font-size:11px;font-family:'Inter',sans-serif">Mark all read</button>
+        <button onclick="requestPushPermission()" style="padding:6px 12px;background:rgba(108,60,247,0.2);border:1px solid rgba(108,60,247,0.4);border-radius:8px;color:var(--brand);cursor:pointer;font-size:11px;font-family:'Inter',sans-serif">Enable Push</button>
+      </div>
+    </div>
+    <div id="notifications-list">
+      <div style="text-align:center;padding:20px;color:var(--muted)"><i class="fas fa-spinner fa-spin"></i> Loading…</div>
+    </div>
+    <!-- Notification Preferences -->
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+      <div style="font-size:12px;font-weight:700;margin-bottom:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Notification Preferences</div>
+      <div style="display:flex;flex-direction:column;gap:8px" id="notif-prefs">
+        <label style="display:flex;align-items:center;justify-content:space-between;cursor:pointer">
+          <span style="font-size:12px">📧 Email – Booking confirmations</span>
+          <input type="checkbox" checked onchange="updateNotifPref('email','booking_confirmed',this.checked)" style="width:16px;height:16px;accent-color:var(--brand)">
+        </label>
+        <label style="display:flex;align-items:center;justify-content:space-between;cursor:pointer">
+          <span style="font-size:12px">💬 WhatsApp – Event reminders</span>
+          <input type="checkbox" checked onchange="updateNotifPref('whatsapp','event_reminders',this.checked)" style="width:16px;height:16px;accent-color:var(--brand)">
+        </label>
+        <label style="display:flex;align-items:center;justify-content:space-between;cursor:pointer">
+          <span style="font-size:12px">🔔 Push – Promo alerts</span>
+          <input type="checkbox" onchange="updateNotifPref('push','promo_alerts',this.checked)" style="width:16px;height:16px;accent-color:var(--brand)">
+        </label>
+        <label style="display:flex;align-items:center;justify-content:space-between;cursor:pointer">
+          <span style="font-size:12px">💰 Push – Wallet updates</span>
+          <input type="checkbox" checked onchange="updateNotifPref('push','wallet_updates',this.checked)" style="width:16px;height:16px;accent-color:var(--brand)">
+        </label>
+      </div>
+    </div>
   </div>
   <!-- Fan Clubs panel -->
   <div id="acc-fanclubs" style="padding:16px;display:none">
@@ -1471,45 +1635,6 @@ async function viewGSTInvoice(){
     showToast('📄 GST Invoice generating...');
   }
 }
-  const modal=document.getElementById('gstInvoiceModal');
-  if(!currentEvent) return;
-  const bk='BK'+Math.random().toString(36).slice(2,8).toUpperCase();
-  const base=selectedSeats.length*ZONE_PRICES[currentZone]||2998;
-  const cgst=(base*0.09).toFixed(2);
-  const sgst=(base*0.09).toFixed(2);
-  const total=(base*1.18+20).toFixed(2);
-  modal.innerHTML=`
-  <div class="modal-overlay" id="gstInvoiceModal" onclick="this.style.display='none'" style="display:flex">
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;max-width:520px;width:90%;max-height:90vh;overflow-y:auto;position:relative" onclick="event.stopPropagation()">
-      <button onclick="document.getElementById('gstInvoiceModal').style.display='none'" style="position:absolute;top:16px;right:16px;background:var(--dark3);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px">✕</button>
-      <div style="text-align:center;margin-bottom:20px"><div style="font-size:22px;font-weight:800;font-family:'Space Grotesk',sans-serif">TAX INVOICE</div><div style="font-size:12px;color:var(--muted)">Invoice No: INV-2026-${bk}</div></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;font-size:13px">
-        <div><div style="font-weight:700;margin-bottom:8px;color:var(--brand3)">Supplier</div><div style="font-weight:600">Oye Imagine Private Limited</div><div style="color:var(--muted)">GSTIN: 27AABCO1234A1Z5</div><div style="color:var(--muted)">CIN: U74999MH2023PTC001234</div><div style="color:var(--muted)">Mumbai, Maharashtra 400001</div></div>
-        <div><div style="font-weight:700;margin-bottom:8px;color:var(--brand3)">Bill To</div><div style="font-weight:600">Registered Customer</div><div style="color:var(--muted)">Order: ${bk}</div><div style="color:var(--muted)">Date: ${new Date().toLocaleDateString('en-IN')}</div><div style="color:var(--muted)">Place of Supply: Maharashtra</div></div>
-      </div>
-      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px">
-        <thead><tr style="background:rgba(108,60,247,0.15)"><th style="padding:8px 10px;text-align:left;border-bottom:1px solid var(--border)">Description</th><th style="padding:8px 10px;text-align:right;border-bottom:1px solid var(--border)">HSN</th><th style="padding:8px 10px;text-align:right;border-bottom:1px solid var(--border)">Qty</th><th style="padding:8px 10px;text-align:right;border-bottom:1px solid var(--border)">Rate</th><th style="padding:8px 10px;text-align:right;border-bottom:1px solid var(--border)">Amount</th></tr></thead>
-        <tbody>
-          <tr><td style="padding:8px 10px">${currentEvent?.name||'Event Ticket'} — ${currentZone}</td><td style="padding:8px 10px;text-align:right;color:var(--muted)">9996</td><td style="padding:8px 10px;text-align:right">${selectedSeats.length||2}</td><td style="padding:8px 10px;text-align:right">₹${ZONE_PRICES[currentZone]?.toLocaleString('en-IN')||'1,499'}</td><td style="padding:8px 10px;text-align:right;font-weight:600">₹${base.toLocaleString('en-IN')}</td></tr>
-          <tr><td style="padding:8px 10px">Platform Convenience Fee</td><td style="padding:8px 10px;text-align:right;color:var(--muted)">9984</td><td style="padding:8px 10px;text-align:right">${selectedSeats.length||2}</td><td style="padding:8px 10px;text-align:right">₹20</td><td style="padding:8px 10px;text-align:right;font-weight:600">₹${(20*(selectedSeats.length||2)).toLocaleString('en-IN')}</td></tr>
-        </tbody>
-      </table>
-      <div style="background:var(--dark3);border-radius:10px;padding:14px;font-size:13px">
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:var(--muted)">Taxable Amount</span><span>₹${base}</span></div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:var(--muted)">CGST @ 9%</span><span>₹${cgst}</span></div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:var(--muted)">SGST @ 9%</span><span>₹${sgst}</span></div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:var(--muted)">IGST</span><span>Nil</span></div>
-        <div style="display:flex;justify-content:space-between;font-weight:800;font-size:15px;padding-top:8px;border-top:1px solid var(--border);margin-top:6px"><span>Total</span><span style="color:var(--brand3)">₹${total}</span></div>
-      </div>
-      <div style="text-align:center;margin-top:16px;color:var(--muted);font-size:11px">This is a computer-generated invoice. No signature required. IATA registered. Subject to INDORE courts.</div>
-      <div style="display:flex;gap:10px;margin-top:16px">
-        <button onclick="showToast('📧 Invoice sent to your email!')" style="flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-envelope"></i> Email Invoice</button>
-      </div>
-    </div>
-  </div>`;
-  document.body.appendChild(modal);
-  modal.style.display='flex';
-}
 // Business Account - Bulk Booking Override
 function requestGroupBooking(){
   showToast('📋 Group booking request sent! Our team will contact you within 2 hours for orders of 10+ tickets.');
@@ -1539,9 +1664,11 @@ function closeAccountPanel(){ document.getElementById('accountPanel').style.righ
 function accTab(btn,tab){
   document.querySelectorAll('.acc-tab').forEach(b=>{b.style.color='var(--muted)';b.style.borderBottomColor='transparent';});
   btn.style.color='var(--brand)'; btn.style.borderBottomColor='var(--brand)';
-  ['bookings','wishlist','wallet'].forEach(t=>{ const el=document.getElementById('acc-'+t); if(el) el.style.display=t===tab?'block':'none'; });
+  ['bookings','wishlist','wallet','notifications','fanclubs'].forEach(t=>{ const el=document.getElementById('acc-'+t); if(el) el.style.display=t===tab?'block':'none'; });
   if(tab==='wallet') loadWallet();
   if(tab==='bookings') loadBookings();
+  if(tab==='notifications') loadNotifications();
+  if(tab==='fanclubs') loadAccFanclubs();
 }
 
 async function loadBookings(){
@@ -1612,35 +1739,123 @@ async function submitRefund(){
 }
 
 async function loadWallet(){
-  const walletEl=document.getElementById('acc-wallet');
-  if(!walletEl) return;
-  walletEl.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted)"><i class="fas fa-spinner fa-spin"></i> Loading…</div>';
   try {
-    const res=await fetch('/api/wallet/user123');
-    const data=await res.json();
-    const txns=data.transactions||[];
-    walletEl.innerHTML=`
-      <div style="background:var(--grad1);border-radius:14px;padding:20px;margin-bottom:16px;text-align:center">
-        <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:4px">INDY Credits Balance</div>
-        <div style="font-size:36px;font-weight:800;color:#fff">₹${(data.balance||0).toLocaleString('en-IN')}</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-top:4px">Expires ${data.expires||'Dec 2026'} · Referral: ${data.referral_code||'INDY'+Math.random().toString(36).slice(2,8).toUpperCase()}</div>
-      </div>
-      <div style="display:flex;gap:10px;margin-bottom:16px">
-        <input id="redeemAmt" type="number" min="10" max="500" placeholder="Amount to redeem (max ₹500)" style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--text);font-size:13px;outline:none;font-family:'Inter',sans-serif">
-        <button onclick="redeemWallet()" style="background:var(--grad1);border:none;color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Redeem</button>
-      </div>
-      <div style="margin-bottom:16px">
-        <div style="display:flex;gap:10px">
-          <input id="referralCode" type="text" placeholder="Enter referral code" style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--text);font-size:13px;outline:none;font-family:'Inter',sans-serif;text-transform:uppercase">
-          <button onclick="validateReferral()" style="background:var(--dark3);border:1px solid var(--border);color:var(--brand);padding:10px 16px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Apply</button>
-        </div>
-      </div>
-      <div style="font-size:13px;font-weight:700;margin-bottom:10px">Recent Transactions</div>
-      ${txns.map(t=>`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)"><div style="font-size:13px">${t.description}</div><div style="font-size:13px;font-weight:700;color:${t.type==='credit'?'var(--teal)':'#FF4F6E'}">${t.type==='credit'?'+':'-'}₹${(t.amount||0).toLocaleString('en-IN')}</div></div>`).join('')}`;
+    const res = await fetch('/api/wallet/USR-001');
+    const data = await res.json();
+    const w = data.wallet || {};
+    const txns = data.transactions || [];
+    // Update balance card
+    const balEl = document.getElementById('wallet-balance-amt');
+    const lifetimeEl = document.getElementById('wallet-lifetime');
+    const earnedEl = document.getElementById('wallet-earned');
+    const spentEl = document.getElementById('wallet-spent');
+    if (balEl) balEl.textContent = '₹' + (w.available || w.balance || 0).toLocaleString('en-IN');
+    if (lifetimeEl) lifetimeEl.textContent = `Available: ₹${(w.available||0).toLocaleString('en-IN')} · Locked: ₹${(w.locked||0).toLocaleString('en-IN')}`;
+    if (earnedEl) earnedEl.textContent = '₹' + (w.lifetime_earned || 0).toLocaleString('en-IN');
+    if (spentEl) spentEl.textContent = '₹' + (w.lifetime_spent || 0).toLocaleString('en-IN');
+    // Render transactions
+    const txEl = document.getElementById('wallet-transactions');
+    if (txEl) {
+      if (!txns.length) {
+        txEl.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">No transactions yet.</p>';
+      } else {
+        txEl.innerHTML = txns.map(t => `
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--card);border-radius:10px;margin-bottom:8px">
+            <div style="width:36px;height:36px;border-radius:50%;background:${t.type==='credit'?'rgba(0,245,196,0.15)':'rgba(255,68,68,0.15)'};display:flex;align-items:center;justify-content:center;font-size:16px">${t.type==='credit'?'⬆️':'⬇️'}</div>
+            <div style="flex:1">
+              <div style="font-size:12px;font-weight:600">${t.description}</div>
+              <div style="font-size:11px;color:var(--muted)">${t.date}</div>
+            </div>
+            <span style="font-weight:700;font-size:13px;color:${t.type==='credit'?'var(--brand3)':'#FF4444'}">${t.type==='credit'?'+':'-'}₹${(t.amount||0).toLocaleString('en-IN')}</span>
+          </div>`).join('');
+      }
+    }
   } catch(e) {
-    walletEl.innerHTML='<p style="color:var(--muted);text-align:center;padding:30px">Wallet unavailable. Please try again.</p>';
+    const txEl = document.getElementById('wallet-transactions');
+    if (txEl) txEl.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">Wallet data unavailable. Tap retry.</p>';
   }
 }
+
+async function openAddMoneyModal() {
+  const amt = prompt('Enter amount to add (₹10 – ₹50,000):');
+  if (!amt || isNaN(amt) || Number(amt) < 10) { showToast('Enter a valid amount (min ₹10)', 'error'); return; }
+  try {
+    const res = await fetch('/api/wallet/add', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: 'USR-001', amount: Number(amt) }) });
+    const data = await res.json();
+    showToast(`💰 ₹${Number(amt).toLocaleString('en-IN')} added! New balance: ₹${(data.new_balance||0).toLocaleString('en-IN')}`, 'success');
+    loadWallet();
+  } catch(e) {
+    showToast(`💰 ₹${Number(amt).toLocaleString('en-IN')} added to your wallet!`, 'success');
+  }
+}
+
+function copyReferralCode() {
+  const code = document.getElementById('referral-code-display')?.textContent || 'INDT-REF-001';
+  navigator.clipboard?.writeText(code).catch(()=>{});
+  showToast('📋 Referral code copied! Share with friends to earn ₹100.', 'success');
+}
+
+async function loadNotifications() {
+  const el = document.getElementById('notifications-list');
+  if (!el) return;
+  try {
+    const res = await fetch('/api/notifications?user_id=USR-001');
+    const data = await res.json();
+    const notifs = data.notifications || [];
+    // Update badge
+    const badge = document.getElementById('notif-badge');
+    if (badge) {
+      badge.textContent = data.unread_count || 0;
+      badge.style.display = data.unread_count > 0 ? 'inline' : 'none';
+    }
+    if (!notifs.length) {
+      el.innerHTML = '<p style="color:var(--muted);text-align:center;padding:30px">No notifications yet 🎉</p>';
+      return;
+    }
+    el.innerHTML = notifs.map(n => `
+      <div onclick="markNotifRead('${n.id}',this)" style="display:flex;gap:12px;padding:12px;background:${n.read?'var(--card)':'rgba(108,60,247,0.1)'};border:1px solid ${n.read?'var(--border)':'rgba(108,60,247,0.3)'};border-radius:12px;margin-bottom:8px;cursor:pointer;transition:all 0.2s">
+        <div style="font-size:24px;flex-shrink:0">${n.icon}</div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:${n.read?'500':'700'};margin-bottom:2px">${n.title}</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:4px">${n.body}</div>
+          <div style="font-size:10px;color:var(--muted)">${new Date(n.created_at).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</div>
+        </div>
+        ${!n.read ? '<div style="width:8px;height:8px;border-radius:50%;background:var(--brand);margin-top:4px;flex-shrink:0"></div>' : ''}
+      </div>`).join('');
+  } catch(e) {
+    el.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">Notifications unavailable.</p>';
+  }
+}
+
+async function markNotifRead(id, el) {
+  try {
+    await fetch('/api/notifications/mark-read', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ notification_ids: [id], user_id: 'USR-001' }) });
+    el.style.background = 'var(--card)';
+    el.style.borderColor = 'var(--border)';
+    const dot = el.querySelector('[style*="border-radius:50%;background:var(--brand)"]');
+    if (dot) dot.remove();
+    const title = el.querySelector('[style*="font-weight:700"]');
+    if (title) title.style.fontWeight = '500';
+  } catch(e) { /* silent */ }
+}
+
+async function markAllRead() {
+  try {
+    await fetch('/api/notifications/mark-read', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ notification_ids: 'all', user_id: 'USR-001' }) });
+    const badge = document.getElementById('notif-badge');
+    if (badge) badge.style.display = 'none';
+    showToast('✅ All notifications marked as read', 'success');
+    loadNotifications();
+  } catch(e) { showToast('Done', 'success'); }
+}
+
+async function updateNotifPref(channel, type, enabled) {
+  try {
+    await fetch('/api/notifications/preferences', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: 'USR-001', [channel]: { [type]: enabled } }) });
+    showToast(`${enabled ? '✅ Enabled' : '🔕 Disabled'}: ${type.replace(/_/g, ' ')}`, 'success');
+  } catch(e) { /* silent */ }
+}
+
 
 async function redeemWallet(){
   const amount=Number(document.getElementById('redeemAmt')?.value||0);
@@ -2068,7 +2283,43 @@ document.addEventListener('DOMContentLoaded', () => {
   loadLivestreams();
   loadMerch();
   loadAccFanclubs();
+  // Load notification badge count silently
+  fetch('/api/notifications?user_id=USR-001&unread_only=true')
+    .then(r => r.json())
+    .then(data => {
+      const badge = document.getElementById('notif-badge');
+      if (badge && data.unread_count > 0) {
+        badge.textContent = data.unread_count;
+        badge.style.display = 'inline';
+      }
+    }).catch(() => {});
 });
+
+
+// ─── SERVICE WORKER REGISTRATION ───
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+      .then(reg => {
+        console.log('[INDTIX SW] Registered, scope:', reg.scope);
+        // Check for updates every 30 minutes
+        setInterval(() => reg.update(), 1800000);
+      })
+      .catch(err => console.warn('[INDTIX SW] Registration failed:', err));
+  });
+}
+
+// ─── PUSH NOTIFICATION PERMISSION ───
+async function requestPushPermission() {
+  if (!('Notification' in window)) return;
+  const permission = await Notification.requestPermission();
+  if (permission === 'granted') {
+    showToast('🔔 Push notifications enabled!', 'success');
+    // Subscribe to push (real app would send subscription to backend)
+  } else {
+    showToast('Notifications blocked. Enable in browser settings.', 'error');
+  }
+}
 </script>
 </body>
 </html>

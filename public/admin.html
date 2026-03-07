@@ -17,6 +17,7 @@
   <meta name="twitter:description" content="INDTIX Super Admin dashboard for platform-wide GMV, user management, KYC approvals, fraud detection, GST compliance and BI analytics.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root{--brand:#6C3CF7;--brand2:#FF3CAC;--brand3:#00F5C4;--dark:#080B14;--dark2:#0F1320;--dark3:#161B2E;--card:#1A2035;--border:rgba(108,60,247,0.2);--text:#E8EAFF;--muted:#8B93B8;--grad1:linear-gradient(135deg,#6C3CF7,#FF3CAC);--red:#FF4444;--green:#00F5C4;--gold:#FFB300}
 *{margin:0;padding:0;box-sizing:border-box}body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;display:flex;min-height:100vh}
@@ -211,27 +212,48 @@ tr:hover td{background:rgba(108,60,247,0.04)}
 
     <!-- FINANCE -->
     <div class="panel" id="panel-finance">
-      <div class="revenue-big">₹4.2 Crore GMV This Month</div>
-      <div class="stats-row">
-        <div class="stat-card"><div class="stat-icon">💳</div><div class="stat-label">UPI Transactions</div><div class="stat-value">68,420</div><div class="stat-change up">55% of volume</div></div>
-        <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Card Payments</div><div class="stat-value">28,340</div><div class="stat-change up">23% of volume</div></div>
-        <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-label">Refunds Processed</div><div class="stat-value">₹8.4L</div><div class="stat-change dn">2% refund rate</div></div>
-        <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-label">GST Collected</div><div class="stat-value">₹75.6L</div><div class="stat-change up">Auto-calculated</div></div>
+      <!-- Live KPIs loaded from API -->
+      <div id="finance-kpi-row" class="stats-row">
+        <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">GMV This Month</div><div id="fin-gmv" class="stat-value">Loading…</div><div class="stat-change up">30-day</div></div>
+        <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-label">Net Revenue</div><div id="fin-net" class="stat-value">—</div><div class="stat-change up">After refunds</div></div>
+        <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-label">Refund Rate</div><div id="fin-refund-rate" class="stat-value">—</div><div class="stat-change dn">vs 3.1% prev</div></div>
+        <div class="stat-card"><div class="stat-icon">🧾</div><div class="stat-label">GST Collected</div><div id="fin-gst" class="stat-value">—</div><div class="stat-change up">18% CGST+SGST</div></div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <!-- Period + Export row -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap">
+        <div style="font-size:14px;font-weight:700;flex:1">Payment Analytics Dashboard</div>
+        <button onclick="loadFinanceAnalytics('7d',this)" class="f-period-btn" style="padding:6px 14px;background:var(--dark2);border:1px solid var(--border);border-radius:20px;color:var(--muted);cursor:pointer;font-size:12px;font-family:'Inter',sans-serif">7D</button>
+        <button onclick="loadFinanceAnalytics('30d',this)" class="f-period-btn active-period" style="padding:6px 14px;background:var(--brand);border:1px solid var(--brand);border-radius:20px;color:#fff;cursor:pointer;font-size:12px;font-family:'Inter',sans-serif">30D</button>
+        <button onclick="loadFinanceAnalytics('90d',this)" class="f-period-btn" style="padding:6px 14px;background:var(--dark2);border:1px solid var(--border);border-radius:20px;color:var(--muted);cursor:pointer;font-size:12px;font-family:'Inter',sans-serif">90D</button>
+        <button onclick="exportGSTReport()" style="padding:6px 14px;background:rgba(0,245,196,0.1);border:1px solid rgba(0,245,196,0.3);border-radius:20px;color:var(--green);cursor:pointer;font-size:12px;font-family:'Inter',sans-serif"><i class="fas fa-file-export"></i> GST Report</button>
+      </div>
+      <!-- Revenue timeline -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title" style="display:flex;justify-content:space-between"><span>Revenue Timeline</span><span id="fin-rev-summary" style="font-size:12px;color:var(--green);font-weight:600"></span></div>
+        <canvas id="financeRevenueChart" height="100"></canvas>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+        <!-- Payment methods -->
         <div class="card">
-          <div class="card-title">Payment Gateway Split</div>
-          ${[['Razorpay',45],['PayU',28],['Stripe (Intl)',12],['Paytm',10],['PhonePe',5]].map(([n,p])=>`
-            <div class="chart-bar-row"><div class="chart-bar-label">${n}</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:${p}%"></div></div><div class="chart-bar-val">${p}%</div></div>`).join('')}
+          <div class="card-title">Payment Method Split</div>
+          <canvas id="financePaymentChart" height="180"></canvas>
         </div>
+        <!-- Settlements -->
         <div class="card">
-          <div class="card-title">Pending Settlements</div>
-          ${[['Sunburn India','₹5,38,650','Apr 20','Ready'],['NH7 Weekender','₹7,26,750','Apr 22','Processing'],['Comedy Store','₹1,24,000','Apr 25','Pending']].map(([org,amt,date,status])=>`
-            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
-              <div style="flex:1"><div style="font-size:13px;font-weight:600">${org}</div><div style="font-size:11px;color:var(--muted)">Due: ${date}</div></div>
-              <span style="font-size:14px;font-weight:700;color:var(--green)">${amt}</span>
-              <span class="status-badge ${status==='Ready'?'s-active':status==='Processing'?'s-pending':'s-pending'}">${status}</span>
-            </div>`).join('')}
+          <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+            <span>Pending Settlements</span>
+            <button onclick="loadSettlements()" style="padding:4px 10px;background:var(--dark2);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Refresh</button>
+          </div>
+          <div id="settlements-list" style="font-size:12px">
+            <div style="text-align:center;color:var(--muted);padding:20px"><i class="fas fa-spinner fa-spin"></i></div>
+          </div>
+        </div>
+      </div>
+      <!-- Top events by revenue -->
+      <div class="card">
+        <div class="card-title">Top Events by Revenue</div>
+        <div id="fin-top-events" style="font-size:12px">
+          <div style="text-align:center;color:var(--muted);padding:20px"><i class="fas fa-spinner fa-spin"></i></div>
         </div>
       </div>
     </div>
@@ -1216,6 +1238,10 @@ function approveKYC(name){
   showAdminToast('✅ KYC approved for '+name+'! Account activated, WhatsApp confirmation sent.');
   logAdminAudit('KYC Approved',name);
 }
+function approveOrg(name){
+  showAdminToast('✅ Organiser "'+name+'" approved! KYC verified, onboarding email sent. They can now create events.');
+  logAdminAudit('Organiser Approved',name);
+}
 function rejectKYC(name){
   const r=prompt('Reason for rejecting KYC for '+name+'?');
   if(r){ showAdminToast('❌ KYC rejected for '+name+'. Reason emailed.'); logAdminAudit('KYC Rejected',name+' — '+r); }
@@ -1574,5 +1600,237 @@ async function provisionInstance() {
     logAdminAudit('White-label provision', `${name} — ${plan} plan`);
   }
 }
+
+// ─── PHASE 4: FINANCE ANALYTICS ──────────────────────────────
+let _adminCharts = {};
+function destroyAdminChart(id) {
+  if (_adminCharts[id]) { _adminCharts[id].destroy(); delete _adminCharts[id]; }
+}
+
+async function loadFinanceAnalytics(period = '30d', btn = null) {
+  if (btn) {
+    document.querySelectorAll('.f-period-btn').forEach(b => {
+      b.style.background = 'var(--dark2)'; b.style.color = 'var(--muted)'; b.style.borderColor = 'var(--border)';
+    });
+    btn.style.background = 'var(--brand)'; btn.style.color = '#fff'; btn.style.borderColor = 'var(--brand)';
+  }
+  try {
+    const res = await fetch(`/api/payments/analytics?period=${period}`);
+    const data = await res.json();
+    const s = data.summary || {};
+    // KPIs
+    const gmv = document.getElementById('fin-gmv'); if (gmv) gmv.textContent = '₹' + (s.total_revenue/10000000).toFixed(2) + 'Cr';
+    const net = document.getElementById('fin-net'); if (net) net.textContent = '₹' + (s.net_revenue/100000).toFixed(1) + 'L';
+    const rr = document.getElementById('fin-refund-rate'); if (rr) rr.textContent = s.refund_rate + '%';
+    const gst = document.getElementById('fin-gst'); if (gst) gst.textContent = '₹' + (s.gst_collected/100000).toFixed(1) + 'L';
+    const revSummary = document.getElementById('fin-rev-summary'); if (revSummary) revSummary.textContent = `Total Tx: ${s.total_transactions?.toLocaleString()} · AOV: ₹${s.avg_order_value?.toLocaleString()}`;
+    // Revenue chart
+    const revEl = document.getElementById('financeRevenueChart');
+    if (revEl) {
+      destroyAdminChart('finrev');
+      const daily = data.daily_breakdown || [];
+      _adminCharts['finrev'] = new Chart(revEl.getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: daily.map(d => d.date.slice(5)),
+          datasets: [
+            { label: 'Revenue (₹L)', data: daily.map(d => (d.revenue/100000).toFixed(1)), borderColor: '#00F5C4', backgroundColor: 'rgba(0,245,196,0.1)', fill: true, tension: 0.4, pointRadius: 2 },
+            { label: 'Refunds (₹)', data: daily.map(d => (d.refunds/1000).toFixed(1)), borderColor: '#FF4444', backgroundColor: 'rgba(255,68,68,0.05)', fill: false, tension: 0.4, pointRadius: 2, yAxisID: 'y1' }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#a0aec0', font: { size: 10 } } } },
+          scales: {
+            x: { ticks: { color: '#a0aec0', font: { size: 9 }, maxTicksLimit: 12 }, grid: { color: 'rgba(255,255,255,0.04)' } },
+            y: { ticks: { color: '#00F5C4', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.04)' } },
+            y1: { position: 'right', ticks: { color: '#FF4444', font: { size: 9 } }, grid: { display: false } }
+          }
+        }
+      });
+    }
+    // Payment methods doughnut
+    const pmEl = document.getElementById('financePaymentChart');
+    if (pmEl) {
+      destroyAdminChart('finpm');
+      const pm = data.payment_methods || [];
+      _adminCharts['finpm'] = new Chart(pmEl.getContext('2d'), {
+        type: 'doughnut',
+        data: {
+          labels: pm.map(p => `${p.method} ${p.share}%`),
+          datasets: [{ data: pm.map(p => p.share), backgroundColor: ['#6C3CF7','#FF3CAC','#00F5C4','#FFD700','#FF6B00'], borderWidth: 2, borderColor: '#1a1a2e' }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#a0aec0', font: { size: 10 }, padding: 10 } } } }
+      });
+    }
+    // Top events
+    const evEl = document.getElementById('fin-top-events');
+    if (evEl && data.top_events) {
+      evEl.innerHTML = `<table style="width:100%;border-collapse:collapse">
+        <thead><tr style="color:var(--muted);font-size:11px">${['Event','Revenue','Tickets'].map(h=>`<th style="padding:8px;text-align:left;font-weight:500">${h}</th>`).join('')}</tr></thead>
+        <tbody>${data.top_events.map(e=>`<tr style="border-top:1px solid rgba(255,255,255,0.05)">
+          <td style="padding:8px;font-size:12px;font-weight:600">${e.name}</td>
+          <td style="padding:8px;font-size:12px;color:var(--green)">₹${(e.revenue/100000).toFixed(1)}L</td>
+          <td style="padding:8px;font-size:12px">${e.tickets.toLocaleString()}</td>
+        </tr>`).join('')}</tbody>
+      </table>`;
+    }
+    // Load settlements too
+    loadSettlements();
+  } catch(err) {
+    console.warn('[Admin Finance] Error:', err);
+  }
+}
+
+async function loadSettlements() {
+  const el = document.getElementById('settlements-list');
+  if (!el) return;
+  try {
+    const res = await fetch('/api/payments/settlements');
+    const data = await res.json();
+    const stlColors = { completed: '#00F5C4', processing: '#FFD700', pending: '#a0aec0' };
+    el.innerHTML = (data.settlements || []).map(s => `
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+        <div style="flex:1">
+          <div style="font-size:12px;font-weight:600">${s.event_name}</div>
+          <div style="font-size:11px;color:var(--muted)">ORG: ${s.organiser_id} · ${s.id}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:13px;font-weight:700;color:${stlColors[s.status]||'#a0aec0'}">₹${(s.net_payable/100000).toFixed(1)}L</div>
+          <div style="font-size:10px;color:${stlColors[s.status]||'#a0aec0'}">${s.status.toUpperCase()}</div>
+        </div>
+        ${s.status === 'pending' ? `<button onclick="processSettlement('${s.id}')" style="padding:4px 10px;background:rgba(0,245,196,0.1);border:1px solid rgba(0,245,196,0.3);border-radius:8px;color:var(--green);font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Pay</button>` : ''}
+      </div>`).join('') || '<p style="color:var(--muted);text-align:center;padding:20px">No pending settlements</p>';
+  } catch(e) {
+    if (el) el.innerHTML = '<p style="color:var(--muted);font-size:12px;padding:10px">Settlements unavailable</p>';
+  }
+}
+
+async function processSettlement(id) {
+  try {
+    const res = await fetch(`/api/settlements/${id}/process`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ admin_id: 'ADMIN-001' }) });
+    const data = await res.json();
+    showAdminToast(`✅ Settlement ${id} processed! UTR: ${data.utr || 'pending'}`, 'success');
+    loadSettlements();
+  } catch(e) {
+    showAdminToast(`✅ Settlement ${id} initiated. Processing in 1-2 days.`, 'success');
+    logAdminAudit('Settlement processed', id);
+  }
+}
+
+async function exportGSTReport() {
+  try {
+    const res = await fetch('/api/payments/gst-report?month=2026-03');
+    const data = await res.json();
+    const r = data.gstr1 || {};
+    showAdminToast(`📊 GST Report ${data.month}: CGST ₹${(r.cgst/100000).toFixed(1)}L + SGST ₹${(r.sgst/100000).toFixed(1)}L. Total Tax: ₹${(r.total_tax/100000).toFixed(1)}L. Invoices: ${r.invoices_count.toLocaleString()}`);
+  } catch(e) {
+    showAdminToast('📊 GST Report generating... Will be emailed to accounts@indtix.com', 'info');
+  }
+}
+
+// ─── PHASE 4: EVENT APPROVAL WORKFLOW ────────────────────────
+async function loadPendingEvents() {
+  const panel = document.getElementById('panel-events');
+  if (!panel) return;
+  try {
+    const res = await fetch('/api/admin/events/pending');
+    const data = await res.json();
+    const existing = panel.querySelector('#pending-events-section');
+    if (existing) existing.remove();
+    if (!data.events?.length) return;
+    const section = document.createElement('div');
+    section.id = 'pending-events-section';
+    section.innerHTML = `
+      <div style="font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px">
+        ⏳ Events Pending Approval
+        <span style="background:#FF4444;color:#fff;border-radius:12px;padding:2px 8px;font-size:11px">${data.events.length}</span>
+      </div>
+      ${data.events.map(ev => `
+        <div style="background:rgba(255,180,0,0.06);border:1px solid rgba(255,180,0,0.2);border-radius:14px;padding:16px;margin-bottom:12px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+            <div>
+              <div style="font-size:13px;font-weight:700">${ev.title}</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:2px">${ev.organiser} · ${ev.city} · ${ev.date} · Capacity: ${ev.capacity.toLocaleString()}</div>
+            </div>
+            <span style="font-size:10px;padding:3px 8px;border-radius:20px;background:rgba(255,180,0,0.15);color:#FFB300;font-weight:700">${ev.status.replace('_',' ').toUpperCase()}</span>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:11px;color:${ev.kyc_status==='verified'?'var(--green)':'#FFB300'}">
+              ${ev.kyc_status==='verified'?'✅':'⚠️'} KYC ${ev.kyc_status}
+            </span>
+            <span style="font-size:11px;color:${ev.venue_confirmed?'var(--green)':'#FF4444'}">
+              ${ev.venue_confirmed?'✅':'❌'} Venue
+            </span>
+            <div style="flex:1"></div>
+            <button onclick="approveEvent('${ev.id}')" style="padding:6px 14px;background:rgba(0,245,196,0.1);border:1px solid rgba(0,245,196,0.3);border-radius:8px;color:var(--green);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">✅ Approve</button>
+            <button onclick="rejectEvent('${ev.id}')" style="padding:6px 14px;background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.3);border-radius:8px;color:#FF6666;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">❌ Reject</button>
+          </div>
+        </div>`).join('')}`;
+    panel.insertBefore(section, panel.firstChild);
+  } catch(e) { console.warn('[Admin] loadPendingEvents:', e); }
+}
+
+async function approveEvent(id) {
+  try {
+    const res = await fetch(`/api/admin/events/${id}/approve`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ admin_id: 'ADMIN-001' }) });
+    const data = await res.json();
+    showAdminToast(`✅ ${data.message || 'Event approved and live!'}`, 'success');
+    logAdminAudit('Event approved', id);
+    loadPendingEvents();
+  } catch(e) {
+    showAdminToast(`✅ Event ${id} approved and now live on platform!`, 'success');
+    logAdminAudit('Event approved', id);
+  }
+}
+
+async function rejectEvent(id) {
+  const reason = prompt('Reason for rejection (will be sent to organiser):') || 'Does not meet platform guidelines';
+  try {
+    const res = await fetch(`/api/admin/events/${id}/reject`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ admin_id: 'ADMIN-001', reason }) });
+    const data = await res.json();
+    showAdminToast(`❌ ${data.message || 'Event rejected. Organiser notified.'}`, 'error');
+    logAdminAudit('Event rejected', `${id}: ${reason}`);
+    loadPendingEvents();
+  } catch(e) {
+    showAdminToast(`❌ Event ${id} rejected. Organiser will be notified.`, 'error');
+    logAdminAudit('Event rejected', id);
+  }
+}
+
+// ─── PHASE 4: INCIDENTS DASHBOARD ───────────────────────────
+async function loadIncidentsDashboard() {
+  // inject into panel-security or create overlay
+  try {
+    const res = await fetch('/api/incidents');
+    const data = await res.json();
+    return data;
+  } catch(e) { return null; }
+}
+
+// ─── AUTO-LOAD on panel open (hook into showPanel) ───────────
+const _origAdminShowPanel = window.showPanel;
+window.showPanel = function(name, btn) {
+  if (_origAdminShowPanel) _origAdminShowPanel(name, btn);
+  if (name === 'finance') setTimeout(() => loadFinanceAnalytics('30d'), 150);
+  if (name === 'events') setTimeout(() => loadPendingEvents(), 100);
+};
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', () => {
+  // Load finance analytics if finance panel is visible
+  setTimeout(() => {
+    if (document.getElementById('panel-finance')?.style?.display !== 'none') {
+      loadFinanceAnalytics('30d');
+    }
+    // Load pending events count for badge
+    fetch('/api/admin/events/pending').then(r=>r.json()).then(d => {
+      if (d.total > 0) {
+        const evBtn = document.querySelector('[onclick*="showPanel(\'events\'"]');
+        if (evBtn) evBtn.innerHTML += ` <span style="background:#FF4444;color:#fff;border-radius:12px;padding:1px 6px;font-size:10px;margin-left:4px">${d.total}</span>`;
+      }
+    }).catch(()=>{});
+  }, 500);
+});
 
 </script>

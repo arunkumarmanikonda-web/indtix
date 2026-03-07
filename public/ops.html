@@ -599,6 +599,27 @@ function setLEDScene(scene){
 function setLEDBandColor(color){
   showOpsToast('🎨 All LED bands set to '+color+'!');
 }
+// Alias wrappers for onclick references in HTML
+function setLED(colorOrMode){
+  if(colorOrMode==='rainbow'){setLEDScene('wave');return;}
+  if(colorOrMode==='off'){showOpsToast('💡 LED bands turned OFF across all zones.');addToLog('valid','LED off');return;}
+  setLEDBandColor(colorOrMode);
+}
+function ledMode(mode){
+  const modes={'pulse':'Pulse mode — bands syncing to music BPM','wave':'Wave mode — rolling colour wave','strobe':'Strobe mode — rapid flash','solid':'Solid mode — static colour'};
+  showOpsToast('💡 LED mode: '+(modes[mode]||mode));
+  addToLog('valid','LED mode set: '+mode);
+}
+let _selectedPayMethod = 'cash';
+function selectPay(btn, method){
+  document.querySelectorAll('.pay-btn,.pay-method').forEach(b=>b.style.opacity='0.5');
+  if(btn){btn.style.opacity='1';btn.style.borderColor='var(--brand)';}
+  _selectedPayMethod = method;
+  showOpsToast('💳 Payment method: '+method.toUpperCase()+' selected');
+}
+function processPOSPayment(){
+  payPOS(_selectedPayMethod || 'upi');
+}
 function triggerEmergencyLED(){
   if(!confirm('Trigger EMERGENCY red flash on ALL wristbands?')) return;
   showOpsToast('🚨 EMERGENCY LED pattern activated on all wristbands!');
@@ -693,7 +714,114 @@ async function loadOpsDashboard() {
 
 window.addEventListener('DOMContentLoaded', () => {
   loadOpsDashboard();
+  loadIncidents();
+  // Auto-refresh every 30 seconds
+  setInterval(() => {
+    loadOpsDashboard();
+    loadIncidents();
+  }, 30000);
 });
+
+// ─── PHASE 4: INCIDENTS REAL-TIME TRACKING ──────────────────
+async function loadIncidents() {
+  try {
+    const res = await fetch('/api/incidents?event_id=e1');
+    const data = await res.json();
+    // Inject into page if incidents section exists
+    let el = document.getElementById('ops-incidents-section');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'ops-incidents-section';
+      el.style.cssText = 'position:fixed;bottom:80px;right:20px;width:340px;max-height:400px;overflow-y:auto;z-index:900;';
+      document.body.appendChild(el);
+    }
+    const open = data.incidents?.filter(i => i.status === 'open') || [];
+    if (!open.length) { el.innerHTML = ''; return; }
+    const priorityColor = { high: '#FF4444', medium: '#FFB300', low: '#00F5C4' };
+    el.innerHTML = `
+      <div style="background:rgba(26,0,64,0.98);border:1px solid rgba(255,68,68,0.4);border-radius:14px;padding:14px;backdrop-filter:blur(10px)">
+        <div style="font-size:12px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;color:#FF6666">
+          🚨 Active Incidents (${open.length})
+          <button onclick="document.getElementById('ops-incidents-section').style.display='none'" style="margin-left:auto;background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px">✕</button>
+        </div>
+        ${open.map(i => `
+          <div style="background:rgba(255,255,255,0.05);border-left:3px solid ${priorityColor[i.priority]||'#FF4444'};border-radius:0 8px 8px 0;padding:8px 10px;margin-bottom:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+              <span style="font-size:11px;font-weight:700;color:${priorityColor[i.priority]||'#FF4444'}">${i.type.replace(/_/g,' ').toUpperCase()}</span>
+              <span style="font-size:10px;color:var(--muted)">${new Date(i.logged_at).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}</span>
+            </div>
+            <div style="font-size:11px;color:#e2e8f0;margin-bottom:2px">${i.description}</div>
+            <div style="font-size:10px;color:var(--muted)">📍 ${i.location}</div>
+            <div style="margin-top:6px;display:flex;gap:6px">
+              <button onclick="resolveIncident('${i.id}')" style="flex:1;padding:4px 8px;background:rgba(0,245,196,0.1);border:1px solid rgba(0,245,196,0.3);border-radius:6px;color:var(--teal);font-size:10px;cursor:pointer;font-family:'Inter',sans-serif">✅ Resolve</button>
+              <button onclick="escalateIncident('${i.id}')" style="flex:1;padding:4px 8px;background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.3);border-radius:6px;color:#FF6666;font-size:10px;cursor:pointer;font-family:'Inter',sans-serif">🚨 Escalate</button>
+            </div>
+          </div>`).join('')}
+      </div>`;
+  } catch(e) { /* silent */ }
+}
+
+async function resolveIncident(id) {
+  try {
+    await fetch(`/api/incidents/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'resolved', resolved_at: new Date().toISOString() }) });
+    showOpsToast(`✅ Incident ${id} marked resolved`);
+    loadIncidents();
+  } catch(e) {
+    showOpsToast(`✅ Incident ${id} resolved`);
+    loadIncidents();
+  }
+}
+
+async function escalateIncident(id) {
+  try {
+    await fetch(`/api/incidents/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ priority: 'critical', escalated: true }) });
+    showOpsToast(`🚨 Incident ${id} ESCALATED to Event Director!`);
+  } catch(e) {
+    showOpsToast(`🚨 Incident ${id} escalated to command!`);
+  }
+}
+
+async function logNewIncident(type, description, location = 'General') {
+  try {
+    const res = await fetch('/api/incidents', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type, description, location, event_id: 'e1' })
+    });
+    const data = await res.json();
+    showOpsToast(`🚨 Incident logged: ${data.incident?.id || 'INC-NEW'}`);
+    loadIncidents();
+  } catch(e) {
+    showOpsToast(`🚨 Incident logged! Response team alerted.`);
+  }
+}
+
+// Scan stats refresh
+async function loadScanStats() {
+  try {
+    const res = await fetch('/api/scan/stats/e1');
+    const data = await res.json();
+    const s = data.scan_stats || {};
+    const scanEl = document.getElementById('ops-scan-stats');
+    if (scanEl) {
+      scanEl.innerHTML = `
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px">
+          <div style="text-align:center">
+            <div style="font-size:20px;font-weight:700;color:var(--teal)">${s.checked_in?.toLocaleString()||0}</div>
+            <div style="font-size:10px;color:var(--muted)">Checked In</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:20px;font-weight:700;color:var(--brand)">${s.check_in_rate||0}%</div>
+            <div style="font-size:10px;color:var(--muted)">Check-in Rate</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:20px;font-weight:700;color:#FFB300">${s.scans_per_minute||0}</div>
+            <div style="font-size:10px;color:var(--muted)">Scans/min</div>
+          </div>
+        </div>`;
+    }
+  } catch(e) { /* silent */ }
+}
 
 </script>
 </body>

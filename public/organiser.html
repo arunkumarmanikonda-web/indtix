@@ -297,25 +297,98 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
 
     <!-- ANALYTICS PANEL -->
     <div class="panel" id="panel-analytics">
-      <div class="stats-row">
-        <div class="stat-card purple"><div class="stat-icon">👀</div><div class="stat-label">Event Page Views</div><div class="stat-value">48,200</div><div class="stat-change up">↑ 32%</div></div>
-        <div class="stat-card pink"><div class="stat-icon">🔄</div><div class="stat-label">Conversion Rate</div><div class="stat-value">3.8%</div><div class="stat-change up">↑ 0.4%</div></div>
-        <div class="stat-card teal"><div class="stat-icon">💳</div><div class="stat-label">Avg Order Value</div><div class="stat-value">₹2,840</div><div class="stat-change up">↑ 12%</div></div>
-        <div class="stat-card gold"><div class="stat-icon">🔁</div><div class="stat-label">Repeat Buyers</div><div class="stat-value">28%</div><div class="stat-change up">↑ 5%</div></div>
+      <!-- Real-time KPI row -->
+      <div class="stats-row" id="analytics-kpi-row">
+        <div class="stat-card purple"><div class="stat-icon">🎟️</div><div class="stat-label">Tickets Sold Today</div><div id="a-kpi-1" class="stat-value">—</div><div class="stat-change up">Live</div></div>
+        <div class="stat-card pink"><div class="stat-icon">💰</div><div class="stat-label">Revenue Today</div><div id="a-kpi-2" class="stat-value">—</div><div class="stat-change up">Live</div></div>
+        <div class="stat-card teal"><div class="stat-icon">🔄</div><div class="stat-label">Conversion Rate</div><div id="a-kpi-3" class="stat-value">—</div><div class="stat-change up">↑ 0.4%</div></div>
+        <div class="stat-card gold"><div class="stat-icon">📊</div><div class="stat-label">Active Sessions</div><div id="a-kpi-4" class="stat-value">—</div><div class="stat-change up">Right now</div></div>
       </div>
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px">
-        <div style="font-size:15px;font-weight:700;margin-bottom:20px">Sales Timeline — Sunburn Arena Mumbai</div>
-        <div style="display:flex;align-items:flex-end;gap:6px;height:120px">
-          ${[30,45,60,80,95,70,85,100,72,88,65,40].map((h,i)=>`<div style="flex:1;background:var(--grad1);border-radius:4px 4px 0 0;height:${h}%;opacity:0.7;cursor:pointer;transition:opacity 0.2s" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'" title="Week ${i+1}: ${h}% sales"></div>`).join('')}
-        </div>
-        <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--muted)">
-          <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span>
+
+      <!-- Period selector -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+        <div style="font-size:15px;font-weight:700">Analytics v2 — Deep Insights</div>
+        <div style="display:flex;gap:6px">
+          <button onclick="loadAnalyticsV2('7d',this)" class="period-btn" style="padding:6px 14px;background:var(--dark3);border:1px solid var(--border);border-radius:20px;color:var(--muted);cursor:pointer;font-size:12px;font-family:'Inter',sans-serif">7D</button>
+          <button onclick="loadAnalyticsV2('30d',this)" class="period-btn active" style="padding:6px 14px;background:var(--brand);border:1px solid var(--brand);border-radius:20px;color:#fff;cursor:pointer;font-size:12px;font-family:'Inter',sans-serif">30D</button>
+          <button onclick="loadAnalyticsV2('90d',this)" class="period-btn" style="padding:6px 14px;background:var(--dark3);border:1px solid var(--border);border-radius:20px;color:var(--muted);cursor:pointer;font-size:12px;font-family:'Inter',sans-serif">90D</button>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
-        <div class="card"><div class="card-title">Ticket Types</div>${[['GA',45,'#6C3CF7'],['Premium',30,'#FF3CAC'],['VIP',25,'#00F5C4']].map(([n,p,c])=>`<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div style="width:10px;height:10px;border-radius:2px;background:${c}"></div><span style="flex:1;font-size:13px">${n}</span><span style="font-size:13px;font-weight:600">${p}%</span></div>`).join('')}</div>
-        <div class="card"><div class="card-title">Top Cities</div>${[['Mumbai',42],['Pune',28],['Nashik',18],['Others',12]].map(([c,p])=>`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>${c}</span><span>${p}%</span></div><div style="background:var(--dark3);border-radius:4px;height:5px"><div style="width:${p}%;height:100%;background:var(--grad1);border-radius:4px"></div></div></div>`).join('')}</div>
-        <div class="card"><div class="card-title">Traffic Sources</div>${[['Organic Search',35],['Social Media',28],['Email/WhatsApp',22],['Referral',15]].map(([s,p])=>`<div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;margin-bottom:10px"><span>${s}</span><span style="font-weight:600">${p}%</span></div>`).join('')}</div>
+
+      <!-- Revenue Chart -->
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <div style="font-size:14px;font-weight:700">Revenue & Transactions Timeline</div>
+          <div id="analytics-rev-total" style="font-size:13px;color:var(--brand3);font-weight:600">Loading…</div>
+        </div>
+        <canvas id="analyticsRevenueChart" height="100"></canvas>
+      </div>
+
+      <!-- Audience + Capacity row -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px">
+        <!-- Audience breakdown doughnut -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:14px">Age Groups</div>
+          <canvas id="analyticsAgeChart" height="140"></canvas>
+        </div>
+        <!-- Device breakdown doughnut -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:14px">Device Split</div>
+          <canvas id="analyticsDeviceChart" height="140"></canvas>
+        </div>
+        <!-- Traffic sources bar -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:14px">Traffic Sources</div>
+          <canvas id="analyticsSourceChart" height="140"></canvas>
+        </div>
+      </div>
+
+      <!-- Capacity + Cities row -->
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px">
+        <!-- Zone capacity bar chart -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:14px">Zone Capacity & Revenue</div>
+          <canvas id="analyticsZoneChart" height="100"></canvas>
+        </div>
+        <!-- Top cities list -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:14px">Top Cities</div>
+          <div id="analytics-cities-list" style="font-size:12px"></div>
+        </div>
+      </div>
+
+      <!-- AI Forecasting -->
+      <div style="background:linear-gradient(135deg,#1a0040,#0d0d2b);border:1px solid rgba(108,60,247,0.4);border-radius:16px;padding:20px;margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <span style="font-size:20px">🤖</span>
+          <div>
+            <div style="font-size:14px;font-weight:700">AI Demand Forecast</div>
+            <div style="font-size:11px;color:var(--muted)">Powered by INDTIX ForecaAI v2</div>
+          </div>
+          <span id="forecast-confidence" style="margin-left:auto;padding:4px 12px;background:rgba(0,245,196,0.1);color:var(--brand3);border-radius:20px;font-size:11px;font-weight:700"></span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
+          <div style="background:rgba(255,255,255,0.05);border-radius:12px;padding:12px;text-align:center">
+            <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Next 24h Sales</div>
+            <div id="f-24h" style="font-size:20px;font-weight:700;color:#fff;margin:4px 0">—</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.05);border-radius:12px;padding:12px;text-align:center">
+            <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">7-Day Revenue</div>
+            <div id="f-7d-rev" style="font-size:20px;font-weight:700;color:var(--brand3);margin:4px 0">—</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.05);border-radius:12px;padding:12px;text-align:center">
+            <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Sellout Probability</div>
+            <div id="f-sellout" style="font-size:20px;font-weight:700;color:#FFD700;margin:4px 0">—</div>
+          </div>
+        </div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--muted)">AI Recommendations</div>
+        <ul id="f-recommendations" style="font-size:12px;color:var(--text);padding-left:16px;line-height:2"></ul>
+      </div>
+
+      <!-- Payment methods chart -->
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:14px">Payment Methods</div>
+        <canvas id="analyticsPaymentChart" height="80"></canvas>
       </div>
     </div>
 
@@ -1399,6 +1472,7 @@ function exportAttendeesFull(){
   showOrgToast('📊 Attendee CSV generating... will download in 5 seconds.');
   setTimeout(()=>showOrgToast('✅ Attendee data exported: '+Math.floor(Math.random()*3000+1000)+' records.'),2000);
 }
+const exportAttendees = exportAttendeesFull; // alias
 function sendBulkWhatsApp(){
   if(!confirm('Send WhatsApp update to all 2,841 attendees?')) return;
   showOrgToast('📲 WhatsApp broadcast queued for 2,841 attendees. ETA: ~5 min.');
@@ -1726,5 +1800,197 @@ function initForecastChart() {
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#a0aec0', font: { size: 10 } } } }, scales: { x: { ticks: { color: '#a0aec0', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } }, y: { ticks: { color: '#a0aec0', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } } } }
   });
 }
+
+// ─── ANALYTICS v2 ────────────────────────────────────────────
+let _analyticsCharts = {};
+
+function destroyChart(id) {
+  if (_analyticsCharts[id]) {
+    _analyticsCharts[id].destroy();
+    delete _analyticsCharts[id];
+  }
+}
+
+const CHART_DEFAULTS = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { labels: { color: '#a0aec0', font: { size: 10 } } } },
+  scales: {
+    x: { ticks: { color: '#a0aec0', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+    y: { ticks: { color: '#a0aec0', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } }
+  }
+};
+
+async function loadAnalyticsV2(period = '30d', btn = null) {
+  // Update active button
+  if (btn) {
+    document.querySelectorAll('.period-btn').forEach(b => {
+      b.style.background = 'var(--dark3)'; b.style.color = 'var(--muted)'; b.style.borderColor = 'var(--border)';
+    });
+    btn.style.background = 'var(--brand)'; btn.style.color = '#fff'; btn.style.borderColor = 'var(--brand)';
+  }
+
+  try {
+    const [analyticsRes, paymentRes, forecastRes] = await Promise.all([
+      fetch(`/api/organiser/analytics/v2?period=${period}`),
+      fetch(`/api/payments/analytics?period=${period}`),
+      fetch('/api/ai/forecast', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_id: 'e1', metric: 'sales' }) })
+    ]);
+    const analytics = await analyticsRes.json();
+    const payment = await paymentRes.json();
+    const forecast = await forecastRes.json();
+
+    // Update KPI cards
+    const rt = analytics.real_time || {};
+    const k1 = document.getElementById('a-kpi-1'); if (k1) k1.textContent = (rt.tickets_sold_today || 0).toLocaleString('en-IN');
+    const k2 = document.getElementById('a-kpi-2'); if (k2) k2.textContent = '₹' + ((rt.revenue_today || 0) / 100000).toFixed(1) + 'L';
+    const k3 = document.getElementById('a-kpi-3'); if (k3) k3.textContent = (rt.conversion_rate || 0) + '%';
+    const k4 = document.getElementById('a-kpi-4'); if (k4) k4.textContent = (rt.active_sessions || 0).toLocaleString('en-IN');
+
+    // Revenue chart
+    const revEl = document.getElementById('analyticsRevenueChart');
+    if (revEl) {
+      destroyChart('revenue');
+      const daily = payment.daily_breakdown || [];
+      const labels = daily.map(d => d.date.slice(5)); // MM-DD
+      const revData = daily.map(d => d.revenue / 100000); // in Lakhs
+      const txData = daily.map(d => d.transactions);
+      _analyticsCharts['revenue'] = new Chart(revEl.getContext('2d'), {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            { label: 'Revenue (₹L)', data: revData, borderColor: '#6C3CF7', backgroundColor: 'rgba(108,60,247,0.1)', fill: true, tension: 0.4, pointRadius: 2, yAxisID: 'y' },
+            { label: 'Transactions', data: txData, borderColor: '#FF3CAC', backgroundColor: 'rgba(255,60,172,0.05)', fill: false, tension: 0.4, pointRadius: 2, yAxisID: 'y1' }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#a0aec0', font: { size: 10 } } } },
+          scales: {
+            x: { ticks: { color: '#a0aec0', font: { size: 9 }, maxTicksLimit: 10 }, grid: { color: 'rgba(255,255,255,0.04)' } },
+            y: { ticks: { color: '#6C3CF7', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.04)' } },
+            y1: { position: 'right', ticks: { color: '#FF3CAC', font: { size: 9 } }, grid: { display: false } }
+          }
+        }
+      });
+      const revTotal = document.getElementById('analytics-rev-total');
+      if (revTotal) revTotal.textContent = `Net: ₹${((payment.summary?.net_revenue||0)/100000).toFixed(1)}L · ${(payment.summary?.total_transactions||0).toLocaleString()} orders`;
+    }
+
+    // Age groups doughnut
+    const ageEl = document.getElementById('analyticsAgeChart');
+    if (ageEl && analytics.audience) {
+      destroyChart('age');
+      const ages = analytics.audience.age_groups || [];
+      _analyticsCharts['age'] = new Chart(ageEl.getContext('2d'), {
+        type: 'doughnut',
+        data: {
+          labels: ages.map(a => a.group),
+          datasets: [{ data: ages.map(a => a.pct), backgroundColor: ['#6C3CF7','#FF3CAC','#00F5C4','#FFD700'], borderWidth: 0 }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#a0aec0', font: { size: 9 }, padding: 8 } } } }
+      });
+    }
+
+    // Device doughnut
+    const devEl = document.getElementById('analyticsDeviceChart');
+    if (devEl && analytics.audience) {
+      destroyChart('device');
+      const dev = analytics.audience.devices || {};
+      _analyticsCharts['device'] = new Chart(devEl.getContext('2d'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Mobile', 'Desktop', 'Tablet'],
+          datasets: [{ data: [dev.mobile||74, dev.desktop||20, dev.tablet||6], backgroundColor: ['#6C3CF7','#00F5C4','#FF3CAC'], borderWidth: 0 }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#a0aec0', font: { size: 9 }, padding: 8 } } } }
+      });
+    }
+
+    // Traffic sources bar
+    const srcEl = document.getElementById('analyticsSourceChart');
+    if (srcEl && analytics.audience) {
+      destroyChart('sources');
+      const src = analytics.audience.sources || {};
+      _analyticsCharts['sources'] = new Chart(srcEl.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: ['Organic', 'Social', 'Paid', 'Referral'],
+          datasets: [{ data: [src.organic||42, src.social||28, src.paid||18, src.referral||12], backgroundColor: ['rgba(108,60,247,0.8)','rgba(255,60,172,0.8)','rgba(0,245,196,0.8)','rgba(255,215,0,0.8)'], borderRadius: 4 }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#a0aec0', font: { size: 9 } }, grid: { display: false } }, y: { ticks: { color: '#a0aec0', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.04)' } } } }
+      });
+    }
+
+    // Zone capacity chart
+    const zoneEl = document.getElementById('analyticsZoneChart');
+    if (zoneEl && analytics.capacity) {
+      destroyChart('zone');
+      const zones = analytics.capacity.zones || [];
+      _analyticsCharts['zone'] = new Chart(zoneEl.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: zones.map(z => z.zone),
+          datasets: [
+            { label: 'Sold', data: zones.map(z => z.sold), backgroundColor: 'rgba(108,60,247,0.8)', borderRadius: 4 },
+            { label: 'Available', data: zones.map(z => z.total - z.sold), backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 4 }
+          ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { labels: { color: '#a0aec0', font: { size: 10 } } } }, scales: { x: { stacked: true, ticks: { color: '#a0aec0', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.04)' } }, y: { stacked: true, ticks: { color: '#a0aec0', font: { size: 9 } }, grid: { display: false } } } }
+      });
+    }
+
+    // Top cities
+    const citiesEl = document.getElementById('analytics-cities-list');
+    if (citiesEl && analytics.audience) {
+      const cities = analytics.audience.cities || [];
+      citiesEl.innerHTML = cities.map(c => `
+        <div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:12px"><span>${c.city}</span><span style="font-weight:600">${c.pct}%</span></div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:4px;height:5px"><div style="width:${c.pct}%;height:100%;background:linear-gradient(90deg,#6C3CF7,#FF3CAC);border-radius:4px"></div></div>
+        </div>`).join('');
+    }
+
+    // Payment methods chart
+    const payEl = document.getElementById('analyticsPaymentChart');
+    if (payEl && payment.payment_methods) {
+      destroyChart('payment');
+      const pm = payment.payment_methods || [];
+      _analyticsCharts['payment'] = new Chart(payEl.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: pm.map(p => p.method),
+          datasets: [{ label: 'Revenue (₹L)', data: pm.map(p => (p.revenue/100000).toFixed(1)), backgroundColor: ['rgba(108,60,247,0.8)','rgba(255,60,172,0.8)','rgba(0,245,196,0.8)','rgba(255,215,0,0.8)','rgba(255,120,0,0.8)'], borderRadius: 6 }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#a0aec0', font: { size: 10 } }, grid: { display: false } }, y: { ticks: { color: '#a0aec0', font: { size: 10 }, callback: v => '₹' + v + 'L' }, grid: { color: 'rgba(255,255,255,0.04)' } } } }
+      });
+    }
+
+    // AI Forecast
+    if (forecast.forecast) {
+      const fc = forecast.forecast;
+      const c = document.getElementById('forecast-confidence');
+      if (c) c.textContent = 'Confidence: ' + Math.round((fc.next_24h.confidence||0.84)*100) + '%';
+      const f24 = document.getElementById('f-24h'); if (f24) f24.textContent = (fc.next_24h.value||0).toLocaleString('en-IN') + ' tickets';
+      const f7d = document.getElementById('f-7d-rev'); if (f7d) f7d.textContent = '₹' + ((fc.next_7d.value||0)/100000).toFixed(1) + 'L';
+      const fso = document.getElementById('f-sellout'); if (fso) fso.textContent = Math.round((fc.sellout_probability||0.92)*100) + '%';
+      const frec = document.getElementById('f-recommendations');
+      if (frec) frec.innerHTML = (fc.recommended_actions||[]).map(a => `<li>${a}</li>`).join('');
+    }
+
+  } catch(err) {
+    console.warn('[Analytics v2] Error:', err);
+  }
+}
+
+// Auto-load analytics when panel is opened
+const _origShowPanel = window.showPanel;
+window.showPanel = function(name, btn) {
+  if (_origShowPanel) _origShowPanel(name, btn);
+  if (name === 'analytics') {
+    setTimeout(() => loadAnalyticsV2('30d'), 100);
+  }
+};
 
 </script>
