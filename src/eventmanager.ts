@@ -1,0 +1,271 @@
+export function eventManagerHTML(): string {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Event Manager Portal – INDTIX</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+:root{--brand:#6C3CF7;--brand2:#FF3CAC;--brand3:#00F5C4;--dark:#080B14;--dark2:#0F1320;--dark3:#161B2E;--card:#1A2035;--border:rgba(108,60,247,0.2);--text:#E8EAFF;--muted:#8B93B8;--grad1:linear-gradient(135deg,#6C3CF7,#FF3CAC)}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;display:flex;min-height:100vh}
+.sidebar{width:260px;background:var(--dark3);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;z-index:100;overflow-y:auto}
+.sb-logo{padding:20px;border-bottom:1px solid var(--border)}.sb-logo a{text-decoration:none;color:inherit}
+.logo-wrap{display:flex;align-items:center;gap:10px}.logo-mark{width:34px;height:34px;background:var(--grad1);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;font-family:'Space Grotesk',sans-serif}
+.logo-text{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px}.logo-text span{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sb-badge{background:rgba(255,180,0,0.15);border:1px solid rgba(255,180,0,0.3);color:#FFB300;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;margin-left:auto;align-self:center}
+.sb-user{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.sb-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FFB300,#FF3CAC);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.sb-uname{font-size:13px;font-weight:600}.sb-role{font-size:11px;color:var(--muted)}.sb-status{width:8px;height:8px;border-radius:50%;background:#FFB300;margin-left:auto}
+.sb-nav{flex:1;padding:16px 12px}.sb-section{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);padding:8px 8px 4px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:all 0.2s;margin-bottom:2px;color:var(--muted);font-size:13px;font-weight:500;border:none;background:transparent;width:100%;text-align:left;font-family:'Inter',sans-serif}
+.sb-item:hover,.sb-item.active{background:rgba(108,60,247,0.15);color:var(--text)}.sb-item.active{color:var(--brand)}.sb-item i{width:18px;text-align:center;font-size:14px}
+.sb-footer{padding:16px 20px;border-top:1px solid var(--border)}.sb-footer a{display:flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;font-size:13px}.sb-footer a:hover{color:var(--brand)}
+.main{margin-left:260px;flex:1;display:flex;flex-direction:column}
+.topbar{background:var(--dark2);border-bottom:1px solid var(--border);padding:0 28px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-title{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700}.topbar-actions{display:flex;align-items:center;gap:12px}
+.btn-sm{padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s}
+.btn-primary{background:var(--grad1);color:#fff}.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text)}.btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+.btn-danger{background:rgba(255,60,172,0.2);border:1px solid rgba(255,60,172,0.4);color:var(--brand2)}
+.btn-success{background:rgba(0,245,196,0.2);border:1px solid rgba(0,245,196,0.4);color:var(--brand3)}
+.content{flex:1;padding:28px}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:28px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;position:relative;overflow:hidden}
+.stat-label{font-size:12px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:0.5px}
+.stat-value{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;margin:8px 0 4px}
+.stat-change{font-size:12px;font-weight:600}.stat-change.up{color:var(--brand3)}.stat-change.dn{color:var(--brand2)}
+.stat-icon{position:absolute;top:20px;right:20px;font-size:24px;opacity:0.6}
+.panel{display:none}.panel.active{display:block}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.live-bar{background:rgba(255,60,172,0.1);border:1px solid rgba(255,60,172,0.3);border-radius:12px;padding:16px;margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.live-dot{width:10px;height:10px;border-radius:50%;background:var(--brand2);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.live-text{font-size:14px;font-weight:600;color:var(--brand2)}
+.live-sub{font-size:12px;color:var(--muted)}
+.checkin-meter{margin-left:auto;text-align:right}
+.checkin-big{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.checkin-small{font-size:11px;color:var(--muted)}
+.task-list{display:flex;flex-direction:column;gap:8px}
+.task-item{background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.2s}
+.task-item:hover{border-color:var(--brand)}
+.task-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;transition:all 0.2s;cursor:pointer}
+.task-item.done .task-check{background:var(--brand3);border-color:var(--brand3);color:var(--dark)}
+.task-item.done .task-text{text-decoration:line-through;color:var(--muted)}
+.task-text{flex:1;font-size:13px;font-weight:500}
+.task-priority{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600}
+.p-high{background:rgba(255,60,172,0.15);color:var(--brand2)}.p-med{background:rgba(255,180,0,0.15);color:#FFB300}.p-low{background:rgba(0,245,196,0.15);color:var(--brand3)}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.team-card{background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;align-items:center;gap:10px}
+.team-avatar{width:36px;height:36px;border-radius:50%;background:var(--grad1);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.team-name{font-size:13px;font-weight:600}
+.team-role{font-size:11px;color:var(--muted)}
+.team-zone{font-size:10px;background:rgba(108,60,247,0.15);color:var(--brand);padding:2px 6px;border-radius:20px;display:inline-block;margin-top:2px}
+.wristband-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.wb-color{width:24px;height:24px;border-radius:6px}
+.wb-info{flex:1}.wb-name{font-size:13px;font-weight:600}.wb-access{font-size:11px;color:var(--muted)}
+.wb-count{font-size:14px;font-weight:700;text-align:right}.wb-pct{font-size:11px;color:var(--muted)}
+.incident-form{display:flex;flex-direction:column;gap:12px}
+.incident-form input,.incident-form select,.incident-form textarea{background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif}
+.incident-form input:focus,.incident-form select:focus{border-color:var(--brand)}
+.incident-form select option{background:var(--dark3)}
+.incident-form textarea{min-height:80px;resize:vertical}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="sb-logo"><a href="/"><div class="logo-wrap"><div class="logo-mark">IX</div><span class="logo-text">IND<span>TIX</span></span><span class="sb-badge">Mgr</span></div></a></div>
+  <div class="sb-user"><div class="sb-avatar">PM</div><div><div class="sb-uname">Priya Mehta</div><div class="sb-role">Event Manager · Sunburn</div></div><div class="sb-status"></div></div>
+  <nav class="sb-nav">
+    <div class="sb-section">Event Control</div>
+    <button class="sb-item active" onclick="showPanel('dashboard',this)"><i class="fas fa-tachometer-alt"></i>Dashboard</button>
+    <button class="sb-item" onclick="showPanel('runsheet',this)"><i class="fas fa-list-check"></i>Run Sheet / Timeline</button>
+    <button class="sb-item" onclick="showPanel('tasks',this)"><i class="fas fa-tasks"></i>Task Manager<span style="margin-left:auto;background:var(--brand2);color:#fff;font-size:10px;padding:2px 7px;border-radius:20px">4</span></button>
+    <button class="sb-item" onclick="showPanel('team',this)"><i class="fas fa-users-cog"></i>Team & Zones</button>
+    <div class="sb-section">On-Ground</div>
+    <button class="sb-item" onclick="showPanel('checkin',this)"><i class="fas fa-qrcode"></i>Live Check-In Monitor</button>
+    <button class="sb-item" onclick="showPanel('wristbands',this)"><i class="fas fa-hand-sparkles"></i>Wristband / LED Bands</button>
+    <button class="sb-item" onclick="showPanel('pos',this)"><i class="fas fa-cash-register"></i>POS Overview</button>
+    <button class="sb-item" onclick="showPanel('fb',this)"><i class="fas fa-utensils"></i>F&B Order Tracker</button>
+    <div class="sb-section">Communications</div>
+    <button class="sb-item" onclick="showPanel('announce',this)"><i class="fas fa-bullhorn"></i>Announcements</button>
+    <button class="sb-item" onclick="showPanel('incidents',this)"><i class="fas fa-exclamation-circle"></i>Incident Reports<span style="margin-left:auto;background:var(--brand2);color:#fff;font-size:10px;padding:2px 7px;border-radius:20px">2</span></button>
+    <div class="sb-section">Post-Event</div>
+    <button class="sb-item" onclick="showPanel('report',this)"><i class="fas fa-file-chart-line"></i>Event Report</button>
+    <button class="sb-item" onclick="showPanel('feedback',this)"><i class="fas fa-star"></i>Attendee Feedback</button>
+  </nav>
+  <div class="sb-footer"><a href="/"><i class="fas fa-arrow-left"></i>Back to Fan Portal</a></div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="topbarTitle">Event Dashboard</div>
+    <div class="topbar-actions">
+      <span style="background:rgba(255,60,172,0.15);border:1px solid rgba(255,60,172,0.4);color:var(--brand2);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;background:var(--brand2);border-radius:50%;animation:pulse 1s infinite;display:inline-block"></span>LIVE · Sunburn Arena Mumbai</span>
+      <button class="btn-sm btn-ghost"><i class="fas fa-walkie-talkie"></i> Radio</button>
+      <button class="btn-sm btn-danger" onclick="emergencyAlert()"><i class="fas fa-siren"></i> Emergency</button>
+    </div>
+  </div>
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="live-bar">
+        <div class="live-dot"></div>
+        <div><div class="live-text">LIVE EVENT — Sunburn Arena Mumbai</div><div class="live-sub">Apr 15, 2025 · 6:00 PM · NSCI Dome, Worli · Expected: 4,200 attendees</div></div>
+        <div class="checkin-meter"><div class="checkin-big" id="checkinCount">2,841</div><div class="checkin-small">checked in / 4,200</div></div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-icon">🚪</div><div class="stat-label">Gates Open</div><div class="stat-value">5/6</div><div class="stat-change up">Gate 4 closed</div></div>
+        <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-label">Check-In Rate</div><div class="stat-value">67%</div><div class="stat-change up">↑ 8%/hr</div></div>
+        <div class="stat-card"><div class="stat-icon">🍕</div><div class="stat-label">F&B Orders</div><div class="stat-value">840</div><div class="stat-change up">₹2.94L revenue</div></div>
+        <div class="stat-card"><div class="stat-icon">⚠️</div><div class="stat-label">Open Incidents</div><div class="stat-value">2</div><div class="stat-change dn">Awaiting resolve</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px">
+        <div class="card">
+          <div class="card-title">Check-In Live Stream <span style="color:var(--brand3);font-size:12px">Real-time</span></div>
+          <div style="display:flex;gap:20px;margin-bottom:16px">
+            ${[['Gate 1','Main Entrance',892,1000,'var(--brand)'],['Gate 2','VIP Entry',342,400,'var(--brand3)'],['Gate 3','General',1240,1600,'var(--brand2)'],['Gate 4','CLOSED',0,200,'var(--muted)']].map(([g,n,c,t,col])=>`
+              <div style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center">
+                <div style="font-size:11px;color:var(--muted)">${g}</div>
+                <div style="font-size:12px;font-weight:600;margin:3px 0">${n}</div>
+                <div style="font-size:20px;font-weight:800;color:${col}">${c}</div>
+                <div style="font-size:10px;color:var(--muted)">/ ${t}</div>
+                <div style="background:var(--dark);border-radius:4px;height:4px;margin-top:8px;overflow:hidden"><div style="width:${Math.round(c/t*100)}%;height:100%;background:${col};border-radius:4px"></div></div>
+              </div>`).join('')}
+          </div>
+          <div style="background:var(--dark3);border-radius:10px;padding:12px">
+            <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--muted)">CHECKIN RATE (last 2 hours)</div>
+            <div style="display:flex;align-items:flex-end;gap:4px;height:60px">
+              ${[40,55,72,85,90,88,95,100,92,98,87,80,75,84,90,95,100,96,89,82,78,72,68,65].map(h=>`<div style="flex:1;background:var(--brand);border-radius:2px 2px 0 0;height:${h}%;opacity:0.7"></div>`).join('')}
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Pending Tasks</div>
+          <div class="task-list" id="taskList">
+            <div class="task-item done"><div class="task-check" onclick="toggleTask(this.parentElement)">✓</div><div class="task-text">Sound check completed</div><span class="task-priority p-high">HIGH</span></div>
+            <div class="task-item done"><div class="task-check" onclick="toggleTask(this.parentElement)">✓</div><div class="task-text">VIP wristbands distributed</div><span class="task-priority p-high">HIGH</span></div>
+            <div class="task-item"><div class="task-check" onclick="toggleTask(this.parentElement)"></div><div class="task-text">Gate 4 technical issue — escalate</div><span class="task-priority p-high">HIGH</span></div>
+            <div class="task-item"><div class="task-check" onclick="toggleTask(this.parentElement)"></div><div class="task-text">F&B Counter 3 restock</div><span class="task-priority p-med">MED</span></div>
+            <div class="task-item"><div class="task-check" onclick="toggleTask(this.parentElement)"></div><div class="task-text">WhatsApp blast: main act in 30min</div><span class="task-priority p-med">MED</span></div>
+            <div class="task-item"><div class="task-check" onclick="toggleTask(this.parentElement)"></div><div class="task-text">Post-show cleanup briefing</div><span class="task-priority p-low">LOW</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WRISTBANDS -->
+    <div class="panel" id="panel-wristbands">
+      <div class="card">
+        <div class="card-title">Wristband & LED Band Management</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:16px">
+            <div style="font-size:14px;font-weight:700;margin-bottom:12px">🎪 Wristband Types</div>
+            ${[['#6C3CF7','VIP Platinum',350,400,'All Access + Backstage'],['#FF3CAC','VIP Gold',800,1000,'VIP Lounge + Stage View'],['#00F5C4','Premium',1200,1500,'Premium Zone Access'],['#FFB300','General',490,1300,'General + F&B Zones']].map(([c,n,issued,total,access])=>`
+              <div class="wristband-row">
+                <div class="wb-color" style="background:${c}"></div>
+                <div class="wb-info"><div class="wb-name">${n}</div><div class="wb-access">${access}</div></div>
+                <div class="wb-count">${issued}<div class="wb-pct">/ ${total}</div></div>
+              </div>`).join('')}
+          </div>
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:16px">
+            <div style="font-size:14px;font-weight:700;margin-bottom:12px">💡 LED Band Control</div>
+            <div style="text-align:center;padding:20px 0">
+              <div style="font-size:48px;margin-bottom:10px">💡</div>
+              <div style="font-size:15px;font-weight:700;margin-bottom:6px">Crowd Sync Active</div>
+              <div style="font-size:12px;color:var(--muted);margin-bottom:16px">2,400 LED bands synced · Beat-reactive mode ON</div>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px">
+                ${['#FF0000','#00FF00','#0066FF','#FFB300','#FF3CAC','#00F5C4','#FFFFFF','🌈'].map(c=>`<button onclick="setLEDColor('${c}')" style="padding:10px;background:${c==='🌈'?'var(--grad1)':c};border:none;border-radius:8px;cursor:pointer;font-size:c==='🌈'?'16px':'0';color:#fff;height:36px;display:flex;align-items:center;justify-content:center">${c==='🌈'?c:''}</button>`).join('')}
+              </div>
+              <div style="display:flex;gap:8px;justify-content:center">
+                <button class="btn-sm btn-ghost" onclick="ledEffect('pulse')">Pulse</button>
+                <button class="btn-sm btn-ghost" onclick="ledEffect('wave')">Wave</button>
+                <button class="btn-sm btn-ghost" onclick="ledEffect('strobe')">Strobe</button>
+                <button class="btn-sm btn-primary" onclick="ledEffect('sync')">🎵 Beat Sync</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn-sm btn-primary"><i class="fas fa-download"></i> Export Wristband Report</button>
+          <button class="btn-sm btn-ghost"><i class="fas fa-print"></i> Print Lost Band Form</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEAM -->
+    <div class="panel" id="panel-team">
+      <div class="card">
+        <div class="card-title">Team Assignment & Zone Control</div>
+        <div class="team-grid">
+          ${[['AR','Amit Roy','Security Head','Main Gate'],['SS','Shreya S','F&B Manager','Food Court'],['VK','Vijay K','Tech Lead','Stage Right'],['NP','Neha P','Guest Rel.','VIP Lounge'],['RD','Rahul D','Gate Staff','Gate 2'],['MM','Meera M','Medic Lead','First Aid']].map(([av,n,r,z])=>`
+            <div class="team-card">
+              <div class="team-avatar">${av}</div>
+              <div><div class="team-name">${n}</div><div class="team-role">${r}</div><div class="team-zone">${z}</div></div>
+              <div style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--brand3)"></div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- INCIDENTS -->
+    <div class="panel" id="panel-incidents">
+      <div class="card">
+        <div class="card-title">Log New Incident</div>
+        <div class="incident-form">
+          <select><option>Medical Emergency</option><option>Security Issue</option><option>Technical Failure</option><option>Crowd Issue</option><option>Property Damage</option><option>Other</option></select>
+          <input type="text" placeholder="Location / Zone (e.g. Gate 2, VIP Lounge)">
+          <textarea placeholder="Describe the incident in detail..."></textarea>
+          <div style="display:flex;gap:10px">
+            <select style="flex:1"><option>Medium Priority</option><option>High Priority</option><option>Critical</option><option>Low Priority</option></select>
+            <button class="btn-sm btn-primary" style="flex:1;justify-content:center" onclick="logIncident()"><i class="fas fa-paper-plane"></i> Log Incident</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Active Incidents</div>
+        ${[['INC-001','Gate 4 scanner down','Technical Failure','Gate 4','HIGH','In Progress'],['INC-002','Minor medical — heat exhaustion','Medical','Main Floor','MED','Resolved']].map(([id,desc,type,loc,pri,status])=>`
+          <div class="wristband-row">
+            <div><div style="font-size:13px;font-weight:700;color:var(--brand)">${id}</div><div style="font-size:11px;color:var(--muted)">${type} · ${loc}</div></div>
+            <div style="flex:1;padding:0 12px;font-size:13px">${desc}</div>
+            <span style="font-size:10px;padding:3px 8px;border-radius:20px;font-weight:600;background:${pri==='HIGH'?'rgba(255,60,172,0.15)':'rgba(255,180,0,0.15)'};color:${pri==='HIGH'?'var(--brand2)':'#FFB300'}">${pri}</span>
+            <span style="font-size:10px;padding:3px 8px;border-radius:20px;font-weight:600;background:${status==='Resolved'?'rgba(0,245,196,0.15)':'rgba(108,60,247,0.15)'};color:${status==='Resolved'?'var(--brand3)':'var(--brand)'};margin:0 8px">${status}</span>
+            <button class="btn-sm btn-ghost" style="font-size:11px">Update</button>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <!-- DEFAULT PANELS -->
+    <div class="panel" id="panel-runsheet"><div class="card"><div class="card-title">Run Sheet / Event Timeline</div><p style="color:var(--muted)">Minute-by-minute event schedule for all zones and teams.</p></div></div>
+    <div class="panel" id="panel-tasks"><div class="card"><div class="card-title">Task Manager</div><p style="color:var(--muted)">4 open tasks, 12 completed today.</p></div></div>
+    <div class="panel" id="panel-checkin"><div class="card"><div class="card-title">Live Check-In Monitor</div><p style="color:var(--muted)">Real-time attendee check-in across all gates.</p></div></div>
+    <div class="panel" id="panel-pos"><div class="card"><div class="card-title">POS Overview</div><p style="color:var(--muted)">All POS terminals, sales summary, and cash reconciliation.</p></div></div>
+    <div class="panel" id="panel-fb"><div class="card"><div class="card-title">F&B Order Tracker</div><p style="color:var(--muted)">840 orders processed · ₹2.94L revenue · 12 counters active.</p></div></div>
+    <div class="panel" id="panel-announce"><div class="card"><div class="card-title">Push Announcements</div><p style="color:var(--muted)">Send WhatsApp/push notifications to all attendees in real-time.</p></div></div>
+    <div class="panel" id="panel-report"><div class="card"><div class="card-title">Post-Event Report</div><p style="color:var(--muted)">Comprehensive post-event analytics, incident summary, and settlement breakdown.</p></div></div>
+    <div class="panel" id="panel-feedback"><div class="card"><div class="card-title">Attendee Feedback</div><p style="color:var(--muted)">Real-time NPS score, ratings, and attendee comments.</p></div></div>
+  </div>
+</div>
+
+<script>
+function showPanel(name,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('active'));
+  const p=document.getElementById('panel-'+name);if(p)p.classList.add('active');if(btn)btn.classList.add('active');
+  const t={dashboard:'Event Dashboard',runsheet:'Run Sheet',tasks:'Task Manager',team:'Team & Zones',checkin:'Live Check-In Monitor',wristbands:'Wristband & LED Bands',pos:'POS Overview',fb:'F&B Order Tracker',announce:'Announcements',incidents:'Incident Reports',report:'Post-Event Report',feedback:'Attendee Feedback'};
+  document.getElementById('topbarTitle').textContent=t[name]||'Dashboard';
+}
+function toggleTask(el){el.classList.toggle('done');el.querySelector('.task-check').textContent=el.classList.contains('done')?'✓':'';}
+function emergencyAlert(){if(confirm('⚠️ SEND EMERGENCY ALERT to all team members?'))alert('🚨 Emergency alert sent to all 24 team members via WhatsApp & radio.');}
+function setLEDColor(c){alert('LED bands set to '+(c==='🌈'?'Rainbow':'color '+c));}
+function ledEffect(e){alert('LED effect: '+e+' activated for 2,400 bands.');}
+function logIncident(){alert('Incident logged and team notified via WhatsApp.');}
+
+// Live checkin counter
+let count=2841;
+setInterval(()=>{count+=Math.floor(Math.random()*3);const el=document.getElementById('checkinCount');if(el)el.textContent=count.toLocaleString('en-IN');},3000);
+</script>
+</body>
+</html>`
+}

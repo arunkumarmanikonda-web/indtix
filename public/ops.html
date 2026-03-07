@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>On-Ground Ops / POS – INDTIX</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+:root{--brand:#6C3CF7;--brand2:#FF3CAC;--brand3:#00F5C4;--dark:#080B14;--dark2:#0F1320;--dark3:#161B2E;--card:#1A2035;--border:rgba(108,60,247,0.2);--text:#E8EAFF;--muted:#8B93B8;--grad1:linear-gradient(135deg,#6C3CF7,#FF3CAC);--green:#00F5C4;--red:#FF4444;--gold:#FFB300}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+.ops-header{background:var(--dark3);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.ops-logo{display:flex;align-items:center;gap:8px}
+.logo-mark{width:32px;height:32px;background:var(--grad1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff;font-family:'Space Grotesk',sans-serif}
+.logo-text{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px}
+.logo-text span{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ops-badge{background:rgba(100,200,255,0.15);border:1px solid rgba(100,200,255,0.3);color:#64C8FF;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:1px}
+.ops-user{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.ops-user i{font-size:16px}
+.ops-nav{display:flex;background:var(--dark2);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ops-nav-btn{flex:1;min-width:80px;padding:12px 8px;background:transparent;border:none;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all 0.2s;white-space:nowrap;font-family:'Inter',sans-serif;border-bottom:2px solid transparent}
+.ops-nav-btn i{font-size:18px}
+.ops-nav-btn.active{color:var(--brand);border-bottom-color:var(--brand);background:rgba(108,60,247,0.08)}
+.ops-nav-btn:hover{color:var(--text)}
+.ops-content{padding:16px;max-width:600px;margin:0 auto}
+.panel{display:none}.panel.active{display:block}
+
+/* SCANNER */
+.scanner-box{background:var(--dark3);border:2px solid var(--border);border-radius:20px;padding:24px;text-align:center;margin-bottom:16px}
+.scanner-viewfinder{width:200px;height:200px;margin:0 auto 20px;border:2px solid var(--brand);border-radius:16px;position:relative;display:flex;align-items:center;justify-content:center;background:rgba(108,60,247,0.05)}
+.scanner-corner{position:absolute;width:24px;height:24px;border-color:var(--brand);border-style:solid}
+.scanner-corner.tl{top:-2px;left:-2px;border-width:3px 0 0 3px;border-radius:4px 0 0 0}
+.scanner-corner.tr{top:-2px;right:-2px;border-width:3px 3px 0 0;border-radius:0 4px 0 0}
+.scanner-corner.bl{bottom:-2px;left:-2px;border-width:0 0 3px 3px;border-radius:0 0 0 4px}
+.scanner-corner.br{bottom:-2px;right:-2px;border-width:0 3px 3px 0;border-radius:0 0 4px 0}
+.scanner-line{position:absolute;width:80%;height:2px;background:var(--brand);animation:scan 2s ease-in-out infinite;opacity:0.8;box-shadow:0 0 10px var(--brand)}
+@keyframes scan{0%,100%{top:20%}50%{top:80%}}
+.scanner-qr-icon{font-size:60px;color:rgba(108,60,247,0.3)}
+.scanner-text{font-size:14px;font-weight:600;margin-bottom:8px}
+.scanner-sub{font-size:12px;color:var(--muted);margin-bottom:16px}
+.btn-scan{background:var(--grad1);border:none;color:#fff;padding:14px 32px;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;width:100%;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 8px 24px rgba(108,60,247,0.4);transition:all 0.2s}
+.btn-scan:hover{transform:scale(1.02)}
+.btn-manual{background:var(--card);border:1px solid var(--border);color:var(--text);padding:12px 24px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;width:100%;font-family:'Inter',sans-serif;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px}
+.scan-result{border-radius:14px;padding:16px;margin-bottom:12px;display:none}
+.scan-result.valid{background:rgba(0,245,196,0.1);border:1px solid rgba(0,245,196,0.4)}
+.scan-result.invalid{background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.4)}
+.scan-result.duplicate{background:rgba(255,180,0,0.1);border:1px solid rgba(255,180,0,0.4)}
+.scan-result-icon{font-size:36px;text-align:center;margin-bottom:8px}
+.scan-result-title{font-size:18px;font-weight:800;text-align:center;margin-bottom:6px}
+.scan-result-name{font-size:16px;font-weight:600;text-align:center;margin-bottom:12px}
+.scan-result-details{background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:6px}
+.scan-detail{display:flex;justify-content:space-between;font-size:13px}
+.scan-detail-label{color:var(--muted)}
+.scan-detail-value{font-weight:600}
+.stats-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.stat-mini{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.stat-mini-val{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-mini-label{font-size:11px;color:var(--muted);margin-top:3px}
+
+/* POS */
+.pos-layout{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pos-products{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px}
+.pos-cart{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px}
+.pos-title{font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.product-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.product-item{background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer;transition:all 0.2s;text-align:center}
+.product-item:hover,.product-item:active{border-color:var(--brand);background:rgba(108,60,247,0.1)}
+.product-emoji{font-size:24px;margin-bottom:4px}
+.product-name{font-size:11px;font-weight:600}
+.product-price{font-size:13px;font-weight:700;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-top:2px}
+.cart-items{min-height:120px;margin-bottom:12px}
+.cart-item{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.ci-name{flex:1;font-size:12px;font-weight:600}
+.ci-qty{display:flex;align-items:center;gap:6px}
+.ci-qty-btn{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);background:var(--dark);color:var(--text);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.ci-qty-num{font-size:13px;font-weight:700;min-width:16px;text-align:center}
+.ci-price{font-size:13px;font-weight:700;color:var(--brand3)}
+.cart-empty{text-align:center;padding:20px;color:var(--muted);font-size:13px}
+.cart-total{background:var(--dark3);border-radius:10px;padding:12px;margin-bottom:10px}
+.cart-total-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+.cart-total-row.main{font-size:16px;font-weight:800;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+.cart-total-row.main span:last-child{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.pay-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.pay-method-btn{background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:8px;font-size:11px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;color:var(--text);text-align:center}
+.pay-method-btn.active{border-color:var(--brand);background:rgba(108,60,247,0.15);color:var(--brand)}
+.btn-pay{background:var(--grad1);border:none;color:#fff;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;width:100%;font-family:'Inter',sans-serif}
+.btn-clear{background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;width:100%;font-family:'Inter',sans-serif;margin-bottom:8px}
+
+/* WRISTBAND OPS */
+.wb-ops-list{display:flex;flex-direction:column;gap:8px}
+.wb-ops-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px}
+.wb-color-dot{width:20px;height:20px;border-radius:50%;flex-shrink:0}
+.wb-ops-info{flex:1}
+.wb-ops-name{font-size:14px;font-weight:700}
+.wb-ops-access{font-size:11px;color:var(--muted)}
+.wb-ops-stats{text-align:right}
+.wb-issued{font-size:16px;font-weight:700}
+.wb-total{font-size:11px;color:var(--muted)}
+.wb-progress{height:4px;background:var(--dark3);border-radius:2px;margin-top:6px;overflow:hidden}
+.wb-prog-fill{height:100%;border-radius:2px;background:var(--grad1)}
+.scan-log{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.log-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:12px;animation:fadeIn 0.3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.log-valid{background:rgba(0,245,196,0.1);border:1px solid rgba(0,245,196,0.2)}
+.log-invalid{background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.2)}
+.log-dup{background:rgba(255,180,0,0.1);border:1px solid rgba(255,180,0,0.2)}
+.log-icon{font-size:14px;flex-shrink:0}
+.log-text{flex:1;font-weight:500}
+.log-time{color:var(--muted);font-size:10px}
+</style>
+</head>
+<body>
+
+<div class="ops-header">
+  <div class="ops-logo">
+    <div class="logo-mark">IX</div>
+    <span class="logo-text">IND<span>TIX</span></span>
+    <span class="ops-badge">OPS</span>
+  </div>
+  <div class="ops-user">
+    <i class="fas fa-wifi"></i>
+    <span id="operatorName">Ankit Kumar · Gate 2</span>
+  </div>
+</div>
+
+<div class="ops-nav">
+  <button class="ops-nav-btn active" onclick="showOpsPanel('scanner',this)"><i class="fas fa-qrcode"></i>Scanner</button>
+  <button class="ops-nav-btn" onclick="showOpsPanel('pos',this)"><i class="fas fa-cash-register"></i>POS</button>
+  <button class="ops-nav-btn" onclick="showOpsPanel('wristbands',this)"><i class="fas fa-hand-sparkles"></i>Wristbands</button>
+  <button class="ops-nav-btn" onclick="showOpsPanel('stats',this)"><i class="fas fa-chart-bar"></i>Live Stats</button>
+  <button class="ops-nav-btn" onclick="showOpsPanel('log',this)"><i class="fas fa-list"></i>Scan Log</button>
+</div>
+
+<div class="ops-content">
+
+  <!-- SCANNER -->
+  <div class="panel active" id="ops-scanner">
+    <div class="stats-mini">
+      <div class="stat-mini"><div class="stat-mini-val" id="liveCheckin">2,841</div><div class="stat-mini-label">Checked In</div></div>
+      <div class="stat-mini"><div class="stat-mini-val">4,200</div><div class="stat-mini-label">Total Expected</div></div>
+      <div class="stat-mini"><div class="stat-mini-val" style="background:var(--brand3);-webkit-background-clip:text;-webkit-text-fill-color:transparent" id="livePct">68%</div><div class="stat-mini-label">Capacity</div></div>
+    </div>
+
+    <!-- Scan Result (shows after scan) -->
+    <div class="scan-result valid" id="scanResult">
+      <div class="scan-result-icon" id="resultIcon">✅</div>
+      <div class="scan-result-title" id="resultTitle">VALID TICKET</div>
+      <div class="scan-result-name" id="resultName">Arjun Sharma</div>
+      <div class="scan-result-details">
+        <div class="scan-detail"><span class="scan-detail-label">Ticket Type</span><span class="scan-detail-value" id="resultType">General Admission</span></div>
+        <div class="scan-detail"><span class="scan-detail-label">Order ID</span><span class="scan-detail-value" id="resultOrderId">BK1744123456</span></div>
+        <div class="scan-detail"><span class="scan-detail-label">Seat / Zone</span><span class="scan-detail-value" id="resultSeat">Floor GA</span></div>
+        <div class="scan-detail"><span class="scan-detail-label">Entry</span><span class="scan-detail-value" id="resultEntry">Gate 2</span></div>
+      </div>
+    </div>
+
+    <div class="scanner-box">
+      <div class="scanner-viewfinder">
+        <div class="scanner-corner tl"></div>
+        <div class="scanner-corner tr"></div>
+        <div class="scanner-corner bl"></div>
+        <div class="scanner-corner br"></div>
+        <div class="scanner-line" id="scanLine"></div>
+        <i class="fas fa-qrcode scanner-qr-icon" id="scannerQRIcon"></i>
+      </div>
+      <div class="scanner-text">Point camera at QR code</div>
+      <div class="scanner-sub">Or tap Scan to simulate scanning</div>
+      <button class="btn-scan" onclick="simulateScan()"><i class="fas fa-camera"></i> Scan Ticket / NFC</button>
+      <button class="btn-manual" onclick="manualEntry()"><i class="fas fa-keyboard"></i> Manual Ticket Entry</button>
+    </div>
+  </div>
+
+  <!-- POS -->
+  <div class="panel" id="ops-pos">
+    <div class="pos-layout">
+      <div class="pos-products">
+        <div class="pos-title">Products <span style="font-size:11px;color:var(--muted)">Tap to add</span></div>
+        <div class="product-grid" id="productGrid">
+          ${[['🍔','Burger','₹180'],['🥤','Cold Drink','₹80'],['🍕','Pizza Slice','₹220'],['☕','Coffee','₹120'],['🌮','Wrap','₹160'],['🍺','Beer','₹350'],['🧃','Juice','₹90'],['🎁','Event Merch','₹899']].map(([e,n,p])=>`
+            <div class="product-item" onclick="addToCart('${n}',${parseInt(p.replace('₹',''))})">
+              <div class="product-emoji">${e}</div>
+              <div class="product-name">${n}</div>
+              <div class="product-price">${p}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="pos-cart">
+        <div class="pos-title">Cart <button onclick="clearCart()" style="background:transparent;border:none;color:var(--muted);font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Clear</button></div>
+        <div class="cart-items" id="cartItems"><div class="cart-empty"><i class="fas fa-shopping-basket" style="font-size:24px;margin-bottom:8px;display:block;opacity:0.4"></i>Cart is empty</div></div>
+        <div class="cart-total" id="cartTotal" style="display:none">
+          <div class="cart-total-row"><span>Subtotal</span><span id="cartSubtotal">₹0</span></div>
+          <div class="cart-total-row"><span>GST (18%)</span><span id="cartGST">₹0</span></div>
+          <div class="cart-total-row main"><span>Total</span><span id="cartTotalAmt">₹0</span></div>
+        </div>
+        <div class="pay-methods">
+          <button class="pay-method-btn active" onclick="selectPay(this,'cash')">💵 Cash</button>
+          <button class="pay-method-btn" onclick="selectPay(this,'upi')">📱 UPI</button>
+          <button class="pay-method-btn" onclick="selectPay(this,'card')">💳 Card</button>
+        </div>
+        <button class="btn-pay" onclick="processPOSPayment()">💳 Process Payment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WRISTBANDS -->
+  <div class="panel" id="ops-wristbands">
+    <div class="card" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
+      <div style="font-size:14px;font-weight:700;margin-bottom:12px">💡 LED Band Control</div>
+      <div style="text-align:center;padding:12px">
+        <div style="font-size:28px;margin-bottom:8px">💡 2,400 bands synced</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
+          ${['#FF0000','#00AAFF','#00FF88','#FFB300','#FF3CAC','#FFFFFF'].map(c=>`<button onclick="setLED('${c}')" style="background:${c};border:none;border-radius:8px;height:32px;cursor:pointer;transition:transform 0.2s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'"></button>`).join('')}
+          <button onclick="setLED('rainbow')" style="background:var(--grad1);border:none;border-radius:8px;height:32px;cursor:pointer;color:#fff;font-size:12px">🌈</button>
+          <button onclick="setLED('off')" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;height:32px;cursor:pointer;color:var(--muted);font-size:11px">OFF</button>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          ${['Pulse','Wave','Strobe','Beat Sync','Fade','Sparkle'].map(e=>`<button onclick="ledMode('${e}')" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text);cursor:pointer;font-size:12px;font-family:'Inter',sans-serif">${e}</button>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="wb-ops-list">
+      ${[['#6C3CF7','VIP Platinum',340,400,'All Access + Backstage','85'],['#FF3CAC','VIP Gold',820,1000,'VIP Lounge + Stage View','82'],['#00F5C4','Premium',1180,1500,'Premium Zone Access','79'],['#FFB300','General',501,1300,'General Floor','39']].map(([c,n,iss,tot,acc,pct])=>`
+        <div class="wb-ops-item">
+          <div class="wb-color-dot" style="background:${c}"></div>
+          <div class="wb-ops-info"><div class="wb-ops-name">${n}</div><div class="wb-ops-access">${acc}</div></div>
+          <div class="wb-ops-stats">
+            <div class="wb-issued">${iss}</div>
+            <div class="wb-total">/ ${tot} issued</div>
+            <div class="wb-progress"><div class="wb-prog-fill" style="width:${pct}%"></div></div>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>
+
+  <!-- LIVE STATS -->
+  <div class="panel" id="ops-stats">
+    <div class="stats-mini">
+      <div class="stat-mini"><div class="stat-mini-val">2,841</div><div class="stat-mini-label">Checked In</div></div>
+      <div class="stat-mini"><div class="stat-mini-val">1,359</div><div class="stat-mini-label">Remaining</div></div>
+      <div class="stat-mini"><div class="stat-mini-val" style="background:var(--brand3);-webkit-background-clip:text;-webkit-text-fill-color:transparent">68%</div><div class="stat-mini-label">Filled</div></div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
+      <div style="font-size:14px;font-weight:700;margin-bottom:12px">Gate-wise Entry</div>
+      ${[['Gate 1 — Main','892','1000',89],['Gate 2 — General','1240','1600',78],['Gate 3 — VIP','342','400',86],['Gate 4 — CLOSED','0','200',0]].map(([g,c,t,p])=>`
+        <div style="margin-bottom:12px">
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
+            <span style="font-weight:600">${g}</span>
+            <span style="color:var(--muted)">${c} / ${t}</span>
+          </div>
+          <div style="background:var(--dark3);border-radius:4px;height:8px;overflow:hidden">
+            <div style="width:${p}%;height:100%;background:var(--grad1);border-radius:4px"></div>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px">
+      <div style="font-size:14px;font-weight:700;margin-bottom:12px">POS Summary</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        ${[['Total Orders','840'],['Revenue','₹2.94L'],['Avg Order','₹350'],['Cash Payments','42%']].map(([l,v])=>`
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center">
+            <div style="font-size:20px;font-weight:700;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent">${v}</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:3px">${l}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+  </div>
+
+  <!-- SCAN LOG -->
+  <div class="panel" id="ops-log">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div style="font-size:14px;font-weight:700">Recent Scans</div>
+      <span style="font-size:12px;color:var(--muted)">Gate 2 · Live</span>
+    </div>
+    <div class="scan-log" id="scanLog">
+      <div class="log-item log-valid"><span class="log-icon">✅</span><span class="log-text">Arjun Sharma — GA · BK174412</span><span class="log-time">18:42:31</span></div>
+      <div class="log-item log-valid"><span class="log-icon">✅</span><span class="log-text">Priya Nair — Premium · BK174411</span><span class="log-time">18:42:28</span></div>
+      <div class="log-item log-dup"><span class="log-icon">⚠️</span><span class="log-text">DUPLICATE — BK174408 already used</span><span class="log-time">18:42:19</span></div>
+      <div class="log-item log-valid"><span class="log-icon">✅</span><span class="log-text">Rohan Mehta — VIP Gold · BK174407</span><span class="log-time">18:42:14</span></div>
+      <div class="log-item log-invalid"><span class="log-icon">❌</span><span class="log-text">INVALID — QR code tampered or fake</span><span class="log-time">18:42:05</span></div>
+      <div class="log-item log-valid"><span class="log-icon">✅</span><span class="log-text">Sneha Kapoor — GA · BK174406</span><span class="log-time">18:41:58</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showOpsPanel(name,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ops-nav-btn').forEach(b=>b.classList.remove('active'));
+  const p=document.getElementById('ops-'+name);if(p)p.classList.add('active');if(btn)btn.classList.add('active');
+}
+
+const scanNames=['Arjun Sharma','Priya Nair','Rohan Mehta','Sneha Kapoor','Vikram Iyer','Anjali Singh','Dev Patel','Meera Rao','Kabir Khan','Ishaan Tiwari'];
+const ticketTypes=['General Admission','Premium Standing','VIP Gold','VIP Platinum'];
+let scanCount=2841;
+
+function simulateScan(){
+  const r=Math.random();
+  const result=document.getElementById('scanResult');
+  result.style.display='block';
+  result.scrollIntoView({behavior:'smooth'});
+
+  if(r>0.85){
+    result.className='scan-result invalid';
+    document.getElementById('resultIcon').textContent='❌';
+    document.getElementById('resultTitle').textContent='INVALID TICKET';
+    document.getElementById('resultTitle').style.color='var(--red)';
+    document.getElementById('resultName').textContent='Ticket not recognised or tampered';
+    addToLog('invalid','INVALID — QR code tampered or fake');
+    playBeep(false);
+  } else if(r>0.75){
+    result.className='scan-result duplicate';
+    document.getElementById('resultIcon').textContent='⚠️';
+    document.getElementById('resultTitle').textContent='ALREADY USED';
+    document.getElementById('resultTitle').style.color='var(--gold)';
+    document.getElementById('resultName').textContent='This ticket was already scanned';
+    addToLog('dup','DUPLICATE — Ticket already used');
+    playBeep(false);
+  } else {
+    result.className='scan-result valid';
+    const name=scanNames[Math.floor(Math.random()*scanNames.length)];
+    const type=ticketTypes[Math.floor(Math.random()*ticketTypes.length)];
+    const orderId='BK'+Math.floor(Math.random()*9000000+1000000);
+    document.getElementById('resultIcon').textContent='✅';
+    document.getElementById('resultTitle').textContent='VALID TICKET';
+    document.getElementById('resultTitle').style.color='var(--green)';
+    document.getElementById('resultName').textContent=name;
+    document.getElementById('resultType').textContent=type;
+    document.getElementById('resultOrderId').textContent=orderId;
+    document.getElementById('resultSeat').textContent=type.includes('VIP')?'VIP Zone A':'Floor GA';
+    document.getElementById('resultEntry').textContent='Gate 2';
+    scanCount++;
+    document.getElementById('liveCheckin').textContent=scanCount.toLocaleString('en-IN');
+    document.getElementById('livePct').textContent=Math.round(scanCount/4200*100)+'%';
+    addToLog('valid',name+' — '+type.split(' ')[0]+' · '+orderId.slice(0,9));
+    playBeep(true);
+  }
+  setTimeout(()=>{result.style.display='none';},4000);
+}
+
+function manualEntry(){
+  const id=prompt('Enter Ticket ID or Order Number:');
+  if(id){simulateScan();}
+}
+
+function addToLog(type,text){
+  const log=document.getElementById('scanLog');
+  if(!log)return;
+  const now=new Date();
+  const time=now.getHours()+':'+String(now.getMinutes()).padStart(2,'0')+':'+String(now.getSeconds()).padStart(2,'0');
+  const div=document.createElement('div');
+  div.className='log-item log-'+type;
+  div.innerHTML='<span class="log-icon">'+(type==='valid'?'✅':type==='invalid'?'❌':'⚠️')+'</span><span class="log-text">'+text+'</span><span class="log-time">'+time+'</span>';
+  log.insertBefore(div,log.firstChild);
+  if(log.children.length>20)log.removeChild(log.lastChild);
+}
+
+function playBeep(success){
+  try{
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator();const g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.frequency.value=success?880:220;
+    o.type=success?'sine':'square';
+    g.gain.setValueAtTime(0.3,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+(success?0.3:0.5));
+    o.start(ctx.currentTime);o.stop(ctx.currentTime+(success?0.3:0.5));
+  }catch(e){}
+}
+
+// POS
+let cart={};
+function addToCart(name,price){
+  if(!cart[name])cart[name]={price,qty:0};
+  cart[name].qty++;
+  updateCart();
+}
+
+function updateCart(){
+  const items=document.getElementById('cartItems');
+  const total=document.getElementById('cartTotal');
+  const keys=Object.keys(cart).filter(k=>cart[k].qty>0);
+  if(!keys.length){
+    items.innerHTML='<div class="cart-empty"><i class="fas fa-shopping-basket" style="font-size:24px;margin-bottom:8px;display:block;opacity:0.4"></i>Cart is empty</div>';
+    total.style.display='none';return;
+  }
+  const sub=keys.reduce((s,k)=>s+cart[k].price*cart[k].qty,0);
+  const gst=Math.round(sub*0.18);
+  items.innerHTML=keys.map(k=>
