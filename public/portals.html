@@ -329,14 +329,17 @@ footer{position:relative;z-index:1;background:var(--dark2);border-top:1px solid 
   <div class="section-sub">Core INDTIX platform API — all running on Cloudflare edge</div>
   <div class="api-grid">
     <div class="api-item" onclick="testApi('/api/health')"><span class="api-method get">GET</span><div><div class="api-path">/api/health</div><div class="api-desc">Platform health check & version</div></div></div>
-    <div class="api-item" onclick="testApi('/api/events')"><span class="api-method get">GET</span><div><div class="api-path">/api/events</div><div class="api-desc">Live events list with categories</div></div></div>
-    <div class="api-item" onclick="testApi('/api/cities')"><span class="api-method get">GET</span><div><div class="api-path">/api/cities</div><div class="api-desc">Supported cities list</div></div></div>
-    <div class="api-item" onclick="showApiInfo('POST /api/orders','Create new ticket order')"><span class="api-method post">POST</span><div><div class="api-path">/api/orders</div><div class="api-desc">Create new ticket order</div></div></div>
-    <div class="api-item" onclick="showApiInfo('POST /api/scan','Validate QR ticket scan')"><span class="api-method post">POST</span><div><div class="api-path">/api/scan</div><div class="api-desc">Validate QR ticket scan</div></div></div>
-    <div class="api-item" onclick="showApiInfo('GET /api/events/:id','Event details and seat map')"><span class="api-method get">GET</span><div><div class="api-path">/api/events/:id</div><div class="api-desc">Event details and seat map</div></div></div>
-    <div class="api-item" onclick="showApiInfo('POST /api/auth/login','Fan authentication via OTP')"><span class="api-method post">POST</span><div><div class="api-path">/api/auth/login</div><div class="api-desc">Fan authentication via OTP</div></div></div>
-    <div class="api-item" onclick="showApiInfo('GET /api/organiser/events','Organiser event list')"><span class="api-method get">GET</span><div><div class="api-path">/api/organiser/events</div><div class="api-desc">Organiser event list</div></div></div>
-    <div class="api-item" onclick="showApiInfo('GET /api/admin/approvals','Pending approval queue')"><span class="api-method get">GET</span><div><div class="api-path">/api/admin/approvals</div><div class="api-desc">Pending approval queue</div></div></div>
+    <div class="api-item" onclick="testApi('/api/events')"><span class="api-method get">GET</span><div><div class="api-path">/api/events</div><div class="api-desc">Live events (filter: city, category, q)</div></div></div>
+    <div class="api-item" onclick="testApi('/api/cities')"><span class="api-method get">GET</span><div><div class="api-path">/api/cities</div><div class="api-desc">Cities with event counts</div></div></div>
+    <div class="api-item" onclick="testApi('/api/categories')"><span class="api-method get">GET</span><div><div class="api-path">/api/categories</div><div class="api-desc">Event categories with counts</div></div></div>
+    <div class="api-item" onclick="testApi('/api/events/e1')"><span class="api-method get">GET</span><div><div class="api-path">/api/events/:id</div><div class="api-desc">Event detail with tiers, add-ons, policies</div></div></div>
+    <div class="api-item" onclick="testApi('/api/venues')"><span class="api-method get">GET</span><div><div class="api-path">/api/venues</div><div class="api-desc">Verified venues list</div></div></div>
+    <div class="api-item" onclick="testApi('/api/admin/stats')"><span class="api-method get">GET</span><div><div class="api-path">/api/admin/stats</div><div class="api-desc">Platform KPIs & finance metrics</div></div></div>
+    <div class="api-item" onclick="testApi('/api/gst/invoice/BK001')"><span class="api-method get">GET</span><div><div class="api-path">/api/gst/invoice/:id</div><div class="api-desc">GST invoice for a booking</div></div></div>
+    <div class="api-item" onclick="showApiInfo('POST /api/bookings','Create booking + GST invoice. Requires: event_id, tickets[]')"><span class="api-method post">POST</span><div><div class="api-path">/api/bookings</div><div class="api-desc">Create booking + GST invoice</div></div></div>
+    <div class="api-item" onclick="showApiInfo('POST /api/scan/verify','Validate QR code. Requires: qr_code, event_id, gate_id')"><span class="api-method post">POST</span><div><div class="api-path">/api/scan/verify</div><div class="api-desc">Validate QR code for entry</div></div></div>
+    <div class="api-item" onclick="showApiInfo('POST /api/ai/chat','INDY chatbot. Requires: message, session_id')"><span class="api-method post">POST</span><div><div class="api-path">/api/ai/chat</div><div class="api-desc">INDY AI chatbot message</div></div></div>
+    <div class="api-item" onclick="showApiInfo('POST /api/promo/validate','Validate promo code. Requires: code, amount')"><span class="api-method post">POST</span><div><div class="api-path">/api/promo/validate</div><div class="api-desc">Validate & apply promo code</div></div></div>
   </div>
 
   <!-- Live API Response -->
@@ -361,6 +364,8 @@ footer{position:relative;z-index:1;background:var(--dark2);border-top:1px solid 
     <a href="/admin" class="footer-link">Admin</a>
     <a href="/ops" class="footer-link">On-Ground Ops</a>
     <a href="/architecture" class="footer-link">Architecture</a>
+    <a href="/architecture-spec" class="footer-link">Tech Spec</a>
+    <a href="/brand" class="footer-link">Brand System</a>
     <a href="/api/health" class="footer-link">API Health</a>
   </div>
   <div style="margin-top:20px;font-size:12px;color:var(--muted)">© 2025 Oye Imagine Pvt Ltd · GSTIN: 27AABCO1234A1Z5 · Powered by Cloudflare Workers + Hono</div>

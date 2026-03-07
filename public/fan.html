@@ -656,6 +656,268 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
   </div>
 </div>
 
+<!-- SEAT MAP MODAL -->
+<div class="modal-overlay" id="seatMapModal">
+  <div class="modal" style="max-width:860px;width:95vw">
+    <button class="modal-close" onclick="closeModal('seatMapModal')"><i class="fas fa-times"></i></button>
+    <div class="modal-body" style="padding:0">
+      <div style="display:grid;grid-template-columns:1fr 300px;min-height:500px">
+        <!-- SEAT MAP CANVAS -->
+        <div style="padding:24px;border-right:1px solid var(--border)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <h3 id="seatMapEventName" style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700"></h3>
+              <p id="seatMapVenue" style="font-size:12px;color:var(--muted);margin-top:3px"></p>
+            </div>
+            <div style="display:flex;gap:8px;font-size:11px;color:var(--muted)">
+              <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:3px;background:#6C3CF7;display:inline-block"></span>Available</span>
+              <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:3px;background:#FF3CAC;display:inline-block"></span>Selected</span>
+              <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:3px;background:var(--dark3);border:1px solid var(--border);display:inline-block"></span>Taken</span>
+            </div>
+          </div>
+          <!-- Stage -->
+          <div style="background:linear-gradient(135deg,rgba(108,60,247,0.3),rgba(255,60,172,0.2));border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;font-weight:700;font-size:13px;letter-spacing:2px;margin-bottom:20px;color:var(--muted)">🎤 STAGE / PERFORMANCE AREA</div>
+          <!-- Zone selector tabs -->
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">
+            <button onclick="selectZone('GA')" class="zone-tab active" style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--brand);background:rgba(108,60,247,0.2);color:var(--brand);cursor:pointer;font-family:'Inter',sans-serif">GA · ₹1,499</button>
+            <button onclick="selectZone('PREM')" class="zone-tab" style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif">Premium · ₹2,999</button>
+            <button onclick="selectZone('VIP')" class="zone-tab" style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif">VIP · ₹4,999</button>
+            <button onclick="selectZone('ACCESSIBLE')" class="zone-tab" style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif">♿ Accessible · ₹1,499</button>
+          </div>
+          <!-- Seat grid -->
+          <div id="seatGrid" style="overflow-x:auto">
+            <div id="seatGridInner" style="display:grid;gap:5px;justify-content:center;padding:8px"></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;font-size:12px;color:var(--muted)">
+            <span>💡 Click seats to select · Max 10 per booking</span>
+            <span id="seatCountBadge" style="background:rgba(108,60,247,0.2);border:1px solid var(--brand);color:var(--brand);padding:3px 12px;border-radius:20px;font-weight:600">0 selected</span>
+          </div>
+        </div>
+        <!-- SEAT SELECTION PANEL -->
+        <div style="padding:20px;display:flex;flex-direction:column">
+          <h4 style="font-size:14px;font-weight:700;margin-bottom:12px">Your Selection</h4>
+          <div id="seatSelectionList" style="flex:1;min-height:160px;background:var(--dark3);border-radius:10px;padding:12px;margin-bottom:12px;font-size:12px;color:var(--muted)">
+            No seats selected yet. Click on the map to pick your spots.
+          </div>
+          <!-- Add-ons in seat flow -->
+          <div style="background:var(--dark3);border-radius:10px;padding:12px;margin-bottom:12px">
+            <div style="font-size:12px;font-weight:700;margin-bottom:10px;color:var(--text)">⚡ Quick Add-ons</div>
+            <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:8px;cursor:pointer">
+              <input type="checkbox" id="addonFoodSeat" style="accent-color:var(--brand)"> 🍺 Combo Meal Pack · ₹499 ea
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:8px;cursor:pointer">
+              <input type="checkbox" id="addonMerchSeat" style="accent-color:var(--brand)"> 👕 Official Tee (Size <select id="merchSize" style="background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:11px;padding:2px">
+                <option>S</option><option>M</option><option selected>L</option><option>XL</option><option>XXL</option>
+              </select>) · ₹799
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer">
+              <input type="checkbox" id="addonFasttag" style="accent-color:var(--brand)"> ⚡ Fast-Track Entry · ₹149 ea
+            </label>
+          </div>
+          <!-- Promo code -->
+          <div style="display:flex;gap:8px;margin-bottom:12px">
+            <input id="seatPromoInput" type="text" placeholder="Promo code" style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none;font-family:'Inter',sans-serif">
+            <button onclick="applyPromo()" style="background:var(--card);border:1px solid var(--border);color:var(--brand);padding:8px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Apply</button>
+          </div>
+          <div id="seatOrderSummary" style="background:var(--dark3);border-radius:10px;padding:12px;margin-bottom:12px;font-size:12px;display:none">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--muted)">Tickets</span><span id="seatOrderTickets" style="font-weight:600"></span></div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--muted)">Add-ons</span><span id="seatOrderAddons" style="font-weight:600">₹0</span></div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--muted)">Platform Fee</span><span style="font-weight:600;color:var(--muted)">₹20</span></div>
+            <div id="seatPromoLine" style="display:none;justify-content:space-between;margin-bottom:4px"><span style="color:var(--brand3)">Promo (INDY20)</span><span style="font-weight:600;color:var(--brand3)" id="seatPromoAmt"></span></div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--muted)">GST (18%)</span><span id="seatOrderGST" style="font-weight:600"></span></div>
+            <div style="border-top:1px solid var(--border);padding-top:8px;margin-top:6px;display:flex;justify-content:space-between"><span style="font-weight:700">Total</span><span id="seatOrderTotal" style="font-weight:800;font-size:16px;color:var(--brand3)"></span></div>
+          </div>
+          <button id="proceedPayBtn" onclick="proceedToPayment()" disabled style="background:var(--grad1);border:none;color:#fff;padding:13px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;opacity:0.5;transition:all 0.2s;font-family:'Inter',sans-serif"><i class="fas fa-lock"></i> Proceed to Pay</button>
+          <p style="font-size:10px;color:var(--muted);text-align:center;margin-top:8px">⏱ Seats held for <span id="seatTimerDisplay" style="color:var(--brand2);font-weight:700">10:00</span></p>
+          <p style="font-size:10px;color:var(--muted);text-align:center;margin-top:4px">This event is organised by the Organiser. INDTIX is the ticketing partner only.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING CONFIRMATION MODAL -->
+<div class="modal-overlay" id="confirmationModal">
+  <div class="modal" style="max-width:520px;text-align:center">
+    <div class="modal-body">
+      <div style="width:80px;height:80px;background:linear-gradient(135deg,rgba(0,245,196,0.2),rgba(108,60,247,0.2));border:2px solid var(--brand3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 20px">🎉</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:800;margin-bottom:6px">You're In! 🎟️</h2>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:20px">Your tickets are confirmed. Time to plan your outfit.</p>
+      <!-- Ticket card -->
+      <div id="ticketCard" style="background:var(--dark3);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;text-align:left">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+          <div>
+            <div id="tcEventName" style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700"></div>
+            <div id="tcVenue" style="font-size:12px;color:var(--muted);margin-top:3px"></div>
+          </div>
+          <div style="background:var(--grad1);border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700">CONFIRMED</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px"><div style="font-size:10px;color:var(--muted)">DATE</div><div id="tcDate" style="font-weight:700;font-size:13px;margin-top:2px"></div></div>
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px"><div style="font-size:10px;color:var(--muted)">BOOKING ID</div><div id="tcBookingId" style="font-weight:700;font-size:13px;margin-top:2px;color:var(--brand3)"></div></div>
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px"><div style="font-size:10px;color:var(--muted)">SEATS</div><div id="tcSeats" style="font-weight:700;font-size:13px;margin-top:2px"></div></div>
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px"><div style="font-size:10px;color:var(--muted)">ZONE</div><div id="tcZone" style="font-weight:700;font-size:13px;margin-top:2px"></div></div>
+        </div>
+        <!-- QR placeholder -->
+        <div style="text-align:center;background:rgba(0,0,0,0.3);border-radius:12px;padding:16px;margin-bottom:12px">
+          <div style="width:100px;height:100px;margin:0 auto;display:grid;grid-template-columns:repeat(7,1fr);gap:2px">
+            <!-- QR visual pattern -->
+            <script>document.write([...Array(49)].map((_,i)=>{ const p=[0,1,2,3,4,5,6,7,14,21,28,35,42,43,44,45,46,47,48,8,9,10,11,12,13,15,20,22,27,29,34,36,41,17,18,19,24,25,26,30,31,32,33]; return `<div style="background:${Math.random()>0.5?'#E8EAFF':'transparent'};border-radius:1px"></div>` }).join(''))</script>
+          </div>
+          <div style="font-size:10px;color:var(--muted);margin-top:6px">QR Code — Show at Entry · One-time use</div>
+        </div>
+        <!-- GST Invoice breakup -->
+        <div style="border-top:1px solid var(--border);padding-top:12px">
+          <div style="font-size:11px;font-weight:700;margin-bottom:8px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">GST Invoice Breakup</div>
+          <div style="font-size:11px;display:flex;flex-direction:column;gap:4px">
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Ticket value (excl. GST)</span><span id="tcBase" style="font-weight:600"></span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">CGST @ 9%</span><span id="tcCGST" style="font-weight:600"></span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">SGST @ 9%</span><span id="tcSGST" style="font-weight:600"></span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Platform Convenience Fee</span><span style="font-weight:600">₹20.00</span></div>
+            <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:6px;margin-top:4px"><span style="font-weight:700;font-size:13px">Total Paid</span><span id="tcTotal" style="font-weight:800;font-size:14px;color:var(--brand3)"></span></div>
+          </div>
+          <p style="font-size:10px;color:var(--muted);margin-top:8px;line-height:1.5">This event is organised by the Organiser. INDTIX (Oye Imagine Pvt Ltd) is the authorised ticketing partner only. GSTIN: 27AABCO1234A1Z5 · HSN: 998554</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+        <button onclick="downloadTicket()" style="background:var(--card);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-download"></i> Download PDF</button>
+        <button onclick="shareTicket()" style="background:var(--card);border:1px solid var(--border);color:var(--brand3);padding:12px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fab fa-whatsapp"></i> Share via WA</button>
+      </div>
+      <div style="background:rgba(108,60,247,0.1);border:1px solid rgba(108,60,247,0.3);border-radius:10px;padding:12px;margin-bottom:16px">
+        <div style="font-size:12px;font-weight:700;margin-bottom:6px">🎁 Refer & Earn</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Share your referral code. When a friend books their first ticket, you both get ₹100 INDY Credits!</div>
+        <div style="display:flex;gap:8px">
+          <input value="INDY-REF-2025" readonly style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--brand3);font-size:13px;font-weight:700;outline:none;font-family:'Space Grotesk',sans-serif">
+          <button onclick="showToast('Referral code copied! 🎉')" style="background:var(--grad1);border:none;color:#fff;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Copy</button>
+        </div>
+      </div>
+      <button onclick="closeModal('confirmationModal')" class="btn-primary" style="width:100%;padding:13px;border-radius:12px;font-size:14px">Done, let's go! 🚀</button>
+    </div>
+  </div>
+</div>
+
+<!-- MY ACCOUNT PANEL (slide-in) -->
+<div id="accountPanel" style="position:fixed;top:0;right:-420px;width:420px;height:100vh;background:var(--dark2);border-left:1px solid var(--border);z-index:2000;transition:right 0.35s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;box-shadow:-20px 0 60px rgba(0,0,0,0.5)">
+  <div style="padding:20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700">My Account</h3>
+    <button onclick="closeAccountPanel()" style="background:transparent;border:none;color:var(--muted);font-size:20px;cursor:pointer"><i class="fas fa-times"></i></button>
+  </div>
+  <!-- Profile summary -->
+  <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+    <div style="width:52px;height:52px;background:var(--grad1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700">A</div>
+    <div style="flex:1">
+      <div style="font-weight:700;font-size:15px">Arjun Mehta</div>
+      <div style="font-size:12px;color:var(--muted)">arjun.mehta@gmail.com · +91 98765 43210</div>
+      <div style="margin-top:4px;display:flex;gap:6px">
+        <span style="background:rgba(0,245,196,0.15);border:1px solid rgba(0,245,196,0.3);color:var(--brand3);font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600">✓ Verified Fan</span>
+        <span style="background:rgba(108,60,247,0.15);border:1px solid var(--border);color:var(--muted);font-size:10px;padding:2px 8px;border-radius:20px">₹250 Credits</span>
+      </div>
+    </div>
+  </div>
+  <!-- Account tabs -->
+  <div style="display:flex;border-bottom:1px solid var(--border)">
+    <button onclick="accTab(this,'bookings')" class="acc-tab active" style="flex:1;padding:12px;background:transparent;border:none;color:var(--brand);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border-bottom:2px solid var(--brand)">My Bookings</button>
+    <button onclick="accTab(this,'wishlist')" class="acc-tab" style="flex:1;padding:12px;background:transparent;border:none;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border-bottom:2px solid transparent">Wishlist</button>
+    <button onclick="accTab(this,'wallet')" class="acc-tab" style="flex:1;padding:12px;background:transparent;border:none;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border-bottom:2px solid transparent">Wallet</button>
+  </div>
+  <!-- Bookings panel -->
+  <div id="acc-bookings" style="padding:16px">
+    ${[{id:'BK001',event:'Sunburn Arena',date:'Apr 15',status:'Confirmed',amt:'₹3,536',seats:'2 × GA'},{id:'BK002',event:'NH7 Weekender',date:'May 20',status:'Confirmed',amt:'₹6,538',seats:'2 × Premium'},{id:'BK003',event:'Comedy Central Live',date:'Mar 10',status:'Attended',amt:'₹1,036',seats:'1 × GA'},{id:'BK004',event:'Tech Summit 2025',date:'Feb 5',status:'Cancelled',amt:'₹5,118 (Refunded)',seats:'1 × General'}].map(b=>`
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <div>
+          <div style="font-weight:700;font-size:13px">${b.event}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">${b.seats} · ${b.date}</div>
+        </div>
+        <span style="font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:${b.status==='Confirmed'?'rgba(0,245,196,0.15)':b.status==='Attended'?'rgba(108,60,247,0.15)':'rgba(255,68,68,0.15)'};color:${b.status==='Confirmed'?'var(--brand3)':b.status==='Attended'?'var(--brand)':'#FF4444'};border:1px solid ${b.status==='Confirmed'?'rgba(0,245,196,0.3)':b.status==='Attended'?'var(--border)':'rgba(255,68,68,0.3)'}">${b.status}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-weight:700;font-size:14px;color:var(--brand3)">${b.amt}</span>
+        <div style="display:flex;gap:6px">
+          <button onclick="showToast('Ticket resent to WhatsApp & Email! 📨')" style="background:transparent;border:1px solid var(--border);color:var(--muted);padding:5px 10px;border-radius:8px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Resend</button>
+          ${b.status==='Confirmed'?`<button onclick="openRefundFlow('${b.id}')" style="background:transparent;border:1px solid rgba(255,68,68,0.4);color:#FF4444;padding:5px 10px;border-radius:8px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Cancel</button>`:''}
+        </div>
+      </div>
+      <div style="font-size:10px;color:var(--muted);margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">Booking ID: <span style="color:var(--brand3);font-weight:600">${b.id}</span> · <a href="#" onclick="showToast('Invoice downloaded!')" style="color:var(--brand);text-decoration:none">Download GST Invoice</a></div>
+    </div>
+    `).join('')}
+  </div>
+  <!-- Wishlist panel -->
+  <div id="acc-wishlist" style="padding:16px;display:none">
+    ${[{name:'Lollapalooza India',date:'Mar 22, 2026',price:'₹5,999',img:'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200'},{name:'Zakir Hussain Live',date:'Apr 20, 2026',price:'₹999',img:'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200'}].map(w=>`
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:center">
+      <img src="${w.img}" style="width:60px;height:60px;border-radius:8px;object-fit:cover">
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:13px">${w.name}</div>
+        <div style="font-size:11px;color:var(--muted)">${w.date} · From ${w.price}</div>
+        <button onclick="showToast('Added to cart!')" style="margin-top:6px;background:var(--grad1);border:none;color:#fff;padding:5px 14px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Book Now</button>
+      </div>
+      <button onclick="this.closest('div[style*=flex]').remove();showToast('Removed from wishlist')" style="background:transparent;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px">×</button>
+    </div>
+    `).join('')}
+  </div>
+  <!-- Wallet panel -->
+  <div id="acc-wallet" style="padding:16px;display:none">
+    <div style="background:var(--grad1);border-radius:14px;padding:20px;margin-bottom:16px;text-align:center">
+      <div style="font-size:12px;font-weight:600;opacity:0.8;text-transform:uppercase;letter-spacing:1px">INDY Credits Balance</div>
+      <div style="font-size:40px;font-weight:800;margin:8px 0;font-family:'Space Grotesk',sans-serif">₹250</div>
+      <div style="font-size:11px;opacity:0.7">Expires: Dec 31, 2026 · Referral credits</div>
+    </div>
+    <div style="font-size:13px;font-weight:600;margin-bottom:10px">Transaction History</div>
+    ${[{type:'credit',desc:'Referral bonus — Priya joined',amt:'+₹100',date:'Feb 28'},{type:'credit',desc:'Welcome bonus',amt:'+₹150',date:'Jan 15'},{type:'debit',desc:'Used at checkout — NH7',amt:'-₹150',date:'Jan 20'}].map(t=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--card);border-radius:10px;margin-bottom:8px">
+      <div style="width:36px;height:36px;border-radius:50%;background:${t.type==='credit'?'rgba(0,245,196,0.15)':'rgba(255,68,68,0.15)'};display:flex;align-items:center;justify-content:center;font-size:16px">${t.type==='credit'?'⬆️':'⬇️'}</div>
+      <div style="flex:1"><div style="font-size:12px;font-weight:600">${t.desc}</div><div style="font-size:11px;color:var(--muted)">${t.date}</div></div>
+      <span style="font-weight:700;font-size:13px;color:${t.type==='credit'?'var(--brand3)':'#FF4444'}">${t.amt}</span>
+    </div>
+    `).join('')}
+  </div>
+</div>
+
+<!-- REFUND / CANCELLATION MODAL -->
+<div class="modal-overlay" id="refundModal">
+  <div class="modal" style="max-width:460px">
+    <button class="modal-close" onclick="closeModal('refundModal')"><i class="fas fa-times"></i></button>
+    <div class="modal-body">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin-bottom:4px">Cancel Booking</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:20px">Please read the refund policy before proceeding.</p>
+      <div style="background:rgba(255,180,0,0.1);border:1px solid rgba(255,180,0,0.3);border-radius:10px;padding:14px;margin-bottom:16px">
+        <div style="font-weight:700;font-size:13px;color:#FFB300;margin-bottom:8px">⚠️ Cancellation Policy</div>
+        <ul style="font-size:12px;color:var(--muted);padding-left:16px;line-height:2">
+          <li>Cancel 48+ hours before event → <strong style="color:var(--text)">50% refund</strong></li>
+          <li>Cancel within 24-48 hours → <strong style="color:var(--text)">25% refund</strong></li>
+          <li>Cancel within 24 hours → <strong style="color:#FF4444">No refund</strong></li>
+          <li>Event cancelled by organiser → <strong style="color:var(--brand3)">Full refund</strong></li>
+        </ul>
+      </div>
+      <div style="background:var(--dark3);border-radius:10px;padding:14px;margin-bottom:16px">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Booking ID</div>
+        <div id="refundBookingId" style="font-weight:700;font-size:14px;color:var(--brand3)">BK001</div>
+        <div style="display:flex;justify-content:space-between;margin-top:10px">
+          <div><div style="font-size:11px;color:var(--muted)">Amount Paid</div><div style="font-weight:700">₹3,536</div></div>
+          <div style="text-align:right"><div style="font-size:11px;color:var(--muted)">Estimated Refund</div><div style="font-weight:700;color:var(--brand3)">₹1,768 (50%)</div></div>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px">Refund processed to original payment method within 5-7 business days.</div>
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="font-size:13px;font-weight:600;display:block;margin-bottom:8px">Reason for cancellation</label>
+        <select style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;font-family:'Inter',sans-serif">
+          <option>Change of plans</option>
+          <option>Can't attend anymore</option>
+          <option>Found a better option</option>
+          <option>Travel issues</option>
+          <option>Medical/personal emergency</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <button onclick="closeModal('refundModal')" style="background:var(--card);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Keep Booking</button>
+        <button onclick="submitRefund()" style="background:linear-gradient(135deg,#FF4444,#FF3CAC);border:none;color:#fff;padding:12px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Confirm Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST CONTAINER -->
 <div class="toast-container" id="toastContainer"></div>
 
@@ -692,9 +954,345 @@ const EVENTS = [
   { id:'E006',name:'BITS Pilani Oasis',date:'Oct 1, 2025',venue:'BITS Campus',city:'Pilani',price:299,category:'College Fest',image:'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600',sold:34 },
 ];
 
-let currentEvent=null, qty={ga:0,prem:0,vip:0,fb:0,merch:0}, selectedSeats=[];
+const EVENTS = [
+  { id:'E001',name:'Sunburn Arena Mumbai',date:'Apr 15, 2026',venue:'NSCI Dome, Worli',city:'Mumbai',price:1499,category:'Music',image:'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600',sold:72 },
+  { id:'E002',name:'NH7 Weekender',date:'May 20, 2026',venue:'Mahalaxmi Grounds',city:'Pune',price:2999,category:'Music',image:'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600',sold:58 },
+  { id:'E003',name:'Comedy Central Live',date:'Apr 28, 2026',venue:'JW Marriott Ballroom',city:'Bengaluru',price:899,category:'Comedy',image:'https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=600',sold:45 },
+  { id:'E004',name:'Tech Summit 2026',date:'Jun 10, 2026',venue:'HITEX Exhibition Centre',city:'Hyderabad',price:4999,category:'Conference',image:'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600',sold:85 },
+  { id:'E005',name:'Lollapalooza India',date:'Mar 22, 2026',venue:'Mahalaxmi Racecourse',city:'Mumbai',price:5999,category:'Music',image:'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600',sold:92 },
+  { id:'E006',name:'BITS Pilani Oasis',date:'Oct 1, 2026',venue:'BITS Campus',city:'Pilani',price:299,category:'College Fest',image:'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600',sold:34 },
+];
 
+let currentEvent=null, qty={ga:0,prem:0,vip:0,fb:0,merch:0}, selectedSeats=[], currentZone='GA', seatTimer=null, seatSeconds=600;
+const ZONE_PRICES = {GA:1499,PREM:2999,VIP:4999,ACCESSIBLE:1499};
+const ZONE_ROWS = {GA:12,PREM:8,VIP:4,ACCESSIBLE:2};
+const ZONE_COLS = {GA:20,PREM:15,VIP:10,ACCESSIBLE:8};
+
+/* ─── RENDER EVENTS ─── */
 function renderEvents(list){
   const grid=document.getElementById('eventsGrid');
-  if(!list||!list.length){grid.innerHTML='<p style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px">No events found. Try a different filter.</p>';return;}
-  grid.innerHTML=list.map(e=>
+  if(!list||!list.length){grid.innerHTML='<p style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px">No events found. Try a different filter. 🙈</p>';return;}
+  grid.innerHTML=list.map(e=>`
+  <div class="event-card" onclick="openEventModal('${e.id}')">
+    <div class="card-img-wrap"><img src="${e.image}" class="card-img" alt="${e.name}" loading="lazy"><div class="card-cat">${e.category}</div>${e.sold>80?'<div class="sold-badge">🔥 Selling Fast</div>':''}</div>
+    <div class="card-body">
+      <div class="card-date"><i class="far fa-calendar"></i>${e.date}</div>
+      <div class="card-title2">${e.name}</div>
+      <div class="card-venue"><i class="fas fa-map-marker-alt"></i>${e.venue}</div>
+      <div class="card-footer2">
+        <div class="card-price">From ₹${e.price.toLocaleString('en-IN')}</div>
+        <div class="sell-bar"><div class="sell-fill" style="width:${e.sold}%"></div></div>
+        <span style="font-size:11px;color:var(--muted)">${e.sold}% sold</span>
+      </div>
+      <button class="card-btn btn-primary">Get Tickets <i class="fas fa-arrow-right"></i></button>
+      <button onclick="toggleWishlist(event,'${e.id}')" class="wishlist-btn" id="wish-${e.id}" style="position:absolute;top:16px;right:16px;background:rgba(0,0,0,0.5);border:1px solid var(--border);color:var(--muted);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.2s">♡</button>
+    </div>
+  </div>`).join('');
+}
+
+/* ─── FILTERS ─── */
+function filterBy(btn,cat){ document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderEvents(cat==='all'?EVENTS:EVENTS.filter(e=>e.category.toLowerCase()===cat||e.category.toLowerCase().includes(cat))); }
+function handleSearch(v){ if(!v.trim()){renderEvents(EVENTS);return;} const q=v.toLowerCase(); renderEvents(EVENTS.filter(e=>e.name.toLowerCase().includes(q)||e.city.toLowerCase().includes(q)||e.venue.toLowerCase().includes(q)||e.category.toLowerCase().includes(q))); }
+function doSearch(){ handleSearch(document.getElementById('searchInput').value); }
+
+/* ─── EVENT MODAL ─── */
+function openEventModal(id){
+  const e=EVENTS.find(x=>x.id===id); if(!e) return;
+  currentEvent=e;
+  document.getElementById('modalTitle').textContent=e.name;
+  document.getElementById('modalDate').textContent=e.date;
+  document.getElementById('modalVenue').textContent=e.venue+', '+e.city;
+  document.getElementById('modalImg').src=e.image;
+  document.getElementById('modalImg').alt=e.name;
+  document.getElementById('gaPrice').textContent='₹'+e.price.toLocaleString('en-IN');
+  document.getElementById('premPrice').textContent='₹'+(e.price*2).toLocaleString('en-IN');
+  document.getElementById('vipPrice').textContent='₹'+(e.price*3.5).toLocaleString('en-IN');
+  Object.keys(qty).forEach(k=>{qty[k]=0;const el=document.getElementById(k+'Qty');if(el)el.textContent='0';});
+  updateTotal();
+  document.getElementById('eventModal').style.display='flex';
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(id){ const m=document.getElementById(id); if(m){m.style.display='none'; if(id==='eventModal'||id==='seatMapModal'||id==='confirmationModal'||id==='refundModal') document.body.style.overflow='auto';} }
+document.addEventListener('click',e=>{if(e.target.classList.contains('modal-overlay'))closeModal(e.target.id);});
+
+function changeQty(type,delta){
+  const total=qty.ga+qty.prem+qty.vip;
+  if(delta>0 && type!=='fb'&&type!=='merch' && total>=10){showToast('Max 10 tickets per booking. Contact us for group bookings 🎟️');return;}
+  qty[type]=Math.max(0,qty[type]+delta);
+  const el=document.getElementById(type+'Qty'); if(el)el.textContent=qty[type];
+  updateTotal();
+}
+
+function updateTotal(){
+  if(!currentEvent) return;
+  const p=currentEvent.price;
+  const sub=(qty.ga*p)+(qty.prem*p*2)+(qty.vip*p*3.5)+(qty.fb*350)+(qty.merch*899);
+  const gst=sub*0.18;
+  const fee=20;
+  const total=sub+gst+fee;
+  const el=document.getElementById('totalPrice');
+  if(el) el.textContent='₹'+total.toLocaleString('en-IN',{maximumFractionDigits:0});
+}
+
+function proceedCheckout(){
+  const tickets=qty.ga+qty.prem+qty.vip;
+  if(!tickets){showToast('Pick at least one ticket first! 🎫');return;}
+  closeModal('eventModal');
+  openSeatMap();
+}
+
+/* ─── SEAT MAP ─── */
+function openSeatMap(){
+  if(!currentEvent) return;
+  document.getElementById('seatMapEventName').textContent=currentEvent.name;
+  document.getElementById('seatMapVenue').textContent=currentEvent.venue+', '+currentEvent.city;
+  selectedSeats=[];
+  currentZone='GA';
+  renderSeatGrid();
+  startSeatTimer();
+  document.getElementById('seatMapModal').style.display='flex';
+  document.body.style.overflow='hidden';
+  updateSeatOrder();
+}
+
+function renderSeatGrid(){
+  const rows=ZONE_ROWS[currentZone]||8, cols=ZONE_COLS[currentZone]||15;
+  const inner=document.getElementById('seatGridInner');
+  inner.style.gridTemplateColumns=`repeat(${cols},1fr)`;
+  const taken=new Set();
+  // Randomly pre-take ~35% of seats
+  for(let i=0;i<rows*cols;i++){if(Math.random()<0.35)taken.add(i);}
+  inner.innerHTML='';
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const idx=r*cols+c;
+      const seatId=`${currentZone}-R${r+1}C${c+1}`;
+      const isTaken=taken.has(idx);
+      const isSelected=selectedSeats.includes(seatId);
+      const btn=document.createElement('button');
+      btn.title=`Row ${r+1}, Seat ${c+1}`;
+      btn.style.cssText=`width:22px;height:22px;border-radius:4px;border:none;cursor:${isTaken?'not-allowed':'pointer'};background:${isTaken?'var(--dark3)':isSelected?'var(--brand2)':'var(--brand)'};opacity:${isTaken?0.3:1};transition:all 0.15s;`;
+      if(!isTaken) btn.onclick=()=>toggleSeat(seatId,btn);
+      inner.appendChild(btn);
+    }
+  }
+}
+
+function toggleSeat(seatId,btn){
+  const idx=selectedSeats.indexOf(seatId);
+  if(idx>-1){selectedSeats.splice(idx,1);btn.style.background='var(--brand)';}
+  else{
+    if(selectedSeats.length>=10){showToast('Max 10 seats per booking 🎟️');return;}
+    selectedSeats.push(seatId);btn.style.background='var(--brand2)';
+  }
+  document.getElementById('seatCountBadge').textContent=`${selectedSeats.length} selected`;
+  const btn2=document.getElementById('proceedPayBtn');
+  btn2.disabled=selectedSeats.length===0;
+  btn2.style.opacity=selectedSeats.length>0?1:0.5;
+  updateSeatOrder();
+  renderSeatList();
+}
+
+function selectZone(zone){
+  currentZone=zone;
+  selectedSeats=[];
+  document.querySelectorAll('.zone-tab').forEach(t=>{t.style.background='transparent';t.style.color='var(--muted)';t.style.borderColor='var(--border)';});
+  event.target.style.background='rgba(108,60,247,0.2)';event.target.style.color='var(--brand)';event.target.style.borderColor='var(--brand)';
+  renderSeatGrid();
+  updateSeatOrder();
+  renderSeatList();
+  document.getElementById('seatCountBadge').textContent='0 selected';
+  document.getElementById('proceedPayBtn').disabled=true;
+  document.getElementById('proceedPayBtn').style.opacity=0.5;
+}
+
+function renderSeatList(){
+  const el=document.getElementById('seatSelectionList');
+  if(!selectedSeats.length){el.textContent='No seats selected yet. Click on the map to pick your spots.';return;}
+  el.innerHTML=selectedSeats.map(s=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="color:var(--text)">${s.replace('-',' · ')}</span><span style="color:var(--brand3);font-weight:600">₹${ZONE_PRICES[currentZone].toLocaleString('en-IN')}</span></div>`).join('')+'<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:13px;font-weight:700;margin-top:4px"><span>Subtotal</span><span style="color:var(--brand3)">₹${(selectedSeats.length*ZONE_PRICES[currentZone]).toLocaleString("en-IN")}</span></div>';
+}
+
+let promoApplied=false;
+function applyPromo(){
+  const code=document.getElementById('seatPromoInput').value.trim().toUpperCase();
+  if(code==='INDY20'){promoApplied=true;showToast('🎉 20% off applied! Code INDY20 is valid');updateSeatOrder();}
+  else if(code==='FIRST50'){promoApplied=true;showToast('🎉 ₹50 off applied! Welcome discount');updateSeatOrder();}
+  else showToast('Invalid promo code. Try INDY20 😉');
+}
+
+function updateSeatOrder(){
+  const el=document.getElementById('seatOrderSummary');
+  if(!selectedSeats.length){el.style.display='none';return;}
+  el.style.display='block';
+  const ticketBase=selectedSeats.length*ZONE_PRICES[currentZone];
+  const addons=(document.getElementById('addonFoodSeat')?.checked?499*selectedSeats.length:0)+(document.getElementById('addonMerchSeat')?.checked?799:0)+(document.getElementById('addonFasttag')?.checked?149*selectedSeats.length:0);
+  const promoDisc=promoApplied?Math.round(ticketBase*0.2):0;
+  const sub=ticketBase+addons-promoDisc;
+  const gst=Math.round(sub*0.18);
+  const total=sub+gst+20;
+  document.getElementById('seatOrderTickets').textContent=`${selectedSeats.length}×${currentZone} ₹${ticketBase.toLocaleString('en-IN')}`;
+  document.getElementById('seatOrderAddons').textContent=addons?`₹${addons.toLocaleString('en-IN')}`:'₹0';
+  document.getElementById('seatOrderGST').textContent=`₹${gst.toLocaleString('en-IN')}`;
+  document.getElementById('seatOrderTotal').textContent=`₹${total.toLocaleString('en-IN')}`;
+  const promoLine=document.getElementById('seatPromoLine');
+  if(promoApplied){promoLine.style.display='flex';document.getElementById('seatPromoAmt').textContent=`-₹${promoDisc.toLocaleString('en-IN')}`;}
+  else promoLine.style.display='none';
+}
+
+function startSeatTimer(){
+  clearInterval(seatTimer); seatSeconds=600;
+  seatTimer=setInterval(()=>{
+    seatSeconds--;
+    const m=Math.floor(seatSeconds/60), s=seatSeconds%60;
+    const el=document.getElementById('seatTimerDisplay');
+    if(el) el.textContent=`${m}:${s.toString().padStart(2,'0')}`;
+    if(seatSeconds<=0){clearInterval(seatTimer);showToast('⏱ Seat hold expired. Please re-select.');closeModal('seatMapModal');}
+  },1000);
+}
+
+/* ─── PAYMENT FLOW ─── */
+function proceedToPayment(){
+  if(!selectedSeats.length)return;
+  closeModal('seatMapModal');
+  clearInterval(seatTimer);
+  // Show payment loading then confirmation
+  setTimeout(()=>showConfirmation(),800);
+}
+
+function showConfirmation(){
+  if(!currentEvent) return;
+  const bookingId='BK'+Math.random().toString(36).slice(2,8).toUpperCase();
+  const ticketBase=selectedSeats.length*ZONE_PRICES[currentZone];
+  const promoDisc=promoApplied?Math.round(ticketBase*0.2):0;
+  const sub=ticketBase-promoDisc;
+  const cgst=Math.round(sub*0.09);
+  const sgst=Math.round(sub*0.09);
+  const total=sub+cgst+sgst+20;
+  document.getElementById('tcEventName').textContent=currentEvent.name;
+  document.getElementById('tcVenue').textContent=currentEvent.venue;
+  document.getElementById('tcDate').textContent=currentEvent.date;
+  document.getElementById('tcBookingId').textContent=bookingId;
+  document.getElementById('tcSeats').textContent=selectedSeats.length+' seats';
+  document.getElementById('tcZone').textContent=currentZone;
+  document.getElementById('tcBase').textContent='₹'+sub.toLocaleString('en-IN');
+  document.getElementById('tcCGST').textContent='₹'+cgst.toLocaleString('en-IN');
+  document.getElementById('tcSGST').textContent='₹'+sgst.toLocaleString('en-IN');
+  document.getElementById('tcTotal').textContent='₹'+total.toLocaleString('en-IN');
+  document.getElementById('confirmationModal').style.display='flex';
+  document.body.style.overflow='hidden';
+  showToast('🎟️ Tickets confirmed! Check your WhatsApp & Email');
+}
+
+function completePayment(){
+  closeModal('checkoutModal');
+  if(currentEvent) showConfirmation();
+}
+
+function downloadTicket(){ showToast('📄 Ticket PDF downloading...'); }
+function shareTicket(){ showToast('📲 Opening WhatsApp share...'); }
+
+/* ─── ACCOUNT PANEL ─── */
+function openAccountPanel(){ document.getElementById('accountPanel').style.right='0'; document.body.style.overflow='hidden'; }
+function closeAccountPanel(){ document.getElementById('accountPanel').style.right='-420px'; document.body.style.overflow='auto'; }
+function accTab(btn,tab){
+  document.querySelectorAll('.acc-tab').forEach(b=>{b.style.color='var(--muted)';b.style.borderBottomColor='transparent';});
+  btn.style.color='var(--brand)'; btn.style.borderBottomColor='var(--brand)';
+  ['bookings','wishlist','wallet'].forEach(t=>{ const el=document.getElementById('acc-'+t); if(el) el.style.display=t===tab?'block':'none'; });
+}
+
+/* ─── WISHLIST ─── */
+const wishlist=new Set();
+function toggleWishlist(e,id){
+  e.stopPropagation();
+  const btn=document.getElementById('wish-'+id);
+  if(wishlist.has(id)){wishlist.delete(id);btn.textContent='♡';btn.style.color='var(--muted)';showToast('Removed from wishlist');}
+  else{wishlist.add(id);btn.textContent='♥';btn.style.color='var(--brand2)';showToast('Added to wishlist ❤️');}
+}
+
+/* ─── REFUND ─── */
+function openRefundFlow(bookingId){
+  document.getElementById('refundBookingId').textContent=bookingId;
+  document.getElementById('refundModal').style.display='flex';
+}
+function submitRefund(){
+  closeModal('refundModal');
+  showToast('✅ Cancellation submitted. Refund ₹1,768 will reach you in 5-7 days.');
+}
+
+/* ─── AUTH ─── */
+function openLoginModal(){ document.getElementById('loginModal').style.display='flex'; document.body.style.overflow='hidden'; }
+function openSignupModal(){ document.getElementById('signupModal').style.display='flex'; document.body.style.overflow='hidden'; }
+function switchToLogin(){ closeModal('signupModal'); openLoginModal(); }
+function switchToSignup(){ closeModal('loginModal'); openSignupModal(); }
+function handleLogin(){ closeModal('loginModal'); showToast('Welcome back! 🎉 Logged in successfully'); }
+function handleSignup(){ closeModal('signupModal'); showToast('Account created! OTP sent to your mobile 📱'); }
+function socialLogin(p){ showToast(`Redirecting to ${p} login... 🔐`); setTimeout(()=>closeModal('loginModal'),800); }
+
+/* ─── CITY ─── */
+function openCityModal(){ document.getElementById('cityModal').style.display='flex'; }
+function selectCity(c){ document.getElementById('cityBtn').textContent='📍 '+c; closeModal('cityModal'); renderEvents(EVENTS.filter(e=>e.city===c)); }
+
+/* ─── PAYMENT ─── */
+function selectPayment(btn,m){ document.querySelectorAll('.pay-btn').forEach(b=>{b.style.borderColor='var(--border)';b.style.background='var(--dark3)';}); btn.style.borderColor='var(--brand)'; btn.style.background='rgba(108,60,247,0.15)'; }
+
+/* ─── CHAT ─── */
+let chatOpen=false;
+const chatResponses={
+  'weekend':['🎵 Sunburn Arena Mumbai — Apr 15! Vibes are immaculate fr fr 🔥','NH7 Weekender Pune — May 20! Pack your sunscreen and your squad 😎'],
+  'concert':['NH7 Weekender and Sunburn Arena are the top picks right now 🎶','Lollapalooza India is 92% sold — hurry! 🏃'],
+  'cancel':['You can cancel 48h+ before the event for a 50% refund. Go to My Account → My Bookings to cancel 💸','Refunds are processed in 5-7 business days to your original payment method.'],
+  'about':['INDTIX is India\'s most intelligent event platform 🚀 Discover, book, and experience the best events across India — concerts, comedy, sports, culture, and more!','We\'re built for the youth of India, powered by AI, and obsessed with your experience ❤️'],
+  'default':['I\'m on it! Let me check that for you 🔍','Great question! Head to our events section to explore 🎪','Try searching by city or category in the main search bar! 🔎']
+};
+function toggleChat(){ chatOpen=!chatOpen; document.getElementById('chatWindow').style.display=chatOpen?'flex':'none'; }
+function sendChat(){
+  const input=document.getElementById('chatInput');
+  const msg=input.value.trim(); if(!msg) return;
+  addChatMsg(msg,'user');
+  input.value='';
+  setTimeout(()=>{
+    const key=Object.keys(chatResponses).find(k=>msg.toLowerCase().includes(k))||'default';
+    const responses=chatResponses[key];
+    addChatMsg(responses[Math.floor(Math.random()*responses.length)],'bot');
+  },700);
+}
+function chatSuggest(msg){ document.getElementById('chatInput').value=msg; sendChat(); }
+function addChatMsg(text,type){ const m=document.createElement('div'); m.className='msg '+type; m.textContent=text; document.getElementById('chatMessages').appendChild(m); document.getElementById('chatMessages').scrollTop=9999; }
+
+/* ─── TOAST ─── */
+function showToast(msg,type='success'){
+  const c=document.getElementById('toastContainer');
+  const t=document.createElement('div'); t.className='toast '+type; t.textContent=msg;
+  c.appendChild(t); setTimeout(()=>t.classList.add('show'),10);
+  setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),300);},3500);
+}
+
+/* ─── PARTICLES ─── */
+function createParticles(){
+  const c=document.getElementById('particles'); if(!c) return;
+  for(let i=0;i<15;i++){
+    const p=document.createElement('div'); p.className='particle';
+    const size=Math.random()*6+3;
+    p.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;background:${['#6C3CF7','#FF3CAC','#00F5C4'][Math.floor(Math.random()*3)]};animation-duration:${Math.random()*10+8}s;animation-delay:${Math.random()*5}s;opacity:0.4;`;
+    c.appendChild(p);
+  }
+}
+
+/* ─── INIT ─── */
+window.addEventListener('DOMContentLoaded',()=>{
+  renderEvents(EVENTS);
+  createParticles();
+  // Add My Account button to nav
+  const navActions=document.querySelector('.nav-actions');
+  if(navActions){
+    const accBtn=document.createElement('button');
+    accBtn.className='btn-ghost';
+    accBtn.innerHTML='<i class="fas fa-user"></i> My Account';
+    accBtn.onclick=openAccountPanel;
+    navActions.insertBefore(accBtn,navActions.firstChild);
+  }
+});
+</script>
+</body>
+</html>

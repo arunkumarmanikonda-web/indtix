@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INDTIX Brand System – Oye Imagine Pvt Ltd</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+:root{
+  --brand:#6C3CF7;--brand2:#00F5C4;--brand3:#FF4F6E;
+  --dark:#0A0A14;--dark2:#0F0F1E;--dark3:#16162A;
+  --card:#1A1A2E;--border:#2A2A45;
+  --text:#F0F0FF;--muted:#9090B0;
+  --grad1:linear-gradient(135deg,#6C3CF7,#00F5C4);
+  --grad2:linear-gradient(135deg,#FF4F6E,#6C3CF7);
+  --grad3:linear-gradient(135deg,#00F5C4,#6C3CF7,#FF4F6E);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--text);line-height:1.6}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--dark2)}
+::-webkit-scrollbar-thumb{background:var(--brand);border-radius:3px}
+
+/* NAV */
+.topnav{position:fixed;top:0;left:0;right:0;height:64px;background:rgba(10,10,20,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;z-index:100}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-mark{width:36px;height:36px;background:var(--grad1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff}
+.logo-text{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--text)}
+.logo-text span{color:var(--brand2)}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:.2s}
+.nav-links a:hover{color:var(--text)}
+.badge{background:var(--brand);color:#fff;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;margin-left:4px}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px;background:radial-gradient(ellipse at 50% 30%,rgba(108,60,247,0.15) 0%,transparent 60%)}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);padding:6px 16px;border-radius:20px;font-size:12px;font-weight:600;color:var(--brand2);text-transform:uppercase;letter-spacing:1px;margin-bottom:24px}
+.hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(48px,8vw,96px);font-weight:700;line-height:1.0;margin-bottom:24px}
+.hero-title .brand-gradient{background:var(--grad3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:20px;color:var(--muted);max-width:600px;margin:0 auto 48px}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--grad1);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;transition:.2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border);padding:14px 28px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;transition:.2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+
+/* SECTIONS */
+section{padding:80px 24px}
+.container{max-width:1200px;margin:0 auto}
+.section-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(0,245,196,0.1);border:1px solid rgba(0,245,196,0.3);color:var(--brand2);padding:4px 14px;border-radius:20px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:700;margin-bottom:16px}
+.section-sub{color:var(--muted);font-size:16px;max-width:600px;margin-bottom:48px}
+.divider{height:1px;background:var(--border);margin:0}
+
+/* LOGO SECTION */
+.logo-showcase{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.logo-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:40px 32px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.logo-card.dark-bg{background:var(--dark2)}
+.logo-card.light-bg{background:#fff}
+.logo-card.grad-bg{background:var(--grad1)}
+.logo-card.black-bg{background:#000}
+.logo-display{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:36px;letter-spacing:-1px}
+.logo-display .dot{color:var(--brand2)}
+.logo-display.on-light{color:#0A0A14}
+.logo-display.on-dark{color:#fff}
+.logo-display.on-grad{color:#fff}
+.logo-stacked{display:flex;flex-direction:column;align-items:center;gap:4px}
+.logo-icon-large{width:72px;height:72px;background:var(--grad1);border-radius:18px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:32px;color:#fff;font-family:'Space Grotesk',sans-serif}
+.logo-desc{font-size:13px;color:var(--muted);margin-top:8px}
+.logo-card.light-bg .logo-desc{color:#666}
+.logo-usage{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:4px 10px;border-radius:8px;background:rgba(108,60,247,0.15);color:var(--brand);margin-top:4px}
+.logo-card.light-bg .logo-usage{color:var(--brand)}
+
+/* COLORS */
+.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:20px}
+.color-swatch{border-radius:16px;overflow:hidden;border:1px solid var(--border)}
+.swatch-color{height:120px}
+.swatch-info{background:var(--card);padding:16px}
+.swatch-name{font-weight:600;font-size:14px;margin-bottom:4px}
+.swatch-hex{font-family:'Space Grotesk',monospace;font-size:13px;color:var(--muted)}
+.swatch-use{font-size:11px;color:var(--brand2);margin-top:4px}
+
+/* TYPOGRAPHY */
+.type-showcase{display:flex;flex-direction:column;gap:32px}
+.type-row{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;padding:24px 0;border-bottom:1px solid var(--border)}
+.type-meta{font-size:12px;color:var(--muted)}
+.type-meta strong{display:block;font-size:14px;color:var(--text);margin-bottom:4px}
+.type-sample-h1{font-family:'Space Grotesk',sans-serif;font-size:48px;font-weight:700;line-height:1.1}
+.type-sample-h2{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700}
+.type-sample-h3{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:600}
+.type-sample-body{font-size:16px;line-height:1.6;max-width:480px}
+.type-sample-small{font-size:13px;color:var(--muted)}
+.type-sample-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--brand2)}
+
+/* SLOGANS */
+.slogan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.slogan-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 24px;position:relative;overflow:hidden}
+.slogan-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad1)}
+.slogan-card.featured::before{background:var(--grad2)}
+.slogan-text{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;margin-bottom:8px}
+.slogan-sub{font-size:13px;color:var(--muted)}
+.slogan-badge{position:absolute;top:16px;right:16px;background:var(--brand);color:#fff;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;text-transform:uppercase}
+.slogan-badge.green{background:var(--brand2);color:#000}
+
+/* TONE */
+.tone-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.tone-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px}
+.tone-icon{font-size:32px;margin-bottom:12px}
+.tone-title{font-weight:700;font-size:16px;margin-bottom:8px}
+.tone-desc{font-size:14px;color:var(--muted);margin-bottom:16px}
+.tone-examples{display:flex;flex-direction:column;gap:8px}
+.tone-ex{display:flex;gap:8px;font-size:13px}
+.tone-ex .good{color:var(--brand2)}
+.tone-ex .bad{color:var(--brand3);text-decoration:line-through;opacity:.6}
+.tone-ex .arrow{color:var(--muted)}
+
+/* MICROCOPY */
+.micro-table{width:100%;border-collapse:collapse}
+.micro-table th{background:var(--dark3);padding:12px 16px;text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);border-bottom:1px solid var(--border)}
+.micro-table td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:14px;vertical-align:top}
+.micro-table tr:last-child td{border-bottom:none}
+.micro-table tr:hover td{background:rgba(108,60,247,0.05)}
+.mc-context{color:var(--muted);font-size:12px}
+.mc-copy{font-weight:500}
+.mc-tone{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600}
+.mc-playful{background:rgba(0,245,196,0.15);color:var(--brand2)}
+.mc-urgent{background:rgba(255,79,110,0.15);color:var(--brand3)}
+.mc-trust{background:rgba(108,60,247,0.15);color:var(--brand)}
+.mc-warm{background:rgba(255,193,7,0.15);color:#ffc107}
+
+/* COMPONENTS */
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px}
+.comp-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;overflow:hidden}
+.comp-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:16px}
+
+/* MANIFESTO */
+.manifesto{background:var(--dark2);border-radius:24px;padding:60px;text-align:center;position:relative;overflow:hidden}
+.manifesto::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(108,60,247,0.2),transparent 60%)}
+.manifesto-quote{font-family:'Space Grotesk',sans-serif;font-size:clamp(20px,3vw,32px);font-weight:600;line-height:1.5;color:var(--text);max-width:800px;margin:0 auto 32px;position:relative;z-index:1}
+.manifesto-quote em{color:var(--brand2);font-style:normal}
+.manifesto-sig{font-size:14px;color:var(--muted);position:relative;z-index:1}
+
+/* DISCLAIMER */
+.disclaimer-box{background:var(--dark3);border:1px solid var(--border);border-left:4px solid var(--brand3);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.disclaimer-title{font-weight:700;font-size:14px;margin-bottom:8px;color:var(--text)}
+.disclaimer-text{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* ICONOGRAPHY */
+.icon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px}
+.icon-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 12px;text-align:center}
+.icon-item i{font-size:24px;color:var(--brand);display:block;margin-bottom:8px}
+.icon-item span{font-size:11px;color:var(--muted)}
+
+/* DO/DONT */
+.dodont-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.dodont-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;overflow:hidden}
+.dodont-card.do-card{border-top:3px solid var(--brand2)}
+.dodont-card.dont-card{border-top:3px solid var(--brand3)}
+.dodont-head{display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;margin-bottom:16px}
+.dodont-head.do{color:var(--brand2)}
+.dodont-head.dont{color:var(--brand3)}
+.dodont-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.dodont-list li{font-size:14px;color:var(--muted);display:flex;align-items:flex-start;gap:8px}
+.dodont-list li::before{flex-shrink:0;margin-top:2px;font-size:12px}
+.do-card .dodont-list li::before{content:'✓';color:var(--brand2)}
+.dont-card .dodont-list li::before{content:'✕';color:var(--brand3)}
+
+/* MOTION */
+.motion-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.motion-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;text-align:center}
+.motion-demo{height:80px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.motion-box{width:48px;height:48px;background:var(--grad1);border-radius:12px}
+.motion-box.pulse{animation:pulse 2s ease-in-out infinite}
+.motion-box.float{animation:float 3s ease-in-out infinite}
+.motion-box.spin-slow{animation:spin 8s linear infinite}
+.motion-box.glow{animation:glow 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.1);opacity:.8}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes glow{0%,100%{box-shadow:0 0 20px rgba(108,60,247,.3)}50%{box-shadow:0 0 40px rgba(108,60,247,.8)}}
+.motion-name{font-weight:600;font-size:14px;margin-bottom:4px}
+.motion-spec{font-size:12px;color:var(--muted);font-family:'Space Grotesk',monospace}
+
+/* GRID */
+.spacing-row{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end}
+.space-box{background:var(--brand);border-radius:4px;display:flex;align-items:center;justify-content:center}
+.space-label{font-size:11px;color:var(--muted);text-align:center;margin-top:6px}
+
+/* FOOTER */
+.footer{background:var(--dark2);border-top:1px solid var(--border);padding:40px 24px;text-align:center}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;margin-bottom:8px}
+.footer-logo span{color:var(--brand2)}
+.footer-tagline{color:var(--muted);font-size:14px;margin-bottom:24px}
+.footer-links{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:14px;transition:.2s}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{font-size:13px;color:var(--muted)}
+
+/* SCROLL PROGRESS */
+.scroll-bar{position:fixed;top:0;left:0;height:3px;background:var(--grad1);z-index:200;transition:width .1s}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .topnav{padding:0 16px}
+  .nav-links{display:none}
+  section{padding:60px 16px}
+  .dodont-grid{grid-template-columns:1fr}
+  .type-row{grid-template-columns:1fr;gap:8px}
+  .manifesto{padding:40px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div class="scroll-bar" id="scrollBar"></div>
+
+<!-- NAV -->
+<nav class="topnav">
+  <a href="/" class="logo">
+    <div class="logo-mark">IN</div>
+    <div class="logo-text">INDT<span>IX</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#logo">Logo</a></li>
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#voice">Voice & Tone</a></li>
+    <li><a href="#components">Components</a></li>
+    <li><a href="#manifesto">Manifesto</a></li>
+    <li><a href="/portals" class="btn-primary" style="padding:8px 16px;font-size:13px">All Portals</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow"><i class="fas fa-palette"></i> INDTIX Brand System v2.0</div>
+    <h1 class="hero-title">Every Pixel<br><span class="brand-gradient">Tells a Story</span></h1>
+    <p class="hero-sub">The official brand guidelines for INDTIX.com — India's next-gen live event commerce platform by Oye Imagine Private Limited.</p>
+    <div class="hero-cta">
+      <a href="#logo" class="btn-primary"><i class="fas fa-arrow-down"></i> Explore Brand System</a>
+      <a href="/portals" class="btn-ghost"><i class="fas fa-th-large"></i> View All Portals</a>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- LOGO SYSTEM -->
+<section id="logo">
+  <div class="container">
+    <div class="section-tag"><i class="fas fa-star"></i> Identity</div>
+    <h2 class="section-title">Logo System</h2>
+    <p class="section-sub">The INDTIX wordmark is built on trust, velocity, and culture. Use only approved variants on approved backgrounds.</p>
+    <div class="logo-showcase">
+      <!-- Primary on Dark -->
+      <div class="logo-card dark-bg">
+        <div class="logo-stacked">
+          <div class="logo-icon-large">IN</div>
+          <div class="logo-display on-dark" style="margin-top:12px">INDT<span style="color:var(--brand2)">IX</span></div>
+          <div style="font-size:12px;color:var(--brand2);font-weight:600;letter-spacing:4px;text-transform:uppercase">BY OYE IMAGINE</div>
+        </div>
+        <div class="logo-desc">Primary Lockup – Dark Background</div>
+        <div class="logo-usage">✅ Primary Use</div>
+      </div>
+      <!-- Wordmark only -->
+      <div class="logo-card" style="background:#111">
+        <div class="logo-display on-dark" style="font-size:48px">INDT<span style="color:var(--brand2)">IX</span></div>
+        <div class="logo-desc">Wordmark Only – Ultra-clean contexts</div>
+        <div class="logo-usage">✅ Wordmark Use</div>
+      </div>
+      <!-- On Light -->
+      <div class="logo-card light-bg">
+        <div class="logo-stacked">
+          <div style="width:64px;height:64px;background:var(--grad1);border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:28px;color:#fff;font-family:'Space Grotesk',sans-serif">IN</div>
+          <div class="logo-display" style="color:#0A0A14;margin-top:12px">INDT<span style="color:#6C3CF7">IX</span></div>
+        </div>
+        <div class="logo-desc" style="color:#666">Light Background Variant</div>
+        <div class="logo-usage" style="background:rgba(108,60,247,0.1)">✅ Light Backgrounds</div>
+      </div>
+      <!-- Gradient badge -->
+      <div class="logo-card grad-bg">
+        <div class="logo-stacked">
+          <div style="width:64px;height:64px;background:rgba(255,255,255,0.2);border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:28px;color:#fff;font-family:'Space Grotesk',sans-serif;backdrop-filter:blur(10px)">IN</div>
+          <div class="logo-display on-grad" style="margin-top:12px">INDTIX</div>
+        </div>
+        <div class="logo-desc" style="color:rgba(255,255,255,0.7)">Gradient Background – Event Cards & OG Images</div>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:4px 10px;border-radius:8px;background:rgba(255,255,255,0.2);color:#fff;margin-top:4px">✅ Gradient Contexts</div>
+      </div>
+      <!-- Black version -->
+      <div class="logo-card black-bg">
+        <div class="logo-display on-dark" style="font-size:40px">INDT<span style="background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">IX</span></div>
+        <div class="logo-desc">Black Background – Merchandise, Premium Surfaces</div>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:4px 10px;border-radius:8px;background:rgba(108,60,247,0.2);color:var(--brand);margin-top:4px">✅ Merch & Print</div>
+      </div>
+      <!-- Favicon / App Icon -->
+      <div class="logo-card dark-bg" style="align-items:center;justify-content:center">
+        <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
+          <div style="width:96px;height:96px;background:var(--grad1);border-radius:22px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:42px;color:#fff;font-family:'Space Grotesk',sans-serif">IN</div>
+          <div style="width:64px;height:64px;background:var(--grad1);border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:28px;color:#fff;font-family:'Space Grotesk',sans-serif">IN</div>
+          <div style="width:32px;height:32px;background:var(--grad1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;font-family:'Space Grotesk',sans-serif">IN</div>
+          <div style="width:16px;height:16px;background:var(--grad1);border-radius:4px"></div>
+        </div>
+        <div class="logo-desc">App Icon Sizes: 96px, 64px, 32px, 16px (favicon)</div>
+        <div class="logo-usage">✅ App Icon / Favicon</div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- COLOR PALETTE -->
+<section id="colors">
+  <div class="container">
+    <div class="section-tag"><i class="fas fa-swatchbook"></i> Palette</div>
+    <h2 class="section-title">Color System</h2>
+    <p class="section-sub">Dark-first palette built for nightlife, concerts, and high-energy events. Every color has a clear role.</p>
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#6C3CF7;background:linear-gradient(135deg,#6C3CF7,#8B5CF6)"></div>
+        <div class="swatch-info"><div class="swatch-name">Brand Purple</div><div class="swatch-hex">#6C3CF7 / var(--brand)</div><div class="swatch-use">Primary CTAs, active states, logo accent</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#00F5C4"></div>
+        <div class="swatch-info"><div class="swatch-name">Electric Teal</div><div class="swatch-hex">#00F5C4 / var(--brand2)</div><div class="swatch-use">Success, verified, highlights, data callouts</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#FF4F6E"></div>
+        <div class="swatch-info"><div class="swatch-name">Neon Coral</div><div class="swatch-hex">#FF4F6E / var(--brand3)</div><div class="swatch-use">Urgency, sold-out, refunds, live badges</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#0A0A14"></div>
+        <div class="swatch-info"><div class="swatch-name">Void Black</div><div class="swatch-hex">#0A0A14 / var(--dark)</div><div class="swatch-use">Page background, deepest level</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#0F0F1E"></div>
+        <div class="swatch-info"><div class="swatch-name">Night Sky</div><div class="swatch-hex">#0F0F1E / var(--dark2)</div><div class="swatch-use">Section backgrounds, navigation</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#16162A"></div>
+        <div class="swatch-info"><div class="swatch-name">Deep Space</div><div class="swatch-hex">#16162A / var(--dark3)</div><div class="swatch-use">Hover states, input backgrounds</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#1A1A2E"></div>
+        <div class="swatch-info"><div class="swatch-name">Galaxy Card</div><div class="swatch-hex">#1A1A2E / var(--card)</div><div class="swatch-use">Card backgrounds, modals, panels</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#2A2A45"></div>
+        <div class="swatch-info"><div class="swatch-name">Stellar Border</div><div class="swatch-hex">#2A2A45 / var(--border)</div><div class="swatch-use">Dividers, input borders, separators</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#F0F0FF"></div>
+        <div class="swatch-info"><div class="swatch-name">Star White</div><div class="swatch-hex">#F0F0FF / var(--text)</div><div class="swatch-use">Primary text, headings</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#9090B0"></div>
+        <div class="swatch-info"><div class="swatch-name">Nebula Muted</div><div class="swatch-hex">#9090B0 / var(--muted)</div><div class="swatch-use">Secondary text, metadata, captions</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:linear-gradient(135deg,#6C3CF7,#00F5C4)"></div>
+        <div class="swatch-info"><div class="swatch-name">Aurora Gradient</div><div class="swatch-hex">var(--grad1)</div><div class="swatch-use">Primary gradient – buttons, brand elements</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:linear-gradient(135deg,#FF4F6E,#6C3CF7)"></div>
+        <div class="swatch-info"><div class="swatch-name">Dusk Gradient</div><div class="swatch-hex">var(--grad2)</div><div class="swatch-use">Alerts, featured events, danger states</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- TYPOGRAPHY -->
+<section id="typography">
+  <div class="container">
+    <div class="section-tag"><i class="fas fa-font"></i> Typography</div>
+    <h2 class="section-title">Type Scale</h2>
+    <p class="section-sub">Two fonts. One job each. Space Grotesk commands attention; Inter handles the body copy with authority.</p>
+    <div class="type-showcase">
+      <div class="type-row">
+        <div class="type-meta"><strong>Display / Hero</strong>Space Grotesk 700<br>80–96px / line 1.0<br>Tracking: -2px</div>
+        <div class="type-sample-h1" style="font-size:clamp(36px,6vw,80px)">Book Your<br><span style="background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Moment.</span></div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><strong>Heading 1</strong>Space Grotesk 700<br>48px / line 1.1</div>
+        <div class="type-sample-h1" style="font-size:48px">India's Biggest Stage</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><strong>Heading 2</strong>Space Grotesk 700<br>36px / line 1.2</div>
+        <div class="type-sample-h2">Events You'll Love</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><strong>Heading 3</strong>Space Grotesk 600<br>24px / line 1.3</div>
+        <div class="type-sample-h3">Upcoming in Mumbai</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><strong>Body Large</strong>Inter 400<br>18px / line 1.6</div>
+        <div class="type-sample-body" style="font-size:18px">Discover concerts, comedy shows, festivals, sports, theatre, and more. Book tickets in seconds. Experience India's live culture.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><strong>Body Regular</strong>Inter 400<br>16px / line 1.6</div>
+        <div class="type-sample-body">Seats are going fast. Book now to lock in your spot before prices go up. Standard refund policy applies to all bookings made on INDTIX.com.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><strong>Body Small</strong>Inter 400<br>14px / line 1.5</div>
+        <div class="type-sample-small" style="font-size:14px">*Prices inclusive of platform convenience fee. GST @18% applicable. All bookings subject to INDTIX Terms of Service. Oye Imagine Pvt Ltd, GSTIN 27AABCO1234A1Z5.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><strong>Label / Tag</strong>Inter 700<br>11px / uppercase<br>Tracking: 2px</div>
+        <div class="type-sample-label">Live Now · Selling Fast · Free Entry · New Arrival</div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- SLOGANS & PUNCHLINES -->
+<section id="voice">
+  <div class="container">
+    <div class="section-tag"><i class="fas fa-microphone"></i> Voice</div>
+    <h2 class="section-title">Slogans & Punchlines</h2>
+    <p class="section-sub">Words are our stage. Every line should crackle with energy and feel distinctly INDTIX. Take the mic:</p>
+    <div class="slogan-grid">
+      <div class="slogan-card featured">
+        <span class="slogan-badge green">⭐ HERO</span>
+        <div class="slogan-text">Your Ticket to Unforgettable.</div>
+        <div class="slogan-sub">Primary brand tagline — homepage hero, OG images, app store listing, merch</div>
+      </div>
+      <div class="slogan-card">
+        <span class="slogan-badge">FANFEST</span>
+        <div class="slogan-text">Experience More. Remember Forever.</div>
+        <div class="slogan-sub">Fan acquisition — performance marketing, social ads, pre-roll video</div>
+      </div>
+      <div class="slogan-card">
+        <div class="slogan-text">India's Stage. Your Story.</div>
+        <div class="slogan-sub">Brand awareness — outdoor, TV spots, PR coverage</div>
+      </div>
+      <div class="slogan-card">
+        <div class="slogan-text">Book It. Feel It. Live It.</div>
+        <div class="slogan-sub">Performance CTA — email subject lines, push notifications, retargeting</div>
+      </div>
+      <div class="slogan-card">
+        <span class="slogan-badge">ORGANISER</span>
+        <div class="slogan-text">Sell Out Every Show.</div>
+        <div class="slogan-sub">B2B acquisition — organiser landing page, LinkedIn ads, event industry publications</div>
+      </div>
+      <div class="slogan-card">
+        <div class="slogan-text">INDY Has the Answers. 🤖</div>
+        <div class="slogan-sub">AI Chatbot launch campaign — in-app tooltip, onboarding nudge, product hunt listing</div>
+      </div>
+      <div class="slogan-card">
+        <div class="slogan-text">No FOMO. Only Tickets.</div>
+        <div class="slogan-sub">Urgency moments — countdown timer pages, last-few-seats banners</div>
+      </div>
+      <div class="slogan-card">
+        <div class="slogan-text">The Grid. The Crowd. The Cheer. That's Us.</div>
+        <div class="slogan-sub">Sports category — IPL, Pro Kabaddi, ISL campaign banners</div>
+      </div>
+      <div class="slogan-card">
+        <span class="slogan-badge">COMEDY</span>
+        <div class="slogan-text">Warning: May Cause Uncontrollable Clapping.</div>
+        <div class="slogan-sub">Comedy category header — irreverent, cheeky, shareable. A/B test candidate.</div>
+      </div>
+      <div class="slogan-card">
+        <div class="slogan-text">₹0 Hidden Charges. (Okay, ₹20 platform fee. We're honest like that.)</div>
+        <div class="slogan-sub">Trust & transparency — checkout reassurance, comparison page vs competitors</div>
+      </div>
+      <div class="slogan-card">
+        <div class="slogan-text">Your Vibe. Your Tribe. INDTIX.</div>
+        <div class="slogan-sub">Community & social — college fests, hobby events, niche categories</div>
+      </div>
+      <div class="slogan-card">
+        <div class="slogan-text">Powered by Oye Imagine. Fuelled by India.</div>
+        <div class="slogan-sub">Investor decks, press releases, LinkedIn company page bio</div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- TONE OF VOICE -->
+<section id="tone">
+  <div class="container">
+    <div class="section-tag"><i class="fas fa-comments"></i> Tone</div>
+    <h2 class="section-title">Voice & Tone Guide</h2>
+    <p class="section-sub">We're the friend who always knows the best gigs in town. Sharp, warm, never corporate-boring.</p>
+    <div class="tone-grid">
+      <div class="tone-card">
+        <div class="tone-icon">⚡</div>
+        <div class="tone-title">Energetic, Never Aggressive</div>
+        <div class="tone-desc">Match the energy of a live event. Bring enthusiasm without desperation.</div>
+        <div class="tone-examples">
+          <div class="tone-ex"><span class="good">✓ "Only 47 seats left. Move fast."</span></div>
+          <div class="tone-ex"><span class="bad">✗ "BUY NOW BEFORE IT'S TOO LATE!!!"</span></div>
+        </div>
+      </div>
+      <div class="tone-card">
+        <div class="tone-icon">🤝</div>
+        <div class="tone-title">Warm, Not Sycophantic</div>
+        <div class="tone-desc">Talk like a knowledgeable friend. Never like a salesperson.</div>
+        <div class="tone-examples">
+          <div class="tone-ex"><span class="good">✓ "Great choice! You're going to love this one."</span></div>
+          <div class="tone-ex"><span class="bad">✗ "Dear Valued Customer, thank you for your interest."</span></div>
+        </div>
+      </div>
+      <div class="tone-card">
+        <div class="tone-icon">🎯</div>
+        <div class="tone-title">Specific, Not Vague</div>
+        <div class="tone-desc">Give real details. Numbers, times, venue names. Vague copy erodes trust.</div>
+        <div class="tone-examples">
+          <div class="tone-ex"><span class="good">✓ "Doors open 6:30 PM. Parking at Gate 3."</span></div>
+          <div class="tone-ex"><span class="bad">✗ "Event starts in the evening. Please arrive accordingly."</span></div>
+        </div>
+      </div>
+      <div class="tone-card">
+        <div class="tone-icon">😄</div>
+        <div class="tone-title">Playful, Never Silly</div>
+        <div class="tone-desc">Wit earns attention. Silliness loses credibility. Know the line.</div>
+        <div class="tone-examples">
+          <div class="tone-ex"><span class="good">✓ "Your cat can't come. But you should."</span></div>
+          <div class="tone-ex"><span class="bad">✗ "OMG this show is sooo amazinggg!!!1!"</span></div>
+        </div>
+      </div>
+      <div class="tone-card">
+        <div class="tone-icon">🔒</div>
+        <div class="tone-title">Trustworthy, Not Pompous</div>
+        <div class="tone-desc">Handle money moments (checkout, refunds) with calm authority and zero drama.</div>
+        <div class="tone-examples">
+          <div class="tone-ex"><span class="good">✓ "Refund processed. ₹1,499 back in 5–7 days."</span></div>
+          <div class="tone-ex"><span class="bad">✗ "We sincerely apologize for any inconvenience caused."</span></div>
+        </div>
+      </div>
+      <div class="tone-card">
+        <div class="tone-icon">🌏</div>
+        <div class="tone-title">Indian at Heart</div>
+        <div class="tone-desc">Reference Indian culture naturally — don't force it or make it cringe.</div>
+        <div class="tone-examples">
+          <div class="tone-ex"><span class="good">✓ "Diwali gigs? We've got your mithai + music sorted."</span></div>
+          <div class="tone-ex"><span class="bad">✗ "India is a land of great cultures and festivals!"</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- MICROCOPY GUIDE -->
+<section id="microcopy">
+  <div class="container">
+    <div class="section-tag"><i class="fas fa-pen-nib"></i> Microcopy</div>
+    <h2 class="section-title">Microcopy Library</h2>
+    <p class="section-sub">Every button, toast, placeholder and error message is a brand moment. Here's the playbook.</p>
+    <div style="overflow-x:auto;border-radius:16px;border:1px solid var(--border)">
+      <table class="micro-table">
+        <thead>
+          <tr><th>Context</th><th>Copy</th><th>Tone</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><div class="mc-context">Search placeholder</div></td><td class="mc-copy">Search artists, venues, events…</td><td><span class="mc-tone mc-warm">Warm</span></td><td>Trailing ellipsis signals open-ended search</td></tr>
+          <tr><td><div class="mc-context">Empty events grid</div></td><td class="mc-copy">No events found. Try a different city or filter. 🙈</td><td><span class="mc-tone mc-playful">Playful</span></td><td>Emoji breaks the cold blank state</td></tr>
+          <tr><td><div class="mc-context">Checkout CTA</div></td><td class="mc-copy"><i class="fas fa-lock"></i> Pay Now & Get Tickets</td><td><span class="mc-tone mc-trust">Trust</span></td><td>Lock icon reduces anxiety. "Get Tickets" is the benefit, not "Submit"</td></tr>
+          <tr><td><div class="mc-context">Seat timer warning</div></td><td class="mc-copy">⏱ Seats reserved for 10:00. Don't dilly-dally.</td><td><span class="mc-tone mc-playful">Playful</span></td><td>Dilly-dally is distinctly INDTIX. A/B vs "Hurry up"</td></tr>
+          <tr><td><div class="mc-context">Booking confirmed</div></td><td class="mc-copy">🎉 You're going! Tickets sent to your WhatsApp & email.</td><td><span class="mc-tone mc-warm">Warm</span></td><td>Start with the win, then the logistics</td></tr>
+          <tr><td><div class="mc-context">Selling fast badge</div></td><td class="mc-copy">🔥 Selling Fast</td><td><span class="mc-tone mc-urgent">Urgent</span></td><td>Only show when >70% sold. No fake scarcity.</td></tr>
+          <tr><td><div class="mc-context">Sold out state</div></td><td class="mc-copy">Sold Out. Join waitlist to get in line.</td><td><span class="mc-tone mc-trust">Trust</span></td><td>Always offer the waitlist — don't dead-end the user</td></tr>
+          <tr><td><div class="mc-context">KYC upload prompt</div></td><td class="mc-copy">Upload your GST certificate. (We check it once, so you don't have to again.)</td><td><span class="mc-tone mc-warm">Warm</span></td><td>Acknowledge the friction. Promise value.</td></tr>
+          <tr><td><div class="mc-context">Refund initiated</div></td><td class="mc-copy">Refund initiated. ₹X back in 5–7 working days. Sit tight.</td><td><span class="mc-tone mc-trust">Trust</span></td><td>"Sit tight" is casual without being dismissive</td></tr>
+          <tr><td><div class="mc-context">QR scan: valid</div></td><td class="mc-copy">✅ VALID · Welcome in! [Name] · [Ticket Tier]</td><td><span class="mc-tone mc-playful">Playful</span></td><td>The welcome is the brand experience on the ground</td></tr>
+          <tr><td><div class="mc-context">QR scan: duplicate</div></td><td class="mc-copy">⚠️ Already Scanned. Flag for manual review.</td><td><span class="mc-tone mc-urgent">Urgent</span></td><td>Don't accuse — flag calmly</td></tr>
+          <tr><td><div class="mc-context">Login CTA</div></td><td class="mc-copy">Continue with Google / Log in with Phone OTP</td><td><span class="mc-tone mc-trust">Trust</span></td><td>"Continue" not "Sign In" — friction-reducing language</td></tr>
+          <tr><td><div class="mc-context">Business onboarding CTA</div></td><td class="mc-copy">Create Organiser Account — It's free to list.</td><td><span class="mc-tone mc-warm">Warm</span></td><td>Address the cost barrier immediately</td></tr>
+          <tr><td><div class="mc-context">Error: payment failed</div></td><td class="mc-copy">Payment didn't go through. Your seats are still held for 5 min. Try again?</td><td><span class="mc-tone mc-trust">Trust</span></td><td>Don't just error — give a safety net and a next action</td></tr>
+          <tr><td><div class="mc-context">INDY chatbot greeting</div></td><td class="mc-copy">Hey! I'm INDY — your AI event guide. What are you in the mood for? 🎶</td><td><span class="mc-tone mc-playful">Playful</span></td><td>"In the mood for" is discovery-oriented, not task-oriented</td></tr>
+          <tr><td><div class="mc-context">Event page — about section</div></td><td class="mc-copy">About This Event</td><td><span class="mc-tone mc-trust">Trust</span></td><td>Simple. No "Event Description" — that's filing cabinet language.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- UI COMPONENTS -->
+<section id="components">
+  <div class="container">
+    <div class="section-tag"><i class="fas fa-layer-group"></i> Components</div>
+    <h2 class="section-title">Core UI Components</h2>
+    <p class="section-sub">Consistent components = trusted product. These are the atoms of the INDTIX design system.</p>
+    <div class="comp-grid">
+      <!-- BUTTONS -->
+      <div class="comp-card">
+        <div class="comp-label">Buttons</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <button class="btn-primary" style="width:fit-content"><i class="fas fa-ticket-alt"></i> Book Now</button>
+          <button class="btn-ghost" style="width:fit-content"><i class="fas fa-heart"></i> Add to Wishlist</button>
+          <button style="background:rgba(255,79,110,0.15);color:var(--brand3);border:1px solid var(--brand3);padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;width:fit-content"><i class="fas fa-times"></i> Cancel Booking</button>
+          <button style="background:rgba(0,245,196,0.1);color:var(--brand2);border:1px solid rgba(0,245,196,0.3);padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;width:fit-content"><i class="fas fa-check"></i> Verified Venue</button>
+          <button style="background:transparent;color:var(--muted);border:none;padding:12px 20px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;width:fit-content;text-decoration:underline">Skip for now</button>
+        </div>
+      </div>
+      <!-- BADGES -->
+      <div class="comp-card">
+        <div class="comp-label">Badges & Tags</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <span style="background:rgba(255,79,110,0.15);color:var(--brand3);padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;border:1px solid rgba(255,79,110,0.3)">🔴 LIVE</span>
+          <span style="background:rgba(255,79,110,0.15);color:var(--brand3);padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700">🔥 Selling Fast</span>
+          <span style="background:rgba(0,245,196,0.1);color:var(--brand2);padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;border:1px solid rgba(0,245,196,0.2)">✅ Verified</span>
+          <span style="background:var(--dark3);color:var(--muted);padding:4px 10px;border-radius:6px;font-size:12px;font-weight:600;border:1px solid var(--border)">Sold Out</span>
+          <span style="background:rgba(108,60,247,0.15);color:var(--brand);padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700">VIP</span>
+          <span style="background:rgba(255,193,7,0.15);color:#ffc107;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700">⭐ Featured</span>
+          <span style="background:rgba(0,245,196,0.1);color:var(--brand2);padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700">FREE</span>
+          <span style="background:var(--grad2);color:#fff;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700">NEW</span>
+        </div>
+      </div>
+      <!-- EVENT CARD -->
+      <div class="comp-card">
+        <div class="comp-label">Event Card</div>
+        <div style="background:var(--dark3);border-radius:14px;overflow:hidden;border:1px solid var(--border);max-width:260px">
+          <div style="height:140px;background:var(--grad1);position:relative;display:flex;align-items:center;justify-content:center">
+            <span style="font-size:40px">🎵</span>
+            <div style="position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.7);color:var(--text);padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">MUSIC</div>
+            <div style="position:absolute;top:10px;right:10px;background:rgba(255,79,110,0.9);color:#fff;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700">🔥 Selling Fast</div>
+          </div>
+          <div style="padding:14px">
+            <div style="font-weight:700;font-size:15px;margin-bottom:6px">Sunburn Arena Mumbai</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:4px"><i class="fas fa-calendar-alt"></i> Apr 15, 2026 · 6:00 PM</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:12px"><i class="fas fa-map-marker-alt"></i> MMRDA Grounds, Mumbai</div>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div style="font-weight:700;font-size:16px">₹1,499<span style="font-size:11px;color:var(--muted);font-weight:400"> onwards</span></div>
+              <button class="btn-primary" style="padding:8px 14px;font-size:12px">Book</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- TOAST NOTIFICATIONS -->
+      <div class="comp-card">
+        <div class="comp-label">Toast Notifications</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="background:#0A2A0A;border:1px solid rgba(0,245,196,0.3);border-left:4px solid var(--brand2);padding:12px 16px;border-radius:10px;display:flex;align-items:center;gap:10px;font-size:14px"><i class="fas fa-check-circle" style="color:var(--brand2)"></i> Booking confirmed! Tickets sent to WhatsApp 🎉</div>
+          <div style="background:#1A0A0A;border:1px solid rgba(255,79,110,0.3);border-left:4px solid var(--brand3);padding:12px 16px;border-radius:10px;display:flex;align-items:center;gap:10px;font-size:14px"><i class="fas fa-exclamation-circle" style="color:var(--brand3)"></i> Payment failed. Seats still held for 5 mins.</div>
+          <div style="background:#0A0A2A;border:1px solid rgba(108,60,247,0.3);border-left:4px solid var(--brand);padding:12px 16px;border-radius:10px;display:flex;align-items:center;gap:10px;font-size:14px"><i class="fas fa-info-circle" style="color:var(--brand)"></i> Promo code FEST20 applied! You save ₹300.</div>
+          <div style="background:var(--dark3);border:1px solid var(--border);border-left:4px solid var(--muted);padding:12px 16px;border-radius:10px;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><i class="fas fa-clock"></i> Added to wishlist. We'll remind you before it sells out.</div>
+        </div>
+      </div>
+      <!-- INPUT FIELDS -->
+      <div class="comp-card">
+        <div class="comp-label">Form Inputs</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px">Phone Number</label>
+            <div style="display:flex;gap:8px">
+              <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:14px;color:var(--muted);width:64px;text-align:center">+91</div>
+              <input type="text" value="98765 43210" style="background:var(--dark3);border:1px solid var(--brand);border-radius:10px;padding:12px 14px;font-size:14px;color:var(--text);flex:1;outline:none;font-family:'Inter',sans-serif">
+            </div>
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px">Email Address</label>
+            <input type="text" placeholder="you@example.com" style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:14px;color:var(--muted);width:100%;outline:none;font-family:'Inter',sans-serif">
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--brand3);display:block;margin-bottom:6px">GST Number — Error state</label>
+            <input type="text" value="27AABCO12" style="background:rgba(255,79,110,0.05);border:1px solid var(--brand3);border-radius:10px;padding:12px 14px;font-size:14px;color:var(--text);width:100%;outline:none;font-family:'Inter',sans-serif">
+            <div style="font-size:12px;color:var(--brand3);margin-top:4px"><i class="fas fa-exclamation-triangle"></i> Invalid GSTIN format. Should be 15 characters.</div>
+          </div>
+        </div>
+      </div>
+      <!-- PROGRESS / STATS -->
+      <div class="comp-card">
+        <div class="comp-label">Progress & Stats</div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"><span>Seats Sold</span><span style="color:var(--brand2)">87/100</span></div>
+            <div style="background:var(--dark3);border-radius:999px;height:8px;overflow:hidden"><div style="width:87%;background:var(--grad1);height:100%;border-radius:999px"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"><span>Check-in Progress</span><span style="color:var(--brand2)">68%</span></div>
+            <div style="background:var(--dark3);border-radius:999px;height:8px;overflow:hidden"><div style="width:68%;background:var(--brand2);height:100%;border-radius:999px"></div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px">
+            <div style="background:var(--dark3);border-radius:10px;padding:14px;text-align:center"><div style="font-size:24px;font-weight:700;color:var(--brand2)">2,841</div><div style="font-size:12px;color:var(--muted)">Checked In</div></div>
+            <div style="background:var(--dark3);border-radius:10px;padding:14px;text-align:center"><div style="font-size:24px;font-weight:700;color:var(--brand3)">1,359</div><div style="font-size:12px;color:var(--muted)">Remaining</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- MOTION & ANIMATION -->
+<section id="motion">
+  <div class="container">
+    <div class="section-tag"><i class="fas fa-magic"></i> Motion</div>
+    <h2 class="section-title">Motion System</h2>
+    <p class="section-sub">Motion communicates state, feedback, and brand energy. Use purposefully — never for decoration alone.</p>
+    <div class="motion-grid">
+      <div class="motion-card">
+        <div class="motion-demo"><div class="motion-box pulse"></div></div>
+        <div class="motion-name">Pulse</div>
+        <div class="motion-spec">2s ease-in-out infinite</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px">Live events, real-time indicators, LIVE badge</div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-demo"><div class="motion-box float"></div></div>
+        <div class="motion-name">Float</div>
+        <div class="motion-spec">3s ease-in-out infinite</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px">Hero decorative elements, empty state illustrations</div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-demo"><div class="motion-box spin-slow"></div></div>
+        <div class="motion-name">Slow Spin</div>
+        <div class="motion-spec">8s linear infinite</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px">Loading states, processing indicators, ticket QR</div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-demo"><div class="motion-box glow"></div></div>
+        <div class="motion-name">Glow Pulse</div>
+        <div class="motion-spec">2s ease-in-out infinite</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px">CTA buttons on hover, selected seats, active filters</div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-demo" style="flex-direction:column;gap:8px">
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;transition:.2s;cursor:pointer" onmouseenter="this.style.transform='translateY(-2px)';this.style.borderColor='var(--brand)'" onmouseleave="this.style.transform='';this.style.borderColor='var(--border)'">Hover me ↑</div>
+        </div>
+        <div class="motion-name">Lift on Hover</div>
+        <div class="motion-spec">translateY(-2px) 0.2s ease</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px">Cards, buttons, interactive list items</div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-demo">
+          <div id="fadeDemo" style="background:var(--grad1);width:48px;height:48px;border-radius:12px;opacity:1;transition:.4s" onclick="this.style.opacity=this.style.opacity==='0.2'?'1':'0.2'">
+          </div>
+        </div>
+        <div class="motion-name">Fade</div>
+        <div class="motion-spec">opacity 0.4s ease (click to demo)</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px">Modal overlays, skeleton loading, disabled states</div>
+      </div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-top:24px">
+      <h4 style="margin-bottom:16px;font-size:16px">Easing Functions</h4>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
+        <div style="background:var(--dark3);padding:12px;border-radius:10px"><div style="font-weight:600;font-size:14px;color:var(--brand2);margin-bottom:4px">ease-out</div><div style="font-size:12px;color:var(--muted)">Entering elements — modals, drawers, toasts</div></div>
+        <div style="background:var(--dark3);padding:12px;border-radius:10px"><div style="font-weight:600;font-size:14px;color:var(--brand2);margin-bottom:4px">ease-in</div><div style="font-size:12px;color:var(--muted)">Exiting elements — closing modals, dismissing toasts</div></div>
+        <div style="background:var(--dark3);padding:12px;border-radius:10px"><div style="font-weight:600;font-size:14px;color:var(--brand2);margin-bottom:4px">ease-in-out</div><div style="font-size:12px;color:var(--muted)">Looping animations — pulse, float, glow</div></div>
+        <div style="background:var(--dark3);padding:12px;border-radius:10px"><div style="font-weight:600;font-size:14px;color:var(--brand2);margin-bottom:4px">linear</div><div style="font-size:12px;color:var(--muted)">Spinners, progress bars, scan lines</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- DO / DON'T -->
+<section id="rules">
+  <div class="container">
+    <div class="section-tag"><i class="fas fa-check-double"></i> Usage Rules</div>
+    <h2 class="section-title">Do's & Don'ts</h2>
+    <p class="section-sub">Brand integrity is product quality. These rules protect the experience.</p>
+    <div class="dodont-grid">
+      <div class="dodont-card do-card">
+        <div class="dodont-head do"><i class="fas fa-check-circle"></i> Do</div>
+        <ul class="dodont-list">
+          <li>Use Space Grotesk for all headings and display text</li>
+          <li>Maintain minimum 44px touch target for all interactive elements</li>
+          <li>Use the full wordmark "INDTIX" (not "Ind-Tix", "IndTix", "indTIX")</li>
+          <li>Show GST amounts separately in all financial contexts</li>
+          <li>Use the brand purple (#6C3CF7) for primary actions only</li>
+          <li>Keep button copy outcome-oriented ("Book Now", "Get Tickets")</li>
+          <li>Respect the 8px base spacing grid (8, 16, 24, 32, 48, 64px)</li>
+          <li>Use dark backgrounds (#0A0A14 or #0F0F1E) as primary canvas</li>
+          <li>Credit as "Powered by INDTIX — Oye Imagine Pvt Ltd"</li>
+        </ul>
+      </div>
+      <div class="dodont-card dont-card">
+        <div class="dodont-head dont"><i class="fas fa-times-circle"></i> Don't</div>
+        <ul class="dodont-list">
+          <li>Never stretch or distort the logo horizontally or vertically</li>
+          <li>Never place the logo on busy photographic backgrounds without a container</li>
+          <li>Never use red (#FF0000) — use Neon Coral (#FF4F6E) for urgency</li>
+          <li>Never use ALL CAPS for body text (labels only)</li>
+          <li>Never fake scarcity — only show "Selling Fast" when >70% sold</li>
+          <li>Never display prices without inclusive GST disclosure</li>
+          <li>Never use Comic Sans, Papyrus, or any other non-brand font</li>
+          <li>Never show raw API errors to users ("500 Internal Server Error")</li>
+          <li>Never abbreviate "Oye Imagine" to "OI" in customer-facing copy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- MANIFESTO -->
+<section id="manifesto" style="background:var(--dark2)">
+  <div class="container">
+    <div class="section-tag"><i class="fas fa-heart"></i> Why We Exist</div>
+    <h2 class="section-title">The INDTIX Manifesto</h2>
+    <br>
+    <div class="manifesto">
+      <div class="manifesto-quote">
+        India has always been a nation of <em>live experiences</em>. Of weddings that shut down entire streets. Of cricket matches that stop time. Of music festivals that make strangers into friends. Of comedy nights where cities laugh as one.<br><br>
+        We built INDTIX because <em>live culture deserves better infrastructure</em>. Not broken checkout flows. Not predatory convenience fees. Not venues that can't sell a seat without a spreadsheet.<br><br>
+        We're building the stage for <em>every artist, every organiser, every venue, every fan</em> — from the 50,000-capacity amphitheatre in Mumbai to the 200-seat comedy basement in Bhopal.<br><br>
+        Because <em>every moment of joy</em> deserves a ticket worth keeping.
+      </div>
+      <div class="manifesto-sig">— Team INDTIX, Oye Imagine Private Limited · Est. 2024 · GSTIN 27AABCO1234A1Z5</div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- DISCLAIMER TEMPLATES -->
+<section id="disclaimers">
+  <div class="container">
+    <div class="section-tag"><i class="fas fa-file-contract"></i> Legal Copy</div>
+    <h2 class="section-title">Disclaimer & Terms Templates</h2>
+    <p class="section-sub">Standard legal copy — approved by Oye Imagine compliance. Use verbatim in all customer-facing contexts.</p>
+    <div class="disclaimer-box">
+      <div class="disclaimer-title">🎟️ Ticket Purchase Disclaimer (Checkout Page)</div>
+      <div class="disclaimer-text">All sales are final. Tickets are non-transferable and non-refundable except as per INDTIX Refund Policy. Prices displayed include applicable GST @ 18% and a platform convenience fee of ₹20 per ticket. INDTIX (operated by Oye Imagine Private Limited, GSTIN: 27AABCO1234A1Z5) acts solely as a ticketing intermediary and is not responsible for event cancellations, postponements, or quality of the event experience. GST invoices available in your account under "My Bookings". By completing this purchase, you agree to INDTIX Terms of Service and Privacy Policy.</div>
+    </div>
+    <div class="disclaimer-box">
+      <div class="disclaimer-title">🏢 Organiser Terms Summary (Organiser Onboarding)</div>
+      <div class="disclaimer-text">By listing your event on INDTIX, you agree that: (1) You hold all necessary licences and permissions for the event; (2) INDTIX retains a platform fee of 3–8% on gross ticket sales (as per your contract tier); (3) Settlements are processed on T+7 working days post-event; (4) You are responsible for GST compliance on your ticket sales; (5) You are responsible for event delivery and any refunds resulting from cancellation; (6) INDTIX reserves the right to remove listings that violate our Content Policy. Full terms at indtix.com/organiser-terms. Oye Imagine Private Limited, GSTIN 27AABCO1234A1Z5.</div>
+    </div>
+    <div class="disclaimer-box">
+      <div class="disclaimer-title">📧 Email Footer (Transactional & Marketing)</div>
+      <div class="disclaimer-text">This email was sent by INDTIX (Oye Imagine Private Limited, Registered Office: [Address], Mumbai – 400001, India | CIN: U74999MH2024PTC000000 | GSTIN: 27AABCO1234A1Z5). You are receiving this because you have an INDTIX account. Manage your notification preferences at indtix.com/settings. © 2025 Oye Imagine Private Limited. All rights reserved. INDTIX is a registered trademark of Oye Imagine Private Limited.</div>
+    </div>
+    <div class="disclaimer-box">
+      <div class="disclaimer-title">📱 WhatsApp / SMS Disclaimer</div>
+      <div class="disclaimer-text">INDTIX by Oye Imagine Pvt Ltd. To unsubscribe reply STOP. Msg & data rates may apply. For support: support@indtix.com | 1800-XXX-XXXX (toll-free Mon–Fri 9am–6pm IST).</div>
+    </div>
+    <div class="disclaimer-box">
+      <div class="disclaimer-title">🎪 Event Day Disclaimer (Ticket PDF / QR Code)</div>
+      <div class="disclaimer-text">This ticket is valid for one-time entry only. QR code is unique and non-reproducible. Resale of tickets is prohibited and voids entry rights. The organiser reserves the right to refuse entry for safety or security reasons. INDTIX (Oye Imagine Private Limited) is not liable for lost, stolen, or fraudulently reproduced tickets. Please carry a valid photo ID matching your booking name. Event programme subject to change without notice.</div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- ICONOGRAPHY -->
+<section id="icons">
+  <div class="container">
+    <div class="section-tag"><i class="fas fa-icons"></i> Icons</div>
+    <h2 class="section-title">Iconography</h2>
+    <p class="section-sub">INDTIX uses Font Awesome 6 as the primary icon set. Prefer solid variants for UI elements; use regular for inactive/deselected states.</p>
+    <div class="icon-grid">
+      <div class="icon-item"><i class="fas fa-ticket-alt"></i><span>ticket-alt</span></div>
+      <div class="icon-item"><i class="fas fa-calendar-alt"></i><span>calendar-alt</span></div>
+      <div class="icon-item"><i class="fas fa-map-marker-alt"></i><span>map-marker</span></div>
+      <div class="icon-item"><i class="fas fa-music"></i><span>music</span></div>
+      <div class="icon-item"><i class="fas fa-qrcode"></i><span>qrcode</span></div>
+      <div class="icon-item"><i class="fas fa-users"></i><span>users</span></div>
+      <div class="icon-item"><i class="fas fa-heart"></i><span>heart</span></div>
+      <div class="icon-item"><i class="fas fa-share-alt"></i><span>share-alt</span></div>
+      <div class="icon-item"><i class="fas fa-star"></i><span>star</span></div>
+      <div class="icon-item"><i class="fas fa-filter"></i><span>filter</span></div>
+      <div class="icon-item"><i class="fas fa-search"></i><span>search</span></div>
+      <div class="icon-item"><i class="fas fa-bell"></i><span>bell</span></div>
+      <div class="icon-item"><i class="fas fa-robot"></i><span>robot</span></div>
+      <div class="icon-item"><i class="fas fa-chart-line"></i><span>chart-line</span></div>
+      <div class="icon-item"><i class="fas fa-rupee-sign"></i><span>rupee-sign</span></div>
+      <div class="icon-item"><i class="fas fa-shield-alt"></i><span>shield-alt</span></div>
+      <div class="icon-item"><i class="fas fa-crown"></i><span>crown</span></div>
+      <div class="icon-item"><i class="fas fa-fire"></i><span>fire</span></div>
+      <div class="icon-item"><i class="fas fa-bolt"></i><span>bolt</span></div>
+      <div class="icon-item"><i class="fas fa-ban"></i><span>ban</span></div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">INDT<span>IX</span></div>
+  <div class="footer-tagline">Your Ticket to Unforgettable. — Brand System v2.0</div>
+  <div class="footer-links">
+    <a href="/fan">Fan Portal</a>
+    <a href="/organiser">Organiser</a>
+    <a href="/venue">Venue</a>
+    <a href="/event-manager">Event Manager</a>
+    <a href="/admin">Super Admin</a>
+    <a href="/ops">Ops & POS</a>
+    <a href="/architecture">Architecture</a>
+    <a href="/portals">All Portals</a>
+  </div>
+  <div class="footer-copy">© 2025 Oye Imagine Private Limited · GSTIN 27AABCO1234A1Z5 · All rights reserved · INDTIX® is a registered trademark.</div>
+</footer>
+
+<script>
+// Scroll progress bar
+window.addEventListener('scroll', () => {
+  const el = document.getElementById('scrollBar');
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  if(el) el.style.width = Math.min(pct,100) + '%';
+});
+</script>
+</body>
+</html>
