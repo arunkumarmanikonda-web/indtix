@@ -1,218 +1,133 @@
-# INDTIX Platform v4.0 — Platinum Grade
+# INDTIX Platform v4.0
 
-## 🚀 Platform Overview
-India's next-generation live event commerce platform by **Oye Imagine Private Limited**.  
-Built with **Hono + Cloudflare Workers + TypeScript** — edge-first, zero cold-start.
+**India's most comprehensive event ticketing & management ecosystem** — 10 portals, 77 API endpoints, 52 live fetch() integrations, zero placeholder buttons.
 
 ---
 
-## 🌐 Production URLs
+## 🌐 Live URLs
 
-| Portal | URL | Status |
-|--------|-----|--------|
-| Fan Portal (Landing) | https://27708022.indtix.pages.dev/fan | ✅ Live |
-| Organiser Portal | https://27708022.indtix.pages.dev/organiser | ✅ Live |
-| Venue Portal | https://27708022.indtix.pages.dev/venue | ✅ Live |
-| Event Manager | https://27708022.indtix.pages.dev/event-manager | ✅ Live |
-| Super Admin / ERP | https://27708022.indtix.pages.dev/admin | ✅ Live |
-| On-Ground Ops / POS | https://27708022.indtix.pages.dev/ops | ✅ Live |
-| Brand Assets | https://27708022.indtix.pages.dev/brand | ✅ Live |
-| Architecture Spec | https://27708022.indtix.pages.dev/architecture-spec | ✅ Live |
-| Portal Hub | https://27708022.indtix.pages.dev/portals | ✅ Live |
-| API Health | https://27708022.indtix.pages.dev/api/health | ✅ Live |
-
-**Sandbox Preview:** https://3000-iq6s3w0eyyf60ds461kuz-c07dda5e.sandbox.novita.ai
+| Environment | URL |
+|---|---|
+| **Production (latest)** | https://1737399e.indtix.pages.dev |
+| **Fan Portal** | https://1737399e.indtix.pages.dev/fan |
+| **Organiser Portal** | https://1737399e.indtix.pages.dev/organiser |
+| **Venue Portal** | https://1737399e.indtix.pages.dev/venue |
+| **Event Manager Portal** | https://1737399e.indtix.pages.dev/event-manager |
+| **Admin / ERP** | https://1737399e.indtix.pages.dev/admin |
+| **Ops / POS** | https://1737399e.indtix.pages.dev/ops |
+| **API Health** | https://1737399e.indtix.pages.dev/api/health |
 
 ---
 
-## 📊 Platform Stats (v4.0)
+## ✅ Phase 4 — Completed Features
+
+### Backend (77 endpoints, `src/index.ts`)
+| Phase | New Endpoints |
+|---|---|
+| Auth | `POST /api/auth/login`, `POST /api/auth/signup`, `POST /api/auth/verify-otp` |
+| Events | `POST /api/events` (create), `PUT /api/events/:id` (update) |
+| Promos | `GET /api/promos`, `POST /api/promos`, `DELETE /api/promos/:code` |
+| Config | `GET /api/admin/config`, `POST /api/admin/config` |
+| Users | `GET /api/admin/users`, `POST /api/admin/users/:id/block`, `GET /api/admin/users/export` |
+| Events Admin | `GET /api/admin/events/queue`, `POST /api/admin/events/:id/approve` |
+| Incidents | `POST /api/incidents`, `GET /api/events/:id/incidents` |
+| Announcements | `POST /api/announcements` |
+| Settlements | `POST /api/settlements/:id/process` |
+| GST | `GET /api/gst/invoice/:booking_id` |
+| Wallet | `POST /api/wallet/redeem` (fixed), `POST /api/referral/validate` (fixed) |
+| LED | `POST /api/wristbands/led/command` (zone-aware, bands_updated) |
+| Team | `POST /api/organiser/team` |
+| Notifications | `POST /api/notifications/send` |
+
+### Fan Portal (`public/fan.html`) — 17 API calls
+- **Auth**: `POST /api/auth/login` + `POST /api/auth/signup` (real API with user state)
+- **Social Login**: wired to `/api/auth/login` with provider
+- **Event Modal**: async `GET /api/events/:id/tiers` + `GET /api/events/:id/addons` on open
+- **Promo**: `POST /api/promo/validate` with local fallback
+- **GST Invoice**: `GET /api/gst/invoice/:booking_id` — real invoice data rendered
+- **Booking confirm**: saves `window._lastBookingId` for GST invoice
+- **Wallet**: `GET /api/wallet/user123` with redeem (`POST /api/wallet/redeem`) and referral (`POST /api/referral/validate`) buttons
+
+### Organiser Portal (`public/organiser.html`) — 8 API calls
+- **Create Event**: `POST /api/events` on Submit for Approval
+- **Settlement**: `POST /api/settlements/:id/process` with UTR response
+- **KYC Status**: `GET /api/kyc/:id` with document-level status display
+
+### Admin Portal (`public/admin.html`) — 12 API calls
+- **Promo CRUD**: `POST /api/promos` (create), reads form fields
+- **Config Save**: `POST /api/admin/config` with audit log
+- **Affiliate Stats**: `GET /api/affiliate/stats` → dynamically renders panel
+- **Event Approval Queue**: `GET /api/admin/events/queue` + `POST /api/admin/events/:id/approve`
+- **Affiliate Panel**: new sidebar item + HTML panel with stats + add form
+
+### Event Manager Portal (`public/event-manager.html`) — 9 API calls
+- **Incident Log**: `POST /api/incidents` with type, location, priority
+- **Broadcast Team**: `POST /api/announcements` (team channel)
+- **Send Announcement**: `POST /api/announcements` (attendees)
+- **LED Commands**: `POST /api/wristbands/led/command` for goLED, activateLEDBand (per zone)
+- **Emergency Alert**: `POST /api/announcements` with emergency priority
+
+---
+
+## 📊 Development Summary (All Phases)
 
 | Metric | Value |
-|--------|-------|
-| API Endpoints | 58 (v4.0) |
-| HTML Lines | 10,521 |
-| Worker Bundle | 56.7 KB |
-| Active Portals | 10 |
-| `alert()` calls remaining | **0** ✅ |
-| Production routes returning 200 | **100%** ✅ |
+|---|---|
+| Total lines of code | ~12,000 |
+| Backend routes | **77** |
+| Frontend fetch() calls | **52** |
+| Portals | 10 (fan, organiser, venue, event-manager, admin, ops, brand, portals, architecture, architecture-spec) |
+| Placeholder buttons | **0** |
+| Production uptime | ✅ Active |
 
 ---
 
-## ✅ Platinum Scope Completion
+## 🗂 Data Models
 
-### 1. Ticket Cap Enforcement
-- Fan portal: 10-ticket cap enforced on quantity selectors, seat map, and API
-- Business cap: 50 tickets (KYC required)
-- Enterprise: 500 tickets (via bulk booking API)
+### Event
+`{ id, name, category, city, date, price, sold_pct, venue, image, tiers[], addons[] }`
 
-### 2. Bulk / Business Booking
-- `/api/bookings/bulk` — tiered discounts (5% @10, 10% @20, 15% @50)
-- GST invoice auto-generated for business orders
-- Account manager assigned on bulk orders
+### Booking
+`{ id, event_id, tickets[], addons[], subtotal, gst, platform_fee, total, qr_url, pdf_url }`
 
-### 3. KYC Flows (4 portals)
-- **Fan**: Aadhaar + PAN verification for >10 ticket buyers
-- **Organiser**: GST, PAN, bank account, document upload
-- **Venue**: NOC, GST certificate, property ownership docs
-- **Admin**: KYC review queue, approve/reject with audit log
-
-### 4. Seat Map Engine
-- 4 zones: GA, Premium, VIP, Accessible
-- Interactive 10-min hold timer, max 10 seats
-- Zone switching with live price update
-- Add-ons in seat flow (Combo Meal, Tee, Fast-Track)
-
-### 5. GST Invoice Engine
-- CGST + SGST each 9%, HSN codes 9996/9984
-- Full invoice modal with download + email
-- Auto-generated on booking confirmation
-- Venue GST invoices for organiser billing
-
-### 6. WhatsApp + Email Transactional
-- Every booking, cancellation, KYC, settlement event flags `whatsapp_sent: true, email_sent: true`
-- Bulk broadcast to attendees from organiser portal
-- `/api/notifications/send` endpoint (multi-channel)
-
-### 7. FAQ Chatbot (INDY)
-- Event-specific FAQ via `/api/events/:id/faq`
-- 8 intent categories: refund, age, parking, entry, dress, food, camera, generic
-- Session-aware AI chat at `/api/ai/chat`
-
-### 8. Wristband & LED Band
-- Issue/deactivate wristbands (`/api/wristbands/issue`, `/api/wristbands/status`)
-- LED commands: color, effect, scenes (`/api/wristbands/led/command`)
-- 4 LED scenes: default, pulse, wave, emergency
-- 5,000-band controller simulation (14 controllers, 99.94% uptime)
-
-### 9. BI & Intelligence Layer
-- `/api/admin/bi/dashboard` — DAU, GMV, conversion rate, AI insights
-- Demand forecast (87% confidence), cohort retention
-- GST reports: GSTR-1, GSTR-3B, HSN summary
-- Affiliate/commission tracking
-
-### 10. Branding
-- Brand assets portal: 6 logos, 12 slogans, full palette, voice guide
-- GSTIN: 27AABCO1234A1Z5
-- Company: Oye Imagine Private Limited
-
----
-
-## 🔌 Full API Reference (58 Endpoints)
-
-### Events
-- `GET /api/events` — list with filters (city, category, q, page)
-- `GET /api/events/:id` — event detail with tiers, addons, policies
-- `GET /api/events/:id/tiers` — ticket tier availability
-- `GET /api/events/:id/addons` — add-on catalogue
-- `GET /api/events/:id/seatmap` — interactive seat map by zone
-- `GET /api/events/:id/checkin-stats` — live gate statistics
-- `POST /api/events/:id/faq` — event-specific FAQ bot
-- `POST /api/events/:id/waitlist` — waitlist registration
-
-### Bookings
-- `POST /api/bookings` — create booking (with GST, platform fee)
-- `GET /api/bookings/:id` — booking detail
-- `POST /api/bookings/:id/cancel` — cancel with refund calculation
-- `POST /api/bookings/bulk` — business/bulk booking (tiered discount)
-
-### Cities, Categories, Venues
-- `GET /api/cities` — 10 cities with event counts
-- `GET /api/categories` — 10 categories with icons and counts
-- `GET /api/venues` — venues with optional city filter
-
-### GST & Finance
-- `GET /api/gst/invoice/:booking_id` — GST invoice with line items
-- `GET /api/admin/gst/monthly` — GSTR-1, GSTR-3B, HSN summary
-- `GET /api/settlements` — settlement list for admin
-- `POST /api/settlements/:id/process` — release settlement
+### Promo
+`{ code, type (percentage|flat), value, max_uses, used, expires, categories[], status }`
 
 ### KYC
-- `POST /api/kyc/submit` — submit KYC documents
-- `GET /api/kyc/:id` — KYC status check
-- `GET /api/admin/kyc/queue` — admin KYC review queue
+`{ kyc_id, entity_type, status (pending|under_review|approved|rejected), documents[], notes }`
 
-### Scan & OPS
-- `POST /api/scan/verify` — QR code validation (valid/duplicate/invalid)
-- `POST /api/pos/sale` — POS on-ground sale
-- `POST /api/wristbands/issue` — issue NFC wristband
-- `POST /api/wristbands/led/command` — LED band command
-- `GET /api/wristbands/status` — wristband controller status
+### Incident
+`{ incident_id, type, location, description, priority, status, event_id, created_at }`
 
-### AI & Engagement
-- `POST /api/ai/chat` — INDY AI assistant
-- `POST /api/promo/validate` — promo code validation
-- `POST /api/notifications/send` — multi-channel notification
-
-### Platform Admin
-- `GET /api/admin/stats` — platform KPIs
-- `GET /api/admin/config` — platform configuration
-- `GET /api/admin/bi/dashboard` — BI + AI insights
-- `GET /api/admin/fraud/alerts` — fraud risk queue
-- `GET /api/affiliate/stats` — affiliate tracking
-
-### Organisers & Venues
-- `GET /api/organiser/analytics` — revenue, tiers, cities breakdown
-- `GET /api/organiser/dashboard` — live organiser summary
-- `POST /api/organiser/register` — organiser onboarding
-- `GET /api/venue/dashboard` — venue summary
-- `POST /api/venue/register` — venue onboarding
-- `GET /api/event-manager/dashboard` — event day live stats
-
-### Wallet & Loyalty
-- `GET /api/wallet/:user_id` — INDY Credits balance + history
-- `POST /api/wallet/redeem` — redeem credits at checkout
-- `POST /api/referral/validate` — referral code check
-- `POST /api/tickets/:id/transfer` — transfer policy enforcement
-
-### Search
-- `GET /api/search` — unified search (events, venues, organisers)
+### Announcement
+`{ announcement_id, message, audience, recipients, channels[], status, sent_at }`
 
 ---
 
-## 🏗️ Architecture
-
-```
-Cloudflare Pages
-├── _worker.js  (56.7 KB — Hono edge app)
-│   ├── 58 API endpoints
-│   ├── CORS middleware
-│   └── Static file serving
-└── public/
-    ├── fan.html          (1,393 lines — Fan Portal)
-    ├── organiser.html    (1,326 lines — Organiser Portal)
-    ├── venue.html        (883 lines — Venue Portal)
-    ├── event-manager.html (1,027 lines — Event Manager)
-    ├── admin.html        (1,155 lines — Super Admin ERP)
-    ├── ops.html          (693 lines — On-Ground Ops/POS)
-    ├── brand.html        (898 lines — Brand Assets)
-    ├── architecture-spec.html (1,198 lines)
-    └── portals.html      (402 lines — Portal Hub)
-```
+## 🔑 Key Promo Codes (live on Fan portal)
+| Code | Discount | Type |
+|---|---|---|
+| `INDY20` | 20% off | All events |
+| `FIRST50` | ₹50 off | First booking |
+| `SUMMER25` | 25% off | Music only |
+| `FEST20` | 20% off | Festivals |
 
 ---
 
-## 🚀 Local Development
-
-```bash
-cd /home/user/webapp
-npm run build
-pm2 start ecosystem.config.cjs
-# Test: curl http://localhost:3000/api/health
-```
-
-## 🌐 Deploy to Production
-
-```bash
-cd /home/user/webapp
-npm run build
-npx wrangler pages deploy dist --project-name indtix
-```
+## 🚀 Tech Stack
+- **Backend**: Hono v4 + TypeScript → Cloudflare Workers
+- **Frontend**: Vanilla JS + Tailwind CSS (CDN) + Font Awesome
+- **Build**: Vite → `dist/_worker.js` (70.5 KB)
+- **Deployment**: Cloudflare Pages (`wrangler pages deploy`)
+- **Dev**: wrangler pages dev + PM2
 
 ---
 
-## 🏢 Company Info
-- **Company**: Oye Imagine Private Limited
-- **GSTIN**: 27AABCO1234A1Z5
-- **CIN**: U74999MH2024PTC000000
-- **Platform**: INDTIX — India's Next-Gen Event Commerce Platform
-- **Last Updated**: March 2026 | **Version**: 4.0.0 Platinum
+## 📅 Deployment History
+| Phase | Date | Key Changes |
+|---|---|---|
+| v1.0 | Mar 2026 | 7 portals, basic structure |
+| v2.0 | Mar 2026 | 10 portals, 16 API routes |
+| v3.0 | Mar 2026 | Phase 2: API wiring, dedup fix |
+| v4.0 | Mar 2026 | Phase 3: Deep API integration, SEO, scanner/POS wiring |
+| **v4.1** | **Mar 7 2026** | **Phase 4: Auth, promo CRUD, incidents, announcements, LED, wallet, affiliate, event approval** |
