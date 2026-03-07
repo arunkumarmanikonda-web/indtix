@@ -108,6 +108,23 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;min
 .log-text{flex:1;font-weight:500}
 .log-time{color:var(--muted);font-size:10px}
 </style>
+
+<style>
+.pos-item{background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:14px;cursor:pointer;transition:all 0.2s;text-align:center}
+.pos-item:hover{border-color:var(--brand);transform:scale(1.02)}
+.pos-item:active{transform:scale(0.98)}
+.pos-item-name{font-weight:600;font-size:13px;margin-top:6px}
+.pos-item-price{font-size:16px;font-weight:800;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-top:2px}
+.cart-item-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.cart-qty-btn{width:26px;height:26px;border-radius:50%;border:1px solid var(--border);background:var(--dark);color:var(--text);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.cart-qty-btn:hover{border-color:var(--brand);background:rgba(108,60,247,0.2)}
+.scanner-box{background:var(--dark);border:2px solid var(--brand);border-radius:20px;padding:30px;text-align:center;position:relative;overflow:hidden}
+.scanner-line{position:absolute;left:20px;right:20px;height:2px;background:linear-gradient(90deg,transparent,var(--brand),transparent);animation:scan 2s ease-in-out infinite;top:50%}
+@keyframes scan{0%{top:20%}50%{top:80%}100%{top:20%}}
+.scan-result.success{background:rgba(0,245,196,0.1);border:1px solid rgba(0,245,196,0.3);color:var(--brand3)}
+.scan-result.error{background:rgba(255,60,172,0.1);border:1px solid rgba(255,60,172,0.3);color:var(--brand2)}
+.scan-result{border-radius:12px;padding:14px;margin-top:12px}
+</style>
 </head>
 <body>
 
@@ -124,7 +141,9 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;min
 </div>
 
 <div class="ops-nav">
-  <button class="ops-nav-btn active" onclick="showOpsPanel('scanner',this)"><i class="fas fa-qrcode"></i>Scanner</button>
+  <button class="ops-nav-btn active" onclick="showOpsPanel('scanner',this)">📷 Scanner</button>
+        <button class="sb-item" onclick="showOpsPanel('pos',this)">🛒 Point of Sale</button>
+        <button class="sb-item" onclick="showOpsPanel('placeholder',this)"><i class="fas fa-qrcode"></i>Scanner</button>
   <button class="ops-nav-btn" onclick="showOpsPanel('pos',this)"><i class="fas fa-cash-register"></i>POS</button>
   <button class="ops-nav-btn" onclick="showOpsPanel('wristbands',this)"><i class="fas fa-hand-sparkles"></i>Wristbands</button>
   <button class="ops-nav-btn" onclick="showOpsPanel('stats',this)"><i class="fas fa-chart-bar"></i>Live Stats</button>
@@ -283,6 +302,81 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;min
 </div>
 
 <script>
+
+const posCart = {};
+function addToCart(name,cat,price){
+  if(!posCart[name])posCart[name]={price,qty:0,cat};
+  posCart[name].qty++;
+  renderPOSCart();
+}
+function renderPOSCart(){
+  const el=document.getElementById('posCart');
+  const sub=document.getElementById('posSubtotal');
+  const gst=document.getElementById('posGST');
+  const tot=document.getElementById('posTotal');
+  const items=Object.entries(posCart).filter(([,v])=>v.qty>0);
+  if(!el)return;
+  if(items.length===0){el.innerHTML='<div style="color:var(--muted);font-size:13px;text-align:center;padding:24px 0">Cart is empty</div>';if(sub)sub.textContent='₹0';if(gst)gst.textContent='₹0';if(tot)tot.textContent='₹0';return;}
+  let subtotal=0;
+  el.innerHTML=items.map(([name,{price,qty}])=>{
+    subtotal+=price*qty;
+    return '<div class="cart-item-row"><div style="flex:1;font-size:13px">'+name+'</div><div style="display:flex;align-items:center;gap:6px"><button class="cart-qty-btn" onclick="changeCartQty(\''+name+'\', -1)">−</button><span style="font-size:13px;font-weight:600;min-width:16px;text-align:center">'+qty+'</span><button class="cart-qty-btn" onclick="changeCartQty(\''+name+'\', 1)">+</button></div><div style="font-size:13px;font-weight:700;min-width:50px;text-align:right">₹'+((price*qty).toLocaleString('en-IN'))+'</div></div>';
+  }).join('');
+  const g=Math.round(subtotal*0.05);
+  if(sub)sub.textContent='₹'+subtotal.toLocaleString('en-IN');
+  if(gst)gst.textContent='₹'+g.toLocaleString('en-IN');
+  if(tot)tot.textContent='₹'+(subtotal+g).toLocaleString('en-IN');
+}
+function changeCartQty(name,delta){
+  if(!posCart[name])return;
+  posCart[name].qty=Math.max(0,posCart[name].qty+delta);
+  renderPOSCart();
+}
+function clearPOSCart(){Object.keys(posCart).forEach(k=>delete posCart[k]);renderPOSCart();}
+function payPOS(method){
+  const tot=document.getElementById('posTotal');
+  if(!tot||tot.textContent==='₹0'){alert('Cart is empty!');return;}
+  alert('✅ Payment via '+method+' confirmed!\nReceipt sent via WhatsApp.\nTransaction logged.');
+  clearPOSCart();
+}
+function filterPOS(btn,cat){document.querySelectorAll('.pos-cat-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function simulateScan(){
+  const outcomes=[
+    {ok:true,name:'Priya Sharma',tier:'VIP',booking:'BK7X9Q2A'},
+    {ok:true,name:'Rahul Mehta',tier:'GA',booking:'BK2K8M4N'},
+    {ok:false,name:null,tier:null,booking:'BK-FAKE-001'},
+  ];
+  const o=outcomes[Math.floor(Math.random()*outcomes.length)];
+  const res=document.getElementById('scanResult');
+  if(!res)return;
+  const cnt=document.getElementById('scanCount');
+  const rej=document.getElementById('rejectCount');
+  if(o.ok){
+    if(cnt)cnt.textContent=parseInt(cnt.textContent)+1;
+    res.innerHTML='<div class="scan-result success"><div style="font-size:16px;font-weight:700">✅ VALID TICKET</div><div style="font-size:14px;margin-top:4px">'+o.name+' — '+o.tier+'</div><div style="font-size:12px;opacity:0.7;margin-top:2px">Booking: '+o.booking+'</div></div>';
+    playBeep(true);
+  } else {
+    if(rej)rej.textContent=parseInt(rej.textContent)+1;
+    res.innerHTML='<div class="scan-result error"><div style="font-size:16px;font-weight:700">❌ INVALID TICKET</div><div style="font-size:14px;margin-top:4px">Booking not found or already used</div></div>';
+    playBeep(false);
+  }
+  setTimeout(()=>{if(res)res.innerHTML='';},4000);
+}
+function manualEntry(){
+  const inp=document.getElementById('manualTicketInput');
+  if(!inp||!inp.value.trim()){alert('Enter a booking ID');return;}
+  const id=inp.value.trim().toUpperCase();
+  const valid=['BK7X9Q2A','BK2K8M4N','BK9P3F7Z'];
+  const res=document.getElementById('scanResult');
+  if(res){
+    if(valid.includes(id)){res.innerHTML='<div class="scan-result success"><div style="font-size:16px;font-weight:700">✅ VALID — '+id+'</div><div style="font-size:12px;margin-top:4px;opacity:0.7">Entry permitted</div></div>';playBeep(true);}
+    else{res.innerHTML='<div class="scan-result error"><div style="font-size:16px;font-weight:700">❌ NOT FOUND — '+id+'</div></div>';playBeep(false);}
+    setTimeout(()=>{res.innerHTML='';},3000);
+  }
+  inp.value='';
+}
+function playBeep(success){try{const ctx=new AudioContext();const osc=ctx.createOscillator();const g=ctx.createGain();osc.connect(g);g.connect(ctx.destination);osc.frequency.value=success?880:220;g.gain.value=0.3;osc.start();setTimeout(()=>{osc.stop();ctx.close();},success?150:400);}catch(e){}}
+
 function showOpsPanel(name,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.ops-nav-btn').forEach(b=>b.classList.remove('active'));

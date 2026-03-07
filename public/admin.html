@@ -329,17 +329,339 @@ tr:hover td{background:rgba(108,60,247,0.04)}
       </div>
     </div>
 
-    <!-- DEFAULT PANELS -->
-    <div class="panel" id="panel-health"><div class="card"><div class="card-title">System Health Monitor</div><div class="platform-health">${[['API','99.9%','var(--green)'],['DB','99.8%','var(--green)'],['CDN','100%','var(--green)'],['Queue','99.7%','var(--green)'],['Search','99.5%','var(--green)'],['Cache','100%','var(--green)']].map(([s,u,c])=>`<div class="health-item"><div class="health-dot" style="background:${c}"></div><div class="health-label">${s}</div><div class="health-val" style="color:${c}">${u}</div></div>`).join('')}</div></div></div>
-    <div class="panel" id="panel-venues"><div class="card"><div class="card-title">Venue Approvals</div><p style="color:var(--muted)">528 venues listed · 12 pending verification.</p></div></div>
-    <div class="panel" id="panel-kyc"><div class="card"><div class="card-title">KYC Review Queue</div><p style="color:var(--muted)">18 organiser KYC submissions pending review.</p></div></div>
-    <div class="panel" id="panel-settlements"><div class="card"><div class="card-title">Settlements & Payouts</div><p style="color:var(--muted)">₹18.4L pending payout to organisers this week.</p></div></div>
-    <div class="panel" id="panel-refunds"><div class="card"><div class="card-title">Refund Management</div><p style="color:var(--muted)">₹8.4L in refunds processed this month. 2% refund rate.</p></div></div>
-    <div class="panel" id="panel-gst"><div class="card"><div class="card-title">GST Engine</div><p style="color:var(--muted)">Auto-calculated GST on all transactions. GSTIN: 27AABCO1234A1Z5. Monthly GSTR-1 auto-generated.</p></div></div>
-    <div class="panel" id="panel-users"><div class="card"><div class="card-title">User Management</div><p style="color:var(--muted)">2.4M registered users · 84,200 DAU · 12 accounts under fraud review.</p></div></div>
-    <div class="panel" id="panel-promo"><div class="card"><div class="card-title">Promotions & Coupons</div><p style="color:var(--muted)">Create platform-wide promo codes, referral campaigns, and loyalty programmes.</p></div></div>
-    <div class="panel" id="panel-notifications"><div class="card"><div class="card-title">Notifications Hub</div><p style="color:var(--muted)">Manage WhatsApp Business API, email (SES), SMS (Twilio), and push notification templates.</p></div></div>
-    <div class="panel" id="panel-rbac"><div class="card"><div class="card-title">RBAC & Permissions</div><p style="color:var(--muted)">Manage role-based access control for all portal users. Roles: Super Admin, Admin, Finance, Support, Organiser, Venue Manager, Event Manager, Scanner, POS Operator.</p></div></div>
+
+    <!-- SYSTEM HEALTH -->
+    <div class="panel" id="panel-health">
+      <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-card"><div class="stat-icon">⚡</div><div class="stat-label">Avg API Latency</div><div class="stat-value">42ms</div><div class="stat-change up">P99: 180ms</div></div>
+        <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-label">Queue Depth</div><div class="stat-value">128</div><div class="stat-change up">Normal</div></div>
+        <div class="stat-card"><div class="stat-icon">🔥</div><div class="stat-label">Error Rate (5m)</div><div class="stat-value">0.02%</div><div class="stat-change up">SLA: &lt;0.1%</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Service Uptime &amp; Status</div>
+        <div class="platform-health">
+          <div class="health-item"><div class="health-dot" style="background:var(--green)"></div><div class="health-label">API Gateway</div><div class="health-val" style="color:var(--green)">99.9%</div></div>
+          <div class="health-item"><div class="health-dot" style="background:var(--green)"></div><div class="health-label">D1 Database</div><div class="health-val" style="color:var(--green)">99.8%</div></div>
+          <div class="health-item"><div class="health-dot" style="background:var(--green)"></div><div class="health-label">CDN / Pages</div><div class="health-val" style="color:var(--green)">100%</div></div>
+          <div class="health-item"><div class="health-dot" style="background:var(--green)"></div><div class="health-label">Queue / KV</div><div class="health-val" style="color:var(--green)">99.7%</div></div>
+          <div class="health-item"><div class="health-dot" style="background:var(--gold)"></div><div class="health-label">Search Index</div><div class="health-val" style="color:var(--gold)">99.5%</div></div>
+          <div class="health-item"><div class="health-dot" style="background:var(--green)"></div><div class="health-label">R2 Storage</div><div class="health-val" style="color:var(--green)">100%</div></div>
+          <div class="health-item"><div class="health-dot" style="background:var(--green)"></div><div class="health-label">Payment GW</div><div class="health-val" style="color:var(--green)">99.9%</div></div>
+          <div class="health-item"><div class="health-dot" style="background:var(--green)"></div><div class="health-label">WhatsApp API</div><div class="health-val" style="color:var(--green)">99.6%</div></div>
+          <div class="health-item"><div class="health-dot" style="background:var(--green)"></div><div class="health-label">Email (SES)</div><div class="health-val" style="color:var(--green)">99.8%</div></div>
+          <div class="health-item"><div class="health-dot" style="background:var(--green)"></div><div class="health-label">SMS (Twilio)</div><div class="health-val" style="color:var(--green)">99.7%</div></div>
+          <div class="health-item"><div class="health-dot" style="background:var(--green)"></div><div class="health-label">AI Engine</div><div class="health-val" style="color:var(--green)">99.4%</div></div>
+          <div class="health-item"><div class="health-dot" style="background:var(--green)"></div><div class="health-label">Scanner API</div><div class="health-val" style="color:var(--green)">100%</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Recent Incidents <span>Last 30 days</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Date</th><th>Severity</th><th>Component</th><th>Duration</th><th>Impact</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td style="color:var(--muted);font-size:11px">Apr 12, 02:14</td><td><span class="status-badge s-pending">P2</span></td><td>Search Index</td><td>18 min</td><td>Search degraded</td><td><span class="status-badge s-active">Resolved</span></td></tr>
+            <tr><td style="color:var(--muted);font-size:11px">Apr 8, 14:30</td><td><span class="status-badge" style="background:rgba(255,68,68,0.15);color:var(--red)">P1</span></td><td>Payment Gateway</td><td>4 min</td><td>0.8% txn failure</td><td><span class="status-badge s-active">Resolved</span></td></tr>
+            <tr><td style="color:var(--muted);font-size:11px">Mar 28, 09:05</td><td><span class="status-badge s-pending">P3</span></td><td>Email SES</td><td>45 min</td><td>Delayed emails</td><td><span class="status-badge s-active">Resolved</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- VENUE APPROVALS -->
+    <div class="panel" id="panel-venues">
+      <div class="stats-row" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat-card"><div class="stat-icon">🏟️</div><div class="stat-label">Total Venues</div><div class="stat-value">528</div><div class="stat-change up">12 cities</div></div>
+        <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-label">Pending Verification</div><div class="stat-value">12</div><div class="stat-change dn">Action needed</div></div>
+        <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Verified Venues</div><div class="stat-value">514</div><div class="stat-change up">97.3% approved</div></div>
+        <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-label">Avg Rating</div><div class="stat-value">4.3</div><div class="stat-change up">Based on organiser reviews</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Pending Venue Applications</div>
+        <div class="approval-list">
+          <div class="approval-item">
+            <div class="ai-icon">🏟️</div>
+            <div class="ai-info"><div class="ai-name">Phoenix Marketcity Amphitheatre <span style="color:var(--muted);font-size:11px">· Pune</span></div><div class="ai-sub">Capacity: 3,000 · Owner: Atria Convergence · Docs: Fire NOC pending</div></div>
+            <div class="ai-actions"><button class="ab ab-view" onclick="alert('Opening venue dossier')">View</button><button class="ab ab-approve" onclick="alert('Venue approved!')">✓ Approve</button><button class="ab ab-reject" onclick="alert('Venue rejected')">✗ Reject</button></div>
+          </div>
+          <div class="approval-item">
+            <div class="ai-icon">🎪</div>
+            <div class="ai-info"><div class="ai-name">Noida Stadium Ground <span style="color:var(--muted);font-size:11px">· Noida</span></div><div class="ai-sub">Capacity: 15,000 · Owner: Noida Authority · Docs: All submitted</div></div>
+            <div class="ai-actions"><button class="ab ab-view" onclick="alert('Opening venue dossier')">View</button><button class="ab ab-approve" onclick="alert('Venue approved!')">✓ Approve</button><button class="ab ab-reject" onclick="alert('Venue rejected')">✗ Reject</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Top Performing Venues <span>By GMV this month</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Venue</th><th>City</th><th>Capacity</th><th>Events (MTD)</th><th>GMV</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">MMRDA Grounds</td><td>Mumbai</td><td>75,000</td><td>3</td><td style="color:var(--green);font-weight:600">₹1.2Cr</td><td><span class="status-badge s-active">Active</span></td></tr>
+            <tr><td style="font-weight:600">Palace Grounds</td><td>Bengaluru</td><td>40,000</td><td>5</td><td style="color:var(--green);font-weight:600">₹84L</td><td><span class="status-badge s-active">Active</span></td></tr>
+            <tr><td style="font-weight:600">Jawaharlal Nehru Stadium</td><td>Delhi</td><td>75,000</td><td>2</td><td style="color:var(--green);font-weight:600">₹68L</td><td><span class="status-badge s-active">Active</span></td></tr>
+            <tr><td style="font-weight:600">HITEX Exhibition Centre</td><td>Hyderabad</td><td>20,000</td><td>4</td><td style="color:var(--green);font-weight:600">₹42L</td><td><span class="status-badge s-active">Active</span></td></tr>
+            <tr><td style="font-weight:600">Shree Shiv Chhatrapati Sports Complex</td><td>Pune</td><td>12,000</td><td>6</td><td style="color:var(--green);font-weight:600">₹38L</td><td><span class="status-badge s-active">Active</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- KYC REVIEW QUEUE -->
+    <div class="panel" id="panel-kyc">
+      <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-label">Pending KYC</div><div class="stat-value">18</div><div class="stat-change dn">SLA: 24h</div></div>
+        <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Approved This Week</div><div class="stat-value">24</div><div class="stat-change up">Avg 6h TAT</div></div>
+        <div class="stat-card"><div class="stat-icon">❌</div><div class="stat-label">Rejected This Week</div><div class="stat-value">3</div><div class="stat-change dn">Docs incomplete</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">KYC Submissions Queue <span>18 pending</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Organiser</th><th>Submitted</th><th>GST</th><th>PAN</th><th>Bank</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">Oye Events Pvt Ltd</td><td style="font-size:11px;color:var(--muted)">Apr 15, 10:20</td><td><span class="status-badge s-active">✓</span></td><td><span class="status-badge s-active">✓</span></td><td><span class="status-badge s-pending">Pending</span></td><td><span class="status-badge s-pending">In Review</span></td><td><div class="action-btns"><button class="ab ab-view" onclick="alert('KYC Details: Oye Events')">View</button><button class="ab ab-approve" onclick="alert('KYC Approved!')">Approve</button><button class="ab ab-reject" onclick="alert('KYC Rejected')">Reject</button></div></td></tr>
+            <tr><td style="font-weight:600">Ravescape Prod.</td><td style="font-size:11px;color:var(--muted)">Apr 15, 08:45</td><td><span class="status-badge s-active">✓</span></td><td><span class="status-badge s-active">✓</span></td><td><span class="status-badge s-active">✓</span></td><td><span class="status-badge s-pending">Pending</span></td><td><div class="action-btns"><button class="ab ab-view" onclick="alert('KYC Details: Ravescape')">View</button><button class="ab ab-approve" onclick="alert('KYC Approved!')">Approve</button><button class="ab ab-reject" onclick="alert('KYC Rejected')">Reject</button></div></td></tr>
+            <tr><td style="font-weight:600">Horizon Live Events</td><td style="font-size:11px;color:var(--muted)">Apr 14, 16:30</td><td><span class="status-badge s-active">✓</span></td><td><span class="status-badge s-rejected">Missing</span></td><td><span class="status-badge s-active">✓</span></td><td><span class="status-badge" style="background:rgba(255,68,68,0.15);color:var(--red)">On Hold</span></td><td><div class="action-btns"><button class="ab ab-view" onclick="alert('KYC Details: Horizon')">View</button><button class="ab ab-reject" onclick="alert('KYC On Hold - request PAN resubmission')">On Hold</button></div></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- SETTLEMENTS & PAYOUTS -->
+    <div class="panel" id="panel-settlements">
+      <div class="stats-row" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat-card"><div class="stat-icon">💸</div><div class="stat-label">Pending Payouts</div><div class="stat-value">₹18.4L</div><div class="stat-change dn">This week</div></div>
+        <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Settled (MTD)</div><div class="stat-value">₹2.1Cr</div><div class="stat-change up">T+7 cycle</div></div>
+        <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-label">In Processing</div><div class="stat-value">₹42L</div><div class="stat-change up">NEFT batch</div></div>
+        <div class="stat-card"><div class="stat-icon">🏦</div><div class="stat-label">TDS Deducted (MTD)</div><div class="stat-value">₹10.5L</div><div class="stat-change up">5% on payouts</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Pending Settlements <span>Requires approval for >₹5L</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Organiser</th><th>Event</th><th>Gross GMV</th><th>Platform Fee</th><th>TDS</th><th>Net Payable</th><th>Due Date</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:600">Sunburn India</td><td>Sunburn Arena Apr</td>
+              <td>₹5,98,500</td><td style="color:var(--red)">-₹59,850</td><td style="color:var(--red)">-₹26,926</td>
+              <td style="color:var(--green);font-weight:700">₹5,11,724</td><td>Apr 20</td>
+              <td><span class="status-badge s-active">Ready</span></td>
+              <td><button class="ab ab-approve" onclick="alert('Settlement initiated for Sunburn India!')">Release</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">NH7 Weekender</td><td>NH7 Apr Edition</td>
+              <td>₹8,50,000</td><td style="color:var(--red)">-₹85,000</td><td style="color:var(--red)">-₹38,250</td>
+              <td style="color:var(--green);font-weight:700">₹7,26,750</td><td>Apr 22</td>
+              <td><span class="status-badge s-pending">Processing</span></td>
+              <td><button class="ab ab-view" onclick="alert('View settlement details')">View</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">Comedy Store</td><td>LOL Night Apr</td>
+              <td>₹1,38,000</td><td style="color:var(--red)">-₹13,800</td><td style="color:var(--red)">-₹6,210</td>
+              <td style="color:var(--green);font-weight:700">₹1,17,990</td><td>Apr 25</td>
+              <td><span class="status-badge s-pending">Pending</span></td>
+              <td><button class="ab ab-approve" onclick="alert('Settlement queued!')">Release</button></td>
+            </tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- REFUND MANAGEMENT -->
+    <div class="panel" id="panel-refunds">
+      <div class="stats-row" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-label">Refunds (MTD)</div><div class="stat-value">₹8.4L</div><div class="stat-change up">2% refund rate</div></div>
+        <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-label">Pending Refunds</div><div class="stat-value">142</div><div class="stat-change dn">5-7 day window</div></div>
+        <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Processed Today</div><div class="stat-value">38</div><div class="stat-change up">₹1.2L</div></div>
+        <div class="stat-card"><div class="stat-icon">⚠️</div><div class="stat-label">Disputed</div><div class="stat-value">7</div><div class="stat-change dn">Manual review</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Refund Queue <span>Pending processing</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Order ID</th><th>Fan</th><th>Event</th><th>Amount</th><th>Reason</th><th>Requested</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td style="color:var(--brand);font-size:12px">#ORD-98421</td><td>Priya S.</td><td>Sunburn Arena</td><td style="color:var(--gold);font-weight:700">₹4,500</td><td>Event cancelled</td><td style="font-size:11px;color:var(--muted)">Apr 15</td><td><span class="status-badge s-pending">Pending</span></td><td><button class="ab ab-approve" onclick="alert('Refund of ₹4,500 approved!')">Approve</button></td></tr>
+            <tr><td style="color:var(--brand);font-size:12px">#ORD-98415</td><td>Rahul K.</td><td>NH7 Weekender</td><td style="color:var(--gold);font-weight:700">₹8,500</td><td>Double booking</td><td style="font-size:11px;color:var(--muted)">Apr 14</td><td><span class="status-badge s-pending">Pending</span></td><td><button class="ab ab-approve" onclick="alert('Refund of ₹8,500 approved!')">Approve</button></td></tr>
+            <tr><td style="color:var(--brand);font-size:12px">#ORD-98388</td><td>Meera T.</td><td>Comedy Night</td><td style="color:var(--gold);font-weight:700">₹1,200</td><td>Duplicate charge</td><td style="font-size:11px;color:var(--muted)">Apr 13</td><td><span class="status-badge" style="background:rgba(255,68,68,0.15);color:var(--red)">Disputed</span></td><td><button class="ab ab-view" onclick="alert('Opening dispute details')">Investigate</button></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- GST ENGINE -->
+    <div class="panel" id="panel-gst">
+      <div class="stats-row" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat-card"><div class="stat-icon">🧾</div><div class="stat-label">GST Collected (MTD)</div><div class="stat-value">₹75.6L</div><div class="stat-change up">18% on platform fee</div></div>
+        <div class="stat-card"><div class="stat-icon">📤</div><div class="stat-label">GSTR-1 (Apr)</div><div class="stat-value">Auto</div><div class="stat-change up">Due May 11</div></div>
+        <div class="stat-card"><div class="stat-icon">📥</div><div class="stat-label">Input Credit (ITC)</div><div class="stat-value">₹8.2L</div><div class="stat-change up">Cloud & infra</div></div>
+        <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Net GST Payable</div><div class="stat-value">₹67.4L</div><div class="stat-change dn">Due by 20th</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-title">GST Breakdown by Category</div>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Category</th><th>Taxable Value</th><th>GST Rate</th><th>CGST</th><th>SGST</th></tr></thead>
+            <tbody>
+              <tr><td>Platform Commission</td><td>₹42L</td><td>18%</td><td>₹3.78L</td><td>₹3.78L</td></tr>
+              <tr><td>Convenience Fee</td><td>₹28L</td><td>18%</td><td>₹2.52L</td><td>₹2.52L</td></tr>
+              <tr><td>Advertising</td><td>₹15L</td><td>18%</td><td>₹1.35L</td><td>₹1.35L</td></tr>
+              <tr style="font-weight:700;color:var(--brand)"><td>Total</td><td>₹85L</td><td>—</td><td>₹7.65L</td><td>₹7.65L</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Filing Schedule</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center">
+              <div><div style="font-size:13px;font-weight:600">GSTR-1 (Apr 2025)</div><div style="font-size:11px;color:var(--muted)">Outward supplies</div></div>
+              <span class="status-badge s-pending">Due May 11</span>
+            </div>
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center">
+              <div><div style="font-size:13px;font-weight:600">GSTR-3B (Apr 2025)</div><div style="font-size:11px;color:var(--muted)">Summary return</div></div>
+              <span class="status-badge s-pending">Due May 20</span>
+            </div>
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center">
+              <div><div style="font-size:13px;font-weight:600">GSTR-1 (Mar 2025)</div><div style="font-size:11px;color:var(--muted)">Previous month</div></div>
+              <span class="status-badge s-active">Filed</span>
+            </div>
+          </div>
+          <div style="margin-top:12px"><button class="btn-sm btn-primary" onclick="alert('Generating GSTR-1 export...')"><i class="fas fa-download"></i> Export GSTR-1 JSON</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- USER MANAGEMENT -->
+    <div class="panel" id="panel-users">
+      <div class="stats-row" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-label">Total Users</div><div class="stat-value">2.4M</div><div class="stat-change up">↑ 18% MoM</div></div>
+        <div class="stat-card"><div class="stat-icon">🌟</div><div class="stat-label">DAU</div><div class="stat-value">84,200</div><div class="stat-change up">3.5% DAU/MAU</div></div>
+        <div class="stat-card"><div class="stat-icon">🔒</div><div class="stat-label">Fraud Flagged</div><div class="stat-value">12</div><div class="stat-change dn">Under review</div></div>
+        <div class="stat-card"><div class="stat-icon">📧</div><div class="stat-label">Verified Emails</div><div class="stat-value">91.4%</div><div class="stat-change up">2.19M users</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">User Search &amp; Management</div>
+        <div style="display:flex;gap:12px;margin-bottom:16px">
+          <input type="text" placeholder="Search by email, phone, or User ID..." style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;outline:none">
+          <button class="btn-sm btn-primary" onclick="alert('Search results loaded')"><i class="fas fa-search"></i> Search</button>
+        </div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>User</th><th>Email</th><th>City</th><th>Joined</th><th>Orders</th><th>Lifetime Value</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">Priya Sharma</td><td style="font-size:11px">priya@gmail.com</td><td>Mumbai</td><td style="font-size:11px;color:var(--muted)">Jan 2023</td><td>28</td><td style="color:var(--green);font-weight:600">₹42,500</td><td><span class="status-badge s-active">Active</span></td><td><button class="ab ab-view" onclick="alert('User profile: Priya Sharma')">View</button></td></tr>
+            <tr><td style="font-weight:600">Rahul Kumar</td><td style="font-size:11px">rahul.k@outlook.com</td><td>Delhi</td><td style="font-size:11px;color:var(--muted)">Mar 2024</td><td>14</td><td style="color:var(--green);font-weight:600">₹18,200</td><td><span class="status-badge s-active">Active</span></td><td><button class="ab ab-view" onclick="alert('User profile: Rahul Kumar')">View</button></td></tr>
+            <tr><td style="font-weight:600">Unknown User #12842</td><td style="font-size:11px">bot-12842@tempmail.com</td><td>—</td><td style="font-size:11px;color:var(--muted)">Apr 2025</td><td>8</td><td style="color:var(--red);font-weight:600">₹0</td><td><span class="status-badge s-rejected">Fraud</span></td><td><div class="action-btns"><button class="ab ab-view" onclick="alert('Fraud details')">View</button><button class="ab ab-reject" onclick="alert('Account banned!')">Ban</button></div></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- PROMOTIONS & COUPONS -->
+    <div class="panel" id="panel-promo">
+      <div class="stats-row" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat-card"><div class="stat-icon">🎟️</div><div class="stat-label">Active Promos</div><div class="stat-value">14</div><div class="stat-change up">3 ending soon</div></div>
+        <div class="stat-card"><div class="stat-icon">💸</div><div class="stat-label">Discount Given (MTD)</div><div class="stat-value">₹12.4L</div><div class="stat-change up">2.9% of GMV</div></div>
+        <div class="stat-card"><div class="stat-icon">🔁</div><div class="stat-label">Redemptions</div><div class="stat-value">8,420</div><div class="stat-change up">↑ 22%</div></div>
+        <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-label">Conversion Lift</div><div class="stat-value">+18%</div><div class="stat-change up">With promo</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-title">Active Promo Codes</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center">
+              <div><div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--brand)">INDTIX20</div><div style="font-size:11px;color:var(--muted)">20% off · All events · Expires Apr 30</div></div>
+              <div style="text-align:right"><div style="font-size:13px;font-weight:700">3,240 used</div><span class="status-badge s-active">Active</span></div>
+            </div>
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center">
+              <div><div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--brand2)">FIRSTTIX</div><div style="font-size:11px;color:var(--muted)">₹100 off · First purchase · No expiry</div></div>
+              <div style="text-align:right"><div style="font-size:13px;font-weight:700">4,180 used</div><span class="status-badge s-active">Active</span></div>
+            </div>
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center">
+              <div><div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--gold)">SUMMER25</div><div style="font-size:11px;color:var(--muted)">25% off · Music events only · Expires May 31</div></div>
+              <div style="text-align:right"><div style="font-size:13px;font-weight:700">1,000 used</div><span class="status-badge s-pending">Ending Soon</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Create New Promo Code</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:12px;color:var(--muted)">Promo Code</label><input type="text" placeholder="e.g. MONSOON30" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:12px;color:var(--muted)">Discount Type</label><select style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none"><option>Percentage (%)</option><option>Flat Amount (₹)</option></select></div>
+              <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:12px;color:var(--muted)">Value</label><input type="number" placeholder="e.g. 25" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none"></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:12px;color:var(--muted)">Max Uses</label><input type="number" placeholder="e.g. 1000" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none"></div>
+              <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:12px;color:var(--muted)">Expires</label><input type="date" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none"></div>
+            </div>
+            <button class="btn-sm btn-primary" onclick="alert('Promo code created!')"><i class="fas fa-plus"></i> Create Promo Code</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTIFICATIONS HUB -->
+    <div class="panel" id="panel-notifications">
+      <div class="stats-row" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat-card"><div class="stat-icon">📱</div><div class="stat-label">WhatsApp Sent (MTD)</div><div class="stat-value">4.2M</div><div class="stat-change up">98.4% delivered</div></div>
+        <div class="stat-card"><div class="stat-icon">📧</div><div class="stat-label">Emails Sent (MTD)</div><div class="stat-value">2.8M</div><div class="stat-change up">42% open rate</div></div>
+        <div class="stat-card"><div class="stat-icon">💬</div><div class="stat-label">SMS Sent (MTD)</div><div class="stat-value">1.2M</div><div class="stat-change up">99.1% delivery</div></div>
+        <div class="stat-card"><div class="stat-icon">🔔</div><div class="stat-label">Push (MTD)</div><div class="stat-value">8.4M</div><div class="stat-change up">12% CTR</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Notification Templates</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer" onclick="alert('Editing: Booking Confirmation')">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><i class="fab fa-whatsapp" style="color:#25D366;font-size:18px"></i><span style="font-size:13px;font-weight:600">Booking Confirmation</span></div>
+            <div style="font-size:11px;color:var(--muted)">Hi {{name}}, your booking for {{event}} is confirmed! 🎉 Tickets: {{qty}} · Order: {{order_id}}</div>
+            <div style="margin-top:8px;font-size:10px;color:var(--brand)">Edit Template →</div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer" onclick="alert('Editing: Event Reminder')">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><i class="fas fa-envelope" style="color:var(--brand);font-size:16px"></i><span style="font-size:13px;font-weight:600">Event Reminder</span></div>
+            <div style="font-size:11px;color:var(--muted)">Your event {{event_name}} is tomorrow! Doors open at {{time}}. Download your QR ticket now.</div>
+            <div style="margin-top:8px;font-size:10px;color:var(--brand)">Edit Template →</div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer" onclick="alert('Editing: Refund Processed')">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><i class="fas fa-sms" style="color:var(--gold);font-size:16px"></i><span style="font-size:13px;font-weight:600">Refund Processed</span></div>
+            <div style="font-size:11px;color:var(--muted)">Your refund of ₹{{amount}} for {{event}} has been processed. Credit within 5-7 business days.</div>
+            <div style="margin-top:8px;font-size:10px;color:var(--brand)">Edit Template →</div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer" onclick="alert('Editing: New Event Alert')">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><i class="fas fa-bell" style="color:var(--brand2);font-size:16px"></i><span style="font-size:13px;font-weight:600">New Event Alert</span></div>
+            <div style="font-size:11px;color:var(--muted)">{{event}} just dropped in {{city}}! Early bird tickets at ₹{{price}}. Book before they sell out.</div>
+            <div style="margin-top:8px;font-size:10px;color:var(--brand)">Edit Template →</div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer" onclick="alert('Editing: OTP Verification')">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><i class="fas fa-key" style="color:var(--green);font-size:16px"></i><span style="font-size:13px;font-weight:600">OTP Verification</span></div>
+            <div style="font-size:11px;color:var(--muted)">Your INDTIX OTP is {{otp}}. Valid for 10 minutes. Do not share with anyone.</div>
+            <div style="margin-top:8px;font-size:10px;color:var(--brand)">Edit Template →</div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer" onclick="alert('Create new template')">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><i class="fas fa-plus-circle" style="color:var(--muted);font-size:16px"></i><span style="font-size:13px;font-weight:600;color:var(--muted)">New Template</span></div>
+            <div style="font-size:11px;color:var(--muted)">Create a custom notification template for any channel</div>
+            <div style="margin-top:8px;font-size:10px;color:var(--brand)">Create →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RBAC & PERMISSIONS -->
+    <div class="panel" id="panel-rbac">
+      <div class="card">
+        <div class="card-title">Role-Based Access Control <span>9 roles defined</span></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Role</th><th>Users</th><th>Portals</th><th>Key Permissions</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:700;color:var(--red)">Super Admin</td><td>2</td><td>All</td><td>Full platform control, freeze, RBAC, finance</td><td><button class="ab ab-view" onclick="alert('Super Admin role details')">Edit</button></td></tr>
+            <tr><td style="font-weight:700;color:var(--brand)">Platform Admin</td><td>5</td><td>Admin, CMS</td><td>Approvals, CMS, user management, reports</td><td><button class="ab ab-view" onclick="alert('Admin role details')">Edit</button></td></tr>
+            <tr><td style="font-weight:700;color:var(--gold)">Finance</td><td>4</td><td>Admin (Finance only)</td><td>Settlements, refunds, GST, payouts</td><td><button class="ab ab-view" onclick="alert('Finance role details')">Edit</button></td></tr>
+            <tr><td style="font-weight:700;color:var(--muted)">Support</td><td>12</td><td>Admin (Support)</td><td>User queries, refund requests, order lookup</td><td><button class="ab ab-view" onclick="alert('Support role details')">Edit</button></td></tr>
+            <tr><td style="font-weight:700;color:var(--brand2)">Organiser</td><td>342</td><td>Organiser</td><td>Create events, ticketing, analytics, settlements</td><td><button class="ab ab-view" onclick="alert('Organiser role details')">Edit</button></td></tr>
+            <tr><td style="font-weight:700;color:var(--green)">Venue Manager</td><td>528</td><td>Venue</td><td>Calendar, pricing, enquiries, analytics</td><td><button class="ab ab-view" onclick="alert('Venue Manager role details')">Edit</button></td></tr>
+            <tr><td style="font-weight:700;color:var(--brand3)">Event Manager</td><td>1,240</td><td>Event Manager</td><td>Ops dashboard, team, tasks, incident log</td><td><button class="ab ab-view" onclick="alert('Event Manager role details')">Edit</button></td></tr>
+            <tr><td style="font-weight:700">Scanner</td><td>4,800</td><td>Ops (Scanner)</td><td>QR scan, entry log, emergency alerts</td><td><button class="ab ab-view" onclick="alert('Scanner role details')">Edit</button></td></tr>
+            <tr><td style="font-weight:700">POS Operator</td><td>2,400</td><td>Ops (POS)</td><td>Merchandise sales, F&amp;B, cart, receipts</td><td><button class="ab ab-view" onclick="alert('POS Operator role details')">Edit</button></td></tr>
+          </tbody>
+        </table></div>
+        <div style="margin-top:16px"><button class="btn-sm btn-primary" onclick="alert('Create new role')"><i class="fas fa-plus"></i> Add New Role</button></div>
+      </div>
+    </div>
   </div>
 </div>
 

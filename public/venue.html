@@ -240,19 +240,404 @@ textarea{resize:vertical;min-height:80px}
       </div>
     </div>
 
-    <!-- DEFAULT PANELS -->
-    <div class="panel" id="panel-bookings"><div class="card"><div class="card-title">All Bookings</div><p style="color:var(--muted)">5 upcoming events confirmed, 2 pending documentation.</p></div></div>
-    <div class="panel" id="panel-calendar"><div class="card"><div class="card-title">Availability Calendar</div><p style="color:var(--muted)">Manage your venue's available and blocked dates.</p></div></div>
-    <div class="panel" id="panel-capacity"><div class="card"><div class="card-title">Capacity & Zone Configuration</div><p style="color:var(--muted)">Set capacity limits for each zone and configure zone-level access controls.</p></div></div>
-    <div class="panel" id="panel-pricing"><div class="card"><div class="card-title">Pricing & Packages</div><p style="color:var(--muted)">Configure hire rates, day/night differential pricing, package bundles.</p></div></div>
-    <div class="panel" id="panel-revenue"><div class="card"><div class="card-title">Hire Fee Revenue</div><p style="color:var(--muted)">₹12.8L earned this month from venue hire fees.</p></div></div>
-    <div class="panel" id="panel-invoices"><div class="card"><div class="card-title">GST Invoices</div><p style="color:var(--muted)">Download venue hire invoices with GST breakdown.</p></div></div>
-    <div class="panel" id="panel-staff"><div class="card"><div class="card-title">Staff Access Control</div><p style="color:var(--muted)">Manage staff roles, gate assignments, and access permissions for each event.</p></div></div>
-    <div class="panel" id="panel-incidents"><div class="card"><div class="card-title">Incident Reports</div><p style="color:var(--muted)">Log and track all on-ground incidents during events.</p></div></div>
+
+    <!-- ALL BOOKINGS -->
+    <div class="panel" id="panel-bookings">
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-label">Upcoming Events</div><div class="stat-value">5</div><div class="stat-change up">Next: Apr 15</div></div>
+        <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-label">Pending Docs</div><div class="stat-value">2</div><div class="stat-change up">Requires action</div></div>
+        <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Total Value</div><div class="stat-value">₹9.6L</div><div class="stat-change up">Confirmed bookings</div></div>
+        <div class="stat-card"><div class="stat-icon">🎫</div><div class="stat-label">Total Attendees</div><div class="stat-value">9,600</div><div class="stat-change up">Expected</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">All Confirmed Bookings <span>5 upcoming</span></div>
+        <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="border-bottom:1px solid var(--border)">
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Event</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Organiser</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Date & Time</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Capacity</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Hire Fee</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Status</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Actions</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)">
+              <td style="padding:10px;font-weight:600">Sunburn Arena Mumbai</td><td style="padding:10px;font-size:12px">Rahul Arora Events</td><td style="padding:10px;font-size:12px">Apr 15 · 6PM–2AM</td><td style="padding:10px">5,000</td><td style="padding:10px;font-weight:700;color:var(--brand3)">₹2,50,000</td><td style="padding:10px"><span class="br-status s-confirmed">Confirmed</span></td><td style="padding:10px"><button class="v-action" onclick="alert('Booking details: Sunburn Arena')">View</button></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)">
+              <td style="padding:10px;font-weight:600">Fashion Week Finale</td><td style="padding:10px;font-size:12px">FDCI</td><td style="padding:10px;font-size:12px">May 18 · 5PM–11PM</td><td style="padding:10px">2,000</td><td style="padding:10px;font-weight:700;color:var(--brand3)">₹3,20,000</td><td style="padding:10px"><span class="br-status s-confirmed">Confirmed</span></td><td style="padding:10px"><button class="v-action" onclick="alert('Booking details: Fashion Week')">View</button></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)">
+              <td style="padding:10px;font-weight:600">Tech Summit 2025</td><td style="padding:10px;font-size:12px">India Tech Consortium</td><td style="padding:10px;font-size:12px">Jun 10 · 9AM–7PM</td><td style="padding:10px">1,200</td><td style="padding:10px;font-weight:700;color:var(--brand3)">₹1,80,000</td><td style="padding:10px"><span class="br-status s-confirmed">Confirmed</span></td><td style="padding:10px"><button class="v-action" onclick="alert('Booking details: Tech Summit')">View</button></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)">
+              <td style="padding:10px;font-weight:600">Corporate Awards Night</td><td style="padding:10px;font-size:12px">Apex Corp</td><td style="padding:10px;font-size:12px">Apr 28 · 7PM–11PM</td><td style="padding:10px">800</td><td style="padding:10px;font-weight:700;color:#FFB300">₹1,20,000</td><td style="padding:10px"><span class="br-status s-pending">Pending Docs</span></td><td style="padding:10px"><div style="display:flex;gap:6px"><button class="v-action" onclick="sendQuote('Apex Corp')">Send Reminder</button><button class="v-action" onclick="alert('Booking cancelled')">Cancel</button></div></td>
+            </tr>
+            <tr>
+              <td style="padding:10px;font-weight:600">Comedy Central Live</td><td style="padding:10px;font-size:12px">LOL Productions</td><td style="padding:10px;font-size:12px">May 5 · 7PM–10PM</td><td style="padding:10px">600</td><td style="padding:10px;font-weight:700;color:#FFB300">₹90,000</td><td style="padding:10px"><span class="br-status s-pending">Awaiting Sign</span></td><td style="padding:10px"><div style="display:flex;gap:6px"><button class="v-action" onclick="sendQuote('LOL Productions')">Send Contract</button></div></td>
+            </tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- AVAILABILITY CALENDAR -->
+    <div class="panel" id="panel-calendar">
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px">
+        <div class="card">
+          <div class="card-title">
+            <span>Availability Calendar — April 2025</span>
+            <div style="display:flex;gap:8px">
+              <button class="v-action" onclick="blockDate()"><i class="fas fa-ban"></i> Block Dates</button>
+              <button class="v-action" onclick="saveAvailability()"><i class="fas fa-save"></i> Save</button>
+            </div>
+          </div>
+          <div class="cal-hdr">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+          <div class="cal-grid" id="venueCalGrid"><!-- JS filled --></div>
+          <div style="display:flex;gap:16px;margin-top:16px;font-size:12px">
+            <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:3px;background:rgba(255,60,172,0.3)"></div>Booked</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:3px;background:rgba(0,245,196,0.2)"></div>Available</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:3px;background:rgba(108,60,247,0.3)"></div>Today</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:3px;background:rgba(50,50,70,0.5)"></div>Blocked</div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-title">Enquiries</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px">
+                <div style="font-size:13px;font-weight:600">Night Pulse Festival</div>
+                <div style="font-size:11px;color:var(--muted);margin:4px 0">May 24 · 8PM–3AM · 4,000 cap</div>
+                <div style="font-size:12px;color:var(--brand3);font-weight:600;margin-bottom:8px">Offered: ₹2,20,000</div>
+                <div style="display:flex;gap:6px">
+                  <button class="v-action" style="font-size:11px" onclick="approveEnquiry('Night Pulse')">✓ Approve</button>
+                  <button class="v-action" style="font-size:11px" onclick="sendQuote('Night Pulse')">Counter Quote</button>
+                  <button class="v-action" style="font-size:11px" onclick="rejectEnquiry('Night Pulse')">✗ Reject</button>
+                </div>
+              </div>
+              <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px">
+                <div style="font-size:13px;font-weight:600">Yoga for the Soul</div>
+                <div style="font-size:11px;color:var(--muted);margin:4px 0">Jun 1 · 7AM–11AM · 500 cap</div>
+                <div style="font-size:12px;color:var(--brand3);font-weight:600;margin-bottom:8px">Offered: ₹45,000</div>
+                <div style="display:flex;gap:6px">
+                  <button class="v-action" style="font-size:11px" onclick="approveEnquiry('Yoga Soul')">✓ Approve</button>
+                  <button class="v-action" style="font-size:11px" onclick="rejectEnquiry('Yoga Soul')">✗ Reject</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="margin-top:0">
+            <div class="card-title">Blocked Dates</div>
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><span>Apr 1–2</span><span style="font-size:11px;color:var(--muted)">Venue maintenance</span><button class="v-action" style="font-size:11px" onclick="alert('Date unblocked')">Unblock</button></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0"><span>Apr 29–30</span><span style="font-size:11px;color:var(--muted)">Annual cleaning</span><button class="v-action" style="font-size:11px" onclick="alert('Date unblocked')">Unblock</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAPACITY & ZONES -->
+    <div class="panel" id="panel-capacity">
+      <div class="card">
+        <div class="card-title">Zone Configuration</div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <div><div style="font-size:14px;font-weight:600">🎤 Main Arena</div><div style="font-size:11px;color:var(--muted);margin-top:2px">Standing / Festival layout</div></div>
+              <label class="v-toggle"><input type="checkbox" checked><span class="v-slider"></span></label>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--muted)">Max Capacity</span><input type="number" value="5000" style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:3px 8px;color:var(--text);font-size:12px;outline:none;width:80px;text-align:right"></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--muted)">Safety Buffer</span><span style="font-weight:600">10%</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--muted)">Entry Gates</span><span style="font-weight:600">Gate A, B, C</span></div>
+            </div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <div><div style="font-size:14px;font-weight:600">👑 VIP Lounge</div><div style="font-size:11px;color:var(--muted);margin-top:2px">Premium seated area</div></div>
+              <label class="v-toggle"><input type="checkbox" checked><span class="v-slider"></span></label>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--muted)">Max Capacity</span><input type="number" value="500" style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:3px 8px;color:var(--text);font-size:12px;outline:none;width:80px;text-align:right"></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--muted)">Entry Gates</span><span style="font-weight:600">Gate VIP</span></div>
+            </div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <div><div style="font-size:14px;font-weight:600">🍕 F&amp;B Zone</div><div style="font-size:11px;color:var(--muted);margin-top:2px">Food &amp; beverage outlets</div></div>
+              <label class="v-toggle"><input type="checkbox" checked><span class="v-slider"></span></label>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--muted)">Stalls</span><input type="number" value="24" style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:3px 8px;color:var(--text);font-size:12px;outline:none;width:80px;text-align:right"></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--muted)">Entry Gates</span><span style="font-weight:600">All gates</span></div>
+            </div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <div><div style="font-size:14px;font-weight:600">🅿️ Parking</div><div style="font-size:11px;color:var(--muted);margin-top:2px">Multi-level parking</div></div>
+              <label class="v-toggle"><input type="checkbox" checked><span class="v-slider"></span></label>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--muted)">Car Slots</span><input type="number" value="500" style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:3px 8px;color:var(--text);font-size:12px;outline:none;width:80px;text-align:right"></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--muted)">Two-Wheeler</span><input type="number" value="200" style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:3px 8px;color:var(--text);font-size:12px;outline:none;width:80px;text-align:right"></div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:16px;display:flex;justify-content:flex-end"><button class="btn-sm btn-primary" onclick="alert('Zone configuration saved!')"><i class="fas fa-save"></i> Save Zones</button></div>
+      </div>
+    </div>
+
+    <!-- PRICING & PACKAGES -->
+    <div class="panel" id="panel-pricing">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div>
+          <div class="card">
+            <div class="card-title">Hire Rate Tiers</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div class="pricing-tier">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                  <div><div style="font-size:14px;font-weight:700">🌙 Evening / Night (6PM–2AM)</div><div style="font-size:11px;color:var(--muted);margin-top:3px">Peak slot — concerts, parties</div></div>
+                  <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--brand3)">₹2,50,000</div>
+                </div>
+              </div>
+              <div class="pricing-tier">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                  <div><div style="font-size:14px;font-weight:700">☀️ Day Session (9AM–5PM)</div><div style="font-size:11px;color:var(--muted);margin-top:3px">Conferences, corporate events</div></div>
+                  <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--brand3)">₹1,80,000</div>
+                </div>
+              </div>
+              <div class="pricing-tier">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                  <div><div style="font-size:14px;font-weight:700">📅 Full Day (9AM–11PM)</div><div style="font-size:11px;color:var(--muted);margin-top:3px">Full-day conference + evening gala</div></div>
+                  <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--brand3)">₹3,50,000</div>
+                </div>
+              </div>
+              <div class="pricing-tier">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                  <div><div style="font-size:14px;font-weight:700">🌅 Half Day AM (9AM–1PM)</div><div style="font-size:11px;color:var(--muted);margin-top:3px">Small seminars, press events</div></div>
+                  <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--brand3)">₹90,000</div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <button class="btn-sm btn-ghost" onclick="addPricingTier()"><i class="fas fa-plus"></i> Add Tier</button>
+              <button class="btn-sm btn-primary" onclick="savePricing()"><i class="fas fa-save"></i> Save Pricing</button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-title">Add-On Packages</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div><div style="font-size:13px;font-weight:600">🎤 Pro Audio Rig</div><div style="font-size:11px;color:var(--muted)">L-Acoustics K2 line array, 4 fills</div></div>
+                  <div style="font-size:14px;font-weight:700;color:var(--brand3)">+₹50,000</div>
+                </div>
+              </div>
+              <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div><div style="font-size:13px;font-weight:600">💡 Full Lighting Rig</div><div style="font-size:11px;color:var(--muted)">Moving heads, LED wash, haze</div></div>
+                  <div style="font-size:14px;font-weight:700;color:var(--brand3)">+₹35,000</div>
+                </div>
+              </div>
+              <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div><div style="font-size:13px;font-weight:600">🎥 LED Video Wall (24×12ft)</div><div style="font-size:11px;color:var(--muted)">P3.9 indoor LED wall, video feed</div></div>
+                  <div style="font-size:14px;font-weight:700;color:var(--brand3)">+₹40,000</div>
+                </div>
+              </div>
+              <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div><div style="font-size:13px;font-weight:600">🔒 Security Package (50 guards)</div><div style="font-size:11px;color:var(--muted)">Crowd control + CCTV monitoring</div></div>
+                  <div style="font-size:14px;font-weight:700;color:var(--brand3)">+₹60,000</div>
+                </div>
+              </div>
+            </div>
+            <button class="btn-sm btn-ghost" style="margin-top:12px" onclick="alert('Add new package')"><i class="fas fa-plus"></i> Add Package</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVENUE -->
+    <div class="panel" id="panel-revenue">
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Revenue (MTD)</div><div class="stat-value">₹12.8L</div><div class="stat-change up">↑ 22% MoM</div></div>
+        <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-label">Events Hosted</div><div class="stat-value">8</div><div class="stat-change up">This month</div></div>
+        <div class="stat-card"><div class="stat-icon">💳</div><div class="stat-label">Avg Hire Fee</div><div class="stat-value">₹1.6L</div><div class="stat-change up">Per event</div></div>
+        <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-label">YTD Revenue</div><div class="stat-value">₹84L</div><div class="stat-change up">FY 2024–25</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Revenue by Event <span>This month</span></div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">Sunburn Arena Mumbai</div><div style="font-size:11px;color:var(--muted)">Apr 6 · Evening Slot + Audio + Lighting</div></div>
+            <div style="text-align:right"><div style="font-size:15px;font-weight:700;color:var(--brand3)">₹3,35,000</div><span class="br-status s-confirmed">Paid</span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">Fashion Week Finale</div><div style="font-size:11px;color:var(--muted)">Apr 2 · Evening Slot + LED Wall</div></div>
+            <div style="text-align:right"><div style="font-size:15px;font-weight:700;color:var(--brand3)">₹2,90,000</div><span class="br-status s-confirmed">Paid</span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;padding:10px 0">
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">HR Conclave 2025</div><div style="font-size:11px;color:var(--muted)">Apr 1 · Day Session</div></div>
+            <div style="text-align:right"><div style="font-size:15px;font-weight:700;color:#FFB300">₹1,80,000</div><span class="br-status s-pending">Awaited</span></div>
+          </div>
+        </div>
+        <div style="margin-top:12px"><button class="btn-sm btn-ghost" onclick="downloadVenueReport()"><i class="fas fa-download"></i> Download Report</button></div>
+      </div>
+    </div>
+
+    <!-- GST INVOICES -->
+    <div class="panel" id="panel-invoices">
+      <div class="card">
+        <div class="card-title">GST Invoices <span>GSTIN: 27AABCN0001A1Z5</span></div>
+        <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="border-bottom:1px solid var(--border)">
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Invoice No.</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Organiser</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Event</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Base Amount</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">GST (18%)</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Total</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Status</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Download</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:10px;color:var(--brand)">INV-2025-0042</td><td style="padding:10px;font-size:12px">Rahul Arora Events</td><td style="padding:10px">Sunburn Arena</td><td style="padding:10px">₹2,84,746</td><td style="padding:10px;color:var(--muted)">₹51,254</td><td style="padding:10px;font-weight:700;color:var(--brand3)">₹3,36,000</td><td style="padding:10px"><span class="br-status s-confirmed">Paid</span></td><td style="padding:10px"><button class="v-action" onclick="alert('Downloading invoice INV-2025-0042')"><i class="fas fa-download"></i> PDF</button></td></tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:10px;color:var(--brand)">INV-2025-0038</td><td style="padding:10px;font-size:12px">FDCI</td><td style="padding:10px">Fashion Week</td><td style="padding:10px">₹2,45,763</td><td style="padding:10px;color:var(--muted)">₹44,237</td><td style="padding:10px;font-weight:700;color:var(--brand3)">₹2,90,000</td><td style="padding:10px"><span class="br-status s-confirmed">Paid</span></td><td style="padding:10px"><button class="v-action" onclick="alert('Downloading invoice INV-2025-0038')"><i class="fas fa-download"></i> PDF</button></td></tr>
+            <tr><td style="padding:10px;color:var(--brand)">INV-2025-0035</td><td style="padding:10px;font-size:12px">Apex Corp</td><td style="padding:10px">Corporate Awards</td><td style="padding:10px">₹1,01,695</td><td style="padding:10px;color:var(--muted)">₹18,305</td><td style="padding:10px;font-weight:700;color:#FFB300">₹1,20,000</td><td style="padding:10px"><span class="br-status s-pending">Pending</span></td><td style="padding:10px"><button class="v-action" onclick="alert('Downloading invoice INV-2025-0035')"><i class="fas fa-download"></i> PDF</button></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- STAFF ACCESS -->
+    <div class="panel" id="panel-staff">
+      <div class="card">
+        <div class="card-title">Staff Access Management <span>Active event: Sunburn Arena Apr 15</span></div>
+        <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="border-bottom:1px solid var(--border)">
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Staff Name</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Role</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Gate Assignment</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Shift</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Status</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:10px;font-weight:600">Amar Singh</td><td style="padding:10px;font-size:12px">Floor Manager</td><td style="padding:10px">All Gates</td><td style="padding:10px">5PM–2AM</td><td style="padding:10px"><span class="br-status s-confirmed">On Duty</span></td></tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:10px;font-weight:600">Priyanka D.</td><td style="padding:10px;font-size:12px">Gate A Supervisor</td><td style="padding:10px">Gate A</td><td style="padding:10px">5PM–11PM</td><td style="padding:10px"><span class="br-status s-pending">Standby</span></td></tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:10px;font-weight:600">Ramesh P.</td><td style="padding:10px;font-size:12px">Security</td><td style="padding:10px">VIP Gate</td><td style="padding:10px">4PM–2AM</td><td style="padding:10px"><span class="br-status s-confirmed">On Duty</span></td></tr>
+            <tr><td style="padding:10px;font-weight:600">Sunita K.</td><td style="padding:10px;font-size:12px">Medical First Aid</td><td style="padding:10px">Medical Bay</td><td style="padding:10px">5PM–2AM</td><td style="padding:10px"><span class="br-status s-confirmed">On Duty</span></td></tr>
+          </tbody>
+        </table></div>
+        <div style="margin-top:12px"><button class="btn-sm btn-primary" onclick="alert('Add staff member')"><i class="fas fa-plus"></i> Add Staff</button></div>
+      </div>
+    </div>
+
+    <!-- INCIDENT REPORTS -->
+    <div class="panel" id="panel-incidents">
+      <div class="card">
+        <div class="card-title">Incident Log <span>Last 30 days</span></div>
+        <div style="margin-bottom:16px"><button class="btn-sm btn-primary" onclick="alert('New incident form opened')"><i class="fas fa-plus"></i> Log New Incident</button></div>
+        <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="border-bottom:1px solid var(--border)">
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Date & Time</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Event</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Type</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Description</th>
+            <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Status</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:10px;font-size:11px;color:var(--muted)">Apr 6, 22:14</td><td style="padding:10px">Sunburn Arena</td><td style="padding:10px"><span class="br-status s-pending">Medical</span></td><td style="padding:10px;font-size:12px">Fan dehydration — first aid administered</td><td style="padding:10px"><span class="br-status s-confirmed">Resolved</span></td></tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:10px;font-size:11px;color:var(--muted)">Apr 2, 20:45</td><td style="padding:10px">Fashion Week</td><td style="padding:10px"><span class="br-status" style="background:rgba(255,68,68,0.15);color:var(--red)">Security</span></td><td style="padding:10px;font-size:12px">Unauthorized zone access — escorted out</td><td style="padding:10px"><span class="br-status s-confirmed">Resolved</span></td></tr>
+            <tr><td style="padding:10px;font-size:11px;color:var(--muted)">Mar 28, 15:30</td><td style="padding:10px">HR Conclave</td><td style="padding:10px"><span class="br-status" style="background:rgba(255,180,0,0.15);color:#FFB300">Technical</span></td><td style="padding:10px;font-size:12px">AV system failure — resolved in 8 min</td><td style="padding:10px"><span class="br-status s-confirmed">Resolved</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
   </div>
 </div>
 
+
+<!-- ENHANCED VENUE PANELS - inserted before main script -->
+<style>
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:12px}
+.cal-day{min-height:64px;background:var(--dark);border:1px solid var(--border);border-radius:8px;padding:6px;cursor:pointer;transition:all 0.2s;font-size:11px}
+.cal-day:hover{border-color:var(--brand)}
+.cal-day.booked{background:rgba(255,60,172,0.12);border-color:rgba(255,60,172,0.3)}
+.cal-day.available{background:rgba(0,245,196,0.08);border-color:rgba(0,245,196,0.25)}
+.cal-day.today{border-color:var(--brand);background:rgba(108,60,247,0.12)}
+.cal-day.blocked{background:rgba(50,50,70,0.5);cursor:not-allowed;opacity:0.5}
+.cal-day-num{font-weight:700;font-size:13px;margin-bottom:3px}
+.cal-event-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:2px}
+.cal-hdr{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
+.cal-hdr span{text-align:center;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase}
+.pricing-tier{background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:18px;transition:all 0.2s}
+.pricing-tier:hover{border-color:var(--brand)}
+.v-stat{background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center}
+.v-stat-val{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.v-stat-lbl{font-size:12px;color:var(--muted);margin-top:4px}
+.v-action{background:var(--dark3);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s}
+.v-action:hover{border-color:var(--brand);color:var(--brand)}
+.v-toggle{position:relative;display:inline-block;width:40px;height:22px;flex-shrink:0}
+.v-toggle input{opacity:0;width:0;height:0}
+.v-slider{position:absolute;cursor:pointer;inset:0;background:var(--dark);border:1px solid var(--border);border-radius:22px;transition:.3s}
+.v-slider:before{content:"";position:absolute;height:16px;width:16px;left:2px;bottom:2px;background:var(--muted);border-radius:50%;transition:.3s}
+.v-toggle input:checked + .v-slider{background:rgba(108,60,247,0.3);border-color:var(--brand)}
+.v-toggle input:checked + .v-slider:before{transform:translateX(18px);background:var(--brand)}
+</style>
 <script>
+
+function initVenueCalendar(){
+  const cal=document.getElementById('venueCalGrid');
+  if(!cal)return;
+  const today=new Date();
+  const month=today.getMonth();const year=today.getFullYear();
+  const firstDay=new Date(year,month,1).getDay();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const booked=[5,6,12,13,14,19,20,26,27];
+  const blocked=[1,2];
+  cal.innerHTML='';
+  for(let i=0;i<firstDay;i++){const e=document.createElement('div');e.className='cal-day';e.style.background='transparent';e.style.border='none';cal.appendChild(e);}
+  for(let d=1;d<=daysInMonth;d++){
+    const e=document.createElement('div');
+    const isBooked=booked.includes(d);
+    const isBlocked=blocked.includes(d);
+    const isToday=d===today.getDate();
+    e.className='cal-day'+(isBooked?' booked':isBlocked?' blocked':isToday?' today':' available');
+    e.innerHTML='<div class="cal-day-num">'+d+'</div>';
+    if(isBooked)e.innerHTML+='<span class="cal-event-dot" style="background:var(--brand2)"></span><span style="font-size:10px">Booked</span>';
+    else if(!isBlocked)e.innerHTML+='<span class="cal-event-dot" style="background:var(--brand3)"></span><span style="font-size:10px">Free</span>';
+    e.onclick=()=>{ if(!isBlocked)alert(isBooked?'Event on this date! Contact organiser to modify.':'Date '+d+' is available — click Book to create enquiry.'); };
+    cal.appendChild(e);
+  }
+}
+function blockDate(){alert('Select dates to block on the calendar — prevents new bookings on those days.');}
+function saveAvailability(){alert('✅ Availability settings saved!');}
+function savePricing(){alert('✅ Pricing tiers saved!');}
+function addPricingTier(){alert('New pricing tier added.');}
+function saveAmenities(){alert('✅ Amenity configuration saved!');}
+function sendQuote(org){alert('Quote sent to organiser: '+org+' via WhatsApp & Email.');}
+function approveEnquiry(org){if(confirm('Approve booking from '+org+'?'))alert('✅ Booking confirmed! Contract sent to organiser.');}
+function rejectEnquiry(org){const r=prompt('Reason for declining '+org+'?');if(r)alert('Enquiry declined. Organiser notified.');}
+function downloadVenueReport(){alert('Generating venue performance report PDF...');}
+window.addEventListener('load',()=>{initVenueCalendar();});
+
+function initVenueCalendar(){const cal=document.getElementById("venueCalGrid");if(!cal)return;const today=new Date();const firstDay=new Date(today.getFullYear(),today.getMonth(),1).getDay();const daysInMonth=new Date(today.getFullYear(),today.getMonth()+1,0).getDate();const booked=[5,6,12,13,14,19,20];const blocked=[1,2];cal.innerHTML="";for(let i=0;i<firstDay;i++){const e=document.createElement("div");e.className="cal-day";e.style.cssText="background:transparent;border:none";cal.appendChild(e);}for(let d=1;d<=daysInMonth;d++){const e=document.createElement("div");const isBooked=booked.includes(d);const isBlocked=blocked.includes(d);const isToday=d===today.getDate();e.className="cal-day"+(isBooked?" booked":isBlocked?" blocked":isToday?" today":" available");e.innerHTML='<div class="cal-day-num">'+d+'</div>';if(isBooked)e.innerHTML+='<span style="font-size:10px;color:var(--brand2)">Booked</span>';else if(!isBlocked)e.innerHTML+='<span style="font-size:10px;color:var(--brand3)">Free</span>';e.onclick=()=>{if(!isBlocked)alert(isBooked?"Event booked on this date.":"Date "+d+" is available!");};cal.appendChild(e);}}
+function blockDate(){alert("Select and block dates to prevent new bookings.");}
+function saveAvailability(){alert("✅ Availability saved!");}
+function savePricing(){alert("✅ Pricing tiers saved!");}
+function addPricingTier(){alert("New tier added.");}
+function sendQuote(org){alert("Quote sent to "+org+" via WhatsApp & Email.");}
+function approveEnquiry(org){if(confirm("Approve booking from "+org+"?"))alert("✅ Booking confirmed!");}
+function rejectEnquiry(org){const r=prompt("Reason?");if(r)alert("Declined. Organiser notified.");}
+function downloadVenueReport(){alert("Generating report PDF...");}
+window.addEventListener("load",()=>{initVenueCalendar();});
 function showPanel(name,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('active'));

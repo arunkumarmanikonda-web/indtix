@@ -12,6 +12,9 @@ app.use('*', cors())
 // We serve the fan portal at / by redirecting to /fan
 app.get('/', (c) => c.redirect('/fan'))
 
+// Portal hub listing all portals
+// /portals.html is served at /portals by Cloudflare Pages automatically
+
 // ─── API Routes ───────────────────────────────────────────
 app.get('/api/health', (c) => {
   return c.json({ status: 'ok', platform: 'INDTIX', version: '1.0.0', ts: new Date().toISOString() })

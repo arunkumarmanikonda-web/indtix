@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>INDTIX — Portal Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+:root{--brand:#6C3CF7;--brand2:#FF3CAC;--brand3:#00F5C4;--dark:#080B14;--dark2:#0F1320;--dark3:#161B2E;--card:#1A2035;--border:rgba(108,60,247,0.2);--text:#E8EAFF;--muted:#8B93B8;--grad1:linear-gradient(135deg,#6C3CF7,#FF3CAC);--grad2:linear-gradient(135deg,#00F5C4,#6C3CF7);--grad3:linear-gradient(135deg,#FF3CAC,#FFB300);--grad4:linear-gradient(135deg,#6C3CF7,#00F5C4)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
+
+/* ── Animated Background ── */
+.bg-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:0.12;animation:orbFloat 12s ease-in-out infinite}
+.orb1{width:600px;height:600px;background:#6C3CF7;top:-200px;left:-200px;animation-delay:0s}
+.orb2{width:500px;height:500px;background:#FF3CAC;bottom:-150px;right:-100px;animation-delay:-4s}
+.orb3{width:400px;height:400px;background:#00F5C4;top:40%;left:50%;animation-delay:-8s}
+@keyframes orbFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-40px) scale(1.05)}}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:100;background:rgba(8,11,20,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text)}
+.logo-mark{width:38px;height:38px;background:var(--grad1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#fff;font-family:'Space Grotesk',sans-serif}
+.logo-text{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:20px}.logo-text span{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;align-items:center;gap:24px}
+.nav-link{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s}.nav-link:hover{color:var(--text)}
+.nav-cta{background:var(--grad1);color:#fff;padding:8px 20px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;transition:opacity 0.2s}.nav-cta:hover{opacity:0.85}
+
+/* ── Hero ── */
+.hero{position:relative;z-index:1;text-align:center;padding:80px 40px 60px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.35);color:var(--brand);padding:6px 16px;border-radius:30px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:24px}
+.hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(36px,6vw,72px);font-weight:800;line-height:1.1;margin-bottom:20px}
+.hero-title .grad{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:clamp(14px,2vw,18px);color:var(--muted);max-width:600px;margin:0 auto 40px;line-height:1.7}
+.hero-stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap}
+.h-stat{text-align:center}
+.h-stat-val{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.h-stat-lbl{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* ── Section ── */
+.section{position:relative;z-index:1;padding:0 40px 60px;max-width:1200px;margin:0 auto}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;margin-bottom:8px}
+.section-sub{font-size:14px;color:var(--muted);margin-bottom:28px}
+
+/* ── Portal Grid ── */
+.portal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.portal-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;cursor:pointer;transition:all 0.3s;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:16px;position:relative;overflow:hidden}
+.portal-card::before{content:'';position:absolute;inset:0;border-radius:20px;background:var(--card-grad,var(--grad1));opacity:0;transition:opacity 0.3s}
+.portal-card:hover{transform:translateY(-4px);border-color:transparent}
+.portal-card:hover::before{opacity:0.08}
+.portal-card:hover .portal-arrow{transform:translateX(4px)}
+.portal-icon-wrap{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.portal-header{display:flex;align-items:center;gap:16px}
+.portal-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:20px;margin-top:4px}
+.portal-name{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700}
+.portal-role{font-size:12px;color:var(--muted);margin-top:2px}
+.portal-desc{font-size:13px;color:var(--muted);line-height:1.6;flex:1}
+.portal-features{display:flex;flex-wrap:wrap;gap:6px}
+.portal-feat{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--muted);font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500}
+.portal-footer{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06)}
+.portal-users{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.portal-arrow{color:var(--brand);font-size:14px;transition:transform 0.2s}
+
+/* ── Architecture Card (full width) ── */
+.arch-card{background:linear-gradient(135deg,rgba(108,60,247,0.15),rgba(255,60,172,0.1));border:1px solid rgba(108,60,247,0.35);border-radius:20px;padding:32px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;cursor:pointer;transition:all 0.3s;text-decoration:none;color:var(--text)}
+.arch-card:hover{transform:translateY(-2px);border-color:var(--brand)}
+.arch-title{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px}
+.arch-desc{font-size:14px;color:var(--muted);line-height:1.6}
+.arch-btn{background:var(--grad1);color:#fff;padding:12px 28px;border-radius:12px;font-size:14px;font-weight:700;white-space:nowrap;display:flex;align-items:center;gap:8px}
+
+/* ── Platform Stats Band ── */
+.stats-band{background:var(--dark2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 40px;position:relative;z-index:1}
+.stats-band-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr);gap:20px}
+.band-stat{text-align:center}
+.band-val{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:800;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.band-lbl{font-size:11px;color:var(--muted);margin-top:3px}
+
+/* ── API Preview ── */
+.api-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.api-item{background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.2s}
+.api-item:hover{border-color:var(--brand);background:rgba(108,60,247,0.08)}
+.api-method{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;min-width:42px;text-align:center}
+.api-method.get{background:rgba(0,245,196,0.2);color:var(--brand3)}
+.api-method.post{background:rgba(108,60,247,0.2);color:var(--brand)}
+.api-path{font-size:13px;font-weight:600;flex:1}
+.api-desc{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ── Footer ── */
+footer{position:relative;z-index:1;background:var(--dark2);border-top:1px solid var(--border);padding:32px 40px;text-align:center}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:800;margin-bottom:8px}
+.footer-logo span{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.footer-sub{font-size:13px;color:var(--muted);margin-bottom:20px}
+.footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
+.footer-link{color:var(--muted);text-decoration:none;font-size:13px;transition:color 0.2s}.footer-link:hover{color:var(--brand)}
+</style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<!-- Nav -->
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="logo-mark">IX</div>
+    <span class="logo-text">IND<span>TIX</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link"><i class="fas fa-ticket-alt"></i> Fan Portal</a>
+    <a href="/architecture" class="nav-link"><i class="fas fa-sitemap"></i> Architecture</a>
+    <a href="/api/health" class="nav-link" target="_blank"><i class="fas fa-heartbeat"></i> API Health</a>
+    <a href="/" class="nav-cta"><i class="fas fa-home"></i> Back to Home</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-badge"><i class="fas fa-layer-group"></i> INDTIX Platform v1.0</div>
+  <h1 class="hero-title">All Portals.<br>One <span class="grad">Platform.</span></h1>
+  <p class="hero-sub">INDTIX powers India's most comprehensive live event ecosystem — from ticket discovery to on-ground operations, backed by a single unified platform.</p>
+  <div class="hero-stats">
+    <div class="h-stat"><div class="h-stat-val">7</div><div class="h-stat-lbl">Role Portals</div></div>
+    <div class="h-stat"><div class="h-stat-val">2.4M</div><div class="h-stat-lbl">Registered Users</div></div>
+    <div class="h-stat"><div class="h-stat-val">₹4.2Cr</div><div class="h-stat-lbl">GMV This Month</div></div>
+    <div class="h-stat"><div class="h-stat-val">528</div><div class="h-stat-lbl">Venue Partners</div></div>
+    <div class="h-stat"><div class="h-stat-val">342</div><div class="h-stat-lbl">Organisers</div></div>
+  </div>
+</div>
+
+<!-- Stats Band -->
+<div class="stats-band">
+  <div class="stats-band-inner">
+    <div class="band-stat"><div class="band-val">99.9%</div><div class="band-lbl">API Uptime</div></div>
+    <div class="band-stat"><div class="band-val">42ms</div><div class="band-lbl">Avg Latency</div></div>
+    <div class="band-stat"><div class="band-val">12</div><div class="band-lbl">Live Events Today</div></div>
+    <div class="band-stat"><div class="band-val">84.2K</div><div class="band-lbl">DAU</div></div>
+    <div class="band-stat"><div class="band-val">₹42L</div><div class="band-lbl">Platform Revenue MTD</div></div>
+    <div class="band-stat"><div class="band-val">4.7★</div><div class="band-lbl">Fan Satisfaction</div></div>
+  </div>
+</div>
+
+<!-- Main Portals -->
+<div class="section" style="margin-top:48px">
+  <div class="section-title">🎯 Role Portals</div>
+  <div class="section-sub">Each portal is purpose-built for its role. Click to open.</div>
+
+  <div class="portal-grid">
+
+    <!-- Fan Portal -->
+    <a href="/fan" class="portal-card" style="--card-grad:var(--grad1)">
+      <div class="portal-header">
+        <div class="portal-icon-wrap" style="background:rgba(108,60,247,0.2)">🎫</div>
+        <div>
+          <div class="portal-name">Fan Portal</div>
+          <div class="portal-role">Public · 2.4M Users</div>
+          <div class="portal-badge" style="background:rgba(108,60,247,0.2);color:var(--brand)">Public</div>
+        </div>
+      </div>
+      <p class="portal-desc">Discover events, purchase tickets, manage wishlist, seat selection, check-in QR codes, and an AI-powered event concierge chatbot for Indian fans.</p>
+      <div class="portal-features">
+        <span class="portal-feat">Event Discovery</span>
+        <span class="portal-feat">QR Tickets</span>
+        <span class="portal-feat">Seat Map</span>
+        <span class="portal-feat">Wishlist</span>
+        <span class="portal-feat">AI Chat</span>
+        <span class="portal-feat">Social Login</span>
+      </div>
+      <div class="portal-footer">
+        <span class="portal-users"><i class="fas fa-users"></i> 2.4M registered · 84K DAU</span>
+        <i class="fas fa-arrow-right portal-arrow"></i>
+      </div>
+    </a>
+
+    <!-- Organiser Portal -->
+    <a href="/organiser" class="portal-card" style="--card-grad:var(--grad3)">
+      <div class="portal-header">
+        <div class="portal-icon-wrap" style="background:rgba(255,60,172,0.2)">🎪</div>
+        <div>
+          <div class="portal-name">Organiser Portal</div>
+          <div class="portal-role">Event Creators · 342 Orgs</div>
+          <div class="portal-badge" style="background:rgba(255,60,172,0.2);color:var(--brand2)">Organiser</div>
+        </div>
+      </div>
+      <p class="portal-desc">Full event lifecycle management — create events, configure tickets, build seat maps, manage add-ons, track real-time analytics, and handle settlements.</p>
+      <div class="portal-features">
+        <span class="portal-feat">Event Builder</span>
+        <span class="portal-feat">Ticket Tiers</span>
+        <span class="portal-feat">Seat Map</span>
+        <span class="portal-feat">Analytics</span>
+        <span class="portal-feat">KYC</span>
+        <span class="portal-feat">Settlements</span>
+      </div>
+      <div class="portal-footer">
+        <span class="portal-users"><i class="fas fa-user-tie"></i> 342 organisers · KYC verified</span>
+        <i class="fas fa-arrow-right portal-arrow"></i>
+      </div>
+    </a>
+
+    <!-- Venue Portal -->
+    <a href="/venue" class="portal-card" style="--card-grad:var(--grad2)">
+      <div class="portal-header">
+        <div class="portal-icon-wrap" style="background:rgba(0,245,196,0.15)">🏟️</div>
+        <div>
+          <div class="portal-name">Venue Portal</div>
+          <div class="portal-role">Venue Managers · 528 Venues</div>
+          <div class="portal-badge" style="background:rgba(0,245,196,0.15);color:var(--brand3)">Venue</div>
+        </div>
+      </div>
+      <p class="portal-desc">Manage venue listings, availability calendar, pricing tiers, booking enquiries, floor plan builder, staff access, and GST invoice management.</p>
+      <div class="portal-features">
+        <span class="portal-feat">Calendar</span>
+        <span class="portal-feat">Pricing</span>
+        <span class="portal-feat">Floor Plan</span>
+        <span class="portal-feat">Bookings</span>
+        <span class="portal-feat">Staff</span>
+        <span class="portal-feat">GST Invoices</span>
+      </div>
+      <div class="portal-footer">
+        <span class="portal-users"><i class="fas fa-building"></i> 528 venues · 12 cities</span>
+        <i class="fas fa-arrow-right portal-arrow"></i>
+      </div>
+    </a>
+
+    <!-- Event Manager Portal -->
+    <a href="/event-manager" class="portal-card" style="--card-grad:var(--grad4)">
+      <div class="portal-header">
+        <div class="portal-icon-wrap" style="background:rgba(108,60,247,0.15)">🎬</div>
+        <div>
+          <div class="portal-name">Event Manager</div>
+          <div class="portal-role">On-ground Ops · 1,240 Managers</div>
+          <div class="portal-badge" style="background:rgba(108,60,247,0.15);color:var(--brand)">Event Mgr</div>
+        </div>
+      </div>
+      <p class="portal-desc">Live operations command centre — run sheet, task manager, real-time check-in monitor, POS overview, F&B tracking, push announcements, and incident log.</p>
+      <div class="portal-features">
+        <span class="portal-feat">Run Sheet</span>
+        <span class="portal-feat">Task Manager</span>
+        <span class="portal-feat">Check-In Live</span>
+        <span class="portal-feat">POS View</span>
+        <span class="portal-feat">Announcements</span>
+        <span class="portal-feat">Incidents</span>
+      </div>
+      <div class="portal-footer">
+        <span class="portal-users"><i class="fas fa-headset"></i> 1,240 managers assigned</span>
+        <i class="fas fa-arrow-right portal-arrow"></i>
+      </div>
+    </a>
+
+    <!-- Super Admin Portal -->
+    <a href="/admin" class="portal-card" style="--card-grad:linear-gradient(135deg,#FF4444,#6C3CF7)">
+      <div class="portal-header">
+        <div class="portal-icon-wrap" style="background:rgba(255,68,68,0.15)">👑</div>
+        <div>
+          <div class="portal-name">Super Admin / ERP</div>
+          <div class="portal-role">Platform Command · Root Access</div>
+          <div class="portal-badge" style="background:rgba(255,68,68,0.15);color:var(--red)">Root</div>
+        </div>
+      </div>
+      <p class="portal-desc">Full platform control — organiser approvals, KYC review, event approvals, settlements, GST engine, CMS, user management, BI/AI analytics, security, and RBAC.</p>
+      <div class="portal-features">
+        <span class="portal-feat">Approvals</span>
+        <span class="portal-feat">KYC</span>
+        <span class="portal-feat">Finance ERP</span>
+        <span class="portal-feat">CMS</span>
+        <span class="portal-feat">BI / AI</span>
+        <span class="portal-feat">RBAC</span>
+      </div>
+      <div class="portal-footer">
+        <span class="portal-users"><i class="fas fa-crown"></i> Root · Oye Imagine Pvt Ltd</span>
+        <i class="fas fa-arrow-right portal-arrow"></i>
+      </div>
+    </a>
+
+    <!-- On-Ground Ops -->
+    <a href="/ops" class="portal-card" style="--card-grad:linear-gradient(135deg,#FFB300,#FF3CAC)">
+      <div class="portal-header">
+        <div class="portal-icon-wrap" style="background:rgba(255,180,0,0.15)">📱</div>
+        <div>
+          <div class="portal-name">On-Ground Ops / POS</div>
+          <div class="portal-role">Scanners & POS · 7,200 Staff</div>
+          <div class="portal-badge" style="background:rgba(255,180,0,0.15);color:var(--gold)">Ops</div>
+        </div>
+      </div>
+      <p class="portal-desc">Mobile-first operations portal — QR ticket scanner with beep feedback, full POS system for merchandise and F&B, wristband manager, live entry stats, and scan log.</p>
+      <div class="portal-features">
+        <span class="portal-feat">QR Scanner</span>
+        <span class="portal-feat">POS Terminal</span>
+        <span class="portal-feat">Wristbands</span>
+        <span class="portal-feat">Live Stats</span>
+        <span class="portal-feat">Scan Log</span>
+        <span class="portal-feat">Emergency</span>
+      </div>
+      <div class="portal-footer">
+        <span class="portal-users"><i class="fas fa-qrcode"></i> 4,800 scanners · 2,400 POS ops</span>
+        <i class="fas fa-arrow-right portal-arrow"></i>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<!-- Architecture Card -->
+<div class="section">
+  <a href="/architecture" class="arch-card">
+    <div>
+      <div style="font-size:32px;margin-bottom:12px">🏗️</div>
+      <div class="arch-title">System Architecture & Tech Stack</div>
+      <p class="arch-desc">Interactive architecture diagram showing INDTIX's edge-first infrastructure — Cloudflare Workers, D1 Database, KV Storage, R2, Razorpay, and all platform integrations. Designed for 10M+ concurrent users at scale.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+        <span style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);color:var(--brand);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600">Cloudflare Workers</span>
+        <span style="background:rgba(0,245,196,0.1);border:1px solid rgba(0,245,196,0.25);color:var(--brand3);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600">D1 SQLite</span>
+        <span style="background:rgba(255,60,172,0.1);border:1px solid rgba(255,60,172,0.25);color:var(--brand2);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600">Hono Framework</span>
+        <span style="background:rgba(255,180,0,0.1);border:1px solid rgba(255,180,0,0.25);color:var(--gold);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600">Razorpay</span>
+        <span style="background:rgba(108,60,247,0.1);border:1px solid rgba(108,60,247,0.2);color:var(--brand);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600">TypeScript</span>
+      </div>
+    </div>
+    <div class="arch-btn"><i class="fas fa-diagram-project"></i> View Architecture</div>
+  </a>
+</div>
+
+<!-- API Endpoints -->
+<div class="section">
+  <div class="section-title">⚡ Live API Endpoints</div>
+  <div class="section-sub">Core INDTIX platform API — all running on Cloudflare edge</div>
+  <div class="api-grid">
+    <div class="api-item" onclick="testApi('/api/health')"><span class="api-method get">GET</span><div><div class="api-path">/api/health</div><div class="api-desc">Platform health check & version</div></div></div>
+    <div class="api-item" onclick="testApi('/api/events')"><span class="api-method get">GET</span><div><div class="api-path">/api/events</div><div class="api-desc">Live events list with categories</div></div></div>
+    <div class="api-item" onclick="testApi('/api/cities')"><span class="api-method get">GET</span><div><div class="api-path">/api/cities</div><div class="api-desc">Supported cities list</div></div></div>
+    <div class="api-item" onclick="showApiInfo('POST /api/orders','Create new ticket order')"><span class="api-method post">POST</span><div><div class="api-path">/api/orders</div><div class="api-desc">Create new ticket order</div></div></div>
+    <div class="api-item" onclick="showApiInfo('POST /api/scan','Validate QR ticket scan')"><span class="api-method post">POST</span><div><div class="api-path">/api/scan</div><div class="api-desc">Validate QR ticket scan</div></div></div>
+    <div class="api-item" onclick="showApiInfo('GET /api/events/:id','Event details and seat map')"><span class="api-method get">GET</span><div><div class="api-path">/api/events/:id</div><div class="api-desc">Event details and seat map</div></div></div>
+    <div class="api-item" onclick="showApiInfo('POST /api/auth/login','Fan authentication via OTP')"><span class="api-method post">POST</span><div><div class="api-path">/api/auth/login</div><div class="api-desc">Fan authentication via OTP</div></div></div>
+    <div class="api-item" onclick="showApiInfo('GET /api/organiser/events','Organiser event list')"><span class="api-method get">GET</span><div><div class="api-path">/api/organiser/events</div><div class="api-desc">Organiser event list</div></div></div>
+    <div class="api-item" onclick="showApiInfo('GET /api/admin/approvals','Pending approval queue')"><span class="api-method get">GET</span><div><div class="api-path">/api/admin/approvals</div><div class="api-desc">Pending approval queue</div></div></div>
+  </div>
+
+  <!-- Live API Response -->
+  <div id="apiResult" style="display:none;margin-top:16px;background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <span id="apiResultTitle" style="font-size:13px;font-weight:600;color:var(--brand)"></span>
+      <button onclick="document.getElementById('apiResult').style.display='none'" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px">×</button>
+    </div>
+    <pre id="apiResultBody" style="font-size:12px;color:var(--brand3);overflow-x:auto;white-space:pre-wrap;line-height:1.6"></pre>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">IND<span>TIX</span></div>
+  <p class="footer-sub">India's Premium Live Event Ticketing & Management Platform · Built on Cloudflare Edge</p>
+  <div class="footer-links">
+    <a href="/" class="footer-link">Fan Portal</a>
+    <a href="/organiser" class="footer-link">Organisers</a>
+    <a href="/venue" class="footer-link">Venues</a>
+    <a href="/event-manager" class="footer-link">Event Managers</a>
+    <a href="/admin" class="footer-link">Admin</a>
+    <a href="/ops" class="footer-link">On-Ground Ops</a>
+    <a href="/architecture" class="footer-link">Architecture</a>
+    <a href="/api/health" class="footer-link">API Health</a>
+  </div>
+  <div style="margin-top:20px;font-size:12px;color:var(--muted)">© 2025 Oye Imagine Pvt Ltd · GSTIN: 27AABCO1234A1Z5 · Powered by Cloudflare Workers + Hono</div>
+</footer>
+
+<script>
+async function testApi(path) {
+  const el = document.getElementById('apiResult');
+  const title = document.getElementById('apiResultTitle');
+  const body = document.getElementById('apiResultBody');
+  title.textContent = 'GET ' + path + ' →';
+  body.textContent = 'Loading...';
+  el.style.display = 'block';
+  el.scrollIntoView({behavior:'smooth',block:'nearest'});
+  try {
+    const res = await fetch(path);
+    const data = await res.json();
+    body.textContent = JSON.stringify(data, null, 2);
+  } catch(e) {
+    body.textContent = 'Error: ' + e.message;
+  }
+}
+function showApiInfo(endpoint, desc) {
+  const el = document.getElementById('apiResult');
+  const title = document.getElementById('apiResultTitle');
+  const body = document.getElementById('apiResultBody');
+  title.textContent = endpoint;
+  body.textContent = '// ' + desc + '\n// Requires authentication token in headers:\n// Authorization: Bearer <token>\n{\n  "message": "Endpoint available in production",\n  "docs": "https://docs.indtix.com/api"\n}';
+  el.style.display = 'block';
+  el.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+</script>
+</body>
+</html>

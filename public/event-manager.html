@@ -70,6 +70,28 @@
 .incident-form select option{background:var(--dark3)}
 .incident-form textarea{min-height:80px;resize:vertical}
 </style>
+
+<style>
+.em-stat{background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center}
+.em-stat-val{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.em-stat-lbl{font-size:12px;color:var(--muted);margin-top:4px}
+.em-action{background:var(--dark3);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s}
+.em-action:hover{border-color:var(--brand);color:var(--brand)}
+.task-row{display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;transition:all 0.2s}
+.task-row:hover{background:rgba(108,60,247,0.06)}
+.task-cb{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.task-cb.done{background:var(--brand);border-color:var(--brand)}
+.incident-row{padding:12px;border-radius:12px;border-left:3px solid;margin-bottom:8px}
+.incident-row.critical{border-color:var(--brand2);background:rgba(255,60,172,0.06)}
+.incident-row.warning{border-color:#FFA500;background:rgba(255,165,0,0.06)}
+.incident-row.info{border-color:var(--brand3);background:rgba(0,245,196,0.05)}
+.team-card{background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;transition:all 0.2s}
+.team-card:hover{border-color:var(--brand)}
+.team-avatar{width:40px;height:40px;border-radius:50%;background:var(--grad1);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.timeline-item{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.timeline-time{width:48px;font-size:12px;color:var(--muted);flex-shrink:0;text-align:right}
+.timeline-dot{width:10px;height:10px;border-radius:50%;margin-top:3px;flex-shrink:0}
+</style>
 </head>
 <body>
 <div class="sidebar">
@@ -79,7 +101,9 @@
     <div class="sb-section">Event Control</div>
     <button class="sb-item active" onclick="showPanel('dashboard',this)"><i class="fas fa-tachometer-alt"></i>Dashboard</button>
     <button class="sb-item" onclick="showPanel('runsheet',this)"><i class="fas fa-list-check"></i>Run Sheet / Timeline</button>
-    <button class="sb-item" onclick="showPanel('tasks',this)"><i class="fas fa-tasks"></i>Task Manager<span style="margin-left:auto;background:var(--brand2);color:#fff;font-size:10px;padding:2px 7px;border-radius:20px">4</span></button>
+    <button class="sb-item" onclick="showPanel('ops',this)">📊 Live Ops</button>
+        <button class="sb-item" onclick="showPanel('team',this)">👥 Team</button>
+        <button class="sb-item" onclick="showPanel('tasks',this)"><i class="fas fa-tasks"></i>Task Manager<span style="margin-left:auto;background:var(--brand2);color:#fff;font-size:10px;padding:2px 7px;border-radius:20px">4</span></button>
     <button class="sb-item" onclick="showPanel('team',this)"><i class="fas fa-users-cog"></i>Team & Zones</button>
     <div class="sb-section">On-Ground</div>
     <button class="sb-item" onclick="showPanel('checkin',this)"><i class="fas fa-qrcode"></i>Live Check-In Monitor</button>
@@ -88,7 +112,9 @@
     <button class="sb-item" onclick="showPanel('fb',this)"><i class="fas fa-utensils"></i>F&B Order Tracker</button>
     <div class="sb-section">Communications</div>
     <button class="sb-item" onclick="showPanel('announce',this)"><i class="fas fa-bullhorn"></i>Announcements</button>
-    <button class="sb-item" onclick="showPanel('incidents',this)"><i class="fas fa-exclamation-circle"></i>Incident Reports<span style="margin-left:auto;background:var(--brand2);color:#fff;font-size:10px;padding:2px 7px;border-radius:20px">2</span></button>
+    <button class="sb-item" onclick="showPanel('incidents',this)">🚨 Incident Log</button>
+        <button class="sb-item" onclick="showPanel('timeline',this)">⏱ Timeline</button>
+        <button class="sb-item" onclick="showPanel('placeholder',this)"><i class="fas fa-exclamation-circle"></i>Incident Reports<span style="margin-left:auto;background:var(--brand2);color:#fff;font-size:10px;padding:2px 7px;border-radius:20px">2</span></button>
     <div class="sb-section">Post-Event</div>
     <button class="sb-item" onclick="showPanel('report',this)"><i class="fas fa-file-chart-line"></i>Event Report</button>
     <button class="sb-item" onclick="showPanel('feedback',this)"><i class="fas fa-star"></i>Attendee Feedback</button>
@@ -235,19 +261,464 @@
       </div>
     </div>
 
-    <!-- DEFAULT PANELS -->
-    <div class="panel" id="panel-runsheet"><div class="card"><div class="card-title">Run Sheet / Event Timeline</div><p style="color:var(--muted)">Minute-by-minute event schedule for all zones and teams.</p></div></div>
-    <div class="panel" id="panel-tasks"><div class="card"><div class="card-title">Task Manager</div><p style="color:var(--muted)">4 open tasks, 12 completed today.</p></div></div>
-    <div class="panel" id="panel-checkin"><div class="card"><div class="card-title">Live Check-In Monitor</div><p style="color:var(--muted)">Real-time attendee check-in across all gates.</p></div></div>
-    <div class="panel" id="panel-pos"><div class="card"><div class="card-title">POS Overview</div><p style="color:var(--muted)">All POS terminals, sales summary, and cash reconciliation.</p></div></div>
-    <div class="panel" id="panel-fb"><div class="card"><div class="card-title">F&B Order Tracker</div><p style="color:var(--muted)">840 orders processed · ₹2.94L revenue · 12 counters active.</p></div></div>
-    <div class="panel" id="panel-announce"><div class="card"><div class="card-title">Push Announcements</div><p style="color:var(--muted)">Send WhatsApp/push notifications to all attendees in real-time.</p></div></div>
-    <div class="panel" id="panel-report"><div class="card"><div class="card-title">Post-Event Report</div><p style="color:var(--muted)">Comprehensive post-event analytics, incident summary, and settlement breakdown.</p></div></div>
-    <div class="panel" id="panel-feedback"><div class="card"><div class="card-title">Attendee Feedback</div><p style="color:var(--muted)">Real-time NPS score, ratings, and attendee comments.</p></div></div>
+
+    <!-- RUN SHEET -->
+    <div class="panel" id="panel-runsheet">
+      <div class="card">
+        <div class="card-title">Run Sheet — Sunburn Arena Mumbai <span>Apr 15, 2025 · 4PM–2AM</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:grid;grid-template-columns:80px 1fr 120px;gap:12px;padding:10px;background:var(--dark3);border-radius:10px;border-left:3px solid var(--brand3)">
+            <div style="font-size:12px;font-weight:700;color:var(--brand3)">16:00</div>
+            <div><div style="font-size:13px;font-weight:600">Venue Setup Complete</div><div style="font-size:11px;color:var(--muted)">Sound check, lighting test, security briefing</div></div>
+            <span style="padding:3px 8px;background:rgba(0,245,196,0.15);color:var(--brand3);border-radius:20px;font-size:10px;font-weight:700;height:fit-content">DONE</span>
+          </div>
+          <div style="display:grid;grid-template-columns:80px 1fr 120px;gap:12px;padding:10px;background:var(--dark3);border-radius:10px;border-left:3px solid var(--brand3)">
+            <div style="font-size:12px;font-weight:700;color:var(--brand3)">16:30</div>
+            <div><div style="font-size:13px;font-weight:600">Gates Open — Entry Begins</div><div style="font-size:11px;color:var(--muted)">All gates active, scanners online, POS live</div></div>
+            <span style="padding:3px 8px;background:rgba(0,245,196,0.15);color:var(--brand3);border-radius:20px;font-size:10px;font-weight:700;height:fit-content">DONE</span>
+          </div>
+          <div style="display:grid;grid-template-columns:80px 1fr 120px;gap:12px;padding:10px;background:rgba(108,60,247,0.12);border-radius:10px;border-left:3px solid var(--brand)">
+            <div style="font-size:12px;font-weight:700;color:var(--brand)">18:00</div>
+            <div><div style="font-size:13px;font-weight:600">Opening Act — DJ Rana</div><div style="font-size:11px;color:var(--muted)">Main stage · 60 min set · All systems check</div></div>
+            <span style="padding:3px 8px;background:rgba(108,60,247,0.2);color:var(--brand);border-radius:20px;font-size:10px;font-weight:700;height:fit-content">ACTIVE</span>
+          </div>
+          <div style="display:grid;grid-template-columns:80px 1fr 120px;gap:12px;padding:10px;background:var(--dark3);border-radius:10px;border-left:3px solid var(--border)">
+            <div style="font-size:12px;font-weight:700;color:var(--muted)">19:30</div>
+            <div><div style="font-size:13px;font-weight:600">Headliner 1 — Nucleya</div><div style="font-size:11px;color:var(--muted)">Main stage · 90 min set · VIP access opens</div></div>
+            <span style="padding:3px 8px;background:rgba(255,255,255,0.05);color:var(--muted);border-radius:20px;font-size:10px;font-weight:700;height:fit-content">UPCOMING</span>
+          </div>
+          <div style="display:grid;grid-template-columns:80px 1fr 120px;gap:12px;padding:10px;background:var(--dark3);border-radius:10px;border-left:3px solid var(--border)">
+            <div style="font-size:12px;font-weight:700;color:var(--muted)">21:00</div>
+            <div><div style="font-size:13px;font-weight:600">Break — F&amp;B Peak Hour</div><div style="font-size:11px;color:var(--muted)">30 min break · Extra POS staff on duty</div></div>
+            <span style="padding:3px 8px;background:rgba(255,255,255,0.05);color:var(--muted);border-radius:20px;font-size:10px;font-weight:700;height:fit-content">UPCOMING</span>
+          </div>
+          <div style="display:grid;grid-template-columns:80px 1fr 120px;gap:12px;padding:10px;background:var(--dark3);border-radius:10px;border-left:3px solid var(--border)">
+            <div style="font-size:12px;font-weight:700;color:var(--muted)">21:30</div>
+            <div><div style="font-size:13px;font-weight:600">Headliner 2 — Ritviz</div><div style="font-size:11px;color:var(--muted)">Main stage · 90 min · LED wall show + confetti</div></div>
+            <span style="padding:3px 8px;background:rgba(255,255,255,0.05);color:var(--muted);border-radius:20px;font-size:10px;font-weight:700;height:fit-content">UPCOMING</span>
+          </div>
+          <div style="display:grid;grid-template-columns:80px 1fr 120px;gap:12px;padding:10px;background:var(--dark3);border-radius:10px;border-left:3px solid var(--border)">
+            <div style="font-size:12px;font-weight:700;color:var(--muted)">23:00</div>
+            <div><div style="font-size:13px;font-weight:600">Headliner 3 — Arjun Kanungo</div><div style="font-size:11px;color:var(--muted)">Main stage · 75 min · Grand finale show</div></div>
+            <span style="padding:3px 8px;background:rgba(255,255,255,0.05);color:var(--muted);border-radius:20px;font-size:10px;font-weight:700;height:fit-content">UPCOMING</span>
+          </div>
+          <div style="display:grid;grid-template-columns:80px 1fr 120px;gap:12px;padding:10px;background:var(--dark3);border-radius:10px;border-left:3px solid var(--red)">
+            <div style="font-size:12px;font-weight:700;color:var(--red)">00:15</div>
+            <div><div style="font-size:13px;font-weight:600">Venue Evacuation Begins</div><div style="font-size:11px;color:var(--muted)">Orderly crowd dispersal, all gates open</div></div>
+            <span style="padding:3px 8px;background:rgba(255,255,255,0.05);color:var(--muted);border-radius:20px;font-size:10px;font-weight:700;height:fit-content">UPCOMING</span>
+          </div>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:10px">
+          <button class="em-btn em-btn-primary" onclick="alert('Run sheet exported as PDF')"><i class="fas fa-download"></i> Export PDF</button>
+          <button class="em-btn" onclick="alert('Run sheet shared with team via WhatsApp')"><i class="fas fa-share"></i> Share with Team</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TASK MANAGER -->
+    <div class="panel" id="panel-tasks">
+      <div class="card">
+        <div class="card-title">Task Manager <span>4 open · 12 done today</span></div>
+        <div style="display:flex;gap:10px;margin-bottom:16px">
+          <input type="text" placeholder="Add new task..." style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;outline:none">
+          <button class="em-btn em-btn-primary" onclick="alert('Task added!')"><i class="fas fa-plus"></i> Add Task</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.2);border-radius:10px">
+            <input type="checkbox" style="width:16px;height:16px;accent-color:var(--brand)">
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">Confirm final headcount with all gate supervisors</div><div style="font-size:11px;color:var(--muted)">Due: 5PM · Owner: Floor Manager</div></div>
+            <span style="font-size:11px;padding:3px 8px;background:rgba(255,68,68,0.2);color:var(--red);border-radius:20px;font-weight:600">Urgent</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:rgba(255,180,0,0.08);border:1px solid rgba(255,180,0,0.2);border-radius:10px">
+            <input type="checkbox" style="width:16px;height:16px;accent-color:var(--brand)">
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">Verify wristband allocation — VIP vs GA split</div><div style="font-size:11px;color:var(--muted)">Due: 5:30PM · Owner: Ops Team</div></div>
+            <span style="font-size:11px;padding:3px 8px;background:rgba(255,180,0,0.2);color:#FFB300;border-radius:20px;font-weight:600">High</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:rgba(255,180,0,0.08);border:1px solid rgba(255,180,0,0.2);border-radius:10px">
+            <input type="checkbox" style="width:16px;height:16px;accent-color:var(--brand)">
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">Brief POS operators on combo meal deals</div><div style="font-size:11px;color:var(--muted)">Due: 4:30PM · Owner: F&amp;B Manager</div></div>
+            <span style="font-size:11px;padding:3px 8px;background:rgba(255,180,0,0.2);color:#FFB300;border-radius:20px;font-weight:600">High</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:rgba(108,60,247,0.08);border:1px solid rgba(108,60,247,0.2);border-radius:10px">
+            <input type="checkbox" style="width:16px;height:16px;accent-color:var(--brand)">
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">Set up backstage artist hospitality</div><div style="font-size:11px;color:var(--muted)">Due: 6PM · Owner: Production Team</div></div>
+            <span style="font-size:11px;padding:3px 8px;background:rgba(108,60,247,0.2);color:var(--brand);border-radius:20px;font-weight:600">Normal</span>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">✅ Completed Today (12)</div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px;opacity:0.5">
+            <input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--brand)">
+            <div><div style="font-size:13px;text-decoration:line-through;color:var(--muted)">Stage production walkthrough with audio team</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px;opacity:0.5">
+            <input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--brand)">
+            <div><div style="font-size:13px;text-decoration:line-through;color:var(--muted)">Test all QR scanners on all 4 gates</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE CHECK-IN MONITOR -->
+    <div class="panel" id="panel-checkin">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--brand3)">2,841</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px">Checked In</div>
+          <div style="font-size:11px;color:var(--brand3);margin-top:2px">68% of capacity</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--muted)">1,359</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px">Not Yet Arrived</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--brand)">142</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px">Scans/min (peak)</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--red)">7</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px">Invalid Scans</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Gate-by-Gate Progress</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:13px;font-weight:600">Gate A — Main Entry</span><span style="font-size:12px;color:var(--muted)">892 / 1,000 · 89%</span></div><div style="background:var(--dark3);border-radius:4px;height:10px;overflow:hidden"><div style="width:89%;height:100%;background:var(--grad1);border-radius:4px"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:13px;font-weight:600">Gate B — General Entry</span><span style="font-size:12px;color:var(--muted)">1,240 / 1,600 · 78%</span></div><div style="background:var(--dark3);border-radius:4px;height:10px;overflow:hidden"><div style="width:78%;height:100%;background:var(--grad1);border-radius:4px"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:13px;font-weight:600">Gate C — VIP Entry</span><span style="font-size:12px;color:var(--muted)">342 / 400 · 86%</span></div><div style="background:var(--dark3);border-radius:4px;height:10px;overflow:hidden"><div style="width:86%;height:100%;background:linear-gradient(135deg,#00F5C4,#6C3CF7);border-radius:4px"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:13px;font-weight:600">Gate D — CLOSED</span><span style="font-size:12px;color:var(--red)">0 / 200 · Closed</span></div><div style="background:var(--dark3);border-radius:4px;height:10px;overflow:hidden"><div style="width:0%;height:100%;background:var(--grad1);border-radius:4px"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POS OVERVIEW -->
+    <div class="panel" id="panel-pos">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--brand3)">₹2.94L</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Total Revenue</div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--brand)">840</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Orders Placed</div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--brand2)">₹350</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Avg Order Value</div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--gold)">12</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Active Terminals</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-title">Top Selling Items</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:10px"><div style="flex:1"><div style="font-size:13px;font-weight:600">🍺 Premium Beer (Kingfisher)</div><div style="font-size:11px;color:var(--muted)">320 sold · ₹180 each</div></div><div style="font-size:14px;font-weight:700;color:var(--brand3)">₹57,600</div></div>
+            <div style="display:flex;align-items:center;gap:10px"><div style="flex:1"><div style="font-size:13px;font-weight:600">🍕 Pizza Slice Combo</div><div style="font-size:11px;color:var(--muted)">185 sold · ₹280 each</div></div><div style="font-size:14px;font-weight:700;color:var(--brand3)">₹51,800</div></div>
+            <div style="display:flex;align-items:center;gap:10px"><div style="flex:1"><div style="font-size:13px;font-weight:600">🎽 INDTIX Event Tee</div><div style="font-size:11px;color:var(--muted)">142 sold · ₹599 each</div></div><div style="font-size:14px;font-weight:700;color:var(--brand3)">₹85,058</div></div>
+            <div style="display:flex;align-items:center;gap:10px"><div style="flex:1"><div style="font-size:13px;font-weight:600">💧 Water Bottle</div><div style="font-size:11px;color:var(--muted)">580 sold · ₹50 each</div></div><div style="font-size:14px;font-weight:700;color:var(--brand3)">₹29,000</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Terminal Status</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--dark3);border-radius:8px"><span style="font-size:13px;font-weight:600">POS #1 — Gate A</span><div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--muted)">₹45,200</span><span style="width:8px;height:8px;border-radius:50%;background:var(--brand3);display:inline-block"></span></div></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--dark3);border-radius:8px"><span style="font-size:13px;font-weight:600">POS #2 — Gate B</span><div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--muted)">₹62,100</span><span style="width:8px;height:8px;border-radius:50%;background:var(--brand3);display:inline-block"></span></div></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--dark3);border-radius:8px"><span style="font-size:13px;font-weight:600">POS #3 — VIP Bar</span><div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--muted)">₹1,12,400</span><span style="width:8px;height:8px;border-radius:50%;background:var(--brand3);display:inline-block"></span></div></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--dark3);border-radius:8px"><span style="font-size:13px;font-weight:600">POS #4 — Merchandise</span><div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--muted)">₹92,400</span><span style="width:8px;height:8px;border-radius:50%;background:var(--brand3);display:inline-block"></span></div></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--dark3);border-radius:8px;opacity:0.5"><span style="font-size:13px;font-weight:600;color:var(--red)">POS #5 — OFFLINE</span><span style="width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- F&B ORDER TRACKER -->
+    <div class="panel" id="panel-fb">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--brand3)">840</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Orders Processed</div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--brand)">₹2.94L</div><div style="font-size:12px;color:var(--muted);margin-top:4px">F&amp;B Revenue</div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--brand2)">12</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Active Counters</div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--gold)">4.2 min</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Avg Queue Wait</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Counter Status (Live)</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+          <div style="background:var(--dark3);border:1px solid rgba(0,245,196,0.3);border-radius:10px;padding:14px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">Counter A1 — Main Bar</div>
+            <div style="font-size:11px;color:var(--muted)">Queue: 18 people · 3.2 min wait</div>
+            <div style="font-size:14px;font-weight:700;color:var(--brand3);margin-top:6px">₹68,400</div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid rgba(0,245,196,0.3);border-radius:10px;padding:14px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">Counter A2 — Food Court</div>
+            <div style="font-size:11px;color:var(--muted)">Queue: 32 people · 5.8 min wait</div>
+            <div style="font-size:14px;font-weight:700;color:var(--brand3);margin-top:6px">₹42,100</div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid rgba(0,245,196,0.3);border-radius:10px;padding:14px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">Counter V1 — VIP Bar</div>
+            <div style="font-size:11px;color:var(--muted)">Queue: 5 people · 1.2 min wait</div>
+            <div style="font-size:14px;font-weight:700;color:var(--brand3);margin-top:6px">₹1,12,400</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PUSH ANNOUNCEMENTS -->
+    <div class="panel" id="panel-announce">
+      <div class="card">
+        <div class="card-title">Send Push Announcement <span>4,200 attendees in-venue</span></div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:12px;color:var(--muted)">Channel</label>
+            <div style="display:flex;gap:10px">
+              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" checked style="accent-color:var(--brand)"> WhatsApp</label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" checked style="accent-color:var(--brand)"> Push Notification</label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" style="accent-color:var(--brand)"> SMS</label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" style="accent-color:var(--brand)"> In-App</label>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:12px;color:var(--muted)">Audience</label><select style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;outline:none"><option>All Attendees (4,200)</option><option>VIP Only (342)</option><option>General Admission (3,858)</option><option>Not Yet Checked In (1,359)</option></select></div>
+          <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:12px;color:var(--muted)">Message Template</label><select style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;outline:none" onchange="document.getElementById('msgBody').value=this.options[this.selectedIndex].dataset.msg||''"><option data-msg="">Custom Message">Custom Message</option><option data-msg="🎵 Headliner Nucleya takes the stage in 10 minutes! Get to the main arena now! 🔥">Headliner Starting Soon</option><option data-msg="⚠️ IMPORTANT: Gate B is experiencing delays. Please use Gate A or Gate C to enter.">Gate Congestion Alert</option><option data-msg="🌧️ Brief weather advisory: Light rain expected at 9PM. Covered zones available at VIP and F&B areas.">Weather Alert</option><option data-msg="⚡ Lightning fast queues at Counter V1 near VIP entrance! Skip the food court rush.">F&B Promotion</option></select></div>
+          <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:12px;color:var(--muted)">Message</label><textarea id="msgBody" placeholder="Type your announcement..." style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;resize:vertical;min-height:100px;font-family:'Inter',sans-serif"></textarea></div>
+          <div style="display:flex;gap:10px"><button class="em-btn" onclick="alert('Preview sent to your device')"><i class="fas fa-eye"></i> Preview</button><button class="em-btn em-btn-primary" onclick="alert('✅ Announcement sent to 4,200 attendees via WhatsApp and Push!')"><i class="fas fa-paper-plane"></i> Send Now</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Recent Announcements</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;font-weight:600">Gates Now Open!</span><span style="font-size:11px;color:var(--muted)">18:28 · 4,200 sent</span></div><div style="font-size:12px;color:var(--muted)">🎉 Gates are now open! Head to your assigned gate with your QR ticket ready. See you inside!</div></div>
+          <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;font-weight:600">DJ Rana Starting!</span><span style="font-size:11px;color:var(--muted)">18:01 · 4,200 sent</span></div><div style="font-size:12px;color:var(--muted)">🎧 DJ Rana just took the stage! Main arena is LIT. Come in now if you haven't already 🔥</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST-EVENT REPORT -->
+    <div class="panel" id="panel-report">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;color:var(--brand3)">4,180</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Total Attendees</div><div style="font-size:11px;color:var(--brand3)">96.3% check-in rate</div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;color:var(--brand)">₹68.4L</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Total Ticket Revenue</div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;color:var(--brand2)">₹2.94L</div><div style="font-size:12px;color:var(--muted);margin-top:4px">F&amp;B / Merch Revenue</div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;color:var(--brand3)">4.7 / 5</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Avg Fan Rating</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-title">Incident Summary</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><span style="font-size:13px">Medical Incidents</span><span style="font-weight:700;color:var(--gold)">3</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><span style="font-size:13px">Security Incidents</span><span style="font-weight:700;color:var(--red)">1</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><span style="font-size:13px">Invalid QR Scans</span><span style="font-weight:700;color:var(--red)">7</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0"><span style="font-size:13px">Technical Issues</span><span style="font-weight:700;color:var(--gold)">2</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Download Reports</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <button class="em-btn" onclick="alert('Downloading full event report PDF...')"><i class="fas fa-file-pdf"></i> Full Event Report (PDF)</button>
+            <button class="em-btn" onclick="alert('Downloading attendee data CSV...')"><i class="fas fa-file-csv"></i> Attendee Data (CSV)</button>
+            <button class="em-btn" onclick="alert('Downloading financial summary...')"><i class="fas fa-file-invoice-dollar"></i> Financial Summary (Excel)</button>
+            <button class="em-btn" onclick="alert('Downloading incident log...')"><i class="fas fa-exclamation-triangle"></i> Incident Log (PDF)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ATTENDEE FEEDBACK -->
+    <div class="panel" id="panel-feedback">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--brand3)">4.7</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Overall Rating</div><div style="color:var(--gold);font-size:16px;margin-top:4px">★★★★★</div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--brand)">78</div><div style="font-size:12px;color:var(--muted);margin-top:4px">NPS Score</div><div style="font-size:11px;color:var(--brand3)">Excellent</div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--brand2)">2,140</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Responses</div><div style="font-size:11px;color:var(--muted)">51% response rate</div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center"><div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;color:var(--gold)">94%</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Would Recommend</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-title">Category Ratings</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:12px"><div style="min-width:100px;font-size:13px">Music / Acts</div><div style="flex:1;background:var(--dark3);border-radius:4px;height:8px;overflow:hidden"><div style="width:96%;height:100%;background:var(--grad1);border-radius:4px"></div></div><div style="min-width:25px;font-size:12px;font-weight:700;text-align:right">4.8</div></div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="min-width:100px;font-size:13px">Sound Quality</div><div style="flex:1;background:var(--dark3);border-radius:4px;height:8px;overflow:hidden"><div style="width:94%;height:100%;background:var(--grad1);border-radius:4px"></div></div><div style="min-width:25px;font-size:12px;font-weight:700;text-align:right">4.7</div></div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="min-width:100px;font-size:13px">Entry Process</div><div style="flex:1;background:var(--dark3);border-radius:4px;height:8px;overflow:hidden"><div style="width:86%;height:100%;background:var(--grad1);border-radius:4px"></div></div><div style="min-width:25px;font-size:12px;font-weight:700;text-align:right">4.3</div></div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="min-width:100px;font-size:13px">F&amp;B Options</div><div style="flex:1;background:var(--dark3);border-radius:4px;height:8px;overflow:hidden"><div style="width:82%;height:100%;background:var(--grad1);border-radius:4px"></div></div><div style="min-width:25px;font-size:12px;font-weight:700;text-align:right">4.1</div></div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="min-width:100px;font-size:13px">Safety</div><div style="flex:1;background:var(--dark3);border-radius:4px;height:8px;overflow:hidden"><div style="width:90%;height:100%;background:var(--grad1);border-radius:4px"></div></div><div style="min-width:25px;font-size:12px;font-weight:700;text-align:right">4.5</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Recent Comments</div>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:12px">
+            <div style="background:var(--dark3);border-radius:10px;padding:12px"><div style="color:var(--gold);margin-bottom:4px">★★★★★</div><div style="color:var(--muted)">Best event of the year! Nucleya was absolutely insane 🔥</div><div style="color:var(--brand);margin-top:4px;font-size:11px">Priya S. · GA</div></div>
+            <div style="background:var(--dark3);border-radius:10px;padding:12px"><div style="color:var(--gold);margin-bottom:4px">★★★★☆</div><div style="color:var(--muted)">Great vibes! Gate entry was a bit slow but worth it.</div><div style="color:var(--brand);margin-top:4px;font-size:11px">Rohan K. · GA</div></div>
+            <div style="background:var(--dark3);border-radius:10px;padding:12px"><div style="color:var(--gold);margin-bottom:4px">★★★★★</div><div style="color:var(--muted)">VIP experience was top class. Will definitely be back!</div><div style="color:var(--brand);margin-top:4px;font-size:11px">Ananya M. · VIP</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  <!-- OPERATIONS OVERVIEW PANEL -->
+  <div class="panel" id="panel-ops">
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div class="card-title">Live Operations — Sunburn Arena</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="background:rgba(0,245,196,0.15);color:var(--brand3);border:1px solid rgba(0,245,196,0.3);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600">🟢 EVENT LIVE</span>
+          <button class="em-action" onclick="emergencyAlert()" style="background:rgba(255,60,172,0.1);border-color:rgba(255,60,172,0.4);color:var(--brand2)">🚨 Emergency Alert</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:24px">
+        <div class="em-stat"><div class="em-stat-val" style="color:var(--brand3)">7,180</div><div class="em-stat-lbl">Checked In</div><div style="font-size:11px;color:var(--muted);margin-top:2px">of 8,240 registered</div></div>
+        <div class="em-stat"><div class="em-stat-val">87%</div><div class="em-stat-lbl">Entry Rate</div></div>
+        <div class="em-stat"><div class="em-stat-val" style="color:var(--brand3)">24</div><div class="em-stat-lbl">Staff Online</div></div>
+        <div class="em-stat"><div class="em-stat-val" style="color:#FFA500">3</div><div class="em-stat-lbl">Active Incidents</div></div>
+        <div class="em-stat"><div class="em-stat-val">₹3.8L</div><div class="em-stat-lbl">On-Site Revenue</div></div>
+        <div class="em-stat"><div class="em-stat-val">14:32</div><div class="em-stat-lbl">Event Started</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div style="background:var(--dark3);border-radius:14px;padding:16px">
+          <div style="font-weight:600;margin-bottom:12px;font-size:14px">Gate Entry Stats</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span>Gate A – Main Entry</span>
+              <div style="display:flex;align-items:center;gap:8px"><span style="font-weight:600">4,820</span><span style="color:var(--brand3)">● Live</span></div>
+            </div>
+            <div style="height:4px;background:var(--dark);border-radius:2px;overflow:hidden"><div style="width:78%;height:100%;background:var(--grad1)"></div></div>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span>Gate B – VIP</span>
+              <div style="display:flex;align-items:center;gap:8px"><span style="font-weight:600">480</span><span style="color:var(--brand3)">● Live</span></div>
+            </div>
+            <div style="height:4px;background:var(--dark);border-radius:2px;overflow:hidden"><div style="width:96%;height:100%;background:var(--brand2)"></div></div>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span>Gate C – Accessible</span>
+              <div style="display:flex;align-items:center;gap:8px"><span style="font-weight:600">42</span><span style="color:#FFA500">● Slow</span></div>
+            </div>
+          </div>
+        </div>
+        <div style="background:var(--dark3);border-radius:14px;padding:16px">
+          <div style="font-weight:600;margin-bottom:12px;font-size:14px">Live Incident Feed</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="incident-row critical"><div style="font-size:12px;font-weight:600;color:var(--brand2)">🚨 CRITICAL — Gate A Queue Spike</div><div style="font-size:11px;color:var(--muted);margin-top:2px">500+ people waiting — open auxiliary lane</div></div>
+            <div class="incident-row warning"><div style="font-size:12px;font-weight:600;color:#FFA500">⚠️ F&B Counter 3 ran out of water bottles</div><div style="font-size:11px;color:var(--muted);margin-top:2px">Restock in progress — ETA 10 mins</div></div>
+            <div class="incident-row info"><div style="font-size:12px;font-weight:600;color:var(--brand3)">ℹ️ LED band sync completed successfully</div><div style="font-size:11px;color:var(--muted);margin-top:2px">2,400 wristbands activated @ 14:45</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- TEAM MANAGEMENT PANEL -->
+  <div class="panel" id="panel-team">
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div class="card-title">Team Management</div>
+        <div style="display:flex;gap:10px">
+          <button class="em-action" onclick="broadcastTeam()">📣 Broadcast</button>
+          <button class="em-action" onclick="addTeamMember()" style="background:rgba(108,60,247,0.15);border-color:var(--brand);color:var(--brand)">+ Add Member</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px">
+        <div class="team-card"><div class="team-avatar">RK</div><div style="flex:1"><div style="font-weight:600;font-size:14px">Ramesh Kumar</div><div style="font-size:12px;color:var(--muted)">Gate A Supervisor</div><div style="font-size:11px;color:var(--brand3);margin-top:2px">● Online · 342 scans</div></div><button class="em-action" style="font-size:11px" onclick="contactMember('Ramesh')">📞</button></div>
+        <div class="team-card"><div class="team-avatar" style="background:var(--grad2)">SV</div><div style="flex:1"><div style="font-weight:600;font-size:14px">Sunil Verma</div><div style="font-size:12px;color:var(--muted)">Scanner — Gate A</div><div style="font-size:11px;color:var(--brand3);margin-top:2px">● Online · 289 scans</div></div><button class="em-action" style="font-size:11px" onclick="contactMember('Sunil')">📞</button></div>
+        <div class="team-card"><div class="team-avatar" style="background:linear-gradient(135deg,#FF3CAC,#FFA500)">KN</div><div style="flex:1"><div style="font-weight:600;font-size:14px">Kavya Nair</div><div style="font-size:12px;color:var(--muted)">VIP Gate Supervisor</div><div style="font-size:11px;color:#FFA500;margin-top:2px">● Idle</div></div><button class="em-action" style="font-size:11px" onclick="contactMember('Kavya')">📞</button></div>
+        <div class="team-card"><div class="team-avatar" style="background:linear-gradient(135deg,#00F5C4,#6C3CF7)">AP</div><div style="flex:1"><div style="font-weight:600;font-size:14px">Arjun Pillai</div><div style="font-size:12px;color:var(--muted)">F&B Coordinator</div><div style="font-size:11px;color:var(--brand3);margin-top:2px">● Online</div></div><button class="em-action" style="font-size:11px" onclick="contactMember('Arjun')">📞</button></div>
+        <div class="team-card"><div class="team-avatar" style="background:linear-gradient(135deg,#6C3CF7,#00F5C4)">PS</div><div style="flex:1"><div style="font-weight:600;font-size:14px">Priya Sharma</div><div style="font-size:12px;color:var(--muted)">Merch Desk Lead</div><div style="font-size:11px;color:var(--brand3);margin-top:2px">● Online</div></div><button class="em-action" style="font-size:11px" onclick="contactMember('Priya')">📞</button></div>
+        <div class="team-card"><div class="team-avatar" style="background:linear-gradient(135deg,#FF3CAC,#6C3CF7)">VM</div><div style="flex:1"><div style="font-weight:600;font-size:14px">Vikram Mehta</div><div style="font-size:12px;color:var(--muted)">Security Chief</div><div style="font-size:11px;color:var(--brand3);margin-top:2px">● Online</div></div><button class="em-action" style="font-size:11px" onclick="contactMember('Vikram')">📞</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK CHECKLIST PANEL -->
+  <div class="panel" id="panel-tasks">
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div class="card-title">Pre-Event Checklist</div>
+        <div style="font-size:13px;color:var(--muted)"><span style="color:var(--brand3);font-weight:700">18</span>/24 tasks completed</div>
+      </div>
+      <div style="height:6px;background:var(--dark);border-radius:3px;margin-bottom:20px;overflow:hidden"><div style="width:75%;height:100%;background:var(--grad1);border-radius:3px"></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div>
+          <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Venue & Infrastructure</div>
+          <div class="task-row"><div class="task-cb done" onclick="toggleTask(this)">✓</div><span style="font-size:14px;text-decoration:line-through;opacity:0.6">Soundcheck completed</span></div>
+          <div class="task-row"><div class="task-cb done" onclick="toggleTask(this)">✓</div><span style="font-size:14px;text-decoration:line-through;opacity:0.6">Lighting rig setup verified</span></div>
+          <div class="task-row"><div class="task-cb done" onclick="toggleTask(this)">✓</div><span style="font-size:14px;text-decoration:line-through;opacity:0.6">Barricades installed — Stage front</span></div>
+          <div class="task-row"><div class="task-cb done" onclick="toggleTask(this)">✓</div><span style="font-size:14px;text-decoration:line-through;opacity:0.6">Generator backup tested</span></div>
+          <div class="task-row"><div class="task-cb" onclick="toggleTask(this)"></div><span style="font-size:14px">Medical bay stocked and ready</span></div>
+          <div class="task-row"><div class="task-cb" onclick="toggleTask(this)"></div><span style="font-size:14px">CCTV feed tested — all 24 cameras</span></div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Operations</div>
+          <div class="task-row"><div class="task-cb done" onclick="toggleTask(this)">✓</div><span style="font-size:14px;text-decoration:line-through;opacity:0.6">Scanner devices charged and synced</span></div>
+          <div class="task-row"><div class="task-cb done" onclick="toggleTask(this)">✓</div><span style="font-size:14px;text-decoration:line-through;opacity:0.6">LED wristbands distributed — 2,400 pcs</span></div>
+          <div class="task-row"><div class="task-cb done" onclick="toggleTask(this)">✓</div><span style="font-size:14px;text-decoration:line-through;opacity:0.6">F&B vendor briefing done</span></div>
+          <div class="task-row"><div class="task-cb done" onclick="toggleTask(this)">✓</div><span style="font-size:14px;text-decoration:line-through;opacity:0.6">Merchandise stall setup complete</span></div>
+          <div class="task-row"><div class="task-cb" onclick="toggleTask(this)"></div><span style="font-size:14px">VIP green room stocked</span></div>
+          <div class="task-row"><div class="task-cb" onclick="toggleTask(this)"></div><span style="font-size:14px">Ambulance on standby confirmed</span></div>
+        </div>
+      </div>
+      <button class="em-action" style="margin-top:16px;background:rgba(108,60,247,0.15);border-color:var(--brand);color:var(--brand);padding:8px 20px" onclick="addTask()">+ Add Task</button>
+    </div>
+  </div>
+
+  <!-- INCIDENT LOG PANEL -->
+  <div class="panel" id="panel-incidents">
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div class="card-title">Incident Log</div>
+        <button class="em-action" onclick="logIncident()" style="background:rgba(255,60,172,0.1);border-color:rgba(255,60,172,0.3);color:var(--brand2)">+ Log Incident</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="incident-row critical">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--brand2)">🚨 CRITICAL — Gate A Crowd Surge</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:4px">Reported by: Vikram Mehta (Security Chief) • 500+ queuing, risk of crush</div>
+            </div>
+            <div style="text-align:right;flex-shrink:0"><div style="font-size:11px;color:var(--muted)">15:42</div><span style="background:rgba(255,60,172,0.2);color:var(--brand2);padding:2px 8px;border-radius:8px;font-size:10px;font-weight:600">OPEN</span></div>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button class="em-action" onclick="resolveIncident(this)">✅ Resolve</button>
+            <button class="em-action" onclick="escalateIncident()">⬆️ Escalate</button>
+          </div>
+        </div>
+        <div class="incident-row warning">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div>
+              <div style="font-weight:700;font-size:14px;color:#FFA500">⚠️ F&B Counter 3 — Stock Out</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:4px">Reported by: Arjun Pillai • Water bottles depleted. Restock ETA: 10 mins</div>
+            </div>
+            <div style="text-align:right;flex-shrink:0"><div style="font-size:11px;color:var(--muted)">15:38</div><span style="background:rgba(255,165,0,0.15);color:#FFA500;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:600">IN PROGRESS</span></div>
+          </div>
+        </div>
+        <div class="incident-row info">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--brand3)">ℹ️ Medical Assistance Required</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:4px">Reported by: Gate C Staff • Attendee feeling unwell, near Section D Row 5</div>
+            </div>
+            <div style="text-align:right;flex-shrink:0"><div style="font-size:11px;color:var(--muted)">15:29</div><span style="background:rgba(0,245,196,0.1);color:var(--brand3);padding:2px 8px;border-radius:8px;font-size:10px;font-weight:600">RESOLVED</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EVENT TIMELINE PANEL -->
+  <div class="panel" id="panel-timeline">
+    <div class="card">
+      <div class="card-title" style="margin-bottom:20px">Event Timeline</div>
+      <div style="position:relative;padding-left:20px">
+        <div style="position:absolute;left:24px;top:0;bottom:0;width:2px;background:var(--border)"></div>
+        <div style="display:flex;flex-direction:column;gap:0">
+          <div class="timeline-item"><div class="timeline-time">13:00</div><div class="timeline-dot" style="background:var(--brand3)"></div><div><div style="font-weight:600;font-size:14px">Venue handover — setup begins</div><div style="font-size:12px;color:var(--muted)">Stage construction, lighting rig, sound check crew arrive</div></div></div>
+          <div class="timeline-item"><div class="timeline-time">14:00</div><div class="timeline-dot" style="background:var(--brand3)"></div><div><div style="font-weight:600;font-size:14px">Gates open — public entry</div><div style="font-size:12px;color:var(--muted)">All 3 gates operational, scanner team deployed</div></div></div>
+          <div class="timeline-item"><div class="timeline-time">14:45</div><div class="timeline-dot" style="background:var(--brand)"></div><div><div style="font-weight:600;font-size:14px">LED wristbands synced and activated</div><div style="font-size:12px;color:var(--muted)">2,400 bands synced to sound system</div></div></div>
+          <div class="timeline-item" style="background:rgba(108,60,247,0.06);border-radius:8px;margin:-2px;padding:10px 0 10px 0"><div class="timeline-time" style="color:var(--brand)">15:42</div><div class="timeline-dot" style="background:var(--brand2)"></div><div><div style="font-weight:600;font-size:14px;color:var(--brand2)">🔴 NOW — Incident: Gate A surge</div><div style="font-size:12px;color:var(--muted)">Action required: open auxiliary entry</div></div></div>
+          <div class="timeline-item" style="opacity:0.5"><div class="timeline-time">16:00</div><div class="timeline-dot" style="background:var(--border)"></div><div><div style="font-weight:600;font-size:14px">Opening act performance</div><div style="font-size:12px;color:var(--muted)">DJ warm-up set — 60 mins</div></div></div>
+          <div class="timeline-item" style="opacity:0.5"><div class="timeline-time">17:30</div><div class="timeline-dot" style="background:var(--border)"></div><div><div style="font-weight:600;font-size:14px">Headliner — Main Stage</div><div style="font-size:12px;color:var(--muted)">3-hour main performance</div></div></div>
+          <div class="timeline-item" style="opacity:0.5"><div class="timeline-time">21:00</div><div class="timeline-dot" style="background:var(--border)"></div><div><div style="font-weight:600;font-size:14px">Pyrotechnics finale</div></div></div>
+          <div class="timeline-item" style="opacity:0.5"><div class="timeline-time">21:30</div><div class="timeline-dot" style="background:var(--border)"></div><div><div style="font-weight:600;font-size:14px">Crowd dispersal — controlled exit</div></div></div>
+          <div class="timeline-item" style="opacity:0.5"><div class="timeline-time">23:00</div><div class="timeline-dot" style="background:var(--border)"></div><div><div style="font-weight:600;font-size:14px">Venue cleared — teardown begins</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
 </div>
 
 <script>
+
+function broadcastTeam(){alert('Broadcasting to all 24 team members via WhatsApp...');}
+function addTeamMember(){alert('Add new team member dialog...');}
+function contactMember(name){alert('Calling '+name+' via radio/WhatsApp...');}
+function toggleTask(el){el.classList.toggle('done');el.textContent=el.classList.contains('done')?'✓':'';el.nextElementSibling.style.textDecoration=el.classList.contains('done')?'line-through':'none';el.nextElementSibling.style.opacity=el.classList.contains('done')?'0.6':'1';}
+function addTask(){const t=prompt('Task description?');if(t)alert('Task added: '+t);}
+function resolveIncident(btn){btn.closest('.incident-row').style.opacity='0.5';alert('Incident marked as resolved.');}
+function escalateIncident(){alert('Incident escalated to Super Admin and venue manager.');}
+function logIncident(){const t=prompt('Describe the incident:');if(t)alert('Incident logged and team notified.');}
+
 function showPanel(name,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('active'));
