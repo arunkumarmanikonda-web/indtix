@@ -479,4 +479,120 @@ function updateCart(){
   }
   const sub=keys.reduce((s,k)=>s+cart[k].price*cart[k].qty,0);
   const gst=Math.round(sub*0.18);
-  items.innerHTML=keys.map(k=>
+  items.innerHTML=keys.map(k=>    `<div class="cart-item"><span class="ci-name">${k}</span><div class="ci-qty"><button class="ci-qty-btn" onclick="changeCartQty('${k}',-1)">−</button><span class="ci-qty-num">${cart[k].qty}</span><button class="ci-qty-btn" onclick="changeCartQty('${k}',1)">+</button></div><span class="ci-price">₹${(cart[k].price*cart[k].qty).toLocaleString('en-IN')}</span></div>`
+  ).join('');
+  total.style.display='block';
+  const cgst=(gst/2).toFixed(0);const sgst=(gst/2).toFixed(0);
+  document.getElementById('cartSubtotal').textContent='₹'+sub.toLocaleString('en-IN');
+  document.getElementById('cartCGST').textContent='₹'+cgst;
+  document.getElementById('cartSGST').textContent='₹'+sgst;
+  document.getElementById('cartGrandTotal').textContent='₹'+(sub+gst).toLocaleString('en-IN');
+}
+
+function changeCartQty(name,delta){
+  if(!cart[name])return;
+  cart[name].qty=Math.max(0,cart[name].qty+delta);
+  if(cart[name].qty===0)delete cart[name];
+  updateCart();
+}
+
+function clearCart(){ cart={}; updateCart(); showOpsToast('🗑 Cart cleared'); }
+
+function processPayment(method){
+  const keys=Object.keys(cart);
+  if(!keys.length){showOpsToast('Cart is empty! Add items first.');return;}
+  const sub=keys.reduce((s,k)=>s+cart[k].price*cart[k].qty,0);
+  const total=Math.round(sub*1.18);
+  clearCart();
+  const orderId='POS'+Math.floor(Math.random()*900000+100000);
+  showOpsToast(`✅ Payment ₹${total.toLocaleString('en-IN')} received via ${method}. Order ${orderId} confirmed!`);
+  addToLog('valid','POS Sale: ₹'+total+' · '+method+' · Order #'+orderId);
+}
+
+function printReceipt(){ showOpsToast('🖨️ Receipt printing on thermal printer...'); }
+function openCash(){ showOpsToast('💰 Cash drawer opened'); }
+
+// Wristband / LED
+let wristCount=2401;
+function issueWristband(){
+  wristCount++;
+  document.getElementById('wristIssued').textContent=wristCount.toLocaleString('en-IN');
+  showOpsToast('✅ Wristband #WB-'+wristCount+' issued and activated!');
+}
+function deactivateWristband(){
+  const id=prompt('Enter wristband ID to deactivate:');
+  if(id)showOpsToast('⛔ Wristband '+id+' deactivated and flagged in system.');
+}
+function activateLEDBand(zone){
+  const colors={'VIP':'Gold','GA':'Blue','PREM':'Purple','ALL':'Rainbow'};
+  showOpsToast('💡 LED bands in zone '+zone+' activated — '+colors[zone]+' mode');
+}
+function syncAllBands(){
+  showOpsToast('🔄 Syncing all 2,400 LED bands... Done! 2,398/2,400 responding (99.9%)');
+}
+function setLEDScene(scene){
+  const scenes={arrive:'Arrival sequence: warm white → brand gradient',perform:'Performance: reactive pulse to BPM',encore:'Encore: full rainbow strobe',exit:'Exit: soft fade out'};
+  showOpsToast('🌈 Scene "'+scene+'" activated: '+(scenes[scene]||scene));
+}
+
+// Emergency / Announcements
+function sendEmergencyAlert(){
+  if(confirm('🚨 SEND EMERGENCY ALERT to ALL on-ground staff via radio + WhatsApp?')){
+    showOpsToast('🚨 EMERGENCY ALERT broadcast to all 48 staff members! Gate 4 emergency protocol activated.');
+    addToLog('invalid','🚨 EMERGENCY ALERT broadcast — all staff notified');
+  }
+}
+function broadcastAnnouncement(){
+  const msg=prompt('Announcement message to broadcast:');
+  if(msg){
+    showOpsToast('📢 Announcement broadcast: "'+msg.slice(0,40)+'"');
+    addToLog('valid','Announcement broadcast: '+msg.slice(0,30));
+  }
+}
+
+// Gate stats live update
+let checkedIn=2841,capacity=5000;
+setInterval(()=>{
+  checkedIn+=Math.floor(Math.random()*3);
+  if(checkedIn>capacity)checkedIn=capacity;
+  const el=document.getElementById('liveCheckin');
+  if(el)el.textContent=checkedIn.toLocaleString('en-IN');
+  const pctEl=document.getElementById('livePct');
+  if(pctEl)pctEl.textContent=Math.round(checkedIn/capacity*100)+'%';
+},3000);
+
+// Live sales counter
+let posTotal=142800;
+setInterval(()=>{
+  posTotal+=Math.floor(Math.random()*500);
+  const el=document.getElementById('posLiveTotal');
+  if(el)el.textContent='₹'+posTotal.toLocaleString('en-IN');
+},5000);
+
+// Toast for ops
+function showOpsToast(msg){
+  let c=document.getElementById('opsToastContainer');
+  if(!c){c=document.createElement('div');c.id='opsToastContainer';c.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:9999;width:90%;max-width:380px;display:flex;flex-direction:column;gap:8px;align-items:center';document.body.appendChild(c);}
+  const t=document.createElement('div');
+  t.style.cssText='background:rgba(26,32,53,0.97);border:1px solid var(--brand);border-radius:12px;padding:12px 18px;font-size:13px;text-align:center;opacity:0;transform:translateY(10px);transition:all 0.3s;box-shadow:0 8px 24px rgba(0,0,0,0.5);width:100%';
+  t.textContent=msg;c.appendChild(t);
+  setTimeout(()=>{t.style.opacity='1';t.style.transform='translateY(0)'},10);
+  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300)},4000);
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  updateCart();
+  // Auto-populate log with sample entries
+  const samples=[
+    ['valid','Rohan Mehta — VIP Gold · BK4821932'],
+    ['valid','Priya Nair — General Admission · BK4821784'],
+    ['dup','DUPLICATE — BK4821302 already used at Gate 1'],
+    ['valid','Arjun Sharma — Premium Standing · BK4820971'],
+    ['invalid','INVALID — QR code tampered'],
+    ['valid','Kavita Rao — General Admission · BK4820853'],
+  ];
+  samples.forEach(([t,txt])=>setTimeout(()=>addToLog(t,txt),Math.random()*1000));
+});
+</script>
+</body>
+</html>

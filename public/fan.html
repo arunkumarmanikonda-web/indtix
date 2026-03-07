@@ -946,15 +946,6 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
 
 <script>
 const EVENTS = [
-  { id:'E001',name:'Sunburn Arena Mumbai',date:'Apr 15, 2025',venue:'NSCI Dome, Worli',city:'Mumbai',price:1499,category:'Music',image:'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600',sold:72 },
-  { id:'E002',name:'NH7 Weekender',date:'May 20, 2025',venue:'Mahalaxmi Grounds',city:'Pune',price:2999,category:'Music',image:'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600',sold:58 },
-  { id:'E003',name:'Comedy Central Live',date:'Apr 28, 2025',venue:'JW Marriott Ballroom',city:'Bengaluru',price:899,category:'Comedy',image:'https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=600',sold:45 },
-  { id:'E004',name:'Tech Summit 2025',date:'Jun 10, 2025',venue:'HITEX Exhibition Centre',city:'Hyderabad',price:4999,category:'Conference',image:'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600',sold:85 },
-  { id:'E005',name:'Lollapalooza India',date:'Mar 22, 2025',venue:'Mahalaxmi Racecourse',city:'Mumbai',price:5999,category:'Music',image:'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600',sold:92 },
-  { id:'E006',name:'BITS Pilani Oasis',date:'Oct 1, 2025',venue:'BITS Campus',city:'Pilani',price:299,category:'College Fest',image:'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600',sold:34 },
-];
-
-const EVENTS = [
   { id:'E001',name:'Sunburn Arena Mumbai',date:'Apr 15, 2026',venue:'NSCI Dome, Worli',city:'Mumbai',price:1499,category:'Music',image:'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600',sold:72 },
   { id:'E002',name:'NH7 Weekender',date:'May 20, 2026',venue:'Mahalaxmi Grounds',city:'Pune',price:2999,category:'Music',image:'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600',sold:58 },
   { id:'E003',name:'Comedy Central Live',date:'Apr 28, 2026',venue:'JW Marriott Ballroom',city:'Bengaluru',price:899,category:'Comedy',image:'https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=600',sold:45 },
@@ -1189,8 +1180,82 @@ function completePayment(){
   if(currentEvent) showConfirmation();
 }
 
-function downloadTicket(){ showToast('📄 Ticket PDF downloading...'); }
-function shareTicket(){ showToast('📲 Opening WhatsApp share...'); }
+function downloadTicket(){
+  showToast('📄 Generating ticket PDF — will download in 3 seconds...');
+  // In production: POST /api/tickets/pdf with bookingId
+  setTimeout(()=>showToast('✅ Ticket downloaded! Check your downloads folder.'),2000);
+}
+function shareTicket(){
+  if(navigator.share){
+    navigator.share({title:'My INDTIX Ticket',text:'I just booked tickets! 🎟️',url:'https://indtix.com'}).catch(()=>{});
+  } else {
+    showToast('📲 Ticket link copied — paste in WhatsApp!');
+    navigator.clipboard?.writeText('https://indtix.com/ticket/'+Math.random().toString(36).slice(2,9).toUpperCase());
+  }
+}
+function viewGSTInvoice(){
+  const modal=document.getElementById('gstInvoiceModal');
+  if(!currentEvent) return;
+  const bk='BK'+Math.random().toString(36).slice(2,8).toUpperCase();
+  const base=selectedSeats.length*ZONE_PRICES[currentZone]||2998;
+  const cgst=(base*0.09).toFixed(2);
+  const sgst=(base*0.09).toFixed(2);
+  const total=(base*1.18+20).toFixed(2);
+  modal.innerHTML=`
+  <div class="modal-overlay" id="gstInvoiceModal" onclick="this.style.display='none'" style="display:flex">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;max-width:520px;width:90%;max-height:90vh;overflow-y:auto;position:relative" onclick="event.stopPropagation()">
+      <button onclick="document.getElementById('gstInvoiceModal').style.display='none'" style="position:absolute;top:16px;right:16px;background:var(--dark3);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px">✕</button>
+      <div style="text-align:center;margin-bottom:20px"><div style="font-size:22px;font-weight:800;font-family:'Space Grotesk',sans-serif">TAX INVOICE</div><div style="font-size:12px;color:var(--muted)">Invoice No: INV-2026-${bk}</div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;font-size:13px">
+        <div><div style="font-weight:700;margin-bottom:8px;color:var(--brand3)">Supplier</div><div style="font-weight:600">Oye Imagine Private Limited</div><div style="color:var(--muted)">GSTIN: 27AABCO1234A1Z5</div><div style="color:var(--muted)">CIN: U74999MH2023PTC001234</div><div style="color:var(--muted)">Mumbai, Maharashtra 400001</div></div>
+        <div><div style="font-weight:700;margin-bottom:8px;color:var(--brand3)">Bill To</div><div style="font-weight:600">Registered Customer</div><div style="color:var(--muted)">Order: ${bk}</div><div style="color:var(--muted)">Date: ${new Date().toLocaleDateString('en-IN')}</div><div style="color:var(--muted)">Place of Supply: Maharashtra</div></div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px">
+        <thead><tr style="background:rgba(108,60,247,0.15)"><th style="padding:8px 10px;text-align:left;border-bottom:1px solid var(--border)">Description</th><th style="padding:8px 10px;text-align:right;border-bottom:1px solid var(--border)">HSN</th><th style="padding:8px 10px;text-align:right;border-bottom:1px solid var(--border)">Qty</th><th style="padding:8px 10px;text-align:right;border-bottom:1px solid var(--border)">Rate</th><th style="padding:8px 10px;text-align:right;border-bottom:1px solid var(--border)">Amount</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:8px 10px">${currentEvent?.name||'Event Ticket'} — ${currentZone}</td><td style="padding:8px 10px;text-align:right;color:var(--muted)">9996</td><td style="padding:8px 10px;text-align:right">${selectedSeats.length||2}</td><td style="padding:8px 10px;text-align:right">₹${ZONE_PRICES[currentZone]?.toLocaleString('en-IN')||'1,499'}</td><td style="padding:8px 10px;text-align:right;font-weight:600">₹${base.toLocaleString('en-IN')}</td></tr>
+          <tr><td style="padding:8px 10px">Platform Convenience Fee</td><td style="padding:8px 10px;text-align:right;color:var(--muted)">9984</td><td style="padding:8px 10px;text-align:right">${selectedSeats.length||2}</td><td style="padding:8px 10px;text-align:right">₹20</td><td style="padding:8px 10px;text-align:right;font-weight:600">₹${(20*(selectedSeats.length||2)).toLocaleString('en-IN')}</td></tr>
+        </tbody>
+      </table>
+      <div style="background:var(--dark3);border-radius:10px;padding:14px;font-size:13px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:var(--muted)">Taxable Amount</span><span>₹${base}</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:var(--muted)">CGST @ 9%</span><span>₹${cgst}</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:var(--muted)">SGST @ 9%</span><span>₹${sgst}</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:var(--muted)">IGST</span><span>Nil</span></div>
+        <div style="display:flex;justify-content:space-between;font-weight:800;font-size:15px;padding-top:8px;border-top:1px solid var(--border);margin-top:6px"><span>Total</span><span style="color:var(--brand3)">₹${total}</span></div>
+      </div>
+      <div style="text-align:center;margin-top:16px;color:var(--muted);font-size:11px">This is a computer-generated invoice. No signature required. IATA registered. Subject to INDORE courts.</div>
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button onclick="showToast('📄 GST Invoice PDF downloading...')" style="flex:1;background:var(--grad1);border:none;color:#fff;padding:10px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-download"></i> Download PDF</button>
+        <button onclick="showToast('📧 Invoice sent to your email!')" style="flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-envelope"></i> Email Invoice</button>
+      </div>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  modal.style.display='flex';
+}
+// Business Account - Bulk Booking Override
+function requestGroupBooking(){
+  showToast('📋 Group booking request sent! Our team will contact you within 2 hours for orders of 10+ tickets.');
+}
+function openKYCVerification(){
+  const kyc=document.createElement('div');
+  kyc.innerHTML=`<div class="modal-overlay" style="display:flex" onclick="this.parentNode.removeChild(this)">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;max-width:480px;width:90%;max-height:85vh;overflow-y:auto" onclick="event.stopPropagation()">
+      <div style="font-size:18px;font-weight:800;margin-bottom:6px;font-family:'Space Grotesk',sans-serif">🔐 KYC Verification</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:20px">Verify your identity to unlock higher ticket limits and business features.</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Full Legal Name (as on Aadhaar)</label><input type="text" placeholder="Enter full name" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif"></div>
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Aadhaar Number</label><input type="text" placeholder="XXXX XXXX XXXX" maxlength="14" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif"></div>
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">PAN Card (optional, for GST invoices)</label><input type="text" placeholder="ABCDE1234F" maxlength="10" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif"></div>
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Upload Aadhaar (front & back)</label><div style="border:2px dashed var(--border);border-radius:10px;padding:20px;text-align:center;cursor:pointer;color:var(--muted)"><i class="fas fa-cloud-upload-alt" style="font-size:24px;margin-bottom:8px;display:block"></i><div style="font-size:13px">Click to upload or drag & drop</div><div style="font-size:11px;margin-top:4px">JPG, PNG, PDF up to 5MB</div></div></div>
+        <div style="background:rgba(108,60,247,0.1);border:1px solid rgba(108,60,247,0.3);border-radius:10px;padding:12px;font-size:12px;color:var(--muted)"><i class="fas fa-shield-alt" style="color:var(--brand);margin-right:6px"></i>Your data is encrypted and stored securely. We comply with IT Act 2000 & DPDP Act 2023.</div>
+        <button onclick="showToast('✅ KYC submitted! Verified within 24 hours. You can now book up to 50 tickets.');this.closest('.modal-overlay').parentNode.removeChild(this.closest('.modal-overlay'))" style="background:var(--grad1);border:none;color:#fff;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Submit KYC →</button>
+      </div>
+    </div>
+  </div>`;
+  document.body.appendChild(kyc.firstElementChild);
+}
 
 /* ─── ACCOUNT PANEL ─── */
 function openAccountPanel(){ document.getElementById('accountPanel').style.right='0'; document.body.style.overflow='hidden'; }
@@ -1283,15 +1348,25 @@ function createParticles(){
 window.addEventListener('DOMContentLoaded',()=>{
   renderEvents(EVENTS);
   createParticles();
-  // Add My Account button to nav
+  // GST Invoice modal container
+  const gstDiv=document.createElement('div');gstDiv.id='gstInvoiceModal';document.body.appendChild(gstDiv);
+  // Add My Account & KYC buttons to nav
   const navActions=document.querySelector('.nav-actions');
   if(navActions){
+    const kycBtn=document.createElement('button');
+    kycBtn.className='btn-ghost';
+    kycBtn.innerHTML='<i class="fas fa-id-card"></i> KYC';
+    kycBtn.onclick=openKYCVerification;
+    kycBtn.title='Verify identity for higher ticket limits';
+    navActions.insertBefore(kycBtn,navActions.firstChild);
     const accBtn=document.createElement('button');
     accBtn.className='btn-ghost';
     accBtn.innerHTML='<i class="fas fa-user"></i> My Account';
     accBtn.onclick=openAccountPanel;
     navActions.insertBefore(accBtn,navActions.firstChild);
   }
+  // Show referral toast after 5s
+  setTimeout(()=>showToast('🎁 Invite friends & earn ₹100 INDY Credits per booking!'),5000);
 });
 </script>
 </body>

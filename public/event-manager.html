@@ -737,4 +737,155 @@ let count=2841;
 setInterval(()=>{count+=Math.floor(Math.random()*3);const el=document.getElementById('checkinCount');if(el)el.textContent=count.toLocaleString('en-IN');},3000);
 </script>
 </body>
-</html>
+</html><script>
+// ─── EVENT MANAGER PLATINUM ENHANCEMENTS ────────────────────────────────
+function showEMToast(msg,type){
+  type=type||'success';
+  let c=document.getElementById('emToastContainer');
+  if(!c){c=document.createElement('div');c.id='emToastContainer';c.style.cssText='position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:10px';document.body.appendChild(c);}
+  const t=document.createElement('div');
+  const color=type==='warning'?'#FFB300':type==='error'?'#FF4444':'var(--brand3)';
+  t.style.cssText='background:var(--card);border:1px solid '+color+';border-radius:12px;padding:14px 20px;font-size:13px;max-width:360px;opacity:0;transform:translateY(20px);transition:all 0.3s;color:var(--text)';
+  t.textContent=msg;c.appendChild(t);
+  setTimeout(function(){t.style.opacity='1';t.style.transform='translateY(0)'},10);
+  setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove()},300)},4000);
+}
+
+// Run Sheet
+var runSheetItems=[
+  {time:'14:00',task:'Crew arrival & accreditation',status:'done',assignee:'Gate Team'},
+  {time:'14:30',task:'Stage A sound check — Main Artist',status:'done',assignee:'Sound Crew'},
+  {time:'15:00',task:'LED band distribution at Gates 1-3',status:'done',assignee:'Ops Team'},
+  {time:'15:30',task:'F&B stall opening check',status:'done',assignee:'F&B Supervisor'},
+  {time:'16:00',task:'Gates open — crowd entry begins',status:'active',assignee:'All Gates'},
+  {time:'17:00',task:'Support act performance',status:'pending',assignee:'Stage Manager'},
+  {time:'19:00',task:'Main act performance — pyro clearance',status:'pending',assignee:'Production'},
+  {time:'21:30',task:'Controlled crowd dispersal',status:'pending',assignee:'Security'},
+  {time:'22:00',task:'Teardown begins',status:'pending',assignee:'Crew'},
+];
+function renderRunSheet(){
+  const container=document.getElementById('runSheetList');
+  if(!container)return;
+  container.innerHTML=runSheetItems.map(function(item,i){
+    const color=item.status==='done'?'var(--brand3)':item.status==='active'?'var(--brand2)':'var(--border)';
+    const statusLabel=item.status==='done'?'✅ Done':item.status==='active'?'🔴 LIVE':'⏳ Pending';
+    return '<div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--dark3);border-radius:10px;margin-bottom:8px;border-left:3px solid '+color+'"><div style="font-size:13px;font-weight:700;color:var(--brand3);min-width:48px">'+item.time+'</div><div style="flex:1"><div style="font-size:13px;font-weight:600">'+item.task+'</div><div style="font-size:11px;color:var(--muted)">Assignee: '+item.assignee+'</div></div><button onclick="updateRunSheetStatus('+i+')" style="background:rgba(108,60,247,0.15);border:1px solid var(--brand);color:var(--brand);padding:4px 12px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif">'+statusLabel+'</button></div>';
+  }).join('');
+}
+function updateRunSheetStatus(i){
+  const item=runSheetItems[i];
+  if(item.status==='pending')item.status='active';
+  else if(item.status==='active')item.status='done';
+  else item.status='pending';
+  renderRunSheet();
+  showEMToast('Run sheet item updated: "'+item.task+'" → '+item.status);
+}
+function addRunSheetItem(){
+  const time=prompt('Time (HH:MM):');
+  const task=prompt('Task description:');
+  const assignee=prompt('Assignee:');
+  if(time&&task){runSheetItems.push({time,task,status:'pending',assignee:assignee||'TBD'});renderRunSheet();showEMToast('Run sheet item added: '+task);}
+}
+function exportRunSheet(){showEMToast('📊 Run sheet exporting as PDF...');}
+
+// Tasks
+var tasks=[];
+function addTask(){
+  const desc=prompt('Task description:');
+  if(!desc)return;
+  const assignee=prompt('Assign to:','Team Lead');
+  tasks.push({desc,assignee:assignee||'Unassigned',done:false,priority:'normal'});
+  renderTaskList();
+  showEMToast('Task added: '+desc);
+}
+function renderTaskList(){
+  const container=document.getElementById('taskList');
+  if(!container)return;
+  if(!tasks.length){container.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted)">No custom tasks. Click "+ Add Task" to start.</div>';return;}
+  container.innerHTML=tasks.map(function(t,i){
+    return '<div style="display:flex;align-items:center;gap:10px;padding:8px;background:var(--dark3);border-radius:8px;margin-bottom:6px;'+(t.done?'opacity:0.5':'')+'"><button onclick="toggleCustomTask('+i+')" style="width:22px;height:22px;border-radius:4px;border:1px solid var(--border);background:'+(t.done?'var(--brand3)':'var(--dark)')+';color:#000;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center">'+(t.done?'✓':'')+'</button><div style="flex:1"><div style="font-size:13px;font-weight:500;'+(t.done?'text-decoration:line-through':'')+'">'+t.desc+'</div><div style="font-size:11px;color:var(--muted)">'+t.assignee+'</div></div><button onclick="deleteTask('+i+')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px">×</button></div>';
+  }).join('');
+}
+function toggleCustomTask(i){tasks[i].done=!tasks[i].done;renderTaskList();}
+function deleteTask(i){tasks.splice(i,1);renderTaskList();}
+
+// Incidents
+var incidents=[];
+function logIncident(){
+  const type=prompt('Incident type (Medical/Security/Fire/Technical/Other):','Security');
+  const desc=prompt('Describe the incident:');
+  if(!type||!desc)return;
+  const id='INC-'+Math.floor(Math.random()*9000+1000);
+  incidents.push({id,type,desc,time:new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}),status:'open',severity:type==='Fire'||type==='Medical'?'critical':'medium'});
+  renderIncidents();
+  showEMToast('🚨 Incident logged: '+id+'. Relevant teams notified via WhatsApp.');
+}
+function renderIncidents(){
+  const container=document.getElementById('incidentList');
+  if(!container)return;
+  if(!incidents.length){container.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted)">No incidents logged. Click "Log Incident" to record new ones.</div>';return;}
+  container.innerHTML=incidents.map(function(inc,i){
+    const severityColor=inc.severity==='critical'?'#FF4444':inc.severity==='high'?'#FFB300':'var(--brand3)';
+    return '<div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--dark3);border-radius:10px;margin-bottom:8px;border-left:3px solid '+severityColor+'"><div style="flex:1"><div style="font-size:13px;font-weight:700">'+inc.id+' — '+inc.type+'</div><div style="font-size:12px;color:var(--muted);margin-top:2px">'+inc.desc+'</div><div style="font-size:11px;color:var(--muted);margin-top:4px">Logged: '+inc.time+' · Status: '+inc.status+'</div></div><div style="display:flex;gap:6px"><button onclick="resolveIncidentEM('+i+')" style="background:rgba(0,245,196,0.15);border:1px solid rgba(0,245,196,0.4);color:var(--brand3);padding:4px 10px;border-radius:8px;font-size:11px;cursor:pointer">Resolve</button><button onclick="escalateIncident(\''+inc.id+'\')" style="background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.3);color:#FF4444;padding:4px 10px;border-radius:8px;font-size:11px;cursor:pointer">Escalate</button></div></div>';
+  }).join('');
+}
+function resolveIncidentEM(i){
+  incidents[i].status='resolved';
+  renderIncidents();
+  showEMToast('✅ Incident '+incidents[i].id+' marked resolved. Admin notified.');
+}
+function escalateIncident(id){showEMToast('⬆️ Incident '+id+' escalated to Super Admin and venue security.');}
+function resolveIncident(btn){btn.closest('.incident-row')&&(btn.closest('.incident-row').style.opacity='0.5');showEMToast('Incident resolved.');}
+
+// Check-in Monitor
+var checkinCount=2841,checkinCapacity=5000;
+function updateCheckinDisplay(){
+  const el=document.getElementById('checkinCount');
+  const pctEl=document.getElementById('checkinPct');
+  const rateEl=document.getElementById('checkinRate');
+  if(el)el.textContent=checkinCount.toLocaleString('en-IN');
+  if(pctEl)pctEl.textContent=Math.round(checkinCount/checkinCapacity*100)+'%';
+  if(rateEl)rateEl.textContent=Math.floor(Math.random()*50+80)+'/min';
+}
+setInterval(function(){
+  checkinCount+=Math.floor(Math.random()*4);
+  if(checkinCount>checkinCapacity)checkinCount=checkinCapacity;
+  updateCheckinDisplay();
+},2500);
+
+// LED / Wristbands
+function setLEDColor(c){showEMToast('🌈 LED bands set to color: '+(c==='🌈'?'Rainbow':c.toUpperCase())+' across all '+(2400).toLocaleString('en-IN')+' active bands');}
+function ledEffect(e){showEMToast('✨ LED effect "'+e+'" activated for all bands. BPM sync: on.');}
+function broadcastTeam(){showEMToast('📢 Team broadcast sent to all 24 members via WhatsApp!');}
+function addTeamMember(){const name=prompt('Team member name:');if(name)showEMToast('Team member '+name+' added and briefed.');}
+function contactMember(name){showEMToast('📞 Calling '+name+' via on-ground radio channel 4...');}
+function emergencyAlert(){if(confirm('🚨 SEND EMERGENCY ALERT to all 24 team members?'))showEMToast('🚨 Emergency alert broadcast! All team notified via WhatsApp + radio.');}
+
+// Announcements
+function postAnnouncement(){
+  const msg=prompt('Announcement to display on screens and PA:');
+  if(msg)showEMToast('📢 Announcement queued: "'+msg.slice(0,40)+'"');
+}
+function testPA(){showEMToast('🔊 PA system test complete — all 8 speaker zones responding.');}
+
+// Post-event
+function generatePostEventReport(){showEMToast('📊 Post-event report generating... PDF ready in 60 seconds.');}
+function submitFinalReport(){showEMToast('✅ Final event report submitted to organiser and admin.');}
+function exportAttendeeData(){showEMToast('📊 Attendee data exporting as CSV...');}
+function collectFeedback(){showEMToast('📱 Feedback SMS + WhatsApp sent to all 2,841 attendees.');}
+
+// Task checkbox original handler
+function toggleTask(el){
+  el.classList.toggle('done');
+  const taskCheck=el.querySelector('.task-check');
+  if(taskCheck)taskCheck.textContent=el.classList.contains('done')?'✓':'';
+}
+
+// Init
+window.addEventListener('DOMContentLoaded',function(){
+  renderRunSheet();
+  renderTaskList();
+  renderIncidents();
+  updateCheckinDisplay();
+});
+</script>

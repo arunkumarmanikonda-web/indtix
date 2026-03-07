@@ -649,4 +649,108 @@ function showPanel(name,btn){
 function toggleAmenity(el){el.classList.toggle('selected');el.querySelector('.amenity-check').style.color=el.classList.contains('selected')?'var(--brand3)':'transparent';}
 </script>
 </body>
-</html>
+</html><script>
+// ─── VENUE PLATINUM ENHANCEMENTS ────────────────────────────────────────
+function showVenueToast(msg,type){
+  type=type||'success';
+  let c=document.getElementById('venueToastContainer');
+  if(!c){c=document.createElement('div');c.id='venueToastContainer';c.style.cssText='position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:10px';document.body.appendChild(c);}
+  const t=document.createElement('div');
+  const color=type==='warning'?'#FFB300':type==='error'?'#FF4444':'var(--brand3)';
+  t.style.cssText='background:var(--card);border:1px solid '+color+';border-radius:12px;padding:14px 20px;font-size:13px;max-width:360px;opacity:0;transform:translateY(20px);transition:all 0.3s;box-shadow:0 8px 24px rgba(0,0,0,0.4);color:var(--text)';
+  t.textContent=msg;c.appendChild(t);
+  setTimeout(function(){t.style.opacity='1';t.style.transform='translateY(0)'},10);
+  setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove()},300)},4200);
+}
+
+// Floor Plan Builder
+var floorPlanZones=[];
+function addFloorZone(){
+  const name=prompt('Zone name (e.g. VIP Lounge, Standing GA, Stage Left):');
+  if(!name)return;
+  const capacity=parseInt(prompt('Capacity for this zone:',500));
+  if(!capacity)return;
+  floorPlanZones.push({name,capacity,color:['#6C3CF7','#FF3CAC','#00F5C4','#FFB300'][floorPlanZones.length%4]});
+  renderFloorPlan();
+  showVenueToast('Zone "'+name+'" added (capacity: '+capacity+')');
+}
+function removeFloorZone(i){
+  floorPlanZones.splice(i,1);
+  renderFloorPlan();
+}
+function renderFloorPlan(){
+  const container=document.getElementById('floorPlanCanvas');
+  if(!container)return;
+  if(!floorPlanZones.length){container.innerHTML='<div style="text-align:center;padding:60px;color:var(--muted);font-size:14px"><i class="fas fa-layer-group" style="font-size:40px;display:block;margin-bottom:12px;opacity:0.3"></i><div>No zones added. Click "+ Add Zone" to start building your floor plan.</div></div>';return;}
+  container.innerHTML=floorPlanZones.map(function(z,i){
+    const w=Math.max(120,Math.min(300,Math.sqrt(z.capacity)*6));
+    const h=Math.max(80,Math.min(200,Math.sqrt(z.capacity)*4));
+    return '<div style="position:relative;background:'+z.color+'22;border:2px solid '+z.color+';border-radius:12px;padding:12px;width:'+w+'px;height:'+h+'px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:move;user-select:none"><div style="font-weight:700;font-size:13px;color:var(--text)">'+z.name+'</div><div style="font-size:11px;color:var(--muted);margin-top:4px">Cap: '+z.capacity.toLocaleString('en-IN')+'</div><button onclick="removeFloorZone('+i+')" style="position:absolute;top:4px;right:6px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px">×</button></div>';
+  }).join('');
+}
+function saveFloorPlan(){
+  if(!floorPlanZones.length){showVenueToast('Add at least one zone before saving.','warning');return;}
+  showVenueToast('✅ Floor plan saved! '+floorPlanZones.length+' zones configured. Version 2.'+Date.now().toString().slice(-4)+' published.');
+}
+function exportFloorPlan(){showVenueToast('📄 Floor plan exporting as PDF/PNG...');}
+
+// Pricing
+function addPricingTier(){
+  const tier={name:['Off-peak','Weekday','Weekend','Premium','Festival','Season Pass'][Math.floor(Math.random()*6)],base:Math.floor(Math.random()*200000+50000),deposit:Math.floor(Math.random()*50000+10000)};
+  showVenueToast('Pricing tier "'+tier.name+'" added (base: ₹'+tier.base.toLocaleString('en-IN')+')');
+}
+function savePricing(){showVenueToast('✅ Pricing tiers saved and live for new enquiries.');}
+function addPricingExtra(){showVenueToast('Add-on service pricing entry added.');}
+
+// GST Invoice
+function generateVenueInvoice(orgName){
+  orgName=orgName||'Organiser';
+  const invNo='VNV-2026-'+Math.floor(Math.random()*90000+10000);
+  const hireFee=Math.floor(Math.random()*300000+100000);
+  const cgst=Math.round(hireFee*0.09);
+  const sgst=Math.round(hireFee*0.09);
+  const total=hireFee+cgst+sgst;
+  const modal=document.createElement('div');
+  modal.innerHTML='<div style="position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center" onclick="this.remove()"><div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;max-width:500px;width:90%;overflow-y:auto;max-height:90vh" onclick="event.stopPropagation()"><div style="font-size:18px;font-weight:800;margin-bottom:4px;font-family:Space Grotesk,sans-serif">🧾 VENUE HIRE TAX INVOICE</div><div style="font-size:12px;color:var(--muted);margin-bottom:20px">Invoice No: '+invNo+' | Date: '+new Date().toLocaleDateString('en-IN')+'</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;font-size:12px"><div><div style="font-weight:700;color:var(--brand3);margin-bottom:6px">Venue / Supplier</div><div style="font-weight:600">Wankhede Stadium Mgmt</div><div style="color:var(--muted)">GSTIN: 27XXXX1234X1Z5</div><div style="color:var(--muted)">Mumbai, Maharashtra</div></div><div><div style="font-weight:700;color:var(--brand3);margin-bottom:6px">Bill To</div><div style="font-weight:600">'+orgName+'</div><div style="color:var(--muted)">GSTIN: Provided by organiser</div></div></div><div style="background:var(--dark3);border-radius:10px;padding:14px;font-size:13px;margin-bottom:16px"><div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>Venue Hire Fee (1 day)</span><span style="font-weight:600">₹'+hireFee.toLocaleString('en-IN')+'</span></div><div style="display:flex;justify-content:space-between;padding:6px 0"><span style="color:var(--muted)">CGST @ 9%</span><span>₹'+cgst.toLocaleString('en-IN')+'</span></div><div style="display:flex;justify-content:space-between;padding:6px 0"><span style="color:var(--muted)">SGST @ 9%</span><span>₹'+sgst.toLocaleString('en-IN')+'</span></div><div style="display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid var(--border);margin-top:4px;font-weight:800;font-size:15px"><span>Total Payable</span><span style="color:var(--brand3)">₹'+total.toLocaleString('en-IN')+'</span></div></div><div style="display:flex;gap:10px"><button onclick="this.closest(\'[onclick]\').remove();showVenueToast(\'📄 Invoice PDF downloading...\')" style="flex:1;background:var(--grad1);border:none;color:#fff;padding:10px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif">Download PDF</button><button onclick="this.closest(\'[onclick]\').remove();showVenueToast(\'📧 Invoice sent via email & WhatsApp!\')" style="flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif">Send to Organiser</button></div></div>';
+  document.body.appendChild(modal.firstElementChild);
+}
+
+// Bookings
+function saveAvailability(){showVenueToast('✅ Availability settings saved. Calendar live for new enquiries.');}
+function saveAmenities(){showVenueToast('✅ Amenity configuration saved.');}
+function sendQuote(org){showVenueToast('💬 Detailed quote sent to '+org+' via WhatsApp & email. Valid for 48 hours.');}
+function approveEnquiry(org){
+  if(confirm('Confirm booking for '+org+'?')){
+    showVenueToast('✅ Booking confirmed for '+org+'! Contract PDF sent. Calendar blocked.');
+    logVenueEvent('Booking confirmed',org);
+  }
+}
+function rejectEnquiry(org){
+  const r=prompt('Reason for declining '+org+'?');
+  if(r)showVenueToast('Enquiry declined. Organiser '+org+' notified.','warning');
+}
+function downloadVenueReport(){showVenueToast('📊 Venue performance report generating...');}
+function submitVenueKYC(){showVenueToast('✅ Venue KYC submitted! Admin will review within 48 hours.');}
+function saveVenueProfile(){showVenueToast('✅ Venue profile saved and updated on platform.');}
+function uploadVenueDoc(){showVenueToast('📁 Document upload dialog opened. JPG, PNG, PDF supported (max 5MB each).');}
+function publishVenueListing(){showVenueToast('🌐 Venue listing published on INDTIX Venue Marketplace!');}
+function addStaffMember(){const email=prompt('Staff email:');if(email&&email.includes('@'))showVenueToast('Staff invitation sent to '+email+' with venue access link.');}
+function removeStaffMember(name){if(confirm('Remove '+name+' from staff?'))showVenueToast('Staff member '+name+' removed. Access revoked.');}
+function logVenueEvent(action,detail){console.log('[Venue]',action,detail);}
+function blockDate(){showVenueToast('Selected dates blocked for maintenance/unavailability.');}
+
+// Revenue
+function downloadRevenueCSV(){showVenueToast('📊 Revenue CSV downloading...');}
+function requestVenueSettlement(){showVenueToast('💰 Settlement request submitted. NEFT in T+3 business days.');}
+function viewHireContract(id){showVenueToast('📄 Hire contract #'+id+' opening in PDF viewer...');}
+function generateMonthlySummary(){showVenueToast('📊 Monthly revenue summary generating — available in 30 seconds...');}
+
+window.addEventListener('DOMContentLoaded',function(){
+  renderFloorPlan();
+  // Revenue trend
+  setInterval(function(){
+    const el=document.getElementById('venueRevLive');
+    if(el)el.textContent='₹'+(Math.floor(Math.random()*50000+3200000)).toLocaleString('en-IN');
+  },7000);
+});
+</script>

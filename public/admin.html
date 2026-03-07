@@ -938,3 +938,86 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 });
 </script>
+</body></html>
+<script>
+// ─── ADMIN PLATINUM ENHANCEMENTS ────────────────────────────────────────
+function showAdminToast(msg,type){
+  type=type||'success';
+  let c=document.getElementById('adminToastContainer');
+  if(!c){c=document.createElement('div');c.id='adminToastContainer';c.style.cssText='position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:10px';document.body.appendChild(c);}
+  const t=document.createElement('div');
+  const color=type==='error'?'#FF4444':type==='warning'?'#FFB300':'var(--brand3)';
+  t.style.cssText='background:var(--card);border:1px solid '+color+';border-radius:12px;padding:14px 20px;font-size:13px;max-width:380px;opacity:0;transform:translateY(20px);transition:all 0.3s;box-shadow:0 8px 24px rgba(0,0,0,0.5);color:var(--text)';
+  t.textContent=msg;c.appendChild(t);
+  setTimeout(function(){t.style.opacity='1';t.style.transform='translateY(0)'},10);
+  setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove()},300)},4500);
+}
+function logAdminAudit(action,detail){
+  var log=document.getElementById('auditTable');
+  if(!log)return;
+  var now=new Date();
+  var timeStr=now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+  var row=document.createElement('tr');
+  row.innerHTML='<td style="padding:8px 10px;font-size:12px;color:var(--text)">'+timeStr+' today</td><td style="padding:8px 10px;font-size:12px">Super Admin</td><td style="padding:8px 10px;font-size:12px;font-weight:600">'+action+'</td><td style="padding:8px 10px;font-size:12px;color:var(--muted)">'+detail+'</td><td style="padding:8px 10px"><span style="background:rgba(0,245,196,0.15);color:var(--brand3);padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600">Logged</span></td>';
+  log.insertBefore(row,log.firstChild);
+}
+function approveKYC(name){showAdminToast('✅ KYC approved for '+name+'. WhatsApp notification sent.');logAdminAudit('KYC Approved',name);}
+function rejectKYC(name){var r=prompt('Reason for rejecting KYC for '+name+'?');if(r){showAdminToast('❌ KYC rejected. Organiser notified with reason.','warning');logAdminAudit('KYC Rejected',name+' — '+r);}}
+function requestMoreDocs(name){showAdminToast('📧 Additional document request sent to '+name);}
+function approveEvent(name){showAdminToast('✅ Event "'+name+'" approved and live on Fan Portal!');logAdminAudit('Event Approved',name);}
+function rejectEvent(name){var r=prompt('Reason for rejecting "'+name+'"?');if(r)showAdminToast('Event rejected. Organiser notified.','warning');}
+function featuredEvent(name){showAdminToast('⭐ "'+name+'" marked as FEATURED on homepage!');}
+function processSettlement(name,amt){if(confirm('Process settlement of '+amt+' to '+name+'?')){showAdminToast('💰 Settlement of '+amt+' processed. UTR sent via WhatsApp.');logAdminAudit('Settlement Processed',name+' — '+amt);}}
+function holdSettlement(name){showAdminToast('⛔ Settlement for '+name+' held. Compliance notified.','warning');}
+function downloadFinanceReport(){showAdminToast('📊 Finance report CSV downloading...');}
+function generateGSTR(){showAdminToast('📄 GSTR-1 report generating for current month...');}
+function downloadGSTR(){showAdminToast('📥 GSTR file downloading in JSON + Excel...');}
+function filingStatus(){showAdminToast('📋 GSTR-1: Filed ✅ · GSTR-3B: Due in 5 days ⚠️');}
+function addAdminUser(){showAdminToast('Invite dialog: enter email and assign role.');}
+function editRole(role){showAdminToast('Role editor for: '+role+'. Changes require Super Admin confirmation.');}
+function revokeAccess(name){if(confirm('Revoke all access for '+name+'?')){showAdminToast('Access revoked for '+name,'warning');logAdminAudit('Access Revoked',name);}}
+function blockUser(email){if(confirm('Block user '+email+'?')){showAdminToast('🛡️ User blocked. All sessions invalidated.','warning');logAdminAudit('User Blocked',email);}}
+function flagOrder(id){showAdminToast('🚩 Order '+id+' flagged for review. Fraud team notified.');}
+function runFraudScan(){showAdminToast('🔍 Fraud scan initiated across all bookings from last 24h...');}
+function exportAuditLog(){showAdminToast('📊 Audit log exporting as CSV (last 30 days)...');}
+function securityScan(){showAdminToast('🔐 Security scan complete. All systems nominal ✅');}
+function refreshBIData(){showAdminToast('🔄 BI data refreshing from warehouse... Done!');}
+function exportBIReport(){showAdminToast('📊 BI executive summary exporting as PDF...');}
+function runPrediction(){showAdminToast('🤖 AI demand prediction running for next 30 days...');}
+function resolveTicket(id){showAdminToast('✅ Ticket #'+id+' resolved and closed. Customer notified.');logAdminAudit('Support Ticket Resolved','#'+id);}
+function escalateTicket(id){showAdminToast('⬆️ Ticket #'+id+' escalated to Tier 2 support.');}
+function sendSupportReply(id){showAdminToast('📧 Reply sent to customer for ticket #'+id);}
+function publishCMSPage(){showAdminToast('🌐 Page published to Fan Portal. CDN refreshed.');logAdminAudit('CMS Page Published','Content update live');}
+function saveDraft(){showAdminToast('💾 Draft saved. Preview at /preview/draft');}
+function scheduleBanner(){showAdminToast('📅 Banner scheduled. Will go live at configured time.');}
+function sendBulkNotification(){showAdminToast('📲 Bulk notification queued for 84,200 users via WhatsApp + Push.');logAdminAudit('Bulk Notification','84,200 users targeted');}
+function testNotification(){showAdminToast('🧪 Test notification sent to your device.');}
+function configureTemplate(){showAdminToast('Template editor opened.');}
+function refreshHealth(){showAdminToast('🔄 System health refreshed. All services nominal ✅');}
+function alertOncall(){showAdminToast('🚨 On-call engineer alerted via PagerDuty & WhatsApp.');}
+function viewLogs(){showAdminToast('📋 Opening Datadog logs for last 1 hour...');}
+function createCustomRole(){showAdminToast('Custom role builder opened. Define granular permissions.');}
+function saveRiskRule(){showAdminToast('✅ Fraud rule saved and active.');}
+function reviewRiskFlag(id){showAdminToast('Opening fraud case #'+id+' — transaction history loaded.');}
+
+// Live metrics animation
+var liveGMV=42000000;
+setInterval(function(){liveGMV+=Math.floor(Math.random()*50000);var el=document.getElementById('liveGMVDisplay');if(el)el.textContent='₹'+(liveGMV/100000).toFixed(2)+'L';},6000);
+var liveUsers=84200;
+setInterval(function(){liveUsers+=Math.floor(Math.random()*20)-5;var el=document.getElementById('liveUsersDisplay');if(el)el.textContent=liveUsers.toLocaleString('en-IN');},4000);
+
+// Admin audit log init with samples  
+window.addEventListener('DOMContentLoaded',function(){
+  var samples=[
+    ['KYC Review','Organiser: Percept Live submitted Aadhaar + GSTIN'],
+    ['Event Approval','Sunburn Arena Mumbai — under review'],
+    ['Settlement','NH7 Weekender — ₹12.4L processed to Only Much Louder'],
+    ['Fraud Alert','IP cluster: 15 bookings in 8 min from 192.168.1.x'],
+    ['Config Change','Ticket cap default updated to 10'],
+    ['User Login','Super Admin login from Mumbai, India'],
+  ];
+  samples.forEach(function(s,i){
+    setTimeout(function(){logAdminAudit(s[0],s[1]);},i*200);
+  });
+});
+</script>

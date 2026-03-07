@@ -1003,14 +1003,52 @@ function saveSettings(){alert('✅ Settings saved successfully!');}
 function inviteTeamMember(){const email=prompt('Enter email address to invite:');if(email)alert('Invitation sent to '+email+' with role selection link!');}
 function editTeamMember(){alert('Opening role editor...');}
 function activateMember(){alert('Member reactivated.');}
-function previewSegment(){alert('Opening LED preview on connected device...');}
-function addSegment(){alert('Add new zone segment...');}
-function startRehearsal(){alert('🧪 Rehearsal mode started! Sequences running on test frequency.');}
-function goLive(){if(confirm('Go LIVE with LED band control? This will activate all bands.'))alert('🔴 LIVE — All bands activated!');}
-function checkHealth(){alert('All 14 controllers online · 4,997/5,000 bands responding ✅');}
-function editSequence(){alert('Opening sequence editor...');}
-function triggerUpload(){alert('File picker would open here — drag & drop supported');}
-function uploadLogo(){alert('Upload organiser logo — drag & drop supported');}
+function previewSegment(){showOrgToast('🔮 Preview mode activated — LED bands flashing on Zone A test frequency.');}
+function addSegment(){showOrgToast('New zone segment added. Configure color, timing, and intensity below.');}
+function startRehearsal(){showOrgToast('🧪 Rehearsal mode started — Sequences running on 2.4GHz test frequency. All 5,000 bands responding.');}
+function goLive(){
+  if(confirm('⚡ ACTIVATE LIVE LED MODE for all 5,000 wristbands?')){
+    showOrgToast('🔴 LIVE! All 5,000 LED bands activated across 4 zones. Real-time control enabled.');
+    const el=document.getElementById('ledLiveStatus');
+    if(el){el.textContent='● LIVE';el.style.color='var(--brand2)';el.style.fontWeight='700';}
+  }
+}
+function checkHealth(){showOrgToast('💚 All 14 controllers online · 4,997/5,000 bands responding (99.94%) · Latency: 12ms ✅');}
+function editSequence(){showOrgToast('Opening sequence editor with timeline view...');}
+function setLEDBrightness(v){showOrgToast('Brightness set to '+v+'%');}
+function syncLEDBands(){showOrgToast('Syncing all bands to master controller... 4,997/5,000 bands synced ✅');}
+function flashPattern(p){showOrgToast('Pattern "'+p+'" activated on all zones!');}
+function triggerUpload(){showOrgToast('File picker opened — drag & drop CSV/PDF supported.');}
+function uploadLogo(){showOrgToast('Logo upload — drag & drop JPG/PNG (max 2MB).');}
+function changePassword(){showOrgToast('Password reset link sent to your registered email.');}
+function setup2FA(){showOrgToast('2FA setup: scan QR with Google Authenticator or Authy.');}
+function saveSettings(){showOrgToast('✅ Settings saved and synced across all sessions.');}
+function inviteTeamMember(){
+  const email=prompt('Enter team member email:');
+  if(email&&email.includes('@')){showOrgToast('Invitation sent to '+email+' with role selection link!');}
+}
+function editTeamMember(){showOrgToast('Role editor opened. Changes require 2FA confirmation.');}
+function activateMember(){showOrgToast('Team member reactivated — access restored.');}
+function requestSettlement(){
+  showOrgToast('💰 Settlement request submitted! Funds will be credited in T+3 business days (NEFT/IMPS).');
+  logOrgAction('Settlement requested: ₹4,28,500');
+}
+function downloadSettlementReport(){showOrgToast('📊 Settlement report CSV downloading...');}
+function viewInvoice(inv){showOrgToast('Opening invoice '+inv+' — PDF viewer loading...');}
+function downloadInvoice(inv){showOrgToast('📄 Invoice '+inv+' downloading to your device...');}
+function sendInvoiceEmail(inv){showOrgToast('📧 Invoice '+inv+' sent to registered email!');}
+function bulkDownloadInvoices(){showOrgToast('📦 Compiling all invoices into ZIP file — ready in 30 seconds...');}
+function exportAttendees(){showOrgToast('📊 Exporting attendee data as CSV...');}
+function sendBulkWhatsApp(){showOrgToast('📲 WhatsApp broadcast queued for 2,841 attendees. Delivery ETA: ~5 min.');}
+function downloadCheckinReport(){showOrgToast('📄 Check-in report generating...');}
+function validateBadge(){showOrgToast('✅ Badge validation mode active on all entry gates.');}
+function publishPromo(){
+  showOrgToast('📢 Promo code published and live on Fan portal!');
+  logOrgAction('Promo code SUNBURN20 published');
+}
+function createSegment(){showOrgToast('Email segment created. Preview available before sending.');}
+function launchAds(){showOrgToast('🚀 Ad campaign submitted for review — live within 2 hours.');}
+function downloadOrgReport(){showOrgToast('📊 Organiser performance report PDF generating...');}
 function renderOrgSeatMap(){
   const map=document.getElementById('orgSeatMap');
   if(!map)return;
@@ -1049,11 +1087,62 @@ function showPanel(name,btn){
   document.getElementById('topbarTitle').textContent=titles[name]||'Dashboard';
 }
 function submitForApproval(){
-  alert('✅ Event submitted for review! Our team will review within 24-48 hours. You\'ll receive a WhatsApp notification on approval.');
+  const btn=event.target;
+  btn.disabled=true;btn.textContent='Submitting...';
+  setTimeout(()=>{
+    btn.disabled=false;btn.textContent='Submitted ✅';
+    showOrgToast('✅ Event submitted for review! Expect WhatsApp notification within 24-48 hours.');
+    // Add to audit log
+    logOrgAction('Event submitted for approval');
+  },1200);
 }
 function submitKYC(){
-  alert('✅ KYC documents submitted! Our compliance team will review within 24-48 hours. You\'ll receive confirmation on your registered mobile.');
+  showOrgToast('✅ KYC documents submitted! Our compliance team reviews within 24-48 hours. Track status in KYC panel.');
+  logOrgAction('KYC documents uploaded');
 }
+function showOrgToast(msg){
+  let c=document.getElementById('orgToastContainer');
+  if(!c){c=document.createElement('div');c.id='orgToastContainer';c.style.cssText='position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:10px';document.body.appendChild(c);}
+  const t=document.createElement('div');
+  t.style.cssText='background:var(--card);border:1px solid var(--brand);border-radius:12px;padding:14px 20px;font-size:13px;max-width:360px;opacity:0;transform:translateY(20px);transition:all 0.3s;box-shadow:0 8px 24px rgba(108,60,247,0.3)';
+  t.textContent=msg;c.appendChild(t);
+  setTimeout(()=>{t.style.opacity='1';t.style.transform='translateY(0)'},10);
+  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300)},4000);
+}
+function logOrgAction(action){
+  const log=document.getElementById('orgAuditLog');
+  if(!log)return;
+  const row=document.createElement('div');
+  row.style.cssText='display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--dark3);border-radius:8px;font-size:12px;margin-bottom:6px';
+  row.innerHTML=`<span style="color:var(--text)">${action}</span><span style="color:var(--muted)">${new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}</span>`;
+  log.insertBefore(row,log.firstChild);
+}
+// Add audit log panel to DOM after load
+document.addEventListener('DOMContentLoaded',()=>{
+  // Audit log init
+  const auditDiv=document.createElement('div');
+  auditDiv.id='orgAuditLog';
+  auditDiv.style.cssText='display:none';
+  document.body.appendChild(auditDiv);
+  // Live revenue ticker
+  setInterval(()=>{
+    const el=document.getElementById('liveRevTicker');
+    if(el){
+      const base=4280000;
+      const delta=Math.floor(Math.random()*15000);
+      el.textContent='₹'+(base+delta).toLocaleString('en-IN');
+    }
+  },4000);
+  // Wristband/LED live count
+  setInterval(()=>{
+    const el=document.getElementById('ledBandCount');
+    if(el){
+      const base=4970;
+      const delta=Math.floor(Math.random()*5);
+      el.textContent=(base+delta).toLocaleString('en-IN');
+    }
+  },3000);
+});
 </script>
 </body>
 </html>
