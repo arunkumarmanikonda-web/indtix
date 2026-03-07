@@ -1,7 +1,7 @@
-// INDTIX Service Worker v4.0
-const CACHE_NAME = 'indtix-v4';
-const STATIC_CACHE = 'indtix-static-v4';
-const API_CACHE = 'indtix-api-v4';
+// INDTIX Service Worker v5.0
+const CACHE_NAME = 'indtix-v5';
+const STATIC_CACHE = 'indtix-static-v5';
+const API_CACHE = 'indtix-api-v5';
 
 const STATIC_ASSETS = [
   '/fan',
