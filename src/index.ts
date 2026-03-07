@@ -296,7 +296,7 @@ app.post('/api/scan/verify', async (c) => {
 
 // ─── API: Platform Stats (Admin) ─────────────────────────
 app.get('/api/admin/stats', (c) => {
-  return c.json({
+  const statsData = {
     total_users: 2400000,
     gmv_this_month: 42000000,
     venues: 528,
@@ -330,7 +330,8 @@ app.get('/api/admin/stats', (c) => {
       events_pending_approval: 24,
     },
     updated_at: new Date().toISOString()
-  })
+  }
+  return c.json({ ...statsData, stats: statsData })
 })
 
 // ─── API: AI Chat (INDY) ─────────────────────────────────
@@ -1577,6 +1578,7 @@ app.get('/api/developer/endpoints', (c) => {
 // WHITE-LABEL: List instances (GET)
 app.get('/api/whitelabel/provision', (c) => {
   return c.json({
+    instance_id: 'WL-001',
     instances: [
       { id:'WL-001', subdomain:'palace.indtix.com', plan:'pro', status:'active', created_at:'2026-01-15T00:00:00Z' },
       { id:'WL-002', subdomain:'waves.indtix.com',  plan:'starter', status:'active', created_at:'2026-02-01T00:00:00Z' },
