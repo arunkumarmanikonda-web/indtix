@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="INDTIX Developer Portal — RESTful API documentation, test console, and API key management for the INDTIX ticketing platform.">
+<title>INDTIX Developer Portal</title>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+:root{--brand:#6C3CF7;--brand2:#00F5C4;--brand3:#FFD700;--dark1:#0A0A14;--dark2:#0F0F1E;--dark3:#14142A;--card:#1A1A2E;--border:rgba(255,255,255,0.08);--text:#E8E8F0;--muted:#8892A4;--grad1:linear-gradient(135deg,#6C3CF7 0%,#9B59F5 100%);--grad2:linear-gradient(135deg,#00F5C4 0%,#00BFA5 100%)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--dark1);color:var(--text);display:flex;min-height:100vh}
+.sidebar{width:260px;background:var(--dark3);border-right:1px solid var(--border);position:fixed;top:0;bottom:0;left:0;overflow-y:auto;z-index:100}
+.logo{padding:20px 16px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.logo-icon{width:36px;height:36px;background:var(--grad1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff}
+.logo-text{font-weight:800;font-size:16px}
+.logo-badge{font-size:10px;color:var(--brand2);font-weight:600;background:rgba(0,245,196,0.1);padding:2px 6px;border-radius:4px;display:block}
+.sb-nav{padding:12px 8px}
+.sb-section{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);padding:10px 8px 5px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;cursor:pointer;transition:all 0.2s;margin-bottom:1px;color:var(--muted);font-size:12px;font-weight:500;border:none;background:transparent;width:100%;text-align:left;font-family:'Inter',sans-serif}
+.sb-item:hover,.sb-item.active{background:rgba(108,60,247,0.15);color:var(--text)}
+.sb-item.active{color:var(--brand)}
+.sb-item i{width:16px;text-align:center;font-size:13px}
+.main{margin-left:260px;flex:1;display:flex;flex-direction:column}
+.topbar{background:var(--dark3);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-title{font-weight:700;font-size:16px}
+.content{padding:24px;flex:1}
+.panel{display:none}
+.panel.active{display:block}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
+.card-title{font-weight:700;font-size:14px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.method-badge{padding:3px 8px;border-radius:5px;font-size:10px;font-weight:700;font-family:monospace}
+.method-get{background:rgba(0,245,196,0.15);color:#00F5C4}
+.method-post{background:rgba(108,60,247,0.2);color:#9B59F5}
+.method-put{background:rgba(255,179,0,0.15);color:#FFB300}
+.method-delete{background:rgba(255,68,68,0.15);color:#FF4444}
+.endpoint-path{font-family:monospace;font-size:12px;color:var(--text);font-weight:500}
+.endpoint-desc{font-size:11px;color:var(--muted);margin-top:2px}
+.endpoint-row{display:flex;align-items:flex-start;gap:12px;padding:12px;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;background:var(--dark3);cursor:pointer;transition:all 0.2s}
+.endpoint-row:hover{border-color:var(--brand);background:rgba(108,60,247,0.05)}
+.code-block{background:#0D1117;border-radius:8px;padding:16px;font-family:monospace;font-size:12px;line-height:1.7;overflow-x:auto;border:1px solid rgba(255,255,255,0.06);position:relative}
+.copy-btn{position:absolute;top:8px;right:8px;background:rgba(108,60,247,0.2);border:1px solid var(--brand);color:var(--brand);padding:4px 10px;border-radius:6px;font-size:10px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600}
+.copy-btn:hover{background:rgba(108,60,247,0.4)}
+.btn-primary{background:var(--grad1);border:none;color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:8px;transition:all 0.2s}
+.btn-primary:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-sm{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;border:none;font-family:'Inter',sans-serif;transition:all 0.2s}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--muted)}
+.btn-ghost:hover{border-color:var(--brand);color:var(--text)}
+.tag{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.tag-free{background:rgba(0,245,196,0.15);color:var(--brand2)}
+.tag-pro{background:rgba(108,60,247,0.15);color:var(--brand)}
+.tag-enterprise{background:rgba(255,215,0,0.15);color:var(--brand3)}
+.input-field{background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;width:100%;font-family:'Inter',sans-serif}
+.input-field:focus{border-color:var(--brand)}
+.response-box{background:#0D1117;border:1px solid var(--border);border-radius:8px;padding:16px;font-family:monospace;font-size:11px;line-height:1.6;max-height:300px;overflow-y:auto;white-space:pre-wrap;word-break:break-word}
+.status-200{color:#00F5C4}
+.status-400{color:#FF4444}
+.status-401{color:#FFB300}
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:10px}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="logo">
+    <div class="logo-icon">⚡</div>
+    <div>
+      <div class="logo-text">INDTIX API</div>
+      <span class="logo-badge">DEVELOPER PORTAL</span>
+    </div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-section">Getting Started</div>
+    <button class="sb-item active" onclick="showPanel('overview',this)"><i class="fas fa-rocket"></i>Overview</button>
+    <button class="sb-item" onclick="showPanel('quickstart',this)"><i class="fas fa-bolt"></i>Quick Start</button>
+    <button class="sb-item" onclick="showPanel('auth',this)"><i class="fas fa-key"></i>Authentication</button>
+    <div class="sb-section">API Reference</div>
+    <button class="sb-item" onclick="showPanel('events_api',this)"><i class="fas fa-calendar"></i>Events</button>
+    <button class="sb-item" onclick="showPanel('bookings_api',this)"><i class="fas fa-ticket"></i>Bookings</button>
+    <button class="sb-item" onclick="showPanel('search_api',this)"><i class="fas fa-search"></i>Search</button>
+    <button class="sb-item" onclick="showPanel('venue_api',this)"><i class="fas fa-building"></i>Venues</button>
+    <button class="sb-item" onclick="showPanel('organiser_api',this)"><i class="fas fa-user-tie"></i>Organisers</button>
+    <button class="sb-item" onclick="showPanel('payments_api',this)"><i class="fas fa-credit-card"></i>Payments & GST</button>
+    <button class="sb-item" onclick="showPanel('webhooks_api',this)"><i class="fas fa-plug"></i>Webhooks</button>
+    <div class="sb-section">Tools</div>
+    <button class="sb-item" onclick="showPanel('console',this)"><i class="fas fa-terminal"></i>API Console</button>
+    <button class="sb-item" onclick="showPanel('apikeys',this)"><i class="fas fa-shield-alt"></i>API Keys</button>
+    <button class="sb-item" onclick="showPanel('sdks',this)"><i class="fas fa-code"></i>SDKs & Libraries</button>
+    <button class="sb-item" onclick="showPanel('status',this)"><i class="fas fa-heartbeat"></i>API Status</button>
+    <div class="sb-section">Portals</div>
+    <button class="sb-item" onclick="window.location.href='/'"><i class="fas fa-home"></i>Fan Portal</button>
+    <button class="sb-item" onclick="window.location.href='/organiser'"><i class="fas fa-user-tie"></i>Organiser Portal</button>
+    <button class="sb-item" onclick="window.location.href='/admin'"><i class="fas fa-shield-halved"></i>Admin ERP</button>
+  </nav>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="topbarTitle">INDTIX Developer Portal</div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span style="font-size:12px;color:var(--brand2)">● API v4.0</span>
+      <span style="font-size:12px;color:var(--muted)">Base URL: <code style="font-size:11px;color:var(--brand)">https://1737399e.indtix.pages.dev</code></span>
+      <a href="/portals.html" style="font-size:12px;color:var(--muted);text-decoration:none"><i class="fas fa-arrow-left"></i> Back to Portals</a>
+    </div>
+  </div>
+  <div class="content">
+
+    <!-- ─── OVERVIEW ─── -->
+    <div class="panel active" id="panel-overview">
+      <div style="background:var(--grad1);border-radius:16px;padding:32px;margin-bottom:24px;position:relative;overflow:hidden">
+        <div style="position:absolute;right:-20px;top:-20px;width:200px;height:200px;background:rgba(255,255,255,0.04);border-radius:50%"></div>
+        <div style="font-size:28px;font-weight:800;margin-bottom:8px">⚡ INDTIX Platform API</div>
+        <div style="font-size:15px;opacity:0.85;margin-bottom:20px">Build powerful ticketing experiences with India's fastest-growing event platform</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn-sm" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:#fff" onclick="showPanel('quickstart',document.querySelector('[onclick*=quickstart]'))"><i class="fas fa-bolt"></i> Get Started Free</button>
+          <button class="btn-sm" style="background:transparent;border:1px solid rgba(255,255,255,0.3);color:#fff" onclick="showPanel('console',document.querySelector('[onclick*=console]'))"><i class="fas fa-terminal"></i> Try in Console</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px">
+        <div class="card" style="text-align:center"><div style="font-size:28px;font-weight:800;color:var(--brand)">86+</div><div style="font-size:12px;color:var(--muted);margin-top:4px">API Endpoints</div></div>
+        <div class="card" style="text-align:center"><div style="font-size:28px;font-weight:800;color:var(--brand2)">2.4M</div><div style="font-size:12px;color:var(--muted);margin-top:4px">API Calls/Month</div></div>
+        <div class="card" style="text-align:center"><div style="font-size:28px;font-weight:800;color:var(--brand3)">99.8%</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Uptime SLA</div></div>
+        <div class="card" style="text-align:center"><div style="font-size:28px;font-weight:800;color:#FF6B6B">12ms</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Avg Latency</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px">
+        <div>
+          <div class="card">
+            <div class="card-title">📦 What You Can Build</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              ${[
+                {icon:'🎟️',title:'Ticket Sales Widget',desc:'Embed ticket booking directly in your website or app'},
+                {icon:'🔍',title:'Event Discovery App',desc:'Search, filter, and display events by city, category, date'},
+                {icon:'📱',title:'Mobile Ticketing App',desc:'Native iOS/Android app with QR scanning and wallets'},
+                {icon:'📊',title:'Analytics Dashboard',desc:'Custom reporting for organisers, venues, and sponsors'},
+                {icon:'🤝',title:'B2B Distribution',desc:'Resell INDTIX tickets through your own platform'},
+                {icon:'🎪',title:'Event Marketplace',desc:'Create a curated events marketplace for your audience'}
+              ].map(f=>`
+              <div style="padding:12px;background:var(--dark3);border-radius:10px;border:1px solid var(--border)">
+                <div style="font-size:20px;margin-bottom:6px">${f.icon}</div>
+                <div style="font-size:12px;font-weight:700;margin-bottom:4px">${f.title}</div>
+                <div style="font-size:11px;color:var(--muted)">${f.desc}</div>
+              </div>`).join('')}
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">📋 Changelog</div>
+            ${[
+              {version:'v4.1',date:'Mar 7, 2026',changes:['Phase 3 endpoints: Fan Clubs, Livestream, Merch, Sponsors','AI Demand Forecasting API','White-Label SaaS provisioning','Developer Portal launched']},
+              {version:'v4.0',date:'Mar 1, 2026',changes:['86 endpoints (was 70)','Authentication: login, signup, OTP','Promo CRUD, incidents, announcements','LED wristband control API']},
+              {version:'v3.0',date:'Feb 2026',changes:['Wallet & referral system','GST invoice generation','KYC submission & status','Settlement processing']}
+            ].map(c=>`
+            <div style="padding:12px;background:var(--dark3);border-radius:8px;margin-bottom:8px;border-left:3px solid var(--brand)">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                <span style="font-weight:700;font-size:12px;color:var(--brand)">${c.version}</span>
+                <span style="font-size:11px;color:var(--muted)">${c.date}</span>
+              </div>
+              <ul style="list-style:none;padding:0">${c.changes.map(ch=>`<li style="font-size:11px;color:var(--muted);margin-bottom:2px">• ${ch}</li>`).join('')}</ul>
+            </div>`).join('')}
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-title">💳 API Pricing Plans</div>
+            ${[
+              {name:'Free',badge:'tag-free',req_min:100,req_day:10000,price:'₹0/mo',features:['Public endpoints','Events & Search API','No credit card needed']},
+              {name:'Pro',badge:'tag-pro',req_min:1000,req_day:500000,price:'₹2,999/mo',features:['All Free features','Booking & Payment API','Webhook support','Priority support']},
+              {name:'Enterprise',badge:'tag-enterprise',req_min:'Custom',req_day:'Custom',price:'Contact Us',features:['Unlimited requests','Dedicated infra','SLA guarantees','White-glove support']}
+            ].map(p=>`
+            <div style="padding:14px;background:var(--dark3);border-radius:10px;margin-bottom:10px;border:1px solid var(--border)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                <span class="tag ${p.badge}" style="font-size:11px">${p.name}</span>
+                <span style="font-weight:700;font-size:14px;margin-left:auto">${p.price}</span>
+              </div>
+              <div style="font-size:11px;color:var(--muted);margin-bottom:8px">${p.req_min} req/min · ${p.req_day} req/day</div>
+              <ul style="list-style:none;padding:0">${p.features.map(f=>`<li style="font-size:11px;color:var(--muted);margin-bottom:2px">✓ ${f}</li>`).join('')}</ul>
+            </div>`).join('')}
+          </div>
+          <div class="card">
+            <div class="card-title">🌐 Supported Regions</div>
+            ${['🇮🇳 India (Mumbai CDN)','🌏 Southeast Asia (Singapore)','🌍 Global (Cloudflare Edge — 300+ PoPs)'].map(r=>`<div style="font-size:12px;padding:6px 0;border-bottom:1px solid var(--border)">${r}</div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── QUICK START ─── -->
+    <div class="panel" id="panel-quickstart">
+      <div class="card">
+        <div class="card-title">⚡ Get up and running in 3 steps</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+          ${[
+            {step:'01',title:'Get an API Key',desc:'Sign up and create a free API key below'},
+            {step:'02',title:'Make Your First Call',desc:'Call GET /api/events to list events in any city'},
+            {step:'03',title:'Build & Deploy',desc:'Use our SDKs or plain fetch() to build your app'}
+          ].map(s=>`
+          <div style="padding:16px;background:var(--dark3);border-radius:10px;border:1px solid var(--border)">
+            <div style="font-size:32px;font-weight:800;color:var(--brand);opacity:0.5;margin-bottom:8px">${s.step}</div>
+            <div style="font-weight:700;font-size:13px;margin-bottom:4px">${s.title}</div>
+            <div style="font-size:12px;color:var(--muted)">${s.desc}</div>
+          </div>`).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📖 Example: List Events in Mumbai</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600">Request</div>
+            <div class="code-block">
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span style="color:#79C0FF">GET</span> <span style="color:#A5D6FF">/api/events?city=Mumbai</span>
+<span style="color:#8B949E">Host: 1737399e.indtix.pages.dev
+Authorization: Bearer sk_test_YOUR_KEY</span>
+            </div>
+            <div style="font-size:12px;color:var(--muted);margin-top:12px;margin-bottom:8px;font-weight:600">cURL</div>
+            <div class="code-block">
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span style="color:#79C0FF">curl</span> <span style="color:#A5D6FF">'https://1737399e.indtix.pages.dev/api/events?city=Mumbai'</span> \
+  -H <span style="color:#79C0FF">'Authorization: Bearer sk_test_YOUR_KEY'</span>
+            </div>
+            <div style="font-size:12px;color:var(--muted);margin-top:12px;margin-bottom:8px;font-weight:600">JavaScript (fetch)</div>
+            <div class="code-block">
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span style="color:#79C0FF">const</span> <span style="color:#A5D6FF">res</span> = <span style="color:#79C0FF">await</span> <span style="color:#FFA657">fetch</span>(<span style="color:#A5D6FF">
+  'https://1737399e.indtix.pages.dev/api/events?city=Mumbai'</span>,
+  { headers: { <span style="color:#A5D6FF">'Authorization'</span>: <span style="color:#A5D6FF">'Bearer sk_test_YOUR_KEY'</span> } }
+);
+<span style="color:#79C0FF">const</span> { events } = <span style="color:#79C0FF">await</span> res.json();
+<span style="color:#FFA657">console</span>.log(events); <span style="color:#8B949E">// Array of event objects</span>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600">Response (200 OK)</div>
+            <div class="code-block" style="max-height:380px;overflow-y:auto">
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+{
+  <span style="color:#A5D6FF">"events"</span>: [
+    {
+      <span style="color:#A5D6FF">"id"</span>: <span style="color:#A5D6FF">"e1"</span>,
+      <span style="color:#A5D6FF">"title"</span>: <span style="color:#A5D6FF">"Sunburn Arena Mumbai"</span>,
+      <span style="color:#A5D6FF">"date"</span>: <span style="color:#A5D6FF">"2026-04-12"</span>,
+      <span style="color:#A5D6FF">"city"</span>: <span style="color:#A5D6FF">"Mumbai"</span>,
+      <span style="color:#A5D6FF">"venue"</span>: <span style="color:#A5D6FF">"MMRDA Grounds"</span>,
+      <span style="color:#A5D6FF">"category"</span>: <span style="color:#A5D6FF">"Music"</span>,
+      <span style="color:#A5D6FF">"price_from"</span>: <span style="color:#79C0FF">1499</span>,
+      <span style="color:#A5D6FF">"capacity"</span>: <span style="color:#79C0FF">5000</span>,
+      <span style="color:#A5D6FF">"tickets_sold"</span>: <span style="color:#79C0FF">4280</span>,
+      <span style="color:#A5D6FF">"status"</span>: <span style="color:#A5D6FF">"live"</span>
+    }
+  ],
+  <span style="color:#A5D6FF">"total"</span>: <span style="color:#79C0FF">12</span>,
+  <span style="color:#A5D6FF">"city_filter"</span>: <span style="color:#A5D6FF">"Mumbai"</span>
+}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── AUTHENTICATION ─── -->
+    <div class="panel" id="panel-auth">
+      <div class="card">
+        <div class="card-title">🔑 Authentication</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">INDTIX API uses Bearer JWT tokens for authentication. Include your API key in every request header:</p>
+        <div class="code-block" style="margin-bottom:16px">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+Authorization: Bearer <span style="color:#A5D6FF">sk_test_YOUR_API_KEY</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:10px">🔒 User Authentication (JWT)</div>
+            <div class="code-block">
+<span style="color:#79C0FF">POST</span> <span style="color:#A5D6FF">/api/auth/login</span>
+{
+  <span style="color:#A5D6FF">"email"</span>: <span style="color:#A5D6FF">"user@example.com"</span>,
+  <span style="color:#A5D6FF">"password"</span>: <span style="color:#A5D6FF">"••••••••"</span>,
+  <span style="color:#A5D6FF">"provider"</span>: <span style="color:#A5D6FF">"email"</span>
+}
+
+<span style="color:#8B949E">// Response</span>
+{
+  <span style="color:#A5D6FF">"token"</span>: <span style="color:#A5D6FF">"eyJhbGciOiJIUzI1..."</span>,
+  <span style="color:#A5D6FF">"user"</span>: { <span style="color:#A5D6FF">"id"</span>: <span style="color:#A5D6FF">"USR-001"</span>, <span style="color:#A5D6FF">"name"</span>: <span style="color:#A5D6FF">"Priya"</span> }
+}
+            </div>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:10px">📱 OTP / Phone Auth</div>
+            <div class="code-block">
+<span style="color:#79C0FF">POST</span> <span style="color:#A5D6FF">/api/auth/signup</span>
+{ <span style="color:#A5D6FF">"phone"</span>: <span style="color:#A5D6FF">"+919876543210"</span>, <span style="color:#A5D6FF">"name"</span>: <span style="color:#A5D6FF">"Priya"</span> }
+
+<span style="color:#79C0FF">POST</span> <span style="color:#A5D6FF">/api/auth/verify-otp</span>
+{ <span style="color:#A5D6FF">"phone"</span>: <span style="color:#A5D6FF">"+919876543210"</span>, <span style="color:#A5D6FF">"otp"</span>: <span style="color:#A5D6FF">"123456"</span> }
+
+<span style="color:#8B949E">// Returns JWT token on success</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:16px;padding:12px;background:rgba(255,179,0,0.08);border-radius:8px;border-left:3px solid #FFB300">
+          <div style="font-size:12px;font-weight:600;color:#FFB300;margin-bottom:4px">⚠️ Security Notice</div>
+          <div style="font-size:12px;color:var(--muted)">Never expose API keys in client-side JavaScript or mobile apps. Use a server-side proxy for production integrations. All API calls are HTTPS-only.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── EVENTS API ─── -->
+    <div class="panel" id="panel-events_api">
+      <div class="card">
+        <div class="card-title">🎪 Events API</div>
+        <div id="events-api-list">
+          ${[
+            {method:'GET',path:'/api/events',desc:'List all events. Query: city, category, date_from, date_to, q (search)',plan:'free'},
+            {method:'GET',path:'/api/events/:id',desc:'Get single event details including tiers, venue, organiser',plan:'free'},
+            {method:'GET',path:'/api/events/:id/tiers',desc:'Get ticket tiers and pricing for an event',plan:'free'},
+            {method:'GET',path:'/api/events/:id/seatmap',desc:'Get seat map configuration',plan:'free'},
+            {method:'GET',path:'/api/events/:id/addons',desc:'Get available add-ons (F&B, merch, etc.)',plan:'free'},
+            {method:'GET',path:'/api/events/:id/faq',desc:'Get frequently asked questions for event',plan:'free'},
+            {method:'GET',path:'/api/events/:id/checkin-stats',desc:'Real-time check-in stats (requires organiser token)',plan:'pro'},
+            {method:'GET',path:'/api/events/:id/incidents',desc:'Event incidents log (requires organiser token)',plan:'pro'},
+            {method:'POST',path:'/api/events',desc:'Create new event (requires organiser token)',plan:'pro'},
+            {method:'PUT',path:'/api/events/:id',desc:'Update event details (requires organiser token)',plan:'pro'},
+            {method:'POST',path:'/api/events/:id/waitlist',desc:'Join event waitlist',plan:'free'},
+            {method:'GET',path:'/api/categories',desc:'List all event categories',plan:'free'},
+            {method:'GET',path:'/api/cities',desc:'List all supported cities',plan:'free'},
+            {method:'GET',path:'/api/search',desc:'Full-text search events, venues, organisers. Query: q, city, category',plan:'free'}
+          ].map(e=>endpointRow(e)).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── BOOKINGS API ─── -->
+    <div class="panel" id="panel-bookings_api">
+      <div class="card">
+        <div class="card-title">🎟️ Bookings API</div>
+        ${[
+          {method:'POST',path:'/api/bookings',desc:'Create a booking. Body: event_id, tier, qty, user_id, payment_method, promos',plan:'pro'},
+          {method:'GET',path:'/api/bookings/:id',desc:'Get booking details by ID',plan:'pro'},
+          {method:'POST',path:'/api/bookings/:id/cancel',desc:'Cancel a booking and initiate refund',plan:'pro'},
+          {method:'GET',path:'/api/bookings/user/:user_id',desc:'Get all bookings for a user',plan:'pro'},
+          {method:'GET',path:'/api/bookings/bulk',desc:'Bulk booking status (group bookings)',plan:'enterprise'},
+          {method:'POST',path:'/api/tickets/:id/transfer',desc:'Transfer ticket to another user',plan:'pro'},
+          {method:'POST',path:'/api/scan/verify',desc:'Verify QR code at gate. Body: qr_code or ticket_id',plan:'pro'},
+          {method:'POST',path:'/api/promo/validate',desc:'Validate promo code for an event. Body: code, event_id, user_id',plan:'free'},
+          {method:'POST',path:'/api/referral/validate',desc:'Validate referral code. Body: code, user_id',plan:'free'}
+        ].map(e=>endpointRow(e)).join('')}
+      </div>
+    </div>
+
+    <!-- ─── SEARCH API ─── -->
+    <div class="panel" id="panel-search_api">
+      <div class="card">
+        <div class="card-title">🔍 Search API</div>
+        <div class="code-block" style="margin-bottom:16px">
+<span style="color:#79C0FF">GET</span> <span style="color:#A5D6FF">/api/search?q=sunburn&city=Mumbai&category=Music</span>
+
+<span style="color:#8B949E">// Query Parameters</span>
+q         <span style="color:#A5D6FF">string</span>   Search query (min 2 chars)
+city      <span style="color:#A5D6FF">string</span>   Filter by city
+category  <span style="color:#A5D6FF">string</span>   Filter by category
+date_from <span style="color:#A5D6FF">date</span>     Filter from date (YYYY-MM-DD)
+date_to   <span style="color:#A5D6FF">date</span>     Filter to date (YYYY-MM-DD)
+price_max <span style="color:#A5D6FF">number</span>   Maximum ticket price
+page      <span style="color:#A5D6FF">number</span>   Page number (default: 1)
+limit     <span style="color:#A5D6FF">number</span>   Results per page (max: 50)
+        </div>
+        <div style="font-size:13px;font-weight:600;margin-bottom:10px">Response Schema</div>
+        <div class="code-block">
+{
+  <span style="color:#A5D6FF">"results"</span>: [ ...events ],
+  <span style="color:#A5D6FF">"total"</span>: <span style="color:#79C0FF">42</span>,
+  <span style="color:#A5D6FF">"suggestions"</span>: [<span style="color:#A5D6FF">"Sunburn Arena"</span>, <span style="color:#A5D6FF">"NH7 Weekender"</span>],
+  <span style="color:#A5D6FF">"facets"</span>: {
+    <span style="color:#A5D6FF">"cities"</span>: [<span style="color:#A5D6FF">"Mumbai"</span>, <span style="color:#A5D6FF">"Pune"</span>],
+    <span style="color:#A5D6FF">"categories"</span>: [<span style="color:#A5D6FF">"Music"</span>, <span style="color:#A5D6FF">"Comedy"</span>]
+  }
+}
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── VENUE API ─── -->
+    <div class="panel" id="panel-venue_api">
+      <div class="card">
+        <div class="card-title">🏟️ Venue API</div>
+        ${[
+          {method:'GET',path:'/api/venues',desc:'List all registered venues with capacity, city, rating',plan:'free'},
+          {method:'POST',path:'/api/venue/register',desc:'Register a new venue. Body: venue_name, city, capacity, type',plan:'pro'},
+          {method:'GET',path:'/api/venue/dashboard',desc:'Venue performance dashboard (requires venue token)',plan:'pro'},
+          {method:'POST',path:'/api/wristbands/issue',desc:'Issue NFC wristband. Body: booking_id, zone',plan:'pro'},
+          {method:'GET',path:'/api/wristbands/status',desc:'Real-time wristband status for event',plan:'pro'},
+          {method:'POST',path:'/api/wristbands/led/command',desc:'Send LED command to wristbands. Body: event_id, command, zone, color',plan:'pro'},
+          {method:'POST',path:'/api/pos/sale',desc:'Point-of-sale transaction (F&B, merch). Body: event_id, items[]',plan:'pro'}
+        ].map(e=>endpointRow(e)).join('')}
+      </div>
+    </div>
+
+    <!-- ─── ORGANISER API ─── -->
+    <div class="panel" id="panel-organiser_api">
+      <div class="card">
+        <div class="card-title">👔 Organiser API</div>
+        ${[
+          {method:'POST',path:'/api/organiser/register',desc:'Register as organiser. Body: company_name, gstin, pan, email',plan:'free'},
+          {method:'GET',path:'/api/organiser/dashboard',desc:'Organiser dashboard: events, revenue, settlements',plan:'pro'},
+          {method:'GET',path:'/api/organiser/analytics',desc:'Detailed analytics: sales by tier, city, channel',plan:'pro'},
+          {method:'GET',path:'/api/organiser/team',desc:'List team members and roles',plan:'pro'},
+          {method:'POST',path:'/api/organiser/team',desc:'Invite team member. Body: name, email, role',plan:'pro'},
+          {method:'POST',path:'/api/organiser/forecast',desc:'AI demand forecast. Body: event_id, horizon_days',plan:'pro'},
+          {method:'POST',path:'/api/kyc/submit',desc:'Submit KYC documents. Body: entity_type, company_name, gstin, pan',plan:'pro'},
+          {method:'GET',path:'/api/kyc/:id',desc:'Get KYC status for entity',plan:'pro'},
+          {method:'GET',path:'/api/settlements',desc:'List settlements for organiser',plan:'pro'},
+          {method:'POST',path:'/api/settlements/:id/process',desc:'Process settlement (admin only)',plan:'enterprise'},
+          {method:'POST',path:'/api/incidents',desc:'Log incident at event. Body: type, location, priority, event_id',plan:'pro'},
+          {method:'POST',path:'/api/announcements',desc:'Send attendee announcement. Body: event_id, message, audience',plan:'pro'}
+        ].map(e=>endpointRow(e)).join('')}
+      </div>
+    </div>
+
+    <!-- ─── PAYMENTS & GST ─── -->
+    <div class="panel" id="panel-payments_api">
+      <div class="card">
+        <div class="card-title">💳 Payments & GST API</div>
+        ${[
+          {method:'GET',path:'/api/gst/invoice/:booking_id',desc:'Generate GST invoice with CGST/SGST/IGST breakdown',plan:'pro'},
+          {method:'GET',path:'/api/wallet/:user_id',desc:'Get user wallet balance and transaction history',plan:'pro'},
+          {method:'POST',path:'/api/wallet/redeem',desc:'Redeem wallet credits at checkout',plan:'pro'},
+          {method:'GET',path:'/api/promos',desc:'List active promo codes (public)',plan:'free'},
+          {method:'POST',path:'/api/promos',desc:'Create promo code (requires admin token)',plan:'enterprise'},
+          {method:'DELETE',path:'/api/promos/:code',desc:'Deactivate promo code (requires admin token)',plan:'enterprise'},
+          {method:'GET',path:'/api/fanclubs',desc:'List fan clubs / artist subscriptions',plan:'free'},
+          {method:'POST',path:'/api/fanclubs/:id/join',desc:'Join a fan club. Body: user_id, tier',plan:'pro'},
+          {method:'GET',path:'/api/livestreams',desc:'List virtual/hybrid event streams',plan:'free'},
+          {method:'POST',path:'/api/livestreams/:id/purchase',desc:'Purchase livestream access. Body: user_id, tier',plan:'pro'},
+          {method:'GET',path:'/api/merch',desc:'List merchandise products',plan:'free'},
+          {method:'POST',path:'/api/merch/order',desc:'Place merch order. Body: items[], user_id, shipping_address',plan:'pro'}
+        ].map(e=>endpointRow(e)).join('')}
+      </div>
+    </div>
+
+    <!-- ─── WEBHOOKS ─── -->
+    <div class="panel" id="panel-webhooks_api">
+      <div class="card">
+        <div class="card-title">🔌 Webhooks</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">INDTIX can push real-time events to your endpoint. Register your webhook URL in the dashboard.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:10px">📋 Available Events</div>
+            ${[
+              {event:'booking.created',desc:'New booking confirmed'},
+              {event:'booking.cancelled',desc:'Booking cancelled and refund initiated'},
+              {event:'ticket.transferred',desc:'Ticket transferred to new user'},
+              {event:'event.live',desc:'Event status changed to live'},
+              {event:'event.cancelled',desc:'Event cancelled'},
+              {event:'checkin.completed',desc:'Attendee checked in at gate'},
+              {event:'kyc.approved',desc:'Organiser/venue KYC approved'},
+              {event:'settlement.processed',desc:'Settlement payment processed'},
+              {event:'fraud.detected',desc:'Suspicious activity detected'}
+            ].map(w=>`
+            <div style="padding:8px;background:var(--dark3);border-radius:6px;margin-bottom:6px;border:1px solid var(--border)">
+              <div style="font-family:monospace;font-size:11px;color:var(--brand);font-weight:600">${w.event}</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:2px">${w.desc}</div>
+            </div>`).join('')}
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:10px">📦 Webhook Payload</div>
+            <div class="code-block">
+{
+  <span style="color:#A5D6FF">"event"</span>: <span style="color:#A5D6FF">"booking.created"</span>,
+  <span style="color:#A5D6FF">"timestamp"</span>: <span style="color:#A5D6FF">"2026-03-07T14:30:00Z"</span>,
+  <span style="color:#A5D6FF">"version"</span>: <span style="color:#A5D6FF">"v4"</span>,
+  <span style="color:#A5D6FF">"data"</span>: {
+    <span style="color:#A5D6FF">"booking_id"</span>: <span style="color:#A5D6FF">"BK-X4J2K9"</span>,
+    <span style="color:#A5D6FF">"event_id"</span>: <span style="color:#A5D6FF">"e1"</span>,
+    <span style="color:#A5D6FF">"user_id"</span>: <span style="color:#A5D6FF">"USR-001"</span>,
+    <span style="color:#A5D6FF">"amount"</span>: <span style="color:#79C0FF">3584</span>,
+    <span style="color:#A5D6FF">"tickets"</span>: <span style="color:#79C0FF">2</span>
+  },
+  <span style="color:#A5D6FF">"signature"</span>: <span style="color:#A5D6FF">"sha256=abc123..."</span>
+}
+            </div>
+            <div style="margin-top:12px;font-size:13px;font-weight:600;margin-bottom:8px">🔒 Signature Verification</div>
+            <div class="code-block">
+<span style="color:#8B949E">// Node.js example</span>
+<span style="color:#79C0FF">const</span> crypto = <span style="color:#FFA657">require</span>(<span style="color:#A5D6FF">'crypto'</span>);
+<span style="color:#79C0FF">const</span> sig = crypto
+  .createHmac(<span style="color:#A5D6FF">'sha256'</span>, WEBHOOK_SECRET)
+  .update(rawBody)
+  .digest(<span style="color:#A5D6FF">'hex'</span>);
+<span style="color:#8B949E">// Compare to X-INDTIX-Signature header</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── API CONSOLE ─── -->
+    <div class="panel" id="panel-console">
+      <div class="card">
+        <div class="card-title">🖥️ API Console — Live Test</div>
+        <div style="display:grid;grid-template-columns:2fr 3fr;gap:20px">
+          <div>
+            <div style="margin-bottom:12px">
+              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Method</label>
+              <select id="consoleMethod" class="input-field" style="width:100%">
+                <option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option>
+              </select>
+            </div>
+            <div style="margin-bottom:12px">
+              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Endpoint</label>
+              <select id="consoleEndpoint" class="input-field" style="width:100%">
+                <option value="/api/health">/api/health</option>
+                <option value="/api/events">/api/events</option>
+                <option value="/api/events/e1">/api/events/e1</option>
+                <option value="/api/cities">/api/cities</option>
+                <option value="/api/categories">/api/categories</option>
+                <option value="/api/search?q=sunburn">/api/search?q=sunburn</option>
+                <option value="/api/promos">/api/promos</option>
+                <option value="/api/fanclubs">/api/fanclubs</option>
+                <option value="/api/livestreams">/api/livestreams</option>
+                <option value="/api/merch">/api/merch</option>
+                <option value="/api/developer/endpoints">/api/developer/endpoints</option>
+              </select>
+            </div>
+            <div style="margin-bottom:12px">
+              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Custom URL (override)</label>
+              <input type="text" id="consoleCustomUrl" placeholder="/api/events?city=Mumbai" class="input-field">
+            </div>
+            <div style="margin-bottom:12px">
+              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Request Body (JSON)</label>
+              <textarea id="consoleBody" class="input-field" style="height:80px;resize:vertical;font-family:monospace;font-size:11px" placeholder='{"city": "Mumbai"}'></textarea>
+            </div>
+            <button class="btn-primary" style="width:100%;justify-content:center" onclick="runApiCall()">
+              <i class="fas fa-play"></i> Send Request
+            </button>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <div style="font-size:12px;color:var(--muted);font-weight:600">Response</div>
+              <div id="consoleStatus" style="font-size:12px;font-weight:700"></div>
+            </div>
+            <div class="response-box" id="consoleResponse" style="min-height:300px;color:var(--muted)">
+              // Response will appear here...
+            </div>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button class="btn-sm btn-ghost" onclick="copyConsoleResponse()"><i class="fas fa-copy"></i> Copy</button>
+              <button class="btn-sm btn-ghost" id="consoleTiming" style="cursor:default"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── API KEYS ─── -->
+    <div class="panel" id="panel-apikeys">
+      <div class="card">
+        <div class="card-title">🔐 Get Your API Key</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div>
+            <div style="margin-bottom:12px">
+              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Your Name / Company</label>
+              <input type="text" id="keyName" placeholder="e.g. Mumbai Events Ltd" class="input-field">
+            </div>
+            <div style="margin-bottom:12px">
+              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Email Address</label>
+              <input type="email" id="keyEmail" placeholder="developer@company.com" class="input-field">
+            </div>
+            <div style="margin-bottom:12px">
+              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Use Case</label>
+              <select id="keyUseCase" class="input-field">
+                <option value="event_discovery">Event Discovery App</option>
+                <option value="ticketing">Custom Ticketing Integration</option>
+                <option value="analytics">Analytics / Reporting</option>
+                <option value="b2b_distribution">B2B Ticket Distribution</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div style="margin-bottom:16px">
+              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Plan</label>
+              <select id="keyTier" class="input-field">
+                <option value="free">Free (100 req/min, 10K/day)</option>
+                <option value="pro">Pro — ₹2,999/mo (1000 req/min, 500K/day)</option>
+                <option value="enterprise">Enterprise (Custom)</option>
+              </select>
+            </div>
+            <button class="btn-primary" style="width:100%;justify-content:center" onclick="requestApiKey()">
+              <i class="fas fa-key"></i> Generate Test API Key
+            </button>
+          </div>
+          <div>
+            <div class="card" style="background:var(--dark3)" id="apiKeyResult" style="display:none">
+              <div class="card-title">✅ Your API Key</div>
+              <div class="code-block" id="apiKeyDisplay" style="word-break:break-all;margin-bottom:12px">
+                <span style="color:var(--muted)">Your key will appear here...</span>
+              </div>
+              <div style="padding:10px;background:rgba(255,179,0,0.08);border-radius:8px;border-left:3px solid #FFB300;margin-bottom:12px">
+                <div style="font-size:11px;color:#FFB300;font-weight:600">⚠️ Save this key now!</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:2px">It won't be shown again. Store in environment variables, never in code.</div>
+              </div>
+              <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Rate limits:</div>
+              <div id="apiKeyLimits" style="font-size:12px"></div>
+            </div>
+            <div class="card" style="background:var(--dark3);margin-top:16px">
+              <div class="card-title">📚 Best Practices</div>
+              ${[
+                'Store keys in environment variables, never hardcode',
+                'Use server-side proxy — never expose keys in frontend',
+                'Rotate keys every 90 days in production',
+                'Set up webhook monitoring for suspicious usage',
+                'Use test keys (sk_test_) for development'
+              ].map(tip=>`<div style="font-size:12px;color:var(--muted);padding:6px 0;border-bottom:1px solid var(--border)">✓ ${tip}</div>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SDKs ─── -->
+    <div class="panel" id="panel-sdks">
+      <div class="card">
+        <div class="card-title">📦 SDKs & Client Libraries</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+          ${[
+            {lang:'JavaScript / Node.js',icon:'fab fa-js',status:'Available',install:'npm install @indtix/sdk',color:'#F7DF1E'},
+            {lang:'Python',icon:'fab fa-python',status:'Coming Soon',install:'pip install indtix',color:'#3776AB'},
+            {lang:'Flutter / Dart',icon:'fas fa-mobile-alt',status:'Coming Soon',install:'flutter pub add indtix',color:'#02569B'},
+            {lang:'React Native',icon:'fab fa-react',status:'Coming Soon',install:'npm install @indtix/react-native',color:'#61DAFB'},
+            {lang:'PHP',icon:'fab fa-php',status:'Coming Soon',install:'composer require indtix/sdk',color:'#777BB4'},
+            {lang:'Java / Kotlin',icon:'fab fa-java',status:'Planned',install:'implementation "in.indtix:sdk:1.0"',color:'#ED8B00'}
+          ].map(s=>`
+          <div style="padding:16px;background:var(--dark3);border-radius:10px;border:1px solid var(--border)">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <i class="${s.icon}" style="font-size:24px;color:${s.color}"></i>
+              <div>
+                <div style="font-weight:700;font-size:12px">${s.lang}</div>
+                <span class="tag ${s.status==='Available'?'tag-free':s.status==='Coming Soon'?'tag-pro':'tag-enterprise'}" style="font-size:10px">${s.status}</span>
+              </div>
+            </div>
+            <div class="code-block" style="font-size:10px;padding:8px">${s.install}</div>
+          </div>`).join('')}
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:10px">JavaScript SDK Example</div>
+            <div class="code-block">
+<span style="color:#79C0FF">import</span> { IndtixClient } <span style="color:#79C0FF">from</span> <span style="color:#A5D6FF">'@indtix/sdk'</span>;
+
+<span style="color:#79C0FF">const</span> client = <span style="color:#79C0FF">new</span> <span style="color:#FFA657">IndtixClient</span>({
+  apiKey: <span style="color:#A5D6FF">process.env.INDTIX_API_KEY</span>
+});
+
+<span style="color:#8B949E">// List events</span>
+<span style="color:#79C0FF">const</span> { events } = <span style="color:#79C0FF">await</span> client.events.<span style="color:#FFA657">list</span>({
+  city: <span style="color:#A5D6FF">'Mumbai'</span>, category: <span style="color:#A5D6FF">'Music'</span>
+});
+
+<span style="color:#8B949E">// Create booking</span>
+<span style="color:#79C0FF">const</span> booking = <span style="color:#79C0FF">await</span> client.bookings.<span style="color:#FFA657">create</span>({
+  event_id: <span style="color:#A5D6FF">'e1'</span>, tier: <span style="color:#A5D6FF">'GA'</span>, qty: <span style="color:#79C0FF">2</span>
+});
+            </div>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:10px">Postman Collection</div>
+            <div style="padding:16px;background:var(--dark3);border-radius:10px;border:1px solid var(--border);margin-bottom:12px">
+              <div style="font-size:13px;font-weight:600;margin-bottom:6px">📬 Download Postman Collection</div>
+              <div style="font-size:12px;color:var(--muted);margin-bottom:12px">Pre-configured collection with all 86+ endpoints, example requests, and environment variables.</div>
+              <button class="btn-primary" onclick="showDevToast('📬 Postman collection JSON downloaded! Import in Postman to get started.')"><i class="fas fa-download"></i> Download Collection</button>
+            </div>
+            <div style="padding:16px;background:var(--dark3);border-radius:10px;border:1px solid var(--border)">
+              <div style="font-size:13px;font-weight:600;margin-bottom:6px">🌐 OpenAPI / Swagger Spec</div>
+              <div style="font-size:12px;color:var(--muted);margin-bottom:12px">OpenAPI 3.0 specification for generating client code in any language.</div>
+              <button class="btn-sm btn-ghost" onclick="showDevToast('📄 OpenAPI spec YAML downloaded!')"><i class="fas fa-file-code"></i> Download spec.yaml</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── API STATUS ─── -->
+    <div class="panel" id="panel-status">
+      <div class="card">
+        <div class="card-title">💚 API Status — All Systems Operational</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px">
+          <div class="card" style="text-align:center;background:rgba(0,245,196,0.05);border-color:rgba(0,245,196,0.2)"><div style="font-size:20px;color:var(--brand2)">✓</div><div style="font-size:12px;font-weight:600;margin-top:4px">API Gateway</div><div style="font-size:11px;color:var(--brand2)">Operational</div></div>
+          <div class="card" style="text-align:center;background:rgba(0,245,196,0.05);border-color:rgba(0,245,196,0.2)"><div style="font-size:20px;color:var(--brand2)">✓</div><div style="font-size:12px;font-weight:600;margin-top:4px">Database (D1)</div><div style="font-size:11px;color:var(--brand2)">Operational</div></div>
+          <div class="card" style="text-align:center;background:rgba(0,245,196,0.05);border-color:rgba(0,245,196,0.2)"><div style="font-size:20px;color:var(--brand2)">✓</div><div style="font-size:12px;font-weight:600;margin-top:4px">Payment Gateway</div><div style="font-size:11px;color:var(--brand2)">Operational</div></div>
+          <div class="card" style="text-align:center;background:rgba(0,245,196,0.05);border-color:rgba(0,245,196,0.2)"><div style="font-size:20px;color:var(--brand2)">✓</div><div style="font-size:12px;font-weight:600;margin-top:4px">WhatsApp / SMS</div><div style="font-size:11px;color:var(--brand2)">Operational</div></div>
+        </div>
+        <div class="card" style="background:var(--dark3)">
+          <div class="card-title">📈 Uptime (Last 30 Days)</div>
+          <div style="display:flex;gap:3px;margin-bottom:8px" id="uptimeBar"></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted)"><span>30 days ago</span><span>Today</span></div>
+          <div style="margin-top:12px;font-size:13px;font-weight:700;color:var(--brand2)">99.8% uptime · 0 incidents in last 30 days</div>
+        </div>
+        <div class="card" style="background:var(--dark3)">
+          <div class="card-title">⚡ Current Metrics</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+            ${[{label:'Avg Latency',val:'12 ms'},{label:'P95 Latency',val:'48 ms'},{label:'Error Rate',val:'0.02%'},{label:'Requests/min',val:'28,400'}].map(m=>`
+            <div style="text-align:center;padding:12px;background:var(--card);border-radius:8px">
+              <div style="font-size:18px;font-weight:800;color:var(--brand)">${m.val}</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:2px">${m.label}</div>
+            </div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- .content -->
+</div><!-- .main -->
+
+<div class="toast-container" id="devToast"></div>
+
+<script>
+function showPanel(name, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById('panel-' + name);
+  if (panel) panel.classList.add('active');
+  if (btn) btn.classList.add('active');
+  const titles = {
+    overview:'Developer Overview', quickstart:'Quick Start Guide', auth:'Authentication',
+    events_api:'Events API', bookings_api:'Bookings API', search_api:'Search API',
+    venue_api:'Venue & Wristband API', organiser_api:'Organiser API', payments_api:'Payments & GST API',
+    webhooks_api:'Webhooks', console:'API Console', apikeys:'API Keys', sdks:'SDKs & Libraries', status:'API Status'
+  };
+  document.getElementById('topbarTitle').textContent = titles[name] || 'Developer Portal';
+  if (name === 'status') renderUptimeBar();
+}
+
+function endpointRow(e) {
+  const methodClass = 'method-' + e.method.toLowerCase();
+  const planClass = e.plan === 'enterprise' ? 'tag-enterprise' : e.plan === 'pro' ? 'tag-pro' : 'tag-free';
+  return `<div class="endpoint-row" onclick="loadEndpointInConsole('${e.method}','${e.path}')">
+    <span class="method-badge ${methodClass}">${e.method}</span>
+    <div style="flex:1">
+      <div class="endpoint-path">${e.path}</div>
+      <div class="endpoint-desc">${e.desc}</div>
+    </div>
+    <span class="tag ${planClass}">${e.plan.toUpperCase()}</span>
+  </div>`;
+}
+
+function loadEndpointInConsole(method, path) {
+  showPanel('console', document.querySelector('[onclick*="console"]'));
+  const methodSel = document.getElementById('consoleMethod');
+  const urlInput = document.getElementById('consoleCustomUrl');
+  if (methodSel) methodSel.value = method;
+  if (urlInput) urlInput.value = path;
+  showDevToast(`📋 Loaded ${method} ${path} in console`);
+}
+
+async function runApiCall() {
+  const method = document.getElementById('consoleMethod')?.value || 'GET';
+  const customUrl = document.getElementById('consoleCustomUrl')?.value;
+  const endpointSel = document.getElementById('consoleEndpoint')?.value;
+  const url = customUrl || endpointSel || '/api/health';
+  const bodyInput = document.getElementById('consoleBody')?.value;
+  const responseEl = document.getElementById('consoleResponse');
+  const statusEl = document.getElementById('consoleStatus');
+  const timingEl = document.getElementById('consoleTiming');
+
+  if (responseEl) responseEl.textContent = '// Loading...';
+  const start = Date.now();
+  try {
+    const opts = { method, headers: {'Content-Type':'application/json'} };
+    if (bodyInput && ['POST','PUT','PATCH'].includes(method)) {
+      try { opts.body = JSON.stringify(JSON.parse(bodyInput)); } catch(e) { opts.body = bodyInput; }
+    }
+    const res = await fetch(url, opts);
+    const elapsed = Date.now() - start;
+    const data = await res.json();
+    if (statusEl) {
+      statusEl.textContent = `${res.status} ${res.statusText}`;
+      statusEl.style.color = res.ok ? 'var(--brand2)' : '#FF4444';
+    }
+    if (timingEl) timingEl.textContent = `⏱ ${elapsed}ms`;
+    if (responseEl) responseEl.textContent = JSON.stringify(data, null, 2);
+  } catch(e) {
+    if (statusEl) { statusEl.textContent = 'Error'; statusEl.style.color = '#FF4444'; }
+    if (responseEl) responseEl.textContent = '// Error: ' + e.message;
+  }
+}
+
+async function requestApiKey() {
+  const name = document.getElementById('keyName')?.value;
+  const email = document.getElementById('keyEmail')?.value;
+  const useCase = document.getElementById('keyUseCase')?.value;
+  const tier = document.getElementById('keyTier')?.value;
+  if (!name || !email) { showDevToast('⚠️ Please fill in your name and email'); return; }
+  try {
+    const res = await fetch('/api/developer/keys', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ name, email, use_case: useCase, tier })
+    });
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('apiKeyResult').style.display = 'block';
+      document.getElementById('apiKeyDisplay').innerHTML = `<span style="color:var(--brand2);font-size:13px">${data.api_key.key}</span>`;
+      document.getElementById('apiKeyLimits').innerHTML = `<span style="color:var(--brand)">Tier: ${data.api_key.tier}</span> · ${data.api_key.rate_limits.requests_per_min} req/min · ${data.api_key.rate_limits.requests_per_day.toLocaleString()} req/day`;
+      showDevToast(`✅ API key created for ${name}! Save it now — it won't be shown again.`);
+    }
+  } catch(e) {
+    const key = 'sk_test_' + Math.random().toString(36).slice(2,18);
+    document.getElementById('apiKeyResult').style.display = 'block';
+    document.getElementById('apiKeyDisplay').innerHTML = `<span style="color:var(--brand2);font-size:13px">${key}</span>`;
+    document.getElementById('apiKeyLimits').innerHTML = `<span style="color:var(--brand)">Tier: ${tier}</span> · Rate limits per plan`;
+    showDevToast(`✅ Test API key created for ${name}! Docs at /developer`);
+  }
+}
+
+function copyCode(btn) {
+  const text = btn.parentElement.innerText.replace('Copy','').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+
+function copyConsoleResponse() {
+  const text = document.getElementById('consoleResponse')?.textContent || '';
+  navigator.clipboard.writeText(text).then(() => showDevToast('📋 Response copied to clipboard!'));
+}
+
+function showDevToast(msg) {
+  const c = document.getElementById('devToast');
+  const t = document.createElement('div');
+  t.style.cssText = 'background:var(--card);border:1px solid var(--brand);border-radius:12px;padding:12px 20px;font-size:13px;max-width:380px;opacity:0;transform:translateY(20px);transition:all 0.3s;box-shadow:0 8px 24px rgba(0,0,0,0.5);color:var(--text)';
+  t.textContent = msg; c.appendChild(t);
+  setTimeout(() => { t.style.opacity = '1'; t.style.transform = 'translateY(0)'; }, 10);
+  setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 4000);
+}
+
+function renderUptimeBar() {
+  const bar = document.getElementById('uptimeBar');
+  if (!bar || bar.children.length > 0) return;
+  for (let i = 0; i < 30; i++) {
+    const day = document.createElement('div');
+    const uptime = Math.random() > 0.02;
+    day.style.cssText = `flex:1;height:32px;border-radius:3px;background:${uptime ? 'var(--brand2)' : '#FF4444'};opacity:${uptime ? 0.7 + Math.random() * 0.3 : 1}`;
+    day.title = `Day ${30-i}: ${uptime ? '100% uptime' : 'Incident detected'}`;
+    bar.appendChild(day);
+  }
+}
+
+// Load API endpoints dynamically
+async function loadEndpointList() {
+  try {
+    const res = await fetch('/api/developer/endpoints');
+    const data = await res.json();
+    console.log(`Loaded ${data.total} endpoints from API`);
+  } catch(e) { /* static data shown */ }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadEndpointList();
+});
+</script>
+</body>
+</html>

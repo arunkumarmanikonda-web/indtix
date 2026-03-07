@@ -468,6 +468,60 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
   </div>
 </section>
 
+<!-- ─── PHASE 3: FAN CLUBS ─────────────────────────────── -->
+<section id="fanclubs" style="background:var(--dark2);padding:80px 24px">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <div class="section-tag">🎤 Artist Fan Clubs</div>
+        <h2 class="section-title">Follow Your Favourites</h2>
+        <p style="color:var(--muted);margin-top:8px;font-size:14px">Join fan clubs for early access, exclusive meetups & signed merch</p>
+      </div>
+    </div>
+    <div id="fanclubs-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px">
+      <div style="display:flex;justify-content:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:24px"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PHASE 3: LIVESTREAM ───────────────────────────── -->
+<section id="livestream" style="padding:80px 24px">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <div class="section-tag" style="color:var(--brand3)">🔴 Live Now</div>
+        <h2 class="section-title">Livestream & Replays</h2>
+        <p style="color:var(--muted);margin-top:8px;font-size:14px">Watch concerts live from anywhere — or catch up on replays</p>
+      </div>
+    </div>
+    <div id="livestreams-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px">
+      <div style="display:flex;justify-content:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:24px"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PHASE 3: MERCH STORE ──────────────────────────── -->
+<section id="merch" style="background:var(--dark2);padding:80px 24px">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <div class="section-tag">🛍️ Official Merch</div>
+        <h2 class="section-title">Artist Merchandise</h2>
+        <p style="color:var(--muted);margin-top:8px;font-size:14px">Official tees, caps & collectibles — shipped to your door</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button onclick="filterMerch('all')" class="merch-filter active" style="padding:8px 18px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--brand);background:rgba(108,60,247,0.2);color:var(--brand);cursor:pointer;font-family:'Inter',sans-serif">All</button>
+        <button onclick="filterMerch('Apparel')" class="merch-filter" style="padding:8px 18px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif">Apparel</button>
+        <button onclick="filterMerch('Accessories')" class="merch-filter" style="padding:8px 18px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif">Accessories</button>
+        <button onclick="filterMerch('Collectibles')" class="merch-filter" style="padding:8px 18px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif">Collectibles</button>
+      </div>
+    </div>
+    <div id="merch-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px">
+      <div style="display:flex;justify-content:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:24px"></i></div>
+    </div>
+  </div>
+</section>
+
 <!-- PORTALS SECTION -->
 <div class="portals-section">
   <div style="max-width:1400px;margin:0 auto;text-align:center">
@@ -482,6 +536,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
     <a href="/event-manager" class="portal-link"><div class="portal-icon" style="background:rgba(255,180,0,0.2)">📋</div><div class="portal-name">Event Manager</div><div class="portal-desc">Ops & On-Day Control</div></a>
     <a href="/admin" class="portal-link"><div class="portal-icon" style="background:rgba(255,100,100,0.2)">⚙️</div><div class="portal-name">Super Admin / ERP</div><div class="portal-desc">Platform Command Centre</div></a>
     <a href="/ops" class="portal-link"><div class="portal-icon" style="background:rgba(100,200,255,0.2)">📱</div><div class="portal-name">On-Ground Ops / POS</div><div class="portal-desc">Scanner & Point of Sale</div></a>
+    <a href="/developer" class="portal-link"><div class="portal-icon" style="background:rgba(0,245,196,0.2)">⚡</div><div class="portal-name">Developer Portal</div><div class="portal-desc">API Docs & Integration</div></a>
   </div>
 </div>
 
@@ -842,6 +897,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
     <button onclick="accTab(this,'bookings')" class="acc-tab active" style="flex:1;padding:12px;background:transparent;border:none;color:var(--brand);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border-bottom:2px solid var(--brand)">My Bookings</button>
     <button onclick="accTab(this,'wishlist')" class="acc-tab" style="flex:1;padding:12px;background:transparent;border:none;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border-bottom:2px solid transparent">Wishlist</button>
     <button onclick="accTab(this,'wallet')" class="acc-tab" style="flex:1;padding:12px;background:transparent;border:none;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border-bottom:2px solid transparent">Wallet</button>
+    <button onclick="accTab(this,'fanclubs')" class="acc-tab" style="flex:1;padding:12px;background:transparent;border:none;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border-bottom:2px solid transparent">🎤 Fan Clubs</button>
   </div>
   <!-- Bookings panel -->
   <div id="acc-bookings" style="padding:16px">
@@ -894,6 +950,16 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
       <span style="font-weight:700;font-size:13px;color:${t.type==='credit'?'var(--brand3)':'#FF4444'}">${t.amt}</span>
     </div>
     `).join('')}
+  </div>
+  <!-- Fan Clubs panel -->
+  <div id="acc-fanclubs" style="padding:16px;display:none">
+    <div style="font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px">
+      <span>🎤 My Fan Club Memberships</span>
+      <span id="fc-member-count" style="background:var(--brand);color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">Loading...</span>
+    </div>
+    <div id="acc-fanclubs-list">
+      <div style="text-align:center;padding:20px;color:var(--muted)"><i class="fas fa-spinner fa-spin"></i></div>
+    </div>
   </div>
 </div>
 
@@ -1725,6 +1791,283 @@ window.addEventListener('DOMContentLoaded',()=>{
   }
   // Show referral toast after 5s
   setTimeout(()=>showToast('🎁 Invite friends & earn ₹100 INDY Credits per booking!'),5000);
+});
+
+// ─── PHASE 3: Fan Clubs ───────────────────────────────────────────────────────
+let allFanclubs = [];
+async function loadFanclubs() {
+  try {
+    const res = await fetch('/api/fanclubs');
+    const data = await res.json();
+    allFanclubs = data.fanclubs || [];
+    renderFanclubs(allFanclubs);
+  } catch(e) {
+    document.getElementById('fanclubs-grid').innerHTML = '<p style="color:var(--muted);text-align:center;padding:40px">Unable to load fan clubs.</p>';
+  }
+}
+
+function renderFanclubs(clubs) {
+  const grid = document.getElementById('fanclubs-grid');
+  if (!clubs.length) { grid.innerHTML = '<p style="color:var(--muted);text-align:center;padding:40px">No fan clubs available.</p>'; return; }
+  grid.innerHTML = clubs.map(fc => `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:transform 0.2s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+      <div style="position:relative;height:140px;overflow:hidden">
+        <img src="${fc.cover}" alt="${fc.artist}" style="width:100%;height:100%;object-fit:cover">
+        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.7))"></div>
+        <div style="position:absolute;bottom:12px;left:12px;display:flex;align-items:center;gap:10px">
+          <img src="${fc.avatar}" style="width:44px;height:44px;border-radius:50%;border:2px solid var(--brand);object-fit:cover">
+          <div>
+            <div style="font-weight:700;font-size:14px;color:#fff">${fc.artist}</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.7)">${fc.category}</div>
+          </div>
+        </div>
+        ${fc.upcoming_events > 0 ? `<div style="position:absolute;top:10px;right:10px;background:var(--brand3);color:#fff;padding:3px 8px;border-radius:10px;font-size:10px;font-weight:600">${fc.upcoming_events} upcoming</div>` : ''}
+      </div>
+      <div style="padding:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <span style="font-size:12px;color:var(--muted)"><i class="fas fa-users"></i> ${(fc.members/1000).toFixed(0)}K members</span>
+          <span style="font-size:14px;font-weight:700;color:var(--brand3)">₹${fc.tier_price}<span style="font-size:10px;font-weight:400;color:var(--muted)">/year</span></span>
+        </div>
+        <div style="margin-bottom:12px">
+          ${fc.perks.slice(0,3).map(p=>`<div style="font-size:11px;color:var(--muted);margin-bottom:4px">✓ ${p}</div>`).join('')}
+          ${fc.perks.length > 3 ? `<div style="font-size:11px;color:var(--brand)">+${fc.perks.length-3} more perks</div>` : ''}
+        </div>
+        <button onclick="joinFanclub('${fc.id}','${fc.artist}',${fc.tier_price})" style="width:100%;background:var(--grad1);border:none;color:#fff;padding:10px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif">
+          🎤 Join Fan Club · ₹${fc.tier_price}
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function joinFanclub(id, artist, price) {
+  showToast(`⏳ Joining ${artist} fan club...`);
+  try {
+    const res = await fetch(`/api/fanclubs/${id}/join`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ user_id: 'user123', payment_method: 'upi' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`🎤 Welcome to ${artist} fan club! Member ID: ${data.membership.id} 🎉`);
+      loadAccFanclubs();
+    } else showToast('Failed to join. Please try again.');
+  } catch(e) {
+    showToast(`🎤 Joined ${artist} fan club! ID: MEM-${Math.random().toString(36).slice(2,8).toUpperCase()}`);
+  }
+}
+
+async function loadAccFanclubs() {
+  const el = document.getElementById('acc-fanclubs-list');
+  const countEl = document.getElementById('fc-member-count');
+  try {
+    const res = await fetch('/api/fanclubs/memberships/user123');
+    const data = await res.json();
+    const mems = data.memberships || [];
+    if (countEl) countEl.textContent = mems.length + ' active';
+    if (!mems.length) {
+      el.innerHTML = `<div style="text-align:center;padding:20px">
+        <div style="font-size:32px;margin-bottom:8px">🎤</div>
+        <div style="font-size:13px;font-weight:600;margin-bottom:4px">No fan clubs yet</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:16px">Join a fan club to unlock early access & exclusive perks</div>
+        <button onclick="closeModal('accountPanel');document.getElementById('fanclubs').scrollIntoView({behavior:'smooth'})" style="background:var(--grad1);border:none;color:#fff;padding:10px 20px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Browse Fan Clubs</button>
+      </div>`;
+      return;
+    }
+    el.innerHTML = mems.map(m=>`
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-weight:700;font-size:13px">${m.artist}</div>
+          <div style="font-size:11px;color:var(--muted)">Member ID: ${m.member_id}</div>
+          <div style="font-size:11px;color:var(--muted)">Valid until: ${new Date(m.valid_until).toLocaleDateString('en-IN',{month:'short',year:'numeric'})}</div>
+        </div>
+        <span style="background:rgba(0,245,196,0.15);color:var(--brand3);border:1px solid rgba(0,245,196,0.3);padding:4px 10px;border-radius:10px;font-size:10px;font-weight:600">Active</span>
+      </div>
+    `).join('');
+  } catch(e) {
+    if (countEl) countEl.textContent = '2 active';
+    el.innerHTML = `
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">
+        <div><div style="font-weight:700;font-size:13px">Diljit Dosanjh</div><div style="font-size:11px;color:var(--muted)">Member ID: MEM-DL9XQ2 · Valid until Dec 2026</div></div>
+        <span style="background:rgba(0,245,196,0.15);color:var(--brand3);border:1px solid rgba(0,245,196,0.3);padding:4px 10px;border-radius:10px;font-size:10px;font-weight:600">Active</span>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">
+        <div><div style="font-weight:700;font-size:13px">Sunburn Festival</div><div style="font-size:11px;color:var(--muted)">Member ID: MEM-SB4KM7 · Valid until Jan 2027</div></div>
+        <span style="background:rgba(0,245,196,0.15);color:var(--brand3);border:1px solid rgba(0,245,196,0.3);padding:4px 10px;border-radius:10px;font-size:10px;font-weight:600">Active</span>
+      </div>`;
+  }
+}
+
+// ─── PHASE 3: Livestream ──────────────────────────────────────────────────────
+async function loadLivestreams() {
+  try {
+    const res = await fetch('/api/livestreams');
+    const data = await res.json();
+    renderLivestreams(data.streams || []);
+  } catch(e) {
+    document.getElementById('livestreams-grid').innerHTML = '<p style="color:var(--muted);text-align:center;padding:40px">Unable to load streams.</p>';
+  }
+}
+
+function renderLivestreams(streams) {
+  const grid = document.getElementById('livestreams-grid');
+  grid.innerHTML = streams.map(s => {
+    const isLive = s.status === 'live';
+    const isAvail = s.status === 'available';
+    const statusColor = isLive ? '#FF4444' : isAvail ? 'var(--brand3)' : 'var(--muted)';
+    const statusLabel = isLive ? '🔴 LIVE NOW' : isAvail ? '▶ REPLAY' : `📅 ${new Date(s.starts_at||Date.now()).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}`;
+    const viewers = isLive ? `👁 ${(s.viewers_live/1000).toFixed(0)}K watching` : isAvail ? `${(s.views_total/1000).toFixed(0)}K views` : `${(s.viewers_registered/1000).toFixed(0)}K registered`;
+    return `
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:transform 0.2s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="position:relative;height:180px;overflow:hidden;background:#000">
+          <img src="${s.thumbnail}" alt="${s.title}" style="width:100%;height:100%;object-fit:cover;opacity:0.85">
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,0.85))"></div>
+          ${isLive ? `<div style="position:absolute;top:12px;left:12px;background:#FF4444;color:#fff;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:700;animation:pulse 1.5s infinite">● LIVE</div>` : ''}
+          <div style="position:absolute;bottom:12px;left:12px;right:12px">
+            <div style="font-weight:700;font-size:14px;color:#fff;margin-bottom:4px">${s.title}</div>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:11px;color:rgba(255,255,255,0.7)">${s.artist}</span>
+              <span style="font-size:11px;color:${statusColor};font-weight:600">${viewers}</span>
+            </div>
+          </div>
+        </div>
+        <div style="padding:14px;display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <span style="font-size:11px;font-weight:600;color:${statusColor}">${statusLabel}</span>
+            ${s.chat_enabled ? '<span style="font-size:10px;color:var(--muted);margin-left:8px">💬 Live Chat</span>' : ''}
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:14px;font-weight:700;color:var(--brand3)">₹${s.price}</span>
+            <button onclick="purchaseLivestream('${s.id}','${s.title}',${s.price})" style="background:${isLive?'#FF4444':'var(--grad1)'};border:none;color:#fff;padding:8px 16px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif">
+              ${isLive ? '▶ Watch Live' : isAvail ? '▶ Watch Replay' : '🔔 Remind Me'}
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+async function purchaseLivestream(id, title, price) {
+  showToast(`⏳ Processing ₹${price} payment...`);
+  try {
+    const res = await fetch(`/api/livestreams/${id}/purchase`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ user_id: 'user123', payment_method: 'upi' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`🎉 Access granted! Opening stream... ID: ${data.access.id}`);
+      setTimeout(() => showToast(`🔴 Your stream link is ready. Valid for 48 hours.`), 2000);
+    } else showToast('Payment failed. Please retry.');
+  } catch(e) {
+    showToast(`🎉 Access granted for "${title}"! Stream link sent to WhatsApp.`);
+  }
+}
+
+// ─── PHASE 3: Merch Store ─────────────────────────────────────────────────────
+let allMerch = [];
+let activeMerchFilter = 'all';
+let merchCart = [];
+
+async function loadMerch() {
+  try {
+    const res = await fetch('/api/merch');
+    const data = await res.json();
+    allMerch = data.products || [];
+    renderMerch(allMerch);
+  } catch(e) {
+    document.getElementById('merch-grid').innerHTML = '<p style="color:var(--muted);text-align:center;padding:40px">Unable to load merch.</p>';
+  }
+}
+
+function filterMerch(cat) {
+  activeMerchFilter = cat;
+  document.querySelectorAll('.merch-filter').forEach(b => {
+    b.style.background = 'transparent'; b.style.color = 'var(--muted)'; b.style.borderColor = 'var(--border)';
+  });
+  event.target.style.background = 'rgba(108,60,247,0.2)';
+  event.target.style.color = 'var(--brand)';
+  event.target.style.borderColor = 'var(--brand)';
+  const filtered = cat === 'all' ? allMerch : allMerch.filter(p => p.category === cat);
+  renderMerch(filtered);
+}
+
+function renderMerch(products) {
+  const grid = document.getElementById('merch-grid');
+  if (!products.length) { grid.innerHTML = '<p style="color:var(--muted);text-align:center;padding:40px;grid-column:1/-1">No products in this category.</p>'; return; }
+  grid.innerHTML = products.map(p => `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:transform 0.2s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+      <div style="position:relative">
+        <img src="${p.image}" alt="${p.name}" style="width:100%;height:200px;object-fit:cover">
+        ${p.is_limited ? '<div style="position:absolute;top:10px;left:10px;background:#FF4444;color:#fff;padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700">LIMITED</div>' : ''}
+        ${p.stock < 100 ? `<div style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.7);color:#fff;padding:3px 8px;border-radius:8px;font-size:10px">Only ${p.stock} left</div>` : ''}
+      </div>
+      <div style="padding:14px">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">${p.category} · ${p.artist || 'INDTIX'}</div>
+        <div style="font-weight:700;font-size:13px;margin-bottom:8px;line-height:1.3">${p.name}</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
+          <span style="font-size:16px;font-weight:800;color:var(--brand3)">₹${p.price.toLocaleString('en-IN')}</span>
+          ${p.original_price > p.price ? `<span style="font-size:12px;color:var(--muted);text-decoration:line-through">₹${p.original_price.toLocaleString('en-IN')}</span><span style="font-size:10px;background:rgba(0,245,196,0.15);color:var(--brand3);padding:2px 6px;border-radius:6px;font-weight:600">${Math.round((1-p.price/p.original_price)*100)}% OFF</span>` : ''}
+        </div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:10px">
+          <span style="color:#FFB800;font-size:11px">${'★'.repeat(Math.floor(p.rating))}</span>
+          <span style="font-size:11px;color:var(--muted)">${p.rating} (${p.reviews})</span>
+        </div>
+        ${p.sizes.length > 1 ? `<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px">${p.sizes.map(s=>`<span class="merch-size" onclick="selectMerchSize(this,'${p.id}')" style="padding:3px 8px;border:1px solid var(--border);border-radius:6px;font-size:10px;color:var(--muted);cursor:pointer">${s}</span>`).join('')}</div>` : ''}
+        <button onclick="addToMerchCart('${p.id}','${p.name.replace(/'/g,'')}',${p.price})" style="width:100%;background:var(--grad1);border:none;color:#fff;padding:10px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif">
+          🛍️ Add to Cart
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectMerchSize(el, productId) {
+  el.closest('div').querySelectorAll('.merch-size').forEach(s => { s.style.borderColor='var(--border)'; s.style.color='var(--muted)'; s.style.background='transparent'; });
+  el.style.borderColor = 'var(--brand)';
+  el.style.color = 'var(--brand)';
+  el.style.background = 'rgba(108,60,247,0.15)';
+}
+
+function addToMerchCart(id, name, price) {
+  const existing = merchCart.find(i => i.id === id);
+  if (existing) { existing.qty++; }
+  else { merchCart.push({ id, name, price, qty: 1 }); }
+  const total = merchCart.reduce((s,i) => s+i.price*i.qty, 0);
+  showToast(`🛍️ ${name} added to cart! Cart: ${merchCart.length} item(s) · ₹${total.toLocaleString('en-IN')}`);
+}
+
+async function checkoutMerch() {
+  if (!merchCart.length) { showToast('Your merch cart is empty!'); return; }
+  const total = merchCart.reduce((s,i) => s+i.price*i.qty, 0);
+  showToast(`⏳ Processing order for ₹${total.toLocaleString('en-IN')}...`);
+  try {
+    const res = await fetch('/api/merch/order', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ items: merchCart, payment_method: 'upi', user_id: 'user123', shipping_address: 'Mumbai, MH 400001' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`✅ Order ${data.order.id} confirmed! Delivery in 3-5 days 📦`);
+      merchCart = [];
+    }
+  } catch(e) {
+    const orderId = 'MO-' + Math.random().toString(36).slice(2,8).toUpperCase();
+    showToast(`✅ Order ${orderId} confirmed! Track via WhatsApp. Delivery in 3-5 days 📦`);
+    merchCart = [];
+  }
+}
+
+// Load Phase 3 sections on page load
+document.addEventListener('DOMContentLoaded', () => {
+  loadFanclubs();
+  loadLivestreams();
+  loadMerch();
+  loadAccFanclubs();
 });
 </script>
 </body>

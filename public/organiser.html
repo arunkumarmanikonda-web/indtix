@@ -17,6 +17,7 @@
   <meta name="twitter:description" content="Create events, manage tickets, track revenue and settle payments on INDTIX. KYC-verified organisers get priority support and marketing tools.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root{--brand:#6C3CF7;--brand2:#FF3CAC;--brand3:#00F5C4;--dark:#080B14;--dark2:#0F1320;--dark3:#161B2E;--card:#1A2035;--border:rgba(108,60,247,0.2);--text:#E8EAFF;--muted:#8B93B8;--grad1:linear-gradient(135deg,#6C3CF7,#FF3CAC);--grad2:linear-gradient(135deg,#00F5C4,#6C3CF7)}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -191,6 +192,9 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
     <button class="sb-item" onclick="showPanel('team',this)"><i class="fas fa-users-cog"></i>Team & Permissions</button>
     <button class="sb-item" onclick="showPanel('ledband',this)"><i class="fas fa-lightbulb"></i>LED Band Config</button>
     <button class="sb-item" onclick="showPanel('crm',this)"><i class="fas fa-star"></i>Brand & CRM</button>
+    <div class="sb-section">Phase 3</div>
+    <button class="sb-item" onclick="showPanel('sponsors',this)"><i class="fas fa-handshake"></i>Sponsor Activation</button>
+    <button class="sb-item" onclick="showPanel('forecast',this)"><i class="fas fa-brain"></i>AI Demand Forecast</button>
   </nav>
   <div class="sb-footer"><a href="/"><i class="fas fa-arrow-left"></i>Back to Fan Portal</a></div>
 </div>
@@ -983,6 +987,187 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
       </div>
     </div>
 
+    <!-- ─── PHASE 3: SPONSOR ACTIVATION PANEL ──────────────────────────── -->
+    <div class="panel" id="panel-sponsors">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px">
+        <div class="card" style="text-align:center"><div style="font-size:28px;font-weight:800;color:var(--brand)">₹24.5L</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Total Sponsorship Value</div></div>
+        <div class="card" style="text-align:center"><div style="font-size:28px;font-weight:800;color:var(--brand2)">6</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Active Sponsors</div></div>
+        <div class="card" style="text-align:center"><div style="font-size:28px;font-weight:800;color:var(--brand3)">92%</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Activation Rate</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div class="card">
+          <div class="card-title">🤝 Active Sponsors</div>
+          <div id="sponsors-list">
+            ${[
+              {name:'Jägermeister India',tier:'Title Sponsor',value:'₹8,00,000',logo:'🍸',activations:['Stage Branding','VIP Bar','LED Band Color'],status:'active'},
+              {name:'boAt Lifestyle',tier:'Audio Partner',value:'₹4,50,000',logo:'🎧',activations:['Sound Stage Signage','Booth Space','Artist Gifting'],status:'active'},
+              {name:'Swiggy Instamart',tier:'F&B Partner',value:'₹3,20,000',logo:'🛍️',activations:['Pre-order Integration','Delivery Kiosks'],status:'active'},
+              {name:'CRED',tier:'Fintech Partner',value:'₹5,00,000',logo:'💳',activations:['Payment Button Skin','Exclusive Cashback'],status:'active'},
+              {name:'Redmi Note 14',tier:'Tech Partner',value:'₹2,50,000',logo:'📱',activations:['Photo Booth','Charging Stations'],status:'active'},
+              {name:'Kingfisher Ultra',tier:'Beverage Partner',value:'₹1,30,000',logo:'🍺',activations:['Bar Branding'],status:'active'}
+            ].map(s=>`
+            <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--dark3);border-radius:10px;margin-bottom:10px;border:1px solid var(--border)">
+              <div style="font-size:28px">${s.logo}</div>
+              <div style="flex:1">
+                <div style="font-weight:700;font-size:13px">${s.name}</div>
+                <div style="font-size:11px;color:var(--brand);font-weight:600">${s.tier} · ${s.value}</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:3px">${s.activations.join(' · ')}</div>
+              </div>
+              <div><span class="status-badge status-active">${s.status.toUpperCase()}</span></div>
+            </div>`).join('')}
+          </div>
+          <button class="btn-sm btn-primary" style="width:100%;justify-content:center;margin-top:8px" onclick="addSponsorForm()">
+            <i class="fas fa-plus"></i> Add Sponsor
+          </button>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-title">📊 Sponsor Performance Metrics</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              ${[
+                {sponsor:'Jägermeister India',impressions:'1,24,000',clicks:'8,420',leads:'340',roi:'3.2x'},
+                {sponsor:'boAt Lifestyle',impressions:'98,000',clicks:'6,100',leads:'280',roi:'2.8x'},
+                {sponsor:'CRED',impressions:'2,10,000',clicks:'18,400',leads:'920',roi:'4.1x'},
+                {sponsor:'Swiggy Instamart',impressions:'1,80,000',clicks:'22,000',leads:'1,840',roi:'5.7x'}
+              ].map(m=>`
+              <div style="padding:10px;background:var(--dark3);border-radius:8px;border:1px solid var(--border)">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                  <span style="font-weight:600;font-size:12px">${m.sponsor}</span>
+                  <span style="font-size:12px;color:var(--brand2);font-weight:700">ROI ${m.roi}</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px">
+                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">${m.impressions}</div><div style="font-size:10px;color:var(--muted)">Impressions</div></div>
+                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">${m.clicks}</div><div style="font-size:10px;color:var(--muted)">Clicks</div></div>
+                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">${m.leads}</div><div style="font-size:10px;color:var(--muted)">Leads</div></div>
+                </div>
+              </div>`).join('')}
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">🎯 Sponsor Activation Checklist</div>
+            ${[
+              {item:'Stage branding artwork submitted',done:true},
+              {item:'LED band color theme configured',done:true},
+              {item:'VIP activation area confirmed',done:true},
+              {item:'Social media kit shared with sponsors',done:true},
+              {item:'On-ground activation staff briefed',done:false},
+              {item:'Post-event report template ready',done:false}
+            ].map(i=>`
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+              <input type="checkbox" ${i.done?'checked':''} style="accent-color:var(--brand);width:16px;height:16px">
+              <span style="font-size:13px;${i.done?'text-decoration:line-through;color:var(--muted)':''}">${i.item}</span>
+            </div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── PHASE 3: AI DEMAND FORECAST PANEL ──────────────────────────── -->
+    <div class="panel" id="panel-forecast">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px">
+        <div class="card" style="text-align:center"><div style="font-size:28px;font-weight:800;color:var(--brand)">94%</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Forecast Accuracy</div></div>
+        <div class="card" style="text-align:center"><div style="font-size:28px;font-weight:800;color:var(--brand2)">+₹18.4L</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Revenue Unlocked via AI</div></div>
+        <div class="card" style="text-align:center"><div style="font-size:28px;font-weight:800;color:var(--brand3)">3</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Active Predictions</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div>
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-title">🧠 Run AI Demand Forecast</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Select Event</label>
+                <select style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text);font-size:13px">
+                  <option>Sunburn Arena Mumbai — Apr 12</option>
+                  <option>Diljit Dosanjh World Tour — May 10</option>
+                  <option>NH7 Weekender — Jun 20</option>
+                </select>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Forecast Horizon</label>
+                  <select style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text);font-size:13px">
+                    <option>7 days</option><option>14 days</option><option>30 days</option>
+                  </select>
+                </div>
+                <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Model Type</label>
+                  <select style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text);font-size:13px">
+                    <option>Standard</option><option>Weather-Aware</option><option>Social Sentiment</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn-sm btn-primary" style="width:100%;justify-content:center" onclick="runForecast()">
+                <i class="fas fa-brain"></i> Generate AI Forecast
+              </button>
+            </div>
+          </div>
+          <div class="card" id="forecast-result" style="display:none">
+            <div class="card-title">📈 Forecast Results</div>
+            <div id="forecast-output"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">💡 AI Pricing Recommendations</div>
+            ${[
+              {tier:'General Admission',current:'₹1,499',recommended:'₹1,799',reason:'85% sold; demand spike detected',uplift:'+₹3.0L'},
+              {tier:'Premium Standing',current:'₹2,999',recommended:'₹3,499',reason:'VIP conversion rate high',uplift:'+₹1.2L'},
+              {tier:'VIP Package',current:'₹5,999',recommended:'₹6,499',reason:'Limited supply, high search volume',uplift:'+₹0.5L'}
+            ].map(r=>`
+            <div style="padding:12px;background:var(--dark3);border-radius:10px;margin-bottom:10px;border:1px solid var(--border)">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <span style="font-weight:700;font-size:13px">${r.tier}</span>
+                <span style="font-size:12px;color:var(--brand2);font-weight:700">${r.uplift} uplift</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+                <span style="font-size:12px;color:var(--muted)">Current: ${r.current}</span>
+                <i class="fas fa-arrow-right" style="color:var(--brand);font-size:10px"></i>
+                <span style="font-size:12px;color:var(--brand2);font-weight:600">AI: ${r.recommended}</span>
+              </div>
+              <div style="font-size:11px;color:var(--muted)">${r.reason}</div>
+              <button class="action-btn" style="margin-top:6px" onclick="applyPrice('${r.tier}','${r.recommended}')">Apply</button>
+            </div>`).join('')}
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-title">📊 Sales Velocity — Last 14 Days</div>
+            <div style="position:relative;height:160px;margin:12px 0">
+              <canvas id="forecastChart" height="160"></canvas>
+            </div>
+          </div>
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-title">🌤️ Demand Signals</div>
+            ${[
+              {signal:'Search Volume',value:'+42%','trend':'↑','color':'var(--brand2)'},
+              {signal:'Social Mentions',value:'+18%','trend':'↑','color':'var(--brand2)'},
+              {signal:'Competitor Events',value:'2 nearby events','trend':'⚠','color':'#FFB300'},
+              {signal:'Weather Forecast',value:'Clear skies ☀️','trend':'↑','color':'var(--brand2)'},
+              {signal:'Holiday / Weekend',value:'Long weekend','trend':'↑','color':'var(--brand2)'},
+              {signal:'Artist Popularity Index',value:'9.2 / 10','trend':'↑','color':'var(--brand2)'}
+            ].map(s=>`
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+              <span style="font-size:12px;color:var(--muted)">${s.signal}</span>
+              <span style="font-size:12px;font-weight:700;color:${s.color}">${s.trend} ${s.value}</span>
+            </div>`).join('')}
+          </div>
+          <div class="card">
+            <div class="card-title">🎯 Audience Segmentation Forecast</div>
+            ${[
+              {segment:'Mumbai Core (18-28)',pct:42,color:'var(--brand)'},
+              {segment:'Out-of-City (Mumbai)',pct:24,color:'var(--brand2)'},
+              {segment:'Pune Day-Trippers',pct:18,color:'var(--brand3)'},
+              {segment:'18-35 Corporate',pct:16,color:'#FFB300'}
+            ].map(s=>`
+            <div style="margin-bottom:10px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span style="font-size:12px">${s.segment}</span>
+                <span style="font-size:12px;font-weight:700">${s.pct}%</span>
+              </div>
+              <div style="height:6px;background:var(--dark3);border-radius:3px">
+                <div style="height:100%;width:${s.pct}%;background:${s.color};border-radius:3px"></div>
+              </div>
+            </div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+
 <script>
 // Non-duplicate utility functions kept here
 function filterEvents(btn,status){document.querySelectorAll('.filter-pill').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
@@ -1041,7 +1226,7 @@ function showPanel(name,btn){
   const panel=document.getElementById('panel-'+name);
   if(panel)panel.classList.add('active');
   if(btn)btn.classList.add('active');
-  const titles={dashboard:'Dashboard',create:'Create New Event',events:'My Events',tickets:'Ticket Builder',seatmap:'Seat Map Configuration',addons:'Add-Ons & Merchandise',revenue:'Revenue Overview',settlements:'Settlements & Payouts',invoices:'GST Invoices',attendees:'Attendee Management',checkin:'Check-In Configuration',marketing:'Marketing Tools',analytics:'Analytics & Insights',kyc:'KYC Verification',settings:'Account Settings',team:'Team & Permissions',ledband:'LED Band Configuration',crm:'Brand & CRM'};
+  const titles={dashboard:'Dashboard',create:'Create New Event',events:'My Events',tickets:'Ticket Builder',seatmap:'Seat Map Configuration',addons:'Add-Ons & Merchandise',revenue:'Revenue Overview',settlements:'Settlements & Payouts',invoices:'GST Invoices',attendees:'Attendee Management',checkin:'Check-In Configuration',marketing:'Marketing Tools',analytics:'Analytics & Insights',kyc:'KYC Verification',settings:'Account Settings',team:'Team & Permissions',ledband:'LED Band Configuration',crm:'Brand & CRM',sponsors:'Sponsor Activation',forecast:'AI Demand Forecast'};
   document.getElementById('topbarTitle').textContent=titles[name]||'Dashboard';
 }
 async function submitForApproval(){
@@ -1437,6 +1622,109 @@ async function loadTeamMembers(){
         </tr>`).join('');
     }
   } catch(e){ /* keep static data */ }
+}
+
+// ─── PHASE 3: Sponsor Activation ─────────────────────────────────────────────
+function addSponsorForm() {
+  showOrgToast('📋 Opening sponsor contract form... Contact partnerships@indtix.com for package details.');
+}
+function editSponsor(name) { showOrgToast(`✏️ Opening edit panel for ${name}...`); }
+async function loadSponsorMetrics() {
+  try {
+    const res = await fetch('/api/events/e1/sponsors');
+    const data = await res.json();
+    showOrgToast(`✅ Loaded ${data.sponsors?.length||6} sponsors. Total value: ₹24,50,000`);
+  } catch(e) { /* static data shown */ }
+}
+async function updateSponsorROI(id, roi) {
+  try {
+    await fetch(`/api/sponsors/${id}/metrics`, {
+      method: 'PUT', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ roi_multiplier: roi, impressions: 124000, clicks: 8420, leads: 340 })
+    });
+    showOrgToast(`📊 Sponsor metrics updated successfully!`);
+  } catch(e) {}
+}
+async function addNewSponsor() {
+  try {
+    const res = await fetch('/api/sponsors', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ name: 'New Sponsor', tier: 'Associate', value: 100000, event_id: 'e1' })
+    });
+    const data = await res.json();
+    if(data.success) showOrgToast(`✅ Sponsor ${data.sponsor.id} added!`);
+  } catch(e) { showOrgToast('✅ Sponsor added to pipeline!'); }
+}
+function applyPrice(tier, price) {
+  showOrgToast(`✅ Price for ${tier} updated to ${price}. Dynamic pricing activated 🚀`);
+}
+
+// ─── PHASE 3: AI Demand Forecasting ─────────────────────────────────────────
+async function runForecast() {
+  showOrgToast('🧠 Running AI forecast model...');
+  const resultCard = document.getElementById('forecast-result');
+  const output = document.getElementById('forecast-output');
+  if (resultCard) resultCard.style.display = 'block';
+  try {
+    const res = await fetch('/api/organiser/forecast', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ event_id: 'e1', horizon_days: 14 })
+    });
+    const data = await res.json();
+    if (output) {
+      output.innerHTML = `
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+          <div style="text-align:center;padding:12px;background:var(--dark3);border-radius:8px">
+            <div style="font-size:22px;font-weight:800;color:var(--brand)">${data.forecast?.expected_sales?.toLocaleString('en-IN')||'3,420'}</div>
+            <div style="font-size:11px;color:var(--muted)">Expected Tickets (14d)</div>
+          </div>
+          <div style="text-align:center;padding:12px;background:var(--dark3);border-radius:8px">
+            <div style="font-size:22px;font-weight:800;color:var(--brand2)">${data.forecast?.confidence||94}%</div>
+            <div style="font-size:11px;color:var(--muted)">Confidence Level</div>
+          </div>
+        </div>
+        <div style="padding:10px;background:rgba(108,60,247,0.08);border-radius:8px;border-left:3px solid var(--brand)">
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px">🎯 AI Recommendation</div>
+          <div style="font-size:12px;color:var(--muted)">${data.forecast?.recommendation||'Increase GA price to ₹1,799 and release 200 early-bird PREM tickets this weekend. Expected uplift: ₹3.2L'}</div>
+        </div>
+      `;
+    }
+    showOrgToast(`✅ Forecast complete! ${data.forecast?.expected_sales||3420} tickets expected. Accuracy: ${data.forecast?.confidence||94}%`);
+  } catch(e) {
+    if (output) output.innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+        <div style="text-align:center;padding:12px;background:var(--dark3);border-radius:8px"><div style="font-size:22px;font-weight:800;color:var(--brand)">3,420</div><div style="font-size:11px;color:var(--muted)">Expected Tickets (14d)</div></div>
+        <div style="text-align:center;padding:12px;background:var(--dark3);border-radius:8px"><div style="font-size:22px;font-weight:800;color:var(--brand2)">94%</div><div style="font-size:11px;color:var(--muted)">Confidence Level</div></div>
+      </div>
+      <div style="padding:10px;background:rgba(108,60,247,0.08);border-radius:8px;border-left:3px solid var(--brand)">
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">🎯 AI Recommendation</div>
+        <div style="font-size:12px;color:var(--muted)">Increase GA price to ₹1,799 and release 200 early-bird PREM tickets this weekend. Expected uplift: ₹3.2L based on social signal spike detected.</div>
+      </div>`;
+    showOrgToast('✅ Forecast ready! 3,420 tickets expected in 14 days (94% confidence)');
+  }
+}
+
+// Draw forecast chart on panel open
+const _origShowPanel = showPanel;
+document.addEventListener('DOMContentLoaded', () => {
+  loadSponsorMetrics();
+  initForecastChart();
+});
+function initForecastChart() {
+  const canvas = document.getElementById('forecastChart');
+  if (!canvas || !window.Chart) return;
+  const ctx = canvas.getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7','Day 8','Day 9','Day 10','Day 11','Day 12','Day 13','Day 14'],
+      datasets: [
+        { label: 'Actual Sales', data: [120,180,240,310,420,380,510,640,580,720,810,900,null,null], borderColor: 'rgb(108,60,247)', backgroundColor: 'rgba(108,60,247,0.08)', fill: true, tension: 0.4, pointRadius: 3 },
+        { label: 'AI Forecast', data: [null,null,null,null,null,null,null,640,720,820,950,1100,1240,1380], borderColor: 'rgb(0,245,196)', backgroundColor: 'rgba(0,245,196,0.05)', borderDash: [5,5], fill: true, tension: 0.4, pointRadius: 3 }
+      ]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#a0aec0', font: { size: 10 } } } }, scales: { x: { ticks: { color: '#a0aec0', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } }, y: { ticks: { color: '#a0aec0', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } } } }
+  });
 }
 
 </script>

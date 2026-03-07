@@ -8,6 +8,7 @@ app.use('*', cors())
 
 // ─── Portal Routes ─────────────────────────────────────────
 app.get('/', (c) => c.redirect('/fan'))
+app.get('/developer', (c) => c.redirect('/developer.html'))
 
 // ─── API: Health ──────────────────────────────────────────
 app.get('/api/health', (c) => {
@@ -16,9 +17,9 @@ app.get('/api/health', (c) => {
     platform: 'INDTIX',
     version: '4.0.0',
     ts: new Date().toISOString(),
-    portals: ['fan','organiser','venue','event-manager','admin','ops','brand','architecture-spec'],
+    portals: ['fan','organiser','venue','event-manager','admin','ops','brand','architecture-spec','developer'],
     api_version: 'v4',
-    total_endpoints: 71,
+    total_endpoints: 86,
     uptime: 'operational',
     region: 'edge-global',
     built_with: 'Hono + Cloudflare Workers + TypeScript',
@@ -1353,6 +1354,193 @@ app.get('/api/announcements', (c) => {
     { id: 'ANN-001', event_id, message: 'Gates open at 4:00 PM. Show starts at 7:00 PM. Carry a valid ID.', audience: 'All Attendees', recipients: 4200, channels: ['whatsapp', 'push'], sent_at: new Date(Date.now()-86400000).toISOString(), delivered: 4074 },
     { id: 'ANN-002', event_id, message: 'VIP lounge now open on Level 2. Show your wristband at the entrance.', audience: 'VIP Only', recipients: 342, channels: ['whatsapp', 'push'], sent_at: new Date(Date.now()-3600000).toISOString(), delivered: 339 },
   ], total: 2, updated_at: new Date().toISOString() })
+})
+
+// ─── PHASE 3: New Feature Routes ─────────────────────────────────────────────
+
+// FAN CLUBS: List artists fan can follow
+app.get('/api/fanclubs', (c) => {
+  return c.json({ fanclubs: [
+    { id: 'FC-001', artist: 'Diljit Dosanjh', slug: 'diljit', category: 'Punjabi', members: 284200, tier_price: 299, perks: ['Early access tickets', 'Exclusive meetup', 'Signed merch', 'Backstage pass lottery'], cover: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600', avatar: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200', upcoming_events: 3, status: 'active' },
+    { id: 'FC-002', artist: 'Sunburn Festival', slug: 'sunburn', category: 'Electronic', members: 142000, tier_price: 199, perks: ['24-hour pre-sale', 'Festival kit', 'Artist meet-greet entry'], cover: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600', avatar: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=200', upcoming_events: 2, status: 'active' },
+    { id: 'FC-003', artist: 'Zakir Hussain', slug: 'zakir', category: 'Classical', members: 48600, tier_price: 149, perks: ['Priority seating', 'Post-show reception'], cover: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=600', avatar: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200', upcoming_events: 1, status: 'active' },
+    { id: 'FC-004', artist: 'Nucleya', slug: 'nucleya', category: 'Electronic', members: 96800, tier_price: 249, perks: ['Exclusive live stream', 'Monthly Q&A', 'Merchandise discount 20%'], cover: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600', avatar: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200', upcoming_events: 4, status: 'active' },
+    { id: 'FC-005', artist: 'Prateek Kuhad', slug: 'prateek', category: 'Indie', members: 62400, tier_price: 179, perks: ['Songwriting workshop invite', 'Signed album', 'Secret show access'], cover: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600', avatar: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200', upcoming_events: 2, status: 'active' },
+    { id: 'FC-006', artist: 'NH7 Weekender', slug: 'nh7', category: 'Festival', members: 208000, tier_price: 349, perks: ['Multi-day festival priority', 'Artist greenroom access', 'VIP queue', 'Festival kit'], cover: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600', avatar: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=200', upcoming_events: 1, status: 'active' },
+  ], total: 6, featured: 'FC-001', updated_at: new Date().toISOString() })
+})
+
+// FAN CLUBS: Join / Subscribe
+app.post('/api/fanclubs/:id/join', async (c) => {
+  const id = c.req.param('id')
+  const { user_id, tier, payment_method } = await c.req.json().catch(() => ({}))
+  const membershipId = 'MEM-' + Math.random().toString(36).slice(2,8).toUpperCase()
+  return c.json({ success: true, membership: { id: membershipId, fanclub_id: id, user_id: user_id || 'USR-001', tier: tier || 'standard', status: 'active', valid_until: new Date(Date.now() + 365*24*3600000).toISOString(), perks_unlocked: ['Early access tickets', 'Exclusive content', 'Member badge'], payment_method: payment_method || 'upi' }, message: `Fan club membership activated! Your member ID is ${membershipId}. Perks are now live in your account.` })
+})
+
+// FAN CLUBS: Member status
+app.get('/api/fanclubs/memberships/:user_id', (c) => {
+  const user_id = c.req.param('user_id')
+  return c.json({ user_id, memberships: [
+    { fanclub_id: 'FC-001', artist: 'Diljit Dosanjh', member_id: 'MEM-DL9XQ2', tier: 'standard', joined: '2025-12-01', valid_until: '2026-12-01', status: 'active', perks_used: 1 },
+    { fanclub_id: 'FC-002', artist: 'Sunburn Festival', member_id: 'MEM-SB4KM7', tier: 'standard', joined: '2026-01-15', valid_until: '2027-01-15', status: 'active', perks_used: 0 },
+  ], total: 2, updated_at: new Date().toISOString() })
+})
+
+// LIVESTREAM: List live/upcoming streams
+app.get('/api/livestreams', (c) => {
+  const now = new Date()
+  return c.json({ streams: [
+    { id: 'LS-001', title: 'Diljit Dosanjh — Exclusive Live from Delhi', artist: 'Diljit Dosanjh', event_id: null, type: 'exclusive', status: 'live', started_at: new Date(Date.now()-1800000).toISOString(), viewers_live: 84200, price: 299, thumbnail: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600', stream_url: 'https://stream.indtix.com/ls-001', chat_enabled: true },
+    { id: 'LS-002', title: 'Sunburn Arena Mumbai — Live Stream', artist: 'Various Artists', event_id: 'e1', type: 'event_stream', status: 'upcoming', starts_at: new Date(Date.now()+86400000).toISOString(), viewers_registered: 12400, price: 499, thumbnail: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600', stream_url: null, chat_enabled: true },
+    { id: 'LS-003', title: 'Nucleya — Studio Session', artist: 'Nucleya', event_id: null, type: 'exclusive', status: 'upcoming', starts_at: new Date(Date.now()+172800000).toISOString(), viewers_registered: 8200, price: 149, thumbnail: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600', stream_url: null, chat_enabled: true },
+    { id: 'LS-004', title: 'NH7 Weekender Replay — Best Moments', artist: 'Various Artists', event_id: 'e2', type: 'replay', status: 'available', published_at: new Date(Date.now()-604800000).toISOString(), views_total: 42800, price: 199, thumbnail: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600', stream_url: 'https://stream.indtix.com/ls-004', chat_enabled: false },
+  ], live_count: 1, upcoming_count: 2, updated_at: now.toISOString() })
+})
+
+// LIVESTREAM: Purchase access
+app.post('/api/livestreams/:id/purchase', async (c) => {
+  const id = c.req.param('id')
+  const { user_id, payment_method } = await c.req.json().catch(() => ({}))
+  const accessId = 'LSA-' + Math.random().toString(36).slice(2,8).toUpperCase()
+  return c.json({ success: true, access: { id: accessId, stream_id: id, user_id: user_id || 'USR-001', status: 'active', access_url: `https://stream.indtix.com/${id}?token=${accessId}`, expires_at: new Date(Date.now() + 48*3600000).toISOString(), payment_method: payment_method || 'upi' }, message: `Access granted! Watch the stream at your link. Valid for 48 hours.` })
+})
+
+// MERCH STORE: List products
+app.get('/api/merch', (c) => {
+  const event_id = c.req.query('event_id')
+  const artist = c.req.query('artist')
+  return c.json({ products: [
+    { id: 'MRC-001', name: 'Sunburn Arena 2026 — Official Tee', artist: 'Sunburn', event_id: 'e1', category: 'Apparel', price: 699, original_price: 999, sizes: ['S','M','L','XL','XXL'], stock: 428, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400', rating: 4.7, reviews: 142, is_limited: false },
+    { id: 'MRC-002', name: 'Diljit World Tour — Cap', artist: 'Diljit Dosanjh', event_id: null, category: 'Accessories', price: 499, original_price: 699, sizes: ['One Size'], stock: 180, image: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400', rating: 4.9, reviews: 89, is_limited: true },
+    { id: 'MRC-003', name: 'INDTIX × Sunburn — Hoodie', artist: 'Sunburn', event_id: 'e1', category: 'Apparel', price: 1499, original_price: 1999, sizes: ['S','M','L','XL'], stock: 64, image: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=400', rating: 4.8, reviews: 38, is_limited: true },
+    { id: 'MRC-004', name: 'Festival Bag — Waterproof', artist: 'INDTIX', event_id: null, category: 'Accessories', price: 1199, original_price: 1599, sizes: ['One Size'], stock: 312, image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400', rating: 4.5, reviews: 201, is_limited: false },
+    { id: 'MRC-005', name: 'NH7 Weekender — Enamel Pin Set', artist: 'NH7', event_id: 'e2', category: 'Collectibles', price: 349, original_price: 349, sizes: ['One Size'], stock: 95, image: 'https://images.unsplash.com/photo-1589803560479-0c96a2a3e0df?w=400', rating: 4.6, reviews: 67, is_limited: true },
+    { id: 'MRC-006', name: 'INDY Credits Gift Card — ₹500', artist: null, event_id: null, category: 'Gift Cards', price: 500, original_price: 500, sizes: ['Digital'], stock: 9999, image: 'https://images.unsplash.com/photo-1607082349566-187342175e2f?w=400', rating: 4.9, reviews: 318, is_limited: false },
+  ].filter(p => (!event_id || p.event_id === event_id) && (!artist || p.artist?.toLowerCase().includes(artist.toLowerCase()))), total: 6, categories: ['Apparel', 'Accessories', 'Collectibles', 'Gift Cards'], updated_at: new Date().toISOString() })
+})
+
+// MERCH STORE: Purchase item
+app.post('/api/merch/order', async (c) => {
+  const { items, shipping_address, payment_method, user_id } = await c.req.json().catch(() => ({}))
+  if (!items || !items.length) return c.json({ error: 'items required' }, 400)
+  const subtotal = items.reduce((s: number, i: any) => s + (i.price * i.qty), 0)
+  const shipping = subtotal > 999 ? 0 : 99
+  const gst = Math.round(subtotal * 0.18)
+  const orderId = 'MO-' + Math.random().toString(36).slice(2,8).toUpperCase()
+  return c.json({ success: true, order: { id: orderId, user_id: user_id || 'USR-001', items, subtotal, shipping, gst, total: subtotal + shipping + gst, estimated_delivery: '3-5 business days', tracking_enabled: true, payment_method: payment_method || 'upi', status: 'confirmed', confirmed_at: new Date().toISOString() }, message: `Order ${orderId} confirmed! Estimated delivery in 3-5 business days. Track via WhatsApp.` })
+})
+
+// SPONSORS: List sponsors for an event
+app.get('/api/events/:id/sponsors', (c) => {
+  const id = c.req.param('id')
+  return c.json({ event_id: id, sponsors: [
+    { id: 'SP-001', name: 'Bacardi', tier: 'Title Sponsor', logo: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200', activation_types: ['Bar activation', 'LED branding', 'Merch giveaway'], budget: 2500000, impressions_target: 80000, impressions_actual: 72400, status: 'active' },
+    { id: 'SP-002', name: 'Jio', tier: 'Digital Partner', logo: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=200', activation_types: ['5G zone', 'Free SIM offer', 'Digital screen'], budget: 1200000, impressions_target: 50000, impressions_actual: 48200, status: 'active' },
+    { id: 'SP-003', name: 'Swiggy Instamart', tier: 'Food Partner', logo: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=200', activation_types: ['Food court', 'App promo'], budget: 800000, impressions_target: 30000, impressions_actual: 28900, status: 'active' },
+  ], total: 3, total_sponsorship_value: 4500000, updated_at: new Date().toISOString() })
+})
+
+// SPONSORS: Create sponsorship deal
+app.post('/api/sponsors', async (c) => {
+  const { event_id, sponsor_name, tier, budget, activation_types, contact_name, contact_email } = await c.req.json().catch(() => ({}))
+  if (!event_id || !sponsor_name || !tier) return c.json({ error: 'event_id, sponsor_name and tier required' }, 400)
+  const sponsorId = 'SP-' + Math.random().toString(36).slice(2,7).toUpperCase()
+  return c.json({ success: true, sponsor: { id: sponsorId, event_id, sponsor_name, tier, budget: budget || 0, activation_types: activation_types || [], contact_name, contact_email, status: 'pending_approval', created_at: new Date().toISOString() }, message: `Sponsorship deal ${sponsorId} created. Awaiting event organiser approval.` })
+})
+
+// SPONSORS: Update activation metrics
+app.put('/api/sponsors/:id/metrics', async (c) => {
+  const id = c.req.param('id')
+  const metrics = await c.req.json().catch(() => ({}))
+  return c.json({ success: true, sponsor_id: id, metrics: { ...metrics, updated_at: new Date().toISOString() }, message: 'Sponsor activation metrics updated.' })
+})
+
+// AI DEMAND FORECASTING: Predict ticket sales
+app.post('/api/organiser/forecast', async (c) => {
+  const { event_id, event_title, category, city, date, capacity, ticket_price, marketing_budget } = await c.req.json().catch(() => ({}))
+  // Simulated ML forecasting model
+  const baselineScore = (category === 'Music' ? 0.8 : category === 'Sports' ? 0.9 : 0.6)
+  const cityMultiplier = (city === 'Mumbai' ? 1.3 : city === 'Delhi' ? 1.2 : city === 'Bengaluru' ? 1.1 : 1.0)
+  const priceElasticity = ticket_price ? Math.max(0.5, 1 - (ticket_price / 10000) * 0.3) : 0.8
+  const marketingLift = marketing_budget ? Math.min(1.5, 1 + (marketing_budget / 1000000) * 0.2) : 1.0
+  const predicted_sellout_pct = Math.min(98, Math.round(baselineScore * cityMultiplier * priceElasticity * marketingLift * 100))
+  const cap = capacity || 5000
+  const predicted_tickets = Math.round(cap * predicted_sellout_pct / 100)
+  const predicted_revenue = predicted_tickets * (ticket_price || 1499)
+  const confidence = predicted_sellout_pct > 80 ? 'high' : predicted_sellout_pct > 60 ? 'medium' : 'low'
+  return c.json({
+    event_id: event_id || 'EVT-NEW',
+    event_title: event_title || 'New Event',
+    forecast: {
+      predicted_sellout_pct,
+      predicted_tickets_sold: predicted_tickets,
+      predicted_revenue,
+      confidence,
+      time_to_sellout_days: confidence === 'high' ? 7 : confidence === 'medium' ? 21 : 45,
+      optimal_price_range: { min: Math.round((ticket_price || 1499) * 0.9), max: Math.round((ticket_price || 1499) * 1.15) },
+      demand_curve: [
+        { day: 0, cumulative_pct: 5 },
+        { day: 7, cumulative_pct: 25 },
+        { day: 14, cumulative_pct: 48 },
+        { day: 21, cumulative_pct: 65 },
+        { day: 30, cumulative_pct: predicted_sellout_pct > 80 ? 82 : 72 },
+        { day: 45, cumulative_pct: predicted_sellout_pct },
+      ],
+    },
+    recommendations: [
+      predicted_sellout_pct < 70 ? 'Consider promotional pricing in first 2 weeks to build momentum' : 'Strong demand predicted — consider dynamic pricing for premium tiers',
+      marketing_budget && marketing_budget < 200000 ? 'Increase digital marketing budget by ₹1L for 12% more sales' : 'Marketing budget allocation looks optimal',
+      'WhatsApp re-engagement campaign 7 days before event can recover 8% of abandoned carts',
+      city === 'Mumbai' ? 'Mumbai audience responds well to Instagram reels — allocate 40% digital budget there' : 'Meta + Google combo recommended for this city',
+    ],
+    model_version: 'INDY-ML-v2.1',
+    computed_at: new Date().toISOString()
+  })
+})
+
+// AI DEMAND FORECASTING: Get event analytics trend
+app.get('/api/organiser/analytics/trend', (c) => {
+  const event_id = c.req.query('event_id') || 'e1'
+  const days = parseInt(c.req.query('days') || '30')
+  const trend = Array.from({ length: days }, (_, i) => {
+    const d = new Date(Date.now() - (days - i) * 86400000)
+    const base = 80 + Math.floor(Math.sin(i / 5) * 40 + Math.random() * 30)
+    return { date: d.toISOString().split('T')[0], tickets_sold: base, revenue: base * 1499, page_views: base * 8, conversion_rate: (Math.random() * 2 + 3).toFixed(1) }
+  })
+  return c.json({ event_id, trend, summary: { total_tickets: trend.reduce((s, d) => s + d.tickets_sold, 0), total_revenue: trend.reduce((s, d) => s + d.revenue, 0), avg_daily_sales: Math.round(trend.reduce((s, d) => s + d.tickets_sold, 0) / days), peak_day: trend.reduce((a, b) => a.tickets_sold > b.tickets_sold ? a : b).date }, updated_at: new Date().toISOString() })
+})
+
+// DEVELOPER API: List endpoints (for developer portal)
+app.get('/api/developer/endpoints', (c) => {
+  return c.json({ endpoints: [
+    { method: 'GET', path: '/api/events', description: 'List all events with filtering', auth: false, rate_limit: '1000/min', category: 'Events' },
+    { method: 'GET', path: '/api/events/:id', description: 'Get event details', auth: false, rate_limit: '2000/min', category: 'Events' },
+    { method: 'POST', path: '/api/bookings', description: 'Create a booking', auth: true, rate_limit: '100/min', category: 'Bookings' },
+    { method: 'GET', path: '/api/bookings/user/:user_id', description: 'Get user booking history', auth: true, rate_limit: '500/min', category: 'Bookings' },
+    { method: 'POST', path: '/api/auth/login', description: 'Authenticate user', auth: false, rate_limit: '50/min', category: 'Auth' },
+    { method: 'POST', path: '/api/promo/validate', description: 'Validate promo code', auth: false, rate_limit: '200/min', category: 'Promos' },
+    { method: 'GET', path: '/api/search', description: 'Search events, venues, artists', auth: false, rate_limit: '500/min', category: 'Search' },
+    { method: 'GET', path: '/api/livestreams', description: 'List live streams', auth: false, rate_limit: '500/min', category: 'Livestream' },
+    { method: 'GET', path: '/api/merch', description: 'List merch products', auth: false, rate_limit: '500/min', category: 'Merch' },
+    { method: 'GET', path: '/api/fanclubs', description: 'List artist fan clubs', auth: false, rate_limit: '500/min', category: 'Fan Clubs' },
+  ], total: 71, api_version: 'v4', base_url: 'https://indtix.pages.dev', auth_scheme: 'Bearer JWT', docs_url: '/developer', updated_at: new Date().toISOString() })
+})
+
+// DEVELOPER API: Issue test API key
+app.post('/api/developer/keys', async (c) => {
+  const { name, email, use_case, tier } = await c.req.json().catch(() => ({}))
+  if (!name || !email) return c.json({ error: 'name and email required' }, 400)
+  const apiKey = 'sk_test_' + Math.random().toString(36).slice(2,18)
+  return c.json({ success: true, api_key: { key: apiKey, name, email, use_case: use_case || 'general', tier: tier || 'free', rate_limits: { requests_per_min: 100, requests_per_day: 10000 }, created_at: new Date().toISOString(), expires_at: null, status: 'active' }, message: `Test API key created. Keep it secret! Docs at /developer.` })
+})
+
+// WHITE-LABEL: Create venue SaaS instance
+app.post('/api/whitelabel/provision', async (c) => {
+  const { venue_name, domain, city, contact_email, plan } = await c.req.json().catch(() => ({}))
+  if (!venue_name || !contact_email) return c.json({ error: 'venue_name and contact_email required' }, 400)
+  const instanceId = 'WL-' + Math.random().toString(36).slice(2,8).toUpperCase()
+  return c.json({ success: true, instance: { id: instanceId, venue_name, domain: domain || `${venue_name.toLowerCase().replace(/\s+/g,'-')}.indtix.com`, city, contact_email, plan: plan || 'starter', status: 'provisioning', features: ['Custom branding', 'Event management', 'Ticket sales', 'Analytics', 'WhatsApp notifications'], monthly_fee: plan === 'enterprise' ? 49999 : plan === 'pro' ? 14999 : 4999, provisioned_at: new Date().toISOString(), live_in: '24-48 hours' }, message: `White-label instance ${instanceId} provisioning. Live in 24-48 hours!` })
 })
 
 
