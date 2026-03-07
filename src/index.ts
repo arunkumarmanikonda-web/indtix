@@ -18,7 +18,7 @@ app.get('/api/health', (c) => {
     ts: new Date().toISOString(),
     portals: ['fan','organiser','venue','event-manager','admin','ops','brand','architecture-spec'],
     api_version: 'v4',
-    total_endpoints: 77,
+    total_endpoints: 71,
     uptime: 'operational',
     region: 'edge-global',
     built_with: 'Hono + Cloudflare Workers + TypeScript',
@@ -209,7 +209,10 @@ app.get('/api/bookings/:id', (c) => {
 
 // ─── API: Scan / QR Verify ───────────────────────────────
 app.post('/api/scan/verify', async (c) => {
-  const { qr_code, event_id, gate_id } = await c.req.json()
+  const body = await c.req.json().catch(() => ({}))
+  const qr_code = body.qr_code || body.ticket_id || body.barcode || body.code
+  const event_id = body.event_id
+  const gate_id = body.gate || body.gate_id
   if (!qr_code) return c.json({ result: 'invalid', message: 'No QR code provided' }, 400)
 
   // Simulate: BK prefix = valid, "DUP" = duplicate, else invalid
@@ -607,6 +610,19 @@ app.post('/api/bookings/bulk', async (c) => {
 })
 
 // ─── API: FAQ Chatbot ─────────────────────────────────────
+app.get('/api/events/:id/faq', (c) => {
+  const event_id = c.req.param('id')
+  return c.json({ event_id, faqs: [
+    { q: 'What is the refund policy?', a: 'Full refund if cancelled 48h+ before event. 50% for 24-48h. No refund within 24h.' },
+    { q: 'Is there age restriction?', a: 'This event is for attendees 18 years and above. Valid ID required at entry.' },
+    { q: 'What can I bring?', a: 'No outside food/drinks. Water bottles (sealed) allowed. No cameras with detachable lenses.' },
+    { q: 'Is there parking?', a: 'Limited parking available. We recommend Ola/Uber. Nearest metro: 10-min walk.' },
+    { q: 'How do I collect my ticket?', a: 'Show your QR code on the INDTIX app at the gate. No physical ticket needed.' },
+    { q: 'Can I transfer my ticket?', a: 'Yes, use the Transfer option in your INDTIX account before the event day.' },
+    { q: 'What happens if the event is cancelled?', a: 'Full refund automatically processed to your original payment method within 7 business days.' },
+    { q: 'Are there food stalls?', a: 'Yes, multiple F&B vendors including vegetarian, vegan, and international cuisine options.' },
+  ], total: 8 })
+})
 app.post('/api/events/:id/faq', async (c) => {
   const event_id = c.req.param('id')
   const event = EVENTS_DATA.find(e => e.id === event_id)
@@ -796,10 +812,11 @@ app.post('/api/organiser/register', async (c) => {
 // ─── API: Venue Onboarding ────────────────────────────────
 app.post('/api/venue/register', async (c) => {
   const body = await c.req.json().catch(() => ({}))
-  const { venue_name, city, capacity, type, contact_name, email, mobile } = body
+  const venue_name = body.venue_name || body.name
+  const { city, capacity, type, contact_name, email, mobile } = body
 
   if (!venue_name || !city || !capacity) {
-    return c.json({ error: 'venue_name, city and capacity are required' }, 400)
+    return c.json({ error: 'name/venue_name, city and capacity are required' }, 400)
   }
 
   const venue_id = 'VEN-' + Math.random().toString(36).substring(2, 9).toUpperCase()
@@ -824,6 +841,11 @@ app.post('/api/venue/register', async (c) => {
 })
 
 // ─── API: Platform Config (Admin) ────────────────────────
+app.post('/api/admin/config', async (c) => {
+  const updates = await c.req.json().catch(() => ({}))
+  return c.json({ success: true, updated: Object.keys(updates), message: 'Platform configuration saved. Changes propagate within 2 minutes.', updated_at: new Date().toISOString() })
+})
+
 app.get('/api/admin/config', (c) => {
   return c.json({
     config: {
@@ -1210,53 +1232,74 @@ app.delete('/api/promos/:code', (c) => {
   return c.json({ success: true, message: `Promo code ${code} deactivated. 0 new redemptions will be accepted.` })
 })
 
-// CONFIG: Get platform config
-app.get('/api/admin/config', (c) => {
-  return c.json({ config: {
-    ticket_cap_default: 10, ticket_cap_max_override: 100,
-    platform_commission_pct: 10, convenience_fee_flat: 20,
-    gst_on_fee_pct: 18, gstin: '27AABCO1234A1Z5',
-    settlement_window_days: 7, tds_pct: 5,
-    min_ticket_price: 1, refund_window_hours: 48,
-    refund_pct_within_window: 50, kyc_sla_hours: 24,
-    cancellation_notice_hours: 48, age_verification: 'aadhaar_otp',
-    maintenance_mode: false, max_bulk_tickets: 50,
-    ai_chat_enabled: true, waitlist_enabled: true,
-    promo_stacking_allowed: false, wallet_enabled: true,
-  }, updated_at: new Date().toISOString() })
+
+// ─── PHASE 5: NEW ENDPOINTS ───────────────────────────────────────────────────
+
+// BOOKINGS: Get user booking history (NEW)
+app.get('/api/bookings/user/:user_id', (c) => {
+  const user_id = c.req.param('user_id')
+  return c.json({
+    user_id,
+    bookings: [
+      { id: 'BK7X9Q2A', event: 'Sunburn Arena Mumbai', date: '2026-04-15', venue: 'NSCI Dome', tickets: 2, tier: 'VIP Gold', amount: 11800, status: 'confirmed', qr_code: 'QR-BK7X9Q2A', booking_date: '2026-03-01', checkin_status: 'not_checked_in' },
+      { id: 'BK2K8M4N', event: 'Lollapalooza India', date: '2026-03-22', venue: 'Mahalaxmi Race Course', tickets: 1, tier: 'General Admission', amount: 3499, status: 'confirmed', qr_code: 'QR-BK2K8M4N', booking_date: '2026-02-15', checkin_status: 'not_checked_in' },
+      { id: 'BK9P3F7Z', event: 'Comedy Night Out', date: '2026-05-03', venue: 'Habitat Centre', tickets: 2, tier: 'Premium', amount: 5600, status: 'confirmed', qr_code: 'QR-BK9P3F7Z', booking_date: '2026-02-28', checkin_status: 'not_checked_in' },
+      { id: 'BK1R4T2E', event: 'NH7 Weekender', date: '2026-01-18', venue: 'Aamby Valley', tickets: 3, tier: 'GA', amount: 7497, status: 'completed', booking_date: '2025-12-20', checkin_status: 'checked_in' },
+    ],
+    total: 4,
+    stats: { total_spent: 28396, events_attended: 1, upcoming_events: 3, cancelled: 0 }
+  })
 })
 
-// CONFIG: Update
-app.post('/api/admin/config', async (c) => {
-  const updates = await c.req.json()
-  return c.json({ success: true, updated: Object.keys(updates), message: 'Platform configuration saved. Changes propagate within 2 minutes.', updated_at: new Date().toISOString() })
+// ORGANISER: Get team members (NEW)
+app.get('/api/organiser/team', (c) => {
+  return c.json({ team: [{ id: 'TM-001', name: 'Arjun Mehta', email: 'arjun@percept.in', role: 'Event Manager', status: 'active', joined: '2025-01-15', events_managed: 12 },{ id: 'TM-002', name: 'Sneha Kapoor', email: 'sneha@percept.in', role: 'Marketing Lead', status: 'active', joined: '2025-02-01', events_managed: 8 },{ id: 'TM-003', name: 'Raj Patel', email: 'raj@percept.in', role: 'Finance', status: 'active', joined: '2025-03-10', events_managed: 5 },{ id: 'TM-004', name: 'Priya Singh', email: 'priya@percept.in', role: 'Operations', status: 'invited', joined: null, events_managed: 0 }], total: 4, active: 3, invited: 1, roles_available: ['Event Manager', 'Marketing Lead', 'Finance', 'Operations', 'Customer Support', 'Scanner Operator'] })
 })
 
-// USERS: List
-app.get('/api/admin/users', (c) => {
-  const q = c.req.query('q') || ''
-  const users = [
-    { id: 'USR-001', name: 'Priya Sharma', email: 'priya.s@gmail.com', city: 'Mumbai', joined: '2024-01', bookings: 18, spend: 42600, status: 'active', kyc: true },
-    { id: 'USR-002', name: 'Rahul Kumar', email: 'rahul.k@outlook.com', city: 'Delhi', joined: '2024-03', bookings: 14, spend: 18200, status: 'active', kyc: true },
-    { id: 'USR-003', name: 'Ananya Iyer', email: 'ananya.i@gmail.com', city: 'Bengaluru', joined: '2024-06', bookings: 9, spend: 27300, status: 'active', kyc: false },
-    { id: 'USR-FRAUD-12842', name: 'Unknown User #12842', email: 'bot-12842@tempmail.com', city: '—', joined: '2025-04', bookings: 8, spend: 0, status: 'fraud', kyc: false },
-  ].filter(u => !q || u.name.toLowerCase().includes(q.toLowerCase()) || u.email.toLowerCase().includes(q.toLowerCase()))
-  return c.json({ users, total: users.length, updated_at: new Date().toISOString() })
-})
-
-// USERS: Block/Unblock
-app.post('/api/admin/users/:id/block', async (c) => {
+// ADMIN: Approve/Reject event
+app.post('/api/admin/events/:id/approve', async (c) => {
   const id = c.req.param('id')
-  const { reason } = await c.req.json().catch(() => ({ reason: 'Policy violation' }))
-  return c.json({ success: true, user_id: id, status: 'blocked', reason, sessions_terminated: 3, message: `User ${id} blocked. All active sessions terminated. Fraud team notified.` })
+  const { action, reason } = await c.req.json().catch(() => ({ action: 'approve' }))
+  const approved = action !== 'reject'
+  return c.json({ success: true, event_id: id, status: approved ? 'approved' : 'rejected', action, reason: reason || null, message: approved ? `Event ${id} approved! Organiser notified via WhatsApp.` : `Event ${id} rejected. Reason sent to organiser.`, notified_at: new Date().toISOString() })
 })
 
-// USERS: Export
-app.get('/api/admin/users/export', (c) => {
-  return c.json({ success: true, message: 'User export queued. CSV will be emailed to admin@indtix.com within 5 minutes.', records: 84200, format: 'CSV' })
+// ORGANISER: Create team member
+app.post('/api/organiser/team', async (c) => {
+  const { name, email, role, permissions } = await c.req.json().catch(() => ({}))
+  if (!name || !email || !role) return c.json({ error: 'name, email and role required' }, 400)
+  return c.json({ success: true, team_member: { id: 'TM-' + Date.now(), name, email, role, permissions: permissions || [], status: 'invited', invited_at: new Date().toISOString() }, message: `Invite sent to ${email}. They can join using the link in their email.` })
 })
 
-// EVENTS: Approval queue (admin)
+// INCIDENTS: Log new incident
+app.post('/api/incidents', async (c) => {
+  const { type, location, description, priority, event_id } = await c.req.json().catch(() => ({}))
+  if (!type || !description) return c.json({ error: 'type and description are required' }, 400)
+  const incidentId = 'INC-' + Math.random().toString(36).slice(2,7).toUpperCase()
+  return c.json({ success: true, incident_id: incidentId, type, location: location || 'General', priority: priority || 'medium', status: 'open', event_id: event_id || 'e1', created_at: new Date().toISOString(), message: `Incident ${incidentId} logged. Control room and safety team notified.` })
+})
+
+// INCIDENTS: Get incidents for a specific event
+app.get('/api/events/:id/incidents', (c) => {
+  const id = c.req.param('id')
+  return c.json({ incidents: [
+    { id: 'INC-001', type: 'Technical Failure', location: 'Gate 4', description: 'Gate 4 scanner down', priority: 'high', status: 'in_progress', event_id: id, logged_at: new Date(Date.now()-7200000).toISOString() },
+    { id: 'INC-002', type: 'Medical', location: 'Main Floor', description: 'Minor heat exhaustion — fan assisted', priority: 'medium', status: 'resolved', event_id: id, logged_at: new Date(Date.now()-3600000).toISOString() },
+  ], total: 2, open: 1, resolved: 1 })
+})
+
+// ANNOUNCEMENTS: Send
+app.post('/api/announcements', async (c) => {
+  const { event_id, message, audience, channels } = await c.req.json().catch(() => ({}))
+  if (!message) return c.json({ error: 'message is required' }, 400)
+  const sizes: Record<string, number> = { 'All Attendees': 4200, 'VIP Only': 342, 'General Admission': 3858, 'Not Yet Checked In': 1359 }
+  const count = sizes[audience as string] || 4200
+  return c.json({ success: true, announcement_id: 'ANN-' + Date.now(), message, audience: audience || 'All Attendees', recipients: count, channels: channels || ['whatsapp', 'push'], status: 'sent', sent_at: new Date().toISOString(), delivered_estimate: Math.round(count * 0.97) })
+})
+
+// ─── PHASE 5: Missing Routes ──────────────────────────────────────────────────
+
+// ADMIN: Events approval queue
 app.get('/api/admin/events/queue', (c) => {
   return c.json({ pending: [
     { id: 'EVT-P001', title: 'Sunburn Arena Mumbai', organiser: 'Percept Live', city: 'Mumbai', date: '2026-04-15', capacity: 8500, category: 'Music', submitted: '2026-03-05T10:00:00Z', docs_complete: true, status: 'pending' },
@@ -1265,105 +1308,52 @@ app.get('/api/admin/events/queue', (c) => {
   ], stats: { pending: 3, pending_docs: 1, approved_today: 2, rejected_today: 0 }, updated_at: new Date().toISOString() })
 })
 
-// EVENTS: Approve/Reject
-app.post('/api/admin/events/:id/approve', async (c) => {
+// ADMIN: Users list (paginated)
+app.get('/api/admin/users', (c) => {
+  const q = c.req.query('q') || ''
+  const page = parseInt(c.req.query('page') || '1')
+  const limit = parseInt(c.req.query('limit') || '20')
+  const users = [
+    { id: 'USR-001', name: 'Priya Sharma', email: 'priya.s@gmail.com', phone: '+91 98765 43210', city: 'Mumbai', joined: '2024-01', bookings: 18, spend: 42600, status: 'active', kyc: true, kyc_status: 'verified' },
+    { id: 'USR-002', name: 'Rahul Kumar', email: 'rahul.k@outlook.com', phone: '+91 98701 23456', city: 'Delhi', joined: '2024-03', bookings: 14, spend: 18200, status: 'active', kyc: true, kyc_status: 'verified' },
+    { id: 'USR-003', name: 'Ananya Iyer', email: 'ananya.i@gmail.com', phone: '+91 99001 23456', city: 'Bengaluru', joined: '2024-06', bookings: 9, spend: 27300, status: 'active', kyc: false, kyc_status: 'pending' },
+    { id: 'USR-004', name: 'Vikram Nair', email: 'vikram.n@yahoo.com', phone: '+91 97001 23456', city: 'Hyderabad', joined: '2024-08', bookings: 5, spend: 12400, status: 'active', kyc: false, kyc_status: 'unverified' },
+    { id: 'USR-FRAUD-12842', name: 'Unknown User #12842', email: 'bot-12842@tempmail.com', phone: 'N/A', city: '—', joined: '2025-04', bookings: 8, spend: 0, status: 'blocked', kyc: false, kyc_status: 'rejected' },
+  ].filter(u => !q || u.name.toLowerCase().includes(q.toLowerCase()) || u.email.toLowerCase().includes(q.toLowerCase()))
+  return c.json({ users, total: 1248420, page, limit, pages: Math.ceil(1248420 / limit), search_query: q, updated_at: new Date().toISOString() })
+})
+
+// ADMIN: Block/Unblock user
+app.post('/api/admin/users/:id/block', async (c) => {
   const id = c.req.param('id')
-  const { action, reason } = await c.req.json().catch(() => ({ action: 'approve' }))
-  const approved = action !== 'reject'
-  return c.json({ success: true, event_id: id, status: approved ? 'approved' : 'rejected', message: approved ? `Event ${id} approved! Organiser notified via WhatsApp.` : `Event ${id} rejected. Reason sent to organiser.`, notified_at: new Date().toISOString() })
+  const { reason, action } = await c.req.json().catch(() => ({ reason: 'Policy violation', action: 'block' }))
+  const blocking = action !== 'unblock'
+  return c.json({ success: true, user_id: id, status: blocking ? 'blocked' : 'active', reason: reason || 'Policy violation', sessions_terminated: blocking ? 3 : 0, message: blocking ? `User ${id} blocked. All active sessions terminated.` : `User ${id} unblocked. Access restored.` })
 })
 
-// INCIDENTS: Log new
-app.post('/api/incidents', async (c) => {
-  const { type, location, description, priority, event_id } = await c.req.json()
-  if (!type || !description) return c.json({ error: 'type and description are required' }, 400)
-  const incidentId = 'INC-' + Math.random().toString(36).slice(2,7).toUpperCase()
-  return c.json({ success: true, incident_id: incidentId, type, location: location || 'General', priority: priority || 'medium', status: 'open', event_id: event_id || 'e1', created_at: new Date().toISOString(), message: `Incident ${incidentId} logged. Control room and safety team notified.` })
+// ADMIN: Export users CSV
+app.get('/api/admin/users/export', (c) => {
+  return c.json({ success: true, message: 'User export queued. CSV will be emailed to admin@indtix.com within 5 minutes.', records: 1248420, format: 'CSV', estimated_size_mb: 420, requested_at: new Date().toISOString() })
 })
 
-// INCIDENTS: List for event
-app.get('/api/events/:id/incidents', (c) => {
+// INCIDENTS: List all (GET)
+app.get('/api/incidents', (c) => {
+  const event_id = c.req.query('event_id') || 'e1'
   return c.json({ incidents: [
-    { id: 'INC-001', type: 'Technical Failure', location: 'Gate 4', description: 'Gate 4 scanner down', priority: 'high', status: 'in_progress', logged_at: new Date(Date.now()-7200000).toISOString() },
-    { id: 'INC-002', type: 'Medical', location: 'Main Floor', description: 'Minor heat exhaustion — fan assisted', priority: 'medium', status: 'resolved', logged_at: new Date(Date.now()-3600000).toISOString() },
-  ], total: 2, open: 1, resolved: 1 })
+    { id: 'INC-001', type: 'Technical Failure', location: 'Gate 4', description: 'Scanner at Gate 4 went offline', priority: 'high', status: 'in_progress', event_id, logged_by: 'Ops Team', logged_at: new Date(Date.now()-7200000).toISOString(), resolved_at: null },
+    { id: 'INC-002', type: 'Medical', location: 'Main Floor — Section C', description: 'Fan reported minor heat exhaustion. First aid administered.', priority: 'medium', status: 'resolved', event_id, logged_by: 'Security Team', logged_at: new Date(Date.now()-3600000).toISOString(), resolved_at: new Date(Date.now()-1800000).toISOString() },
+    { id: 'INC-003', type: 'Crowd Management', location: 'Entry Plaza', description: 'Queue buildup at main entrance. Additional staff deployed.', priority: 'low', status: 'resolved', event_id, logged_by: 'Gate Team', logged_at: new Date(Date.now()-5400000).toISOString(), resolved_at: new Date(Date.now()-4200000).toISOString() },
+  ], total: 3, open: 1, resolved: 2, updated_at: new Date().toISOString() })
 })
 
-// ANNOUNCEMENTS: Send
-app.post('/api/announcements', async (c) => {
-  const { event_id, message, audience, channels } = await c.req.json()
-  if (!message) return c.json({ error: 'message is required' }, 400)
-  const sizes = { 'All Attendees': 4200, 'VIP Only': 342, 'General Admission': 3858, 'Not Yet Checked In': 1359 }
-  const count = sizes[audience as keyof typeof sizes] || 4200
-  return c.json({ success: true, announcement_id: 'ANN-' + Date.now(), message, audience: audience || 'All Attendees', recipients: count, channels: channels || ['whatsapp', 'push'], status: 'sent', sent_at: new Date().toISOString(), delivered_estimate: Math.round(count * 0.97) })
+// ANNOUNCEMENTS: GET (list recent)
+app.get('/api/announcements', (c) => {
+  const event_id = c.req.query('event_id') || 'e1'
+  return c.json({ announcements: [
+    { id: 'ANN-001', event_id, message: 'Gates open at 4:00 PM. Show starts at 7:00 PM. Carry a valid ID.', audience: 'All Attendees', recipients: 4200, channels: ['whatsapp', 'push'], sent_at: new Date(Date.now()-86400000).toISOString(), delivered: 4074 },
+    { id: 'ANN-002', event_id, message: 'VIP lounge now open on Level 2. Show your wristband at the entrance.', audience: 'VIP Only', recipients: 342, channels: ['whatsapp', 'push'], sent_at: new Date(Date.now()-3600000).toISOString(), delivered: 339 },
+  ], total: 2, updated_at: new Date().toISOString() })
 })
 
-// SETTLEMENTS: Process one
-app.post('/api/settlements/:id/process', async (c) => {
-  const id = c.req.param('id')
-  const utr = 'UTR' + Date.now().toString().slice(-10)
-  return c.json({ success: true, settlement_id: id, utr_reference: utr, status: 'processed', amount_transferred: 324500, bank: 'HDFC Bank ****4521', processed_at: new Date().toISOString(), message: `Settlement ${id} processed. UTR: ${utr}. Credit within 2 hours.` })
-})
-
-// ORGANISER: KYC Status check
-app.get('/api/kyc/:id', (c) => {
-  const id = c.req.param('id')
-  return c.json({ kyc_id: id, status: 'under_review', submitted_at: new Date(Date.now()-86400000).toISOString(), expected_completion: new Date(Date.now()+86400000).toISOString(), documents: [{ type: 'GST Certificate', status: 'verified' }, { type: 'PAN Card', status: 'under_review' }, { type: 'Bank Statement', status: 'pending' }], reviewer: 'Compliance Team', notes: 'PAN verification in progress. Please ensure document is clear and unblurred.' })
-})
-
-// GST INVOICE: Get by booking
-app.get('/api/gst/invoice/:booking_id', (c) => {
-  const id = c.req.param('booking_id')
-  const base = 2999
-  const gst = Math.round(base * 0.18)
-  return c.json({ invoice_id: 'INV-' + id, booking_id: id, gstin_platform: '27AABCO1234A1Z5', gstin_organiser: '27BBCPL9876B1Z2', invoice_date: new Date().toISOString().split('T')[0], line_items: [{ description: 'Event Ticket — Sunburn Arena Mumbai (GA)', qty: 2, unit_price: base/2, amount: base }, { description: 'Platform Convenience Fee', qty: 1, unit_price: 20, amount: 20 }], subtotal: base + 20, cgst: Math.round((base+20)*0.09), sgst: Math.round((base+20)*0.09), total_gst: gst + 4, grand_total: base + 20 + gst + 4, pdf_url: `https://invoice.indtix.com/${id}.pdf`, hsn_code: '998554', place_of_supply: 'Maharashtra (27)' })
-})
-
-// WAITLIST: Join
-app.post('/api/events/:id/waitlist', async (c) => {
-  const id = c.req.param('id')
-  const { user_id, email, tier } = await c.req.json()
-  const position = Math.floor(50 + Math.random() * 200)
-  return c.json({ success: true, waitlist_id: 'WL-' + Date.now(), event_id: id, position, tier: tier || 'GA', email_confirmation: email, message: `You're #${position} on the waitlist for ${tier || 'GA'} tickets. We'll notify you when tickets become available!` })
-})
-
-// SEARCH: Enhanced with suggestions
-app.get('/api/search', (c) => {
-  const q = (c.req.query('q') || '').toLowerCase()
-  const city = c.req.query('city') || ''
-  const allEvents = [
-    { id: 'e1', name: 'Sunburn Arena Mumbai', category: 'Music', city: 'Mumbai', date: '2026-04-15', price: 1499, sold_pct: 72, venue: 'NSCI Dome', image: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600' },
-    { id: 'e2', name: 'NH7 Weekender', category: 'Music', city: 'Pune', date: '2026-05-20', price: 2999, sold_pct: 58, venue: 'Mahalaxmi Grounds', image: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600' },
-    { id: 'e3', name: 'Comedy Central Live', category: 'Comedy', city: 'Bengaluru', date: '2026-04-28', price: 899, sold_pct: 45, venue: 'JW Marriott Ballroom', image: 'https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=600' },
-    { id: 'e4', name: 'Tech Summit 2026', category: 'Conference', city: 'Hyderabad', date: '2026-06-10', price: 4999, sold_pct: 85, venue: 'HITEX Exhibition Centre', image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600' },
-    { id: 'e5', name: 'Lollapalooza India', category: 'Music', city: 'Mumbai', date: '2026-03-22', price: 5999, sold_pct: 92, venue: 'Mahalaxmi Racecourse', image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600' },
-    { id: 'e6', name: 'BITS Pilani Oasis', category: 'College Fest', city: 'Pilani', date: '2026-10-01', price: 299, sold_pct: 34, venue: 'BITS Campus', image: 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600' },
-    { id: 'e7', name: 'Bollywood Night Out', category: 'Music', city: 'Delhi', date: '2026-05-05', price: 1999, sold_pct: 61, venue: 'Jawaharlal Nehru Stadium', image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600' },
-    { id: 'e8', name: 'Startup Summit India', category: 'Conference', city: 'Bengaluru', date: '2026-07-20', price: 3499, sold_pct: 40, venue: 'KTPO Trade Centre', image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600' },
-  ]
-  const results = allEvents.filter(e => (!q || e.name.toLowerCase().includes(q) || e.category.toLowerCase().includes(q) || e.city.toLowerCase().includes(q) || e.venue.toLowerCase().includes(q)) && (!city || e.city.toLowerCase() === city.toLowerCase()))
-  const suggestions = q ? ['Live music in ' + (city||'Mumbai'), q + ' tickets', q + ' 2026'].slice(0,3) : []
-  return c.json({ query: q, results, total: results.length, suggestions, updated_at: new Date().toISOString() })
-})
-
-// ORGANISER: Create team member
-app.post('/api/organiser/team', async (c) => {
-  const { name, email, role } = await c.req.json()
-  if (!name || !email || !role) return c.json({ error: 'name, email and role required' }, 400)
-  return c.json({ success: true, team_member: { id: 'TM-' + Date.now(), name, email, role, status: 'invited', invited_at: new Date().toISOString() }, message: `Invite sent to ${email}. They can join with the link in their email.` })
-})
-
-// VENUE: Dashboard (enhanced)
-app.get('/api/venue/dashboard', (c) => {
-  return c.json({ venue: { id: 'VEN-001', name: 'NSCI Dome, Worli', city: 'Mumbai', capacity: 8500, rating: 4.8, verified: true }, stats: { upcoming_events: 3, revenue_mtd: 1280000, bookings_confirmed: 2, pending_enquiries: 4, occupancy_rate_avg: 0.82 }, upcoming: [{ event_id: 'e1', title: 'Sunburn Arena Mumbai', date: '2026-04-15', organiser: 'Percept Live', revenue: 320000, status: 'confirmed' }, { event_id: 'e5', title: 'Lollapalooza India', date: '2026-03-22', organiser: 'BookMyShow Live', revenue: 580000, status: 'confirmed' }, { event_id: 'evp1', title: 'Corporate Gala — Tech Corp', date: '2026-04-02', organiser: 'TechCorp India', revenue: 90000, status: 'pending_payment' }], updated_at: new Date().toISOString() })
-})
-
-// NOTIFICATIONS: Send
-app.post('/api/notifications/send', async (c) => {
-  const { template, recipients, channel, params } = await c.req.json()
-  if (!template || !recipients) return c.json({ error: 'template and recipients required' }, 400)
-  const count = Array.isArray(recipients) ? recipients.length : recipients
-  return c.json({ success: true, notification_id: 'NOTIF-' + Date.now(), template, channel: channel || 'whatsapp', queued_for: count, estimated_delivery_minutes: Math.ceil(count / 10000), message: `${count} ${channel || 'WhatsApp'} notifications queued. ETA: ${Math.ceil(count/10000)} min.` })
-})
 
 export default app

@@ -721,35 +721,6 @@
 </div>
 
 <script>
-
-function broadcastTeam(){showEMToast('Broadcasting to all 24 team members via WhatsApp...');}
-function addTeamMember(){showEMToast('Add new team member dialog...');}
-function contactMember(name){showEMToast('📲 Calling '+name+' via radio/WhatsApp...');}
-function toggleTask(el){el.classList.toggle('done');el.textContent=el.classList.contains('done')?'✓':'';el.nextElementSibling.style.textDecoration=el.classList.contains('done')?'line-through':'none';el.nextElementSibling.style.opacity=el.classList.contains('done')?'0.6':'1';}
-function addTask(){const t=prompt('Task description?');if(t)showEMToast('✅ Task added: '+t);}
-function resolveIncident(btn){btn.closest('.incident-row').style.opacity='0.5';showEMToast('Incident marked as resolved.');}
-function escalateIncident(){showEMToast('Incident escalated to Super Admin and venue manager.');}
-function logIncident(){const t=prompt('Describe the incident:');if(t)showEMToast('Incident logged and team notified.');}
-
-function showPanel(name,btn){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('active'));
-  const p=document.getElementById('panel-'+name);if(p)p.classList.add('active');if(btn)btn.classList.add('active');
-  const t={dashboard:'Event Dashboard',runsheet:'Run Sheet',tasks:'Task Manager',team:'Team & Zones',checkin:'Live Check-In Monitor',wristbands:'Wristband & LED Bands',pos:'POS Overview',fb:'F&B Order Tracker',announce:'Announcements',incidents:'Incident Reports',report:'Post-Event Report',feedback:'Attendee Feedback'};
-  document.getElementById('topbarTitle').textContent=t[name]||'Dashboard';
-}
-function toggleTask(el){el.classList.toggle('done');el.querySelector('.task-check').textContent=el.classList.contains('done')?'✓':'';}
-function emergencyAlert(){if(confirm('⚠️ SEND EMERGENCY ALERT to all team members?')){showToast('🚨 Emergency alert sent to all 24 team members via WhatsApp & radio.');};}
-function setLEDColor(c){showEMToast('💡 LED bands set to '+(c==='🌈'?'Rainbow':'color '+c));}
-function ledEffect(e){showEMToast('✨ LED effect: '+e+' activated for 2,400 bands.');}
-function logIncident(){showEMToast('Incident logged and team notified via WhatsApp.');}
-
-// Live checkin counter
-let count=2841;
-setInterval(()=>{count+=Math.floor(Math.random()*3);const el=document.getElementById('checkinCount');if(el)el.textContent=count.toLocaleString('en-IN');},3000);
-</script>
-</body>
-</html><script>
 // ─── EVENT MANAGER PLATINUM ENHANCEMENTS ────────────────────────────────
 function showEMToast(msg,type){
   type=type||'success';
@@ -798,18 +769,9 @@ function addRunSheetItem(){
   const assignee=prompt('Assignee:');
   if(time&&task){runSheetItems.push({time,task,status:'pending',assignee:assignee||'TBD'});renderRunSheet();showEMToast('Run sheet item added: '+task);}
 }
-function exportRunSheet(){showEMToast('📊 Run sheet exporting as PDF...');}
 
 // Tasks
 var tasks=[];
-function addTask(){
-  const desc=prompt('Task description:');
-  if(!desc)return;
-  const assignee=prompt('Assign to:','Team Lead');
-  tasks.push({desc,assignee:assignee||'Unassigned',done:false,priority:'normal'});
-  renderTaskList();
-  showEMToast('Task added: '+desc);
-}
 function renderTaskList(){
   const container=document.getElementById('taskList');
   if(!container)return;
@@ -823,15 +785,6 @@ function deleteTask(i){tasks.splice(i,1);renderTaskList();}
 
 // Incidents
 var incidents=[];
-function logIncident(){
-  const type=prompt('Incident type (Medical/Security/Fire/Technical/Other):','Security');
-  const desc=prompt('Describe the incident:');
-  if(!type||!desc)return;
-  const id='INC-'+Math.floor(Math.random()*9000+1000);
-  incidents.push({id,type,desc,time:new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}),status:'open',severity:type==='Fire'||type==='Medical'?'critical':'medium'});
-  renderIncidents();
-  showEMToast('🚨 Incident logged: '+id+'. Relevant teams notified via WhatsApp.');
-}
 function renderIncidents(){
   const container=document.getElementById('incidentList');
   if(!container)return;
@@ -846,9 +799,6 @@ function resolveIncidentEM(i){
   renderIncidents();
   showEMToast('✅ Incident '+incidents[i].id+' marked resolved. Admin notified.');
 }
-function escalateIncident(id){showEMToast('⬆️ Incident '+id+' escalated to Super Admin and venue security.');}
-function resolveIncident(btn){btn.closest('.incident-row')&&(btn.closest('.incident-row').style.opacity='0.5');showEMToast('Incident resolved.');}
-
 // Check-in Monitor
 var checkinCount=2841,checkinCapacity=5000;
 function updateCheckinDisplay(){
@@ -865,14 +815,6 @@ setInterval(function(){
   updateCheckinDisplay();
 },2500);
 
-// LED / Wristbands
-function setLEDColor(c){showEMToast('🌈 LED bands set to color: '+(c==='🌈'?'Rainbow':c.toUpperCase())+' across all '+(2400).toLocaleString('en-IN')+' active bands');}
-function ledEffect(e){showEMToast('✨ LED effect "'+e+'" activated for all bands. BPM sync: on.');}
-function broadcastTeam(){showEMToast('📢 Team broadcast sent to all 24 members via WhatsApp!');}
-function addTeamMember(){const name=prompt('Team member name:');if(name)showEMToast('Team member '+name+' added and briefed.');}
-function contactMember(name){showEMToast('📞 Calling '+name+' via on-ground radio channel 4...');}
-function emergencyAlert(){if(confirm('🚨 SEND EMERGENCY ALERT to all 24 team members?'))showEMToast('🚨 Emergency alert broadcast! All team notified via WhatsApp + radio.');}
-
 // Announcements
 function postAnnouncement(){
   const msg=prompt('Announcement to display on screens and PA:');
@@ -886,12 +828,7 @@ function submitFinalReport(){showEMToast('✅ Final event report submitted to or
 function exportAttendeeData(){showEMToast('📊 Attendee data exporting as CSV...');}
 function collectFeedback(){showEMToast('📱 Feedback SMS + WhatsApp sent to all 2,841 attendees.');}
 
-// Task checkbox original handler
-function toggleTask(el){
-  el.classList.toggle('done');
-  const taskCheck=el.querySelector('.task-check');
-  if(taskCheck)taskCheck.textContent=el.classList.contains('done')?'✓':'';
-}
+// Task checkbox handler merged into full implementation below
 
 // Init
 window.addEventListener('DOMContentLoaded',function(){

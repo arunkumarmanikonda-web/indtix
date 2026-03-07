@@ -316,11 +316,6 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;min
 <script>
 
 const posCart = {};
-function addToCart(name,cat,price){
-  if(!posCart[name])posCart[name]={price,qty:0,cat};
-  posCart[name].qty++;
-  renderPOSCart();
-}
 function renderPOSCart(){
   const el=document.getElementById('posCart');
   const sub=document.getElementById('posSubtotal');
@@ -339,11 +334,6 @@ function renderPOSCart(){
   if(gst)gst.textContent='₹'+g.toLocaleString('en-IN');
   if(tot)tot.textContent='₹'+(subtotal+g).toLocaleString('en-IN');
 }
-function changeCartQty(name,delta){
-  if(!posCart[name])return;
-  posCart[name].qty=Math.max(0,posCart[name].qty+delta);
-  renderPOSCart();
-}
 function clearPOSCart(){Object.keys(posCart).forEach(k=>delete posCart[k]);renderPOSCart();}
 function payPOS(method){
   const tot=document.getElementById('posTotal');
@@ -352,42 +342,6 @@ function payPOS(method){
   clearPOSCart();
 }
 function filterPOS(btn,cat){document.querySelectorAll('.pos-cat-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
-function simulateScan(){
-  const outcomes=[
-    {ok:true,name:'Priya Sharma',tier:'VIP',booking:'BK7X9Q2A'},
-    {ok:true,name:'Rahul Mehta',tier:'GA',booking:'BK2K8M4N'},
-    {ok:false,name:null,tier:null,booking:'BK-FAKE-001'},
-  ];
-  const o=outcomes[Math.floor(Math.random()*outcomes.length)];
-  const res=document.getElementById('scanResult');
-  if(!res)return;
-  const cnt=document.getElementById('scanCount');
-  const rej=document.getElementById('rejectCount');
-  if(o.ok){
-    if(cnt)cnt.textContent=parseInt(cnt.textContent)+1;
-    res.innerHTML='<div class="scan-result success"><div style="font-size:16px;font-weight:700">✅ VALID TICKET</div><div style="font-size:14px;margin-top:4px">'+o.name+' — '+o.tier+'</div><div style="font-size:12px;opacity:0.7;margin-top:2px">Booking: '+o.booking+'</div></div>';
-    playBeep(true);
-  } else {
-    if(rej)rej.textContent=parseInt(rej.textContent)+1;
-    res.innerHTML='<div class="scan-result error"><div style="font-size:16px;font-weight:700">❌ INVALID TICKET</div><div style="font-size:14px;margin-top:4px">Booking not found or already used</div></div>';
-    playBeep(false);
-  }
-  setTimeout(()=>{if(res)res.innerHTML='';},4000);
-}
-function manualEntry(){
-  const inp=document.getElementById('manualTicketInput');
-  if(!inp||!inp.value.trim()){showOpsToast('Enter a booking ID');return;}
-  const id=inp.value.trim().toUpperCase();
-  const valid=['BK7X9Q2A','BK2K8M4N','BK9P3F7Z'];
-  const res=document.getElementById('scanResult');
-  if(res){
-    if(valid.includes(id)){res.innerHTML='<div class="scan-result success"><div style="font-size:16px;font-weight:700">✅ VALID — '+id+'</div><div style="font-size:12px;margin-top:4px;opacity:0.7">Entry permitted</div></div>';playBeep(true);}
-    else{res.innerHTML='<div class="scan-result error"><div style="font-size:16px;font-weight:700">❌ NOT FOUND — '+id+'</div></div>';playBeep(false);}
-    setTimeout(()=>{res.innerHTML='';},3000);
-  }
-  inp.value='';
-}
-function playBeep(success){try{const ctx=new AudioContext();const osc=ctx.createOscillator();const g=ctx.createGain();osc.connect(g);g.connect(ctx.destination);osc.frequency.value=success?880:220;g.gain.value=0.3;osc.start();setTimeout(()=>{osc.stop();ctx.close();},success?150:400);}catch(e){}}
 
 function showOpsPanel(name,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
@@ -546,42 +500,10 @@ async function processPayment(method){
   }
 }
 
-function printReceipt(){ showOpsToast('🖨️ Receipt printing on thermal printer...'); }
 function openCash(){ showOpsToast('💰 Cash drawer opened'); }
 
 // Wristband / LED
 let wristCount=2401;
-async function issueWristband(){
-  try {
-    const zone=prompt('Zone (GA/PREM/VIP):') || 'GA';
-    const res=await fetch('/api/wristbands/issue',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({booking_id:'BK001',zone,led_enabled:true})});
-    const data=await res.json();
-    if(data.success){
-      wristCount++;
-      const el=document.getElementById('wristIssued'); if(el) el.textContent=wristCount.toLocaleString('en-IN');
-      showOpsToast(`✅ Wristband ${data.wristband.id} issued — Zone ${data.wristband.zone}, NFC: ${data.wristband.nfc_id}`);
-    }
-  } catch(e){
-    wristCount++;
-    const el=document.getElementById('wristIssued'); if(el) el.textContent=wristCount.toLocaleString('en-IN');
-    showOpsToast('✅ Wristband #WB-'+wristCount+' issued and activated!');
-  }
-}
-function deactivateWristband(){
-  const id=prompt('Enter wristband ID to deactivate:');
-  if(id)showOpsToast('⛔ Wristband '+id+' deactivated and flagged in system.');
-}
-function activateLEDBand(zone){
-  const colors={'VIP':'Gold','GA':'Blue','PREM':'Purple','ALL':'Rainbow'};
-  showOpsToast('💡 LED bands in zone '+zone+' activated — '+colors[zone]+' mode');
-}
-function syncAllBands(){
-  showOpsToast('🔄 Syncing all 2,400 LED bands... Done! 2,398/2,400 responding (99.9%)');
-}
-function setLEDScene(scene){
-  const scenes={arrive:'Arrival sequence: warm white → brand gradient',perform:'Performance: reactive pulse to BPM',encore:'Encore: full rainbow strobe',exit:'Exit: soft fade out'};
-  showOpsToast('🌈 Scene "'+scene+'" activated: '+(scenes[scene]||scene));
-}
 
 // Emergency / Announcements
 function sendEmergencyAlert(){

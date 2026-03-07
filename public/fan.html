@@ -1091,7 +1091,6 @@ function renderEvents(list){
 
 /* ─── FILTERS ─── */
 function filterBy(btn,cat){ document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); activeCategory = cat==='all' ? null : cat; loadEvents({city: activeCity, category: activeCategory}); }
-function filterCategory(cat){ activeCategory = cat; loadEvents({city: activeCity, category: activeCategory}); window.scrollTo({top: document.getElementById('events-section')?.offsetTop || 600, behavior:'smooth'}); }
 function handleSearch(v){ if(!v.trim()){ loadEvents({city: activeCity, category: activeCategory}); return; } loadEvents({q: v.trim()}); }
 function doSearch(){ handleSearch(document.getElementById('searchInput').value); }
 
@@ -1469,13 +1468,46 @@ function openKYCVerification(){
 }
 
 /* ─── ACCOUNT PANEL ─── */
-function openAccountPanel(){ document.getElementById('accountPanel').style.right='0'; document.body.style.overflow='hidden'; }
+function openAccountPanel(){ document.getElementById('accountPanel').style.right='0'; document.body.style.overflow='hidden'; loadBookings(); }
 function closeAccountPanel(){ document.getElementById('accountPanel').style.right='-420px'; document.body.style.overflow='auto'; }
 function accTab(btn,tab){
   document.querySelectorAll('.acc-tab').forEach(b=>{b.style.color='var(--muted)';b.style.borderBottomColor='transparent';});
   btn.style.color='var(--brand)'; btn.style.borderBottomColor='var(--brand)';
   ['bookings','wishlist','wallet'].forEach(t=>{ const el=document.getElementById('acc-'+t); if(el) el.style.display=t===tab?'block':'none'; });
   if(tab==='wallet') loadWallet();
+  if(tab==='bookings') loadBookings();
+}
+
+async function loadBookings(){
+  const el=document.getElementById('acc-bookings');
+  if(!el) return;
+  el.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted)"><i class="fas fa-spinner fa-spin"></i> Loading bookings…</div>';
+  try {
+    const res=await fetch('/api/bookings/user/user123');
+    const data=await res.json();
+    if(!data.bookings||!data.bookings.length){el.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted)">No bookings yet. Find your next event!</div>';return;}
+    const statusColor={confirmed:'var(--brand3)',completed:'var(--muted)',cancelled:'#FF4444'};
+    el.innerHTML=data.bookings.map(b=>`
+      <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+          <div style="font-size:13px;font-weight:700;color:var(--text)">${b.event}</div>
+          <span style="font-size:10px;font-weight:700;color:${statusColor[b.status]||'var(--brand3)'};background:rgba(0,245,196,0.1);padding:3px 8px;border-radius:20px">${b.status.toUpperCase()}</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px">📅 ${b.date} · ${b.venue}</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px">🎫 ${b.tickets} × ${b.tier} · ₹${b.amount.toLocaleString('en-IN')}</div>
+        <div style="display:flex;gap:8px">
+          <button onclick="viewGSTInvoice('${b.id}')" style="flex:1;background:var(--dark);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:8px;font-size:11px;cursor:pointer;font-family:Inter,sans-serif">🧾 Invoice</button>
+          ${b.status==='confirmed'?`<button onclick="openRefundFlow('${b.id}')" style="flex:1;background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.3);color:#FF6666;padding:7px;border-radius:8px;font-size:11px;cursor:pointer;font-family:Inter,sans-serif">❌ Cancel</button>`:''}
+        </div>
+      </div>`).join('');
+  } catch(e){
+    el.innerHTML=`<div style="background:var(--dark3);border-radius:14px;padding:14px;margin-bottom:12px">
+      <div style="font-size:13px;font-weight:700">Sunburn Arena Mumbai</div>
+      <div style="font-size:12px;color:var(--muted);margin:4px 0">📅 Apr 15, 2026 · NSCI Dome</div>
+      <div style="font-size:12px;color:var(--muted)">🎫 2 × VIP Gold · ₹11,800</div>
+      <div style="margin-top:8px"><span style="font-size:10px;font-weight:700;color:var(--brand3);background:rgba(0,245,196,0.1);padding:3px 8px;border-radius:20px">CONFIRMED</span></div>
+    </div>`;
+  }
 }
 
 /* ─── WISHLIST ─── */

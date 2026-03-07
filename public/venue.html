@@ -604,96 +604,6 @@ textarea{resize:vertical;min-height:80px}
 .v-toggle input:checked + .v-slider:before{transform:translateX(18px);background:var(--brand)}
 </style>
 <script>
-
-function initVenueCalendar(){
-  const cal=document.getElementById('venueCalGrid');
-  if(!cal)return;
-  const today=new Date();
-  const month=today.getMonth();const year=today.getFullYear();
-  const firstDay=new Date(year,month,1).getDay();
-  const daysInMonth=new Date(year,month+1,0).getDate();
-  const booked=[5,6,12,13,14,19,20,26,27];
-  const blocked=[1,2];
-  cal.innerHTML='';
-  for(let i=0;i<firstDay;i++){const e=document.createElement('div');e.className='cal-day';e.style.background='transparent';e.style.border='none';cal.appendChild(e);}
-  for(let d=1;d<=daysInMonth;d++){
-    const e=document.createElement('div');
-    const isBooked=booked.includes(d);
-    const isBlocked=blocked.includes(d);
-    const isToday=d===today.getDate();
-    e.className='cal-day'+(isBooked?' booked':isBlocked?' blocked':isToday?' today':' available');
-    e.innerHTML='<div class="cal-day-num">'+d+'</div>';
-    if(isBooked)e.innerHTML+='<span class="cal-event-dot" style="background:var(--brand2)"></span><span style="font-size:10px">Booked</span>';
-    else if(!isBlocked)e.innerHTML+='<span class="cal-event-dot" style="background:var(--brand3)"></span><span style="font-size:10px">Free</span>';
-    e.onclick=()=>{ if(!isBlocked)showVenueToast(isBooked?'📅 Event booked on this date — contact organiser to modify.':'✅ Date '+d+' is available — click Book to create enquiry.'); };
-    cal.appendChild(e);
-  }
-}
-function blockDate(){showVenueToast('Select dates to block on the calendar — prevents new bookings on those days.');}
-function saveAvailability(){showVenueToast('✅ Availability settings saved!');}
-function savePricing(){showVenueToast('✅ Pricing tiers saved!');}
-function addPricingTier(){showVenueToast('New pricing tier added.');}
-function saveAmenities(){showVenueToast('✅ Amenity configuration saved!');}
-function sendQuote(org){showVenueToast('📲 Quote sent to '+org+' via WhatsApp & Email.');}
-function approveEnquiry(org){if(confirm('Approve booking from '+org+'?')){showToast('✅ Booking confirmed! Contract sent to organiser.');};}
-function rejectEnquiry(org){const r=prompt('Reason for declining '+org+'?');if(r)showVenueToast('Enquiry declined. Organiser notified.');}
-function downloadVenueReport(){showVenueToast('Generating venue performance report PDF...');}
-window.addEventListener('load',()=>{initVenueCalendar();});
-
-function initVenueCalendar(){const cal=document.getElementById("venueCalGrid");if(!cal)return;const today=new Date();const firstDay=new Date(today.getFullYear(),today.getMonth(),1).getDay();const daysInMonth=new Date(today.getFullYear(),today.getMonth()+1,0).getDate();const booked=[5,6,12,13,14,19,20];const blocked=[1,2];cal.innerHTML="";for(let i=0;i<firstDay;i++){const e=document.createElement("div");e.className="cal-day";e.style.cssText="background:transparent;border:none";cal.appendChild(e);}for(let d=1;d<=daysInMonth;d++){const e=document.createElement("div");const isBooked=booked.includes(d);const isBlocked=blocked.includes(d);const isToday=d===today.getDate();e.className="cal-day"+(isBooked?" booked":isBlocked?" blocked":isToday?" today":" available");e.innerHTML='<div class="cal-day-num">'+d+'</div>';if(isBooked)e.innerHTML+='<span style="font-size:10px;color:var(--brand2)">Booked</span>';else if(!isBlocked)e.innerHTML+='<span style="font-size:10px;color:var(--brand3)">Free</span>';e.onclick=()=>{if(!isBlocked)showVenueToast(isBooked?'📅 Event booked on this date.':'✅ Date '+d+' is available!');};cal.appendChild(e);}}
-function blockDate(){showVenueToast('Select and block dates to prevent new bookings.');}
-function saveAvailability(){showVenueToast('✅ Availability saved!');}
-function savePricing(){showVenueToast('✅ Pricing tiers saved!');}
-function addPricingTier(){showVenueToast('New tier added.');}
-function sendQuote(org){showVenueToast('📲 Quote sent to '+org+' via WhatsApp & Email.');}
-function approveEnquiry(org){if(confirm("Approve booking from "+org+"?"))showVenueToast('✅ Booking confirmed!');}
-function rejectEnquiry(org){const r=prompt("Reason?");if(r)showVenueToast('Declined. Organiser notified.');}
-function downloadVenueReport(){showVenueToast('Generating report PDF...');}
-window.addEventListener("load",()=>{initVenueCalendar();});
-function showPanel(name,btn){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('active'));
-  const p=document.getElementById('panel-'+name);if(p)p.classList.add('active');
-  if(btn)btn.classList.add('active');
-  const t={dashboard:'Venue Dashboard',profile:'Venue Profile',floorplan:'Floor Plan Builder',capacity:'Capacity & Zones',amenities:'Amenities & Facilities',pricing:'Pricing & Packages',docs:'Documents & NOC',bookings:'Bookings',calendar:'Availability Calendar',revenue:'Hire Fee Revenue',invoices:'GST Invoices',staff:'Staff Access',incidents:'Incident Reports'};
-  document.getElementById('topbarTitle').textContent=t[name]||'Dashboard';
-}
-function toggleAmenity(el){el.classList.toggle('selected');el.querySelector('.amenity-check').style.color=el.classList.contains('selected')?'var(--brand3)':'transparent';}/* ─── LIVE API INTEGRATION ─── */
-async function loadVenueDashboard() {
-  try {
-    const res = await fetch('/api/venue/dashboard');
-    const data = await res.json();
-    const s = data.stats || {};
-    const v = data.venue || {};
-
-    const vals = document.querySelectorAll('.stat-card .stat-value');
-    const labels = document.querySelectorAll('.stat-card .stat-label');
-    vals.forEach((el,i) => {
-      const lbl = (labels[i]?.textContent||'').toLowerCase();
-      if (lbl.includes('booking')) el.textContent = s.bookings_this_month || el.textContent;
-      else if (lbl.includes('revenue') || lbl.includes('earning')) el.textContent = '₹' + ((s.revenue_this_month||7500000)/100000).toFixed(1) + 'L';
-      else if (lbl.includes('occupancy')) el.textContent = (s.occupancy_rate||84) + '%';
-      else if (lbl.includes('rating')) el.textContent = v.rating || '4.7';
-    });
-
-    const cal = data.calendar_highlights || [];
-    const calEl = document.querySelector('.calendar-events, #venueCalendar');
-    if (calEl && cal.length) {
-      const existing = calEl.querySelectorAll('.cal-event');
-      if (!existing.length) {
-        calEl.innerHTML += cal.map(c => `<div class="cal-event" style="background:var(--dark3);border-radius:8px;padding:10px;margin-bottom:8px"><div style="font-size:13px;font-weight:600">${c.event}</div><div style="font-size:12px;color:var(--muted)">${c.date} · ${c.organiser} · ${(c.pax||0).toLocaleString('en-IN')} pax</div></div>`).join('');
-      }
-    }
-  } catch(e) {}
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-  loadVenueDashboard();
-});
-
-</script>
-</body>
-</html><script>
 // ─── VENUE PLATINUM ENHANCEMENTS ────────────────────────────────────────
 function showVenueToast(msg,type){
   type=type||'success';
@@ -739,11 +649,6 @@ function saveFloorPlan(){
 function exportFloorPlan(){showVenueToast('📄 Floor plan exporting as PDF/PNG...');}
 
 // Pricing
-function addPricingTier(){
-  const tier={name:['Off-peak','Weekday','Weekend','Premium','Festival','Season Pass'][Math.floor(Math.random()*6)],base:Math.floor(Math.random()*200000+50000),deposit:Math.floor(Math.random()*50000+10000)};
-  showVenueToast('Pricing tier "'+tier.name+'" added (base: ₹'+tier.base.toLocaleString('en-IN')+')');
-}
-function savePricing(){showVenueToast('✅ Pricing tiers saved and live for new enquiries.');}
 function addPricingExtra(){showVenueToast('Add-on service pricing entry added.');}
 
 // GST Invoice
@@ -760,28 +665,6 @@ function generateVenueInvoice(orgName){
 }
 
 // Bookings
-function saveAvailability(){showVenueToast('✅ Availability settings saved. Calendar live for new enquiries.');}
-function saveAmenities(){showVenueToast('✅ Amenity configuration saved.');}
-function sendQuote(org){showVenueToast('💬 Detailed quote sent to '+org+' via WhatsApp & email. Valid for 48 hours.');}
-function approveEnquiry(org){
-  if(confirm('Confirm booking for '+org+'?')){
-    showVenueToast('✅ Booking confirmed for '+org+'! Contract PDF sent. Calendar blocked.');
-    logVenueEvent('Booking confirmed',org);
-  }
-}
-function rejectEnquiry(org){
-  const r=prompt('Reason for declining '+org+'?');
-  if(r)showVenueToast('Enquiry declined. Organiser '+org+' notified.','warning');
-}
-function downloadVenueReport(){showVenueToast('📊 Venue performance report generating...');}
-function submitVenueKYC(){showVenueToast('✅ Venue KYC submitted! Admin will review within 48 hours.');}
-function saveVenueProfile(){showVenueToast('✅ Venue profile saved and updated on platform.');}
-function uploadVenueDoc(){showVenueToast('📁 Document upload dialog opened. JPG, PNG, PDF supported (max 5MB each).');}
-function publishVenueListing(){showVenueToast('🌐 Venue listing published on INDTIX Venue Marketplace!');}
-function addStaffMember(){const email=prompt('Staff email:');if(email&&email.includes('@'))showVenueToast('Staff invitation sent to '+email+' with venue access link.');}
-function removeStaffMember(name){if(confirm('Remove '+name+' from staff?'))showVenueToast('Staff member '+name+' removed. Access revoked.');}
-function logVenueEvent(action,detail){console.log('[Venue]',action,detail);}
-function blockDate(){showVenueToast('Selected dates blocked for maintenance/unavailability.');}
 
 // Revenue
 function downloadRevenueCSV(){showVenueToast('📊 Revenue CSV downloading...');}
@@ -791,12 +674,25 @@ function generateMonthlySummary(){showVenueToast('📊 Monthly revenue summary g
 
 window.addEventListener('DOMContentLoaded',function(){
   renderFloorPlan();
+  loadVenueDashboard();
   // Revenue trend
   setInterval(function(){
     const el=document.getElementById('venueRevLive');
     if(el)el.textContent='₹'+(Math.floor(Math.random()*50000+3200000)).toLocaleString('en-IN');
   },7000);
 });
+
+async function loadVenueDashboard(){
+  try {
+    const res=await fetch('/api/venue/dashboard');
+    const data=await res.json();
+    const v=data.venue; const s=data.stats;
+    const el=document.getElementById('venueName'); if(el) el.textContent=v.name;
+    const revEl=document.getElementById('venueRevLive'); if(revEl&&s.revenue_mtd) revEl.textContent='₹'+(s.revenue_mtd).toLocaleString('en-IN');
+    const upcomEl=document.getElementById('venueUpcomingCount'); if(upcomEl) upcomEl.textContent=s.upcoming_events;
+    const occEl=document.getElementById('venueOccupancy'); if(occEl) occEl.textContent=Math.round(s.occupancy_rate_avg*100)+'%';
+  } catch(e){ /* keep static fallback */ }
+}
 
 /* ═══════════════════════════════════════
    PLATINUM ENHANCEMENTS — VENUE PORTAL
