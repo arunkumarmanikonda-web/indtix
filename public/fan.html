@@ -748,11 +748,11 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
         <button onclick="socialLogin('facebook')" style="flex:1;padding:12px;background:var(--dark3);border:1px solid var(--border);border-radius:12px;color:var(--text);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Inter',sans-serif"><i class="fab fa-facebook" style="color:#1877F2"></i> Facebook</button>
       </div>
       <div style="position:relative;margin-bottom:20px;text-align:center"><div style="position:absolute;left:0;right:0;top:50%;height:1px;background:var(--border)"></div><span style="position:relative;background:var(--card);padding:0 12px;font-size:12px;color:var(--muted)">or continue with email</span></div>
-      <div style="display:flex;flex-direction:column;gap:14px">
-        <input type="email" placeholder="Email address" style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
-        <input type="password" placeholder="Password" style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
-        <button class="btn-primary" style="padding:12px;font-size:15px;border-radius:12px" onclick="handleLogin()">Sign In <i class="fas fa-arrow-right"></i></button>
-      </div>
+      <form novalidate onsubmit="event.preventDefault();handleLogin()" style="display:flex;flex-direction:column;gap:14px">
+        <input id="loginEmail" type="email" autocomplete="email" placeholder="Email address" style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
+        <input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password" style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
+        <button type="submit" class="btn-primary" style="padding:12px;font-size:15px;border-radius:12px">Sign In <i class="fas fa-arrow-right"></i></button>
+      </form>
       <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--muted)">New to INDTIX? <a href="#" onclick="switchToSignup()" style="color:var(--brand);text-decoration:none;font-weight:600">Create account</a></p>
       <p style="text-align:center;margin-top:8px;font-size:12px;color:var(--muted)"><a href="#" style="color:var(--muted)">Forgot password?</a></p>
     </div>
@@ -770,15 +770,15 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
         <p style="color:var(--muted);font-size:14px;margin-top:6px">Your next unforgettable experience awaits</p>
       </div>
       <div style="display:flex;gap:12px;margin-bottom:14px">
-        <input type="text" placeholder="First Name" style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
-        <input type="text" placeholder="Last Name" style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
+        <input id="signupFirstName" type="text" placeholder="First Name" style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
+        <input id="signupLastName" type="text" placeholder="Last Name" style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
       </div>
-      <div style="display:flex;flex-direction:column;gap:14px">
-        <input type="email" placeholder="Email address" style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
-        <input type="tel" placeholder="Mobile number (for WhatsApp tickets)" style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
-        <input type="password" placeholder="Create password" style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
-        <button class="btn-primary" style="padding:12px;font-size:15px;border-radius:12px" onclick="handleSignup()">Create Account <i class="fas fa-arrow-right"></i></button>
-      </div>
+      <form novalidate onsubmit="event.preventDefault();handleSignup()" style="display:flex;flex-direction:column;gap:14px">
+        <input id="signupEmail" type="email" autocomplete="email" placeholder="Email address" style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
+        <input id="signupPhone" type="tel" autocomplete="tel" placeholder="Mobile number (for WhatsApp tickets)" style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
+        <input id="signupPassword" type="password" placeholder="Create password" autocomplete="new-password" style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
+        <button type="submit" class="btn-primary" style="padding:12px;font-size:15px;border-radius:12px">Create Account <i class="fas fa-arrow-right"></i></button>
+      </form>
       <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--muted)">By signing up, you agree to our <a href="#" style="color:var(--brand)">Terms</a> and <a href="#" style="color:var(--brand)">Privacy Policy</a>. GST invoice available for business bookings.</p>
       <p style="text-align:center;margin-top:10px;font-size:13px;color:var(--muted)">Already have an account? <a href="#" onclick="switchToLogin()" style="color:var(--brand);text-decoration:none;font-weight:600">Sign in</a></p>
     </div>
@@ -2006,8 +2006,7 @@ function switchToLogin(){ closeModal('signupModal'); openLoginModal(); }
 function switchToSignup(){ closeModal('loginModal'); openSignupModal(); }
 async function handleLogin(){
   const email=document.getElementById('loginEmail')?.value||'fan@example.com';
-  const pass=document.getElementById('loginPassword')?.value||'password';
-  try{
+  const pass=document.getElementById('loginPassword')?.value||'password';  try{
     const res=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
     const d=await res.json();
     if(d.success){
@@ -2020,7 +2019,7 @@ async function handleLogin(){
   }catch(e){ closeModal('loginModal'); showToast('Welcome back! 🎉 Logged in successfully'); }
 }
 async function handleSignup(){
-  const name=document.getElementById('signupName')?.value||'Fan User';
+  const name=((document.getElementById('signupFirstName')?.value||'')+' '+(document.getElementById('signupLastName')?.value||'')).trim()||document.getElementById('signupName')?.value||'Fan User';
   const email=document.getElementById('signupEmail')?.value||'fan@example.com';
   const phone=document.getElementById('signupPhone')?.value||'+91 9000000000';
   try{
@@ -2420,7 +2419,7 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js', { scope: '/' })
       .then(reg => {
-        console.log('[INDTIX SW] Registered, scope:', reg.scope);
+        /* SW registered */
         // Check for updates every 30 minutes
         setInterval(() => reg.update(), 1800000);
       })

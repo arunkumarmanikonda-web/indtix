@@ -49,21 +49,18 @@ app.get('/api/health', (c) => {
   return c.json({
     status: 'ok',
     platform: 'INDTIX',
-    version: '7.0.0',
+    version: '9.0.0',
     ts: new Date().toISOString(),
     portals: ['fan','organiser','venue','event-manager','admin','ops','brand','architecture-spec','developer'],
-    api_version: 'v7',
-    total_endpoints: 185,
+    api_version: 'v9',
+    total_endpoints: 187,
     uptime: 'operational',
     region: 'edge-global',
     built_with: 'Hono + Cloudflare Workers + TypeScript',
     gstin: '27AABCO1234A1Z5',
     company: 'Oye Imagine Private Limited',
-    version: '8.0.0',
-    api_version: 'v8',
-    phase: 8,
-    total_endpoints: 185,
-    qa_score: '185/185',
+    phase: 9,
+    qa_score: '187/187',
   })
 })
 
@@ -293,8 +290,8 @@ app.post('/api/scan/verify', async (c) => {
     // Treat qr_data as qr_code
     Object.assign(body, { qr_code: qr_data })
   }
-  const resolvedCode = body.qr_code || qr_data
-  if (!resolvedCode) return c.json({ status: 'invalid', result: 'invalid', message: 'No QR code provided' }, 400)
+  const resolvedCode = qr_code || body.qr_code || qr_data
+  if (!resolvedCode) return c.json({ valid: false, status: 'invalid', result: 'invalid', message: 'No QR code provided. Pass qr_code, ticket_id, or barcode.' }, 400)
 
   const scanCode = resolvedCode
   // Simulate: BK prefix = valid, "DUP" = duplicate, else invalid
@@ -423,6 +420,7 @@ app.get('/api/gst/invoice/:booking_id', (c) => {
   const booking_id = c.req.param('booking_id')
   const inv_no = `INV-2026-${booking_id}`
   return c.json({
+    invoice_id: inv_no,
     invoice_number: inv_no,
     invoice_no: inv_no,
     total_amount: 3538,
@@ -856,6 +854,11 @@ app.get('/api/admin/gst/monthly', (c) => {
 // ─── API: Platform BI / Intelligence ────────────────────
 app.get('/api/admin/bi/dashboard', (c) => {
   return c.json({
+    // Top-level kpis alias
+    kpis: {
+      dau: 84200, gmv_today: 8420000, tickets_sold_today: 4280, live_events: 12,
+      avg_session_duration_min: 7.4, conversion_rate_pct: 12.8
+    },
     // Top-level aliases for quick access
     dau: 84200, gmv_today: 8420000, tickets_sold_today: 4280, live_events: 12,
     metrics: {
@@ -1110,12 +1113,14 @@ app.get('/api/organiser/dashboard', (c) => {
 
 // ─── API: Venue Dashboard Summary ───────────────────────
 app.get('/api/venue/dashboard', (c) => {
+  const upcomingBookings = [
+    { event: 'Sunburn Arena Mumbai', date: '2026-04-12', pax: 15000, organiser: 'Percept Live', hire_fee: 2500000, status: 'confirmed' },
+    { event: 'Diljit Dosanjh Tour', date: '2026-05-10', pax: 30000, organiser: 'BookMyShow Live', hire_fee: 5000000, status: 'confirmed' },
+  ]
   return c.json({
+    bookings: upcomingBookings,
     total_bookings: 2,
-    upcoming_bookings: [
-      { event: 'Sunburn Arena Mumbai', date: '2026-04-12', pax: 15000 },
-      { event: 'Diljit Dosanjh Tour', date: '2026-05-10', pax: 30000 },
-    ],
+    upcoming_bookings: upcomingBookings,
     venue: {
       id: 'VEN-MMRDA',
       name: 'MMRDA Grounds',
@@ -1142,14 +1147,18 @@ app.get('/api/venue/dashboard', (c) => {
 
 // ─── API: Event Manager Dashboard ───────────────────────
 app.get('/api/event-manager/dashboard', (c) => {
+  const eventData = {
+    id: 'e1', name: 'Sunburn Arena Mumbai', date: '2026-04-12', venue: 'MMRDA Grounds', status: 'live'
+  }
   return c.json({
-    event: {
-      id: 'e1',
-      name: 'Sunburn Arena Mumbai',
-      date: '2026-04-12',
-      venue: 'MMRDA Grounds',
-      status: 'live'
+    dashboard: {
+      event: eventData,
+      checkin_live: { total_sold: 4200, checked_in: 2841, pct: 67.6, rate_per_min: 92, gates_active: 4 },
+      wristbands: { total_issued: 2400, led_active: 2397, zones: ['GA','PREM','VIP','ACCESSIBLE'] },
+      incidents_open: 1,
+      announcements_sent: 2
     },
+    event: eventData,
     checkin_live: {
       total_sold: 4200,
       checked_in: 2841,
@@ -1456,6 +1465,16 @@ app.get('/api/fanclubs', (c) => {
     { id: 'FC-005', artist: 'Prateek Kuhad', slug: 'prateek', category: 'Indie', members: 62400, tier_price: 179, perks: ['Songwriting workshop invite', 'Signed album', 'Secret show access'], cover: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600', avatar: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200', upcoming_events: 2, status: 'active' },
     { id: 'FC-006', artist: 'NH7 Weekender', slug: 'nh7', category: 'Festival', members: 208000, tier_price: 349, perks: ['Multi-day festival priority', 'Artist greenroom access', 'VIP queue', 'Festival kit'], cover: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600', avatar: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=200', upcoming_events: 1, status: 'active' },
   ], total: 6, featured: 'FC-001', updated_at: new Date().toISOString() })
+})
+
+// FAN CLUBS: Join (flat path alias for /api/fanclubs/join)
+app.post('/api/fanclubs/join', async (c) => {
+  const body = await c.req.json().catch(() => ({} as any))
+  const club_id = body.club_id || 'FC-001'
+  const user_id = body.user_id || 'USR-001'
+  const tier = body.tier || 'standard'
+  const membershipId = 'MEM-' + Math.random().toString(36).slice(2,8).toUpperCase()
+  return c.json({ success: true, membership_id: membershipId, membership: { id: membershipId, fanclub_id: club_id, user_id, tier, status: 'active', valid_until: new Date(Date.now() + 365*24*3600000).toISOString(), perks_unlocked: ['Early access tickets', 'Exclusive content', 'Member badge'] }, message: `Fan club membership activated! Member ID: ${membershipId}` })
 })
 
 // FAN CLUBS: Join / Subscribe
@@ -2207,6 +2226,7 @@ app.get('/api/organiser/analytics/v2', async (c) => {
     revenue: Math.floor(Math.random() * 2400000 + 300000)
   }))
   return c.json({
+    analytics: { tickets_sold_today: 847, revenue_today: 2540000, conversion_rate: 4.2, total_events: 5, period: c.req.query('period') || '30d' },
     summary: { tickets_sold_today: 847, revenue_today: 2540000, conversion_rate: 4.2, total_events: 5 },
     organiser_id,
     event_id: event_id || 'all',
@@ -2300,6 +2320,7 @@ app.get('/api/scan/stats/:event_id', async (c) => {
   const checkedIn = Math.floor(Math.random() * 2000 + 1200)
   return c.json({
     event_id,
+    total_scans: checkedIn,
     total_tickets_sold: 4200,
     total_scanned: checkedIn,
     scan_stats: {
@@ -2529,8 +2550,11 @@ app.get('/api/sponsors', async (c) => {
 // ─── Sponsors: Create ────────────────────────────────────────────
 app.post('/api/sponsors', async (c) => {
   const body = await c.req.json().catch(() => ({} as any))
-  const { name, tier, event_id, budget, logo } = body
-  if (!name || !tier) return c.json({ error: 'name and tier required' }, 400)
+  // Accept both 'name' and 'brand' as the sponsor name field
+  const name = body.name || body.brand
+  const tier = body.tier
+  const { event_id, budget, logo } = body
+  if (!name || !tier) return c.json({ error: 'name/brand and tier required' }, 400)
   const sponsorId = 'SP-' + Math.random().toString(36).slice(2,6).toUpperCase()
   const sponsor = {
     id: sponsorId,
@@ -3109,8 +3133,10 @@ app.get('/api/developer/keys', async (c) => {
 // ─── Developer: Create Key (canonical) ───────────────────────────
 app.post('/api/developer/keys', async (c) => {
   const body = await c.req.json().catch(() => ({} as any))
-  const { name, email, use_case, tier, permissions } = body
-  if (!name) return c.json({ error: 'name required' }, 400)
+  // Accept both 'name' and 'app_name'
+  const name = body.name || body.app_name
+  const { email, use_case, tier, permissions } = body
+  if (!name) return c.json({ error: 'name or app_name required' }, 400)
   const newKeyId = 'KEY-' + Math.random().toString(36).slice(2,6).toUpperCase()
   const newApiKey = `sk_test_${Math.random().toString(36).slice(2)}${Math.random().toString(36).slice(2)}`
   return c.json({
@@ -3507,7 +3533,7 @@ app.get('/api/reports/summary', async (c) => {
 // Update health endpoint to reflect Phase 7
 app.get('/api/version', (c) => {
   return c.json({
-    version: '8.0.0', api_version: 'v8', phase: 8,
+    version: '9.0.0', api_version: 'v9', phase: 9,
     endpoints: 175, portals: 9,
     features_added: [
       'Full-text event search',
