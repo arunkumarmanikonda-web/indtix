@@ -335,8 +335,8 @@ function changeCartQty(name,delta){
 function clearPOSCart(){Object.keys(posCart).forEach(k=>delete posCart[k]);renderPOSCart();}
 function payPOS(method){
   const tot=document.getElementById('posTotal');
-  if(!tot||tot.textContent==='₹0'){alert('Cart is empty!');return;}
-  alert('✅ Payment via '+method+' confirmed!\nReceipt sent via WhatsApp.\nTransaction logged.');
+  if(!tot||tot.textContent==='₹0'){showOpsToast('Cart is empty!');return;}
+  showOpsToast('✅ Payment via '+method+' confirmed! Receipt sent via WhatsApp. Transaction logged.');
   clearPOSCart();
 }
 function filterPOS(btn,cat){document.querySelectorAll('.pos-cat-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
@@ -364,7 +364,7 @@ function simulateScan(){
 }
 function manualEntry(){
   const inp=document.getElementById('manualTicketInput');
-  if(!inp||!inp.value.trim()){alert('Enter a booking ID');return;}
+  if(!inp||!inp.value.trim()){showOpsToast('Enter a booking ID');return;}
   const id=inp.value.trim().toUpperCase();
   const valid=['BK7X9Q2A','BK2K8M4N','BK9P3F7Z'];
   const res=document.getElementById('scanResult');
@@ -593,6 +593,138 @@ window.addEventListener('DOMContentLoaded',()=>{
   ];
   samples.forEach(([t,txt])=>setTimeout(()=>addToLog(t,txt),Math.random()*1000));
 });
+
+/* ════════════════════════════════════════
+   PLATINUM ENHANCEMENTS — OPS/POS PORTAL
+   ════════════════════════════════════════ */
+
+/* ─── Wristband Management ─── */
+function issueWristband(){
+  const zone=prompt('Zone for wristband? (GA/PREM/VIP/ACCESSIBLE):')||'GA';
+  const id='WB-'+Math.random().toString(36).slice(2,9).toUpperCase();
+  const nfc='NFC-'+Math.random().toString(36).slice(2,9).toUpperCase();
+  showOpsToast('✅ Wristband issued: '+id+' · Zone: '+zone+' · NFC: '+nfc);
+  addToLog('valid','Wristband issued: '+id+' Zone: '+zone);
+}
+function deactivateWristband(){
+  const id=prompt('Enter Wristband ID to deactivate:');
+  if(id){ showOpsToast('🚫 Wristband '+id+' deactivated. NFC tag invalidated.'); addToLog('invalid','Wristband deactivated: '+id); }
+}
+function bulkIssueWristbands(){
+  const qty=prompt('How many wristbands to issue?')||'10';
+  const n=parseInt(qty);
+  if(n>0&&n<=500){ showOpsToast('✅ '+n+' wristbands issued in bulk — Zone GA by default.'); }
+  else showOpsToast('⚠️ Enter a valid quantity (1–500).');
+}
+function syncWristbands(){
+  showOpsToast('🔄 Syncing all wristbands to LED controller... 99.94% responding ✅');
+}
+
+/* ─── LED Band Controls ─── */
+function setLEDScene(scene){
+  const scenes={default:'Standard white glow',pulse:'Purple pulse rhythm',wave:'Rainbow wave effect',emergency:'Red emergency flash'};
+  showOpsToast('💡 LED scene activated: "'+scene+'" — '+(scenes[scene]||scene)+' across all zones!');
+  addToLog('valid','LED scene: '+scene);
+}
+function setLEDBandColor(color){
+  showOpsToast('🎨 All LED bands set to '+color+'!');
+}
+function triggerEmergencyLED(){
+  if(!confirm('Trigger EMERGENCY red flash on ALL wristbands?')) return;
+  showOpsToast('🚨 EMERGENCY LED pattern activated on all wristbands!');
+  addToLog('invalid','EMERGENCY LED triggered');
+}
+
+/* ─── Payment Processing ─── */
+function processRefundOnsite(amount){
+  const amt=amount||prompt('Refund amount (₹)?');
+  if(amt){
+    showOpsToast('💰 Refund of ₹'+amt+' processed! Reversing to original payment method. Receipt printed.');
+    addToLog('valid','Refund: ₹'+amt+' processed');
+  }
+}
+function openCashDrawer(){
+  showOpsToast('🗄️ Cash drawer opened. Remember to record cash transaction manually.');
+}
+function printReceipt(){
+  showOpsToast('🖨️ Receipt printing... Thermal printer connected ✅');
+}
+function voidTransaction(orderId){
+  if(!confirm('Void transaction '+orderId+'? This will initiate a full refund.')) return;
+  showOpsToast('🚫 Transaction '+orderId+' voided. Full refund initiated.');
+  addToLog('invalid','Transaction voided: '+orderId);
+}
+
+/* ─── Gate Management ─── */
+function switchGate(gate){
+  showOpsToast('🚪 Switched to '+gate+'. Scanner recalibrated for this gate.');
+  const el=document.getElementById('currentGate');
+  if(el) el.textContent=gate;
+}
+function pauseScanning(){
+  showOpsToast('⏸️ Scanning paused. Resume when ready.');
+}
+function resumeScanning(){
+  showOpsToast('▶️ Scanning resumed. All gates active.');
+}
+function callSupervisor(){
+  showOpsToast('📞 Supervisor called via radio! ETA: 2 minutes.');
+}
+
+/* ─── Reports ─── */
+function downloadShiftReport(){
+  showOpsToast('📊 Shift report generating: Gate-wise scan data, POS sales, wristband log...');
+  setTimeout(()=>showOpsToast('✅ Shift report PDF downloaded!'),2000);
+}
+function exportPOSData(){
+  showOpsToast('📊 POS sales data exporting as CSV...');
+}
+
+/* ─── LIVE API INTEGRATION ─── */
+async function loadOpsDashboard() {
+  try {
+    const [checkinRes, wristRes] = await Promise.all([
+      fetch('/api/events/e1/checkin-stats'),
+      fetch('/api/wristbands/status?event_id=e1')
+    ]);
+    const checkin = await checkinRes.json();
+    const wrist = await wristRes.json();
+    const ci = checkin.stats || {};
+
+    // Patch live checkin
+    const el = document.getElementById('opsLiveCheckin');
+    if (el) { el.textContent = (ci.checked_in||opsCheckinBase).toLocaleString('en-IN'); opsCheckinBase = ci.checked_in||opsCheckinBase; }
+
+    // Patch wristband status
+    const w = wrist.zones || {};
+    const wbEl = document.querySelector('#opsWristbandStatus, [data-ops="wristbands"]');
+    if (wbEl) {
+      wbEl.innerHTML = Object.entries(w).map(([zone, z]) => `
+        <div style="background:var(--dark3);border-radius:10px;padding:10px;text-align:center">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">${zone}</div>
+          <div style="font-size:18px;font-weight:700;color:var(--brand)">${z.issued}</div>
+          <div style="font-size:10px;color:${z.led_active===z.issued?'var(--teal)':'#FFB300'}">${z.led_active}/${z.issued} LED</div>
+        </div>`).join('');
+    }
+
+    // Patch gate rates
+    if (ci.gates) {
+      const gatesEl = document.querySelector('#opsGates, .ops-gates');
+      if (gatesEl) {
+        gatesEl.innerHTML = ci.gates.map(g => `
+          <div style="background:var(--dark3);border-radius:8px;padding:10px;margin-bottom:6px;display:flex;justify-content:space-between">
+            <span style="font-size:13px">${g.gate} · ${g.active_scanners} scanners</span>
+            <span style="font-size:13px;font-weight:700;color:var(--brand)">${g.scanned.toLocaleString('en-IN')} scanned</span>
+          </div>`).join('');
+      }
+    }
+  } catch(e) {}
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadOpsDashboard();
+});
+
 </script>
 </body>
 </html>

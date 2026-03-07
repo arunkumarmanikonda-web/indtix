@@ -14,11 +14,11 @@ app.get('/api/health', (c) => {
   return c.json({
     status: 'ok',
     platform: 'INDTIX',
-    version: '3.0.0',
+    version: '4.0.0',
     ts: new Date().toISOString(),
     portals: ['fan','organiser','venue','event-manager','admin','ops','brand','architecture-spec'],
-    api_version: 'v3',
-    total_endpoints: 32,
+    api_version: 'v4',
+    total_endpoints: 58,
     uptime: 'operational',
     region: 'edge-global',
     built_with: 'Hono + Cloudflare Workers + TypeScript',
@@ -875,4 +875,262 @@ app.post('/api/pos/sale', async (c) => {
   })
 })
 
+// ─── API: Waitlist ───────────────────────────────────────
+app.post('/api/events/:id/waitlist', async (c) => {
+  const event_id = c.req.param('id')
+  const { name, email, mobile, tier_id } = await c.req.json().catch(() => ({}))
+  if (!email) return c.json({ error: 'email required' }, 400)
+  const waitlist_id = 'WL-' + Math.random().toString(36).substring(2, 9).toUpperCase()
+  return c.json({
+    success: true,
+    waitlist: {
+      id: waitlist_id,
+      event_id,
+      tier_id: tier_id || 'ga',
+      name,
+      email,
+      mobile,
+      position: Math.floor(Math.random() * 50) + 1,
+      estimated_availability: '24-48 hours if tickets become available',
+      whatsapp_alert: true,
+      email_alert: true,
+      added_at: new Date().toISOString()
+    }
+  })
+})
+
+// ─── API: Loyalty / Wallet ───────────────────────────────
+app.get('/api/wallet/:user_id', (c) => {
+  const user_id = c.req.param('user_id')
+  return c.json({
+    user_id,
+    balance: 250,
+    currency: 'INDY Credits',
+    expires: '2026-12-31',
+    transactions: [
+      { id: 'TXN001', type: 'credit', amount: 100, description: 'Referral bonus — friend booked', date: '2026-02-28' },
+      { id: 'TXN002', type: 'credit', amount: 150, description: 'Welcome bonus', date: '2026-01-15' },
+      { id: 'TXN003', type: 'debit', amount: 150, description: 'Used at checkout — NH7 Weekender', date: '2026-01-20' },
+    ],
+    referral_code: 'INDY-REF-'+user_id.slice(0,6).toUpperCase(),
+    referral_link: `https://indtix.com/ref/${user_id.slice(0,6)}`,
+    total_earned: 400,
+    total_redeemed: 150
+  })
+})
+
+app.post('/api/wallet/redeem', async (c) => {
+  const { user_id, amount, booking_id } = await c.req.json().catch(() => ({}))
+  if (!amount || amount <= 0) return c.json({ error: 'valid amount required' }, 400)
+  if (amount > 250) return c.json({ error: 'Insufficient INDY Credits balance' }, 400)
+  return c.json({
+    success: true,
+    redeemed: amount,
+    new_balance: 250 - amount,
+    booking_id,
+    applied_at: new Date().toISOString()
+  })
+})
+
+// ─── API: Referral ───────────────────────────────────────
+app.post('/api/referral/validate', async (c) => {
+  const { code } = await c.req.json().catch(() => ({}))
+  if (!code) return c.json({ error: 'code required' }, 400)
+  const valid = code.startsWith('INDY-REF-')
+  return c.json({
+    valid,
+    code,
+    reward_for_referrer: 100,
+    reward_for_new_user: 100,
+    currency: 'INDY Credits',
+    expires: '2026-12-31',
+    message: valid ? '🎁 Referral code valid! Both you and your friend get ₹100 INDY Credits.' : 'Invalid referral code.'
+  })
+})
+
+// ─── API: Ticket Transfer ────────────────────────────────
+app.post('/api/tickets/:id/transfer', async (c) => {
+  const ticket_id = c.req.param('id')
+  const { to_email, to_mobile } = await c.req.json().catch(() => ({}))
+  return c.json({
+    success: false,
+    error: 'Tickets are non-transferable as per event organiser policy.',
+    ticket_id,
+    policy: 'Tickets on INDTIX are non-transferable. If you cannot attend, please cancel for a refund per our policy.',
+    support_url: 'https://indtix.com/support'
+  })
+})
+
+// ─── API: Organiser Dashboard Summary ───────────────────
+app.get('/api/organiser/dashboard', (c) => {
+  return c.json({
+    organiser: {
+      id: 'ORG-PERCEPT',
+      name: 'Percept Live',
+      kyc_status: 'verified',
+      account_manager: 'Kavita Reddy'
+    },
+    stats: {
+      total_events: 12,
+      live_events: 3,
+      draft_events: 2,
+      total_tickets_sold: 42840,
+      total_revenue: 124000000,
+      pending_settlement: 4285000,
+      avg_rating: 4.7
+    },
+    upcoming_events: [
+      { id: 'e1', name: 'Sunburn Arena Mumbai', date: '2026-04-12', sold_pct: 72, tickets_sold: 3600, revenue: 5400000 },
+      { id: 'e5', name: 'Diljit Dosanjh World Tour', date: '2026-05-10', sold_pct: 88, tickets_sold: 4400, revenue: 15400000 },
+    ],
+    recent_transactions: [
+      { booking_id: 'BK-ABC123', event: 'Sunburn Arena', amount: 3584, timestamp: new Date(Date.now()-120000).toISOString() },
+      { booking_id: 'BK-DEF456', event: 'Sunburn Arena', amount: 5992, timestamp: new Date(Date.now()-240000).toISOString() },
+    ],
+    updated_at: new Date().toISOString()
+  })
+})
+
+// ─── API: Venue Dashboard Summary ───────────────────────
+app.get('/api/venue/dashboard', (c) => {
+  return c.json({
+    venue: {
+      id: 'VEN-MMRDA',
+      name: 'MMRDA Grounds',
+      city: 'Mumbai',
+      kyc_status: 'verified',
+      rating: 4.7,
+      capacity: 50000
+    },
+    stats: {
+      bookings_this_month: 3,
+      revenue_this_month: 7500000,
+      occupancy_rate: 84,
+      upcoming_bookings: 2,
+      pending_enquiries: 1
+    },
+    calendar_highlights: [
+      { date: '2026-04-12', event: 'Sunburn Arena Mumbai', organiser: 'Percept Live', pax: 15000 },
+      { date: '2026-05-10', event: 'Diljit Dosanjh Tour', organiser: 'BookMyShow Live', pax: 30000 },
+    ],
+    updated_at: new Date().toISOString()
+  })
+})
+
+// ─── API: Event Manager Dashboard ───────────────────────
+app.get('/api/event-manager/dashboard', (c) => {
+  return c.json({
+    event: {
+      id: 'e1',
+      name: 'Sunburn Arena Mumbai',
+      date: '2026-04-12',
+      venue: 'MMRDA Grounds',
+      status: 'live'
+    },
+    checkin_live: {
+      total_sold: 4200,
+      checked_in: 2841,
+      pct: 67.6,
+      rate_per_min: 92,
+      gates_active: 4
+    },
+    wristbands: {
+      total_issued: 2400,
+      led_active: 2397,
+      zones: ['GA', 'PREM', 'VIP', 'ACCESSIBLE']
+    },
+    incidents_open: 2,
+    tasks_pending: 7,
+    team_online: 18,
+    updated_at: new Date().toISOString()
+  })
+})
+
+// ─── API: Platform Search ─────────────────────────────────
+app.get('/api/search', (c) => {
+  const q = c.req.query('q') || ''
+  const type = c.req.query('type') || 'all'
+  const query = q.toLowerCase()
+
+  const events = query ? EVENTS_DATA.filter(e =>
+    e.name.toLowerCase().includes(query) ||
+    e.city.toLowerCase().includes(query) ||
+    e.venue.toLowerCase().includes(query) ||
+    e.category.toLowerCase().includes(query)
+  ) : EVENTS_DATA.slice(0, 5)
+
+  return c.json({
+    query: q,
+    results: {
+      events: events.slice(0, 5),
+      venues: query ? [{ id: 'v1', name: 'MMRDA Grounds', city: 'Mumbai', capacity: 50000 }] : [],
+      organisers: query ? [{ id: 'o1', name: 'Percept Live', events: 12 }] : [],
+    },
+    total: events.length,
+    suggestions: ['Sunburn Arena', 'NH7 Weekender', 'Lollapalooza India', 'IPL 2026'],
+    ts: new Date().toISOString()
+  })
+})
+
+// ─── API: Wristband Status ───────────────────────────────
+app.get('/api/wristbands/status', (c) => {
+  const event_id = c.req.query('event_id') || 'e1'
+  return c.json({
+    event_id,
+    total_issued: 2400,
+    zones: {
+      GA: { issued: 1500, led_active: 1498, color: 'white', effect: 'pulse' },
+      PREM: { issued: 600, led_active: 600, color: 'purple', effect: 'wave' },
+      VIP: { issued: 250, led_active: 249, color: 'gold', effect: 'shimmer' },
+      ACCESSIBLE: { issued: 50, led_active: 50, color: 'blue', effect: 'steady' },
+    },
+    controllers_online: 14,
+    controllers_total: 14,
+    latency_ms: 12,
+    last_command: 'color_change',
+    last_command_at: new Date(Date.now() - 30000).toISOString(),
+    updated_at: new Date().toISOString()
+  })
+})
+
+// ─── API: Admin KYC Queue ────────────────────────────────
+app.get('/api/admin/kyc/queue', (c) => {
+  return c.json({
+    pending: [
+      { id: 'KYC-001', entity: 'Oye Events Pvt Ltd', type: 'organiser', submitted: '2026-04-15T10:20:00Z', docs: ['GST', 'PAN', 'Bank'], status: 'pending' },
+      { id: 'KYC-002', entity: 'Ravescape Productions', type: 'organiser', submitted: '2026-04-15T08:45:00Z', docs: ['GST', 'PAN', 'INC'], status: 'pending' },
+      { id: 'KYC-003', entity: 'MMRDA Grounds', type: 'venue', submitted: '2026-04-14T16:30:00Z', docs: ['GST', 'NOC'], status: 'on_hold' },
+    ],
+    stats: { pending_orgs: 18, pending_venues: 12, avg_review_time_hrs: 22, approved_today: 5 },
+    updated_at: new Date().toISOString()
+  })
+})
+
+// ─── API: Admin Fraud Queue ──────────────────────────────
+app.get('/api/admin/fraud/alerts', (c) => {
+  return c.json({
+    alerts: [
+      { id: 'FRAUD-001', type: 'velocity', description: '15 bookings in 8 min from IP 192.168.1.x', risk: 'high', amount: 67500, user_id: 'USR-889241', flagged_at: new Date(Date.now()-3600000).toISOString() },
+      { id: 'FRAUD-002', type: 'card_testing', description: 'Multiple low-value transactions from same device', risk: 'medium', amount: 1500, user_id: 'USR-442819', flagged_at: new Date(Date.now()-7200000).toISOString() },
+      { id: 'FRAUD-003', type: 'identity', description: 'Mismatched name on KYC and payment method', risk: 'low', amount: 4500, user_id: 'USR-119234', flagged_at: new Date(Date.now()-10800000).toISOString() },
+    ],
+    stats: { high_risk: 1, medium_risk: 1, low_risk: 1, blocked_today: 3, amount_saved: 73500 },
+    updated_at: new Date().toISOString()
+  })
+})
+
+// ─── API: Affiliate / Commission ─────────────────────────
+app.get('/api/affiliate/stats', (c) => {
+  return c.json({
+    affiliates: [
+      { id: 'AFF-001', name: 'MumbaiEventsBlog', clicks: 8420, conversions: 284, commission: 28400, status: 'active' },
+      { id: 'AFF-002', name: 'IndiaFestivals.in', clicks: 5210, conversions: 187, commission: 18700, status: 'active' },
+    ],
+    total_commission_paid: 47100,
+    commission_rate_pct: 2,
+    updated_at: new Date().toISOString()
+  })
+})
+
+// ─── Update health to reflect 58 endpoints ───────────────
 export default app

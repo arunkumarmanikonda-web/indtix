@@ -258,6 +258,17 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
 .footer-legal a{font-size:12px;color:var(--muted);text-decoration:none}
 .footer-legal a:hover{color:var(--brand)}
 
+/* DYNAMIC CARD STYLES */
+.card-date{font-size:12px;color:var(--muted);margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.card-title2{font-size:17px;font-weight:700;margin-bottom:6px;line-height:1.3}
+.card-venue{font-size:12px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:5px}
+.card-footer2{margin-bottom:10px}
+.card-btn{width:100%;padding:9px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;margin-top:6px}
+.sell-bar{height:4px;background:var(--dark3);border-radius:2px;margin:4px 0;overflow:hidden}
+.sell-fill{height:100%;background:var(--grad1);border-radius:2px;transition:width 0.5s}
+.sold-badge{position:absolute;top:40px;left:14px;background:linear-gradient(135deg,#FF3CAC,#6C3CF7);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px}
+.wishlist-btn{font-family:'Inter',sans-serif}
+
 /* RESPONSIVE */
 @media(max-width:768px){
   .hero-content{grid-template-columns:1fr;gap:40px}
@@ -945,14 +956,99 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
 </div>
 
 <script>
-const EVENTS = [
-  { id:'E001',name:'Sunburn Arena Mumbai',date:'Apr 15, 2026',venue:'NSCI Dome, Worli',city:'Mumbai',price:1499,category:'Music',image:'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600',sold:72 },
-  { id:'E002',name:'NH7 Weekender',date:'May 20, 2026',venue:'Mahalaxmi Grounds',city:'Pune',price:2999,category:'Music',image:'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600',sold:58 },
-  { id:'E003',name:'Comedy Central Live',date:'Apr 28, 2026',venue:'JW Marriott Ballroom',city:'Bengaluru',price:899,category:'Comedy',image:'https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=600',sold:45 },
-  { id:'E004',name:'Tech Summit 2026',date:'Jun 10, 2026',venue:'HITEX Exhibition Centre',city:'Hyderabad',price:4999,category:'Conference',image:'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600',sold:85 },
-  { id:'E005',name:'Lollapalooza India',date:'Mar 22, 2026',venue:'Mahalaxmi Racecourse',city:'Mumbai',price:5999,category:'Music',image:'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600',sold:92 },
-  { id:'E006',name:'BITS Pilani Oasis',date:'Oct 1, 2026',venue:'BITS Campus',city:'Pilani',price:299,category:'College Fest',image:'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600',sold:34 },
-];
+/* ─── LIVE API DATA LAYER ─── */
+let EVENTS = [];
+let activeCity = null, activeCategory = null;
+
+async function loadEvents(params = {}) {
+  const grid = document.getElementById('eventsGrid');
+  grid.innerHTML = '<p style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px"><i class="fas fa-spinner fa-spin"></i> Loading events…</p>';
+  try {
+    const qs = new URLSearchParams();
+    if (params.city) qs.set('city', params.city);
+    if (params.category) qs.set('category', params.category);
+    if (params.q) qs.set('q', params.q);
+    const res = await fetch('/api/events?' + qs.toString());
+    const data = await res.json();
+    EVENTS = (data.events || []).map(e => ({
+      id: e.id, name: e.name, date: e.date, venue: e.venue,
+      city: e.city, price: e.price, category: e.category,
+      image: e.image, sold: e.sold_pct
+    }));
+    renderEvents(EVENTS);
+  } catch(err) {
+    grid.innerHTML = '<p style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px">⚠️ Could not load events. Please refresh.</p>';
+  }
+}
+
+async function loadCities() {
+  try {
+    const res = await fetch('/api/cities');
+    const data = await res.json();
+    const cityGrid = document.querySelector('.cities-grid');
+    if (cityGrid && data.cities) {
+      cityGrid.innerHTML = data.cities.map(c => `
+        <div class="city-card" onclick="selectCity('${c.name}')">
+          <div class="city-overlay"><div class="city-name">${c.icon} ${c.name}</div><div class="city-count">${c.events} events</div></div>
+        </div>`).join('');
+    }
+  } catch(e) {}
+}
+
+async function loadCategories() {
+  try {
+    const res = await fetch('/api/categories');
+    const data = await res.json();
+    const catGrid = document.querySelector('.categories-grid');
+    if (catGrid && data.categories) {
+      catGrid.innerHTML = data.categories.map(c => `
+        <div class="category-card" onclick="filterCategory('${c.id}')" style="cursor:pointer">
+          <div class="cat-icon">${c.icon}</div>
+          <div class="cat-name">${c.name}</div>
+          <div class="cat-count">${c.count.toLocaleString('en-IN')} events</div>
+        </div>`).join('');
+    }
+  } catch(e) {}
+}
+
+async function sendChatAPI(message) {
+  try {
+    const res = await fetch('/api/ai/chat', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({message}) });
+    const data = await res.json();
+    return data.reply || 'Let me help you find the perfect event! 🎟️';
+  } catch(e) {
+    return 'Let me help you find the perfect event! 🎟️';
+  }
+}
+
+async function bookTickets() {
+  if (!currentEvent) return;
+  const tickets = [];
+  if (qty.ga > 0) tickets.push({ tier:'ga', qty: qty.ga, price: currentEvent.price });
+  if (qty.prem > 0) tickets.push({ tier:'premium', qty: qty.prem, price: currentEvent.price * 2 });
+  if (qty.vip > 0) tickets.push({ tier:'vip', qty: qty.vip, price: currentEvent.price * 3.5 });
+  if (!tickets.length) { showToast('Pick at least one ticket! 🎫'); return; }
+  try {
+    const res = await fetch('/api/bookings', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ event_id: currentEvent.id, tickets, payment_method: 'upi' }) });
+    const data = await res.json();
+    if (data.success) {
+      closeModal('eventModal'); closeModal('seatMapModal');
+      showConfirmationFromAPI(data.booking);
+    } else { showToast('Booking failed: ' + (data.error || 'Try again'), 'error'); }
+  } catch(e) { showToast('⚠️ Network error. Please try again.', 'error'); }
+}
+
+function showConfirmationFromAPI(booking) {
+  document.getElementById('confBookingId').textContent = booking.id;
+  document.getElementById('confEvent').textContent = currentEvent?.name || 'Event';
+  document.getElementById('confDate').textContent = currentEvent?.date || '';
+  document.getElementById('confVenue').textContent = currentEvent?.venue || '';
+  document.getElementById('confTotal').textContent = '₹' + booking.total.toLocaleString('en-IN');
+  document.getElementById('confQR').src = booking.qr_url;
+  document.getElementById('confirmationModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
 
 let currentEvent=null, qty={ga:0,prem:0,vip:0,fb:0,merch:0}, selectedSeats=[], currentZone='GA', seatTimer=null, seatSeconds=600;
 const ZONE_PRICES = {GA:1499,PREM:2999,VIP:4999,ACCESSIBLE:1499};
@@ -982,8 +1078,9 @@ function renderEvents(list){
 }
 
 /* ─── FILTERS ─── */
-function filterBy(btn,cat){ document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderEvents(cat==='all'?EVENTS:EVENTS.filter(e=>e.category.toLowerCase()===cat||e.category.toLowerCase().includes(cat))); }
-function handleSearch(v){ if(!v.trim()){renderEvents(EVENTS);return;} const q=v.toLowerCase(); renderEvents(EVENTS.filter(e=>e.name.toLowerCase().includes(q)||e.city.toLowerCase().includes(q)||e.venue.toLowerCase().includes(q)||e.category.toLowerCase().includes(q))); }
+function filterBy(btn,cat){ document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); activeCategory = cat==='all' ? null : cat; loadEvents({city: activeCity, category: activeCategory}); }
+function filterCategory(cat){ activeCategory = cat; loadEvents({city: activeCity, category: activeCategory}); window.scrollTo({top: document.getElementById('events-section')?.offsetTop || 600, behavior:'smooth'}); }
+function handleSearch(v){ if(!v.trim()){ loadEvents({city: activeCity, category: activeCategory}); return; } loadEvents({q: v.trim()}); }
 function doSearch(){ handleSearch(document.getElementById('searchInput').value); }
 
 /* ─── EVENT MODAL ─── */
@@ -1295,8 +1392,17 @@ function handleSignup(){ closeModal('signupModal'); showToast('Account created! 
 function socialLogin(p){ showToast(`Redirecting to ${p} login... 🔐`); setTimeout(()=>closeModal('loginModal'),800); }
 
 /* ─── CITY ─── */
-function openCityModal(){ document.getElementById('cityModal').style.display='flex'; }
-function selectCity(c){ document.getElementById('cityBtn').textContent='📍 '+c; closeModal('cityModal'); renderEvents(EVENTS.filter(e=>e.city===c)); }
+function showCityPicker(){ document.getElementById('cityModal').style.display='flex'; document.body.style.overflow='hidden'; }
+function openCityModal(){ showCityPicker(); }
+function filterCategory(cat){ activeCategory = cat==='all'?null:cat; loadEvents({city: activeCity, category: activeCategory}); document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active')); window.scrollTo({top:(document.getElementById('events')||document.getElementById('events-section'))?.offsetTop-80||600,behavior:'smooth'}); }
+function selectCity(c){
+  activeCity = c;
+  const pill=document.getElementById('selectedCity'); if(pill) pill.textContent=c;
+  closeModal('cityModal');
+  loadEvents({city: c, category: activeCategory});
+  showToast('📍 Showing events in '+c);
+  window.scrollTo({top:document.getElementById('events').offsetTop-80,behavior:'smooth'});
+}
 
 /* ─── PAYMENT ─── */
 function selectPayment(btn,m){ document.querySelectorAll('.pay-btn').forEach(b=>{b.style.borderColor='var(--border)';b.style.background='var(--dark3)';}); btn.style.borderColor='var(--brand)'; btn.style.background='rgba(108,60,247,0.15)'; }
@@ -1316,11 +1422,12 @@ function sendChat(){
   const msg=input.value.trim(); if(!msg) return;
   addChatMsg(msg,'user');
   input.value='';
-  setTimeout(()=>{
-    const key=Object.keys(chatResponses).find(k=>msg.toLowerCase().includes(k))||'default';
-    const responses=chatResponses[key];
-    addChatMsg(responses[Math.floor(Math.random()*responses.length)],'bot');
-  },700);
+  addChatMsg('…','bot');
+  sendChatAPI(msg).then(reply=>{
+    const msgs=document.getElementById('chatMessages');
+    const dots=[...msgs.querySelectorAll('.msg.bot')].pop();
+    if(dots) dots.textContent=reply;
+  });
 }
 function chatSuggest(msg){ document.getElementById('chatInput').value=msg; sendChat(); }
 function addChatMsg(text,type){ const m=document.createElement('div'); m.className='msg '+type; m.textContent=text; document.getElementById('chatMessages').appendChild(m); document.getElementById('chatMessages').scrollTop=9999; }
@@ -1346,7 +1453,9 @@ function createParticles(){
 
 /* ─── INIT ─── */
 window.addEventListener('DOMContentLoaded',()=>{
-  renderEvents(EVENTS);
+  loadEvents();
+  loadCities();
+  loadCategories();
   createParticles();
   // GST Invoice modal container
   const gstDiv=document.createElement('div');gstDiv.id='gstInvoiceModal';document.body.appendChild(gstDiv);

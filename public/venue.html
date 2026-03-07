@@ -164,7 +164,7 @@ textarea{resize:vertical;min-height:80px}
         </div>
         <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">
           <button class="btn-sm btn-ghost">Cancel</button>
-          <button class="btn-sm btn-primary" onclick="alert('Venue profile updated successfully!')"><i class="fas fa-save"></i> Save Changes</button>
+          <button class="btn-sm btn-primary" onclick="showVenueToast('Venue profile updated successfully!')"><i class="fas fa-save"></i> Save Changes</button>
         </div>
       </div>
     </div>
@@ -189,7 +189,7 @@ textarea{resize:vertical;min-height:80px}
             </div>`).join('')}
         </div>
         <div style="margin-top:16px;display:flex;justify-content:flex-end">
-          <button class="btn-sm btn-primary" onclick="alert('Amenities saved!')"><i class="fas fa-save"></i> Save Amenities</button>
+          <button class="btn-sm btn-primary" onclick="showVenueToast('Amenities saved!')"><i class="fas fa-save"></i> Save Amenities</button>
         </div>
       </div>
     </div>
@@ -263,16 +263,16 @@ textarea{resize:vertical;min-height:80px}
           </tr></thead>
           <tbody>
             <tr style="border-bottom:1px solid rgba(255,255,255,0.04)">
-              <td style="padding:10px;font-weight:600">Sunburn Arena Mumbai</td><td style="padding:10px;font-size:12px">Rahul Arora Events</td><td style="padding:10px;font-size:12px">Apr 15 · 6PM–2AM</td><td style="padding:10px">5,000</td><td style="padding:10px;font-weight:700;color:var(--brand3)">₹2,50,000</td><td style="padding:10px"><span class="br-status s-confirmed">Confirmed</span></td><td style="padding:10px"><button class="v-action" onclick="alert('Booking details: Sunburn Arena')">View</button></td>
+              <td style="padding:10px;font-weight:600">Sunburn Arena Mumbai</td><td style="padding:10px;font-size:12px">Rahul Arora Events</td><td style="padding:10px;font-size:12px">Apr 15 · 6PM–2AM</td><td style="padding:10px">5,000</td><td style="padding:10px;font-weight:700;color:var(--brand3)">₹2,50,000</td><td style="padding:10px"><span class="br-status s-confirmed">Confirmed</span></td><td style="padding:10px"><button class="v-action" onclick="showVenueToast('Booking details: Sunburn Arena')">View</button></td>
             </tr>
             <tr style="border-bottom:1px solid rgba(255,255,255,0.04)">
-              <td style="padding:10px;font-weight:600">Fashion Week Finale</td><td style="padding:10px;font-size:12px">FDCI</td><td style="padding:10px;font-size:12px">May 18 · 5PM–11PM</td><td style="padding:10px">2,000</td><td style="padding:10px;font-weight:700;color:var(--brand3)">₹3,20,000</td><td style="padding:10px"><span class="br-status s-confirmed">Confirmed</span></td><td style="padding:10px"><button class="v-action" onclick="alert('Booking details: Fashion Week')">View</button></td>
+              <td style="padding:10px;font-weight:600">Fashion Week Finale</td><td style="padding:10px;font-size:12px">FDCI</td><td style="padding:10px;font-size:12px">May 18 · 5PM–11PM</td><td style="padding:10px">2,000</td><td style="padding:10px;font-weight:700;color:var(--brand3)">₹3,20,000</td><td style="padding:10px"><span class="br-status s-confirmed">Confirmed</span></td><td style="padding:10px"><button class="v-action" onclick="showVenueToast('Booking details: Fashion Week')">View</button></td>
             </tr>
             <tr style="border-bottom:1px solid rgba(255,255,255,0.04)">
-              <td style="padding:10px;font-weight:600">Tech Summit 2025</td><td style="padding:10px;font-size:12px">India Tech Consortium</td><td style="padding:10px;font-size:12px">Jun 10 · 9AM–7PM</td><td style="padding:10px">1,200</td><td style="padding:10px;font-weight:700;color:var(--brand3)">₹1,80,000</td><td style="padding:10px"><span class="br-status s-confirmed">Confirmed</span></td><td style="padding:10px"><button class="v-action" onclick="alert('Booking details: Tech Summit')">View</button></td>
+              <td style="padding:10px;font-weight:600">Tech Summit 2025</td><td style="padding:10px;font-size:12px">India Tech Consortium</td><td style="padding:10px;font-size:12px">Jun 10 · 9AM–7PM</td><td style="padding:10px">1,200</td><td style="padding:10px;font-weight:700;color:var(--brand3)">₹1,80,000</td><td style="padding:10px"><span class="br-status s-confirmed">Confirmed</span></td><td style="padding:10px"><button class="v-action" onclick="showVenueToast('Booking details: Tech Summit')">View</button></td>
             </tr>
             <tr style="border-bottom:1px solid rgba(255,255,255,0.04)">
-              <td style="padding:10px;font-weight:600">Corporate Awards Night</td><td style="padding:10px;font-size:12px">Apex Corp</td><td style="padding:10px;font-size:12px">Apr 28 · 7PM–11PM</td><td style="padding:10px">800</td><td style="padding:10px;font-weight:700;color:#FFB300">₹1,20,000</td><td style="padding:10px"><span class="br-status s-pending">Pending Docs</span></td><td style="padding:10px"><div style="display:flex;gap:6px"><button class="v-action" onclick="sendQuote('Apex Corp')">Send Reminder</button><button class="v-action" onclick="alert('Booking cancelled')">Cancel</button></div></td>
+              <td style="padding:10px;font-weight:600">Corporate Awards Night</td><td style="padding:10px;font-size:12px">Apex Corp</td><td style="padding:10px;font-size:12px">Apr 28 · 7PM–11PM</td><td style="padding:10px">800</td><td style="padding:10px;font-weight:700;color:#FFB300">₹1,20,000</td><td style="padding:10px"><span class="br-status s-pending">Pending Docs</span></td><td style="padding:10px"><div style="display:flex;gap:6px"><button class="v-action" onclick="sendQuote('Apex Corp')">Send Reminder</button><button class="v-action" onclick="showVenueToast('Booking cancelled')">Cancel</button></div></td>
             </tr>
             <tr>
               <td style="padding:10px;font-weight:600">Comedy Central Live</td><td style="padding:10px;font-size:12px">LOL Productions</td><td style="padding:10px;font-size:12px">May 5 · 7PM–10PM</td><td style="padding:10px">600</td><td style="padding:10px;font-weight:700;color:#FFB300">₹90,000</td><td style="padding:10px"><span class="br-status s-pending">Awaiting Sign</span></td><td style="padding:10px"><div style="display:flex;gap:6px"><button class="v-action" onclick="sendQuote('LOL Productions')">Send Contract</button></div></td>
@@ -332,8 +332,8 @@ textarea{resize:vertical;min-height:80px}
           <div class="card" style="margin-top:0">
             <div class="card-title">Blocked Dates</div>
             <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><span>Apr 1–2</span><span style="font-size:11px;color:var(--muted)">Venue maintenance</span><button class="v-action" style="font-size:11px" onclick="alert('Date unblocked')">Unblock</button></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0"><span>Apr 29–30</span><span style="font-size:11px;color:var(--muted)">Annual cleaning</span><button class="v-action" style="font-size:11px" onclick="alert('Date unblocked')">Unblock</button></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><span>Apr 1–2</span><span style="font-size:11px;color:var(--muted)">Venue maintenance</span><button class="v-action" style="font-size:11px" onclick="showVenueToast('Date unblocked')">Unblock</button></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0"><span>Apr 29–30</span><span style="font-size:11px;color:var(--muted)">Annual cleaning</span><button class="v-action" style="font-size:11px" onclick="showVenueToast('Date unblocked')">Unblock</button></div>
             </div>
           </div>
         </div>
@@ -387,7 +387,7 @@ textarea{resize:vertical;min-height:80px}
             </div>
           </div>
         </div>
-        <div style="margin-top:16px;display:flex;justify-content:flex-end"><button class="btn-sm btn-primary" onclick="alert('Zone configuration saved!')"><i class="fas fa-save"></i> Save Zones</button></div>
+        <div style="margin-top:16px;display:flex;justify-content:flex-end"><button class="btn-sm btn-primary" onclick="showVenueToast('Zone configuration saved!')"><i class="fas fa-save"></i> Save Zones</button></div>
       </div>
     </div>
 
@@ -458,7 +458,7 @@ textarea{resize:vertical;min-height:80px}
                 </div>
               </div>
             </div>
-            <button class="btn-sm btn-ghost" style="margin-top:12px" onclick="alert('Add new package')"><i class="fas fa-plus"></i> Add Package</button>
+            <button class="btn-sm btn-ghost" style="margin-top:12px" onclick="showVenueToast('Add new package')"><i class="fas fa-plus"></i> Add Package</button>
           </div>
         </div>
       </div>
@@ -508,9 +508,9 @@ textarea{resize:vertical;min-height:80px}
             <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Download</th>
           </tr></thead>
           <tbody>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:10px;color:var(--brand)">INV-2025-0042</td><td style="padding:10px;font-size:12px">Rahul Arora Events</td><td style="padding:10px">Sunburn Arena</td><td style="padding:10px">₹2,84,746</td><td style="padding:10px;color:var(--muted)">₹51,254</td><td style="padding:10px;font-weight:700;color:var(--brand3)">₹3,36,000</td><td style="padding:10px"><span class="br-status s-confirmed">Paid</span></td><td style="padding:10px"><button class="v-action" onclick="alert('Downloading invoice INV-2025-0042')"><i class="fas fa-download"></i> PDF</button></td></tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:10px;color:var(--brand)">INV-2025-0038</td><td style="padding:10px;font-size:12px">FDCI</td><td style="padding:10px">Fashion Week</td><td style="padding:10px">₹2,45,763</td><td style="padding:10px;color:var(--muted)">₹44,237</td><td style="padding:10px;font-weight:700;color:var(--brand3)">₹2,90,000</td><td style="padding:10px"><span class="br-status s-confirmed">Paid</span></td><td style="padding:10px"><button class="v-action" onclick="alert('Downloading invoice INV-2025-0038')"><i class="fas fa-download"></i> PDF</button></td></tr>
-            <tr><td style="padding:10px;color:var(--brand)">INV-2025-0035</td><td style="padding:10px;font-size:12px">Apex Corp</td><td style="padding:10px">Corporate Awards</td><td style="padding:10px">₹1,01,695</td><td style="padding:10px;color:var(--muted)">₹18,305</td><td style="padding:10px;font-weight:700;color:#FFB300">₹1,20,000</td><td style="padding:10px"><span class="br-status s-pending">Pending</span></td><td style="padding:10px"><button class="v-action" onclick="alert('Downloading invoice INV-2025-0035')"><i class="fas fa-download"></i> PDF</button></td></tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:10px;color:var(--brand)">INV-2025-0042</td><td style="padding:10px;font-size:12px">Rahul Arora Events</td><td style="padding:10px">Sunburn Arena</td><td style="padding:10px">₹2,84,746</td><td style="padding:10px;color:var(--muted)">₹51,254</td><td style="padding:10px;font-weight:700;color:var(--brand3)">₹3,36,000</td><td style="padding:10px"><span class="br-status s-confirmed">Paid</span></td><td style="padding:10px"><button class="v-action" onclick="showVenueToast('Downloading invoice INV-2025-0042')"><i class="fas fa-download"></i> PDF</button></td></tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:10px;color:var(--brand)">INV-2025-0038</td><td style="padding:10px;font-size:12px">FDCI</td><td style="padding:10px">Fashion Week</td><td style="padding:10px">₹2,45,763</td><td style="padding:10px;color:var(--muted)">₹44,237</td><td style="padding:10px;font-weight:700;color:var(--brand3)">₹2,90,000</td><td style="padding:10px"><span class="br-status s-confirmed">Paid</span></td><td style="padding:10px"><button class="v-action" onclick="showVenueToast('Downloading invoice INV-2025-0038')"><i class="fas fa-download"></i> PDF</button></td></tr>
+            <tr><td style="padding:10px;color:var(--brand)">INV-2025-0035</td><td style="padding:10px;font-size:12px">Apex Corp</td><td style="padding:10px">Corporate Awards</td><td style="padding:10px">₹1,01,695</td><td style="padding:10px;color:var(--muted)">₹18,305</td><td style="padding:10px;font-weight:700;color:#FFB300">₹1,20,000</td><td style="padding:10px"><span class="br-status s-pending">Pending</span></td><td style="padding:10px"><button class="v-action" onclick="showVenueToast('Downloading invoice INV-2025-0035')"><i class="fas fa-download"></i> PDF</button></td></tr>
           </tbody>
         </table></div>
       </div>
@@ -535,7 +535,7 @@ textarea{resize:vertical;min-height:80px}
             <tr><td style="padding:10px;font-weight:600">Sunita K.</td><td style="padding:10px;font-size:12px">Medical First Aid</td><td style="padding:10px">Medical Bay</td><td style="padding:10px">5PM–2AM</td><td style="padding:10px"><span class="br-status s-confirmed">On Duty</span></td></tr>
           </tbody>
         </table></div>
-        <div style="margin-top:12px"><button class="btn-sm btn-primary" onclick="alert('Add staff member')"><i class="fas fa-plus"></i> Add Staff</button></div>
+        <div style="margin-top:12px"><button class="btn-sm btn-primary" onclick="showVenueToast('Add staff member')"><i class="fas fa-plus"></i> Add Staff</button></div>
       </div>
     </div>
 
@@ -543,7 +543,7 @@ textarea{resize:vertical;min-height:80px}
     <div class="panel" id="panel-incidents">
       <div class="card">
         <div class="card-title">Incident Log <span>Last 30 days</span></div>
-        <div style="margin-bottom:16px"><button class="btn-sm btn-primary" onclick="alert('New incident form opened')"><i class="fas fa-plus"></i> Log New Incident</button></div>
+        <div style="margin-bottom:16px"><button class="btn-sm btn-primary" onclick="showVenueToast('New incident form opened')"><i class="fas fa-plus"></i> Log New Incident</button></div>
         <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px">
           <thead><tr style="border-bottom:1px solid var(--border)">
             <th style="padding:9px 10px;text-align:left;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase">Date & Time</th>
@@ -613,30 +613,30 @@ function initVenueCalendar(){
     e.innerHTML='<div class="cal-day-num">'+d+'</div>';
     if(isBooked)e.innerHTML+='<span class="cal-event-dot" style="background:var(--brand2)"></span><span style="font-size:10px">Booked</span>';
     else if(!isBlocked)e.innerHTML+='<span class="cal-event-dot" style="background:var(--brand3)"></span><span style="font-size:10px">Free</span>';
-    e.onclick=()=>{ if(!isBlocked)alert(isBooked?'Event on this date! Contact organiser to modify.':'Date '+d+' is available — click Book to create enquiry.'); };
+    e.onclick=()=>{ if(!isBlocked)showVenueToast(isBooked?'📅 Event booked on this date — contact organiser to modify.':'✅ Date '+d+' is available — click Book to create enquiry.'); };
     cal.appendChild(e);
   }
 }
-function blockDate(){alert('Select dates to block on the calendar — prevents new bookings on those days.');}
-function saveAvailability(){alert('✅ Availability settings saved!');}
-function savePricing(){alert('✅ Pricing tiers saved!');}
-function addPricingTier(){alert('New pricing tier added.');}
-function saveAmenities(){alert('✅ Amenity configuration saved!');}
-function sendQuote(org){alert('Quote sent to organiser: '+org+' via WhatsApp & Email.');}
-function approveEnquiry(org){if(confirm('Approve booking from '+org+'?'))alert('✅ Booking confirmed! Contract sent to organiser.');}
-function rejectEnquiry(org){const r=prompt('Reason for declining '+org+'?');if(r)alert('Enquiry declined. Organiser notified.');}
-function downloadVenueReport(){alert('Generating venue performance report PDF...');}
+function blockDate(){showVenueToast('Select dates to block on the calendar — prevents new bookings on those days.');}
+function saveAvailability(){showVenueToast('✅ Availability settings saved!');}
+function savePricing(){showVenueToast('✅ Pricing tiers saved!');}
+function addPricingTier(){showVenueToast('New pricing tier added.');}
+function saveAmenities(){showVenueToast('✅ Amenity configuration saved!');}
+function sendQuote(org){showVenueToast('📲 Quote sent to '+org+' via WhatsApp & Email.');}
+function approveEnquiry(org){if(confirm('Approve booking from '+org+'?')){showToast('✅ Booking confirmed! Contract sent to organiser.');};}
+function rejectEnquiry(org){const r=prompt('Reason for declining '+org+'?');if(r)showVenueToast('Enquiry declined. Organiser notified.');}
+function downloadVenueReport(){showVenueToast('Generating venue performance report PDF...');}
 window.addEventListener('load',()=>{initVenueCalendar();});
 
-function initVenueCalendar(){const cal=document.getElementById("venueCalGrid");if(!cal)return;const today=new Date();const firstDay=new Date(today.getFullYear(),today.getMonth(),1).getDay();const daysInMonth=new Date(today.getFullYear(),today.getMonth()+1,0).getDate();const booked=[5,6,12,13,14,19,20];const blocked=[1,2];cal.innerHTML="";for(let i=0;i<firstDay;i++){const e=document.createElement("div");e.className="cal-day";e.style.cssText="background:transparent;border:none";cal.appendChild(e);}for(let d=1;d<=daysInMonth;d++){const e=document.createElement("div");const isBooked=booked.includes(d);const isBlocked=blocked.includes(d);const isToday=d===today.getDate();e.className="cal-day"+(isBooked?" booked":isBlocked?" blocked":isToday?" today":" available");e.innerHTML='<div class="cal-day-num">'+d+'</div>';if(isBooked)e.innerHTML+='<span style="font-size:10px;color:var(--brand2)">Booked</span>';else if(!isBlocked)e.innerHTML+='<span style="font-size:10px;color:var(--brand3)">Free</span>';e.onclick=()=>{if(!isBlocked)alert(isBooked?"Event booked on this date.":"Date "+d+" is available!");};cal.appendChild(e);}}
-function blockDate(){alert("Select and block dates to prevent new bookings.");}
-function saveAvailability(){alert("✅ Availability saved!");}
-function savePricing(){alert("✅ Pricing tiers saved!");}
-function addPricingTier(){alert("New tier added.");}
-function sendQuote(org){alert("Quote sent to "+org+" via WhatsApp & Email.");}
-function approveEnquiry(org){if(confirm("Approve booking from "+org+"?"))alert("✅ Booking confirmed!");}
-function rejectEnquiry(org){const r=prompt("Reason?");if(r)alert("Declined. Organiser notified.");}
-function downloadVenueReport(){alert("Generating report PDF...");}
+function initVenueCalendar(){const cal=document.getElementById("venueCalGrid");if(!cal)return;const today=new Date();const firstDay=new Date(today.getFullYear(),today.getMonth(),1).getDay();const daysInMonth=new Date(today.getFullYear(),today.getMonth()+1,0).getDate();const booked=[5,6,12,13,14,19,20];const blocked=[1,2];cal.innerHTML="";for(let i=0;i<firstDay;i++){const e=document.createElement("div");e.className="cal-day";e.style.cssText="background:transparent;border:none";cal.appendChild(e);}for(let d=1;d<=daysInMonth;d++){const e=document.createElement("div");const isBooked=booked.includes(d);const isBlocked=blocked.includes(d);const isToday=d===today.getDate();e.className="cal-day"+(isBooked?" booked":isBlocked?" blocked":isToday?" today":" available");e.innerHTML='<div class="cal-day-num">'+d+'</div>';if(isBooked)e.innerHTML+='<span style="font-size:10px;color:var(--brand2)">Booked</span>';else if(!isBlocked)e.innerHTML+='<span style="font-size:10px;color:var(--brand3)">Free</span>';e.onclick=()=>{if(!isBlocked)showVenueToast(isBooked?'📅 Event booked on this date.':'✅ Date '+d+' is available!');};cal.appendChild(e);}}
+function blockDate(){showVenueToast('Select and block dates to prevent new bookings.');}
+function saveAvailability(){showVenueToast('✅ Availability saved!');}
+function savePricing(){showVenueToast('✅ Pricing tiers saved!');}
+function addPricingTier(){showVenueToast('New tier added.');}
+function sendQuote(org){showVenueToast('📲 Quote sent to '+org+' via WhatsApp & Email.');}
+function approveEnquiry(org){if(confirm("Approve booking from "+org+"?"))showVenueToast('✅ Booking confirmed!');}
+function rejectEnquiry(org){const r=prompt("Reason?");if(r)showVenueToast('Declined. Organiser notified.');}
+function downloadVenueReport(){showVenueToast('Generating report PDF...');}
 window.addEventListener("load",()=>{initVenueCalendar();});
 function showPanel(name,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
@@ -646,7 +646,39 @@ function showPanel(name,btn){
   const t={dashboard:'Venue Dashboard',profile:'Venue Profile',floorplan:'Floor Plan Builder',capacity:'Capacity & Zones',amenities:'Amenities & Facilities',pricing:'Pricing & Packages',docs:'Documents & NOC',bookings:'Bookings',calendar:'Availability Calendar',revenue:'Hire Fee Revenue',invoices:'GST Invoices',staff:'Staff Access',incidents:'Incident Reports'};
   document.getElementById('topbarTitle').textContent=t[name]||'Dashboard';
 }
-function toggleAmenity(el){el.classList.toggle('selected');el.querySelector('.amenity-check').style.color=el.classList.contains('selected')?'var(--brand3)':'transparent';}
+function toggleAmenity(el){el.classList.toggle('selected');el.querySelector('.amenity-check').style.color=el.classList.contains('selected')?'var(--brand3)':'transparent';}/* ─── LIVE API INTEGRATION ─── */
+async function loadVenueDashboard() {
+  try {
+    const res = await fetch('/api/venue/dashboard');
+    const data = await res.json();
+    const s = data.stats || {};
+    const v = data.venue || {};
+
+    const vals = document.querySelectorAll('.stat-card .stat-value');
+    const labels = document.querySelectorAll('.stat-card .stat-label');
+    vals.forEach((el,i) => {
+      const lbl = (labels[i]?.textContent||'').toLowerCase();
+      if (lbl.includes('booking')) el.textContent = s.bookings_this_month || el.textContent;
+      else if (lbl.includes('revenue') || lbl.includes('earning')) el.textContent = '₹' + ((s.revenue_this_month||7500000)/100000).toFixed(1) + 'L';
+      else if (lbl.includes('occupancy')) el.textContent = (s.occupancy_rate||84) + '%';
+      else if (lbl.includes('rating')) el.textContent = v.rating || '4.7';
+    });
+
+    const cal = data.calendar_highlights || [];
+    const calEl = document.querySelector('.calendar-events, #venueCalendar');
+    if (calEl && cal.length) {
+      const existing = calEl.querySelectorAll('.cal-event');
+      if (!existing.length) {
+        calEl.innerHTML += cal.map(c => `<div class="cal-event" style="background:var(--dark3);border-radius:8px;padding:10px;margin-bottom:8px"><div style="font-size:13px;font-weight:600">${c.event}</div><div style="font-size:12px;color:var(--muted)">${c.date} · ${c.organiser} · ${(c.pax||0).toLocaleString('en-IN')} pax</div></div>`).join('');
+      }
+    }
+  } catch(e) {}
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadVenueDashboard();
+});
+
 </script>
 </body>
 </html><script>
@@ -753,4 +785,131 @@ window.addEventListener('DOMContentLoaded',function(){
     if(el)el.textContent='₹'+(Math.floor(Math.random()*50000+3200000)).toLocaleString('en-IN');
   },7000);
 });
+
+/* ═══════════════════════════════════════
+   PLATINUM ENHANCEMENTS — VENUE PORTAL
+   ═══════════════════════════════════════ */
+
+/* ─── Profile & Settings ─── */
+function saveVenueProfile(){
+  showVenueToast('✅ Venue profile updated! Changes visible to organisers within 2 minutes.');
+  logVenueAction('Venue profile saved');
+}
+function saveAmenities(){
+  showVenueToast('✅ Amenities list saved and published to your venue listing.');
+  logVenueAction('Amenities updated');
+}
+function saveZoneConfig(){
+  showVenueToast('✅ Zone configuration saved! Capacity updates are live.');
+  logVenueAction('Zone config saved');
+}
+function savePricing(){
+  showVenueToast('✅ Pricing tiers saved. New rates apply to future enquiries.');
+  logVenueAction('Pricing saved');
+}
+function addPricingTier(){
+  showVenueToast('💰 New pricing tier added. Set name, base rate, and conditions below.');
+}
+
+/* ─── Bookings ─── */
+function viewBookingDetails(name){
+  showVenueToast('📋 Opening booking details for: '+name+'...');
+}
+function approveEnquiry(org){
+  if(!confirm('Confirm venue booking for '+org+'?')) return;
+  showVenueToast('✅ Booking confirmed for '+org+'! Contract email sent.');
+  logVenueAction('Booking approved: '+org);
+}
+function rejectEnquiry(org){
+  const r=prompt('Reason for declining '+org+'?');
+  if(r) { showVenueToast('❌ Booking declined for '+org+'. Reason sent via email.'); logVenueAction('Booking declined: '+org); }
+}
+function cancelBooking(name){
+  if(!confirm('Cancel booking for '+name+'? This cannot be undone.')) return;
+  showVenueToast('🚫 Booking for '+name+' cancelled. Organiser notified via WhatsApp.');
+  logVenueAction('Booking cancelled: '+name);
+}
+
+/* ─── Availability & Calendar ─── */
+function blockDate(){
+  showVenueToast('📅 Select dates on the calendar to block. Prevents new enquiries on those days.');
+}
+function saveAvailability(){
+  showVenueToast('✅ Availability updated and published. Organisers will see updated calendar.');
+  logVenueAction('Availability saved');
+}
+
+/* ─── Finance & Reports ─── */
+function downloadVenueReport(){
+  showVenueToast('📊 Monthly venue performance report PDF generating...');
+  setTimeout(()=>showVenueToast('✅ Report downloaded: April 2026 Venue Summary.pdf'),1500);
+}
+function generateGSTInvoice(invNo){
+  showVenueToast('📄 GST Invoice '+invNo+' PDF generating...');
+  setTimeout(()=>showVenueToast('✅ Invoice ready! Sent to registered email + available for download.'),1000);
+}
+function downloadInvoice(invNo){
+  showVenueToast('📥 Downloading GST invoice '+invNo+'...');
+}
+function requestPayout(){
+  showVenueToast('💰 Payout request submitted! T+5 business days. Reference: PAY-'+Math.random().toString(36).slice(2,8).toUpperCase());
+  logVenueAction('Payout requested');
+}
+
+/* ─── Incident & Operations ─── */
+function addStaffMember(){
+  const name=prompt('Staff member name and role?');
+  if(name) { showVenueToast('👤 Staff member "'+name+'" added to your team!'); }
+}
+function logIncidentVenue(){
+  showVenueToast('⚠️ Incident log form opened. Complete and submit for records.');
+}
+function addPackage(){
+  showVenueToast('📦 New venue package added. Set name, inclusions, and pricing.');
+}
+
+/* ─── Venue Log ─── */
+const venueLog=[];
+function logVenueAction(action){
+  venueLog.unshift({action,time:new Date().toLocaleTimeString('en-IN'),user:'Venue Manager'});
+  const el=document.getElementById('venueAuditLog');
+  if(el) el.innerHTML=venueLog.slice(0,10).map(l=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:12px"><span style="color:var(--text)">${l.action}</span><span style="color:var(--muted)">${l.time}</span></div>`).join('');
+}
+
+/* ─── GST Invoice Generator ─── */
+function generateGSTInvoiceModal(orgName, amount){
+  const inv='INV-VEN-2026-'+Math.random().toString(36).slice(2,6).toUpperCase();
+  const taxable=amount||250000;
+  const cgst=(taxable*0.09).toFixed(2);
+  const sgst=(taxable*0.09).toFixed(2);
+  const total=(taxable*1.18).toFixed(2);
+  const modal=document.createElement('div');
+  modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px';
+  modal.onclick=e=>{if(e.target===modal)modal.remove()};
+  modal.innerHTML=`<div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div><div style="font-size:18px;font-weight:800;font-family:'Space Grotesk',sans-serif">TAX INVOICE</div><div style="font-size:12px;color:var(--muted)">${inv}</div></div>
+      <button onclick="this.closest('[style*=fixed]').remove()" style="background:var(--dark3);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px">✕</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;font-size:13px">
+      <div><div style="font-weight:700;color:var(--brand3);margin-bottom:6px">Venue Owner</div><div style="font-weight:600">MMRDA Grounds</div><div style="color:var(--muted)">GSTIN: 27AABMM1234A1Z5</div><div style="color:var(--muted)">Mumbai, MH 400051</div></div>
+      <div><div style="font-weight:700;color:var(--brand3);margin-bottom:6px">Bill To</div><div style="font-weight:600">${orgName||'Percept Live Events'}</div><div style="color:var(--muted)">Invoice Date: ${new Date().toLocaleDateString('en-IN')}</div><div style="color:var(--muted)">Place of Supply: Maharashtra</div></div>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px">
+      <thead><tr style="background:rgba(108,60,247,0.15)"><th style="padding:8px;text-align:left;border-bottom:1px solid var(--border)">Description</th><th style="padding:8px;text-align:right;border-bottom:1px solid var(--border)">HSN</th><th style="padding:8px;text-align:right;border-bottom:1px solid var(--border)">Amount</th></tr></thead>
+      <tbody>
+        <tr><td style="padding:8px">Venue Hire — Event Date</td><td style="padding:8px;text-align:right;color:var(--muted)">9972</td><td style="padding:8px;text-align:right;font-weight:600">₹${taxable.toLocaleString('en-IN')}</td></tr>
+        <tr><td style="padding:8px;color:var(--muted)">CGST @ 9%</td><td style="padding:8px;text-align:right;color:var(--muted)">—</td><td style="padding:8px;text-align:right">₹${cgst}</td></tr>
+        <tr><td style="padding:8px;color:var(--muted)">SGST @ 9%</td><td style="padding:8px;text-align:right;color:var(--muted)">—</td><td style="padding:8px;text-align:right">₹${sgst}</td></tr>
+        <tr style="border-top:2px solid var(--brand)"><td style="padding:8px;font-weight:800">Total</td><td></td><td style="padding:8px;text-align:right;font-weight:800;color:var(--brand3);font-size:16px">₹${parseFloat(total).toLocaleString('en-IN')}</td></tr>
+      </tbody>
+    </table>
+    <div style="display:flex;gap:10px;margin-top:4px">
+      <button onclick="showVenueToast('📥 Invoice PDF downloading...');this.closest('[style*=fixed]').remove()" style="flex:1;background:var(--grad1);border:none;color:#fff;padding:10px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-download"></i> Download PDF</button>
+      <button onclick="showVenueToast('📧 Invoice emailed!')" style="flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-envelope"></i> Email</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+}
+
 </script>

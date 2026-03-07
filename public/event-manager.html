@@ -309,8 +309,8 @@
           </div>
         </div>
         <div style="margin-top:16px;display:flex;gap:10px">
-          <button class="em-btn em-btn-primary" onclick="alert('Run sheet exported as PDF')"><i class="fas fa-download"></i> Export PDF</button>
-          <button class="em-btn" onclick="alert('Run sheet shared with team via WhatsApp')"><i class="fas fa-share"></i> Share with Team</button>
+          <button class="em-btn em-btn-primary" onclick="showEMToast('Run sheet exported as PDF')"><i class="fas fa-download"></i> Export PDF</button>
+          <button class="em-btn" onclick="showEMToast('Run sheet shared with team via WhatsApp')"><i class="fas fa-share"></i> Share with Team</button>
         </div>
       </div>
     </div>
@@ -321,7 +321,7 @@
         <div class="card-title">Task Manager <span>4 open · 12 done today</span></div>
         <div style="display:flex;gap:10px;margin-bottom:16px">
           <input type="text" placeholder="Add new task..." style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;outline:none">
-          <button class="em-btn em-btn-primary" onclick="alert('Task added!')"><i class="fas fa-plus"></i> Add Task</button>
+          <button class="em-btn em-btn-primary" onclick="showEMToast('Task added!')"><i class="fas fa-plus"></i> Add Task</button>
         </div>
         <div style="display:flex;flex-direction:column;gap:8px">
           <div style="display:flex;align-items:center;gap:12px;padding:12px;background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.2);border-radius:10px">
@@ -466,7 +466,7 @@
           <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:12px;color:var(--muted)">Audience</label><select style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;outline:none"><option>All Attendees (4,200)</option><option>VIP Only (342)</option><option>General Admission (3,858)</option><option>Not Yet Checked In (1,359)</option></select></div>
           <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:12px;color:var(--muted)">Message Template</label><select style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;outline:none" onchange="document.getElementById('msgBody').value=this.options[this.selectedIndex].dataset.msg||''"><option data-msg="">Custom Message">Custom Message</option><option data-msg="🎵 Headliner Nucleya takes the stage in 10 minutes! Get to the main arena now! 🔥">Headliner Starting Soon</option><option data-msg="⚠️ IMPORTANT: Gate B is experiencing delays. Please use Gate A or Gate C to enter.">Gate Congestion Alert</option><option data-msg="🌧️ Brief weather advisory: Light rain expected at 9PM. Covered zones available at VIP and F&B areas.">Weather Alert</option><option data-msg="⚡ Lightning fast queues at Counter V1 near VIP entrance! Skip the food court rush.">F&B Promotion</option></select></div>
           <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:12px;color:var(--muted)">Message</label><textarea id="msgBody" placeholder="Type your announcement..." style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;resize:vertical;min-height:100px;font-family:'Inter',sans-serif"></textarea></div>
-          <div style="display:flex;gap:10px"><button class="em-btn" onclick="alert('Preview sent to your device')"><i class="fas fa-eye"></i> Preview</button><button class="em-btn em-btn-primary" onclick="alert('✅ Announcement sent to 4,200 attendees via WhatsApp and Push!')"><i class="fas fa-paper-plane"></i> Send Now</button></div>
+          <div style="display:flex;gap:10px"><button class="em-btn" onclick="showEMToast('Preview sent to your device')"><i class="fas fa-eye"></i> Preview</button><button class="em-btn em-btn-primary" onclick="showEMToast('✅ Announcement sent to 4,200 attendees via WhatsApp and Push!')"><i class="fas fa-paper-plane"></i> Send Now</button></div>
         </div>
       </div>
       <div class="card">
@@ -499,10 +499,10 @@
         <div class="card">
           <div class="card-title">Download Reports</div>
           <div style="display:flex;flex-direction:column;gap:10px">
-            <button class="em-btn" onclick="alert('Downloading full event report PDF...')"><i class="fas fa-file-pdf"></i> Full Event Report (PDF)</button>
-            <button class="em-btn" onclick="alert('Downloading attendee data CSV...')"><i class="fas fa-file-csv"></i> Attendee Data (CSV)</button>
-            <button class="em-btn" onclick="alert('Downloading financial summary...')"><i class="fas fa-file-invoice-dollar"></i> Financial Summary (Excel)</button>
-            <button class="em-btn" onclick="alert('Downloading incident log...')"><i class="fas fa-exclamation-triangle"></i> Incident Log (PDF)</button>
+            <button class="em-btn" onclick="showEMToast('Downloading full event report PDF...')"><i class="fas fa-file-pdf"></i> Full Event Report (PDF)</button>
+            <button class="em-btn" onclick="showEMToast('Downloading attendee data CSV...')"><i class="fas fa-file-csv"></i> Attendee Data (CSV)</button>
+            <button class="em-btn" onclick="showEMToast('Downloading financial summary...')"><i class="fas fa-file-invoice-dollar"></i> Financial Summary (Excel)</button>
+            <button class="em-btn" onclick="showEMToast('Downloading incident log...')"><i class="fas fa-exclamation-triangle"></i> Incident Log (PDF)</button>
           </div>
         </div>
       </div>
@@ -710,14 +710,14 @@
 
 <script>
 
-function broadcastTeam(){alert('Broadcasting to all 24 team members via WhatsApp...');}
-function addTeamMember(){alert('Add new team member dialog...');}
-function contactMember(name){alert('Calling '+name+' via radio/WhatsApp...');}
+function broadcastTeam(){showEMToast('Broadcasting to all 24 team members via WhatsApp...');}
+function addTeamMember(){showEMToast('Add new team member dialog...');}
+function contactMember(name){showEMToast('📲 Calling '+name+' via radio/WhatsApp...');}
 function toggleTask(el){el.classList.toggle('done');el.textContent=el.classList.contains('done')?'✓':'';el.nextElementSibling.style.textDecoration=el.classList.contains('done')?'line-through':'none';el.nextElementSibling.style.opacity=el.classList.contains('done')?'0.6':'1';}
-function addTask(){const t=prompt('Task description?');if(t)alert('Task added: '+t);}
-function resolveIncident(btn){btn.closest('.incident-row').style.opacity='0.5';alert('Incident marked as resolved.');}
-function escalateIncident(){alert('Incident escalated to Super Admin and venue manager.');}
-function logIncident(){const t=prompt('Describe the incident:');if(t)alert('Incident logged and team notified.');}
+function addTask(){const t=prompt('Task description?');if(t)showEMToast('✅ Task added: '+t);}
+function resolveIncident(btn){btn.closest('.incident-row').style.opacity='0.5';showEMToast('Incident marked as resolved.');}
+function escalateIncident(){showEMToast('Incident escalated to Super Admin and venue manager.');}
+function logIncident(){const t=prompt('Describe the incident:');if(t)showEMToast('Incident logged and team notified.');}
 
 function showPanel(name,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
@@ -727,10 +727,10 @@ function showPanel(name,btn){
   document.getElementById('topbarTitle').textContent=t[name]||'Dashboard';
 }
 function toggleTask(el){el.classList.toggle('done');el.querySelector('.task-check').textContent=el.classList.contains('done')?'✓':'';}
-function emergencyAlert(){if(confirm('⚠️ SEND EMERGENCY ALERT to all team members?'))alert('🚨 Emergency alert sent to all 24 team members via WhatsApp & radio.');}
-function setLEDColor(c){alert('LED bands set to '+(c==='🌈'?'Rainbow':'color '+c));}
-function ledEffect(e){alert('LED effect: '+e+' activated for 2,400 bands.');}
-function logIncident(){alert('Incident logged and team notified via WhatsApp.');}
+function emergencyAlert(){if(confirm('⚠️ SEND EMERGENCY ALERT to all team members?')){showToast('🚨 Emergency alert sent to all 24 team members via WhatsApp & radio.');};}
+function setLEDColor(c){showEMToast('💡 LED bands set to '+(c==='🌈'?'Rainbow':'color '+c));}
+function ledEffect(e){showEMToast('✨ LED effect: '+e+' activated for 2,400 bands.');}
+function logIncident(){showEMToast('Incident logged and team notified via WhatsApp.');}
 
 // Live checkin counter
 let count=2841;
@@ -888,4 +888,179 @@ window.addEventListener('DOMContentLoaded',function(){
   renderIncidents();
   updateCheckinDisplay();
 });
+
+/* ═════════════════════════════════════════════
+   PLATINUM ENHANCEMENTS — EVENT MANAGER PORTAL
+   ═════════════════════════════════════════════ */
+
+/* ─── Run Sheet ─── */
+function exportRunSheet(){
+  showEMToast('📥 Run sheet exported as PDF — check your downloads.');
+}
+function shareRunSheet(){
+  showEMToast('📲 Run sheet shared with all 24 team members via WhatsApp!');
+  logEMAction('Run sheet shared with team');
+}
+function addRunItem(){
+  const time=prompt('Time (e.g. 18:00)?');
+  const desc=prompt('Activity description?');
+  if(time&&desc){
+    showEMToast('✅ Added to run sheet: '+time+' — '+desc);
+    logEMAction('Run sheet item added: '+time+' '+desc);
+  }
+}
+function editRunItem(time){
+  showEMToast('✏️ Editing run sheet item at '+time+'...');
+}
+
+/* ─── Task Management ─── */
+function addTask(){
+  const t=prompt('Task description?');
+  if(t){
+    showEMToast('✅ Task added: "'+t+'" — assigned to Operations team.');
+    logEMAction('Task created: '+t);
+  }
+}
+function toggleTask(el){
+  el.style.opacity=el.style.opacity==='0.5'?'1':'0.5';
+  showEMToast(el.style.opacity==='0.5'?'✅ Task marked complete':'↩ Task reopened');
+}
+
+/* ─── Incident Management ─── */
+function resolveIncident(id){
+  showEMToast('✅ Incident #'+id+' marked as resolved. Log updated.');
+  logEMAction('Incident #'+id+' resolved');
+}
+function escalateIncident(id){
+  showEMToast('🚨 Incident #'+id+' escalated to Event Director! WhatsApp sent.');
+  logEMAction('Incident #'+id+' escalated');
+}
+function logIncident(){
+  const type=prompt('Incident type (Medical/Security/Technical/Crowd)?');
+  const desc=prompt('Brief description?');
+  if(type&&desc){
+    showEMToast('⚠️ Incident logged: '+type+' — Response team notified.');
+    logEMAction('Incident logged: '+type+' — '+desc);
+  }
+}
+
+/* ─── Team & Communications ─── */
+function broadcastTeam(){
+  const msg=prompt('Message to broadcast to all team members?');
+  if(msg){
+    showEMToast('📢 Broadcast sent to all 24 team members via radio/WhatsApp!');
+    logEMAction('Team broadcast: '+msg.slice(0,40));
+  }
+}
+function addTeamMember(){
+  const n=prompt('Team member name and role?');
+  if(n){ showEMToast('👤 "'+n+'" added to event team with portal access.'); }
+}
+function contactMember(name){
+  showEMToast('📲 Calling '+name+' via radio/WhatsApp...');
+}
+
+/* ─── Announcements ─── */
+function previewAnnouncement(){
+  showEMToast('👁️ Preview sent to your device — check before broadcasting to 4,200 attendees.');
+}
+function sendAnnouncement(){
+  if(!confirm('Send this announcement to ALL 4,200 attendees via WhatsApp and push?')) return;
+  showEMToast('✅ Announcement sent to 4,200 attendees via WhatsApp and Push!');
+  logEMAction('Bulk announcement sent to 4,200 attendees');
+}
+
+/* ─── LED & Wristbands ─── */
+function setLEDColor(c){
+  showEMToast('💡 LED bands set to '+(c==='🌈'?'Rainbow':c==='🔴'?'Red':c==='🔵'?'Blue':c==='🟢'?'Green':'Gold')+' across all zones.');
+  logEMAction('LED color set: '+c);
+}
+function ledEffect(e){
+  showEMToast('✨ LED effect: "'+e+'" activated for 2,400 wristbands!');
+  logEMAction('LED effect: '+e);
+}
+function syncAllBands(){
+  showEMToast('🔄 Syncing 2,400 LED bands to master controller... 99.94% responding ✅');
+}
+function goLED(){
+  if(!confirm('Activate LIVE LED mode for all 2,400 wristbands?')) return;
+  showEMToast('🔴 LIVE! All 2,400 LED bands activated across 4 zones!');
+  logEMAction('LED bands went LIVE');
+}
+function emergencyAlert(){
+  if(!confirm('⚠️ BROADCAST EMERGENCY ALERT to all wristbands and PA system?')) return;
+  showEMToast('🚨 EMERGENCY ALERT broadcast to all 2,400 wristbands and PA system!');
+  logEMAction('EMERGENCY ALERT broadcast');
+}
+
+/* ─── Reports & Downloads ─── */
+function downloadFullReport(){
+  showEMToast('📄 Full event report PDF generating...');
+  setTimeout(()=>showEMToast('✅ Event Report downloaded successfully.'),1500);
+}
+function downloadAttendeeCSV(){
+  showEMToast('📊 Attendee data CSV downloading...');
+}
+function downloadFinancialSummary(){
+  showEMToast('💰 Financial summary Excel generating...');
+}
+function downloadIncidentLog(){
+  showEMToast('⚠️ Incident log PDF downloading...');
+}
+
+/* ─── EM Audit Log ─── */
+const emLog=[];
+function logEMAction(action){
+  emLog.unshift({action,time:new Date().toLocaleTimeString('en-IN')});
+  const el=document.getElementById('emAuditLog');
+  if(el) el.innerHTML=emLog.slice(0,10).map(l=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:12px"><span>${l.action}</span><span style="color:var(--muted)">${l.time}</span></div>`).join('');
+}
+
+/* ─── LIVE API INTEGRATION ─── */
+async function loadEMDashboard() {
+  try {
+    const [dashRes, checkinRes, wristRes] = await Promise.all([
+      fetch('/api/event-manager/dashboard'),
+      fetch('/api/events/e1/checkin-stats'),
+      fetch('/api/wristbands/status?event_id=e1')
+    ]);
+    const dash = await dashRes.json();
+    const checkin = await checkinRes.json();
+    const wrist = await wristRes.json();
+
+    const ci = checkin.stats || {};
+    const d = dash.checkin_live || {};
+
+    // Patch live checkin counter
+    const checkinEl = document.getElementById('emLiveCheckin');
+    if (checkinEl) { checkinEl.textContent = (ci.checked_in||d.checked_in||2841).toLocaleString('en-IN'); emCheckinCount = ci.checked_in||d.checked_in||2841; }
+
+    // Patch checkin percent
+    const pctEl = document.querySelector('#emCheckinPct, [data-em="pct"]');
+    if (pctEl) pctEl.textContent = (ci.checkin_pct||d.pct||67.6).toFixed(1) + '%';
+
+    // Patch rate
+    const rateEl = document.querySelector('[data-em="rate"]');
+    if (rateEl) rateEl.textContent = ci.checkin_rate_per_min || d.rate_per_min || 92;
+
+    // Patch wristband stats
+    const wbEl = document.querySelector('[data-em="wristbands"], #emWristbands');
+    if (wbEl) wbEl.textContent = (wrist.total_issued||2400).toLocaleString('en-IN');
+
+    // Patch gates
+    const gatesEl = document.querySelector('#emGates, .gates-list');
+    if (gatesEl && ci.gates) {
+      gatesEl.innerHTML = ci.gates.map(g => `
+        <div style="background:var(--dark3);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div><div style="font-size:14px;font-weight:600">${g.gate}</div><div style="font-size:12px;color:var(--muted)">${g.active_scanners} scanners active</div></div>
+          <div style="text-align:right"><div style="font-size:18px;font-weight:700;color:var(--brand)">${g.scanned.toLocaleString('en-IN')}</div><div style="font-size:11px;color:${g.invalid>0?'#FF4F6E':'var(--teal)'}">${g.invalid} invalid</div></div>
+        </div>`).join('');
+    }
+  } catch(e) {}
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadEMDashboard();
+});
+
 </script>

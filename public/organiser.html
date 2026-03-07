@@ -410,7 +410,7 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
               <div style="color:#FFA500;font-size:12px;margin-top:4px">⏳ INDTIX team is reviewing your event. Expected: 24-48 hrs</div>
               <div style="display:flex;gap:8px;margin-top:10px">
                 <button class="action-btn" onclick="editEvent()">✏️ Edit Draft</button>
-                <button class="action-btn" onclick="alert('Withdraw and edit submission')">↩ Withdraw</button>
+                <button class="action-btn" onclick="showOrgToast('Withdraw and edit submission')">↩ Withdraw</button>
               </div>
             </div>
             <div style="text-align:right;flex-shrink:0">
@@ -973,36 +973,36 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
 
 <script>
 function filterEvents(btn,status){document.querySelectorAll('.filter-pill').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
-function editEvent(){alert('Opening event editor...');}
+function editEvent(){showOrgToast('Opening event editor...');}
 function viewAnalytics(){showPanel('analytics',null);}
 function manageTickets(){showPanel('tickets',null);}
-function downloadReport(){alert('Generating PDF report...');}
-function deleteDraft(){if(confirm('Delete this draft?'))alert('Draft deleted.');}
-function addTicketType(){alert('New tier row added.');}
+function downloadReport(){showOrgToast('Generating PDF report...');}
+function deleteDraft(){if(confirm('Delete this draft?')){showToast('Draft deleted.');};}
+function addTicketType(){showOrgToast('New tier row added.');}
 function removeRow(el){el.closest('.ticket-builder-row').remove();}
-function saveTickets(){alert('✅ Ticket configuration saved!');}
-function previewTickets(){alert('Opening ticket preview...');}
-function loadTemplate(t){alert('Loading '+t+' seat map template...');renderOrgSeatMap();}
-function saveSeatMap(){alert('✅ Seat map saved!');}
+function saveTickets(){showOrgToast('✅ Ticket configuration saved!');}
+function previewTickets(){showOrgToast('Opening ticket preview...');}
+function loadTemplate(t){showOrgToast('Loading '+t+' seat map template...');renderOrgSeatMap();}
+function saveSeatMap(){showOrgToast('✅ Seat map saved!');}
 function selectSection(el,id){document.querySelectorAll('.section-item').forEach(s=>s.classList.remove('active'));el.classList.add('active');}
-function addSection(){alert('Add new section dialog...');}
-function addAddon(){alert('Add new add-on item...');}
+function addSection(){showOrgToast('Add new section dialog...');}
+function addAddon(){showOrgToast('Add new add-on item...');}
 function toggleAddon(el){el.closest('.addon-card').style.opacity=el.checked?'1':'0.5';}
-function editAddon(el){alert('Edit add-on...');}
+function editAddon(el){showOrgToast('Edit add-on...');}
 function updatePrice(el){console.log('Price updated:',el.value);}
-function downloadAllInvoices(){alert('Preparing bulk download of all invoices...');}
-function downloadInv(){alert('Downloading GST invoice PDF...');}
-function exportAttendees(){alert('Exporting attendee CSV...');}
-function sendBroadcast(){alert('Opening WhatsApp broadcast composer...');}
-function viewAttendee(){alert('Opening attendee profile...');}
-function openTool(t){alert('Opening '+t+' tool...');}
-function createPromoCode(){const code=prompt('Enter promo code name:');if(code)alert('Promo code '+code+' created!');}
-function changePassword(){alert('Sending password reset link to your email...');}
-function setup2FA(){alert('Opening 2FA setup wizard...');}
-function saveSettings(){alert('✅ Settings saved successfully!');}
-function inviteTeamMember(){const email=prompt('Enter email address to invite:');if(email)alert('Invitation sent to '+email+' with role selection link!');}
-function editTeamMember(){alert('Opening role editor...');}
-function activateMember(){alert('Member reactivated.');}
+function downloadAllInvoices(){showOrgToast('Preparing bulk download of all invoices...');}
+function downloadInv(){showOrgToast('Downloading GST invoice PDF...');}
+function exportAttendees(){showOrgToast('Exporting attendee CSV...');}
+function sendBroadcast(){showOrgToast('Opening WhatsApp broadcast composer...');}
+function viewAttendee(){showOrgToast('Opening attendee profile...');}
+function openTool(t){showOrgToast('Opening '+t+' tool...');}
+function createPromoCode(){const code=prompt('Enter promo code name:');if(code)showOrgToast('✅ Promo code '+code+' created and published!');}
+function changePassword(){showOrgToast('Sending password reset link to your email...');}
+function setup2FA(){showOrgToast('Opening 2FA setup wizard...');}
+function saveSettings(){showOrgToast('✅ Settings saved successfully!');}
+function inviteTeamMember(){const email=prompt('Enter email address to invite:');if(email&&email.includes('@'))showOrgToast('✅ Invitation sent to '+email+' with role selection link!');}
+function editTeamMember(){showOrgToast('Opening role editor...');}
+function activateMember(){showOrgToast('Member reactivated.');}
 function previewSegment(){showOrgToast('🔮 Preview mode activated — LED bands flashing on Zone A test frequency.');}
 function addSegment(){showOrgToast('New zone segment added. Configure color, timing, and intensity below.');}
 function startRehearsal(){showOrgToast('🧪 Rehearsal mode started — Sequences running on 2.4GHz test frequency. All 5,000 bands responding.');}
@@ -1143,6 +1143,239 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
   },3000);
 });
+
+/* ═══════════════════════════════════════════
+   PLATINUM ENHANCEMENTS — ORGANISER PORTAL
+   ═══════════════════════════════════════════ */
+
+/* ─── Live Revenue Ticker ─── */
+let orgRevBase=42840000;
+setInterval(()=>{
+  orgRevBase+=Math.floor(Math.random()*8000+2000);
+  const el=document.getElementById('orgLiveRevenue');
+  if(el) el.textContent='₹'+orgRevBase.toLocaleString('en-IN');
+},4000);
+
+/* ─── Event Creation Wizard ─── */
+function saveEventDraft(){
+  const title=document.getElementById('eventTitle')?.value||'Untitled Event';
+  showOrgToast('💾 Draft saved: "'+title+'" — auto-saved every 30 seconds');
+  logOrgAction('Event draft saved: '+title);
+}
+function previewEventPage(){
+  showOrgToast('👁️ Preview page opened in new tab — share link with your team!');
+}
+function publishEvent(){
+  if(!confirm('Submit this event for INDTIX review? It will go live within 24-48 hours after approval.')) return;
+  showOrgToast('🚀 Event submitted for review! You will receive a WhatsApp notification once approved.');
+  logOrgAction('Event published for review');
+}
+function duplicateEvent(name){
+  showOrgToast('📋 Event "'+name+'" duplicated — open it from My Events to edit dates.');
+}
+function archiveEvent(name){
+  showOrgToast('📦 Event "'+name+'" archived. Revenue and attendee data preserved.');
+  logOrgAction('Event archived: '+name);
+}
+
+/* ─── Ticket Builder ─── */
+function addTicketType(){
+  const container=document.getElementById('ticketTypesContainer');
+  if(!container){showOrgToast('New tier row added. Set name, price and capacity.');return;}
+  const row=document.createElement('div');
+  row.style.cssText='display:grid;grid-template-columns:1fr 100px 100px 80px;gap:10px;align-items:center;padding:10px;background:var(--dark3);border-radius:10px;margin-bottom:8px';
+  row.innerHTML=`<input placeholder="Tier name (e.g. VIP Lounge)" style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;outline:none;font-family:'Inter',sans-serif">
+    <input type="number" placeholder="Price ₹" style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:8px;color:var(--text);font-size:13px;outline:none;text-align:right;font-family:'Inter',sans-serif">
+    <input type="number" placeholder="Capacity" style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:8px;color:var(--text);font-size:13px;outline:none;text-align:right;font-family:'Inter',sans-serif">
+    <button onclick="this.parentNode.remove();showOrgToast('Tier removed')" style="background:rgba(255,68,68,0.15);border:1px solid rgba(255,68,68,0.3);color:#FF4444;padding:8px;border-radius:8px;cursor:pointer;font-size:12px;font-family:'Inter',sans-serif">Remove</button>`;
+  container.appendChild(row);
+  showOrgToast('✅ New ticket tier added below.');
+}
+function saveTickets(){
+  showOrgToast('✅ Ticket configuration saved! Changes live in 2 minutes.');
+  logOrgAction('Ticket config saved');
+}
+function previewTickets(){
+  showOrgToast('👁️ Preview mode: Fan-facing ticket page opened in new tab.');
+}
+
+/* ─── Seat Map ─── */
+function loadTemplate(t){
+  showOrgToast('🗺️ Loading "'+t+'" seat map template...');
+  setTimeout(()=>{ renderOrgSeatMap(); showOrgToast('✅ Template "'+t+'" loaded — '+Math.floor(Math.random()*500+500)+' seats configured.'); },600);
+}
+function saveSeatMap(){
+  showOrgToast('✅ Seat map saved! Changes propagate to fan portal within 5 minutes.');
+  logOrgAction('Seat map saved');
+}
+function addSection(){
+  showOrgToast('New section added to seat map. Label it and set capacity.');
+}
+
+/* ─── Add-ons ─── */
+function addAddon(){
+  showOrgToast('New add-on item added. Set name, price, and category.');
+}
+function editAddon(el){
+  showOrgToast('✏️ Edit mode enabled for this add-on. Click Save when done.');
+}
+function saveAddons(){
+  showOrgToast('✅ Add-ons configuration saved and published to fan portal.');
+  logOrgAction('Add-ons saved');
+}
+
+/* ─── Attendee Management ─── */
+function exportAttendeesFull(){
+  showOrgToast('📊 Attendee CSV generating... will download in 5 seconds.');
+  setTimeout(()=>showOrgToast('✅ Attendee data exported: '+Math.floor(Math.random()*3000+1000)+' records.'),2000);
+}
+function sendBulkWhatsApp(){
+  if(!confirm('Send WhatsApp update to all 2,841 attendees?')) return;
+  showOrgToast('📲 WhatsApp broadcast queued for 2,841 attendees. ETA: ~5 min.');
+  logOrgAction('Bulk WhatsApp sent to 2,841 attendees');
+}
+function sendBulkEmail(){
+  showOrgToast('📧 Email campaign queued for 2,841 attendees. ETA: ~10 min.');
+}
+function validateBadge(){
+  showOrgToast('✅ Badge validation mode active on all 4 entry gates.');
+}
+function downloadCheckinReport(){
+  showOrgToast('📄 Check-in report PDF generating... ready in 30 seconds.');
+}
+
+/* ─── Marketing Tools ─── */
+function createPromoCode(){
+  const code=prompt('Enter promo code name (e.g. FEST20):');
+  if(code&&code.trim()){
+    const clean=code.trim().toUpperCase();
+    showOrgToast('✅ Promo code '+clean+' created and published on Fan portal!');
+    logOrgAction('Promo code created: '+clean);
+  }
+}
+function publishPromo(){
+  showOrgToast('📢 Promo published and live on Fan portal for 48 hours!');
+  logOrgAction('Promo published');
+}
+function createSegment(){
+  showOrgToast('📊 Audience segment created. Preview before sending campaign.');
+}
+function launchAds(){
+  showOrgToast('🚀 Ad campaign submitted — goes live in ~2 hours after review.');
+  logOrgAction('Ad campaign launched');
+}
+function sendBroadcast(){
+  showOrgToast('📲 WhatsApp broadcast campaign queued for your attendee list.');
+}
+
+/* ─── Settlement & Finance ─── */
+function requestSettlement(){
+  showOrgToast('💰 Settlement request submitted! T+3 business days (NEFT/IMPS).');
+  logOrgAction('Settlement requested');
+}
+function downloadSettlementReport(){
+  showOrgToast('📊 Settlement report CSV downloading...');
+}
+function viewInvoice(inv){
+  showOrgToast('📄 Opening GST invoice '+inv+'...');
+}
+function downloadInvoice(inv){
+  showOrgToast('📥 Invoice '+inv+' PDF downloading to your device...');
+}
+function sendInvoiceEmail(inv){
+  showOrgToast('📧 Invoice '+inv+' emailed to your registered address!');
+}
+function downloadAllInvoices(){
+  showOrgToast('📦 Compiling all invoices into ZIP file — ready in 30 seconds...');
+}
+function downloadInv(){
+  showOrgToast('📥 GST invoice PDF downloading...');
+}
+function bulkDownloadInvoices(){
+  showOrgToast('📦 Bulk invoice ZIP compiling — ready in 30 seconds...');
+}
+function downloadOrgReport(){
+  showOrgToast('📊 Full performance report PDF generating...');
+}
+
+/* ─── Settings & Team ─── */
+function triggerUpload(){
+  showOrgToast('📁 File picker opened — drag & drop CSV/PDF supported.');
+}
+function uploadLogo(){
+  showOrgToast('🖼️ Logo upload — drag & drop JPG/PNG (max 2MB).');
+}
+function openTool(t){
+  showOrgToast('🛠️ Opening tool: '+t+'...');
+}
+function editEvent(){
+  showOrgToast('✏️ Event editor opened. Remember to save changes before exiting.');
+}
+function downloadReport(){
+  showOrgToast('📊 Generating PDF performance report...');
+}
+function deleteDraft(){
+  if(confirm('Delete this draft? This action cannot be undone.'))
+    showOrgToast('🗑️ Draft deleted. All data removed permanently.');
+}
+function viewAttendee(){
+  showOrgToast('👤 Opening full attendee profile with booking history...');
+}
+/* ─── LIVE API INTEGRATION ─── */
+async function loadOrgDashboard() {
+  try {
+    const [dashRes, analyticsRes, settlementsRes] = await Promise.all([
+      fetch('/api/organiser/dashboard'),
+      fetch('/api/organiser/analytics'),
+      fetch('/api/settlements')
+    ]);
+    const dash = await dashRes.json();
+    const analytics = await analyticsRes.json();
+    const settlements = await settlementsRes.json();
+
+    // Patch stat cards
+    const stats = dash.stats || {};
+    const sc = document.querySelectorAll('.stat-card .stat-value');
+    if (sc[0]) sc[0].textContent = (stats.total_tickets_sold||0).toLocaleString('en-IN');
+    if (sc[1]) sc[1].textContent = '₹' + ((stats.total_revenue||0)/100000).toFixed(1) + 'L';
+    if (sc[2]) sc[2].textContent = stats.live_events || '3';
+    if (sc[3]) sc[3].textContent = (stats.avg_rating||4.7).toFixed(1);
+
+    // Patch pending settlement
+    const ps = document.querySelector('#panel-dashboard .card-title + div .stat-value, #panel-dashboard [style*="28px"]');
+    if (ps) ps.textContent = '₹' + ((stats.pending_settlement||0)/100000).toFixed(0) + ',000';
+
+    // Patch settlements table
+    const settleList = settlements.settlements || [];
+    const stBody = document.querySelector('#panel-settlements table tbody, #panel-settlements .settle-list');
+    if (stBody) {
+      stBody.innerHTML = settleList.map(s => `
+        <tr>
+          <td>${s.id}</td><td>${s.organiser}</td>
+          <td>₹${(s.amount||0).toLocaleString('en-IN')}</td>
+          <td><span class="status-badge ${s.status==='processed'?'s-approved':s.status==='on_hold'?'s-rejected':'s-pending'}">${s.status}</span></td>
+          <td>${s.utr||'—'}</td><td>${s.date||'—'}</td>
+          <td><button class="btn-sm btn-primary" onclick="requestSettlement()">Process</button></td>
+        </tr>`).join('');
+    }
+
+    // Patch analytics revenue by month
+    const revData = analytics.revenue_by_month || [];
+    const revEl = document.getElementById('orgRevChart');
+    if (revEl && revData.length) {
+      const max = Math.max(...revData.map(r=>r.amount));
+      revEl.innerHTML = revData.map(r=>`
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
+          <div style="font-size:10px;color:var(--muted)">₹${(r.amount/100000).toFixed(1)}L</div>
+          <div style="width:100%;background:var(--grad1);border-radius:4px 4px 0 0;height:${Math.round((r.amount/max)*120)}px"></div>
+          <div style="font-size:10px;color:var(--muted)">${r.month.replace(' ','\n')}</div>
+        </div>`).join('');
+    }
+  } catch(e) { /* keep static fallback */ }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadOrgDashboard();
+});
+
 </script>
-</body>
-</html>
