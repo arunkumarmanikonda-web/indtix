@@ -699,6 +699,8 @@ tr:hover td{background:rgba(108,60,247,0.04)}
 document.addEventListener('DOMContentLoaded', function() {
   const content = document.querySelector('.content');
   if (!content) return;
+  // panelContainer is the main content area for injected panels
+  var panelContainer = content;
 
   // Add missing nav items to sidebar
   const navSec = document.querySelector('.sb-nav');
@@ -1139,7 +1141,6 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 });
 </script>
-</body></html>
 <script>
 // ─── ADMIN PLATINUM ENHANCEMENTS ────────────────────────────────────────
 function showAdminToast(msg,type){
@@ -1272,8 +1273,7 @@ async function approveEventSimple(eventId, name) {
     } else { showAdminToast('Error: ' + (data.error || 'Approval failed'), 'error'); }
   } catch(e) { showAdminToast('Network error during approval', 'error'); }
 }
-async function rejectEvent(eventId, name) {
-  const r = prompt('Reason for rejecting "' + (name || eventId) + '"?');
+async function rejectEventFromQueue(eventId, name) {
   if (!r) return;
   try {
     const resp = await fetch('/api/admin/events/' + eventId + '/reject', {
@@ -1320,7 +1320,7 @@ async function loadAdminEventQueue() {
 
 
 /* ─── Finance & Settlements ─── */
-function processSettlement(name, amt){
+function processSettlementSimple(name, amt){
   if(!confirm('Process settlement of ₹'+amt+' for '+name+'?')) return;
   const utr='UTR'+Date.now().toString().slice(-8);
   showAdminToast('💰 Settlement of ₹'+amt+' processed for '+name+'. UTR: '+utr);
@@ -1603,14 +1603,14 @@ async function loadEventApprovalQueue(){
         </div>
         <div class="ai-actions">
           <button class="ab ab-view" onclick="showAdminToast('Opening event dossier: ${ev.id}')">View</button>
-          <button class="ab ab-approve" onclick="approveEvent('${ev.id}','approve')">✓ Approve</button>
-          <button class="ab ab-reject" onclick="approveEvent('${ev.id}','reject')">✗ Reject</button>
+            <button class="ab ab-approve" onclick="approveEvent('${ev.id}')">✓ Approve</button>
+            <button class="ab ab-reject" onclick="rejectEvent('${ev.id}')">✗ Reject</button>
         </div>
       </div>`).join('');
   }catch(e){}
 }
 
-async function approveEvent(id,action){
+async function approveEventBasic(id,action){
   try{
     const res=await fetch(`/api/admin/events/${id}/approve`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,reason:action==='reject'?'Does not meet guidelines':undefined})});
     const d=await res.json();
@@ -1883,4 +1883,206 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 500);
 });
 
+/* ═══════════════════════════════════════════════════════════════
+   PHASE 7 ADMIN ENHANCEMENTS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Platform Health (detailed) ─── */
+async function loadPlatformHealth() {
+  try {
+    const res = await fetch('/api/admin/platform/health');
+    const data = await res.json();
+    const el = document.getElementById('platformHealthDetails');
+    if (!el) return;
+    const statusColor = s => s==='healthy'?'var(--brand3)':s==='degraded'?'#FFB300':'#FF4444';
+    const statusIcon  = s => s==='healthy'?'✅':s==='degraded'?'⚠️':'❌';
+    el.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <span style="font-size:20px">${data.overall==='healthy'?'💚':'🟡'}</span>
+        <div>
+          <div style="font-size:15px;font-weight:700;color:${statusColor(data.overall)}">${data.overall?.toUpperCase()} — ${data.status}</div>
+          <div style="font-size:11px;color:var(--muted)">Last checked: ${new Date(data.updated_at).toLocaleTimeString('en-IN')}</div>
+        </div>
+        <button onclick="loadPlatformHealth()" style="margin-left:auto;padding:6px 12px;background:var(--dark3);border:1px solid var(--border);border-radius:8px;color:var(--text);cursor:pointer;font-size:12px;font-family:inherit">↺ Refresh</button>
+      </div>
+      <div style="display:grid;gap:8px">
+        ${(data.services||[]).map(s=>`
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--dark3);border-radius:10px;border-left:3px solid ${statusColor(s.status)}">
+            <span>${statusIcon(s.status)}</span>
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:600;color:var(--text)">${s.name}</div>
+              <div style="font-size:11px;color:var(--muted)">Latency: ${s.latency_ms}ms · Uptime: ${s.uptime_24h}% · Req/min: ${(s.requests_pm||0).toLocaleString('en-IN')}</div>
+            </div>
+            <span style="font-size:12px;font-weight:700;color:${statusColor(s.status)}">${s.status}</span>
+          </div>`).join('')}
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px">
+        ${[
+          {label:'CPU',val:(data.infrastructure?.cpu_pct||42)+'%',icon:'🖥️'},
+          {label:'Memory',val:(data.infrastructure?.memory_pct||68)+'%',icon:'💾'},
+          {label:'Cache Hit',val:(data.infrastructure?.cache_hit_rate_pct||94.2)+'%',icon:'⚡'},
+        ].map(m=>`<div style="padding:12px;background:var(--dark3);border-radius:10px;text-align:center">
+          <div style="font-size:18px">${m.icon}</div>
+          <div style="font-size:16px;font-weight:700;color:var(--text);margin:4px 0">${m.val}</div>
+          <div style="font-size:11px;color:var(--muted)">${m.label}</div>
+        </div>`).join('')}
+      </div>
+      ${data.alerts?.length ? `<div style="margin-top:14px;padding:12px 14px;background:rgba(255,179,0,0.1);border:1px solid rgba(255,179,0,0.3);border-radius:10px">
+        ${data.alerts.map(a=>`<div style="font-size:13px;color:#FFB300">⚠️ ${a.message} <span style="font-size:11px;color:var(--muted)">(${a.service})</span></div>`).join('')}
+      </div>` : ''}`;
+  } catch(e) {
+    showAdminToast('Platform health data unavailable', 'warning');
+  }
+}
+
+/* ─── AI Revenue Forecast ─── */
+async function loadAdminForecast(horizon) {
+  horizon = horizon || '30d';
+  try {
+    const res = await fetch(`/api/admin/forecast?horizon=${horizon}`);
+    const data = await res.json();
+    const el = document.getElementById('forecastPanel');
+    if (!el) return;
+    const total = data.summary?.total_predicted_revenue || 0;
+    const tickets = data.summary?.total_predicted_tickets || 0;
+    el.innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+        <div style="padding:14px;background:var(--dark3);border-radius:12px;border:1px solid var(--border)">
+          <div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Predicted GMV</div>
+          <div style="font-size:22px;font-weight:800;color:var(--brand3);margin:6px 0">₹${(total/10000000).toFixed(1)}Cr</div>
+          <div style="font-size:11px;color:var(--muted)">${horizon} horizon</div>
+        </div>
+        <div style="padding:14px;background:var(--dark3);border-radius:12px;border:1px solid var(--border)">
+          <div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Predicted Tickets</div>
+          <div style="font-size:22px;font-weight:800;color:var(--brand);margin:6px 0">${tickets.toLocaleString('en-IN')}</div>
+          <div style="font-size:11px;color:var(--muted)">AI confidence: ${((data.confidence||0.87)*100).toFixed(0)}%</div>
+        </div>
+        <div style="padding:14px;background:var(--dark3);border-radius:12px;border:1px solid var(--border)">
+          <div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Model</div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin:6px 0">${data.model||'ML Ensemble'}</div>
+          <div style="font-size:11px;color:var(--muted)">Updated: ${new Date(data.updated_at).toLocaleDateString('en-IN')}</div>
+        </div>
+      </div>
+      <div style="margin-bottom:12px">
+        <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:8px">🚀 Key Demand Drivers</div>
+        ${(data.summary?.key_drivers||[]).map(d=>`<span style="display:inline-block;background:rgba(108,60,247,0.15);color:var(--brand);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;margin:3px 3px 3px 0">${d}</span>`).join('')}
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:600;color:#FFB300;margin-bottom:8px">⚠️ Risk Factors</div>
+        ${(data.summary?.risk_factors||[]).map(r=>`<span style="display:inline-block;background:rgba(255,179,0,0.1);color:#FFB300;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;margin:3px 3px 3px 0">${r}</span>`).join('')}
+      </div>
+      <div style="margin-top:14px;display:flex;gap:8px">
+        ${['7d','30d','90d'].map(h=>`<button onclick="loadAdminForecast('${h}')" style="padding:6px 14px;background:${h===horizon?'var(--brand)':'var(--dark3)'};border:1px solid ${h===horizon?'var(--brand)':'var(--border)'};border-radius:8px;color:${h===horizon?'#fff':'var(--text)'};cursor:pointer;font-size:12px;font-weight:600;font-family:inherit">${h}</button>`).join('')}
+        <button onclick="showAdminToast('📊 Forecast report PDF downloading...')" style="margin-left:auto;padding:6px 14px;background:var(--dark3);border:1px solid var(--border);border-radius:8px;color:var(--text);cursor:pointer;font-size:12px;font-family:inherit">📥 Export</button>
+      </div>`;
+  } catch(e) {
+    showAdminToast('Forecast data unavailable', 'warning');
+  }
+}
+
+/* ─── Reports Summary ─── */
+async function loadReportsSummary() {
+  try {
+    const res = await fetch('/api/reports/summary?period=march-2026');
+    const data = await res.json();
+    const s = data.executive_summary || {};
+    showAdminToast(`📊 March Report: GMV ₹${(s.total_gmv/10000000).toFixed(1)}Cr · Tickets: ${(s.total_tickets||0).toLocaleString('en-IN')} · GST: ₹${(s.gst_collected/100000).toFixed(1)}L`);
+  } catch(e) { showAdminToast('📊 Loading consolidated platform report...'); }
+}
+
+/* ─── Auto-inject Phase 7 panels into sidebar ─── */
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    // Load platform health and forecast on page load
+    loadPlatformHealth();
+    loadAdminForecast('30d');
+
+    // Inject Phase 7 sidebar items
+    const navSec = document.querySelector('.sb-nav');
+    if (navSec && !document.getElementById('p7-nav-injected')) {
+      const extra = document.createElement('div');
+      extra.id = 'p7-nav-injected';
+      extra.innerHTML = `
+        <div class="sb-section">Phase 7 Intelligence</div>
+        <button class="sb-item" onclick="showPanel('platformhealth',this)"><i class="fas fa-heartbeat"></i>Platform Health<span class="sb-dot" style="background:var(--brand3);margin-left:auto"></span></button>
+        <button class="sb-item" onclick="showPanel('aiforecast',this)"><i class="fas fa-chart-line"></i>AI Revenue Forecast</button>
+        <button class="sb-item" onclick="showPanel('reports',this)"><i class="fas fa-file-chart-column"></i>Consolidated Reports</button>
+        <button class="sb-item" onclick="showPanel('search_admin',this)"><i class="fas fa-search"></i>Platform Search</button>
+      `;
+      navSec.appendChild(extra);
+    }
+
+    // Inject Phase 7 panel content
+    const content = document.querySelector('.content');
+    if (content && !document.getElementById('panel-platformhealth')) {
+      const panels = document.createElement('div');
+      panels.innerHTML = `
+        <div class="panel" id="panel-platformhealth" style="display:none">
+          <div class="panel-header">🏥 Platform Health Monitor</div>
+          <div id="platformHealthDetails"><div style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin fa-2x"></i><p>Loading health data...</p></div></div>
+        </div>
+        <div class="panel" id="panel-aiforecast" style="display:none">
+          <div class="panel-header">🤖 AI Revenue Forecast</div>
+          <div id="forecastPanel"><div style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin fa-2x"></i><p>Loading forecast...</p></div></div>
+        </div>
+        <div class="panel" id="panel-reports" style="display:none">
+          <div class="panel-header">📋 Consolidated Platform Reports</div>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px">
+            ${[{label:'March GMV',val:'₹4.2Cr',icon:'💰',color:'var(--brand3)'},{label:'Total Tickets',val:'1,24,500',icon:'🎫',color:'var(--brand)'},{label:'GST Collected',val:'₹75.6L',icon:'📋',color:'#FFB300'},{label:'Net Revenue',val:'₹98.5L',icon:'📈',color:'var(--brand2)'}].map(s=>`
+            <div class="stat-card" style="border:1px solid var(--border)">
+              <div class="stat-label">${s.label}</div>
+              <div class="stat-value" style="color:${s.color}">${s.val}</div>
+              <div class="stat-icon">${s.icon}</div>
+            </div>`).join('')}
+          </div>
+          <div class="card">
+            <div class="card-title">📊 Download Reports</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+              ${['PDF Report','Excel Export','CSV Data','JSON API','GST Report','Settlement Report'].map(r=>`<button class="action-btn" onclick="showAdminToast('📥 ${r} downloading...')"><i class="fas fa-download" style="margin-right:6px"></i>${r}</button>`).join('')}
+            </div>
+          </div>
+        </div>
+        <div class="panel" id="panel-search_admin" style="display:none">
+          <div class="panel-header">🔍 Platform-Wide Search</div>
+          <div class="card">
+            <div style="display:flex;gap:10px;margin-bottom:16px">
+              <input type="text" id="adminSearchInput" placeholder="Search events, users, organisers, venues..." style="flex:1;padding:10px 14px;background:var(--dark3);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:13px;outline:none;font-family:inherit">
+              <button onclick="runAdminSearch()" style="padding:10px 20px;background:var(--brand);border:none;border-radius:10px;color:#fff;font-weight:600;cursor:pointer;font-family:inherit">Search</button>
+            </div>
+            <div id="adminSearchResults" style="color:var(--muted);font-size:13px">Enter a query to search across the platform</div>
+          </div>
+        </div>`;
+      content.appendChild(panels);
+    }
+  }, 800);
+});
+
+async function runAdminSearch() {
+  const q = document.getElementById('adminSearchInput')?.value?.trim();
+  if (!q) return;
+  const resultsEl = document.getElementById('adminSearchResults');
+  if (resultsEl) resultsEl.innerHTML = '<div style="color:var(--muted)"><i class="fas fa-spinner fa-spin"></i> Searching...</div>';
+  try {
+    const res = await fetch(`/api/search?q=${encodeURIComponent(q)}&type=all&limit=10`);
+    const data = await res.json();
+    if (!resultsEl) return;
+    if (!data.results?.length) {
+      resultsEl.innerHTML = '<div style="color:var(--muted);text-align:center;padding:30px">No results found</div>';
+      return;
+    }
+    resultsEl.innerHTML = `<div style="font-size:12px;color:var(--muted);margin-bottom:12px">${data.total} result${data.total>1?'s':''} for "${q}"</div>` +
+      data.results.map(r => `
+        <div style="padding:12px 14px;background:var(--dark3);border-radius:10px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
+          <span style="font-size:18px">${r.type==='event'?'🎫':r.type==='artist'?'🎤':'🏟️'}</span>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:600;color:var(--text)">${r.title||r.name}</div>
+            <div style="font-size:11px;color:var(--muted)">${r.type} ${r.city?'· '+r.city:''} ${r.date?'· '+r.date:''}</div>
+          </div>
+          <span style="font-size:11px;font-weight:600;background:rgba(108,60,247,0.2);color:var(--brand);padding:3px 8px;border-radius:8px">${r.type}</span>
+        </div>`).join('');
+  } catch(e) {
+    if (resultsEl) resultsEl.innerHTML = '<div style="color:#FF4444">Search failed. Try again.</div>';
+  }
+}
 </script>
+</body></html>

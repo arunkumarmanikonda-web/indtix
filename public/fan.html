@@ -410,6 +410,10 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
         <i class="fas fa-chevron-down" style="font-size:10px"></i>
       </div>
       <button class="btn-ghost" onclick="openLoginModal()">Sign In</button>
+      <button class="btn-ghost" onclick="accTab(null,'notifications')" id="nav-notif-btn" title="Notifications" style="position:relative;padding:8px 12px;min-width:auto">
+        <i class="fas fa-bell"></i>
+        <span id="nav-notif-count" style="display:none;position:absolute;top:2px;right:2px;background:#FF4444;color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;font-weight:700;display:none;align-items:center;justify-content:center;line-height:16px;text-align:center">0</span>
+      </button>
       <button class="btn-primary" onclick="openSignupModal()"><i class="fas fa-ticket"></i> Get Tickets</button>
     </div>
   </div>
@@ -1321,8 +1325,123 @@ function renderEvents(list){
 
 /* ─── FILTERS ─── */
 function filterBy(btn,cat){ document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); activeCategory = cat==='all' ? null : cat; loadEvents({city: activeCity, category: activeCategory}); }
-function handleSearch(v){ if(!v.trim()){ loadEvents({city: activeCity, category: activeCategory}); return; } loadEvents({q: v.trim()}); }
-function doSearch(){ handleSearch(document.getElementById('searchInput').value); }
+
+let _searchTimer = null;
+let _searchDropdown = null;
+
+function handleSearch(v) {
+  if (!v.trim()) {
+    hideSearchDropdown();
+    loadEvents({city: activeCity, category: activeCategory});
+    return;
+  }
+  // Debounce: wait 300ms before searching
+  clearTimeout(_searchTimer);
+  _searchTimer = setTimeout(() => liveSearch(v.trim()), 300);
+}
+
+async function liveSearch(q) {
+  try {
+    const res = await fetch(`/api/search?q=${encodeURIComponent(q)}&limit=5`);
+    const data = await res.json();
+    if (data.results && data.results.length > 0) {
+      showSearchDropdown(data.results, data.suggestions || [], q);
+    } else {
+      showSearchDropdown([], data.suggestions || [], q);
+    }
+    // Also update main grid
+    if (data.results.filter(r => r.type === 'event').length > 0) {
+      const events = data.results.filter(r => r.type === 'event');
+      EVENTS = events;
+      renderEvents(events);
+      updateResultCount(events.length);
+    } else {
+      loadEvents({q});
+    }
+  } catch(e) {
+    loadEvents({q});
+  }
+}
+
+function showSearchDropdown(results, suggestions, q) {
+  hideSearchDropdown();
+  if (!results.length && !suggestions.length) return;
+  const input = document.getElementById('searchInput');
+  if (!input) return;
+  const dropdown = document.createElement('div');
+  dropdown.id = 'searchDropdown';
+  dropdown.style.cssText = 'position:absolute;top:100%;left:0;right:0;background:var(--card);border:1px solid var(--border);border-radius:12px;z-index:1000;box-shadow:0 8px 32px rgba(0,0,0,0.5);overflow:hidden;margin-top:4px';
+  
+  let html = '';
+  if (results.length) {
+    html += `<div style="padding:8px 12px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;font-weight:600">Results</div>`;
+    html += results.slice(0, 5).map(r => `
+      <div onclick="selectSearchResult('${r.id}','${r.type}','${(r.title||r.name).replace(/'/g,"\\'")}'); hideSearchDropdown()" style="padding:10px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.2s" onmouseenter="this.style.background='var(--dark3)'" onmouseleave="this.style.background='transparent'">
+        <span style="font-size:18px">${r.type==='event'?'🎫':r.type==='artist'?'🎤':'🏟️'}</span>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--text)">${r.title||r.name}</div>
+          <div style="font-size:11px;color:var(--muted)">${r.type==='event'?`${r.city} · ${r.date||''} · ₹${(r.price||0).toLocaleString('en-IN')}`:r.type==='artist'?`${r.genre||''} · ${r.followers||''} followers`:`Capacity: ${(r.capacity||0).toLocaleString('en-IN')}`}</div>
+        </div>
+        ${r.type==='event' && r.sold_pct > 80 ? '<span style="margin-left:auto;background:rgba(255,60,172,0.15);color:#FF3CAC;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">Hot🔥</span>' : ''}
+      </div>`).join('');
+  }
+  if (suggestions.length) {
+    html += `<div style="padding:8px 12px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;font-weight:600;border-top:1px solid var(--border)">Suggestions</div>`;
+    html += suggestions.map(s => `
+      <div onclick="document.getElementById('searchInput').value='${s}'; handleSearch('${s}'); hideSearchDropdown()" style="padding:8px 16px;cursor:pointer;font-size:13px;color:var(--text);display:flex;align-items:center;gap:8px;transition:background 0.2s" onmouseenter="this.style.background='var(--dark3)'" onmouseleave="this.style.background='transparent'">
+        <i class="fas fa-search" style="color:var(--muted);font-size:11px"></i> ${s}
+      </div>`).join('');
+  }
+  dropdown.innerHTML = html;
+  
+  const wrap = input.closest('.search-box') || input.parentElement;
+  wrap.style.position = 'relative';
+  wrap.appendChild(dropdown);
+  _searchDropdown = dropdown;
+  
+  // Close on outside click
+  setTimeout(() => document.addEventListener('click', hideSearchDropdownOutside), 10);
+}
+
+function hideSearchDropdownOutside(e) {
+  const drop = document.getElementById('searchDropdown');
+  if (drop && !drop.contains(e.target) && e.target.id !== 'searchInput') {
+    hideSearchDropdown();
+    document.removeEventListener('click', hideSearchDropdownOutside);
+  }
+}
+
+function hideSearchDropdown() {
+  const d = document.getElementById('searchDropdown');
+  if (d) d.remove();
+  _searchDropdown = null;
+}
+
+function selectSearchResult(id, type, name) {
+  if (type === 'event') {
+    const found = EVENTS.find(e => e.id === id);
+    if (found) openEventModal(id);
+    else { document.getElementById('searchInput').value = name; loadEvents({q: name}); }
+  } else if (type === 'artist') {
+    showToast(`🎤 Showing shows by ${name}`, 'info');
+    loadEvents({q: name});
+  }
+}
+
+function doSearch(){ 
+  const v = document.getElementById('searchInput').value;
+  hideSearchDropdown();
+  if (v.trim()) liveSearch(v.trim());
+}
+
+function updateResultCount(count) {
+  const title = document.querySelector('#events .section-header h2, .section-header h2');
+  if (title) {
+    const origText = title.dataset.orig || title.textContent;
+    title.dataset.orig = origText;
+    title.textContent = count === 0 ? 'No events found' : `${count} Event${count>1?'s':''} Found`;
+  }
+}
 
 /* ─── EVENT MODAL ─── */
 async function openEventModal(id){
@@ -2422,6 +2541,152 @@ document.addEventListener('DOMContentLoaded', () => {
 // Expose globally
 window.IndtixAuth = IndtixAuth;
 window.getCurrentUserId = () => IndtixAuth.getCurrentUserId();
+
+// ─── PHASE 7: Notification count badge ─────────────────────────
+async function loadNotificationCount() {
+  try {
+    const userId = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+    const res = await fetch(`/api/notifications/count?user_id=${userId}`);
+    const data = await res.json();
+    const badge = document.getElementById('nav-notif-count');
+    const oldBadge = document.getElementById('notif-badge');
+    if (data.unread > 0) {
+      if (badge) { badge.textContent = data.unread; badge.style.display = 'flex'; }
+      if (oldBadge) { oldBadge.textContent = data.unread; oldBadge.style.display = 'inline'; }
+    }
+  } catch(e) { /* silent */ }
+}
+
+// ─── PHASE 7: Related events in modal ──────────────────────────
+async function loadRelatedEvents(eventId) {
+  try {
+    const res = await fetch(`/api/events/${eventId}/related?limit=3`);
+    const data = await res.json();
+    const container = document.getElementById('relatedEventsSection');
+    if (!container || !data.related || !data.related.length) return;
+    container.style.display = 'block';
+    container.innerHTML = `
+      <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border)">
+        <h3 style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:14px">You might also like</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+          ${data.related.map(e => `
+            <div onclick="openEventModal('${e.id}')" style="background:var(--dark3);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s" onmouseenter="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 20px rgba(0,0,0,0.4)'" onmouseleave="this.style.transform='';this.style.boxShadow=''">
+              <img src="${e.image}" alt="${e.name}" style="width:100%;height:80px;object-fit:cover">
+              <div style="padding:8px">
+                <div style="font-size:12px;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:4px">${e.name}</div>
+                <div style="font-size:11px;color:var(--muted)">${e.city} · ₹${(e.price||0).toLocaleString('en-IN')}</div>
+                <div style="font-size:10px;color:var(--brand3);margin-top:4px">${e.reason}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>`;
+  } catch(e) { /* silent */ }
+}
+
+// ─── PHASE 7: Event reviews ──────────────────────────────────────
+async function loadEventReviews(eventId) {
+  try {
+    const res = await fetch(`/api/events/${eventId}/reviews`);
+    const data = await res.json();
+    const container = document.getElementById('eventReviewsSection');
+    if (!container) return;
+    container.style.display = 'block';
+    const stars = (n) => '★'.repeat(Math.round(n)) + '☆'.repeat(5-Math.round(n));
+    container.innerHTML = `
+      <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <h3 style="font-size:16px;font-weight:700;color:var(--text)">Reviews & Ratings</h3>
+          <div style="text-align:right">
+            <span style="font-size:28px;font-weight:800;color:var(--text)">${data.avg_rating}</span>
+            <span style="color:#FFB300;font-size:16px;margin-left:4px">${stars(data.avg_rating)}</span>
+            <div style="font-size:11px;color:var(--muted)">${(data.total_reviews||0).toLocaleString('en-IN')} reviews</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          ${(data.reviews||[]).slice(0,3).map(r => `
+            <div style="background:var(--dark3);border-radius:12px;padding:14px">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                <img src="${r.avatar}" alt="${r.user}" style="width:32px;height:32px;border-radius:50%">
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:var(--text)">${r.user} ${r.verified_buyer?'<span style="background:rgba(0,245,196,0.15);color:var(--brand3);padding:1px 6px;border-radius:10px;font-size:10px">✓ Verified</span>':''}</div>
+                  <div style="color:#FFB300;font-size:12px">${stars(r.rating)} <span style="color:var(--muted)">${r.date}</span></div>
+                </div>
+                <div style="margin-left:auto;font-size:11px;color:var(--muted)">👍 ${r.helpful}</div>
+              </div>
+              <p style="font-size:13px;color:var(--text);line-height:1.5;margin:0">${r.comment}</p>
+            </div>`).join('')}
+        </div>
+        <button onclick="showWriteReview('${eventId}')" style="margin-top:14px;width:100%;padding:10px;background:var(--dark3);border:1px solid var(--border);border-radius:10px;color:var(--text);cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;transition:background 0.2s" onmouseenter="this.style.background='var(--brand)'" onmouseleave="this.style.background='var(--dark3)'">
+          ✍️ Write a Review
+        </button>
+      </div>`;
+  } catch(e) { /* silent */ }
+}
+
+function showWriteReview(eventId) {
+  const existing = document.getElementById('writeReviewForm');
+  if (existing) { existing.remove(); return; }
+  const reviews = document.getElementById('eventReviewsSection');
+  if (!reviews) return;
+  const form = document.createElement('div');
+  form.id = 'writeReviewForm';
+  form.style.cssText = 'margin-top:14px;padding:16px;background:var(--dark3);border-radius:12px;border:1px solid var(--border)';
+  form.innerHTML = `
+    <h4 style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:12px">Your Review</h4>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      ${[1,2,3,4,5].map(i => `<span onclick="setReviewRating(${i})" id="rstar-${i}" style="font-size:24px;cursor:pointer;color:#666;transition:color 0.2s">★</span>`).join('')}
+    </div>
+    <textarea id="reviewComment" placeholder="Share your experience..." rows="3" style="width:100%;background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text);font-size:13px;resize:vertical;font-family:inherit;box-sizing:border-box"></textarea>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button onclick="submitReview('${eventId}')" style="flex:1;padding:10px;background:var(--brand);border:none;border-radius:8px;color:#fff;font-weight:600;cursor:pointer;font-family:inherit">Submit Review</button>
+      <button onclick="document.getElementById('writeReviewForm').remove()" style="padding:10px 16px;background:var(--dark2);border:1px solid var(--border);border-radius:8px;color:var(--text);cursor:pointer;font-family:inherit">Cancel</button>
+    </div>`;
+  reviews.appendChild(form);
+}
+
+let _reviewRating = 0;
+function setReviewRating(n) {
+  _reviewRating = n;
+  for (let i=1; i<=5; i++) {
+    const el = document.getElementById(`rstar-${i}`);
+    if (el) el.style.color = i <= n ? '#FFB300' : '#666';
+  }
+}
+
+async function submitReview(eventId) {
+  const comment = document.getElementById('reviewComment')?.value?.trim();
+  if (!_reviewRating) { showToast('Please select a star rating', 'error'); return; }
+  if (!comment) { showToast('Please write a comment', 'error'); return; }
+  try {
+    const res = await fetch(`/api/events/${eventId}/reviews`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ rating: _reviewRating, comment, user_id: window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('✅ Review posted! Thanks for your feedback.', 'success');
+      document.getElementById('writeReviewForm')?.remove();
+      _reviewRating = 0;
+    }
+  } catch(e) { showToast('Failed to submit review', 'error'); }
+}
+
+// Initialize Phase 7 features
+document.addEventListener('DOMContentLoaded', () => {
+  // Load notification count
+  setTimeout(loadNotificationCount, 1500);
+  // Refresh count every 2 minutes
+  setInterval(loadNotificationCount, 120000);
+  
+  // Add placeholder for related events and reviews in modal if not present
+  const modal = document.getElementById('eventModal');
+  if (modal && !document.getElementById('relatedEventsSection')) {
+    const section = document.createElement('div');
+    section.id = 'relatedEventsSection';
+    section.style.display = 'none';
+    modal.querySelector('.modal-body, .event-detail-content, .modal-content')?.appendChild(section);
+  }
+});
 </script>
 </body>
 </html>

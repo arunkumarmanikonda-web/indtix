@@ -1779,7 +1779,7 @@ async function runForecast() {
 }
 
 // Draw forecast chart on panel open
-const _origShowPanel = showPanel;
+// _origShowPanel is captured below in the analytics section — no duplicate needed here
 document.addEventListener('DOMContentLoaded', () => {
   loadSponsorMetrics();
   initForecastChart();
@@ -1994,3 +1994,4 @@ window.showPanel = function(name, btn) {
 };
 
 </script>
+</body></html>
