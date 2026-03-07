@@ -1,244 +1,202 @@
-# INDTIX — India's Next-Gen Live Event Platform
+# INDTIX — India's Live Event Platform v6.0
 
-**Version:** 5.0 · **Phase:** Phase 5 Complete · **QA:** 151/151 ✅  
-**Live:** https://49766cb9.indtix.pages.dev  
-**Stack:** Hono + Cloudflare Workers + TypeScript · Edge-global deployment
-
----
-
-## Platform Overview
-
-INDTIX is a comprehensive ticketing and event management platform for India's live events ecosystem. It supports 11 portals, 151 API endpoints, covering the complete event lifecycle — from discovery to check-in.
-
-**Company:** Oye Imagine Private Limited  
-**GSTIN:** 27AABCO1234A1Z5  
-**Tech:** Hono 4.x · Cloudflare Workers · Cloudflare Pages · TypeScript
+## Project Overview
+- **Platform**: INDTIX — Full-stack live events ticketing & management platform
+- **Company**: Oye Imagine Private Limited | GSTIN: 27AABCO1234A1Z5
+- **Phase**: 6 (Current) — 157/157 QA Pass
+- **Version**: 6.0.0
+- **API Version**: v6
+- **Total Endpoints**: 157 (across 9 portals)
+- **Codebase**: ~16,500 lines (src/index.ts + 9 portal HTML files)
 
 ---
 
-## Portals (11)
-
-| Portal | Path | Description |
-|--------|------|-------------|
-| Fan | `/fan` | Ticket discovery, booking, wallet, fan clubs |
-| Organiser | `/organiser` | Event management, analytics, settlements |
-| Venue | `/venue` | Venue calendar, bookings, KYC |
-| Event Manager | `/event-manager` | Live ops, wristbands, staff coordination |
-| Admin | `/admin` | Platform control, KYC queue, fraud, BI |
-| Ops | `/ops` | Real-time gate operations, scan stats, incidents |
-| Brand | `/brand` | Sponsorship campaigns, analytics |
-| Developer | `/developer` | API keys, webhooks, usage |
-| Architecture Spec | `/architecture-spec` | System architecture documentation |
-| Portals Hub | `/portals` | Portal directory |
-| Architecture | `/architecture` | Architecture overview |
-
----
-
-## API Summary (151 endpoints)
-
-### Core Events
-- `GET /api/events` — List with city/category/q/pagination filters
-- `GET /api/events/:id` — Event detail with tiers, addons, description
-- `GET /api/events/:id/tiers` — Ticket tier availability
-- `GET /api/events/:id/seatmap` — Zone-based seat map (`sections`, `zones`, `seats`)
-- `GET /api/events/:id/addons` — Combo meals, parking, merch add-ons
-- `GET /api/events/:id/faq` — AI-generated FAQ + POST custom FAQ
-- `GET /api/events/:id/waitlist` — Waitlist entries
-- `GET /api/events/:id/checkin-stats` — Gate-by-gate check-in totals
-- `GET /api/events/:id/checkin-live` — Live feed + `rate` per min
-- `GET /api/events/:id/availability` — Tier availability snapshot
-- `GET /api/events/:id/social` — Social sentiment, hashtag, top posts
-- `GET /api/events/:id/incidents` — Incidents for event
-- `GET /api/events/:id/sponsors` — Sponsor list for event
-- `POST /api/events/:id/clone` → 201 `{ event, cloned_event_id }`
-- `POST /api/events/:id/emergency` → 200 `{ status, emergency_id }`
-- `GET /api/cities` · `GET /api/categories` · `GET /api/venues`
-- `GET /api/search?q=` · `GET /api/trending` · `GET /api/recommendations/:user_id`
-
-### Auth
-- `POST /api/auth/signup` → 200 `{ user_id, verify_required }`
-- `POST /api/auth/login` → 200 `{ token, user }` (accepts email+password OR email+otp)
-- `POST /api/auth/verify-otp` → 200 `{ token }`
-- `POST /api/auth/refresh` → 200 `{ token }`
-- `POST /api/auth/logout` → 200 `{ success }`
-
-### Bookings
-- `POST /api/bookings` → 201 `{ booking_id }` (accepts tickets[] OR tier+quantity)
-- `GET /api/bookings/:id` · `GET /api/bookings/user/:user_id`
-- `POST /api/bookings/:id/cancel` → 200 `{ success, refund_pct }`
-- `POST /api/bookings/bulk` → 201 `{ booking_id, bulk_booking }`
-
-### Payments
-- `GET /api/payments/analytics` — Revenue breakdown, daily series
-- `GET /api/payments/settlements` — Settlement list with `settlements[]`
-- `GET /api/payments/gst-report` — `{ total_gst, period, gstr1, gstr3b }`
-- `POST /api/payments/refund` → 200 `{ refund_id }`
-- `GET /api/gst/invoice/:booking_id` → `{ invoice_number, invoice{} }`
-- `GET /api/gst/report` — Annual GST summary
-
-### Wallet & Loyalty
-- `GET /api/wallet/:user_id` → `{ balance, transactions }`
-- `POST /api/wallet/add` → 200 `{ balance }`
-- `POST /api/wallet/redeem` → 200 `{ success }`
-- `GET /api/loyalty/:user_id` · `POST /api/loyalty/redeem`
-
-### Promos
-- `GET /api/promos` — All active promos
-- `GET /api/promos/catalog` — Promo catalog (resolved before `:code`)
-- `GET /api/promos/:code` — Single promo detail
-- `POST /api/promo/validate` → 200 `{ discount, final_price }`
-- `POST /api/promos/bulk-create` → 200 `{ created, codes }`
-- `GET /api/promos/analytics` — Top codes, redemption stats
-
-### Organiser
-- `POST /api/organiser/register` → 201 `{ organiser_id, organiser{} }`
-- `GET /api/organiser/dashboard` — KPIs, live events, revenue
-- `GET /api/organiser/events` — Event list with revenue/status
-- `GET /api/organiser/analytics` — `{ total_revenue, analytics{} }`
-- `GET /api/organiser/analytics/v2` — `{ metrics{}, real_time{}, audience{} }`
-- `GET /api/organiser/revenue/breakdown` — Tier/day breakdown
-- `GET /api/organiser/audience` — `{ total, demographics{} }`
-- `GET|POST /api/organiser/team` — Team members
-- `GET /api/organiser/settlements` — Settlement history
-- `POST /api/organiser/coupons/distribute` — 200 `{ created, coupon_code }`
-- `GET|POST /api/organiser/forecast` — ML-based demand forecast
-
-### Admin
-- `GET /api/admin/stats` — `{ total_users, platform{} }`
-- `GET /api/admin/users` — Paginated user list
-- `GET /api/admin/users/export` — 200 `{ export{} }`
-- `POST /api/admin/users/:id/block`
-- `GET|POST /api/admin/config`
-- `GET /api/admin/kyc/queue` — `{ queue[], pending[] }`
-- `GET /api/admin/fraud/alerts` — `{ alerts[] }`
-- `GET /api/admin/bi/dashboard` — `{ metrics{}, realtime{} }`
-- `GET /api/admin/events/pending` · `GET /api/admin/events/queue`
-- `POST /api/admin/events/:id/approve` → 200
-- `POST /api/admin/events/:id/reject` → 200
-- `GET /api/admin/gst/monthly` — `{ months[], gstr1{} }`
-- `GET /api/admin/notifications` · `POST /api/admin/notifications/:id/read`
-- `GET /api/admin/reports/revenue` — `{ gmv, top_events }`
-- `GET /api/admin/audit` — Audit log
-- `GET /api/admin/system/health` — Component uptime
-- `GET /api/admin/experiments`
-
-### Ops & Scan
-- `GET /api/ops/dashboard?event_id=e1` — `{ total_checkins, gates, revenue }`
-- `GET /api/scan/stats/:event_id` — `{ checked_in, scan_rate }`
-- `POST /api/scan/verify` — QR validation `{ result, booking{} }`
-- `GET /api/incidents` · `POST /api/incidents` → 201 `{ incident_id }`
-- `PUT /api/incidents/:id`
-- `GET /api/wristbands/event/:event_id` — `{ wristbands{} }`
-- `GET /api/wristbands/status` — `{ status, total_issued, zones{} }`
-- `POST /api/wristbands/issue` → 201 `{ wristband_id }`
-- `POST /api/wristbands/led/command` · `GET /api/wristbands/led/presets`
-- `GET /api/pos/sessions` · `POST /api/pos/sale` → 201 `{ transaction_id }`
-
-### Fan Clubs
-- `GET /api/fanclubs` — `{ clubs[], fanclubs[] }`
-- `POST /api/fanclubs/:id/join` → 200 `{ membership{} }`
-- `GET /api/fanclubs/memberships/:user_id`
-
-### Sponsors
-- `GET /api/sponsors` · `POST /api/sponsors` → 201 `{ id }`
-- `GET /api/sponsors/:id` · `GET /api/sponsors/:id/metrics`
-
-### Venues
-- `POST /api/venue/register` → 201 `{ venue_id, venue{} }`
-- `GET /api/venue/dashboard` — `{ upcoming_events, stats{} }`
-- `GET /api/venue/availability` — `{ available_dates }`
-- `GET /api/venues/:id/calendar` — `{ events[], days[] }`
-- `GET /api/event-manager/dashboard` — `{ assigned_events[], checkin_live{} }`
-
-### AI
-- `POST /api/ai/chat` → 200 `{ response }`
-- `POST /api/ai/forecast` → 200 `{ predicted_attendance, forecast{} }`
-- `GET /api/ai/recommendations/:user_id`
-
-### Developer
-- `GET|POST /api/developer/keys` — API key management → POST 201 `{ key }`
-- `GET /api/developer/webhooks`
-- `GET /api/developer/usage` — `{ total_requests, quota }`
-- `GET /api/developer/endpoints`
-
-### Brand
-- `GET /api/brand/dashboard` — `{ campaigns[], totals{} }`
-- `GET|POST /api/brand/campaigns` — POST → 201 `{ id }`
-- `GET /api/brand/analytics`
-
-### Affiliate
-- `GET /api/affiliate/dashboard` — `{ total_clicks, stats{} }`
-- `POST /api/affiliate/register` → 201 `{ affiliate_id, affiliate{} }`
-- `GET /api/affiliate/stats/:id`
-- `POST /api/affiliate/payout` → 200 `{ payout_id }`
-
-### Misc
-- `GET /api/notifications` · `POST /api/notifications/send` → 201 `{ notification_id }`
-- `POST /api/notifications/mark-read` · `GET|PUT /api/notifications/preferences`
-- `POST /api/kyc/submit` → 201 `{ kyc_id, kyc{} }` · `GET /api/kyc/:id`
-- `GET /api/merch` · `POST /api/merch/order` → 201 `{ order_id }`
-- `GET /api/merch/order/:id`
-- `GET /api/livestreams` · `POST /api/livestreams/:id/purchase` → 200
-- `GET /api/settlements` · `POST /api/settlements/:id/process`
-- `POST /api/whitelabel/provision` → 200 `{ subdomain, instance{} }`
-- `POST /api/referral/validate` · `POST /api/tickets/:id/transfer`
-- `GET /api/status` · `GET /api/health`
-- `GET /api/announcements` · `POST /api/announcements` → 201 `{ announcement_id }`
-- `GET /api/announcements/:event_id`
+## Production URLs
+| Resource | URL |
+|---|---|
+| **Production** | https://4224b873.indtix.pages.dev |
+| **Fan Portal** | https://4224b873.indtix.pages.dev/fan |
+| **Organiser Portal** | https://4224b873.indtix.pages.dev/organiser |
+| **Venue Portal** | https://4224b873.indtix.pages.dev/venue |
+| **Event Manager** | https://4224b873.indtix.pages.dev/event-manager |
+| **Admin Portal** | https://4224b873.indtix.pages.dev/admin |
+| **Ops Portal** | https://4224b873.indtix.pages.dev/ops |
+| **Brand Portal** | https://4224b873.indtix.pages.dev/brand |
+| **Developer Portal** | https://4224b873.indtix.pages.dev/developer |
+| **Architecture** | https://4224b873.indtix.pages.dev/architecture-spec |
+| **Health API** | https://4224b873.indtix.pages.dev/api/health |
 
 ---
 
-## QA Status
-
-| Phase | Tests | Result |
-|-------|-------|--------|
-| Phase 5 (current) | 151/151 | ✅ 100% |
-| Phase 4 | 114/114 | ✅ 100% |
-| Phase 3 | 83/83 | ✅ 100% |
-
-**Coverage:** Core, Auth, Bookings, Scan, Wallet, Promos, Users, Notifications, Organiser, Payments, Admin, Incidents, Ops, Sponsors, Fan Clubs, Venues, AI, Developer, Brand, Affiliate, Announcements, Misc
+## QA Score History
+| Phase | Tests | Passed | Status |
+|---|---|---|---|
+| Phase 3 | 63 | 63 | ✅ 100% |
+| Phase 4 | 63 | 63 | ✅ 100% |
+| Phase 5 | 151 | 151 | ✅ 100% |
+| **Phase 6** | **157** | **157** | ✅ **100%** |
 
 ---
 
-## URLs
+## Phase 6 Audit Findings & Fixes (60 total)
 
-| Environment | URL |
-|-------------|-----|
-| Production | https://49766cb9.indtix.pages.dev |
-| Alt | https://main.indtix.pages.dev |
-| Health | https://49766cb9.indtix.pages.dev/api/health |
-| Fan Portal | https://49766cb9.indtix.pages.dev/fan |
-| Admin Portal | https://49766cb9.indtix.pages.dev/admin |
-| Developer | https://49766cb9.indtix.pages.dev/developer |
+### Response-Key Mismatches Fixed
+| Module | Fixed Keys |
+|---|---|
+| Events | `total` in list, unwrapped `event` detail, `booking_limits`, `capacity` |
+| Auth | `otp_sent` in signup, clone returns 200 |
+| Bookings | `total`, `payment_url`, `booking_id`, `refund_pct`, `refund_amount` |
+| Scan | `valid`, `attendee` at top-level, `total_scanned` in scan stats |
+| Admin | `gmv_this_month`, `venues`, `pending_approvals`, `events` in queue, `format` in export |
+| Payments | `total_revenue`, `total_transactions`, `invoice_no`, `total_amount` |
+| Promos | `discount_amount`, `code/type/value` in promo-by-code, analytics keys |
+| Notifications | `status` in send, `channels` in prefs |
+| Organiser | `age_groups`, `gender`, `predicted_sellout_pct`, `member` in team-POST |
+| Venue | `upcoming_bookings`, `calendar`, `venues` in availability |
+| Ops | `events`, `incidents`, `wristbands` in dashboard |
+| POS | `order_id`, `total` at top, return 200 |
+| Wristbands | `issued`, `total_issued`, `zones` |
+| Fan Clubs | Return 201 on join |
+| Livestream | `access_id`, `stream_url` |
+| Merch | `total`, `order_id`, `status` |
+| Sponsors | `sponsor_id`, `metrics` |
+| Affiliate | Register 200, payout 201+`status` |
+| Brand | `impressions`, `campaign_id`, `total_impressions`, `roi` |
+| Developer | Keys 200, webhooks `webhook_id`, `usage` key |
+| Trending | `events` key |
+| Announcements | `announcement_id` |
+
+---
+
+## API Endpoint Categories (157 total)
+
+### Core Events (19)
+- `GET /api/events` — List with city/category/search filter + pagination
+- `GET /api/events/:id` — Full detail with tiers, addons, policies
+- `GET /api/events/:id/seatmap` — Zone-based seating with GA/PREM/VIP/ACCESSIBLE
+- `GET /api/events/:id/tiers` — Pricing tiers with booking_limits
+- `GET /api/events/:id/addons` — Combo meals, merch, parking
+- `GET /api/events/:id/availability` — Real-time capacity
+- `GET /api/events/:id/faq` — Chatbot FAQs
+- `POST /api/events/:id/waitlist` — Join waitlist
+- `GET /api/events/:id/waitlist` — Waitlist status
+- `POST /api/events/:id/clone` — Duplicate event
+- `POST /api/events/:id/emergency` — Emergency broadcast
+- `GET /api/events/:id/checkin-live` — Live check-in rate
+- `GET /api/events/:id/checkin-stats` — Gate-by-gate stats
+- `GET /api/events/:id/social` — Social mentions & sentiment
+- `GET /api/events/:id/sponsors` — Event sponsorships
+- `GET /api/events/:id/incidents` — Event incidents
+- `POST /api/events` — Create event
+- `PUT /api/events/:id` — Update event
+- `GET /api/trending` — Trending events
+
+### Auth (5)
+`login` · `signup` · `verify-otp` · `refresh` · `logout`
+
+### Bookings (7)
+`create` · `get` · `user bookings` · `bulk` · `cancel` · `scan/verify` · `scan/stats`
+
+### Organiser (14)
+`register` · `dashboard` · `analytics` · `analytics/v2` · `analytics/trend` · `audience` · `revenue/breakdown` · `events` · `settlements` · `team (GET/POST)` · `forecast (GET/POST)` · `coupons/distribute`
+
+### Venue (4)
+`register` · `dashboard` · `calendar` · `availability`
+
+### Admin (20)
+`stats` · `bi/dashboard` · `gst/monthly` · `kyc/queue` · `fraud/alerts` · `events/queue` · `events/pending` · `events/approve` · `events/reject` · `users` · `users/export` · `users/block` · `notifications` · `notifications/read` · `system/health` · `config (GET/POST)` · `reports/revenue` · `audit` · `experiments`
+
+### Payments (6)
+`refund` · `analytics` · `settlements` · `gst-report` · `gst/invoice` · `gst/report`
+
+### Promos (7)
+`list` · `catalog` · `by-code` · `validate` · `create` · `bulk-create` · `analytics`
+
+### KYC & Settlements (4)
+`kyc/submit` · `kyc/:id` · `settlements` · `settlements/process`
+
+### Notifications (5)
+`send` · `list` · `mark-read` · `preferences GET` · `preferences PUT`
+
+### User & Loyalty (12)
+`user profile` · `user profile v2` · `update profile` · `notif-prefs GET/PUT` · `loyalty points` · `loyalty redeem` · `wallet balance` · `wallet redeem` · `wallet add` · `referral` · `ticket transfer`
+
+### Wristbands (5)
+`issue` · `status` · `by-event` · `LED command` · `LED presets`
+
+### POS & Ops (6)
+`pos/sale` · `pos/sessions` · `ops/dashboard` · `incidents list/create/update`
+
+### Fan Clubs (3)
+`list` · `join` · `memberships`
+
+### Live & Merch (5)
+`livestreams` · `purchase` · `merch list` · `merch order` · `merch order get`
+
+### Sponsors (5)
+`list` · `create` · `detail` · `metrics GET/PUT`
+
+### Affiliate (4)
+`register` · `dashboard` · `stats` · `payout`
+
+### AI (3)
+`chat` · `forecast` · `recommendations`
+
+### Brand (4)
+`dashboard` · `campaigns list` · `create campaign` · `analytics`
+
+### Developer (6)
+`endpoints` · `keys GET/POST` · `usage` · `webhooks GET/POST`
+
+### Search & Discovery (6)
+`search` · `cities` · `categories` · `venues` · `trending` · `recommendations`
+
+### Misc (5)
+`whitelabel/provision` · `announcements list/create/by-event` · `status`
 
 ---
 
 ## Data Architecture
+- **Event Data**: 8 seeded live events (Sunburn, NH7, Zakir Hussain, IPL, Diljit, TEDx, Comedy Central, Lollapalooza)
+- **Storage**: Cloudflare Workers edge-global (in-memory simulation for demo)
+- **Auth**: Token-based (Bearer tok_* format)
+- **GST**: CGST+SGST (intra-state) / IGST (inter-state), HSN 9996 (events) + 9984 (platform fees)
+- **Payments**: UPI 60% / Card 25% / Net Banking 10% / Wallet 5%
 
-- **Storage:** In-memory edge data (Cloudflare Workers) — no external DB required for demo
-- **Events:** 8 sample events (e1–e8) across Mumbai, Pune, Delhi, Bangalore, Chennai
-- **Auth:** Simulated OTP flow — returns token on verify
-- **Payments:** GST-compliant (18% CGST+SGST) with Razorpay/Stripe/UPI support
-- **QR/Scan:** BK-prefixed codes = valid; DUP-prefixed = duplicate alert
-- **Production DB upgrade path:** Cloudflare D1 for relational data, KV for sessions
+---
+
+## Tech Stack
+| Layer | Technology |
+|---|---|
+| Backend | Hono Framework + Cloudflare Workers |
+| Runtime | TypeScript (ES2020) |
+| Build | Vite + @hono/vite-cloudflare-pages |
+| CDN | Cloudflare Pages (edge-global) |
+| Frontend | Vanilla JS + TailwindCSS (CDN) + Chart.js |
+| Dev Server | Wrangler Pages Dev + PM2 |
 
 ---
 
 ## Deployment
+- **Platform**: Cloudflare Pages
+- **Status**: ✅ Active
+- **Build Size**: ~153 kB (worker bundle)
+- **Cold Start**: <5ms (edge-global)
+- **Last Deployed**: Phase 6 (2026-03-07)
 
+## Development
 ```bash
-# Build
-npm run build
-
-# Deploy to Cloudflare Pages
-npx wrangler pages deploy dist --project-name indtix
-
-# Local development
-pm2 start ecosystem.config.cjs
-curl http://localhost:3000/api/health
+npm run build          # Build for production
+pm2 start ecosystem.config.cjs  # Start dev server on :3000
+npm run db:migrate:local        # (if D1 enabled)
 ```
 
-**Platform:** Cloudflare Pages + Workers  
-**Build output:** `dist/_worker.js` (~153 kB)  
-**Last deployed:** 2026-03-07  
-**Status:** ✅ Operational
+## Next Development Phase (Phase 7 Candidates)
+1. **Real-time Features**: WebSocket-based live check-in dashboard
+2. **D1 Database**: Persistent data storage with Cloudflare D1
+3. **Stripe/Razorpay Integration**: Real payment gateway via API routes
+4. **Multi-tenant Auth**: JWT-based org/venue/admin role separation
+5. **Event Search**: Full-text search with Cloudflare Workers AI
+6. **Analytics Dashboard**: Real-time Chart.js dashboards in portals
+7. **WhatsApp Integration**: Twilio/Meta WhatsApp Business API for notifications
+8. **Image Upload**: R2 bucket integration for event banners/media
