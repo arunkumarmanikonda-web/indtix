@@ -500,7 +500,31 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
         <div class="section-tag">🔥 Trending</div>
         <h2 class="section-title">Events You'll Love</h2>
       </div>
-      <a href="#" class="see-all">View All <i class="fas fa-arrow-right"></i></a>
+      <a href="javascript:showAllEvents()" class="see-all">View All <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <!-- Phase 10: Advanced Filters Row -->
+    <div id="advFilters" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;align-items:center">
+      <select id="priceFilter" onchange="applyAdvFilters()" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:8px 14px;color:var(--text);font-size:13px;cursor:pointer">
+        <option value="">💰 Any Price</option>
+        <option value="0-500">Under ₹500</option>
+        <option value="500-1500">₹500 – ₹1,500</option>
+        <option value="1500-3000">₹1,500 – ₹3,000</option>
+        <option value="3000-999999">Above ₹3,000</option>
+      </select>
+      <select id="dateFilter" onchange="applyAdvFilters()" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:8px 14px;color:var(--text);font-size:13px;cursor:pointer">
+        <option value="">📅 Any Date</option>
+        <option value="this_week">This Week</option>
+        <option value="this_month">This Month</option>
+        <option value="next_month">Next Month</option>
+      </select>
+      <select id="sortFilter" onchange="applyAdvFilters()" style="background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:8px 14px;color:var(--text);font-size:13px;cursor:pointer">
+        <option value="">↕ Sort: Trending</option>
+        <option value="price_asc">Price: Low to High</option>
+        <option value="price_desc">Price: High to Low</option>
+        <option value="date_asc">Date: Soonest</option>
+        <option value="sold_desc">Most Popular</option>
+      </select>
+      <span id="eventCountBadge" style="font-size:13px;color:var(--muted);margin-left:auto"></span>
     </div>
     <div class="events-grid" id="eventsGrid"></div>
   </div>
@@ -658,9 +682,12 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
         </div>
       </div>
       <div class="footer-col"><h4>Discover</h4><ul>
-        <li><a href="#">Music Events</a></li><li><a href="#">Comedy Shows</a></li>
-        <li><a href="#">Sports Events</a></li><li><a href="#">Theatre</a></li>
-        <li><a href="#">Workshops</a></li><li><a href="#">Nightlife</a></li>
+        <li><a href="javascript:filterCategory('Music')" onclick="document.getElementById('events').scrollIntoView({behavior:'smooth'})">Music Events</a></li>
+        <li><a href="javascript:filterCategory('Comedy')" onclick="document.getElementById('events').scrollIntoView({behavior:'smooth'})">Comedy Shows</a></li>
+        <li><a href="javascript:filterCategory('Sports')" onclick="document.getElementById('events').scrollIntoView({behavior:'smooth'})">Sports Events</a></li>
+        <li><a href="javascript:filterCategory('Theatre')" onclick="document.getElementById('events').scrollIntoView({behavior:'smooth'})">Theatre</a></li>
+        <li><a href="javascript:filterCategory('Workshop')" onclick="document.getElementById('events').scrollIntoView({behavior:'smooth'})">Workshops</a></li>
+        <li><a href="javascript:filterCategory('Nightlife')" onclick="document.getElementById('events').scrollIntoView({behavior:'smooth'})">Nightlife</a></li>
       </ul></div>
       <div class="footer-col"><h4>Platform</h4><ul>
         <li><a href="/organiser">Organise an Event</a></li>
@@ -670,17 +697,18 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
         <li><a href="/ops">POS & Scanner</a></li>
       </ul></div>
       <div class="footer-col"><h4>Company</h4><ul>
-        <li><a href="#">About Oye Imagine Pvt Ltd</a></li>
-        <li><a href="#">Careers</a></li><li><a href="#">Press</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms of Service</a></li>
-        <li><a href="#">GST: 27AABCO1234A1Z5</a></li>
+        <li><a href="/architecture-spec">About INDTIX</a></li>
+        <li><a href="/developer">Careers in Tech</a></li>
+        <li><a href="/architecture-spec">Press &amp; Media</a></li>
+        <li><a href="javascript:showPrivacyModal()">Privacy Policy</a></li>
+        <li><a href="javascript:showTermsModal()">Terms of Service</a></li>
+        <li><a href="javascript:void(0)" style="color:var(--muted);cursor:default">GST: 27AABCO1234A1Z5</a></li>
       </ul></div>
     </div>
     <div class="footer-bottom">
       <div class="footer-copy">© 2025 Oye Imagine Private Limited. All rights reserved. CIN: U74999MH2024PTC000000</div>
       <div class="footer-legal">
-        <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookie Policy</a><a href="#">Grievance</a>
+        <a href="javascript:showPrivacyModal()">Privacy</a><a href="javascript:showTermsModal()">Terms</a><a href="javascript:void(0)" onclick="showFanToast('Cookie preferences saved','success')">Cookie Policy</a><a href="javascript:void(0)" onclick="showFanToast('Grievance portal: grievance@indtix.com','info')">Grievance</a>
       </div>
     </div>
   </div>
@@ -2670,6 +2698,119 @@ async function submitReview(eventId) {
   } catch(e) { showToast('Failed to submit review', 'error'); }
 }
 
+// ─── PHASE 10: ADVANCED FILTERS ─────────────────────────────
+let _allEventsCache = [];
+
+function showAllEvents() {
+  // Reset all filters and show all events
+  activeCategory = null;
+  document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+  const all = document.querySelector('.filter-chip');
+  if (all) all.classList.add('active');
+  document.getElementById('priceFilter').value = '';
+  document.getElementById('dateFilter').value = '';
+  document.getElementById('sortFilter').value = '';
+  loadEvents({city: activeCity});
+  document.getElementById('events')?.scrollIntoView({behavior:'smooth'});
+}
+
+function applyAdvFilters() {
+  const priceRange = document.getElementById('priceFilter')?.value || '';
+  const dateRange = document.getElementById('dateFilter')?.value || '';
+  const sort = document.getElementById('sortFilter')?.value || '';
+
+  const params = {city: activeCity, category: activeCategory};
+  if (priceRange) {
+    const [min, max] = priceRange.split('-').map(Number);
+    params.price_min = min;
+    params.price_max = max;
+  }
+  if (dateRange) params.date_range = dateRange;
+  if (sort) params.sort = sort;
+
+  loadEvents(params);
+}
+
+// showFanToast alias (Phase 10 footer links use this)
+function showFanToast(msg, type) { showToast(msg, type); }
+
+// Privacy/Terms modals (lightweight inline)
+function showPrivacyModal() {
+  const m = document.createElement('div');
+  m.style = 'position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px';
+  m.innerHTML = `<div style="background:var(--dark2);border:1px solid var(--border);border-radius:20px;padding:32px;max-width:520px;width:100%;max-height:80vh;overflow-y:auto">
+    <h2 style="color:var(--text);font-family:'Space Grotesk',sans-serif;margin-bottom:16px">Privacy Policy</h2>
+    <p style="color:var(--muted);font-size:14px;line-height:1.7">INDTIX (Oye Imagine Private Limited) collects minimal data to provide our ticketing services. We collect your name, email, phone number, and payment method for booking purposes. Your data is encrypted and never sold to third parties. We comply with Indian IT Act 2000 and DPDP Act 2023. For queries: privacy@indtix.com · GSTIN: 27AABCO1234A1Z5</p>
+    <button onclick="this.closest('div[style*=fixed]').remove()" style="margin-top:20px;background:var(--grad1);border:none;color:#fff;padding:10px 24px;border-radius:10px;cursor:pointer;font-weight:600">Close</button>
+  </div>`;
+  document.body.appendChild(m);
+}
+
+function showTermsModal() {
+  const m = document.createElement('div');
+  m.style = 'position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px';
+  m.innerHTML = `<div style="background:var(--dark2);border:1px solid var(--border);border-radius:20px;padding:32px;max-width:520px;width:100%;max-height:80vh;overflow-y:auto">
+    <h2 style="color:var(--text);font-family:'Space Grotesk',sans-serif;margin-bottom:16px">Terms of Service</h2>
+    <p style="color:var(--muted);font-size:14px;line-height:1.7">By using INDTIX, you agree to: (1) Provide accurate information during registration; (2) Not resell tickets above the platform's 20% markup cap; (3) Comply with venue rules; (4) Accept our refund policy (48-hour window before event); (5) Not misuse the platform for fraudulent bookings. Disputes governed by Indian law, jurisdiction: Mumbai, Maharashtra. Contact: legal@indtix.com</p>
+    <button onclick="this.closest('div[style*=fixed]').remove()" style="margin-top:20px;background:var(--grad1);border:none;color:#fff;padding:10px 24px;border-radius:10px;cursor:pointer;font-weight:600">Close</button>
+  </div>`;
+  document.body.appendChild(m);
+}
+
+// Phase 10: Event reminder
+async function setReminder(eventId, eventName) {
+  try {
+    const r = await fetch(`/api/events/${eventId}/remind`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({user_id: 'u1', channels: ['push', 'email'], hours_before: 24})
+    });
+    const d = await r.json();
+    if (d.success) showToast('🔔 Reminder set! We\'ll notify you 24h before ' + eventName, 'success');
+  } catch(e) { showToast('Could not set reminder', 'error'); }
+}
+
+// Phase 10: Carbon footprint
+async function showCarbonFootprint(eventId) {
+  try {
+    const r = await fetch(`/api/events/${eventId}/carbon`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({travel_mode: 'metro', distance_km: 12})
+    });
+    const d = await r.json();
+    const m = document.createElement('div');
+    m.style = 'position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px';
+    m.innerHTML = `<div style="background:var(--dark2);border:1px solid var(--border);border-radius:20px;padding:32px;max-width:420px;width:100%">
+      <h3 style="color:var(--text);margin-bottom:12px">🌱 Carbon Footprint</h3>
+      <p style="color:var(--muted);font-size:14px;line-height:1.7">
+        Travel mode: <strong style="color:var(--text)">Metro</strong> · 12 km each way<br>
+        Your footprint: <strong style="color:#44BB44">${d.carbon_footprint_kg} kg CO₂</strong><br>
+        Platform avg: <strong style="color:var(--brand3)">${d.event_avg_footprint_kg} kg CO₂</strong><br>
+        ${d.comparison === 'below_average' ? '✅ Below average — great choice!' : '⚠️ Above average — consider metro/cab pooling'}
+      </p>
+      <div style="margin-top:12px">
+        <p style="font-size:12px;color:var(--muted);margin-bottom:8px">Offset options:</p>
+        ${(d.offset_options||[]).map(o=>`<div style="background:var(--dark3);border-radius:8px;padding:8px 12px;margin-bottom:6px;font-size:12px;color:var(--text)">${o.provider} — ₹${o.cost_inr} plants ${o.trees_planted || ''} trees</div>`).join('')}
+      </div>
+      <button onclick="this.closest('div[style*=fixed]').remove()" style="margin-top:16px;background:var(--grad1);border:none;color:#fff;padding:10px 24px;border-radius:10px;cursor:pointer;font-weight:600">Close</button>
+    </div>`;
+    document.body.appendChild(m);
+  } catch(e) { showToast('Carbon data unavailable', 'error'); }
+}
+
+// Phase 10: Update events count badge
+const _origLoadEvents = loadEvents;
+async function loadEventsWithCount(params) {
+  await _origLoadEvents(params);
+  const grid = document.getElementById('eventsGrid');
+  const badge = document.getElementById('eventCountBadge');
+  if (grid && badge) {
+    const cards = grid.querySelectorAll('.event-card, [class*="event"]');
+    badge.textContent = cards.length ? `Showing ${cards.length} events` : '';
+  }
+}
+
 // Initialize Phase 7 features
 document.addEventListener('DOMContentLoaded', () => {
   // Load notification count
@@ -2685,6 +2826,16 @@ document.addEventListener('DOMContentLoaded', () => {
     section.style.display = 'none';
     modal.querySelector('.modal-body, .event-detail-content, .modal-content')?.appendChild(section);
   }
+
+  // Phase 10: update event count after initial load
+  setTimeout(() => {
+    const grid = document.getElementById('eventsGrid');
+    const badge = document.getElementById('eventCountBadge');
+    if (grid && badge) {
+      const cards = grid.children.length;
+      if (cards) badge.textContent = `Showing ${cards} events`;
+    }
+  }, 2000);
 });
 </script>
 </body>

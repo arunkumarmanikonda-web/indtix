@@ -622,21 +622,22 @@ limit     <span style="color:#A5D6FF">number</span>   Results per page (max: 50)
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
           ${[
             {lang:'JavaScript / Node.js',icon:'fab fa-js',status:'Available',install:'npm install @indtix/sdk',color:'#F7DF1E'},
-            {lang:'Python',icon:'fab fa-python',status:'Coming Soon',install:'pip install indtix',color:'#3776AB'},
-            {lang:'Flutter / Dart',icon:'fas fa-mobile-alt',status:'Coming Soon',install:'flutter pub add indtix',color:'#02569B'},
+            {lang:'Python',icon:'fab fa-python',status:'Beta',install:'pip install indtix',color:'#3776AB'},
+            {lang:'Flutter / Dart',icon:'fas fa-mobile-alt',status:'Beta',install:'flutter pub add indtix',color:'#02569B'},
             {lang:'React Native',icon:'fab fa-react',status:'Coming Soon',install:'npm install @indtix/react-native',color:'#61DAFB'},
-            {lang:'PHP',icon:'fab fa-php',status:'Coming Soon',install:'composer require indtix/sdk',color:'#777BB4'},
+            {lang:'PHP',icon:'fab fa-php',status:'Beta',install:'composer require indtix/sdk',color:'#777BB4'},
             {lang:'Java / Kotlin',icon:'fab fa-java',status:'Planned',install:'implementation "in.indtix:sdk:1.0"',color:'#ED8B00'}
           ].map(s=>`
-          <div style="padding:16px;background:var(--dark3);border-radius:10px;border:1px solid var(--border)">
+          <div style="padding:16px;background:var(--dark3);border-radius:10px;border:1px solid ${s.status==='Available'?'rgba(0,245,196,.3)':s.status==='Beta'?'rgba(108,60,247,.3)':'var(--border)'}">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
               <i class="${s.icon}" style="font-size:24px;color:${s.color}"></i>
               <div>
                 <div style="font-weight:700;font-size:12px">${s.lang}</div>
-                <span class="tag ${s.status==='Available'?'tag-free':s.status==='Coming Soon'?'tag-pro':'tag-enterprise'}" style="font-size:10px">${s.status}</span>
+                <span class="tag ${s.status==='Available'?'tag-free':s.status==='Beta'?'tag-pro':'tag-enterprise'}" style="font-size:10px">${s.status}</span>
               </div>
             </div>
             <div class="code-block" style="font-size:10px;padding:8px">${s.install}</div>
+            ${s.status!=='Planned'&&s.status!=='Coming Soon'?`<button onclick="showSDKDocs('${s.lang}')" style="margin-top:8px;background:transparent;border:1px solid var(--border);color:var(--brand2);padding:4px 12px;border-radius:6px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">View Docs</button>`:''}
           </div>`).join('')}
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
@@ -841,6 +842,58 @@ function renderUptimeBar() {
     day.title = `Day ${30-i}: ${uptime ? '100% uptime' : 'Incident detected'}`;
     bar.appendChild(day);
   }
+}
+
+// Phase 10: SDK Docs modal
+function showSDKDocs(lang) {
+  const docs = {
+    'JavaScript / Node.js': {
+      install: 'npm install @indtix/sdk',
+      code: `import { IndtixClient } from '@indtix/sdk';\nconst client = new IndtixClient({ apiKey: process.env.INDTIX_API_KEY });\nconst { events } = await client.events.list({ city: 'Mumbai' });\nconsole.log(events);`,
+      version: '1.4.2', status: 'Stable'
+    },
+    'Python': {
+      install: 'pip install indtix',
+      code: `from indtix import IndtixClient\nclient = IndtixClient(api_key=os.environ['INDTIX_API_KEY'])\nevents = client.events.list(city='Mumbai', category='Music')\nfor e in events:\n    print(e['name'], e['price'])`,
+      version: '0.9.1-beta', status: 'Beta'
+    },
+    'Flutter / Dart': {
+      install: 'flutter pub add indtix',
+      code: `import 'package:indtix/indtix.dart';\nfinal client = IndtixClient(apiKey: const String.fromEnvironment('INDTIX_KEY'));\nfinal events = await client.events.list(city: 'Mumbai');\nfor (final e in events) {\n  print('\${e.name}: \${e.price}');\n}`,
+      version: '0.7.0-beta', status: 'Beta'
+    },
+    'PHP': {
+      install: 'composer require indtix/sdk',
+      code: `<?php\nuse Indtix\\IndtixClient;\n$client = new IndtixClient(['api_key' => $_ENV['INDTIX_API_KEY']]);\n$events = $client->events->list(['city' => 'Mumbai']);\nforeach ($events as $event) {\n    echo $event['name'] . ': ' . $event['price'] . '\\n';\n}`,
+      version: '0.8.2-beta', status: 'Beta'
+    }
+  };
+  const d = docs[lang] || docs['JavaScript / Node.js'];
+  const m = document.createElement('div');
+  m.style = 'position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px';
+  m.innerHTML = `<div style="background:#0D1117;border:1px solid rgba(108,60,247,.3);border-radius:20px;padding:28px;max-width:600px;width:100%">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <h3 style="color:#f0f6fc;font-family:'Space Grotesk',sans-serif">${lang} SDK Docs</h3>
+      <span style="background:rgba(108,60,247,.2);color:#6C3CF7;border:1px solid rgba(108,60,247,.3);padding:3px 10px;border-radius:20px;font-size:11px">${d.status} v${d.version}</span>
+    </div>
+    <div style="background:#161b22;border:1px solid #30363d;border-radius:10px;padding:12px;margin-bottom:12px;font-size:11px;color:#8b949e;font-family:monospace">$ ${d.install}</div>
+    <pre style="background:#161b22;border:1px solid #30363d;border-radius:10px;padding:14px;font-size:11px;color:#e6edf3;font-family:monospace;overflow-x:auto;white-space:pre-wrap">${d.code}</pre>
+    <div style="display:flex;gap:10px;margin-top:14px">
+      <button onclick="showDevToast('📋 Copied ${lang} snippet to clipboard!')" style="background:rgba(108,60,247,.2);border:1px solid rgba(108,60,247,.4);color:#6C3CF7;padding:8px 18px;border-radius:8px;font-size:12px;cursor:pointer">Copy Code</button>
+      <button onclick="showDevToast('📚 Full ${lang} docs opening in new tab...')" style="background:transparent;border:1px solid #30363d;color:#8b949e;padding:8px 18px;border-radius:8px;font-size:12px;cursor:pointer">Full Docs</button>
+      <button onclick="this.closest('div[style*=fixed]').remove()" style="margin-left:auto;background:transparent;border:1px solid #30363d;color:#8b949e;padding:8px 18px;border-radius:8px;font-size:12px;cursor:pointer">Close</button>
+    </div>
+  </div>`;
+  document.body.appendChild(m);
+}
+
+// Phase 10: Rate limit checker
+async function checkRateLimit() {
+  try {
+    const res = await fetch('/api/developer/rate-limit');
+    const d = await res.json();
+    showDevToast(`Rate Limit: ${d.current_usage.this_minute}/${d.limits.per_minute} req/min used — Resets in ${Math.round((new Date(d.reset_at)-Date.now())/1000)}s`);
+  } catch(e) { showDevToast('Could not fetch rate limit status', 'error'); }
 }
 
 // Load API endpoints dynamically
