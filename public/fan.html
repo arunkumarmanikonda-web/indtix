@@ -1676,7 +1676,7 @@ async function loadBookings(){
   if(!el) return;
   el.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted)"><i class="fas fa-spinner fa-spin"></i> Loading bookings…</div>';
   try {
-    const res=await fetch('/api/bookings/user/user123');
+    const res=await fetch('/api/bookings/user/' + (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'));
     const data=await res.json();
     if(!data.bookings||!data.bookings.length){el.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted)">No bookings yet. Find your next event!</div>';return;}
     const statusColor={confirmed:'var(--brand3)',completed:'var(--muted)',cancelled:'#FF4444'};
@@ -1740,7 +1740,7 @@ async function submitRefund(){
 
 async function loadWallet(){
   try {
-    const res = await fetch('/api/wallet/USR-001');
+    const res = await fetch('/api/wallet/' + (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'));
     const data = await res.json();
     const w = data.wallet || {};
     const txns = data.transactions || [];
@@ -1780,7 +1780,7 @@ async function openAddMoneyModal() {
   const amt = prompt('Enter amount to add (₹10 – ₹50,000):');
   if (!amt || isNaN(amt) || Number(amt) < 10) { showToast('Enter a valid amount (min ₹10)', 'error'); return; }
   try {
-    const res = await fetch('/api/wallet/add', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: 'USR-001', amount: Number(amt) }) });
+    const res = await fetch('/api/wallet/add', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'), amount: Number(amt) }) });
     const data = await res.json();
     showToast(`💰 ₹${Number(amt).toLocaleString('en-IN')} added! New balance: ₹${(data.new_balance||0).toLocaleString('en-IN')}`, 'success');
     loadWallet();
@@ -1799,7 +1799,7 @@ async function loadNotifications() {
   const el = document.getElementById('notifications-list');
   if (!el) return;
   try {
-    const res = await fetch('/api/notifications?user_id=USR-001');
+    const res = await fetch('/api/notifications?user_id=' + (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'));
     const data = await res.json();
     const notifs = data.notifications || [];
     // Update badge
@@ -1829,7 +1829,7 @@ async function loadNotifications() {
 
 async function markNotifRead(id, el) {
   try {
-    await fetch('/api/notifications/mark-read', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ notification_ids: [id], user_id: 'USR-001' }) });
+    await fetch('/api/notifications/mark-read', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ notification_ids: [id], user_id: (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001') }) });
     el.style.background = 'var(--card)';
     el.style.borderColor = 'var(--border)';
     const dot = el.querySelector('[style*="border-radius:50%;background:var(--brand)"]');
@@ -1841,7 +1841,7 @@ async function markNotifRead(id, el) {
 
 async function markAllRead() {
   try {
-    await fetch('/api/notifications/mark-read', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ notification_ids: 'all', user_id: 'USR-001' }) });
+    await fetch('/api/notifications/mark-read', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ notification_ids: 'all', user_id: (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001') }) });
     const badge = document.getElementById('notif-badge');
     if (badge) badge.style.display = 'none';
     showToast('✅ All notifications marked as read', 'success');
@@ -1851,7 +1851,7 @@ async function markAllRead() {
 
 async function updateNotifPref(channel, type, enabled) {
   try {
-    await fetch('/api/notifications/preferences', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: 'USR-001', [channel]: { [type]: enabled } }) });
+    await fetch('/api/notifications/preferences', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'), [channel]: { [type]: enabled } }) });
     showToast(`${enabled ? '✅ Enabled' : '🔕 Disabled'}: ${type.replace(/_/g, ' ')}`, 'success');
   } catch(e) { /* silent */ }
 }
@@ -1862,7 +1862,7 @@ async function redeemWallet(){
   if(!amount||amount<10){showToast('Enter a valid amount (min ₹10)');return;}
   if(amount>500){showToast('Max ₹500 per redemption');return;}
   try{
-    const res=await fetch('/api/wallet/redeem',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'user123',amount,booking_id:'current'})});
+    const res=await fetch('/api/wallet/redeem',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:(window.getCurrentUserId?window.getCurrentUserId():'USR-001'),amount,booking_id:'current'})});
     const d=await res.json();
     if(d.success){showToast(`✅ ₹${amount} redeemed! New balance: ₹${d.new_balance}`);loadWallet();}
     else showToast(d.error||'Redemption failed');
@@ -1873,7 +1873,7 @@ async function validateReferral(){
   const code=document.getElementById('referralCode')?.value?.trim()?.toUpperCase();
   if(!code){showToast('Enter a referral code');return;}
   try{
-    const res=await fetch('/api/referral/validate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({referral_code:code,user_id:'user123'})});
+    const res=await fetch('/api/referral/validate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({referral_code:code,user_id:(window.getCurrentUserId?window.getCurrentUserId():'USR-001')})});
     const d=await res.json();
     if(d.valid){showToast(`🎉 ${d.message}`);if(document.getElementById('referralCode'))document.getElementById('referralCode').value='';}
     else showToast(d.message||'Invalid referral code');
@@ -2061,7 +2061,7 @@ async function joinFanclub(id, artist, price) {
     const res = await fetch(`/api/fanclubs/${id}/join`, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ user_id: 'user123', payment_method: 'upi' })
+      body: JSON.stringify({ user_id: (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'), payment_method: 'upi' })
     });
     const data = await res.json();
     if (data.success) {
@@ -2077,7 +2077,7 @@ async function loadAccFanclubs() {
   const el = document.getElementById('acc-fanclubs-list');
   const countEl = document.getElementById('fc-member-count');
   try {
-    const res = await fetch('/api/fanclubs/memberships/user123');
+    const res = await fetch('/api/fanclubs/memberships/' + (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'));
     const data = await res.json();
     const mems = data.memberships || [];
     if (countEl) countEl.textContent = mems.length + ' active';
@@ -2170,7 +2170,7 @@ async function purchaseLivestream(id, title, price) {
     const res = await fetch(`/api/livestreams/${id}/purchase`, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ user_id: 'user123', payment_method: 'upi' })
+      body: JSON.stringify({ user_id: (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'), payment_method: 'upi' })
     });
     const data = await res.json();
     if (data.success) {
@@ -2263,7 +2263,7 @@ async function checkoutMerch() {
     const res = await fetch('/api/merch/order', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ items: merchCart, payment_method: 'upi', user_id: 'user123', shipping_address: 'Mumbai, MH 400001' })
+      body: JSON.stringify({ items: merchCart, payment_method: 'upi', user_id: (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'), shipping_address: 'Mumbai, MH 400001' })
     });
     const data = await res.json();
     if (data.success) {
@@ -2320,6 +2320,108 @@ async function requestPushPermission() {
     showToast('Notifications blocked. Enable in browser settings.', 'error');
   }
 }
+
+// ─── INDTIX AUTH SESSION MANAGEMENT ───────────────
+const IndtixAuth = {
+  _KEY: 'indtix_session',
+  
+  getSession() {
+    try { return JSON.parse(localStorage.getItem(this._KEY) || 'null'); }
+    catch { return null; }
+  },
+  
+  setSession(token, user) {
+    const session = { token, user, ts: Date.now() };
+    localStorage.setItem(this._KEY, JSON.stringify(session));
+    return session;
+  },
+  
+  clearSession() {
+    localStorage.removeItem(this._KEY);
+  },
+  
+  isLoggedIn() {
+    const s = this.getSession();
+    if (!s || !s.token) return false;
+    // Expire after 24h
+    if (Date.now() - s.ts > 86400000) { this.clearSession(); return false; }
+    return true;
+  },
+  
+  getCurrentUser() {
+    const s = this.getSession();
+    return s ? s.user : null;
+  },
+  
+  getCurrentUserId() {
+    const u = this.getCurrentUser();
+    return u ? u.id : 'USR-001'; // fallback
+  },
+  
+  async login(email, password) {
+    const resp = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await resp.json();
+    if (data.token && data.user) {
+      this.setSession(data.token, data.user);
+      return { success: true, user: data.user };
+    }
+    return { success: false, error: data.error || 'Login failed' };
+  },
+  
+  async logout() {
+    const s = this.getSession();
+    if (s?.token) {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + s.token },
+        body: JSON.stringify({ token: s.token })
+      }).catch(() => {});
+    }
+    this.clearSession();
+    window.location.reload();
+  },
+  
+  updateAvatar() {
+    const user = this.getCurrentUser();
+    if (!user) return;
+    // Update any user-display elements
+    document.querySelectorAll('[data-user-name]').forEach(el => el.textContent = user.name || 'Fan');
+    document.querySelectorAll('[data-user-email]').forEach(el => el.textContent = user.email || '');
+    document.querySelectorAll('[data-user-id]').forEach(el => el.textContent = user.id || 'USR-001');
+  }
+};
+
+// Replace hardcoded IDs with session user_id on page load
+document.addEventListener('DOMContentLoaded', () => {
+  IndtixAuth.updateAvatar();
+  
+  // If a login form exists, wire it up
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = loginForm.querySelector('[name="email"], #login-email')?.value;
+      const pass = loginForm.querySelector('[name="password"], #login-password')?.value;
+      if (!email || !pass) return;
+      
+      const result = await IndtixAuth.login(email, pass);
+      if (result.success) {
+        showToast(`Welcome back, ${result.user.name}! 🎉`, 'success');
+        setTimeout(() => window.location.reload(), 1000);
+      } else {
+        showToast(result.error, 'error');
+      }
+    });
+  }
+});
+
+// Expose globally
+window.IndtixAuth = IndtixAuth;
+window.getCurrentUserId = () => IndtixAuth.getCurrentUserId();
 </script>
 </body>
 </html>

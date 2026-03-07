@@ -1256,18 +1256,68 @@ function viewKYCDoc(type){ showAdminToast('📄 Opening '+type+' document in sec
 function requestMoreDocs(name){ showAdminToast('📧 Request for additional documents sent to '+name+' via WhatsApp & Email.'); logAdminAudit('Docs Requested',name); }
 
 /* ─── Event Moderation ─── */
-function approveEventSimple(name){
-  showAdminToast('✅ Event "'+name+'" approved and live on INDTIX!');
-  logAdminAudit('Event Approved',name);
+async function approveEventSimple(eventId, name) {
+  if (!confirm('Approve event "' + (name || eventId) + '"?')) return;
+  try {
+    const resp = await fetch('/api/admin/events/' + eventId + '/approve', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'approve' })
+    });
+    const data = await resp.json();
+    if (data.success) {
+      showAdminToast('✅ Event "' + (name || eventId) + '" approved and live!');
+      logAdminAudit('Event Approved', name || eventId);
+      // Refresh event queue
+      setTimeout(() => loadAdminEventQueue && loadAdminEventQueue(), 1000);
+    } else { showAdminToast('Error: ' + (data.error || 'Approval failed'), 'error'); }
+  } catch(e) { showAdminToast('Network error during approval', 'error'); }
 }
-function rejectEvent(name){
-  const r=prompt('Reason for rejecting event "'+name+'"?');
-  if(r){ showAdminToast('❌ Event "'+name+'" rejected. Organiser notified.'); logAdminAudit('Event Rejected',name); }
+async function rejectEvent(eventId, name) {
+  const r = prompt('Reason for rejecting "' + (name || eventId) + '"?');
+  if (!r) return;
+  try {
+    const resp = await fetch('/api/admin/events/' + eventId + '/reject', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reason: r })
+    });
+    const data = await resp.json();
+    if (data.success) {
+      showAdminToast('❌ Event "' + (name || eventId) + '" rejected. Organiser notified.');
+      logAdminAudit('Event Rejected', name || eventId);
+      setTimeout(() => loadAdminEventQueue && loadAdminEventQueue(), 1000);
+    }
+  } catch(e) { showAdminToast('Network error during rejection', 'error'); }
 }
-function holdEvent(name){
-  showAdminToast('⏸️ Event "'+name+'" put on hold pending review.');
-  logAdminAudit('Event On Hold',name);
+function holdEvent(name) {
+  showAdminToast('⏸️ Event "' + name + '" put on hold pending review.');
+  logAdminAudit('Event On Hold', name);
 }
+
+/* ─── Load Event Queue ─── */
+async function loadAdminEventQueue() {
+  try {
+    const resp = await fetch('/api/admin/events/queue');
+    const data = await resp.json();
+    const events = data.queue || data.pending || [];
+    const el = document.querySelector('#panel-approvals .events-queue, #approvals-tbody, #event-queue-table');
+    if (el) {
+      el.innerHTML = events.map(e => `
+        <tr>
+          <td><strong>${e.title}</strong></td>
+          <td>${e.organiser || '-'}</td>
+          <td>${e.city || '-'}</td>
+          <td>${e.date || '-'}</td>
+          <td><span class="badge ${e.status === 'pending' ? 'badge-warning' : 'badge-info'}">${e.status}</span></td>
+          <td>
+            <button class="btn btn-success btn-xs" onclick="approveEventSimple('${e.id}','${e.title}')">✅ Approve</button>
+            <button class="btn btn-danger btn-xs" onclick="rejectEvent('${e.id}','${e.title}')">❌ Reject</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+  } catch(e) { console.warn('Event queue load failed:', e); }
+}
+
 
 /* ─── Finance & Settlements ─── */
 function processSettlement(name, amt){
