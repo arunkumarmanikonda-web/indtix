@@ -4,19 +4,25 @@
 
 ---
 
-## 🔗 Live URLs (Sandbox)
+## 🔗 Live URLs
+
+### Production (Cloudflare Pages — Global Edge)
+**Base:** `https://indtix.pages.dev`
 
 | Portal | URL |
 |--------|-----|
-| 🎫 Fan Portal | `/fan` |
-| 🎪 Organiser | `/organiser` |
-| 🏟️ Venue | `/venue` |
-| 🎬 Event Manager | `/event-manager` |
-| 👑 Super Admin / ERP | `/admin` |
-| 📱 On-Ground Ops / POS | `/ops` |
-| 🏗️ Architecture | `/architecture` |
-| 🗂️ **Portal Hub** | `/portals` |
-| ❤️ API Health | `/api/health` |
+| 🗂️ **Portal Hub** | https://indtix.pages.dev/portals |
+| 🎫 Fan Portal | https://indtix.pages.dev/fan |
+| 🎪 Organiser | https://indtix.pages.dev/organiser |
+| 🏟️ Venue | https://indtix.pages.dev/venue |
+| 🎬 Event Manager | https://indtix.pages.dev/event-manager |
+| 👑 Super Admin / ERP | https://indtix.pages.dev/admin |
+| 📱 On-Ground Ops / POS | https://indtix.pages.dev/ops |
+| 🏗️ Architecture | https://indtix.pages.dev/architecture |
+| ❤️ API Health | https://indtix.pages.dev/api/health |
+
+### Latest Deployment
+https://8d2bac41.indtix.pages.dev
 
 ---
 
@@ -154,10 +160,12 @@ webapp/
 ## 🌐 Deployment
 
 - **Platform**: Cloudflare Pages + Workers
-- **Status**: ✅ Running (Sandbox)
+- **Status**: ✅ **LIVE** — https://8d2bac41.indtix.pages.dev
+- **Production URL**: https://indtix.pages.dev
 - **Build**: `npm run build` → `dist/` (25.56 kB worker)
-- **Start**: `pm2 start ecosystem.config.cjs`
+- **Start (local)**: `pm2 start ecosystem.config.cjs`
 - **Deploy**: `npm run deploy` (requires `CLOUDFLARE_API_TOKEN`)
+- **Last deployed**: 2026-03-07
 
 ---
 
