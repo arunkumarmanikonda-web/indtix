@@ -1,11 +1,11 @@
-# INDTIX — India's Live Event Platform v7.0
+# INDTIX — India's Live Event Platform v8.0
 
 ## Project Overview
 - **Platform**: INDTIX — Full-stack live events ticketing & management platform
 - **Company**: Oye Imagine Private Limited | GSTIN: 27AABCO1234A1Z5
-- **Phase**: 7 (Current) — **44/44 Production QA Pass (100%)** + 126/126 local QA
-- **Version**: 7.0.0
-- **API Version**: v7
+- **Phase**: 8 (Current) — **20/20 Production QA (100%)** + **67/67 local QA (100%)**
+- **Version**: 8.0.0
+- **API Version**: v8
 - **Total Endpoints**: 185 (across 9 portals)
 - **Codebase**: ~18,000+ lines (src/index.ts + 9 portal HTML files + public assets)
 
@@ -14,17 +14,17 @@
 ## Production URLs
 | Resource | URL |
 |---|---|
-| **Production** | https://9444bb1b.indtix.pages.dev |
-| **Fan Portal** | https://9444bb1b.indtix.pages.dev/fan |
-| **Organiser Portal** | https://9444bb1b.indtix.pages.dev/organiser |
-| **Venue Portal** | https://9444bb1b.indtix.pages.dev/venue |
-| **Event Manager** | https://9444bb1b.indtix.pages.dev/event-manager |
-| **Admin Portal** | https://9444bb1b.indtix.pages.dev/admin |
-| **Ops Portal** | https://9444bb1b.indtix.pages.dev/ops |
-| **Brand Portal** | https://9444bb1b.indtix.pages.dev/brand |
-| **Developer Portal** | https://9444bb1b.indtix.pages.dev/developer |
-| **Architecture** | https://9444bb1b.indtix.pages.dev/architecture-spec |
-| **Health API** | https://9444bb1b.indtix.pages.dev/api/health |
+| **Production** | https://b5560f96.indtix.pages.dev |
+| **Fan Portal** | https://b5560f96.indtix.pages.dev/fan |
+| **Organiser Portal** | https://b5560f96.indtix.pages.dev/organiser |
+| **Venue Portal** | https://b5560f96.indtix.pages.dev/venue |
+| **Event Manager** | https://b5560f96.indtix.pages.dev/event-manager |
+| **Admin Portal** | https://b5560f96.indtix.pages.dev/admin |
+| **Ops Portal** | https://b5560f96.indtix.pages.dev/ops |
+| **Brand Portal** | https://b5560f96.indtix.pages.dev/brand |
+| **Developer Portal** | https://b5560f96.indtix.pages.dev/developer |
+| **Architecture** | https://b5560f96.indtix.pages.dev/architecture-spec |
+| **Health API** | https://b5560f96.indtix.pages.dev/api/health |
 
 ---
 
@@ -35,7 +35,8 @@
 | Phase 4 | 63 | 63 | ✅ 100% |
 | Phase 5 | 151 | 151 | ✅ 100% |
 | Phase 6 | 157 | 157 | ✅ 100% |
-| **Phase 7** | **44 prod + 126 local** | **170** | ✅ **100%** |
+| Phase 7 | 44 prod + 126 local | 170 | ✅ 100% |
+| **Phase 8** | **20 prod + 67 local** | **87** | ✅ **100%** |
 
 ---
 
@@ -214,7 +215,7 @@
 - **Status**: ✅ Active
 - **Build Size**: ~155 kB (worker bundle)
 - **Cold Start**: <5ms (edge-global)
-- **Last Deployed**: Phase 7 (2026-03-07) — https://9444bb1b.indtix.pages.dev
+- **Last Deployed**: Phase 7 (2026-03-07) — https://b5560f96.indtix.pages.dev
 
 ## Development
 ```bash
