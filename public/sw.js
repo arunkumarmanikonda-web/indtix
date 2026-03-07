@@ -5,7 +5,6 @@ const API_CACHE = 'indtix-api-v4';
 
 const STATIC_ASSETS = [
   '/fan',
-  '/fan.html',
   '/manifest.json'
 ];
 
