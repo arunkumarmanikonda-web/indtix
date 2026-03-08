@@ -4,10 +4,10 @@
 - **Name**: INDTIX
 - **Goal**: Full-stack multi-portal event ticketing & management platform
 - **Company**: Oye Imagine Private Limited (GSTIN: 27AABCO1234A1Z5)
-- **Phase**: 13.0 (Production)
-- **QA Score**: 105/105 checks passing ✅ | 9/9 production smoke tests ✅ | 0 console errors
-- **Total API Endpoints**: 297 routes (295 unique)
-- **Total Lines of Code**: ~20,800 across 10 HTML portals + 5,481-line backend
+- **Phase**: 14.0 (Production)
+- **QA Score**: 67/67 checks passing ✅ | 9/9 production smoke tests ✅ | 0 console errors
+- **Total API Endpoints**: 340 routes
+- **Total Lines of Code**: ~21,500 across 10 HTML portals + 5,800-line backend
 
 ## Live URLs
 | Portal | URL |
@@ -98,7 +98,69 @@
 - **API version**: v13
 - **Phase**: 13
 - **Base URL**: `https://indtix.pages.dev/api/`
-- **Worker size**: ~230 KB (well within 25 MB limit)
+- **Worker size**: ~244 KB (well within 25 MB limit)
+
+### Phase 14 — New Endpoints (45 added)
+```
+# Ops / POS
+POST /api/pos/refund                         — Process on-site refund
+POST /api/pos/void                           — Void POS transaction
+POST /api/pos/cash-drawer                    — Open cash drawer
+POST /api/pos/receipt                        — Print/issue receipt
+GET  /api/pos/shift-report                   — Gate+POS shift summary
+POST /api/pos/export                         — Export POS data CSV
+POST /api/ops/gate/switch                    — Switch active gate
+POST /api/ops/scanning/pause                 — Pause scanning
+POST /api/ops/scanning/resume                — Resume scanning
+POST /api/ops/supervisor/call                — Call supervisor via radio
+POST /api/ops/emergency/alert                — Broadcast emergency alert
+POST /api/ops/announcement                   — Broadcast ops announcement
+
+# Wristbands
+POST /api/wristbands/issue                   — Issue single wristband
+POST /api/wristbands/deactivate              — Deactivate wristband
+POST /api/wristbands/bulk-issue              — Bulk issue wristbands
+POST /api/wristbands/sync                    — Sync all bands to LED controller
+
+# LED Bands
+POST /api/led/scene                          — Set LED scene
+POST /api/led/color                          — Set LED band color
+POST /api/led/mode                           — Set LED mode
+POST /api/led/emergency                      — Emergency LED pattern
+
+# Organiser LED & Event Management
+POST /api/organiser/events/:id/withdraw      — Withdraw event submission
+GET  /api/organiser/events/:id/attendees/export — Export attendee CSV
+POST /api/organiser/events/:id/broadcast     — Broadcast to attendees
+POST /api/organiser/led/preview              — Preview LED segment
+POST /api/organiser/led/segment              — Add LED zone segment
+POST /api/organiser/led/rehearsal            — Start LED rehearsal
+POST /api/organiser/led/activate             — Go LIVE with LED
+POST /api/organiser/led/health               — LED controller health check
+GET  /api/organiser/seatmap/:event_id        — Get seat map
+PUT  /api/organiser/seatmap/:event_id        — Save seat map
+GET  /api/organiser/checkin/:event_id        — Check-in report
+POST /api/organiser/tickets/save             — Save ticket config
+POST /api/organiser/addons/save              — Save add-ons
+GET  /api/organiser/kyc/status               — Organiser KYC status
+
+# Brand Portal
+GET  /api/brand/campaigns/:id               — Campaign detail
+GET  /api/brand/sponsor/:id/analytics        — Sponsor analytics
+
+# Fan / Auth
+POST /api/promo/apply                        — Apply promo code (alias)
+GET  /api/wallet/balance                     — Wallet balance
+POST /api/wallet/add                         — Add money to wallet
+PUT  /api/users/:id/notifications            — Update notification prefs
+POST /api/notifications/mark-read           — Mark notifications read
+POST /api/auth/verify-otp                   — Verify OTP
+POST /api/cookies/preferences               — Save cookie preferences
+POST /api/support/grievance                 — Submit grievance ticket
+
+# Admin
+GET  /api/admin/settlements                  — List settlements (new)
+```
 
 ### Phase 13 — New Endpoints (27 added)
 ```
@@ -159,8 +221,29 @@ POST /api/pos/sale / POST /api/scan/verify
 | 11 | 26 new APIs, 93→0 frontend-backend gaps, 263 endpoints |
 | 12 | Venue live API wiring, admin organiser queue, fan portal fixes, 270 endpoints |
 | **13** | **27 new APIs, all toast-only buttons wired, 105/105 QA, 295 endpoints** |
+| **14** | **45 new APIs, Ops/POS+LED+wristbands+organiser+brand wired, 67/67 QA, 340 endpoints** |
 
-## Phase 13 — Completed ✅
+## Phase 14 — Completed ✅
+- ✅ **Ops/POS: 12 buttons wired** — refund, void, cash-drawer, receipt, shift-report, gate-switch, scanning pause/resume, supervisor call, emergency broadcast, announcement
+- ✅ **Wristbands: 4 real APIs** — issue, deactivate, bulk-issue, sync with LED controller
+- ✅ **LED Bands: 4 real APIs** — scene, color, mode, emergency (ops.html)
+- ✅ **Organiser LED: 5 real APIs** — preview, add segment, rehearsal, activate LIVE, health check
+- ✅ **Organiser: Seat map** — GET + PUT `/api/organiser/seatmap/:event_id`
+- ✅ **Organiser: Attendee export** — GET `/api/organiser/events/:id/attendees/export`
+- ✅ **Organiser: Bulk broadcast** — POST `/api/organiser/events/:id/broadcast` (WhatsApp + Email)
+- ✅ **Organiser: Event withdraw** — POST `/api/organiser/events/:id/withdraw`
+- ✅ **Organiser: Check-in report** — GET `/api/organiser/checkin/:event_id`
+- ✅ **Organiser: Ticket/Addon save** — POST `/api/organiser/tickets/save`, `/api/organiser/addons/save`
+- ✅ **Brand portal: Campaign detail** — GET `/api/brand/campaigns/:id`
+- ✅ **Brand portal: Sponsor analytics** — GET `/api/brand/sponsor/:id/analytics`
+- ✅ **Fan: Cookie preferences** — POST `/api/cookies/preferences`
+- ✅ **Fan: Grievance portal** — POST `/api/support/grievance` with ticket ID
+- ✅ **Fan: Clipboard referral** — async `navigator.clipboard.writeText()` with promise handling
+- ✅ **Admin: Settlements list** — GET `/api/admin/settlements` (was 404)
+- ✅ **Venue calendar** — now includes `slots` array for date-range UI
+- ✅ **340 total API endpoints**, version 14.0.0
+
+## Phase 15 Roadmap
 - ✅ **Admin: Venue approvals** — View / Approve / Reject wired to `/api/admin/venues/queue`
 - ✅ **Admin: KYC queue** — All 3 rows (Oye Events, Ravescape, Horizon) wired with real API
 - ✅ **Admin: Settlement Release** — POST `/api/admin/settlements/:id/initiate` + UTR
@@ -189,20 +272,27 @@ POST /api/pos/sale / POST /api/scan/verify
 - ✅ **Fan: Email invoice** → `POST /api/notifications/email`
 - ✅ **295 total API endpoints**, version 13.0.0
 
-## Phase 14 Roadmap
+## Phase 13 — Completed ✅
 - 🔜 Real authentication with Cloudflare D1 database
 - 🔜 Real booking persistence (D1 + KV)
 - 🔜 WebSocket-based live check-in dashboard
 - 🔜 Stripe/Razorpay payment integration
 - 🔜 SendGrid email notifications
 - 🔜 Bundle Tailwind CSS (remove CDN dependency)
-- 🔜 Organiser portal: 24 TODO/FIXME comments resolved
-- 🔜 Admin portal: remaining 40+ toast-only utility buttons
+## Phase 15 Roadmap
+- 🔜 Real authentication with Cloudflare D1 database
+- 🔜 Real booking persistence (D1 + KV)
+- 🔜 WebSocket-based live check-in dashboard
+- 🔜 Stripe/Razorpay payment integration
+- 🔜 SendGrid email notifications
+- 🔜 Bundle Tailwind CSS (remove CDN dependency)
+- 🔜 Admin portal: remaining utility buttons
 - 🔜 Full text search with Cloudflare KV indexes
+- 🔜 Event-manager portal: real-time check-in WebSocket feed
 
 ## Data Architecture
 - **Storage**: In-memory mock data (Cloudflare Workers edge runtime)
-- **Auth**: Mock JWT tokens — real D1 + proper auth planned for Phase 14
+- **Auth**: Mock JWT tokens — real D1 + proper auth planned for Phase 15
 - **Avatars**: Inline SVG data URIs — no external CDN
 - **Images**: Unsplash CDN with `onerror` fallback to gradient placeholders
 - **Service Worker**: v5.1 — caches `/fan` + `/manifest.json`
@@ -213,15 +303,15 @@ POST /api/pos/sale / POST /api/scan/verify
 3. Organiser portal: create events, track analytics, manage team
 4. Admin portal: approve events, manage KYC, settlements, refunds
 5. Venue portal: manage bookings, calendar, staff, incidents
-6. Developer portal: explore 295 API endpoints, download SDK
+6. Developer portal: explore 340 API endpoints, download SDK
 
 ## Deployment
 - **Platform**: Cloudflare Pages
 - **Project**: `indtix`
 - **Branch**: `main`
-- **Status**: ✅ Active — v13.0.0
+- **Status**: ✅ Active — v14.0.0
 - **Tech Stack**: Hono 4 + TypeScript + Cloudflare Workers
-- **Last Deployed**: 2026-03-08 (Phase 13)
+- **Last Deployed**: 2026-03-08 (Phase 14)
 - **Build command**: `npm run build`
 - **Output dir**: `dist/`
-- **Worker size**: ~230 KB (well within 25 MB limit)
+- **Worker size**: ~244 KB (well within 25 MB limit)

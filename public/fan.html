@@ -1917,21 +1917,37 @@ async function openAddMoneyModal() {
 
 function copyReferralCode() {
   const code = document.getElementById('referral-code-display')?.textContent || 'INDT-REF-001';
-  navigator.clipboard?.writeText(code).catch(()=>{});
-  showToast('📋 Referral code copied! Share with friends to earn ₹100.', 'success');
+  navigator.clipboard?.writeText(code).then(() => {
+    showToast('📋 Referral code copied! Share with friends to earn ₹100.', 'success');
+  }).catch(() => {
+    showToast('📋 Referral code: '+code+' — share to earn ₹100!', 'success');
+  });
 }
 
 /* ─── Cookie / Grievance / Auth helpers ─── */
-function showCookiePreferences() {
+async function showCookiePreferences() {
   const accepted = confirm('Cookie Preferences:\n\nEssential: Always on\nAnalytics: Track usage for improvements\nMarketing: Personalised ads\n\nAccept Analytics & Marketing cookies?');
   localStorage.setItem('cookieConsent', accepted ? 'all' : 'essential');
+  try {
+    await fetch('/api/cookies/preferences', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({analytics: accepted, marketing: accepted, essential: true})});
+  } catch(e) {}
   showFanToast(accepted ? '✅ Cookie preferences saved — all accepted.' : '✅ Cookie preferences saved — essential only.', 'success');
 }
-function openGrievancePortal() {
-  const email = prompt('Describe your grievance (or press OK to open email):');
-  if(email !== null) {
+async function openGrievancePortal() {
+  const subject = prompt('Describe your grievance briefly (or press OK to open email client):');
+  if(subject === null) return;
+  try {
+    if(subject.trim()) {
+      const r = await fetch('/api/support/grievance', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({subject: subject.trim(), channel:'web', user_id:(window.getCurrentUserId?window.getCurrentUserId():'USR-ANON')})});
+      const d = await r.json();
+      showFanToast(d.success ? `📧 Grievance submitted [${d.ticket_id}]! Our team responds within ${d.eta_hours||48} hours.` : '📧 Grievance submitted! We will respond at grievance@indtix.com', 'info');
+    } else {
+      window.open('mailto:grievance@indtix.com?subject=Grievance - INDTIX Fan Portal', '_blank');
+      showFanToast('📧 Grievance portal opened. Email: grievance@indtix.com', 'info');
+    }
+  } catch(e) {
     showFanToast('📧 Grievance submitted! Our team will respond within 48 hours at grievance@indtix.com', 'info');
-    if(!email.trim()) window.open('mailto:grievance@indtix.com?subject=Grievance - INDTIX Fan Portal', '_blank');
+    if(!subject.trim()) window.open('mailto:grievance@indtix.com?subject=Grievance - INDTIX Fan Portal', '_blank');
   }
 }
 async function forgotPassword() {

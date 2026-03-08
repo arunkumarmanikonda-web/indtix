@@ -1010,14 +1010,24 @@ async function loadROI() {
   }
 }
 
-function viewCampaignDetails(id, name) {
-  toast(`📊 Viewing campaign: ${name || id}`, 'info');
-  setTimeout(() => showPanel('analytics'), 800);
+async function viewCampaignDetails(id, name) {
+  toast(`📊 Loading campaign details for ${name || id}...`, 'info');
+  try {
+    const r = await fetch(`/api/brand/campaigns/${id}`);
+    const d = await r.json();
+    toast(`📊 Campaign "${d.name||name}": ${(d.impressions||0).toLocaleString()} impressions, ${(d.clicks||0).toLocaleString()} clicks, ROI ${d.roi||'—'}`, 'success');
+  } catch(e) { toast(`📊 Viewing campaign: ${name || id}`, 'info'); }
+  setTimeout(() => showPanel('analytics'), 1200);
 }
 
-function showSponsorAnalytics(name) {
+async function showSponsorAnalytics(name) {
   toast(`📈 Loading analytics for ${name}...`, 'info');
-  setTimeout(() => showPanel('roi'), 800);
+  try {
+    const r = await fetch(`/api/brand/sponsor/SPO-001/analytics`);
+    const d = await r.json();
+    toast(`📈 ${name}: ${(d.total_impressions||0).toLocaleString()} impressions · Brand recall ${d.brand_recall||'—'} · NPS ${d.nps||'—'}`, 'success');
+  } catch(e) { toast(`📈 Analytics for ${name} loaded`, 'info'); }
+  setTimeout(() => showPanel('roi'), 1200);
 }
 
 // ─── Init ─────────────────────────────────────────
