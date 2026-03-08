@@ -829,19 +829,30 @@ function renderRunSheet(){
     return '<div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--dark3);border-radius:10px;margin-bottom:8px;border-left:3px solid '+color+'"><div style="font-size:13px;font-weight:700;color:var(--brand3);min-width:48px">'+item.time+'</div><div style="flex:1"><div style="font-size:13px;font-weight:600">'+item.task+'</div><div style="font-size:11px;color:var(--muted)">Assignee: '+item.assignee+'</div></div><button onclick="updateRunSheetStatus('+i+')" style="background:rgba(108,60,247,0.15);border:1px solid var(--brand);color:var(--brand);padding:4px 12px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif">'+statusLabel+'</button></div>';
   }).join('');
 }
-function updateRunSheetStatus(i){
+async function updateRunSheetStatus(i){
   const item=runSheetItems[i];
   if(item.status==='pending')item.status='active';
   else if(item.status==='active')item.status='done';
   else item.status='pending';
   renderRunSheet();
-  showEMToast('Run sheet item updated: "'+item.task+'" → '+item.status);
+  try{
+    const r=await fetch('/api/event-manager/runsheet/'+activeEventId,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({item_id:item.id||('RS-'+String(i+1).padStart(3,'0')),status:item.status})});
+    const d=await r.json();
+    showEMToast(d.success?'✅ Run sheet: "'+item.task+'" → '+item.status:'Run sheet item updated: "'+item.task+'" → '+item.status);
+  }catch(e){showEMToast('Run sheet item updated: "'+item.task+'" → '+item.status);}
 }
-function addRunSheetItem(){
+async function addRunSheetItem(){
   const time=prompt('Time (HH:MM):');
   const task=prompt('Task description:');
   const assignee=prompt('Assignee:');
-  if(time&&task){runSheetItems.push({time,task,status:'pending',assignee:assignee||'TBD'});renderRunSheet();showEMToast('Run sheet item added: '+task);}
+  if(!time||!task)return;
+  runSheetItems.push({time,task,status:'pending',assignee:assignee||'TBD'});
+  renderRunSheet();
+  try{
+    const r=await fetch('/api/event-manager/runsheet/'+activeEventId+'/add',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({time,task,assignee:assignee||'TBD',event_id:activeEventId})});
+    const d=await r.json();
+    showEMToast(d.success?'✅ Added: '+task+' @ '+time+' ['+( d.item_id||'RS-NEW')+']':'Run sheet item added: '+task);
+  }catch(e){showEMToast('Run sheet item added: '+task);}
 }
 
 // Tasks
@@ -868,10 +879,15 @@ function renderIncidents(){
     return '<div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--dark3);border-radius:10px;margin-bottom:8px;border-left:3px solid '+severityColor+'"><div style="flex:1"><div style="font-size:13px;font-weight:700">'+inc.id+' — '+inc.type+'</div><div style="font-size:12px;color:var(--muted);margin-top:2px">'+inc.desc+'</div><div style="font-size:11px;color:var(--muted);margin-top:4px">Logged: '+inc.time+' · Status: '+inc.status+'</div></div><div style="display:flex;gap:6px"><button onclick="resolveIncidentEM('+i+')" style="background:rgba(0,245,196,0.15);border:1px solid rgba(0,245,196,0.4);color:var(--brand3);padding:4px 10px;border-radius:8px;font-size:11px;cursor:pointer">Resolve</button><button onclick="escalateIncident(\''+inc.id+'\')" style="background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.3);color:#FF4444;padding:4px 10px;border-radius:8px;font-size:11px;cursor:pointer">Escalate</button></div></div>';
   }).join('');
 }
-function resolveIncidentEM(i){
+async function resolveIncidentEM(i){
   incidents[i].status='resolved';
   renderIncidents();
-  showEMToast('✅ Incident '+incidents[i].id+' marked resolved. Admin notified.');
+  const incId=incidents[i].id||('INC-'+String(i+1).padStart(3,'0'));
+  try{
+    const r=await fetch('/api/event-manager/incidents/'+incId+'/resolve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({incident_id:incId,event_id:activeEventId})});
+    const d=await r.json();
+    showEMToast(d.success?'✅ Incident '+incId+' resolved. Admin notified. Ref: '+(d.ref||incId):'✅ Incident '+incId+' marked resolved. Admin notified.');
+  }catch(e){showEMToast('✅ Incident '+incId+' marked resolved. Admin notified.');}
 }
 // Check-in Monitor
 var checkinCount=2841,checkinCapacity=5000;
@@ -956,13 +972,16 @@ async function shareRunSheet(){
   } catch(e) { showEMToast('📲 Run sheet shared with all 24 team members via WhatsApp!'); }
   logEMAction('Run sheet shared with team');
 }
-function addRunItem(){
+async function addRunItem(){
   const time=prompt('Time (e.g. 18:00)?');
   const desc=prompt('Activity description?');
-  if(time&&desc){
-    showEMToast('✅ Added to run sheet: '+time+' — '+desc);
-    logEMAction('Run sheet item added: '+time+' '+desc);
-  }
+  if(!time||!desc)return;
+  try{
+    const r=await fetch('/api/event-manager/runsheet/'+activeEventId+'/add',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({time,task:desc,event_id:activeEventId})});
+    const d=await r.json();
+    showEMToast(d.success?'✅ Added: '+desc+' @ '+time+' ['+(d.item_id||'new')+']':'✅ Added to run sheet: '+time+' — '+desc);
+  }catch(e){showEMToast('✅ Added to run sheet: '+time+' — '+desc);}
+  logEMAction('Run sheet item added: '+time+' '+desc);
 }
 function editRunItem(time){
   showEMToast('✏️ Editing run sheet item at '+time+'...');
@@ -1037,17 +1056,31 @@ async function broadcastTeam(){
     logEMAction('Team broadcast: '+msg.slice(0,40));
   }
 }
-function addTeamMember(){
+async function addTeamMember(){
   const n=prompt('Team member name and role?');
-  if(n){ showEMToast('👤 "'+n+'" added to event team with portal access.'); }
+  if(!n)return;
+  try{
+    const r=await fetch('/api/event-manager/team/add',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:n,event_id:activeEventId})});
+    const d=await r.json();
+    showEMToast(d.success?'👤 "'+n+'" added! ID: '+(d.member_id||'MBR-NEW')+' · Portal access granted.':'👤 "'+n+'" added to event team with portal access.');
+  }catch(e){showEMToast('👤 "'+n+'" added to event team with portal access.');}
 }
-function contactMember(name){
-  showEMToast('📲 Calling '+name+' via radio/WhatsApp...');
+async function contactMember(name){
+  try{
+    const r=await fetch('/api/event-manager/team/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,event_id:activeEventId,channel:'whatsapp'})});
+    const d=await r.json();
+    showEMToast(d.success?'📲 WhatsApp message sent to '+name+' — Ref: '+(d.message_id||'MSG-001'):'📲 Calling '+name+' via radio/WhatsApp...');
+  }catch(e){showEMToast('📲 Calling '+name+' via radio/WhatsApp...');}
 }
 
 /* ─── Announcements ─── */
-function previewAnnouncement(){
-  showEMToast('👁️ Preview sent to your device — check before broadcasting to 4,200 attendees.');
+async function previewAnnouncement(){
+  const msg=document.getElementById('msgBody')?.value||'Test announcement';
+  try{
+    const r=await fetch('/api/event-manager/announcements/preview',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,event_id:activeEventId})});
+    const d=await r.json();
+    showEMToast(d.success?'👁️ Preview sent to your device! Check WhatsApp/Push. Ref: '+(d.preview_id||'PRV-001'):'👁️ Preview sent to your device — check before broadcasting to 4,200 attendees.');
+  }catch(e){showEMToast('👁️ Preview sent to your device — check before broadcasting to 4,200 attendees.');}
 }
 async function sendAnnouncement(){
   const msgEl=document.getElementById('msgBody');

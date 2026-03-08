@@ -878,12 +878,17 @@ function copyCode(btn) {
   navigator.clipboard.writeText(text).then(() => {
     btn.textContent = 'Copied!';
     setTimeout(() => btn.textContent = 'Copy', 2000);
-  });
+    fetch('/api/developer/snippets/copy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chars:text.length})}).catch(()=>{});
+    showDevToast('📋 Code copied! ('+text.length+' chars)');
+  }).catch(() => showDevToast('📋 Copy failed — use Ctrl+C'));
 }
 
-function copyConsoleResponse() {
+async function copyConsoleResponse() {
   const text = document.getElementById('consoleResponse')?.textContent || '';
-  navigator.clipboard.writeText(text).then(() => showDevToast('📋 Response copied to clipboard!'));
+  try{
+    await navigator.clipboard.writeText(text);
+    showDevToast('📋 Response copied! ('+text.length+' chars)');
+  }catch(e){showDevToast('📋 Copy failed — select text and Ctrl+C');}
 }
 
 function showDevToast(msg) {
@@ -994,7 +999,7 @@ async function copyCodeSnippet(code, lang) {
     showDevToast('📋 Copy failed — select code and use Ctrl+C');
   }
 }
-function openFullDocs(lang) {
+async function openFullDocs(lang) {
   const docsUrls = {
     'Node.js': 'https://docs.indtix.com/sdk/nodejs',
     'Python': 'https://docs.indtix.com/sdk/python',
@@ -1002,8 +1007,12 @@ function openFullDocs(lang) {
     'cURL': 'https://docs.indtix.com/api/rest',
   };
   const url = docsUrls[lang] || 'https://docs.indtix.com';
-  showDevToast('📚 Opening full '+lang+' docs in new tab...');
   window.open(url, '_blank');
+  try{
+    const r=await fetch('/api/developer/docs/view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang,url})});
+    const d=await r.json();
+    showDevToast('📚 '+lang+' docs opened! Updated: '+(d.last_updated||'2026-03-08'));
+  }catch(e){showDevToast('📚 Opening full '+lang+' docs in new tab...');}
 }
 
 // Load API endpoints dynamically

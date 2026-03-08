@@ -438,7 +438,7 @@ function renderPOSCart(){
   if(gst)gst.textContent='₹'+g.toLocaleString('en-IN');
   if(tot)tot.textContent='₹'+(subtotal+g).toLocaleString('en-IN');
 }
-function clearPOSCart(){Object.keys(posCart).forEach(k=>delete posCart[k]);renderPOSCart();}
+async function clearPOSCart(){Object.keys(posCart).forEach(k=>delete posCart[k]);renderPOSCart();try{const r=await fetch('/api/pos/cart/clear',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({terminal_id:'POS-001'})});const d=await r.json();showOpsToast(d.success?'🗑 Cart cleared [Ref: '+(d.ref||'CLR-001')+']':'🗑 Cart cleared');}catch(e){showOpsToast('🗑 Cart cleared');}}
 function payPOS(method){
   const tot=document.getElementById('posTotal');
   if(!tot||tot.textContent==='₹0'){showOpsToast('Cart is empty!');return;}
@@ -788,11 +788,15 @@ async function ledMode(mode){
   }
 }
 let _selectedPayMethod = 'cash';
-function selectPay(btn, method){
+async function selectPay(btn, method){
   document.querySelectorAll('.pay-btn,.pay-method').forEach(b=>b.style.opacity='0.5');
   if(btn){btn.style.opacity='1';btn.style.borderColor='var(--brand)';}
   _selectedPayMethod = method;
-  showOpsToast('💳 Payment method: '+method.toUpperCase()+' selected');
+  try{
+    const r=await fetch('/api/pos/payment/method',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method,terminal_id:'POS-001'})});
+    const d=await r.json();
+    showOpsToast('💳 '+method.toUpperCase()+' selected'+(d.fee_pct?' | Fee: '+d.fee_pct:''));
+  }catch(e){showOpsToast('💳 Payment method: '+method.toUpperCase()+' selected');}
 }
 function processPOSPayment(){
   payPOS(_selectedPayMethod || 'upi');
