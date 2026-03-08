@@ -4,10 +4,10 @@
 - **Name**: INDTIX
 - **Goal**: Full-stack multi-portal event ticketing & management platform
 - **Company**: Oye Imagine Private Limited (GSTIN: 27AABCO1234A1Z5)
-- **Phase**: 14.0 (Production)
-- **QA Score**: 67/67 checks passing ✅ | 9/9 production smoke tests ✅ | 0 console errors
-- **Total API Endpoints**: 340 routes
-- **Total Lines of Code**: ~21,500 across 10 HTML portals + 5,800-line backend
+- **Phase**: 14.1 (Production)
+- **QA Score**: 100/100 checks passing ✅ | 9/9 production smoke tests ✅ | 0 console errors
+- **Total API Endpoints**: 390+ routes (340 unique + field-alias overrides)
+- **Total Lines of Code**: ~22,800 across 10 HTML portals + 6,600-line backend
 
 ## Live URLs
 | Portal | URL |
@@ -94,11 +94,11 @@
 - Webhook registration, API key generation, rate limit monitor
 
 ## API Summary
-- **Total endpoints**: 295+ (297 routes including aliases)
-- **API version**: v13
-- **Phase**: 13
+- **Total endpoints**: 390+ routes (340 unique + field-alias aliases)
+- **API version**: v14
+- **Phase**: 14.1
 - **Base URL**: `https://indtix.pages.dev/api/`
-- **Worker size**: ~244 KB (well within 25 MB limit)
+- **Worker size**: ~259 KB (well within 25 MB limit)
 
 ### Phase 14 — New Endpoints (45 added)
 ```
@@ -223,14 +223,14 @@ POST /api/pos/sale / POST /api/scan/verify
 | **13** | **27 new APIs, all toast-only buttons wired, 105/105 QA, 295 endpoints** |
 | **14** | **45 new APIs, Ops/POS+LED+wristbands+organiser+brand wired, 67/67 QA, 340 endpoints** |
 
-## Phase 14 — Completed ✅
+## Phase 14.1 — Completed ✅ (QA: 100/100)
 - ✅ **Ops/POS: 12 buttons wired** — refund, void, cash-drawer, receipt, shift-report, gate-switch, scanning pause/resume, supervisor call, emergency broadcast, announcement
 - ✅ **Wristbands: 4 real APIs** — issue, deactivate, bulk-issue, sync with LED controller
 - ✅ **LED Bands: 4 real APIs** — scene, color, mode, emergency (ops.html)
 - ✅ **Organiser LED: 5 real APIs** — preview, add segment, rehearsal, activate LIVE, health check
 - ✅ **Organiser: Seat map** — GET + PUT `/api/organiser/seatmap/:event_id`
-- ✅ **Organiser: Attendee export** — GET `/api/organiser/events/:id/attendees/export`
-- ✅ **Organiser: Bulk broadcast** — POST `/api/organiser/events/:id/broadcast` (WhatsApp + Email)
+- ✅ **Organiser: Attendee export** — GET/POST `/api/events/:id/attendees/export`
+- ✅ **Organiser: Bulk broadcast** — POST `/api/organiser/comms/whatsapp` & `/api/organiser/comms/email`
 - ✅ **Organiser: Event withdraw** — POST `/api/organiser/events/:id/withdraw`
 - ✅ **Organiser: Check-in report** — GET `/api/organiser/checkin/:event_id`
 - ✅ **Organiser: Ticket/Addon save** — POST `/api/organiser/tickets/save`, `/api/organiser/addons/save`
@@ -240,8 +240,20 @@ POST /api/pos/sale / POST /api/scan/verify
 - ✅ **Fan: Grievance portal** — POST `/api/support/grievance` with ticket ID
 - ✅ **Fan: Clipboard referral** — async `navigator.clipboard.writeText()` with promise handling
 - ✅ **Admin: Settlements list** — GET `/api/admin/settlements` (was 404)
+- ✅ **Admin: Event approve/reject** — POST `/api/admin/events/queue/:id/approve|reject`
+- ✅ **Admin: GST report** — GET `/api/admin/gst/report`
 - ✅ **Venue calendar** — now includes `slots` array for date-range UI
-- ✅ **340 total API endpoints**, version 14.0.0
+- ✅ **Booking history** — GET `/api/users/:id/bookings`
+- ✅ **Bulk booking** — POST `/api/bookings/bulk` (supports `seats` array param)
+- ✅ **Promo apply** — POST `/api/promo/apply` with FEST20, INDY20, FLAT100, NEWUSER codes
+- ✅ **FAQ** — GET `/api/faq` with 5 platform FAQs
+- ✅ **Reports download** — GET `/api/reports/:type/download` with `url` field
+- ✅ **LED wristband status** — GET `/api/events/:id/led-bands` with zones
+- ✅ **LED wristband control** — POST `/api/events/:id/led-bands/control`
+- ✅ **Ops shift report** — POST `/api/ops/shift/report`
+- ✅ **Emergency broadcast** — POST `/api/ops/emergency/broadcast`
+- ✅ **OpenAPI JSON** — GET `/api/developer/openapi?format=json` or `Accept: application/json`
+- ✅ **390+ total API routes**, version 14.0.0, QA score **100/100**
 
 ## Phase 15 Roadmap
 - ✅ **Admin: Venue approvals** — View / Approve / Reject wired to `/api/admin/venues/queue`
@@ -303,14 +315,16 @@ POST /api/pos/sale / POST /api/scan/verify
 3. Organiser portal: create events, track analytics, manage team
 4. Admin portal: approve events, manage KYC, settlements, refunds
 5. Venue portal: manage bookings, calendar, staff, incidents
-6. Developer portal: explore 340 API endpoints, download SDK
+6. Developer portal: explore 390+ API endpoints, download SDK
 
 ## Deployment
 - **Platform**: Cloudflare Pages
 - **Project**: `indtix`
 - **Branch**: `main`
-- **Status**: ✅ Active — v14.0.0
+- **Status**: ✅ Active — v14.0.0 (Phase 14.1)
+- **QA Score**: 100/100 ✅ | 9/9 smoke tests ✅
 - **Tech Stack**: Hono 4 + TypeScript + Cloudflare Workers
+- **Last Deployed**: 2026-03-08 (Phase 14.1)
 - **Last Deployed**: 2026-03-08 (Phase 14)
 - **Build command**: `npm run build`
 - **Output dir**: `dist/`
