@@ -25,6 +25,8 @@ app.use('/api/admin/*', async (c, next) => {
 
 // ─── Portal Routes ─────────────────────────────────────────
 app.get('/', (c) => c.redirect('/fan'))
+app.get('/index', (c) => c.redirect('/fan'))
+app.get('/index.html', (c) => c.redirect('/fan'))
 app.get('/developer', (c) => c.redirect('/developer.html'))
 
 // manifest.json — served inline so wrangler dev + production both work

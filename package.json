@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && cp public/*.html dist/ && cp public/manifest.json dist/ 2>/dev/null; node -e \"require('fs').writeFileSync('dist/_routes.json', JSON.stringify({version:1,include:['/_worker.js','/api/*','/favicon.ico','/manifest.json','/apple-touch-icon.png','/apple-touch-icon-precomposed.png','/sitemap.xml','/robots.txt'],exclude:['/fan','/fan.html','/organiser','/organiser.html','/venue','/venue.html','/event-manager','/event-manager.html','/admin','/admin.html','/ops','/ops.html','/brand','/brand.html','/portals','/portals.html','/architecture','/architecture.html','/architecture-spec','/architecture-spec.html','/developer','/developer.html','/sw.js']}))\"",
+    "build": "vite build && cp public/*.html dist/ && cp public/manifest.json dist/ 2>/dev/null; node -e \"require('fs').writeFileSync('dist/_routes.json', JSON.stringify({version:1,include:['/_worker.js','/','/index.html','/index','/api/*','/favicon.ico','/manifest.json','/apple-touch-icon.png','/apple-touch-icon-precomposed.png','/sitemap.xml','/robots.txt'],exclude:['/fan','/fan.html','/organiser','/organiser.html','/venue','/venue.html','/event-manager','/event-manager.html','/admin','/admin.html','/ops','/ops.html','/brand','/brand.html','/portals','/portals.html','/architecture','/architecture.html','/architecture-spec','/architecture-spec.html','/developer','/developer.html','/sw.js']}))\"",
     "build:prod": "vite build && cp public/*.html dist/",
     "dev:sandbox": "wrangler pages dev dist --ip 0.0.0.0 --port 3000",
     "preview": "wrangler pages dev dist",
