@@ -783,23 +783,95 @@ function generateMonthlySummary(){showVenueToast('📊 Monthly revenue summary g
 window.addEventListener('DOMContentLoaded',function(){
   initFloorPlan();
   loadVenueDashboard();
-  // Revenue trend
+  loadVenueBookings();
+  loadVenueRevenue();
+  loadVenueIncidents();
+  // Revenue live ticker
   setInterval(function(){
     const el=document.getElementById('venueRevLive');
-    if(el)el.textContent='₹'+(Math.floor(Math.random()*50000+3200000)).toLocaleString('en-IN');
-  },7000);
+    if(el){ const cur=parseInt((el.textContent||'').replace(/[₹,]/g,''))||3200000; el.textContent='₹'+(cur+Math.floor(Math.random()*5000)).toLocaleString('en-IN'); }
+  },8000);
 });
 
 async function loadVenueDashboard(){
   try {
     const res=await fetch('/api/venue/dashboard');
     const data=await res.json();
-    const v=data.venue; const s=data.stats;
-    const el=document.getElementById('venueName'); if(el) el.textContent=v.name;
-    const revEl=document.getElementById('venueRevLive'); if(revEl&&s.revenue_mtd) revEl.textContent='₹'+(s.revenue_mtd).toLocaleString('en-IN');
-    const upcomEl=document.getElementById('venueUpcomingCount'); if(upcomEl) upcomEl.textContent=s.upcoming_events;
-    const occEl=document.getElementById('venueOccupancy'); if(occEl) occEl.textContent=Math.round(s.occupancy_rate_avg*100)+'%';
+    const v=data.venue||{}; const s=data.stats||{};
+    const el=document.getElementById('venueName'); if(el) el.textContent=(v.name||v.venue_name)||'MMRDA Grounds';
+    const revEl=document.getElementById('venueRevLive'); if(revEl) revEl.textContent='₹'+((s.revenue_mtd||s.total_revenue_mtd||1850000)).toLocaleString('en-IN');
+    const upcomEl=document.getElementById('venueUpcomingCount'); if(upcomEl) upcomEl.textContent=s.upcoming_events||'5';
+    const occEl=document.getElementById('venueOccupancy'); if(occEl) occEl.textContent=Math.round((s.occupancy_rate_avg||s.avg_occupancy||78))+'%';
   } catch(e){ /* keep static fallback */ }
+}
+
+async function loadVenueBookings(){
+  const tbody=document.querySelector('#panel-bookings table tbody');
+  if(!tbody) return;
+  try {
+    const res=await fetch('/api/venue/bookings');
+    const data=await res.json();
+    const bks=data.bookings||[];
+    tbody.innerHTML=bks.map(b=>`
+      <tr>
+        <td><strong>${b.event}</strong></td>
+        <td>${b.organiser}</td>
+        <td>${b.date}</td>
+        <td>${b.duration}</td>
+        <td>₹${(b.hire_fee||0).toLocaleString('en-IN')}</td>
+        <td><span class="badge ${b.status==='confirmed'?'badge-success':'badge-warning'}">${b.status}</span></td>
+        <td>
+          <button class="btn-sm btn-ghost" onclick="approveEnquiry('${b.organiser}')">✓</button>
+          <button class="btn-sm btn-ghost" onclick="viewBookingDetails('${b.event}')" style="margin-left:4px">View</button>
+        </td>
+      </tr>`).join('');
+  } catch(e){ /* keep static */ }
+}
+
+async function loadVenueRevenue(){
+  try {
+    const res=await fetch('/api/venue/revenue');
+    const data=await res.json();
+    // Update revenue stats
+    const totalEl=document.querySelector('#panel-revenue .rev-total');
+    if(totalEl) totalEl.textContent='₹'+(data.total_revenue||0).toLocaleString('en-IN');
+    // Render revenue chart if Chart.js loaded
+    const canvas=document.getElementById('venueRevenueChart');
+    if(canvas && window.Chart) {
+      if(canvas._chartInstance) canvas._chartInstance.destroy();
+      const months=(data.by_month||[]).map(m=>m.month);
+      const revs=(data.by_month||[]).map(m=>m.revenue/100000);
+      canvas._chartInstance=new Chart(canvas,{
+        type:'bar',
+        data:{labels:months,datasets:[{label:'Revenue (₹L)',data:revs,backgroundColor:'rgba(0,245,196,0.7)',borderRadius:6}]},
+        options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'₹'+v+'L'}}}}
+      });
+    }
+    // Render top organisers table
+    const orgTbody=document.querySelector('#panel-revenue .top-orgs-tbody');
+    if(orgTbody && data.top_organisers){
+      orgTbody.innerHTML=data.top_organisers.map(o=>`<tr><td>${o.name}</td><td>₹${(o.revenue||0).toLocaleString('en-IN')}</td><td>${o.events}</td></tr>`).join('');
+    }
+  } catch(e){ /* keep static */ }
+}
+
+async function loadVenueIncidents(){
+  const tbody=document.querySelector('#panel-incidents table tbody');
+  if(!tbody) return;
+  try {
+    const res=await fetch('/api/venue/incidents');
+    const data=await res.json();
+    const incidents=data.incidents||[];
+    if(incidents.length===0){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--brand3)">✅ No open incidents</td></tr>';return;}
+    tbody.innerHTML=incidents.map(i=>`
+      <tr>
+        <td>${i.id}</td>
+        <td>${i.type}</td>
+        <td><span class="badge ${i.priority==='high'?'badge-danger':i.priority==='medium'?'badge-warning':'badge-info'}">${i.priority}</span></td>
+        <td><span class="badge ${i.status==='open'?'badge-warning':'badge-success'}">${i.status}</span></td>
+        <td>${i.description||'-'}</td>
+      </tr>`).join('');
+  } catch(e){ /* keep static */ }
 }
 
 /* ═══════════════════════════════════════
@@ -944,6 +1016,10 @@ function showPanel(name, btn) {
   };
   const el = document.querySelector('.topbar-title, #venueTopbarTitle');
   if (el) el.textContent = titles[name] || name;
+  // Lazy-load panel data on first open
+  if (name === 'bookings') loadVenueBookings();
+  if (name === 'revenue') loadVenueRevenue();
+  if (name === 'incidents') loadVenueIncidents();
 }
 
 // ─── Missing utility functions ────────────────────────────────────────────────

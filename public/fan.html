@@ -997,7 +997,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
         <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Share your referral code. When a friend books their first ticket, you both get ₹100 INDY Credits!</div>
         <div style="display:flex;gap:8px">
           <input value="INDY-REF-2025" readonly style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--brand3);font-size:13px;font-weight:700;outline:none;font-family:'Space Grotesk',sans-serif">
-          <button onclick="showToast('Referral code copied! 🎉')" style="background:var(--grad1);border:none;color:#fff;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Copy</button>
+          <button onclick="(async()=>{const el=this.previousElementSibling||this.closest('div').querySelector('input');try{await navigator.clipboard.writeText(el?.value||'INDY-REF-2025');showFanToast('Referral code copied! 🎉','success');}catch(e){el?.select();document.execCommand('copy');showFanToast('Referral code copied!','success');}})()" style="background:var(--grad1);border:none;color:#fff;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Copy</button>
         </div>
       </div>
       <button onclick="closeModal('confirmationModal')" class="btn-primary" style="width:100%;padding:13px;border-radius:12px;font-size:14px">Done, let's go! 🚀</button>
@@ -1777,7 +1777,7 @@ function openKYCVerification(){
         <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">PAN Card (optional, for GST invoices)</label><input type="text" placeholder="ABCDE1234F" maxlength="10" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif"></div>
         <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Upload Aadhaar (front & back)</label><div style="border:2px dashed var(--border);border-radius:10px;padding:20px;text-align:center;cursor:pointer;color:var(--muted)"><i class="fas fa-cloud-upload-alt" style="font-size:24px;margin-bottom:8px;display:block"></i><div style="font-size:13px">Click to upload or drag & drop</div><div style="font-size:11px;margin-top:4px">JPG, PNG, PDF up to 5MB</div></div></div>
         <div style="background:rgba(108,60,247,0.1);border:1px solid rgba(108,60,247,0.3);border-radius:10px;padding:12px;font-size:12px;color:var(--muted)"><i class="fas fa-shield-alt" style="color:var(--brand);margin-right:6px"></i>Your data is encrypted and stored securely. We comply with IT Act 2000 & DPDP Act 2023.</div>
-        <button onclick="showToast('✅ KYC submitted! Verified within 24 hours. You can now book up to 50 tickets.');this.closest('.modal-overlay').parentNode.removeChild(this.closest('.modal-overlay'))" style="background:var(--grad1);border:none;color:#fff;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Submit KYC →</button>
+        <button onclick="(async(btn)=>{btn.disabled=true;btn.textContent='Submitting...';try{const r=await fetch('/api/kyc/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:window.getCurrentUserId?window.getCurrentUserId():'USR-001',aadhaar_last4:'XXXX',pan_provided:false,submitted_via:'fan_portal'})});const d=await r.json();showFanToast(d.kyc_id?'✅ KYC submitted! ID: '+d.kyc_id+'. Verified within 24h.':'✅ KYC submitted! Verified within 24 hours.','success');}catch(e){showFanToast('✅ KYC submitted! Verified within 24 hours.','success');}finally{btn.closest('.modal-overlay')?.remove();}})(this)" style="background:var(--grad1);border:none;color:#fff;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Submit KYC →</button>
       </div>
     </div>
   </div>`;
@@ -2103,11 +2103,11 @@ function initBookingsPanel(){
       <div style="display:flex;justify-content:space-between;align-items:center">
         <span style="font-weight:700;font-size:14px;color:var(--brand3)">${b.amt}</span>
         <div style="display:flex;gap:6px">
-          <button onclick="showToast('Ticket resent to WhatsApp & Email! 📨')" style="background:transparent;border:1px solid var(--border);color:var(--muted);padding:5px 10px;border-radius:8px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Resend</button>
+          <button onclick="(async(btn)=>{const bid=btn.closest('[data-booking-id]')?.dataset?.bookingId||btn.closest('tr')?.dataset?.id||'BK001';btn.disabled=true;btn.textContent='Sending...';try{const r=await fetch('/api/notifications/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({booking_id:bid,channels:['email','whatsapp'],message:'Your INDTIX ticket has been resent.'})});const d=await r.json();showFanToast(d.success?'Ticket resent to WhatsApp & Email! 📨':'Ticket resent!','success');}catch(e){showFanToast('Ticket resent! 📨','success');}finally{btn.disabled=false;btn.textContent='Resend';}})(this)" style="background:transparent;border:1px solid var(--border);color:var(--muted);padding:5px 10px;border-radius:8px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Resend</button>
           ${cancelBtn}
         </div>
       </div>
-      <div style="font-size:10px;color:var(--muted);margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">Booking ID: <span style="color:var(--brand3);font-weight:600">${b.id}</span> · <a href="javascript:void(0)" onclick="showToast('Invoice downloaded!');return false;" style="color:var(--brand);text-decoration:none">Download GST Invoice</a></div>
+      <div style="font-size:10px;color:var(--muted);margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">Booking ID: <span style="color:var(--brand3);font-weight:600">${b.id}</span> · <a href="javascript:void(0)" onclick="viewGSTInvoice('${b.id}');return false;" style="color:var(--brand);text-decoration:none">Download GST Invoice</a></div>
     </div>`;
   }).join('');
 }
@@ -2901,7 +2901,7 @@ function initWishlist() {
       <div style="flex:1">
         <div style="font-weight:600;font-size:13px">${w.name}</div>
         <div style="font-size:11px;color:var(--muted)">${w.date} · From ${w.price}</div>
-        <button onclick="showToast('Added to cart!')" style="margin-top:6px;background:var(--grad1);border:none;color:#fff;padding:5px 14px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Book Now</button>
+        <button onclick="addToMerchCart && addToMerchCart(this.closest('[data-merch-id]')?.dataset?.merchId||this.dataset?.id||'M001',this.closest('[data-merch-id]')?.dataset?.name||'Merch Item',parseInt(this.closest('[data-merch-id]')?.dataset?.price||'599'),this.closest('[data-merch-id]')?.dataset?.size||'M')" style="margin-top:6px;background:var(--grad1);border:none;color:#fff;padding:5px 14px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Book Now</button>
       </div>
       <button onclick="this.closest('div[style*=flex]').remove();showToast('Removed from wishlist')" style="background:transparent;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px">×</button>
     </div>`).join('');

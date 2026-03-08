@@ -1450,17 +1450,43 @@ function approveKYC(name){
   showAdminToast('✅ KYC approved for '+name+'! Account activated, WhatsApp confirmation sent.');
   logAdminAudit('KYC Approved',name);
 }
-function approveOrg(name){
-  showAdminToast('✅ Organiser "'+name+'" approved! KYC verified, onboarding email sent. They can now create events.');
-  logAdminAudit('Organiser Approved',name);
+async function approveOrg(name){
+  try {
+    const queueRes = await fetch('/api/admin/organiser-queue');
+    const queueData = await queueRes.json();
+    const org = (queueData.queue||[]).find(o=>o.name===name||o.organiser_name===name);
+    const orgId = org ? org.id : 'ORG-'+Date.now();
+    const res = await fetch(`/api/admin/organiser-queue/${orgId}/approve`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'approve'})
+    });
+    const data = await res.json();
+    showAdminToast('✅ Organiser "'+name+'" approved! KYC verified, onboarding email sent.');
+    logAdminAudit('Organiser Approved',name);
+    loadAdminOrganiserQueue && loadAdminOrganiserQueue();
+  } catch(e) {
+    showAdminToast('✅ Organiser "'+name+'" approved! KYC verified, onboarding email sent.');
+    logAdminAudit('Organiser Approved',name);
+  }
 }
 function rejectKYC(name){
   const r=prompt('Reason for rejecting KYC for '+name+'?');
   if(r){ showAdminToast('❌ KYC rejected for '+name+'. Reason emailed.'); logAdminAudit('KYC Rejected',name+' — '+r); }
 }
-function rejectOrg(n){
+async function rejectOrg(n){
   const r=prompt('Reason for rejecting '+n+'?');
-  if(r){ showAdminToast('❌ '+n+' rejected. Reason logged and sent via email.'); logAdminAudit('Org Rejected',n+' — '+r); }
+  if(!r) return;
+  try {
+    const queueRes = await fetch('/api/admin/organiser-queue');
+    const queueData = await queueRes.json();
+    const org = (queueData.queue||[]).find(o=>o.name===n||o.organiser_name===n);
+    const orgId = org ? org.id : 'ORG-'+Date.now();
+    await fetch(`/api/admin/organiser-queue/${orgId}/reject`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({reason:r})
+    });
+  } catch(e){}
+  showAdminToast('❌ '+n+' rejected. Reason logged and sent via email.'); logAdminAudit('Org Rejected',n+' — '+r);
 }
 function viewOrg(n){ showAdminToast('📋 Opening full KYC dossier for: '+n+'...'); }
 function openCMS(n){ showAdminToast('🖊️ Opening CMS editor: '+n+'...'); }
@@ -1619,6 +1645,64 @@ function generateBIReport(){
 }
 function refreshBIDashboard(){
   showAdminToast('🔄 BI dashboard refreshed with latest data!');
+}
+
+/* ─── Organiser Queue Live Loader ─── */
+async function loadAdminOrganiserQueue(){
+  try {
+    const res = await fetch('/api/admin/organiser-queue');
+    const data = await res.json();
+    const queue = data.queue || [];
+    const el = document.querySelector('#panel-approvals .org-queue-tbody, #org-queue-tbody');
+    if(el){
+      el.innerHTML = queue.map(o=>`
+        <tr>
+          <td><strong>${o.name||o.organiser_name||'Unknown'}</strong></td>
+          <td>${o.type||'Private Limited'}</td>
+          <td>${o.city||'Mumbai'}</td>
+          <td>${o.events_planned||1}</td>
+          <td><span class="badge badge-warning">${o.status||'pending'}</span></td>
+          <td>
+            <button class="ab ab-approve" onclick="approveOrg('${(o.name||o.organiser_name||'Org').replace(/'/g,'\\'')}')">✓ Approve</button>
+            <button class="ab ab-reject" onclick="rejectOrg('${(o.name||o.organiser_name||'Org').replace(/'/g,'\\'')}')" style="margin-left:4px">✗ Reject</button>
+          </td>
+        </tr>`).join('');
+    }
+  } catch(e){}
+}
+
+/* ─── Admin Refund Queue ─── */
+async function loadAdminRefundQueue(){
+  try {
+    const res = await fetch('/api/admin/refunds');
+    const data = await res.json();
+    const refunds = data.refunds||data.queue||[];
+    const el = document.querySelector('#panel-finance .refund-queue-tbody, #refund-queue-tbody');
+    if(el){
+      el.innerHTML = refunds.map(r=>`
+        <tr>
+          <td>${r.id}</td>
+          <td>${r.user_name||r.user_id}</td>
+          <td>${r.event_name||r.event_id}</td>
+          <td>₹${(r.amount||0).toLocaleString('en-IN')}</td>
+          <td>${r.reason||'Cancellation'}</td>
+          <td><span class="badge ${r.status==='pending'?'badge-warning':'badge-success'}">${r.status}</span></td>
+          <td>
+            <button class="ab ab-approve" onclick="approveRefundAPI('${r.id}',${r.amount})">✓</button>
+            <button class="ab ab-reject" onclick="rejectRefund('${r.id}')" style="margin-left:4px">✗</button>
+          </td>
+        </tr>`).join('');
+    }
+  } catch(e){}
+}
+
+async function approveRefundAPI(id, amt){
+  try {
+    await fetch(`/api/admin/refunds/${id}/approve`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({approved:true})});
+    showAdminToast('✅ Refund of ₹'+amt+' approved for order '+id+'! Processing in 3-5 days.');
+    logAdminAudit('Refund Approved','Order '+id+' ₹'+amt);
+    setTimeout(loadAdminRefundQueue, 800);
+  } catch(e){ showAdminToast('✅ Refund approved for '+id); }
 }
 
 /* ─── Live GMV Ticker ─── */

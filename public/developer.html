@@ -964,7 +964,7 @@ async function loadEndpointList() {
   try {
     const res = await fetch('/api/developer/endpoints');
     const data = await res.json();
-    console.log(`Loaded ${data.total} endpoints from API`);
+    // endpoints loaded: data.total
   } catch(e) { /* static data shown */ }
 }
 
