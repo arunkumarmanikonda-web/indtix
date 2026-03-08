@@ -4,8 +4,9 @@
 - **Name**: INDTIX
 - **Goal**: Full-stack multi-portal event ticketing & management platform
 - **Company**: Oye Imagine Private Limited (GSTIN: 27AABCO1234A1Z5)
-- **Phase**: 11.0 (Production)
-- **QA Score**: 57/57 tests passing ✅ | 0 console errors across all 9 portals
+- **Phase**: 12.0 (Production)
+- **QA Score**: 115/115 checks passing ✅ | 0 console errors across all 9 portals
+- **Total API Endpoints**: 270
 
 ## Live URLs
 | Portal | URL |
@@ -166,13 +167,28 @@ GET  /api/developer/usage               — Dev usage (requests_today)
 - **Last Deployed**: 2026-03-08
 - **Build command**: `npm run build`
 - **Output dir**: `dist/`
-- **Worker size**: ~203 KB (well within 25 MB limit)
+- **Worker size**: ~218 KB (well within 25 MB limit)
 
-## Phase 12 Roadmap
+## Phase 12 — Completed ✅
+- ✅ **Venue portal live API wiring** – bookings, revenue, incidents panels load from API
+- ✅ **Admin organiser queue** – approveOrg/rejectOrg wired to `/api/admin/organiser-queue/:id/approve|reject`
+- ✅ **Admin refund queue** – loadAdminRefundQueue() + approveRefundAPI() wired to real API
+- ✅ **Fan: Clipboard referral copy** – `navigator.clipboard` API used, fallback to execCommand
+- ✅ **Fan: Ticket resend** – calls `/api/notifications/send` with booking_id
+- ✅ **Fan: GST Invoice link** – booking list "Download GST Invoice" calls `viewGSTInvoice()`
+- ✅ **Fan: KYC submit** – wired to `POST /api/kyc/submit`
+- ✅ **Fan: Merch Book Now** – calls `addToMerchCart()` with data attributes
+- ✅ **Developer portal** – console.log data leak fixed
+- ✅ **Backend** – new `POST /api/admin/organiser-queue/:id/reject` endpoint
+- ✅ **270 total API endpoints**, version 12.0.0
+
+## Phase 13 Roadmap
 - 🔜 Real authentication with Cloudflare D1 database
 - 🔜 Real booking persistence (D1 + KV)
 - 🔜 WebSocket-based live check-in dashboard
 - 🔜 Stripe/Razorpay payment integration
 - 🔜 SendGrid email notifications
 - 🔜 PWA offline mode improvements
+- 🔜 Fan portal: interactive full SVG seat-map with live availability sync
+- 🔜 Admin portal: full user-management panel with live search/filter
 - 🔜 Bundle Tailwind CSS (remove CDN dependency)
