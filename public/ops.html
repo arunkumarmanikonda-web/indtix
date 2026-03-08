@@ -416,6 +416,9 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;min
 
 <script>
 
+// Active event for ops portal — set from URL or event selector
+const opsEventId = new URLSearchParams(location.search).get('event_id') || 'e1';
+
 const posCart = {};
 function renderPOSCart(){
   const el=document.getElementById('posCart');
@@ -466,7 +469,7 @@ async function simulateScan(qrCode){
 
   const code = qrCode || 'BK'+Math.random().toString(36).slice(2,9).toUpperCase();
   try {
-    const res=await fetch('/api/scan/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({qr_code:code,event_id:'e1',gate_id:'Gate 2'})});
+    const res=await fetch('/api/scan/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({qr_code:code,event_id:opsEventId,gate_id:'Gate 2'})});
     const data=await res.json();
     if(data.result==='valid'){
       result.className='scan-result valid';
@@ -586,7 +589,7 @@ async function processPayment(method){
   const gst=Math.round(sub*0.18);
   const total=sub+gst;
   try {
-    const res=await fetch('/api/pos/sale',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',items,payment_method:method,gate_id:'Gate 2',operator_id:'OPS001'})});
+    const res=await fetch('/api/pos/sale',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:opsEventId,items,payment_method:method,gate_id:'Gate 2',operator_id:'OPS001'})});
     const data=await res.json();
     clearCart();
     if(data.success){
@@ -887,7 +890,7 @@ async function logNewIncident(type, description, location = 'General') {
     const res = await fetch('/api/incidents', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type, description, location, event_id: 'e1' })
+      body: JSON.stringify({ type, description, location, event_id: opsEventId })
     });
     const data = await res.json();
     showOpsToast(`🚨 Incident logged: ${data.incident?.id || 'INC-NEW'}`);

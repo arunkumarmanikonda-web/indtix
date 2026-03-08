@@ -1509,6 +1509,8 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
 
 <script>
 // Non-duplicate utility functions kept here
+// Active event for organiser portal — defaults to first event, overridden when selecting an event
+let activeOrgEventId = 'e1';
 function filterEvents(btn,status){document.querySelectorAll('.filter-pill').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
 function viewAnalytics(){showPanel('analytics',null);}
 function manageTickets(){showPanel('tickets',null);}
@@ -1971,7 +1973,7 @@ function addSponsorForm() {
 function editSponsor(name) { showOrgToast(`✏️ Opening edit panel for ${name}...`); }
 async function loadSponsorMetrics() {
   try {
-    const res = await fetch('/api/events/e1/sponsors');
+    const res = await fetch(`/api/events/${activeOrgEventId}/sponsors`);
     const data = await res.json();
     showOrgToast(`✅ Loaded ${data.sponsors?.length||6} sponsors. Total value: ₹24,50,000`);
   } catch(e) { /* static data shown */ }
@@ -1989,7 +1991,7 @@ async function addNewSponsor() {
   try {
     const res = await fetch('/api/sponsors', {
       method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ name: 'New Sponsor', tier: 'Associate', value: 100000, event_id: 'e1' })
+      body: JSON.stringify({ name: 'New Sponsor', tier: 'Associate', value: 100000, event_id: activeOrgEventId })
     });
     const data = await res.json();
     if(data.success) showOrgToast(`✅ Sponsor ${data.sponsor.id} added!`);
@@ -2008,7 +2010,7 @@ async function runForecast() {
   try {
     const res = await fetch('/api/organiser/forecast', {
       method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ event_id: 'e1', horizon_days: 14 })
+      body: JSON.stringify({ event_id: activeOrgEventId, horizon_days: 14 })
     });
     const data = await res.json();
     if (output) {
@@ -2100,7 +2102,7 @@ async function loadAnalyticsV2(period = '30d', btn = null) {
     const [analyticsRes, paymentRes, forecastRes] = await Promise.all([
       fetch(`/api/organiser/analytics/v2?period=${period}`),
       fetch(`/api/payments/analytics?period=${period}`),
-      fetch('/api/ai/forecast', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_id: 'e1', metric: 'sales' }) })
+      fetch('/api/ai/forecast', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_id: activeOrgEventId, metric: 'sales' }) })
     ]);
     const analytics = await analyticsRes.json();
     const payment = await paymentRes.json();
