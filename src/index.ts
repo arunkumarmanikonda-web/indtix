@@ -97,17 +97,17 @@ app.get('/api/health', (c) => {
   return c.json({
     status: 'ok',
     platform: 'INDTIX',
-    version: '12.0.0',
+    version: '13.0.0',
     ts: new Date().toISOString(),
     portals: ['fan','organiser','venue','event-manager','admin','ops','brand','architecture-spec','developer'],
-    api_version: 'v12',
-    total_endpoints: 270,
+    api_version: 'v13',
+    total_endpoints: 295,
     uptime: 'operational',
     region: 'edge-global',
     built_with: 'Hono + Cloudflare Workers + TypeScript',
     gstin: '27AABCO1234A1Z5',
     company: 'Oye Imagine Private Limited',
-    phase: 12,
+    phase: 13,
     qa_score: '100%',
   })
 })
@@ -5182,4 +5182,300 @@ app.get('/api/events/:id/seat-map', (c) => {
   return c.json({ event_id: id, zones: zones.map(z => ({ name: z, available: seats.filter(s => s.zone===z && s.status==='available').length, total: seats.filter(s => s.zone===z).length })), seats, total: seats.length, available: seats.filter(s => s.status==='available').length, updated_at: new Date().toISOString() })
 })
 
+// ─── Phase 13 Extra: promo/validate + runsheet export ───
+app.get('/api/promo/validate', async (c) => {
+  const code = c.req.query('code') || ''
+  if (!code) return c.json({ valid: false, message: 'No promo code provided' })
+  const promos: Record<string, any> = {
+    'FIRSTTIX': { valid: true, type: 'flat', value: 100, description: '₹100 off first purchase' },
+    'INDIE20': { valid: true, type: 'percentage', value: 20, description: '20% off' },
+    'SUMMER25': { valid: true, type: 'percentage', value: 25, description: '25% off music events' },
+    'INDY20': { valid: true, type: 'percentage', value: 20, description: '20% off for fans' },
+  }
+  const promo = promos[code.toUpperCase()]
+  if (promo) return c.json({ valid: true, code: code.toUpperCase(), ...promo, updated_at: new Date().toISOString() })
+  return c.json({ valid: false, code, message: 'Promo code not found or expired' })
+})
+
+app.post('/api/event-manager/runsheet/:event_id/export', async (c) => {
+  const event_id = c.req.param('event_id')
+  const body = await c.req.json().catch(() => ({})) as any
+  const format = body.format || 'pdf'
+  return c.json({
+    success: true, event_id,
+    export_id: `RS-EXP-${Date.now()}`,
+    format,
+    download_url: `https://r2.indtix.com/exports/runsheet-${event_id}-${Date.now()}.${format}`,
+    items_exported: 12,
+    generated_at: new Date().toISOString()
+  })
+})
+
 export default app
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 13: NEW BACKEND ENDPOINTS
+// ═══════════════════════════════════════════════════════════
+
+// 1. GET /api/admin/venues/queue — venue approval queue
+app.get('/api/admin/venues/queue', (c) => {
+  return c.json({
+    queue: [
+      { id: 'VEN-P01', name: 'The Grand Amphitheatre', city: 'Pune', capacity: 8000, type: 'Outdoor', contact: 'Sanjay Patil', email: 's.patil@grand.in', submitted_at: '2026-03-01', docs: 'complete', status: 'pending' },
+      { id: 'VEN-P02', name: 'Echoes Underground', city: 'Bengaluru', capacity: 1200, type: 'Indoor Club', contact: 'Priya Nair', email: 'priya@echoes.io', submitted_at: '2026-03-04', docs: 'complete', status: 'pending' },
+      { id: 'VEN-P03', name: 'Sealink Skypark', city: 'Mumbai', capacity: 3000, type: 'Rooftop', contact: 'Rahul Mehta', email: 'rahul@skypark.com', submitted_at: '2026-03-06', docs: 'incomplete', status: 'under_review' },
+    ],
+    total: 3, updated_at: new Date().toISOString()
+  })
+})
+
+// 2. POST /api/admin/venues/queue/:id/approve
+app.post('/api/admin/venues/queue/:id/approve', async (c) => {
+  const id = c.req.param('id')
+  return c.json({ success: true, venue_id: id, status: 'approved', approved_at: new Date().toISOString(), notification_sent: true, message: `Venue ${id} approved and listed on platform.` })
+})
+
+// 3. POST /api/admin/venues/queue/:id/reject
+app.post('/api/admin/venues/queue/:id/reject', async (c) => {
+  const id = c.req.param('id')
+  const body = await c.req.json().catch(() => ({})) as any
+  return c.json({ success: true, venue_id: id, status: 'rejected', reason: body.reason || 'Non-compliance', rejected_at: new Date().toISOString(), notification_sent: true })
+})
+
+// 4. POST /api/admin/kyc/:id/approve — approve a KYC
+app.post('/api/admin/kyc/:id/approve', async (c) => {
+  const id = c.req.param('id')
+  return c.json({ success: true, kyc_id: id, status: 'approved', approved_at: new Date().toISOString(), gstin_issued: `27AABX${id.slice(-4)}A1Z5`, notification_sent: true, message: `KYC ${id} approved. Organiser can now publish events.` })
+})
+
+// 5. POST /api/admin/kyc/:id/reject — reject a KYC
+app.post('/api/admin/kyc/:id/reject', async (c) => {
+  const id = c.req.param('id')
+  const body = await c.req.json().catch(() => ({})) as any
+  return c.json({ success: true, kyc_id: id, status: 'rejected', reason: body.reason || 'Document mismatch', rejected_at: new Date().toISOString(), notification_sent: true })
+})
+
+// 6. POST /api/admin/settlements/:id/initiate — initiate a settlement payment
+app.post('/api/admin/settlements/:id/initiate', async (c) => {
+  const id = c.req.param('id')
+  const body = await c.req.json().catch(() => ({})) as any
+  const utr = 'UTR' + Date.now().toString().slice(-10)
+  return c.json({ success: true, settlement_id: id, utr, amount: body.amount || 1000000, status: 'initiated', bank: body.bank || 'HDFC Bank', eta: 'T+3 business days', initiated_at: new Date().toISOString(), message: `Settlement ${id} initiated. UTR: ${utr}` })
+})
+
+// 7. GET /api/admin/cms/pages — CMS pages list
+app.get('/api/admin/cms/pages', (c) => {
+  return c.json({
+    pages: [
+      { id: 'pg-home', title: 'Home Page Hero', slug: '/', status: 'published', last_edited: '2026-03-05', editor: 'Admin' },
+      { id: 'pg-about', title: 'About INDTIX', slug: '/about', status: 'published', last_edited: '2026-02-28', editor: 'Admin' },
+      { id: 'pg-blog', title: 'Blog: Sunburn 2026', slug: '/blog/sunburn-2026', status: 'draft', last_edited: '2026-03-07', editor: 'Content Team' },
+      { id: 'pg-promo', title: 'Holi Special Promo', slug: '/promo/holi', status: 'scheduled', last_edited: '2026-03-06', editor: 'Marketing' },
+    ],
+    total: 4, updated_at: new Date().toISOString()
+  })
+})
+
+// 8. PUT /api/admin/cms/pages/:id — update CMS page
+app.put('/api/admin/cms/pages/:id', async (c) => {
+  const id = c.req.param('id')
+  const body = await c.req.json().catch(() => ({})) as any
+  return c.json({ success: true, page_id: id, status: body.status || 'published', updated_at: new Date().toISOString(), message: `Page ${id} updated successfully.` })
+})
+
+// 9. GET /api/admin/security/logs — security audit logs
+app.get('/api/admin/security/logs', (c) => {
+  return c.json({
+    logs: [
+      { id: 'LOG-001', event: 'Admin Login', user: 'admin@indtix.com', ip: '103.21.42.180', city: 'Mumbai', status: 'success', ts: new Date(Date.now() - 600000).toISOString() },
+      { id: 'LOG-002', event: 'KYC Approved', user: 'admin@indtix.com', target: 'ORG-042', status: 'success', ts: new Date(Date.now() - 1800000).toISOString() },
+      { id: 'LOG-003', event: 'Failed Login Attempt', user: 'unknown', ip: '45.132.100.24', city: 'Unknown', status: 'blocked', ts: new Date(Date.now() - 3600000).toISOString() },
+      { id: 'LOG-004', event: 'Event Published', user: 'organiser@percept.com', target: 'e7', status: 'success', ts: new Date(Date.now() - 7200000).toISOString() },
+      { id: 'LOG-005', event: 'Bulk Export', user: 'admin@indtix.com', target: 'users_db', status: 'success', ts: new Date(Date.now() - 10800000).toISOString() },
+    ],
+    total: 5, threat_level: 'low', last_scan: new Date(Date.now() - 1800000).toISOString(), updated_at: new Date().toISOString()
+  })
+})
+
+// 10. POST /api/auth/forgot-password — forgot password
+app.post('/api/auth/forgot-password', async (c) => {
+  const body = await c.req.json().catch(() => ({})) as any
+  const email = body.email || 'user@example.com'
+  return c.json({ success: true, message: `Password reset link sent to ${email}`, expires_in: 900, email_masked: email.replace(/(.{2}).+(@.+)/, '$1***$2'), reset_token_hint: 'Check your email inbox and spam folder.' })
+})
+
+// 11. POST /api/auth/reset-password — reset password with token
+app.post('/api/auth/reset-password', async (c) => {
+  const body = await c.req.json().catch(() => ({})) as any
+  return c.json({ success: true, message: 'Password updated successfully. Please login with your new password.', updated_at: new Date().toISOString() })
+})
+
+// 12. GET /api/runsheet/:event_id — run sheet (alias)
+app.get('/api/runsheet/:event_id', async (c) => {
+  const event_id = c.req.param('event_id')
+  return c.redirect(`/api/event-manager/runsheet/${event_id}`)
+})
+
+// 13. POST /api/runsheet/:event_id/export — export run sheet
+app.post('/api/runsheet/:event_id/export', async (c) => {
+  const event_id = c.req.param('event_id')
+  const body = await c.req.json().catch(() => ({})) as any
+  const format = body.format || 'pdf'
+  return c.json({ success: true, event_id, format, download_url: `https://r2.indtix.com/runsheets/${event_id}-runsheet-${new Date().toISOString().slice(0,10)}.${format}`, generated_at: new Date().toISOString(), expires_at: new Date(Date.now() + 86400000).toISOString(), file_size_kb: 284 })
+})
+
+// 14. POST /api/event-manager/tasks — add task to run sheet
+app.post('/api/event-manager/tasks', async (c) => {
+  const body = await c.req.json().catch(() => ({})) as any
+  return c.json({ success: true, task_id: `TASK-${Math.random().toString(36).slice(2,8).toUpperCase()}`, event_id: body.event_id || 'e1', title: body.title || 'New task', assigned_to: body.assigned_to || 'Team', time: body.time || '12:00', priority: body.priority || 'medium', status: 'pending', created_at: new Date().toISOString() })
+})
+
+// 15. GET /api/event-manager/tasks/:event_id — get tasks for event
+app.get('/api/event-manager/tasks/:event_id', (c) => {
+  const event_id = c.req.param('event_id')
+  return c.json({
+    event_id, tasks: [
+      { id: 'TASK-001', title: 'Stage setup', assigned_to: 'Production Crew', time: '08:00', priority: 'high', status: 'completed' },
+      { id: 'TASK-002', title: 'Sound check', assigned_to: 'Audio Team', time: '14:00', priority: 'high', status: 'in_progress' },
+      { id: 'TASK-003', title: 'Artist arrival', assigned_to: 'Hospitality', time: '16:00', priority: 'medium', status: 'pending' },
+      { id: 'TASK-004', title: 'Gates open', assigned_to: 'Security', time: '17:00', priority: 'high', status: 'pending' },
+      { id: 'TASK-005', title: 'Headliner performance', assigned_to: 'Stage Manager', time: '20:00', priority: 'high', status: 'pending' },
+    ],
+    total: 5, completed: 1, in_progress: 1, pending: 3, updated_at: new Date().toISOString()
+  })
+})
+
+// 16. GET /api/reports/:type/download — report download URL
+app.get('/api/reports/:type/download', (c) => {
+  const type = c.req.param('type')
+  const formats: Record<string,string> = { attendees: 'Attendee List', revenue: 'Revenue Report', gst: 'GST Report', financial: 'Financial Summary', incidents: 'Incident Log' }
+  return c.json({ type, title: formats[type] || `${type} Report`, rows: Math.floor(Math.random() * 5000) + 500, format: 'pdf', download_url: `https://r2.indtix.com/reports/${type}-${new Date().toISOString().slice(0,10)}.pdf`, csv_url: `https://r2.indtix.com/reports/${type}-${new Date().toISOString().slice(0,10)}.csv`, generated_at: new Date().toISOString(), expires_at: new Date(Date.now() + 86400000 * 7).toISOString() })
+})
+
+// 17. POST /api/developer/sdk/download — SDK download
+app.post('/api/developer/sdk/download', async (c) => {
+  const body = await c.req.json().catch(() => ({})) as any
+  const lang = body.language || body.lang || 'javascript'
+  const urls: Record<string,string> = {
+    javascript: 'https://registry.npmjs.org/@indtix/sdk/-/@indtix/sdk-1.4.2.tgz',
+    python: 'https://pypi.org/packages/source/i/indtix/indtix-1.4.2.tar.gz',
+    php: 'https://packagist.org/packages/indtix/sdk#1.4.2',
+    go: 'https://pkg.go.dev/github.com/indtix/go-sdk@v1.4.2',
+  }
+  return c.json({ success: true, language: lang, version: '1.4.2', download_url: urls[lang] || urls.javascript, install_cmd: lang === 'python' ? 'pip install indtix' : lang === 'php' ? 'composer require indtix/sdk' : 'npm install @indtix/sdk', size_kb: { javascript: 48, python: 32, php: 29, go: 24 }[lang] || 48, checksums: { sha256: 'a' + Math.random().toString(36).slice(2, 66) }, generated_at: new Date().toISOString() })
+})
+
+// 18. GET /api/developer/openapi — OpenAPI spec download
+app.get('/api/developer/openapi', (c) => {
+  c.header('Content-Disposition', 'attachment; filename="indtix-openapi-v12.yaml"')
+  return c.text(`openapi: 3.0.3
+info:
+  title: INDTIX Platform API
+  version: 12.0.0
+  description: India's Live Event Platform — 270 endpoints
+servers:
+  - url: https://indtix.pages.dev
+    description: Production
+paths:
+  /api/events:
+    get:
+      summary: List events
+      tags: [Events]
+      parameters:
+        - name: city
+          in: query
+          schema: { type: string }
+        - name: category
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Events list
+  /api/events/{id}:
+    get:
+      summary: Get event detail
+      tags: [Events]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Event detail
+  /api/bookings:
+    post:
+      summary: Create booking
+      tags: [Bookings]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [event_id, user_id, tickets]
+              properties:
+                event_id: { type: string }
+                user_id: { type: string }
+                tickets: { type: integer }
+      responses:
+        '200':
+          description: Booking created
+`)
+})
+
+// 19. POST /api/developer/webhooks — register webhook
+app.post('/api/developer/webhooks', async (c) => {
+  const body = await c.req.json().catch(() => ({})) as any
+  return c.json({ success: true, webhook_id: `WH-${Math.random().toString(36).slice(2,10).toUpperCase()}`, url: body.url || 'https://your-server.com/webhook', events: body.events || ['booking.created', 'booking.cancelled'], secret: `whsec_${Math.random().toString(36).slice(2,34)}`, status: 'active', created_at: new Date().toISOString() })
+})
+
+// 20. GET /api/developer/webhooks — list webhooks
+app.get('/api/developer/webhooks', (c) => {
+  return c.json({ webhooks: [{ id: 'WH-SAMPLE01', url: 'https://demo.example.com/hook', events: ['booking.created', 'payment.completed'], status: 'active', last_triggered: new Date(Date.now() - 3600000).toISOString() }], total: 1, updated_at: new Date().toISOString() })
+})
+
+// 21. GET /api/admin/whitelabel — whitelabel configs list
+app.get('/api/admin/whitelabel', (c) => {
+  return c.json({
+    instances: [
+      { id: 'WL-001', name: 'BookMyShow Clone', brand_color: '#E91E63', domain: 'events.client1.com', status: 'active', events: 142, revenue: 8400000 },
+      { id: 'WL-002', name: 'Paytm Events Sub', brand_color: '#00B9F1', domain: 'events.paytm-demo.in', status: 'active', events: 84, revenue: 4200000 },
+      { id: 'WL-003', name: 'StagePass Beta', brand_color: '#6C3CF7', domain: 'stagepass.in', status: 'setup', events: 0, revenue: 0 },
+    ],
+    total: 3, active: 2, setup: 1, updated_at: new Date().toISOString()
+  })
+})
+
+// 22. POST /api/notifications/email — send email notification
+app.post('/api/notifications/email', async (c) => {
+  const body = await c.req.json().catch(() => ({})) as any
+  return c.json({ success: true, email_id: `EMAIL-${Date.now()}`, to: body.to || body.email || 'user@example.com', subject: body.subject || 'INDTIX Notification', status: 'queued', eta_minutes: 2, updated_at: new Date().toISOString() })
+})
+
+// 23. GET /api/organiser/events — list organiser's events
+app.get('/api/organiser/events', (c) => {
+  return c.json({
+    events: EVENTS_DATA.slice(0, 4).map(e => ({ ...e, tickets_sold: Math.floor(e.sold_pct * 50), revenue: Math.floor(e.sold_pct * 50 * e.price), checkins: Math.floor(e.sold_pct * 30) })),
+    total: 4, upcoming: 2, completed: 1, draft: 1, updated_at: new Date().toISOString()
+  })
+})
+
+// 24. GET /api/venue/calendar — venue availability calendar
+app.get('/api/venue/calendar', (c) => {
+  const now = new Date()
+  const slots = Array.from({ length: 30 }, (_, i) => {
+    const d = new Date(now)
+    d.setDate(d.getDate() + i + 1)
+    const ds = d.toISOString().slice(0, 10)
+    const status = i % 7 === 0 ? 'booked' : i % 11 === 0 ? 'blocked' : 'available'
+    return { date: ds, status, event: status === 'booked' ? 'Sunburn Arena' : null }
+  })
+  return c.json({ venue_id: 'VEN-001', slots, available: slots.filter(s => s.status === 'available').length, booked: slots.filter(s => s.status === 'booked').length, blocked: slots.filter(s => s.status === 'blocked').length, updated_at: new Date().toISOString() })
+})
+
+// 25. POST /api/venue/calendar/block — block dates
+app.post('/api/venue/calendar/block', async (c) => {
+  const body = await c.req.json().catch(() => ({})) as any
+  return c.json({ success: true, blocked_dates: body.dates || [new Date().toISOString().slice(0, 10)], reason: body.reason || 'Maintenance', updated_at: new Date().toISOString() })
+})
+

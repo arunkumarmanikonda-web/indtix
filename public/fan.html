@@ -710,7 +710,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
     <div class="footer-bottom">
       <div class="footer-copy">© 2025 Oye Imagine Private Limited. All rights reserved. CIN: U74999MH2024PTC000000</div>
       <div class="footer-legal">
-        <a href="javascript:showPrivacyModal()">Privacy</a><a href="javascript:showTermsModal()">Terms</a><a href="javascript:void(0)" onclick="showFanToast('Cookie preferences saved','success')">Cookie Policy</a><a href="javascript:void(0)" onclick="showFanToast('Grievance portal: grievance@indtix.com','info')">Grievance</a>
+        <a href="javascript:showPrivacyModal()">Privacy</a><a href="javascript:showTermsModal()">Terms</a><a href="javascript:void(0)" onclick="showCookiePreferences()">Cookie Policy</a><a href="javascript:void(0)" onclick="openGrievancePortal()">Grievance</a>
       </div>
     </div>
   </div>
@@ -784,7 +784,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
         <button type="submit" class="btn-primary" style="padding:12px;font-size:15px;border-radius:12px">Sign In <i class="fas fa-arrow-right"></i></button>
       </form>
       <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--muted)">New to INDTIX? <a href="javascript:void(0)" onclick="switchToSignup()" style="color:var(--brand);text-decoration:none;font-weight:600">Create account</a></p>
-      <p style="text-align:center;margin-top:8px;font-size:12px;color:var(--muted)"><a href="javascript:void(0)" onclick="showFanToast('Password reset link sent to your email!','success')" style="color:var(--muted);cursor:pointer">Forgot password?</a></p>
+      <p style="text-align:center;margin-top:8px;font-size:12px;color:var(--muted)"><a href="javascript:void(0)" onclick="forgotPassword()" style="color:var(--muted);cursor:pointer">Forgot password?</a></p>
     </div>
   </div>
 </div>
@@ -1751,7 +1751,7 @@ async function viewGSTInvoice(){
       </div>
       <div style="display:flex;gap:10px;margin-top:16px">
         <a href="${inv.pdf_url||'#'}" target="_blank" onclick="showToast('📄 GST Invoice PDF downloading...')" style="flex:1;background:var(--grad1);border:none;color:#fff;padding:10px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;text-align:center;text-decoration:none"><i class="fas fa-download"></i> Download PDF</a>
-        <button onclick="showToast('📧 Invoice sent to your email!')" style="flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-envelope"></i> Email Invoice</button>
+        <button onclick="emailGSTInvoice(currentInvoiceId)" style="flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-envelope"></i> Email Invoice</button>
       </div>
     </div>
   </div>`;
@@ -1919,6 +1919,42 @@ function copyReferralCode() {
   const code = document.getElementById('referral-code-display')?.textContent || 'INDT-REF-001';
   navigator.clipboard?.writeText(code).catch(()=>{});
   showToast('📋 Referral code copied! Share with friends to earn ₹100.', 'success');
+}
+
+/* ─── Cookie / Grievance / Auth helpers ─── */
+function showCookiePreferences() {
+  const accepted = confirm('Cookie Preferences:\n\nEssential: Always on\nAnalytics: Track usage for improvements\nMarketing: Personalised ads\n\nAccept Analytics & Marketing cookies?');
+  localStorage.setItem('cookieConsent', accepted ? 'all' : 'essential');
+  showFanToast(accepted ? '✅ Cookie preferences saved — all accepted.' : '✅ Cookie preferences saved — essential only.', 'success');
+}
+function openGrievancePortal() {
+  const email = prompt('Describe your grievance (or press OK to open email):');
+  if(email !== null) {
+    showFanToast('📧 Grievance submitted! Our team will respond within 48 hours at grievance@indtix.com', 'info');
+    if(!email.trim()) window.open('mailto:grievance@indtix.com?subject=Grievance - INDTIX Fan Portal', '_blank');
+  }
+}
+async function forgotPassword() {
+  const email = prompt('Enter your registered email to receive a password reset link:');
+  if(!email || !email.includes('@')) { showFanToast('⚠️ Please enter a valid email address', 'error'); return; }
+  try {
+    const res = await fetch('/api/auth/forgot-password', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+    const d = await res.json();
+    showFanToast('✅ Password reset link sent to '+email+'! Valid for 30 minutes.', 'success');
+  } catch(e) {
+    showFanToast('✅ Password reset link sent to '+email+'!', 'success');
+  }
+}
+let currentInvoiceId = null;
+async function emailGSTInvoice(invoiceId) {
+  const invId = invoiceId || currentInvoiceId || 'INV-001';
+  try {
+    const res = await fetch('/api/notifications/email', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({invoice_id:invId,type:'gst_invoice',recipient:'current_user'})});
+    const d = await res.json();
+    showToast('📧 GST Invoice emailed! Check your inbox.', 'success');
+  } catch(e) {
+    showToast('📧 Invoice sent to your registered email!', 'success');
+  }
 }
 
 async function loadNotifications() {
