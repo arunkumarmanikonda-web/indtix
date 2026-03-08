@@ -4913,8 +4913,8 @@ app.get('/api/payments/analytics', async (c) => {
 // ─── PHASE 12: UPDATE VERSION ───────────────────────────────────────────────
 app.get('/api/version', (c) => {
   return c.json({
-    version: '16.0.0', api_version: 'v15', phase: 16,
-    endpoints: 390, portals: 9,
+    version: '16.0.0', api_version: 'v16', phase: 16,
+    total_endpoints: 450, endpoints: 450, portals: 9,
     phase_15_features: [
       'Admin: RBAC role management, support tickets, city/category/partner/sponsor/API-key/affiliate management — all wired',
       'Event Manager: full/attendee/financial/incident reports, PA test, post-event, feedback, runsheet CRUD — all wired',
