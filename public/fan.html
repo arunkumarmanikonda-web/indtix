@@ -783,7 +783,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
         <input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password" style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif">
         <button type="submit" class="btn-primary" style="padding:12px;font-size:15px;border-radius:12px">Sign In <i class="fas fa-arrow-right"></i></button>
       </form>
-      <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--muted)">New to INDTIX? <a href="#" onclick="switchToSignup()" style="color:var(--brand);text-decoration:none;font-weight:600">Create account</a></p>
+      <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--muted)">New to INDTIX? <a href="javascript:void(0)" onclick="switchToSignup()" style="color:var(--brand);text-decoration:none;font-weight:600">Create account</a></p>
       <p style="text-align:center;margin-top:8px;font-size:12px;color:var(--muted)"><a href="javascript:void(0)" onclick="showFanToast('Password reset link sent to your email!','success')" style="color:var(--muted);cursor:pointer">Forgot password?</a></p>
     </div>
   </div>
@@ -810,7 +810,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
         <button type="submit" class="btn-primary" style="padding:12px;font-size:15px;border-radius:12px">Create Account <i class="fas fa-arrow-right"></i></button>
       </form>
       <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--muted)">By signing up, you agree to our <a href="javascript:showTermsModal()" style="color:var(--brand)">Terms</a> and <a href="javascript:showPrivacyModal()" style="color:var(--brand)">Privacy Policy</a>. GST invoice available for business bookings.</p>
-      <p style="text-align:center;margin-top:10px;font-size:13px;color:var(--muted)">Already have an account? <a href="#" onclick="switchToLogin()" style="color:var(--brand);text-decoration:none;font-weight:600">Sign in</a></p>
+      <p style="text-align:center;margin-top:10px;font-size:13px;color:var(--muted)">Already have an account? <a href="javascript:void(0)" onclick="switchToLogin()" style="color:var(--brand);text-decoration:none;font-weight:600">Sign in</a></p>
     </div>
   </div>
 </div>
@@ -822,8 +822,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
     <div class="modal-body">
       <h3 style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;margin-bottom:20px">Select Your City</h3>
       <input type="text" placeholder="Search city..." style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif;margin-bottom:16px">
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
-        ${['Mumbai','Delhi','Bengaluru','Pune','Hyderabad','Chennai','Kolkata','Ahmedabad','Jaipur','Goa','Chandigarh','Kochi'].map(c=>`<button onclick="selectCity('${c}')" style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px;color:var(--text);cursor:pointer;font-size:13px;font-family:'Inter',sans-serif;transition:all 0.2s" onmouseover="this.style.borderColor='var(--brand)'" onmouseout="this.style.borderColor='var(--border)'">${c}</button>`).join('')}
+      <div id="cityGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
       </div>
     </div>
   </div>
@@ -1034,25 +1033,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
   </div>
   <!-- Bookings panel -->
   <div id="acc-bookings" style="padding:16px">
-    ${[{id:'BK001',event:'Sunburn Arena',date:'Apr 15',status:'Confirmed',amt:'₹3,536',seats:'2 × GA'},{id:'BK002',event:'NH7 Weekender',date:'May 20',status:'Confirmed',amt:'₹6,538',seats:'2 × Premium'},{id:'BK003',event:'Comedy Central Live',date:'Mar 10',status:'Attended',amt:'₹1,036',seats:'1 × GA'},{id:'BK004',event:'Tech Summit 2025',date:'Feb 5',status:'Cancelled',amt:'₹5,118 (Refunded)',seats:'1 × General'}].map(b=>`
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-        <div>
-          <div style="font-weight:700;font-size:13px">${b.event}</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px">${b.seats} · ${b.date}</div>
-        </div>
-        <span style="font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:${b.status==='Confirmed'?'rgba(0,245,196,0.15)':b.status==='Attended'?'rgba(108,60,247,0.15)':'rgba(255,68,68,0.15)'};color:${b.status==='Confirmed'?'var(--brand3)':b.status==='Attended'?'var(--brand)':'#FF4444'};border:1px solid ${b.status==='Confirmed'?'rgba(0,245,196,0.3)':b.status==='Attended'?'var(--border)':'rgba(255,68,68,0.3)'}">${b.status}</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="font-weight:700;font-size:14px;color:var(--brand3)">${b.amt}</span>
-        <div style="display:flex;gap:6px">
-          <button onclick="showToast('Ticket resent to WhatsApp & Email! 📨')" style="background:transparent;border:1px solid var(--border);color:var(--muted);padding:5px 10px;border-radius:8px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Resend</button>
-          ${b.status==='Confirmed'?`<button onclick="openRefundFlow('${b.id}')" style="background:transparent;border:1px solid rgba(255,68,68,0.4);color:#FF4444;padding:5px 10px;border-radius:8px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Cancel</button>`:''}
-        </div>
-      </div>
-      <div style="font-size:10px;color:var(--muted);margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">Booking ID: <span style="color:var(--brand3);font-weight:600">${b.id}</span> · <a href="#" onclick="showToast('Invoice downloaded!')" style="color:var(--brand);text-decoration:none">Download GST Invoice</a></div>
-    </div>
-    `).join('')}
+    <!-- rendered by initBookingsPanel() -->
   </div>
   <!-- Wishlist panel -->
   <div id="acc-wishlist" style="padding:16px;display:none">
@@ -2072,6 +2053,59 @@ function selectCity(c){
   window.scrollTo({top:document.getElementById('events').offsetTop-80,behavior:'smooth'});
 }
 
+/* ─── CITY GRID INIT ─── */
+function initCityGrid(){
+  const grid = document.getElementById('cityGrid');
+  if(!grid) return;
+  const cities = ['Mumbai','Delhi','Bengaluru','Pune','Hyderabad','Chennai','Kolkata','Ahmedabad','Jaipur','Goa','Chandigarh','Kochi'];
+  grid.innerHTML = cities.map(c=>`<button onclick="selectCity('${c}')" style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px;color:var(--text);cursor:pointer;font-size:13px;font-family:'Inter',sans-serif;transition:all 0.2s" onmouseover="this.style.borderColor='var(--brand)'" onmouseout="this.style.borderColor='var(--border)'">${c}</button>`).join('');
+  // Wire up search filter
+  const searchInput = grid.previousElementSibling;
+  if(searchInput && searchInput.tagName==='INPUT'){
+    searchInput.addEventListener('input', function(){
+      const q = this.value.toLowerCase();
+      grid.querySelectorAll('button').forEach(btn=>{
+        btn.style.display = btn.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    });
+  }
+}
+
+/* ─── BOOKINGS PANEL INIT ─── */
+function initBookingsPanel(){
+  const container = document.getElementById('acc-bookings');
+  if(!container) return;
+  const bookings = [
+    {id:'BK001',event:'Sunburn Arena',date:'Apr 15',status:'Confirmed',amt:'₹3,536',seats:'2 × GA'},
+    {id:'BK002',event:'NH7 Weekender',date:'May 20',status:'Confirmed',amt:'₹6,538',seats:'2 × Premium'},
+    {id:'BK003',event:'Comedy Central Live',date:'Mar 10',status:'Attended',amt:'₹1,036',seats:'1 × GA'},
+    {id:'BK004',event:'Tech Summit 2025',date:'Feb 5',status:'Cancelled',amt:'₹5,118 (Refunded)',seats:'1 × General'}
+  ];
+  container.innerHTML = bookings.map(b=>{
+    const statusBg = b.status==='Confirmed'?'rgba(0,245,196,0.15)':b.status==='Attended'?'rgba(108,60,247,0.15)':'rgba(255,68,68,0.15)';
+    const statusColor = b.status==='Confirmed'?'var(--brand3)':b.status==='Attended'?'var(--brand)':'#FF4444';
+    const statusBorder = b.status==='Confirmed'?'rgba(0,245,196,0.3)':b.status==='Attended'?'var(--border)':'rgba(255,68,68,0.3)';
+    const cancelBtn = b.status==='Confirmed'?`<button onclick="openRefundFlow('${b.id}')" style="background:transparent;border:1px solid rgba(255,68,68,0.4);color:#FF4444;padding:5px 10px;border-radius:8px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Cancel</button>`:'';
+    return `<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <div>
+          <div style="font-weight:700;font-size:13px">${b.event}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">${b.seats} · ${b.date}</div>
+        </div>
+        <span style="font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:${statusBg};color:${statusColor};border:1px solid ${statusBorder}">${b.status}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-weight:700;font-size:14px;color:var(--brand3)">${b.amt}</span>
+        <div style="display:flex;gap:6px">
+          <button onclick="showToast('Ticket resent to WhatsApp & Email! 📨')" style="background:transparent;border:1px solid var(--border);color:var(--muted);padding:5px 10px;border-radius:8px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Resend</button>
+          ${cancelBtn}
+        </div>
+      </div>
+      <div style="font-size:10px;color:var(--muted);margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">Booking ID: <span style="color:var(--brand3);font-weight:600">${b.id}</span> · <a href="javascript:void(0)" onclick="showToast('Invoice downloaded!');return false;" style="color:var(--brand);text-decoration:none">Download GST Invoice</a></div>
+    </div>`;
+  }).join('');
+}
+
 /* ─── PAYMENT ─── */
 function selectPayment(btn,m){ document.querySelectorAll('.pay-btn').forEach(b=>{b.style.borderColor='var(--border)';b.style.background='var(--dark3)';}); btn.style.borderColor='var(--brand)'; btn.style.background='rgba(108,60,247,0.15)'; }
 
@@ -2125,6 +2159,8 @@ window.addEventListener('DOMContentLoaded',()=>{
   loadCities();
   loadCategories();
   createParticles();
+  initCityGrid();
+  initBookingsPanel();
   // GST Invoice modal container
   const gstDiv=document.createElement('div');gstDiv.id='gstInvoiceModal';document.body.appendChild(gstDiv);
   // Add My Account & KYC buttons to nav

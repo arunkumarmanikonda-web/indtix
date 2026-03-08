@@ -186,19 +186,97 @@ textarea{resize:vertical;min-height:80px}
       <div class="card">
         <div class="card-title">Venue Amenities & Facilities</div>
         <div class="amenity-grid" id="amenityGrid">
-          ${[
-            ['🎤','PA System & Stage','selected'],['💡','Professional Lighting','selected'],['🎥','AV & Projection','selected'],
-            ['🅿️','Parking (500 cars)','selected'],['♿','Wheelchair Access','selected'],['🍽️','Catering Kitchen',''],
-            ['🚿','Changing Rooms','selected'],['🔒','CCTV Security','selected'],['❄️','Air Conditioning','selected'],
-            ['🚿','Green Rooms',''],['🎨','Branding Space','selected'],['🌐','High-speed WiFi','selected'],
-            ['🚒','Fire Safety Cert','selected'],['🏥','First Aid Station','selected'],['🛡️','Security Staff',''],
-            ['🎪','Outdoor Area',''],['🍺','Bar License','selected'],['🚌','Shuttle Service',''],
-          ].map(([icon,name,sel])=>`
-            <div class="amenity-item ${sel}" onclick="toggleAmenity(this)">
-              <span class="amenity-icon">${icon}</span>
-              <span class="amenity-name">${name}</span>
+          
+            <div class="amenity-item selected" onclick="toggleAmenity(this)">
+              <span class="amenity-icon">🎤</span>
+              <span class="amenity-name">PA System & Stage</span>
               <i class="fas fa-check amenity-check"></i>
-            </div>`).join('')}
+            </div>
+            <div class="amenity-item selected" onclick="toggleAmenity(this)">
+              <span class="amenity-icon">💡</span>
+              <span class="amenity-name">Professional Lighting</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item selected" onclick="toggleAmenity(this)">
+              <span class="amenity-icon">🎥</span>
+              <span class="amenity-name">AV & Projection</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item selected" onclick="toggleAmenity(this)">
+              <span class="amenity-icon">🅿️</span>
+              <span class="amenity-name">Parking (500 cars)</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item selected" onclick="toggleAmenity(this)">
+              <span class="amenity-icon">♿</span>
+              <span class="amenity-name">Wheelchair Access</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item " onclick="toggleAmenity(this)">
+              <span class="amenity-icon">🍽️</span>
+              <span class="amenity-name">Catering Kitchen</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item selected" onclick="toggleAmenity(this)">
+              <span class="amenity-icon">🚿</span>
+              <span class="amenity-name">Changing Rooms</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item selected" onclick="toggleAmenity(this)">
+              <span class="amenity-icon">🔒</span>
+              <span class="amenity-name">CCTV Security</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item selected" onclick="toggleAmenity(this)">
+              <span class="amenity-icon">❄️</span>
+              <span class="amenity-name">Air Conditioning</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item " onclick="toggleAmenity(this)">
+              <span class="amenity-icon">🚿</span>
+              <span class="amenity-name">Green Rooms</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item selected" onclick="toggleAmenity(this)">
+              <span class="amenity-icon">🎨</span>
+              <span class="amenity-name">Branding Space</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item selected" onclick="toggleAmenity(this)">
+              <span class="amenity-icon">🌐</span>
+              <span class="amenity-name">High-speed WiFi</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item selected" onclick="toggleAmenity(this)">
+              <span class="amenity-icon">🚒</span>
+              <span class="amenity-name">Fire Safety Cert</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item selected" onclick="toggleAmenity(this)">
+              <span class="amenity-icon">🏥</span>
+              <span class="amenity-name">First Aid Station</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item " onclick="toggleAmenity(this)">
+              <span class="amenity-icon">🛡️</span>
+              <span class="amenity-name">Security Staff</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item " onclick="toggleAmenity(this)">
+              <span class="amenity-icon">🎪</span>
+              <span class="amenity-name">Outdoor Area</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item selected" onclick="toggleAmenity(this)">
+              <span class="amenity-icon">🍺</span>
+              <span class="amenity-name">Bar License</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
+            <div class="amenity-item " onclick="toggleAmenity(this)">
+              <span class="amenity-icon">🚌</span>
+              <span class="amenity-name">Shuttle Service</span>
+              <i class="fas fa-check amenity-check"></i>
+            </div>
         </div>
         <div style="margin-top:16px;display:flex;justify-content:flex-end">
           <button class="btn-sm btn-primary" onclick="showVenueToast('Amenities saved!')"><i class="fas fa-save"></i> Save Amenities</button>
@@ -230,22 +308,55 @@ textarea{resize:vertical;min-height:80px}
       </div>
       <div class="card">
         <div class="card-title">Document Status</div>
-        ${[
-          ['📋','Trade License / Shop Act','✅ Verified','s-confirmed'],
-          ['🏗️','Occupancy Certificate','✅ Verified','s-confirmed'],
-          ['🔥','Fire NOC','✅ Verified','s-confirmed'],
-          ['🎵','Music License (IPRS/PPL)','⚠️ Expiring Apr 30','s-pending'],
-          ['🚒','Fire Insurance Certificate','✅ Verified','s-confirmed'],
-          ['🍺','Liquor License','✅ Verified','s-confirmed'],
-          ['♿','Disability Compliance Cert','❌ Upload Required',''],
-          ['🔒','Security Agency Agreement','✅ Verified','s-confirmed'],
-        ].map(([icon,name,status,cls])=>`
+        
           <div class="booking-row">
-            <div style="font-size:24px">${icon}</div>
-            <div class="br-info"><div class="br-event">${name}</div></div>
-            <span class="br-status ${cls}" style="font-size:11px">${status}</span>
-            <button class="btn-sm btn-ghost" style="font-size:11px" onclick="uploadDocModal('${name}')"><i class="fas fa-upload"></i> Update</button>
-          </div>`).join('')}
+            <div style="font-size:24px">📋</div>
+            <div class="br-info"><div class="br-event">Trade License / Shop Act</div></div>
+            <span class="br-status s-confirmed" style="font-size:11px">✅ Verified</span>
+            <button class="btn-sm btn-ghost" style="font-size:11px" onclick="uploadDocModal('Trade License / Shop Act')"><i class="fas fa-upload"></i> Update</button>
+          </div>
+          <div class="booking-row">
+            <div style="font-size:24px">🏗️</div>
+            <div class="br-info"><div class="br-event">Occupancy Certificate</div></div>
+            <span class="br-status s-confirmed" style="font-size:11px">✅ Verified</span>
+            <button class="btn-sm btn-ghost" style="font-size:11px" onclick="uploadDocModal('Occupancy Certificate')"><i class="fas fa-upload"></i> Update</button>
+          </div>
+          <div class="booking-row">
+            <div style="font-size:24px">🔥</div>
+            <div class="br-info"><div class="br-event">Fire NOC</div></div>
+            <span class="br-status s-confirmed" style="font-size:11px">✅ Verified</span>
+            <button class="btn-sm btn-ghost" style="font-size:11px" onclick="uploadDocModal('Fire NOC')"><i class="fas fa-upload"></i> Update</button>
+          </div>
+          <div class="booking-row">
+            <div style="font-size:24px">🎵</div>
+            <div class="br-info"><div class="br-event">Music License (IPRS/PPL)</div></div>
+            <span class="br-status s-pending" style="font-size:11px">⚠️ Expiring Apr 30</span>
+            <button class="btn-sm btn-ghost" style="font-size:11px" onclick="uploadDocModal('Music License (IPRS/PPL)')"><i class="fas fa-upload"></i> Update</button>
+          </div>
+          <div class="booking-row">
+            <div style="font-size:24px">🚒</div>
+            <div class="br-info"><div class="br-event">Fire Insurance Certificate</div></div>
+            <span class="br-status s-confirmed" style="font-size:11px">✅ Verified</span>
+            <button class="btn-sm btn-ghost" style="font-size:11px" onclick="uploadDocModal('Fire Insurance Certificate')"><i class="fas fa-upload"></i> Update</button>
+          </div>
+          <div class="booking-row">
+            <div style="font-size:24px">🍺</div>
+            <div class="br-info"><div class="br-event">Liquor License</div></div>
+            <span class="br-status s-confirmed" style="font-size:11px">✅ Verified</span>
+            <button class="btn-sm btn-ghost" style="font-size:11px" onclick="uploadDocModal('Liquor License')"><i class="fas fa-upload"></i> Update</button>
+          </div>
+          <div class="booking-row">
+            <div style="font-size:24px">♿</div>
+            <div class="br-info"><div class="br-event">Disability Compliance Cert</div></div>
+            <span class="br-status " style="font-size:11px">❌ Upload Required</span>
+            <button class="btn-sm btn-ghost" style="font-size:11px" onclick="uploadDocModal('Disability Compliance Cert')"><i class="fas fa-upload"></i> Update</button>
+          </div>
+          <div class="booking-row">
+            <div style="font-size:24px">🔒</div>
+            <div class="br-info"><div class="br-event">Security Agency Agreement</div></div>
+            <span class="br-status s-confirmed" style="font-size:11px">✅ Verified</span>
+            <button class="btn-sm btn-ghost" style="font-size:11px" onclick="uploadDocModal('Security Agency Agreement')"><i class="fas fa-upload"></i> Update</button>
+          </div>
       </div>
     </div>
 
@@ -871,6 +982,13 @@ function sendQuote(orgName) {
       </div>
     </div>`;
   document.body.appendChild(modal);
+}
+
+function submitQuote(orgName) {
+  const amt = document.getElementById('quoteAmt')?.value || '500000';
+  const date = document.getElementById('quoteDate')?.value || '';
+  const notes = document.getElementById('quoteNotes')?.value || '';
+  showVenueToast('📨 Quote sent to ' + orgName + ' — ₹' + Number(amt).toLocaleString('en-IN') + (date ? ' for ' + date : '') + '. They will respond within 24 hours.');
 }
 
 // ─── REAL MODAL IMPLEMENTATIONS ──────────────────────────────────────────────

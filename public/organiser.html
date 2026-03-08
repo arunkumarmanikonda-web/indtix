@@ -441,7 +441,7 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
       <div class="card">
         <div class="card-title">Settlement History</div>
         <table style="width:100%;border-collapse:collapse;font-size:13px">
-          <thead><tr style="border-bottom:1px solid var(--border);color:var(--muted)">${['Settlement ID','Event','Gross','Platform Fee','TDS','Net Payout','Date','Status'].map(h=>`<th style="padding:10px 8px;text-align:left;font-weight:500">${h}</th>`).join('')}</tr></thead>
+          <thead><tr style="border-bottom:1px solid var(--border);color:var(--muted)"><th style="padding:10px 8px;text-align:left;font-weight:500">Settlement ID</th><th style="padding:10px 8px;text-align:left;font-weight:500">Event</th><th style="padding:10px 8px;text-align:left;font-weight:500">Gross</th><th style="padding:10px 8px;text-align:left;font-weight:500">Platform Fee</th><th style="padding:10px 8px;text-align:left;font-weight:500">TDS</th><th style="padding:10px 8px;text-align:left;font-weight:500">Net Payout</th><th style="padding:10px 8px;text-align:left;font-weight:500">Date</th><th style="padding:10px 8px;text-align:left;font-weight:500">Status</th></tr></thead>
           <tbody>
             <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:10px 8px;font-weight:600">STL-001</td><td>Sunburn Arena</td><td>₹6,30,000</td><td>₹63,000 (10%)</td><td>₹28,350</td><td style="color:var(--brand3);font-weight:700">₹5,38,650</td><td>Mar 20</td><td><span class="er-status s-approved">Paid</span></td></tr>
             <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:10px 8px;font-weight:600">STL-002</td><td>NH7 Weekender</td><td>₹8,50,000</td><td>₹85,000 (10%)</td><td>₹38,250</td><td style="color:var(--brand3);font-weight:700">₹7,26,750</td><td>Apr 5</td><td><span class="er-status s-pending">Processing</span></td></tr>
@@ -917,7 +917,7 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
           <table class="data-table" style="width:100%;min-width:700px">
             <thead><tr><th>Permission</th><th>Owner</th><th>Event Mgr</th><th>Finance</th><th>Marketing</th><th>Scanner</th><th>Box Office</th></tr></thead>
             <tbody>
-              ${[['Create/Edit Events','✅','✅','❌','❌','❌','❌'],['Approve Tickets','✅','✅','❌','❌','❌','✅'],['View Revenue','✅','✅','✅','❌','❌','❌'],['Download GST Invoice','✅','❌','✅','❌','❌','❌'],['Initiate Refund','✅','❌','✅','❌','❌','❌'],['Scan / Redeem','✅','✅','❌','❌','✅','✅'],['Edit Promo Codes','✅','❌','❌','✅','❌','❌'],['Manage Team','✅','❌','❌','❌','❌','❌'],['View Attendees','✅','✅','✅','✅','❌','✅'],['Configure Seat Map','✅','✅','❌','❌','❌','❌']].map(r=>`<tr>${r.map((c,i)=>`<td style="text-align:${i===0?'left':'center'};font-size:${i===0?'13px':'16px'}">${c}</td>`).join('')}</tr>`).join('')}
+              <tr><td style="text-align:left;font-size:13px">Create/Edit Events</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td></tr><tr><td style="text-align:left;font-size:13px">Approve Tickets</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">✅</td></tr><tr><td style="text-align:left;font-size:13px">View Revenue</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td></tr><tr><td style="text-align:left;font-size:13px">Download GST Invoice</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td></tr><tr><td style="text-align:left;font-size:13px">Initiate Refund</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td></tr><tr><td style="text-align:left;font-size:13px">Scan / Redeem</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">✅</td></tr><tr><td style="text-align:left;font-size:13px">Edit Promo Codes</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td></tr><tr><td style="text-align:left;font-size:13px">Manage Team</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td></tr><tr><td style="text-align:left;font-size:13px">View Attendees</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">✅</td></tr><tr><td style="text-align:left;font-size:13px">Configure Seat Map</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">✅</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td><td style="text-align:center;font-size:16px">❌</td></tr>
             </tbody>
           </table>
         </div>
@@ -953,7 +953,7 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
         <div class="card">
           <div class="card-title">🎨 Segment Color Mapping</div>
           <div id="segmentColorMap" style="display:flex;flex-direction:column;gap:12px">
-            <!-- Rendered by script below to avoid literal ${z.color} warning -->
+            <!-- Rendered by script below to avoid literal  warning -->
             <button class="btn-primary" style="padding:10px;border:none;border-radius:10px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;font-size:13px" onclick="addSegment()">+ Add Segment</button>
           </div>
           <script>
@@ -983,13 +983,37 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
       <div class="card" style="margin-bottom:20px">
         <div class="card-title">⏱ Show Sequence Timeline</div>
         <div style="display:flex;flex-direction:column;gap:10px">
-          ${[{time:'19:00',name:'Pre-show wave — All white pulse',status:'scheduled'},{time:'20:00',name:'Opening act — Red/orange surge',status:'scheduled'},{time:'21:30',name:'Main act entry — Full rainbow sync',status:'scheduled'},{time:'22:15',name:'Encore — White strobe burst',status:'scheduled'},{time:'23:00',name:'Closing — Slow fade all zones',status:'scheduled'}].map(s=>`
+          
           <div style="display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--dark3);border-radius:10px;border-left:3px solid var(--brand)">
-            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--brand3);width:44px">${s.time}</div>
-            <div style="flex:1;font-size:13px;font-weight:500">${s.name}</div>
-            <span style="font-size:10px;font-weight:600;color:var(--muted);background:var(--card);padding:2px 8px;border-radius:10px;text-transform:uppercase">${s.status}</span>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--brand3);width:44px">19:00</div>
+            <div style="flex:1;font-size:13px;font-weight:500">Pre-show wave — All white pulse</div>
+            <span style="font-size:10px;font-weight:600;color:var(--muted);background:var(--card);padding:2px 8px;border-radius:10px;text-transform:uppercase">scheduled</span>
             <button class="action-btn" onclick="editSequence()">Edit</button>
-          </div>`).join('')}
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--dark3);border-radius:10px;border-left:3px solid var(--brand)">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--brand3);width:44px">20:00</div>
+            <div style="flex:1;font-size:13px;font-weight:500">Opening act — Red/orange surge</div>
+            <span style="font-size:10px;font-weight:600;color:var(--muted);background:var(--card);padding:2px 8px;border-radius:10px;text-transform:uppercase">scheduled</span>
+            <button class="action-btn" onclick="editSequence()">Edit</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--dark3);border-radius:10px;border-left:3px solid var(--brand)">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--brand3);width:44px">21:30</div>
+            <div style="flex:1;font-size:13px;font-weight:500">Main act entry — Full rainbow sync</div>
+            <span style="font-size:10px;font-weight:600;color:var(--muted);background:var(--card);padding:2px 8px;border-radius:10px;text-transform:uppercase">scheduled</span>
+            <button class="action-btn" onclick="editSequence()">Edit</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--dark3);border-radius:10px;border-left:3px solid var(--brand)">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--brand3);width:44px">22:15</div>
+            <div style="flex:1;font-size:13px;font-weight:500">Encore — White strobe burst</div>
+            <span style="font-size:10px;font-weight:600;color:var(--muted);background:var(--card);padding:2px 8px;border-radius:10px;text-transform:uppercase">scheduled</span>
+            <button class="action-btn" onclick="editSequence()">Edit</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--dark3);border-radius:10px;border-left:3px solid var(--brand)">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--brand3);width:44px">23:00</div>
+            <div style="flex:1;font-size:13px;font-weight:500">Closing — Slow fade all zones</div>
+            <span style="font-size:10px;font-weight:600;color:var(--muted);background:var(--card);padding:2px 8px;border-radius:10px;text-transform:uppercase">scheduled</span>
+            <button class="action-btn" onclick="editSequence()">Edit</button>
+          </div>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
@@ -1006,30 +1030,91 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
           <span style="background:rgba(255,179,0,0.15);color:#FFB300;border:1px solid rgba(255,179,0,0.3);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600">⚠️ Pending Review</span>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
-          ${[{doc:'PAN Card',status:'verified',icon:'✅'},{doc:'GST Certificate',status:'verified',icon:'✅'},{doc:'Bank Account',status:'verified',icon:'✅'},{doc:'Incorporation Cert',status:'pending',icon:'⏳'},{doc:'Cancelled Cheque',status:'pending',icon:'⏳'},{doc:'MOA / AOA',status:'missing',icon:'❌'},{doc:'Director PAN',status:'verified',icon:'✅'},{doc:'Venue Hire Docs',status:'missing',icon:'⚠️'}].map(d=>`
-          <div style="background:var(--dark3);border:1px solid ${d.status==='verified'?'rgba(0,245,196,0.3)':d.status==='pending'?'rgba(255,179,0,0.3)':'rgba(255,68,68,0.3)'};border-radius:10px;padding:12px;text-align:center">
-            <div style="font-size:24px;margin-bottom:4px">${d.icon}</div>
-            <div style="font-size:12px;font-weight:600">${d.doc}</div>
-            <div style="font-size:10px;color:${d.status==='verified'?'var(--brand3)':d.status==='pending'?'#FFB300':'#FF4444'};margin-top:3px;text-transform:uppercase;font-weight:600">${d.status}</div>
-          </div>`).join('')}
+          
+          <div style="background:var(--dark3);border:1px solid rgba(0,245,196,0.3);border-radius:10px;padding:12px;text-align:center">
+            <div style="font-size:24px;margin-bottom:4px">✅</div>
+            <div style="font-size:12px;font-weight:600">PAN Card</div>
+            <div style="font-size:10px;color:var(--brand3);margin-top:3px;text-transform:uppercase;font-weight:600">verified</div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid rgba(0,245,196,0.3);border-radius:10px;padding:12px;text-align:center">
+            <div style="font-size:24px;margin-bottom:4px">✅</div>
+            <div style="font-size:12px;font-weight:600">GST Certificate</div>
+            <div style="font-size:10px;color:var(--brand3);margin-top:3px;text-transform:uppercase;font-weight:600">verified</div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid rgba(0,245,196,0.3);border-radius:10px;padding:12px;text-align:center">
+            <div style="font-size:24px;margin-bottom:4px">✅</div>
+            <div style="font-size:12px;font-weight:600">Bank Account</div>
+            <div style="font-size:10px;color:var(--brand3);margin-top:3px;text-transform:uppercase;font-weight:600">verified</div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid rgba(255,179,0,0.3);border-radius:10px;padding:12px;text-align:center">
+            <div style="font-size:24px;margin-bottom:4px">⏳</div>
+            <div style="font-size:12px;font-weight:600">Incorporation Cert</div>
+            <div style="font-size:10px;color:#FFB300;margin-top:3px;text-transform:uppercase;font-weight:600">pending</div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid rgba(255,179,0,0.3);border-radius:10px;padding:12px;text-align:center">
+            <div style="font-size:24px;margin-bottom:4px">⏳</div>
+            <div style="font-size:12px;font-weight:600">Cancelled Cheque</div>
+            <div style="font-size:10px;color:#FFB300;margin-top:3px;text-transform:uppercase;font-weight:600">pending</div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid rgba(255,68,68,0.3);border-radius:10px;padding:12px;text-align:center">
+            <div style="font-size:24px;margin-bottom:4px">❌</div>
+            <div style="font-size:12px;font-weight:600">MOA / AOA</div>
+            <div style="font-size:10px;color:#FF4444;margin-top:3px;text-transform:uppercase;font-weight:600">missing</div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid rgba(0,245,196,0.3);border-radius:10px;padding:12px;text-align:center">
+            <div style="font-size:24px;margin-bottom:4px">✅</div>
+            <div style="font-size:12px;font-weight:600">Director PAN</div>
+            <div style="font-size:10px;color:var(--brand3);margin-top:3px;text-transform:uppercase;font-weight:600">verified</div>
+          </div>
+          <div style="background:var(--dark3);border:1px solid rgba(255,68,68,0.3);border-radius:10px;padding:12px;text-align:center">
+            <div style="font-size:24px;margin-bottom:4px">⚠️</div>
+            <div style="font-size:12px;font-weight:600">Venue Hire Docs</div>
+            <div style="font-size:10px;color:#FF4444;margin-top:3px;text-transform:uppercase;font-weight:600">missing</div>
+          </div>
         </div>
         <div style="background:rgba(108,60,247,0.08);border:1px solid var(--border);border-radius:12px;padding:16px">
           <div style="font-weight:600;font-size:14px;margin-bottom:12px">🏢 Organisation Details</div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
-            ${[{label:'Legal Entity Name',val:'Oye Events Pvt Ltd'},{label:'Entity Type',val:'Private Limited'},{label:'CIN',val:'U74999MH2023PTC123456'},{label:'PAN',val:'AABCO1234A'},{label:'GSTIN',val:'27AABCO1234A1Z5'},{label:'TAN',val:'MUMX01234A'},{label:'Incorporation Date',val:'Jan 15, 2023'},{label:'State',val:'Maharashtra'},{label:'City',val:'Mumbai'},{label:'Authorised Signatory',val:'Riya Kapoor'},{label:'Signatory PAN',val:'ABCPK1234X'},{label:'Bank Account',val:'HDFC ****4521'}].map(f=>`
-            <div><div style="font-size:11px;color:var(--muted);margin-bottom:3px">${f.label}</div><div style="font-size:13px;font-weight:600">${f.val}</div></div>`).join('')}
+            
+            <div><div style="font-size:11px;color:var(--muted);margin-bottom:3px">Legal Entity Name</div><div style="font-size:13px;font-weight:600">Oye Events Pvt Ltd</div></div>
+            <div><div style="font-size:11px;color:var(--muted);margin-bottom:3px">Entity Type</div><div style="font-size:13px;font-weight:600">Private Limited</div></div>
+            <div><div style="font-size:11px;color:var(--muted);margin-bottom:3px">CIN</div><div style="font-size:13px;font-weight:600">U74999MH2023PTC123456</div></div>
+            <div><div style="font-size:11px;color:var(--muted);margin-bottom:3px">PAN</div><div style="font-size:13px;font-weight:600">AABCO1234A</div></div>
+            <div><div style="font-size:11px;color:var(--muted);margin-bottom:3px">GSTIN</div><div style="font-size:13px;font-weight:600">27AABCO1234A1Z5</div></div>
+            <div><div style="font-size:11px;color:var(--muted);margin-bottom:3px">TAN</div><div style="font-size:13px;font-weight:600">MUMX01234A</div></div>
+            <div><div style="font-size:11px;color:var(--muted);margin-bottom:3px">Incorporation Date</div><div style="font-size:13px;font-weight:600">Jan 15, 2023</div></div>
+            <div><div style="font-size:11px;color:var(--muted);margin-bottom:3px">State</div><div style="font-size:13px;font-weight:600">Maharashtra</div></div>
+            <div><div style="font-size:11px;color:var(--muted);margin-bottom:3px">City</div><div style="font-size:13px;font-weight:600">Mumbai</div></div>
+            <div><div style="font-size:11px;color:var(--muted);margin-bottom:3px">Authorised Signatory</div><div style="font-size:13px;font-weight:600">Riya Kapoor</div></div>
+            <div><div style="font-size:11px;color:var(--muted);margin-bottom:3px">Signatory PAN</div><div style="font-size:13px;font-weight:600">ABCPK1234X</div></div>
+            <div><div style="font-size:11px;color:var(--muted);margin-bottom:3px">Bank Account</div><div style="font-size:13px;font-weight:600">HDFC ****4521</div></div>
           </div>
         </div>
       </div>
       <div class="card" style="margin-bottom:20px">
         <div class="card-title">📤 Upload / Update Documents</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-          ${[{label:'MOA / AOA (Required)',required:true},{label:'Venue Hire Agreement (Required for next event)',required:true},{label:'Updated GST Certificate',required:false},{label:'FSSAI (If selling F&B)',required:false}].map(d=>`
-          <div style="border:2px dashed ${d.required?'rgba(255,68,68,0.4)':'var(--border)'};border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all 0.2s" onclick="triggerUpload()">
-            <div style="font-size:28px;margin-bottom:8px">${d.required?'⚠️':'📎'}</div>
-            <div style="font-size:13px;font-weight:600;margin-bottom:4px">${d.label}</div>
+          
+          <div style="border:2px dashed rgba(255,68,68,0.4);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all 0.2s" onclick="triggerUpload()">
+            <div style="font-size:28px;margin-bottom:8px">⚠️</div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">MOA / AOA (Required)</div>
             <div style="font-size:11px;color:var(--muted)">Drag & drop or click to upload · PDF/JPG/PNG max 10MB</div>
-          </div>`).join('')}
+          </div>
+          <div style="border:2px dashed rgba(255,68,68,0.4);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all 0.2s" onclick="triggerUpload()">
+            <div style="font-size:28px;margin-bottom:8px">⚠️</div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">Venue Hire Agreement (Required for next event)</div>
+            <div style="font-size:11px;color:var(--muted)">Drag & drop or click to upload · PDF/JPG/PNG max 10MB</div>
+          </div>
+          <div style="border:2px dashed var(--border);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all 0.2s" onclick="triggerUpload()">
+            <div style="font-size:28px;margin-bottom:8px">📎</div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">Updated GST Certificate</div>
+            <div style="font-size:11px;color:var(--muted)">Drag & drop or click to upload · PDF/JPG/PNG max 10MB</div>
+          </div>
+          <div style="border:2px dashed var(--border);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all 0.2s" onclick="triggerUpload()">
+            <div style="font-size:28px;margin-bottom:8px">📎</div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">FSSAI (If selling F&B)</div>
+            <div style="font-size:11px;color:var(--muted)">Drag & drop or click to upload · PDF/JPG/PNG max 10MB</div>
+          </div>
         </div>
       </div>
       <button class="btn-primary" style="padding:12px 28px;border:none;border-radius:10px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600" onclick="submitKYC()">📤 Submit KYC for Review</button>
@@ -1057,22 +1142,50 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
         <div class="card">
           <div class="card-title">📊 Organiser Scorecard</div>
           <div style="display:flex;flex-direction:column;gap:12px">
-            ${[{label:'Platform Trust Score',val:'87/100',color:'var(--brand3)'},{label:'Avg. Customer Rating',val:'4.8 ★',color:'#FFB300'},{label:'Events Completed',val:'12',color:'var(--brand)'},{label:'On-time Settlement Rate',val:'100%',color:'var(--brand3)'},{label:'Refund Rate',val:'1.8%',color:'var(--brand3)'},{label:'KYC Compliance',val:'92%',color:'#FFB300'}].map(m=>`
+            
             <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--dark3);border-radius:8px">
-              <span style="font-size:13px">${m.label}</span>
-              <span style="font-weight:700;color:${m.color};font-family:'Space Grotesk',sans-serif">${m.val}</span>
-            </div>`).join('')}
+              <span style="font-size:13px">Platform Trust Score</span>
+              <span style="font-weight:700;color:var(--brand3);font-family:'Space Grotesk',sans-serif">87/100</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--dark3);border-radius:8px">
+              <span style="font-size:13px">Avg. Customer Rating</span>
+              <span style="font-weight:700;color:#FFB300;font-family:'Space Grotesk',sans-serif">4.8 ★</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--dark3);border-radius:8px">
+              <span style="font-size:13px">Events Completed</span>
+              <span style="font-weight:700;color:var(--brand);font-family:'Space Grotesk',sans-serif">12</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--dark3);border-radius:8px">
+              <span style="font-size:13px">On-time Settlement Rate</span>
+              <span style="font-weight:700;color:var(--brand3);font-family:'Space Grotesk',sans-serif">100%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--dark3);border-radius:8px">
+              <span style="font-size:13px">Refund Rate</span>
+              <span style="font-weight:700;color:var(--brand3);font-family:'Space Grotesk',sans-serif">1.8%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--dark3);border-radius:8px">
+              <span style="font-size:13px">KYC Compliance</span>
+              <span style="font-weight:700;color:#FFB300;font-family:'Space Grotesk',sans-serif">92%</span>
+            </div>
           </div>
         </div>
       </div>
       <div class="card">
         <div class="card-title">📋 Account Manager Notes & History</div>
         <div style="display:flex;flex-direction:column;gap:10px">
-          ${[{date:'Mar 5, 2026',note:'Approved for Tier 2 events (cap 10,000 pax). Settlement window reduced to T+5.',by:'Kavita R (INDTIX AM)'},{date:'Feb 10, 2026',note:'KYC clarification provided. MOA submitted and verified.',by:'Compliance Team'},{date:'Jan 15, 2026',note:'Initial onboarding completed. Trial event approved.',by:'Kavita R (INDTIX AM)'}].map(n=>`
+          
           <div style="padding:12px;background:var(--dark3);border-radius:10px;border-left:3px solid var(--brand)">
-            <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:11px;color:var(--muted)">${n.date}</span><span style="font-size:11px;color:var(--brand);font-weight:600">${n.by}</span></div>
-            <div style="font-size:13px">${n.note}</div>
-          </div>`).join('')}
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:11px;color:var(--muted)">Mar 5, 2026</span><span style="font-size:11px;color:var(--brand);font-weight:600">Kavita R (INDTIX AM)</span></div>
+            <div style="font-size:13px">Approved for Tier 2 events (cap 10,000 pax). Settlement window reduced to T+5.</div>
+          </div>
+          <div style="padding:12px;background:var(--dark3);border-radius:10px;border-left:3px solid var(--brand)">
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:11px;color:var(--muted)">Feb 10, 2026</span><span style="font-size:11px;color:var(--brand);font-weight:600">Compliance Team</span></div>
+            <div style="font-size:13px">KYC clarification provided. MOA submitted and verified.</div>
+          </div>
+          <div style="padding:12px;background:var(--dark3);border-radius:10px;border-left:3px solid var(--brand)">
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:11px;color:var(--muted)">Jan 15, 2026</span><span style="font-size:11px;color:var(--brand);font-weight:600">Kavita R (INDTIX AM)</span></div>
+            <div style="font-size:13px">Initial onboarding completed. Trial event approved.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1088,23 +1201,61 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
         <div class="card">
           <div class="card-title">🤝 Active Sponsors</div>
           <div id="sponsors-list">
-            ${[
-              {name:'Jägermeister India',tier:'Title Sponsor',value:'₹8,00,000',logo:'🍸',activations:['Stage Branding','VIP Bar','LED Band Color'],status:'active'},
-              {name:'boAt Lifestyle',tier:'Audio Partner',value:'₹4,50,000',logo:'🎧',activations:['Sound Stage Signage','Booth Space','Artist Gifting'],status:'active'},
-              {name:'Swiggy Instamart',tier:'F&B Partner',value:'₹3,20,000',logo:'🛍️',activations:['Pre-order Integration','Delivery Kiosks'],status:'active'},
-              {name:'CRED',tier:'Fintech Partner',value:'₹5,00,000',logo:'💳',activations:['Payment Button Skin','Exclusive Cashback'],status:'active'},
-              {name:'Redmi Note 14',tier:'Tech Partner',value:'₹2,50,000',logo:'📱',activations:['Photo Booth','Charging Stations'],status:'active'},
-              {name:'Kingfisher Ultra',tier:'Beverage Partner',value:'₹1,30,000',logo:'🍺',activations:['Bar Branding'],status:'active'}
-            ].map(s=>`
+            
             <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--dark3);border-radius:10px;margin-bottom:10px;border:1px solid var(--border)">
-              <div style="font-size:28px">${s.logo}</div>
+              <div style="font-size:28px">🍸</div>
               <div style="flex:1">
-                <div style="font-weight:700;font-size:13px">${s.name}</div>
-                <div style="font-size:11px;color:var(--brand);font-weight:600">${s.tier} · ${s.value}</div>
-                <div style="font-size:11px;color:var(--muted);margin-top:3px">${s.activations.join(' · ')}</div>
+                <div style="font-weight:700;font-size:13px">Jägermeister India</div>
+                <div style="font-size:11px;color:var(--brand);font-weight:600">Title Sponsor · ₹8,00,000</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:3px">Stage Branding · VIP Bar · LED Band Color</div>
               </div>
-              <div><span class="status-badge status-active">${s.status.toUpperCase()}</span></div>
-            </div>`).join('')}
+              <div><span class="status-badge status-active">ACTIVE</span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--dark3);border-radius:10px;margin-bottom:10px;border:1px solid var(--border)">
+              <div style="font-size:28px">🎧</div>
+              <div style="flex:1">
+                <div style="font-weight:700;font-size:13px">boAt Lifestyle</div>
+                <div style="font-size:11px;color:var(--brand);font-weight:600">Audio Partner · ₹4,50,000</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:3px">Sound Stage Signage · Booth Space · Artist Gifting</div>
+              </div>
+              <div><span class="status-badge status-active">ACTIVE</span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--dark3);border-radius:10px;margin-bottom:10px;border:1px solid var(--border)">
+              <div style="font-size:28px">🛍️</div>
+              <div style="flex:1">
+                <div style="font-weight:700;font-size:13px">Swiggy Instamart</div>
+                <div style="font-size:11px;color:var(--brand);font-weight:600">F&B Partner · ₹3,20,000</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:3px">Pre-order Integration · Delivery Kiosks</div>
+              </div>
+              <div><span class="status-badge status-active">ACTIVE</span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--dark3);border-radius:10px;margin-bottom:10px;border:1px solid var(--border)">
+              <div style="font-size:28px">💳</div>
+              <div style="flex:1">
+                <div style="font-weight:700;font-size:13px">CRED</div>
+                <div style="font-size:11px;color:var(--brand);font-weight:600">Fintech Partner · ₹5,00,000</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:3px">Payment Button Skin · Exclusive Cashback</div>
+              </div>
+              <div><span class="status-badge status-active">ACTIVE</span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--dark3);border-radius:10px;margin-bottom:10px;border:1px solid var(--border)">
+              <div style="font-size:28px">📱</div>
+              <div style="flex:1">
+                <div style="font-weight:700;font-size:13px">Redmi Note 14</div>
+                <div style="font-size:11px;color:var(--brand);font-weight:600">Tech Partner · ₹2,50,000</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:3px">Photo Booth · Charging Stations</div>
+              </div>
+              <div><span class="status-badge status-active">ACTIVE</span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--dark3);border-radius:10px;margin-bottom:10px;border:1px solid var(--border)">
+              <div style="font-size:28px">🍺</div>
+              <div style="flex:1">
+                <div style="font-weight:700;font-size:13px">Kingfisher Ultra</div>
+                <div style="font-size:11px;color:var(--brand);font-weight:600">Beverage Partner · ₹1,30,000</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:3px">Bar Branding</div>
+              </div>
+              <div><span class="status-badge status-active">ACTIVE</span></div>
+            </div>
           </div>
           <button class="btn-sm btn-primary" style="width:100%;justify-content:center;margin-top:8px" onclick="addSponsorForm()">
             <i class="fas fa-plus"></i> Add Sponsor
@@ -1114,39 +1265,80 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
           <div class="card" style="margin-bottom:16px">
             <div class="card-title">📊 Sponsor Performance Metrics</div>
             <div style="display:flex;flex-direction:column;gap:10px">
-              ${[
-                {sponsor:'Jägermeister India',impressions:'1,24,000',clicks:'8,420',leads:'340',roi:'3.2x'},
-                {sponsor:'boAt Lifestyle',impressions:'98,000',clicks:'6,100',leads:'280',roi:'2.8x'},
-                {sponsor:'CRED',impressions:'2,10,000',clicks:'18,400',leads:'920',roi:'4.1x'},
-                {sponsor:'Swiggy Instamart',impressions:'1,80,000',clicks:'22,000',leads:'1,840',roi:'5.7x'}
-              ].map(m=>`
+              
               <div style="padding:10px;background:var(--dark3);border-radius:8px;border:1px solid var(--border)">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-                  <span style="font-weight:600;font-size:12px">${m.sponsor}</span>
-                  <span style="font-size:12px;color:var(--brand2);font-weight:700">ROI ${m.roi}</span>
+                  <span style="font-weight:600;font-size:12px">Jägermeister India</span>
+                  <span style="font-size:12px;color:var(--brand2);font-weight:700">ROI 3.2x</span>
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px">
-                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">${m.impressions}</div><div style="font-size:10px;color:var(--muted)">Impressions</div></div>
-                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">${m.clicks}</div><div style="font-size:10px;color:var(--muted)">Clicks</div></div>
-                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">${m.leads}</div><div style="font-size:10px;color:var(--muted)">Leads</div></div>
+                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">1,24,000</div><div style="font-size:10px;color:var(--muted)">Impressions</div></div>
+                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">8,420</div><div style="font-size:10px;color:var(--muted)">Clicks</div></div>
+                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">340</div><div style="font-size:10px;color:var(--muted)">Leads</div></div>
                 </div>
-              </div>`).join('')}
+              </div>
+              <div style="padding:10px;background:var(--dark3);border-radius:8px;border:1px solid var(--border)">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                  <span style="font-weight:600;font-size:12px">boAt Lifestyle</span>
+                  <span style="font-size:12px;color:var(--brand2);font-weight:700">ROI 2.8x</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px">
+                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">98,000</div><div style="font-size:10px;color:var(--muted)">Impressions</div></div>
+                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">6,100</div><div style="font-size:10px;color:var(--muted)">Clicks</div></div>
+                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">280</div><div style="font-size:10px;color:var(--muted)">Leads</div></div>
+                </div>
+              </div>
+              <div style="padding:10px;background:var(--dark3);border-radius:8px;border:1px solid var(--border)">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                  <span style="font-weight:600;font-size:12px">CRED</span>
+                  <span style="font-size:12px;color:var(--brand2);font-weight:700">ROI 4.1x</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px">
+                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">2,10,000</div><div style="font-size:10px;color:var(--muted)">Impressions</div></div>
+                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">18,400</div><div style="font-size:10px;color:var(--muted)">Clicks</div></div>
+                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">920</div><div style="font-size:10px;color:var(--muted)">Leads</div></div>
+                </div>
+              </div>
+              <div style="padding:10px;background:var(--dark3);border-radius:8px;border:1px solid var(--border)">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                  <span style="font-weight:600;font-size:12px">Swiggy Instamart</span>
+                  <span style="font-size:12px;color:var(--brand2);font-weight:700">ROI 5.7x</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px">
+                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">1,80,000</div><div style="font-size:10px;color:var(--muted)">Impressions</div></div>
+                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">22,000</div><div style="font-size:10px;color:var(--muted)">Clicks</div></div>
+                  <div style="text-align:center"><div style="font-size:13px;font-weight:700">1,840</div><div style="font-size:10px;color:var(--muted)">Leads</div></div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="card">
             <div class="card-title">🎯 Sponsor Activation Checklist</div>
-            ${[
-              {item:'Stage branding artwork submitted',done:true},
-              {item:'LED band color theme configured',done:true},
-              {item:'VIP activation area confirmed',done:true},
-              {item:'Social media kit shared with sponsors',done:true},
-              {item:'On-ground activation staff briefed',done:false},
-              {item:'Post-event report template ready',done:false}
-            ].map(i=>`
+            
             <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
-              <input type="checkbox" ${i.done?'checked':''} style="accent-color:var(--brand);width:16px;height:16px">
-              <span style="font-size:13px;${i.done?'text-decoration:line-through;color:var(--muted)':''}">${i.item}</span>
-            </div>`).join('')}
+              <input type="checkbox" checked style="accent-color:var(--brand);width:16px;height:16px">
+              <span style="font-size:13px;text-decoration:line-through;color:var(--muted)">Stage branding artwork submitted</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+              <input type="checkbox" checked style="accent-color:var(--brand);width:16px;height:16px">
+              <span style="font-size:13px;text-decoration:line-through;color:var(--muted)">LED band color theme configured</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+              <input type="checkbox" checked style="accent-color:var(--brand);width:16px;height:16px">
+              <span style="font-size:13px;text-decoration:line-through;color:var(--muted)">VIP activation area confirmed</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+              <input type="checkbox" checked style="accent-color:var(--brand);width:16px;height:16px">
+              <span style="font-size:13px;text-decoration:line-through;color:var(--muted)">Social media kit shared with sponsors</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+              <input type="checkbox"  style="accent-color:var(--brand);width:16px;height:16px">
+              <span style="font-size:13px;">On-ground activation staff briefed</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+              <input type="checkbox"  style="accent-color:var(--brand);width:16px;height:16px">
+              <span style="font-size:13px;">Post-event report template ready</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1194,24 +1386,46 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
           </div>
           <div class="card">
             <div class="card-title">💡 AI Pricing Recommendations</div>
-            ${[
-              {tier:'General Admission',current:'₹1,499',recommended:'₹1,799',reason:'85% sold; demand spike detected',uplift:'+₹3.0L'},
-              {tier:'Premium Standing',current:'₹2,999',recommended:'₹3,499',reason:'VIP conversion rate high',uplift:'+₹1.2L'},
-              {tier:'VIP Package',current:'₹5,999',recommended:'₹6,499',reason:'Limited supply, high search volume',uplift:'+₹0.5L'}
-            ].map(r=>`
+            
             <div style="padding:12px;background:var(--dark3);border-radius:10px;margin-bottom:10px;border:1px solid var(--border)">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-                <span style="font-weight:700;font-size:13px">${r.tier}</span>
-                <span style="font-size:12px;color:var(--brand2);font-weight:700">${r.uplift} uplift</span>
+                <span style="font-weight:700;font-size:13px">General Admission</span>
+                <span style="font-size:12px;color:var(--brand2);font-weight:700">+₹3.0L uplift</span>
               </div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-                <span style="font-size:12px;color:var(--muted)">Current: ${r.current}</span>
+                <span style="font-size:12px;color:var(--muted)">Current: ₹1,499</span>
                 <i class="fas fa-arrow-right" style="color:var(--brand);font-size:10px"></i>
-                <span style="font-size:12px;color:var(--brand2);font-weight:600">AI: ${r.recommended}</span>
+                <span style="font-size:12px;color:var(--brand2);font-weight:600">AI: ₹1,799</span>
               </div>
-              <div style="font-size:11px;color:var(--muted)">${r.reason}</div>
-              <button class="action-btn" style="margin-top:6px" onclick="applyPrice('${r.tier}','${r.recommended}')">Apply</button>
-            </div>`).join('')}
+              <div style="font-size:11px;color:var(--muted)">85% sold; demand spike detected</div>
+              <button class="action-btn" style="margin-top:6px" onclick="applyPrice('General Admission','₹1,799')">Apply</button>
+            </div>
+            <div style="padding:12px;background:var(--dark3);border-radius:10px;margin-bottom:10px;border:1px solid var(--border)">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <span style="font-weight:700;font-size:13px">Premium Standing</span>
+                <span style="font-size:12px;color:var(--brand2);font-weight:700">+₹1.2L uplift</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+                <span style="font-size:12px;color:var(--muted)">Current: ₹2,999</span>
+                <i class="fas fa-arrow-right" style="color:var(--brand);font-size:10px"></i>
+                <span style="font-size:12px;color:var(--brand2);font-weight:600">AI: ₹3,499</span>
+              </div>
+              <div style="font-size:11px;color:var(--muted)">VIP conversion rate high</div>
+              <button class="action-btn" style="margin-top:6px" onclick="applyPrice('Premium Standing','₹3,499')">Apply</button>
+            </div>
+            <div style="padding:12px;background:var(--dark3);border-radius:10px;margin-bottom:10px;border:1px solid var(--border)">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <span style="font-weight:700;font-size:13px">VIP Package</span>
+                <span style="font-size:12px;color:var(--brand2);font-weight:700">+₹0.5L uplift</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+                <span style="font-size:12px;color:var(--muted)">Current: ₹5,999</span>
+                <i class="fas fa-arrow-right" style="color:var(--brand);font-size:10px"></i>
+                <span style="font-size:12px;color:var(--brand2);font-weight:600">AI: ₹6,499</span>
+              </div>
+              <div style="font-size:11px;color:var(--muted)">Limited supply, high search volume</div>
+              <button class="action-btn" style="margin-top:6px" onclick="applyPrice('VIP Package','₹6,499')">Apply</button>
+            </div>
           </div>
         </div>
         <div>
@@ -1223,36 +1437,71 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
           </div>
           <div class="card" style="margin-bottom:16px">
             <div class="card-title">🌤️ Demand Signals</div>
-            ${[
-              {signal:'Search Volume',value:'+42%','trend':'↑','color':'var(--brand2)'},
-              {signal:'Social Mentions',value:'+18%','trend':'↑','color':'var(--brand2)'},
-              {signal:'Competitor Events',value:'2 nearby events','trend':'⚠','color':'#FFB300'},
-              {signal:'Weather Forecast',value:'Clear skies ☀️','trend':'↑','color':'var(--brand2)'},
-              {signal:'Holiday / Weekend',value:'Long weekend','trend':'↑','color':'var(--brand2)'},
-              {signal:'Artist Popularity Index',value:'9.2 / 10','trend':'↑','color':'var(--brand2)'}
-            ].map(s=>`
+            
             <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
-              <span style="font-size:12px;color:var(--muted)">${s.signal}</span>
-              <span style="font-size:12px;font-weight:700;color:${s.color}">${s.trend} ${s.value}</span>
-            </div>`).join('')}
+              <span style="font-size:12px;color:var(--muted)">Search Volume</span>
+              <span style="font-size:12px;font-weight:700;color:var(--brand2)">↑ +42%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+              <span style="font-size:12px;color:var(--muted)">Social Mentions</span>
+              <span style="font-size:12px;font-weight:700;color:var(--brand2)">↑ +18%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+              <span style="font-size:12px;color:var(--muted)">Competitor Events</span>
+              <span style="font-size:12px;font-weight:700;color:#FFB300">⚠ 2 nearby events</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+              <span style="font-size:12px;color:var(--muted)">Weather Forecast</span>
+              <span style="font-size:12px;font-weight:700;color:var(--brand2)">↑ Clear skies ☀️</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+              <span style="font-size:12px;color:var(--muted)">Holiday / Weekend</span>
+              <span style="font-size:12px;font-weight:700;color:var(--brand2)">↑ Long weekend</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+              <span style="font-size:12px;color:var(--muted)">Artist Popularity Index</span>
+              <span style="font-size:12px;font-weight:700;color:var(--brand2)">↑ 9.2 / 10</span>
+            </div>
           </div>
           <div class="card">
             <div class="card-title">🎯 Audience Segmentation Forecast</div>
-            ${[
-              {segment:'Mumbai Core (18-28)',pct:42,color:'var(--brand)'},
-              {segment:'Out-of-City (Mumbai)',pct:24,color:'var(--brand2)'},
-              {segment:'Pune Day-Trippers',pct:18,color:'var(--brand3)'},
-              {segment:'18-35 Corporate',pct:16,color:'#FFB300'}
-            ].map(s=>`
+            
             <div style="margin-bottom:10px">
               <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                <span style="font-size:12px">${s.segment}</span>
-                <span style="font-size:12px;font-weight:700">${s.pct}%</span>
+                <span style="font-size:12px">Mumbai Core (18-28)</span>
+                <span style="font-size:12px;font-weight:700">42%</span>
               </div>
               <div style="height:6px;background:var(--dark3);border-radius:3px">
-                <div style="height:100%;width:${s.pct}%;background:${s.color};border-radius:3px"></div>
+                <div style="height:100%;width:42%;background:var(--brand);border-radius:3px"></div>
               </div>
-            </div>`).join('')}
+            </div>
+            <div style="margin-bottom:10px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span style="font-size:12px">Out-of-City (Mumbai)</span>
+                <span style="font-size:12px;font-weight:700">24%</span>
+              </div>
+              <div style="height:6px;background:var(--dark3);border-radius:3px">
+                <div style="height:100%;width:24%;background:var(--brand2);border-radius:3px"></div>
+              </div>
+            </div>
+            <div style="margin-bottom:10px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span style="font-size:12px">Pune Day-Trippers</span>
+                <span style="font-size:12px;font-weight:700">18%</span>
+              </div>
+              <div style="height:6px;background:var(--dark3);border-radius:3px">
+                <div style="height:100%;width:18%;background:var(--brand3);border-radius:3px"></div>
+              </div>
+            </div>
+            <div style="margin-bottom:10px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span style="font-size:12px">18-35 Corporate</span>
+                <span style="font-size:12px;font-weight:700">16%</span>
+              </div>
+              <div style="height:6px;background:var(--dark3);border-radius:3px">
+                <div style="height:100%;width:16%;background:#FFB300;border-radius:3px"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

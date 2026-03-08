@@ -99,7 +99,7 @@ app.get('/api/health', (c) => {
     ts: new Date().toISOString(),
     portals: ['fan','organiser','venue','event-manager','admin','ops','brand','architecture-spec','developer'],
     api_version: 'v10',
-    total_endpoints: 230,
+    total_endpoints: 237,
     uptime: 'operational',
     region: 'edge-global',
     built_with: 'Hono + Cloudflare Workers + TypeScript',
@@ -383,7 +383,9 @@ app.post('/api/scan/verify', async (c) => {
 app.get('/api/admin/stats', (c) => {
   const statsData = {
     total_users: 2400000,
+    total_revenue: 48200000,
     gmv_this_month: 42000000,
+    gmv_total: 482000000,
     venues: 528,
     pending_approvals: 24,
     platform: {
@@ -2488,6 +2490,7 @@ app.get('/api/sponsors/:id', async (c) => {
 
 app.get('/api/developer/usage', async (c) => {
   return c.json({
+    requests_today: 1240,
     usage: { total: 84200, today: 1240, this_month: 84200, limit: 1000000 },
     current_period: '2026-03',
     total_requests: 84200,
@@ -3639,6 +3642,7 @@ app.get('/api/venue/calendar', async (c) => {
   return c.json({
     events: calEvents,
     calendar: calEvents,
+    bookings: calEvents,
     month: new Date().toISOString().slice(0,7),
     total: 2,
     ts: new Date().toISOString()
@@ -4430,10 +4434,97 @@ app.get('/api/events/:id/checkin', (c) => {
 })
 
 // ─── PHASE 10: VERSION ENDPOINT ─────────────────────────────
+
+// FIX: Add missing endpoints that portals reference
+
+// Brand impressions (alias for /api/brand/analytics)
+app.get('/api/brand/impressions', async (c) => {
+  return c.json({
+    impressions: 1240000, clicks: 84200, leads: 3400, conversions: 890,
+    ctr: 6.79, cpc: 42.5, cpm: 340, roas: 3.2,
+    by_channel: [
+      { channel: 'Fan Portal Banners', impressions: 580000, clicks: 42000 },
+      { channel: 'Event Listing Ads', impressions: 320000, clicks: 24000 },
+      { channel: 'LED Wristband', impressions: 240000, clicks: 12000 },
+      { channel: 'Push Notifications', impressions: 100000, clicks: 6200 }
+    ],
+    period: 'last_30_days', updated_at: new Date().toISOString()
+  })
+})
+
+// Admin events list
+app.get('/api/admin/events', async (c) => {
+  return c.json({
+    events: [
+      { id: 'e1', name: 'Sunburn Arena Mumbai', organiser: 'Oye Events', city: 'Mumbai', date: '2026-04-12', status: 'live', gmv: '₹12.4L', tickets_sold: 4200 },
+      { id: 'e2', name: 'NH7 Weekender Pune', organiser: 'Only Much Louder', city: 'Pune', date: '2026-05-20', status: 'approved', gmv: '₹8.2L', tickets_sold: 2800 },
+      { id: 'e3', name: 'Lollapalooza India', organiser: 'BookMyShow Live', city: 'Mumbai', date: '2026-01-27', status: 'completed', gmv: '₹38.5L', tickets_sold: 12000 },
+      { id: 'e4', name: 'Comedy Store India', organiser: 'Percept Live', city: 'Delhi', date: '2026-06-10', status: 'pending', gmv: '₹0', tickets_sold: 0 }
+    ],
+    total: 4, pending: 1, live: 1, approved: 1, completed: 1,
+    updated_at: new Date().toISOString()
+  })
+})
+
+// Wristband status endpoint
+app.get('/api/events/:id/wristband-status', async (c) => {
+  const id = c.req.param('id')
+  return c.json({
+    event_id: id,
+    wristbands: [
+      { tier: 'VIP Platinum', color: '#6C3CF7', total_issued: 350, active: 347, inactive: 3, zones: 'All Access + Backstage' },
+      { tier: 'VIP Gold', color: '#FF3CAC', total_issued: 820, active: 818, inactive: 2, zones: 'VIP Lounge + Stage View' },
+      { tier: 'Premium', color: '#00F5C4', total_issued: 1180, active: 1178, inactive: 2, zones: 'Premium Zone Access' },
+      { tier: 'General', color: '#FFB300', total_issued: 501, active: 500, inactive: 1, zones: 'General + F&B Zones' }
+    ],
+    total_issued: 2851, total_active: 2843, total_inactive: 8,
+    battery_avg: 87, signal_strength: 'excellent',
+    updated_at: new Date().toISOString()
+  })
+})
+
+// Admin stats: add total_revenue alias
+app.get('/api/admin/revenue', async (c) => {
+  return c.json({
+    total_revenue: '₹4.82Cr', gmv_total: '₹48.2Cr', platform_take: 10,
+    this_month: '₹1.8Cr', last_month: '₹1.5Cr', growth: 20,
+    by_source: [
+      { source: 'Ticket Platform Fee', amount: '₹2.02Cr', pct: 42 },
+      { source: 'Convenience Fee', amount: '₹1.35Cr', pct: 28 },
+      { source: 'Ads & Promoted Listings', amount: '₹72.3L', pct: 15 },
+      { source: 'Wristband/NFC', amount: '₹48.2L', pct: 10 },
+      { source: 'F&B Commission', amount: '₹24.1L', pct: 5 }
+    ],
+    updated_at: new Date().toISOString()
+  })
+})
+
+// Developer usage: add requests_today alias
+app.get('/api/developer/stats', async (c) => {
+  return c.json({
+    requests_today: 24891, requests_month: 718420,
+    success_rate: 99.2, avg_latency_ms: 12,
+    top_endpoints: ['/api/events', '/api/search', '/api/cities'],
+    quota_remaining: 75109, updated_at: new Date().toISOString()
+  })
+})
+
+// Venue bookings alias (calendar already returns events/calendar)
+app.get('/api/venue/bookings', async (c) => {
+  return c.json({
+    bookings: [
+      { id: 'VB-001', event: 'Sunburn Arena', organiser: 'Oye Events', date: '2026-04-12', status: 'confirmed', hire_fee: 500000 },
+      { id: 'VB-002', event: 'NH7 Weekender', organiser: 'Only Much Louder', date: '2026-05-20', status: 'pending', hire_fee: 450000 }
+    ],
+    total: 2, confirmed: 1, pending: 1,
+    updated_at: new Date().toISOString()
+  })
+})
+
 app.get('/api/version', (c) => {
   return c.json({
     version: '10.0.0', api_version: 'v10', phase: 10,
-    endpoints: 230, portals: 9,
+    endpoints: 237, portals: 9,
     features_added: [
       'Artist follow/unfollow API',
       'Event wishlist (add/remove/list)',

@@ -156,17 +156,32 @@ tr:hover td{background:rgba(108,60,247,0.04)}
         <div class="card">
           <div class="card-title">Revenue Trend (Last 12 Months) <span>Platform take rate: 10%</span></div>
           <div style="display:flex;align-items:flex-end;gap:6px;height:100px;margin-bottom:8px">
-            ${[22,28,35,42,38,55,68,72,58,65,80,95].map((h,i)=>`
-              <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:${h}%;opacity:0.75;cursor:pointer" title="Month ${i+1}: ₹${h*4}L GMV" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'"></div>`).join('')}
+            
+              <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:22%;opacity:0.75;cursor:pointer" title="Month 1: ₹88L GMV" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'"></div>
+              <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:28%;opacity:0.75;cursor:pointer" title="Month 2: ₹112L GMV" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'"></div>
+              <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:35%;opacity:0.75;cursor:pointer" title="Month 3: ₹140L GMV" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'"></div>
+              <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:42%;opacity:0.75;cursor:pointer" title="Month 4: ₹168L GMV" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'"></div>
+              <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:38%;opacity:0.75;cursor:pointer" title="Month 5: ₹152L GMV" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'"></div>
+              <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:55%;opacity:0.75;cursor:pointer" title="Month 6: ₹220L GMV" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'"></div>
+              <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:68%;opacity:0.75;cursor:pointer" title="Month 7: ₹272L GMV" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'"></div>
+              <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:72%;opacity:0.75;cursor:pointer" title="Month 8: ₹288L GMV" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'"></div>
+              <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:58%;opacity:0.75;cursor:pointer" title="Month 9: ₹232L GMV" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'"></div>
+              <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:65%;opacity:0.75;cursor:pointer" title="Month 10: ₹260L GMV" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'"></div>
+              <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:80%;opacity:0.75;cursor:pointer" title="Month 11: ₹320L GMV" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'"></div>
+              <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:95%;opacity:0.75;cursor:pointer" title="Month 12: ₹380L GMV" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'"></div>
           </div>
           <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted)">
-            ${['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'].map(m=>`<span>${m}</span>`).join('')}
+            <span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span>
           </div>
         </div>
         <div class="card">
           <div class="card-title">Revenue Mix</div>
-          ${[['Ticket Platform Fee',42],['Convenience Fee',28],['Ads & Promoted Listings',15],['Wristband/NFC',10],['F&B Commission',5]].map(([n,p])=>`
-            <div class="chart-bar-row"><div class="chart-bar-label">${n}</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:${p}%"></div></div><div class="chart-bar-val">${p}%</div></div>`).join('')}
+          
+            <div class="chart-bar-row"><div class="chart-bar-label">Ticket Platform Fee</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:42%"></div></div><div class="chart-bar-val">42%</div></div>
+            <div class="chart-bar-row"><div class="chart-bar-label">Convenience Fee</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:28%"></div></div><div class="chart-bar-val">28%</div></div>
+            <div class="chart-bar-row"><div class="chart-bar-label">Ads & Promoted Listings</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:15%"></div></div><div class="chart-bar-val">15%</div></div>
+            <div class="chart-bar-row"><div class="chart-bar-label">Wristband/NFC</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:10%"></div></div><div class="chart-bar-val">10%</div></div>
+            <div class="chart-bar-row"><div class="chart-bar-label">F&B Commission</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:5%"></div></div><div class="chart-bar-val">5%</div></div>
         </div>
       </div>
     </div>
@@ -175,25 +190,47 @@ tr:hover td{background:rgba(108,60,247,0.04)}
     <div class="panel" id="panel-organisers">
       <div class="approval-list">
         <div style="background:rgba(255,180,0,0.08);border:1px solid rgba(255,180,0,0.3);border-radius:10px;padding:12px;font-size:12px;color:var(--gold);margin-bottom:12px">⚠️ 18 organiser applications pending review. Approving grants full event creation access.</div>
-        ${[['🏢','Oye Events Pvt Ltd','GST: 27AABCO1234A1Z5 · PAN: AABCO1234A','Mumbai','Pending KYC'],['👨‍💼','Ravescape Productions','GST: 29AABCR5678A1Z5 · PAN: AABCR5678A','Bengaluru','Docs Uploaded'],['🎪','Horizon Live','GST: 27AABCH9012A1Z5 · PAN: AABCH9012A','Pune','Under Review']].map(([icon,name,gst,city,stage])=>`
+        
           <div class="approval-item">
-            <div class="ai-icon">${icon}</div>
-            <div class="ai-info"><div class="ai-name">${name} <span style="color:var(--muted);font-weight:400;font-size:11px">· ${city}</span></div><div class="ai-sub">${gst} · ${stage}</div></div>
+            <div class="ai-icon">🏢</div>
+            <div class="ai-info"><div class="ai-name">Oye Events Pvt Ltd <span style="color:var(--muted);font-weight:400;font-size:11px">· Mumbai</span></div><div class="ai-sub">GST: 27AABCO1234A1Z5 · PAN: AABCO1234A · Pending KYC</div></div>
             <div class="ai-actions">
-              <button class="ab ab-view" onclick="viewOrg('${name}')">View</button>
-              <button class="ab ab-approve" onclick="approveOrg('${name}')">✓ Approve</button>
-              <button class="ab ab-reject" onclick="rejectOrg('${name}')">✗ Reject</button>
+              <button class="ab ab-view" onclick="viewOrg('Oye Events Pvt Ltd')">View</button>
+              <button class="ab ab-approve" onclick="approveOrg('Oye Events Pvt Ltd')">✓ Approve</button>
+              <button class="ab ab-reject" onclick="rejectOrg('Oye Events Pvt Ltd')">✗ Reject</button>
             </div>
-          </div>`).join('')}
+          </div>
+          <div class="approval-item">
+            <div class="ai-icon">👨‍💼</div>
+            <div class="ai-info"><div class="ai-name">Ravescape Productions <span style="color:var(--muted);font-weight:400;font-size:11px">· Bengaluru</span></div><div class="ai-sub">GST: 29AABCR5678A1Z5 · PAN: AABCR5678A · Docs Uploaded</div></div>
+            <div class="ai-actions">
+              <button class="ab ab-view" onclick="viewOrg('Ravescape Productions')">View</button>
+              <button class="ab ab-approve" onclick="approveOrg('Ravescape Productions')">✓ Approve</button>
+              <button class="ab ab-reject" onclick="rejectOrg('Ravescape Productions')">✗ Reject</button>
+            </div>
+          </div>
+          <div class="approval-item">
+            <div class="ai-icon">🎪</div>
+            <div class="ai-info"><div class="ai-name">Horizon Live <span style="color:var(--muted);font-weight:400;font-size:11px">· Pune</span></div><div class="ai-sub">GST: 27AABCH9012A1Z5 · PAN: AABCH9012A · Under Review</div></div>
+            <div class="ai-actions">
+              <button class="ab ab-view" onclick="viewOrg('Horizon Live')">View</button>
+              <button class="ab ab-approve" onclick="approveOrg('Horizon Live')">✓ Approve</button>
+              <button class="ab ab-reject" onclick="rejectOrg('Horizon Live')">✗ Reject</button>
+            </div>
+          </div>
       </div>
       <div class="card" style="margin-top:16px">
         <div class="card-title">All Organisers <span>342 total</span></div>
         <div class="table-wrap">
           <table>
-            <thead><tr>${['Organiser','City','Events','GMV','Status','Actions'].map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+            <thead><tr><th>Organiser</th><th>City</th><th>Events</th><th>GMV</th><th>Status</th><th>Actions</th></tr></thead>
             <tbody>
-              ${[['Sunburn India','Mumbai',12,'₹2.4Cr','Active'],['BookMyShow Live','Mumbai',28,'₹8.1Cr','Active'],['Comedy Store India','Delhi',45,'₹1.2Cr','Active'],['Percept Live','Mumbai',8,'₹1.8Cr','Active'],['FLY Entertainment','Pune',6,'₹45L','Suspended']].map(([n,c,e,g,s])=>`
-                <tr><td style="font-weight:600">${n}</td><td>${c}</td><td>${e}</td><td style="color:var(--green);font-weight:600">${g}</td><td><span class="status-badge ${s==='Active'?'s-active':'s-suspended'}">${s}</span></td><td><div class="action-btns"><button class="ab ab-view">View</button><button class="ab ab-suspend">Suspend</button></div></td></tr>`).join('')}
+              
+                <tr><td style="font-weight:600">Sunburn India</td><td>Mumbai</td><td>12</td><td style="color:var(--green);font-weight:600">₹2.4Cr</td><td><span class="status-badge s-active">Active</span></td><td><div class="action-btns"><button class="ab ab-view">View</button><button class="ab ab-suspend">Suspend</button></div></td></tr>
+                <tr><td style="font-weight:600">BookMyShow Live</td><td>Mumbai</td><td>28</td><td style="color:var(--green);font-weight:600">₹8.1Cr</td><td><span class="status-badge s-active">Active</span></td><td><div class="action-btns"><button class="ab ab-view">View</button><button class="ab ab-suspend">Suspend</button></div></td></tr>
+                <tr><td style="font-weight:600">Comedy Store India</td><td>Delhi</td><td>45</td><td style="color:var(--green);font-weight:600">₹1.2Cr</td><td><span class="status-badge s-active">Active</span></td><td><div class="action-btns"><button class="ab ab-view">View</button><button class="ab ab-suspend">Suspend</button></div></td></tr>
+                <tr><td style="font-weight:600">Percept Live</td><td>Mumbai</td><td>8</td><td style="color:var(--green);font-weight:600">₹1.8Cr</td><td><span class="status-badge s-active">Active</span></td><td><div class="action-btns"><button class="ab ab-view">View</button><button class="ab ab-suspend">Suspend</button></div></td></tr>
+                <tr><td style="font-weight:600">FLY Entertainment</td><td>Pune</td><td>6</td><td style="color:var(--green);font-weight:600">₹45L</td><td><span class="status-badge s-suspended">Suspended</span></td><td><div class="action-btns"><button class="ab ab-view">View</button><button class="ab ab-suspend">Suspend</button></div></td></tr>
             </tbody>
           </table>
         </div>
@@ -261,8 +298,19 @@ tr:hover td{background:rgba(108,60,247,0.04)}
     <!-- CMS -->
     <div class="panel" id="panel-cms">
       <div class="cms-grid">
-        ${[['🏠','Homepage Banners','Manage hero banners, featured events, and promotional sections'],['📣','Promotions','Create and schedule platform-wide promotional campaigns'],['📧','Email Templates','Edit transactional and marketing email templates'],['💬','WhatsApp Templates','Manage WhatsApp Business API message templates'],['📋','Static Pages','Edit About, FAQ, Terms, Privacy Policy, and Help pages'],['🎨','Design Tokens','Update brand colours, fonts, and design system variables'],['🔍','SEO Manager','Meta titles, descriptions, and sitemap configuration'],['📱','Push Notifications','Configure and send push notification campaigns'],['🎁','Featured Events','Manually curate homepage featured event slots'],['🏷️','Category Manager','Add, edit, and reorder event categories and sub-categories'],['🌐','City Manager','Add new cities, manage city-level settings and banners'],['📊','Banners & Ads','Manage sponsored banner placements across all portals']].map(([icon,name,desc])=>`
-          <div class="cms-item" onclick="openCMS('${name}')"><div class="cms-icon">${icon}</div><div class="cms-name">${name}</div><div class="cms-desc">${desc}</div></div>`).join('')}
+        
+          <div class="cms-item" onclick="openCMS('Homepage Banners')"><div class="cms-icon">🏠</div><div class="cms-name">Homepage Banners</div><div class="cms-desc">Manage hero banners, featured events, and promotional sections</div></div>
+          <div class="cms-item" onclick="openCMS('Promotions')"><div class="cms-icon">📣</div><div class="cms-name">Promotions</div><div class="cms-desc">Create and schedule platform-wide promotional campaigns</div></div>
+          <div class="cms-item" onclick="openCMS('Email Templates')"><div class="cms-icon">📧</div><div class="cms-name">Email Templates</div><div class="cms-desc">Edit transactional and marketing email templates</div></div>
+          <div class="cms-item" onclick="openCMS('WhatsApp Templates')"><div class="cms-icon">💬</div><div class="cms-name">WhatsApp Templates</div><div class="cms-desc">Manage WhatsApp Business API message templates</div></div>
+          <div class="cms-item" onclick="openCMS('Static Pages')"><div class="cms-icon">📋</div><div class="cms-name">Static Pages</div><div class="cms-desc">Edit About, FAQ, Terms, Privacy Policy, and Help pages</div></div>
+          <div class="cms-item" onclick="openCMS('Design Tokens')"><div class="cms-icon">🎨</div><div class="cms-name">Design Tokens</div><div class="cms-desc">Update brand colours, fonts, and design system variables</div></div>
+          <div class="cms-item" onclick="openCMS('SEO Manager')"><div class="cms-icon">🔍</div><div class="cms-name">SEO Manager</div><div class="cms-desc">Meta titles, descriptions, and sitemap configuration</div></div>
+          <div class="cms-item" onclick="openCMS('Push Notifications')"><div class="cms-icon">📱</div><div class="cms-name">Push Notifications</div><div class="cms-desc">Configure and send push notification campaigns</div></div>
+          <div class="cms-item" onclick="openCMS('Featured Events')"><div class="cms-icon">🎁</div><div class="cms-name">Featured Events</div><div class="cms-desc">Manually curate homepage featured event slots</div></div>
+          <div class="cms-item" onclick="openCMS('Category Manager')"><div class="cms-icon">🏷️</div><div class="cms-name">Category Manager</div><div class="cms-desc">Add, edit, and reorder event categories and sub-categories</div></div>
+          <div class="cms-item" onclick="openCMS('City Manager')"><div class="cms-icon">🌐</div><div class="cms-name">City Manager</div><div class="cms-desc">Add new cities, manage city-level settings and banners</div></div>
+          <div class="cms-item" onclick="openCMS('Banners & Ads')"><div class="cms-icon">📊</div><div class="cms-name">Banners & Ads</div><div class="cms-desc">Manage sponsored banner placements across all portals</div></div>
       </div>
     </div>
 
@@ -290,17 +338,41 @@ tr:hover td{background:rgba(108,60,247,0.04)}
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
         <div class="card">
           <div class="card-title">AI Model Performance</div>
-          ${[['Recommendation Engine','91.2%','Active'],['Demand Forecasting','88.7%','Active'],['Fraud Detection','96.4%','Active'],['Dynamic Pricing','84.1%','Beta'],['Churn Prediction','79.3%','Training']].map(([m,acc,s])=>`
+          
             <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
-              <div style="flex:1"><div style="font-size:13px;font-weight:600">${m}</div></div>
-              <span style="font-size:13px;font-weight:700;color:var(--green)">${acc}</span>
-              <span class="status-badge ${s==='Active'?'s-active':s==='Beta'?'s-pending':'s-rejected'}">${s}</span>
-            </div>`).join('')}
+              <div style="flex:1"><div style="font-size:13px;font-weight:600">Recommendation Engine</div></div>
+              <span style="font-size:13px;font-weight:700;color:var(--green)">91.2%</span>
+              <span class="status-badge s-active">Active</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+              <div style="flex:1"><div style="font-size:13px;font-weight:600">Demand Forecasting</div></div>
+              <span style="font-size:13px;font-weight:700;color:var(--green)">88.7%</span>
+              <span class="status-badge s-active">Active</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+              <div style="flex:1"><div style="font-size:13px;font-weight:600">Fraud Detection</div></div>
+              <span style="font-size:13px;font-weight:700;color:var(--green)">96.4%</span>
+              <span class="status-badge s-active">Active</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+              <div style="flex:1"><div style="font-size:13px;font-weight:600">Dynamic Pricing</div></div>
+              <span style="font-size:13px;font-weight:700;color:var(--green)">84.1%</span>
+              <span class="status-badge s-pending">Beta</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+              <div style="flex:1"><div style="font-size:13px;font-weight:600">Churn Prediction</div></div>
+              <span style="font-size:13px;font-weight:700;color:var(--green)">79.3%</span>
+              <span class="status-badge s-rejected">Training</span>
+            </div>
         </div>
         <div class="card">
           <div class="card-title">Top Performing Cities</div>
-          ${[['Mumbai','₹1.8Cr',43],['Delhi','₹98L',23],['Bengaluru','₹72L',17],['Pune','₹48L',11],['Hyderabad','₹26L',6]].map(([c,r,p])=>`
-            <div class="chart-bar-row"><div class="chart-bar-label">${c}</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:${p*2}%"></div></div><div class="chart-bar-val" style="color:var(--green)">${r}</div></div>`).join('')}
+          
+            <div class="chart-bar-row"><div class="chart-bar-label">Mumbai</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:86%"></div></div><div class="chart-bar-val" style="color:var(--green)">₹1.8Cr</div></div>
+            <div class="chart-bar-row"><div class="chart-bar-label">Delhi</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:46%"></div></div><div class="chart-bar-val" style="color:var(--green)">₹98L</div></div>
+            <div class="chart-bar-row"><div class="chart-bar-label">Bengaluru</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:34%"></div></div><div class="chart-bar-val" style="color:var(--green)">₹72L</div></div>
+            <div class="chart-bar-row"><div class="chart-bar-label">Pune</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:22%"></div></div><div class="chart-bar-val" style="color:var(--green)">₹48L</div></div>
+            <div class="chart-bar-row"><div class="chart-bar-label">Hyderabad</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:12%"></div></div><div class="chart-bar-val" style="color:var(--green)">₹26L</div></div>
         </div>
       </div>
 
@@ -319,12 +391,47 @@ tr:hover td{background:rgba(108,60,247,0.04)}
         <div class="stat-card"><div class="stat-icon">🕵️</div><div class="stat-label">Fraud Flags (24h)</div><div class="stat-value">18</div><div class="stat-change up">8 auto-blocked</div></div>
       </div>
       <div class="security-grid">
-        ${[['🛡️','WAF (Web Application Firewall)','Cloudflare WAF — blocking SQLi, XSS, CSRF'],['🔐','MFA Enforcement','Mandatory 2FA for all admin and organiser accounts'],['🔒','Data Encryption','AES-256 at rest, TLS 1.3 in transit'],['🔑','API Rate Limiting','100 req/min for public, 1000 for authenticated'],['🕵️','Bot Protection','ML-based bot detection with CAPTCHA challenges'],['📊','Audit Logging','Immutable audit logs for all sensitive operations'],['💳','PCI-DSS Compliance','Card data never stored — tokenised via payment gateway'],['🚨','Incident Response','24/7 on-call security team, 15-min SLA']].map(([icon,name,desc])=>`
+        
           <div class="sec-item">
-            <div class="sec-icon">${icon}</div>
-            <div class="sec-info"><div class="sec-name">${name}</div><div class="sec-desc">${desc}</div></div>
+            <div class="sec-icon">🛡️</div>
+            <div class="sec-info"><div class="sec-name">WAF (Web Application Firewall)</div><div class="sec-desc">Cloudflare WAF — blocking SQLi, XSS, CSRF</div></div>
             <button class="sec-toggle">ON</button>
-          </div>`).join('')}
+          </div>
+          <div class="sec-item">
+            <div class="sec-icon">🔐</div>
+            <div class="sec-info"><div class="sec-name">MFA Enforcement</div><div class="sec-desc">Mandatory 2FA for all admin and organiser accounts</div></div>
+            <button class="sec-toggle">ON</button>
+          </div>
+          <div class="sec-item">
+            <div class="sec-icon">🔒</div>
+            <div class="sec-info"><div class="sec-name">Data Encryption</div><div class="sec-desc">AES-256 at rest, TLS 1.3 in transit</div></div>
+            <button class="sec-toggle">ON</button>
+          </div>
+          <div class="sec-item">
+            <div class="sec-icon">🔑</div>
+            <div class="sec-info"><div class="sec-name">API Rate Limiting</div><div class="sec-desc">100 req/min for public, 1000 for authenticated</div></div>
+            <button class="sec-toggle">ON</button>
+          </div>
+          <div class="sec-item">
+            <div class="sec-icon">🕵️</div>
+            <div class="sec-info"><div class="sec-name">Bot Protection</div><div class="sec-desc">ML-based bot detection with CAPTCHA challenges</div></div>
+            <button class="sec-toggle">ON</button>
+          </div>
+          <div class="sec-item">
+            <div class="sec-icon">📊</div>
+            <div class="sec-info"><div class="sec-name">Audit Logging</div><div class="sec-desc">Immutable audit logs for all sensitive operations</div></div>
+            <button class="sec-toggle">ON</button>
+          </div>
+          <div class="sec-item">
+            <div class="sec-icon">💳</div>
+            <div class="sec-info"><div class="sec-name">PCI-DSS Compliance</div><div class="sec-desc">Card data never stored — tokenised via payment gateway</div></div>
+            <button class="sec-toggle">ON</button>
+          </div>
+          <div class="sec-item">
+            <div class="sec-icon">🚨</div>
+            <div class="sec-info"><div class="sec-name">Incident Response</div><div class="sec-desc">24/7 on-call security team, 15-min SLA</div></div>
+            <button class="sec-toggle">ON</button>
+          </div>
       </div>
     </div>
 
@@ -334,24 +441,54 @@ tr:hover td{background:rgba(108,60,247,0.04)}
         <div class="card-title">Audit Log Stream <span>Real-time · Last 100 actions</span></div>
         <div class="table-wrap">
           <table>
-            <thead><tr>${['Timestamp','User','Role','Action','Resource','IP','Status'].map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+            <thead><tr><th>Timestamp</th><th>User</th><th>Role</th><th>Action</th><th>Resource</th><th>IP</th><th>Status</th></tr></thead>
             <tbody>
-              ${[
-                ['2025-04-15 18:42:11','admin@oyeimagine.com','Super Admin','APPROVE_EVENT','Event #E-2025-0045','103.24.x.x','SUCCESS'],
-                ['2025-04-15 18:38:44','rahul@sunburn.com','Organiser','UPDATE_EVENT','Event #E-2025-0042','49.36.x.x','SUCCESS'],
-                ['2025-04-15 18:31:02','system','AI Engine','FLAG_FRAUD','Order #ORD-98423','AUTO','BLOCKED'],
-                ['2025-04-15 18:28:15','admin@oyeimagine.com','Super Admin','REJECT_KYC','Organiser #O-1204','103.24.x.x','SUCCESS'],
-                ['2025-04-15 18:15:39','unknown','—','BRUTE_FORCE','Login','185.220.x.x','BLOCKED'],
-              ].map(([ts,user,role,action,res,ip,status])=>`
+              
                 <tr>
-                  <td style="font-size:11px;color:var(--muted)">${ts}</td>
-                  <td style="font-size:12px">${user}</td>
-                  <td><span class="status-badge s-active" style="font-size:10px">${role}</span></td>
-                  <td style="font-size:12px;font-weight:600;color:var(--brand)">${action}</td>
-                  <td style="font-size:11px">${res}</td>
-                  <td style="font-size:11px;color:var(--muted)">${ip}</td>
-                  <td><span class="status-badge ${status==='SUCCESS'?'s-active':status==='BLOCKED'?'s-rejected':'s-pending'}">${status}</span></td>
-                </tr>`).join('')}
+                  <td style="font-size:11px;color:var(--muted)">2025-04-15 18:42:11</td>
+                  <td style="font-size:12px">admin@oyeimagine.com</td>
+                  <td><span class="status-badge s-active" style="font-size:10px">Super Admin</span></td>
+                  <td style="font-size:12px;font-weight:600;color:var(--brand)">APPROVE_EVENT</td>
+                  <td style="font-size:11px">Event #E-2025-0045</td>
+                  <td style="font-size:11px;color:var(--muted)">103.24.x.x</td>
+                  <td><span class="status-badge s-active">SUCCESS</span></td>
+                </tr>
+                <tr>
+                  <td style="font-size:11px;color:var(--muted)">2025-04-15 18:38:44</td>
+                  <td style="font-size:12px">rahul@sunburn.com</td>
+                  <td><span class="status-badge s-active" style="font-size:10px">Organiser</span></td>
+                  <td style="font-size:12px;font-weight:600;color:var(--brand)">UPDATE_EVENT</td>
+                  <td style="font-size:11px">Event #E-2025-0042</td>
+                  <td style="font-size:11px;color:var(--muted)">49.36.x.x</td>
+                  <td><span class="status-badge s-active">SUCCESS</span></td>
+                </tr>
+                <tr>
+                  <td style="font-size:11px;color:var(--muted)">2025-04-15 18:31:02</td>
+                  <td style="font-size:12px">system</td>
+                  <td><span class="status-badge s-active" style="font-size:10px">AI Engine</span></td>
+                  <td style="font-size:12px;font-weight:600;color:var(--brand)">FLAG_FRAUD</td>
+                  <td style="font-size:11px">Order #ORD-98423</td>
+                  <td style="font-size:11px;color:var(--muted)">AUTO</td>
+                  <td><span class="status-badge s-rejected">BLOCKED</span></td>
+                </tr>
+                <tr>
+                  <td style="font-size:11px;color:var(--muted)">2025-04-15 18:28:15</td>
+                  <td style="font-size:12px">admin@oyeimagine.com</td>
+                  <td><span class="status-badge s-active" style="font-size:10px">Super Admin</span></td>
+                  <td style="font-size:12px;font-weight:600;color:var(--brand)">REJECT_KYC</td>
+                  <td style="font-size:11px">Organiser #O-1204</td>
+                  <td style="font-size:11px;color:var(--muted)">103.24.x.x</td>
+                  <td><span class="status-badge s-active">SUCCESS</span></td>
+                </tr>
+                <tr>
+                  <td style="font-size:11px;color:var(--muted)">2025-04-15 18:15:39</td>
+                  <td style="font-size:12px">unknown</td>
+                  <td><span class="status-badge s-active" style="font-size:10px">—</span></td>
+                  <td style="font-size:12px;font-weight:600;color:var(--brand)">BRUTE_FORCE</td>
+                  <td style="font-size:11px">Login</td>
+                  <td style="font-size:11px;color:var(--muted)">185.220.x.x</td>
+                  <td><span class="status-badge s-rejected">BLOCKED</span></td>
+                </tr>
             </tbody>
           </table>
         </div>
@@ -363,12 +500,67 @@ tr:hover td{background:rgba(108,60,247,0.04)}
       <div class="card">
         <div class="card-title">Platform Configuration</div>
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px">
-          ${[['Default Ticket Cap per User','10','Override per event allowed'],['Platform Commission Rate','10%','Applied to gross ticket sales'],['Convenience Fee (flat)','₹20','Per order'],['GST on Platform Fee','18%','GSTIN: 27AABCO1234A1Z5'],['Settlement Window','T+7 days','After event date'],['TDS Deduction Rate','5%','On payments to organisers'],['Minimum Event Price','₹1','Per ticket'],['Maximum Ticket Qty Override','100','Admin approval required'],['KYC SLA','24 hours','Business hours only'],['Refund Processing Time','5-7 business days','NEFT/UPI'],['Cancellation Window','48 hours before event','50% refund'],['Age Verification','Aadhaar OTP','For 18+ events']].map(([k,v,note])=>`
+          
             <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px">
-              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">${k}</div>
-              <div style="font-size:18px;font-weight:700;color:var(--brand)">${v}</div>
-              <div style="font-size:11px;color:var(--muted);margin-top:4px">${note}</div>
-            </div>`).join('')}
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Default Ticket Cap per User</div>
+              <div style="font-size:18px;font-weight:700;color:var(--brand)">10</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px">Override per event allowed</div>
+            </div>
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px">
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Platform Commission Rate</div>
+              <div style="font-size:18px;font-weight:700;color:var(--brand)">10%</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px">Applied to gross ticket sales</div>
+            </div>
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px">
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Convenience Fee (flat)</div>
+              <div style="font-size:18px;font-weight:700;color:var(--brand)">₹20</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px">Per order</div>
+            </div>
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px">
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">GST on Platform Fee</div>
+              <div style="font-size:18px;font-weight:700;color:var(--brand)">18%</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px">GSTIN: 27AABCO1234A1Z5</div>
+            </div>
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px">
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Settlement Window</div>
+              <div style="font-size:18px;font-weight:700;color:var(--brand)">T+7 days</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px">After event date</div>
+            </div>
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px">
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">TDS Deduction Rate</div>
+              <div style="font-size:18px;font-weight:700;color:var(--brand)">5%</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px">On payments to organisers</div>
+            </div>
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px">
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Minimum Event Price</div>
+              <div style="font-size:18px;font-weight:700;color:var(--brand)">₹1</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px">Per ticket</div>
+            </div>
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px">
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Maximum Ticket Qty Override</div>
+              <div style="font-size:18px;font-weight:700;color:var(--brand)">100</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px">Admin approval required</div>
+            </div>
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px">
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">KYC SLA</div>
+              <div style="font-size:18px;font-weight:700;color:var(--brand)">24 hours</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px">Business hours only</div>
+            </div>
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px">
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Refund Processing Time</div>
+              <div style="font-size:18px;font-weight:700;color:var(--brand)">5-7 business days</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px">NEFT/UPI</div>
+            </div>
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px">
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Cancellation Window</div>
+              <div style="font-size:18px;font-weight:700;color:var(--brand)">48 hours before event</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px">50% refund</div>
+            </div>
+            <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:14px">
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Age Verification</div>
+              <div style="font-size:18px;font-weight:700;color:var(--brand)">Aadhaar OTP</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px">For 18+ events</div>
+            </div>
         </div>
         <div style="margin-top:16px;display:flex;justify-content:flex-end">
           <button class="btn-sm btn-primary" onclick="saveConfigAPI()"><i class="fas fa-save"></i> Save Configuration</button>
