@@ -3100,4 +3100,29 @@ async function loadP36VenueFX() {
 }
 </script>
 <!-- END PHASE 36 VENUE PORTAL -->
+
+<!-- PHASE 37 VENUE PORTAL: AR Wayfinding & Accessibility -->
+<div class="phase-section" id="p37-venue-section">
+  <h3>🥽 Phase 37 — AR Wayfinding & Accessibility</h3>
+  <div class="btn-row">
+    <button onclick="loadP37VenueWayfinding()">Wayfinding Analytics</button>
+    <button onclick="loadP37VenueAccessibility()">Accessibility</button>
+  </div>
+  <div id="p37-venue-output" class="output-box"></div>
+</div>
+<script>
+async function loadP37VenueWayfinding() {
+  const r = await fetch('/api/venue/immersive/ar/wayfinding-analytics');
+  const d = await r.json();
+  document.getElementById('p37-venue-output').innerHTML =
+    `<div class="info-alert">🗺️ Nav Sessions: ${d.navigation_sessions.toLocaleString()} | Steps Saved: ${d.avg_steps_saved} avg | Alerts: ${d.congestion_alerts} | Popular: ${d.popular_routes.join(' → ')}</div>`;
+}
+async function loadP37VenueAccessibility() {
+  const r = await fetch('/api/venue/immersive/ar/accessibility');
+  const d = await r.json();
+  document.getElementById('p37-venue-output').innerHTML =
+    `<div class="success-alert">♿ Sign Language: ${d.sign_language_overlay ? '✅' : '❌'} | Audio Desc: ${d.audio_description ? '✅' : '❌'} | Haptic: ${d.haptic_alerts ? '✅' : '❌'} | WCAG-AA: ${d.wcag_aa ? '✅' : '❌'}</div>`;
+}
+</script>
+<!-- END PHASE 37 VENUE PORTAL -->
 </body></html>

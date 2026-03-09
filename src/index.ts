@@ -21981,7 +21981,7 @@ app.get('/api/ops/web3/analytics/indexer-health', (c) => c.json({
 }))
 
 // ── Phase 36 health endpoint ─────────────────────────────────
-app.get('/api/health', (c) => c.json({
+app.get('/api/v36/health', (c) => c.json({
   status: 'ok', platform: 'INDTIX', version: 'v36.0.0',
   phase: 'Phase 36', theme: 'Web3, NFT Ticketing & Blockchain Infrastructure',
   new_endpoints: 90, total_endpoints: 2269,
@@ -22001,6 +22001,443 @@ app.get('/api/health', (c) => c.json({
 
 // ═══════════════════════════════════════════════════════════
 // END PHASE 36 — WEB3, NFT TICKETING & BLOCKCHAIN INFRASTRUCTURE
+// ═══════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 37 — IMMERSIVE EXPERIENCES: AR/VR, METAVERSE & LIVE STREAMING
+// Version: v37.0.0 | New endpoints: 90 | Total: 2359
+// ═══════════════════════════════════════════════════════════
+
+// ── Module 1: Virtual & Hybrid Event Platform ───────────────
+app.get('/api/admin/immersive/virtual-events/dashboard', (c) => c.json({
+  virtual_events_ytd: 284, hybrid_events_ytd: 840, avg_virtual_attendance: 28400,
+  peak_concurrent_viewers: 284000, platforms: ['INDTIX-Live', 'YouTube', 'Twitch', 'JioTV'],
+  total_virtual_revenue_inr: 284000000, ppt_per_viewer_inr: 180
+}))
+app.get('/api/admin/immersive/virtual-events/catalogue', (c) => c.json({
+  upcoming: [
+    { event: 'Sunburn Virtual 2026', date: '2026-04-20', capacity: 100000, tickets_sold: 84000, price_inr: 499 },
+    { event: 'AR Rahman Digital Concert', date: '2026-05-15', capacity: 500000, tickets_sold: 284000, price_inr: 299 }
+  ]
+}))
+app.post('/api/admin/immersive/virtual-events/create', (c) => c.json({
+  event_id: `VEVT-${Date.now()}`, type: 'hybrid', capacity: 50000,
+  streaming_key: `sk_live_${Math.random().toString(36).slice(2)}`,
+  cdn_regions: ['Mumbai', 'Delhi', 'Singapore', 'London'], latency_ms: 800
+}))
+app.get('/api/admin/immersive/virtual-events/tech-stack', (c) => c.json({
+  streaming: 'WebRTC + HLS', cdn: 'Cloudflare Stream + AWS IVS',
+  video_codec: 'H.265/AV1', max_bitrate_mbps: 8, adaptive_bitrate: true,
+  latency_mode: 'low-latency-hls', dvr_enabled: true
+}))
+app.get('/api/organiser/immersive/virtual-events/control-room', (c) => c.json({
+  live: true, viewers_now: 28400, bitrate_mbps: 6.2, dropped_frames_pct: 0.02,
+  chat_messages_pm: 8400, reactions_pm: 28400, health: 'green'
+}))
+app.post('/api/organiser/immersive/virtual-events/go-live', (c) => c.json({
+  stream_id: `STR-${Date.now()}`, rtmp_url: 'rtmps://live.indtix.com/app/',
+  went_live_at: new Date().toISOString(), quality: '4K-HDR', status: 'broadcasting'
+}))
+app.get('/api/admin/immersive/virtual-events/monetisation', (c) => c.json({
+  ppv_revenue_inr: 84000000, subscription_revenue_inr: 42000000,
+  virtual_merch_inr: 8400000, super_chat_inr: 2840000, sponsorship_inr: 28400000
+}))
+app.get('/api/organiser/immersive/virtual-events/replay', (c) => c.json({
+  replays_available: 284, total_replay_views: 1200000, avg_watch_time_min: 48,
+  replay_revenue_inr: 28400000, drm_protected: true
+}))
+app.post('/api/admin/immersive/virtual-events/schedule', (c) => c.json({
+  schedule_id: `SCH-${Date.now()}`, events_scheduled: 8, auto_start: true,
+  reminder_sent: 28400, calendar_sync: true
+}))
+app.get('/api/admin/immersive/virtual-events/quality-monitor', (c) => c.json({
+  p50_buffer_ratio: 0.002, p95_latency_ms: 840, rebuffer_rate_pct: 0.4,
+  cdn_hit_rate_pct: 98.4, regions_healthy: 8, active_abr_streams: 28400
+}))
+
+// ── Module 2: AR Fan Experiences & Venue Navigation ─────────
+app.get('/api/fan/immersive/ar/dashboard', (c) => c.json({
+  ar_sessions_today: 28400, avg_session_min: 12, features_used: ['wayfinding', 'artist-info', 'seat-preview', 'filter-effects'],
+  devices_active: 18400, avg_fps: 58, satisfaction_score: 4.6
+}))
+app.get('/api/fan/immersive/ar/venue-map', (c) => c.json({
+  venue: 'DY Patil Stadium', ar_anchors: 284, indoor_navigation: true,
+  poi_categories: ['Entrance', 'Food', 'Restroom', 'First Aid', 'Stage View'],
+  avg_nav_accuracy_m: 1.2, blue_dot_enabled: true
+}))
+app.get('/api/fan/immersive/ar/artist-lens', (c) => c.json({
+  artist: 'AR Rahman', ar_effects: 8, face_filter: true,
+  setlist_overlay: true, lyrics_ar: true, votes_used: 28400
+}))
+app.post('/api/fan/immersive/ar/seat-preview', (c) => c.json({
+  seat: 'Block-A Row-12 Seat-8', view_score: 9.2, distance_from_stage_m: 28,
+  ar_preview_url: 'https://ar.indtix.com/preview/DA12-8', sightline: 'unobstructed'
+}))
+app.get('/api/venue/immersive/ar/wayfinding-analytics', (c) => c.json({
+  navigation_sessions: 28400, avg_steps_saved: 84, congestion_alerts: 4,
+  popular_routes: ['Gate-1 → Stage', 'Parking → Entrance', 'Food Court → Seat'],
+  accessibility_mode_usage_pct: 8
+}))
+app.get('/api/fan/immersive/ar/social-layer', (c) => c.json({
+  nearby_fans: 284, shared_moments: 8400, ar_group_selfies: 2840,
+  viral_filter_uses: 28400, trending_effect: 'Sunburn-Holi-Dust'
+}))
+app.post('/api/fan/immersive/ar/capture-moment', (c) => c.json({
+  moment_id: `MOM-${Date.now()}`, media_type: 'ar-photo', effect: 'artist-crown',
+  share_url: `https://share.indtix.com/m/${Math.random().toString(36).slice(2)}`,
+  nft_mintable: true
+}))
+app.get('/api/venue/immersive/ar/accessibility', (c) => c.json({
+  sign_language_overlay: true, audio_description: true, large_text_mode: true,
+  high_contrast: true, haptic_alerts: true, wcag_aa: true
+}))
+
+// ── Module 3: Metaverse Concert & Virtual Venue ─────────────
+app.get('/api/admin/immersive/metaverse/dashboard', (c) => c.json({
+  virtual_venues: 12, metaverse_platforms: ['Decentraland', 'Fortnite', 'Roblox', 'INDIEN-World'],
+  mau_metaverse: 284000, virtual_land_parcels: 42, avg_session_min: 84,
+  metaverse_revenue_inr: 84000000
+}))
+app.get('/api/fan/immersive/metaverse/my-avatar', (c) => c.json({
+  avatar_id: `AVT-${Date.now()}`, skins_owned: 8, wearables: 4,
+  backstage_pass_nft: true, fan_tier: 'Platinum', xp_points: 28400
+}))
+app.get('/api/admin/immersive/metaverse/virtual-venues', (c) => c.json({
+  venues: [
+    { name: 'INDIEN Amphitheatre', platform: 'Decentraland', capacity: 50000, parcel: '-42,84' },
+    { name: 'Sky Stage Mumbai', platform: 'INDIEN-World', capacity: 100000, parcel: 'SW-12' }
+  ]
+}))
+app.post('/api/fan/immersive/metaverse/enter-venue', (c) => c.json({
+  session_id: `MVS-${Date.now()}`, venue: 'INDIEN Amphitheatre', concurrent_users: 28400,
+  teleport_url: 'dcl://concert-stage', voice_enabled: true, vr_mode: false
+}))
+app.get('/api/admin/immersive/metaverse/virtual-merch', (c) => c.json({
+  items_listed: 2840, sold_ytd: 84000, avg_price_inr: 840,
+  top_item: 'AR Rahman Digital Jacket', revenue_inr: 70560000, nft_backed: true
+}))
+app.get('/api/fan/immersive/metaverse/social-hub', (c) => c.json({
+  fan_clubs_active: 284, members_online: 28400, events_today: 42,
+  virtual_autograph_sessions: 8, fan_battles: 18
+}))
+app.post('/api/admin/immersive/metaverse/drop-wearable', (c) => c.json({
+  wearable_id: `WEAR-${Date.now()}`, name: 'Festival Crown 2026', rarity: 'rare',
+  supply: 2840, price_inr: 1200, blockchain: 'Polygon', status: 'launched'
+}))
+app.get('/api/admin/immersive/metaverse/sponsorship', (c) => c.json({
+  sponsors_active: 8, virtual_billboards: 42, branded_spaces: 8,
+  impression_count: 28400000, cpm_inr: 84, total_sponsorship_inr: 28400000
+}))
+app.get('/api/fan/immersive/metaverse/leaderboard', (c) => c.json({
+  top_fans: [
+    { rank: 1, fan: 'MetaFan2026', xp: 284000, badge: 'Legend' },
+    { rank: 2, fan: 'CryptoGroove', xp: 184000, badge: 'Champion' }
+  ]
+}))
+app.get('/api/admin/immersive/metaverse/analytics', (c) => c.json({
+  peak_concurrent: 284000, avg_dwell_min: 84, conversion_to_paid_pct: 28,
+  retention_d7_pct: 48, nps_metaverse: 74, churn_pct: 12
+}))
+
+// ── Module 4: Live Streaming & Pay-Per-View ─────────────────
+app.get('/api/admin/immersive/streaming/dashboard', (c) => c.json({
+  live_streams_today: 42, concurrent_viewers_now: 284000, bandwidth_gbps: 840,
+  ppv_tickets_sold_today: 28400, revenue_today_inr: 14200000, cdn_nodes: 284
+}))
+app.get('/api/fan/immersive/streaming/catalogue', (c) => c.json({
+  live_now: 4, upcoming_48h: 18, on_demand: 284,
+  free_streams: 8, ppv: 24, subscription_included: 12
+}))
+app.post('/api/fan/immersive/streaming/purchase-ppv', (c) => c.json({
+  access_token: `PPV-${Date.now()}`, event: 'Sunburn Live 2026',
+  valid_until: new Date(Date.now() + 86400000).toISOString(),
+  price_inr: 499, quality_max: '4K-HDR', devices: 2
+}))
+app.get('/api/fan/immersive/streaming/watch', (c) => c.json({
+  stream_url: 'https://live.indtix.com/hls/stream.m3u8',
+  drm: 'Widevine+FairPlay', quality_options: ['4K', '1080p', '720p', '480p'],
+  latency_ms: 800, chat_enabled: true, interactive: true
+}))
+app.get('/api/event-manager/immersive/streaming/encoder-settings', (c) => c.json({
+  codec: 'H.265', bitrate_mbps: 8, fps: 60, resolution: '3840x2160',
+  keyframe_interval: 2, audio_codec: 'AAC-LC', audio_bitrate_kbps: 320
+}))
+app.post('/api/event-manager/immersive/streaming/clip-highlight', (c) => c.json({
+  clip_id: `CLIP-${Date.now()}`, start_sec: 1800, duration_sec: 30,
+  auto_subtitle: true, share_url: `https://share.indtix.com/c/${Math.random().toString(36).slice(2)}`,
+  nft_mintable: true
+}))
+app.get('/api/admin/immersive/streaming/revenue-breakdown', (c) => c.json({
+  ppv_inr: 84000000, subscriptions_inr: 42000000, ads_inr: 28400000,
+  super_chat_inr: 8400000, replay_inr: 14200000, total_inr: 177000000
+}))
+app.get('/api/event-manager/immersive/streaming/chat-moderation', (c) => c.json({
+  messages_24h: 2840000, auto_moderated: 28400, escalated: 84,
+  spam_blocked: 8400, sentiment_positive_pct: 74, active_mods: 8
+}))
+app.post('/api/admin/immersive/streaming/create-stream', (c) => c.json({
+  stream_id: `LIVE-${Date.now()}`, ingest_url: 'rtmps://ingest.indtix.com/live',
+  stream_key: `sk_${Math.random().toString(36).slice(2)}`,
+  regions: ['ap-south', 'ap-east', 'eu-west', 'us-east'], status: 'ready'
+}))
+app.get('/api/admin/immersive/streaming/analytics', (c) => c.json({
+  avg_watch_time_min: 48, completion_rate_pct: 62, rebuffer_pct: 0.4,
+  device_split: { mobile: 58, desktop: 28, smart_tv: 14 }, peak_viewers: 284000
+}))
+
+// ── Module 5: Interactive Live & Second Screen ───────────────
+app.get('/api/fan/immersive/interactive/dashboard', (c) => c.json({
+  active_polls: 4, active_quizzes: 2, reactions_pm: 28400,
+  super_chat_pm: 840, setlist_votes_active: true, fan_cam_submissions: 284
+}))
+app.post('/api/fan/immersive/interactive/vote-setlist', (c) => c.json({
+  vote_id: `VOTE-${Date.now()}`, song: 'Jai Ho', votes_cast: 1,
+  current_rank: 2, total_votes: 28400, result_live: true
+}))
+app.post('/api/fan/immersive/interactive/react', (c) => c.json({
+  reaction: '🔥', timestamp: new Date().toISOString(),
+  total_reactions: 284000, trending: true
+}))
+app.get('/api/fan/immersive/interactive/second-screen', (c) => c.json({
+  camera_angles: 4, current_angle: 'stage-front', stats_overlay: true,
+  artist_bio: true, merch_popup: true, next_song_hint: 'Roja'
+}))
+app.get('/api/ops/immersive/interactive/engagement-metrics', (c) => c.json({
+  interactions_per_viewer: 8.4, peak_interaction_min: 42,
+  sentiment_live: 0.84, viral_coefficient: 2.8, nps_live: 72
+}))
+app.post('/api/fan/immersive/interactive/fan-cam', (c) => c.json({
+  submission_id: `CAM-${Date.now()}`, status: 'in-review',
+  on_screen_chance_pct: 8, reward_tokens: 100
+}))
+app.get('/api/ops/immersive/interactive/gamification', (c) => c.json({
+  trivia_questions_live: 8, leaderboard_participants: 28400,
+  prizes: ['Meet-Greet', 'Signed-Poster', 'VIP-Upgrade'], avg_score: 742
+}))
+app.get('/api/admin/immersive/interactive/sponsor-integrations', (c) => c.json({
+  branded_polls: 4, sponsored_reactions: 2, product_placement_views: 2840000,
+  click_through_rate_pct: 4.2, sponsor_revenue_inr: 8400000
+}))
+
+// ── Module 6: Spatial Audio & Immersive Sound ───────────────
+app.get('/api/admin/immersive/audio/dashboard', (c) => c.json({
+  dolby_atmos_events: 84, spatial_audio_streams: 28400,
+  avg_audio_bitrate_kbps: 320, binaural_rendering: true,
+  audio_formats: ['Dolby Atmos', 'Sony 360RA', 'Apple Spatial', 'Ambisonics']
+}))
+app.get('/api/event-manager/immersive/audio/mix-settings', (c) => c.json({
+  channels: 32, sample_rate_hz: 48000, bit_depth: 24,
+  loudness_target_lufs: -14, true_peak_dbtp: -1, spatial_engine: 'Dolby.io'
+}))
+app.post('/api/event-manager/immersive/audio/apply-spatial', (c) => c.json({
+  mix_id: `MIX-${Date.now()}`, format: 'Dolby Atmos', rendered_channels: 12,
+  processing_time_sec: 8, preview_url: `https://audio.indtix.com/p/${Math.random().toString(36).slice(2)}`
+}))
+app.get('/api/fan/immersive/audio/personalise', (c) => c.json({
+  hearing_profile: 'normal', eq_preset: 'concert-hall', bass_boost: false,
+  spatial_mode: '3d-sphere', headphone_optimised: true
+}))
+app.get('/api/admin/immersive/audio/quality-monitor', (c) => c.json({
+  avg_mos_score: 4.4, latency_ms: 40, jitter_ms: 4, packet_loss_pct: 0.02,
+  dropout_events_24h: 2, listener_satisfaction_pct: 94
+}))
+app.post('/api/event-manager/immersive/audio/soundcheck', (c) => c.json({
+  soundcheck_id: `SC-${Date.now()}`, freq_response: 'flat',
+  clipping_detected: false, recommended_gain_db: -2, ready: true
+}))
+app.get('/api/admin/immersive/audio/device-compatibility', (c) => c.json({
+  compatible_headphones: 8400, airpods_spatial: true, beats_spatial: true,
+  samsung_360: true, sony_wh1000xm6: true, web_audio_api: true
+}))
+app.get('/api/admin/immersive/audio/analytics', (c) => c.json({
+  spatial_adoption_pct: 42, avg_session_min: 84, satisfaction_uplift_pct: 28,
+  premium_spatial_subscribers: 84000, revenue_uplift_inr: 42000000
+}))
+
+// ── Module 7: Virtual Meet & Greet Platform ─────────────────
+app.get('/api/admin/immersive/meet-greet/dashboard', (c) => c.json({
+  sessions_ytd: 2840, fans_served: 28400, avg_session_min: 4,
+  artists_active: 284, revenue_inr: 284000000, satisfaction_pct: 97
+}))
+app.get('/api/fan/immersive/meet-greet/available', (c) => c.json({
+  upcoming: [
+    { artist: 'AR Rahman', date: '2026-04-20', slots: 100, price_inr: 8400, available: 28 },
+    { artist: 'Arijit Singh', date: '2026-05-01', slots: 50, price_inr: 12400, available: 12 }
+  ]
+}))
+app.post('/api/fan/immersive/meet-greet/book', (c) => c.json({
+  booking_id: `MG-${Date.now()}`, artist: 'AR Rahman', slot: '2026-04-20T15:00',
+  duration_min: 4, video_room: `https://meet.indtix.com/mg/${Math.random().toString(36).slice(2)}`,
+  reminder_sent: true
+}))
+app.get('/api/fan/immersive/meet-greet/my-sessions', (c) => c.json({
+  upcoming: 1, completed: 4, recordings_available: 3,
+  autographs_digital: 4, memories_nft: 2
+}))
+app.post('/api/organiser/immersive/meet-greet/schedule', (c) => c.json({
+  schedule_id: `MGS-${Date.now()}`, artist: 'Diljit Dosanjh',
+  slots: 80, price_inr: 6400, duration_min: 5, launch_date: '2026-04-01'
+}))
+app.get('/api/admin/immersive/meet-greet/ai-host', (c) => c.json({
+  ai_host_enabled: true, pre_session_briefing: true, icebreaker_generated: true,
+  translation_realtime: true, languages: 22, post_session_recap: true
+}))
+app.get('/api/organiser/immersive/meet-greet/artist-prep', (c) => c.json({
+  fan_profiles: 28, fan_questions_curated: 84, gifts_digital: 42,
+  content_suggestions: 8, backdrop_templates: 12
+}))
+app.get('/api/admin/immersive/meet-greet/revenue-analytics', (c) => c.json({
+  avg_revenue_per_session_inr: 100000, top_artist_rev_inr: 28400000,
+  upsell_conversion_pct: 42, repeat_fan_pct: 28
+}))
+
+// ── Module 8: XR Content Studio & Creator Tools ─────────────
+app.get('/api/admin/immersive/xr-studio/dashboard', (c) => c.json({
+  creators_active: 2840, content_pieces_created: 28400,
+  formats: ['VR-180', 'VR-360', 'AR-Filter', 'Hologram', 'Volumetric'],
+  avg_production_hours: 4.2, monetised_content: 8400, revenue_inr: 84000000
+}))
+app.get('/api/event-manager/immersive/xr-studio/tools', (c) => c.json({
+  tools: ['3D Scene Builder', 'AR Filter Creator', 'Volumetric Capture', '360 Stitcher', 'Hologram Composer'],
+  templates: 284, ai_assist: true, cloud_render: true, avg_render_min: 12
+}))
+app.post('/api/event-manager/immersive/xr-studio/create-project', (c) => c.json({
+  project_id: `XRP-${Date.now()}`, type: 'VR-360', resolution: '8K',
+  storage_gb: 8.4, collaboration_link: `https://studio.indtix.com/p/${Math.random().toString(36).slice(2)}`
+}))
+app.get('/api/admin/immersive/xr-studio/asset-library', (c) => c.json({
+  total_assets: 28400, categories: ['Stages', 'Avatars', 'Effects', 'Backgrounds', 'Instruments'],
+  licensed: 8400, free: 20000, premium: 8400, new_this_week: 284
+}))
+app.post('/api/event-manager/immersive/xr-studio/publish', (c) => c.json({
+  content_id: `XRC-${Date.now()}`, published_to: ['INDIEN-World', 'INDTIX-App', 'Meta Horizon'],
+  views_24h: 28400, revenue_share_pct: 70, monetised: true
+}))
+app.get('/api/event-manager/immersive/xr-studio/ai-tools', (c) => c.json({
+  scene_generation: 'text-to-3D', avatar_animation: 'motion-capture-ai',
+  lip_sync: 'auto', background_removal: 'real-time', upscaling: '4x-ai-sr'
+}))
+app.get('/api/admin/immersive/xr-studio/marketplace', (c) => c.json({
+  listings: 8400, sold_ytd: 28400, avg_price_inr: 840,
+  top_seller: 'StageDesigns_Inc', gmv_inr: 28400000, creator_payout_pct: 70
+}))
+app.post('/api/admin/immersive/xr-studio/brand-kit', (c) => c.json({
+  kit_id: `BK-${Date.now()}`, brand: 'INDIE-FEST', assets: 42,
+  ar_logo: true, colour_palette_applied: true, font_pack: 'INDIEN-Sans'
+}))
+app.get('/api/event-manager/immersive/xr-studio/collab-sessions', (c) => c.json({
+  active_sessions: 42, participants_total: 284, real_time_sync: true,
+  version_history: true, avg_session_duration_min: 84
+}))
+app.get('/api/admin/immersive/xr-studio/analytics', (c) => c.json({
+  content_views_total: 28400000, avg_engagement_min: 8.4,
+  creator_earnings_inr: 84000000, top_format: 'VR-360', cpm_inr: 840
+}))
+
+// ── Module 9: Immersive Analytics & Viewer Intelligence ─────
+app.get('/api/admin/immersive/analytics/dashboard', (c) => c.json({
+  total_immersive_sessions: 2840000, avg_session_min: 42, nps_immersive: 74,
+  platforms_tracked: 8, devices_tracked: 284000, ai_insights_generated: 28400
+}))
+app.get('/api/admin/immersive/analytics/viewer-heatmap', (c) => c.json({
+  hotspots: ['Stage-Left', 'Drum-Kit', 'Lead-Vocalist'],
+  avg_gaze_duration_sec: 8.4, vr_vs_screen_pct: 28,
+  immersion_score: 8.4, presence_score: 7.8
+}))
+app.get('/api/admin/immersive/analytics/engagement-funnel', (c) => c.json({
+  watched_trailer: 284000, entered_event: 184000, stayed_15min: 140000,
+  purchased_merch: 28400, shared: 42000, conversion_rate_pct: 15.4
+}))
+app.get('/api/ops/immersive/analytics/performance', (c) => c.json({
+  p50_load_sec: 2.4, p95_load_sec: 4.8, error_rate_pct: 0.04,
+  cdn_cost_per_gb_inr: 0.84, infra_utilisation_pct: 74, auto_scaled: true
+}))
+app.get('/api/admin/immersive/analytics/retention', (c) => c.json({
+  d1_retention_pct: 74, d7_retention_pct: 48, d30_retention_pct: 28,
+  avg_ltv_immersive_inr: 8400, churn_predictor_accuracy_pct: 84
+}))
+app.get('/api/ops/immersive/analytics/cost-per-viewer', (c) => c.json({
+  avg_cost_per_viewer_inr: 42, cdn_pct: 58, compute_pct: 28, storage_pct: 14,
+  revenue_per_viewer_inr: 284, margin_pct: 85.2
+}))
+app.get('/api/admin/immersive/analytics/content-performance', (c) => c.json({
+  top_content: 'AR Rahman VR Concert', views: 2840000, completion_pct: 74,
+  shares: 284000, nft_mints: 28400, revenue_inr: 84000000
+}))
+app.get('/api/ops/immersive/analytics/infra-health', (c) => c.json({
+  stream_servers: 284, healthy: 280, degraded: 4, failed: 0,
+  auto_failover: true, uptime_pct: 99.97, regions: 8
+}))
+
+// ── Module 10: Hardware & Device Partner Ecosystem ──────────
+app.get('/api/admin/immersive/hardware/dashboard', (c) => c.json({
+  device_partners: 42, certified_devices: 284, active_sdk_integrations: 84,
+  platforms: ['Meta Quest', 'Apple Vision Pro', 'PICO 4', 'Samsung XR', 'HTC Vive'],
+  monthly_active_xr_devices: 28400
+}))
+app.get('/api/admin/immersive/hardware/certified-devices', (c) => c.json({
+  devices: [
+    { name: 'Meta Quest 3', type: 'VR', support: 'full', users: 8400 },
+    { name: 'Apple Vision Pro', type: 'MR', support: 'full', users: 2840 },
+    { name: 'PICO 4', type: 'VR', support: 'full', users: 4200 }
+  ]
+}))
+app.post('/api/admin/immersive/hardware/certify-device', (c) => c.json({
+  cert_id: `CERT-${Date.now()}`, device: 'Lenovo ThinkReality A3',
+  tests_passed: 42, certification: 'INDIEN-XR-Certified', valid_until: '2027-03-09'
+}))
+app.get('/api/admin/immersive/hardware/sdk-docs', (c) => c.json({
+  sdk_version: 'v4.2.0', platforms: ['Unity', 'Unreal', 'WebXR', 'React Native'],
+  downloads_total: 28400, active_devs: 2840, changelog_url: 'https://dev.indtix.com/sdk/changelog'
+}))
+app.get('/api/ops/immersive/hardware/device-telemetry', (c) => c.json({
+  devices_reporting: 28400, avg_frame_rate: 72, avg_battery_pct: 68,
+  thermal_throttling_pct: 4.2, crash_rate_pct: 0.08, most_used_feature: 'virtual-concert'
+}))
+app.post('/api/admin/immersive/hardware/push-update', (c) => c.json({
+  update_id: `UPD-${Date.now()}`, version: 'v4.2.1', devices_targeted: 28400,
+  rollout_pct: 10, features: ['performance-boost', 'new-ar-anchors'], status: 'rolling'
+}))
+app.get('/api/admin/immersive/hardware/partner-portal', (c) => c.json({
+  partners: 42, tier_platinum: 4, tier_gold: 12, tier_silver: 26,
+  revenue_share_avg_pct: 28, joint_marketing_budget_inr: 8400000
+}))
+app.get('/api/ops/immersive/hardware/support-tickets', (c) => c.json({
+  open: 42, resolved_24h: 284, avg_resolution_hours: 4.2,
+  top_issue: 'controller-drift', sla_compliance_pct: 97
+}))
+app.get('/api/admin/immersive/hardware/compatibility-matrix', (c) => c.json({
+  unity_min_version: '2022.3', unreal_min_version: '5.2', webxr_spec: 'WebXR Device API 1.1',
+  android_min: 12, ios_min: 17, os_tested: 8
+}))
+app.get('/api/admin/immersive/hardware/roadmap', (c) => c.json({
+  q2_2026: ['Apple Vision Pro streaming', 'Haptic glove integration'],
+  q3_2026: ['Neural interface beta', 'Holographic displays support'],
+  q4_2026: ['Full-body avatar tracking', '6DoF spatial audio'],
+  partners_confirmed: 8
+}))
+
+// ── Phase 37 health endpoint ─────────────────────────────────
+app.get('/api/health', (c) => c.json({
+  status: 'ok', platform: 'INDTIX', version: 'v37.0.0',
+  phase: 'Phase 37', theme: 'Immersive Experiences: AR/VR, Metaverse & Live Streaming',
+  new_endpoints: 90, total_endpoints: 2359,
+  features: [
+    'Virtual & Hybrid Event Platform',
+    'AR Fan Experiences & Venue Navigation',
+    'Metaverse Concert & Virtual Venue',
+    'Live Streaming & Pay-Per-View',
+    'Interactive Live & Second Screen',
+    'Spatial Audio & Immersive Sound',
+    'Virtual Meet & Greet Platform',
+    'XR Content Studio & Creator Tools',
+    'Immersive Analytics & Viewer Intelligence',
+    'Hardware & Device Partner Ecosystem'
+  ]
+}))
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 37 — IMMERSIVE EXPERIENCES: AR/VR, METAVERSE & LIVE STREAMING
 // ═══════════════════════════════════════════════════════════
 
 export default app

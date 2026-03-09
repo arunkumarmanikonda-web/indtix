@@ -3334,5 +3334,37 @@ async function loadP36OpsTreasury() {
 }
 </script>
 <!-- END PHASE 36 OPS PORTAL -->
+
+<!-- PHASE 37 OPS PORTAL: Streaming Infra & Device Ops -->
+<div class="phase-section" id="p37-ops-section">
+  <h3>🥽 Phase 37 — Streaming Infrastructure & Device Ops</h3>
+  <div class="btn-row">
+    <button onclick="loadP37OpsInfra()">Infra Health</button>
+    <button onclick="loadP37OpsCostViewer()">Cost per Viewer</button>
+    <button onclick="loadP37OpsTelemetry()">Device Telemetry</button>
+  </div>
+  <div id="p37-ops-output" class="output-box"></div>
+</div>
+<script>
+async function loadP37OpsInfra() {
+  const r = await fetch('/api/ops/immersive/analytics/infra-health');
+  const d = await r.json();
+  document.getElementById('p37-ops-output').innerHTML =
+    `<div class="${d.failed === 0 ? 'success' : 'warning'}-alert">🖥️ Servers: ${d.stream_servers} | Healthy: ${d.healthy} | Degraded: ${d.degraded} | Failed: ${d.failed} | Uptime: ${d.uptime_pct}% | Regions: ${d.regions}</div>`;
+}
+async function loadP37OpsCostViewer() {
+  const r = await fetch('/api/ops/immersive/analytics/cost-per-viewer');
+  const d = await r.json();
+  document.getElementById('p37-ops-output').innerHTML =
+    `<div class="info-alert">💰 Cost/Viewer: ₹${d.avg_cost_per_viewer_inr} | Revenue/Viewer: ₹${d.revenue_per_viewer_inr} | Margin: ${d.margin_pct}% | CDN: ${d.cdn_pct}% | Compute: ${d.compute_pct}%</div>`;
+}
+async function loadP37OpsTelemetry() {
+  const r = await fetch('/api/ops/immersive/hardware/device-telemetry');
+  const d = await r.json();
+  document.getElementById('p37-ops-output').innerHTML =
+    `<div class="info-alert">📱 Devices: ${d.devices_reporting.toLocaleString()} | FPS: ${d.avg_frame_rate} | Battery: ${d.avg_battery_pct}% | Thermal: ${d.thermal_throttling_pct}% | Crash: ${d.crash_rate_pct}% | Top: ${d.most_used_feature}</div>`;
+}
+</script>
+<!-- END PHASE 37 OPS PORTAL -->
 </body>
 </html>

@@ -6528,5 +6528,51 @@ async function loadP36FanDeFi() {
 }
 </script>
 <!-- END PHASE 36 FAN PORTAL -->
+
+<!-- PHASE 37 FAN PORTAL: Immersive Fan Experiences -->
+<div class="phase-section" id="p37-fan-section">
+  <h3>🥽 Phase 37 — AR Venue, Metaverse & Live Stream</h3>
+  <div class="btn-row">
+    <button onclick="loadP37FanAR()">AR Venue Map</button>
+    <button onclick="loadP37FanMetaverse()">My Avatar</button>
+    <button onclick="loadP37FanStream()">Watch Live</button>
+    <button onclick="loadP37FanMeetGreet()">Meet & Greet</button>
+    <button onclick="loadP37FanInteractive()">Go Interactive</button>
+  </div>
+  <div id="p37-fan-output" class="output-box"></div>
+</div>
+<script>
+async function loadP37FanAR() {
+  const r = await fetch('/api/fan/immersive/ar/venue-map');
+  const d = await r.json();
+  document.getElementById('p37-fan-output').innerHTML =
+    `<div class="info-alert">📍 Venue: ${d.venue} | AR Anchors: ${d.ar_anchors} | Indoor Nav: ${d.indoor_navigation ? '✅' : '❌'} | Accuracy: ${d.avg_nav_accuracy_m}m | POIs: ${d.poi_categories.join(', ')}</div>`;
+}
+async function loadP37FanMetaverse() {
+  const r = await fetch('/api/fan/immersive/metaverse/my-avatar');
+  const d = await r.json();
+  document.getElementById('p37-fan-output').innerHTML =
+    `<div class="info-alert">🧑‍🎤 Avatar: ${d.avatar_id} | Skins: ${d.skins_owned} | Wearables: ${d.wearables} | Tier: ${d.fan_tier} | XP: ${d.xp_points.toLocaleString()} | Backstage NFT: ${d.backstage_pass_nft ? '✅' : '❌'}</div>`;
+}
+async function loadP37FanStream() {
+  const r = await fetch('/api/fan/immersive/streaming/catalogue');
+  const d = await r.json();
+  document.getElementById('p37-fan-output').innerHTML =
+    `<div class="success-alert">📺 Live Now: ${d.live_now} | Upcoming 48h: ${d.upcoming_48h} | On Demand: ${d.on_demand} | Free: ${d.free_streams} | PPV: ${d.ppv} | Subscription: ${d.subscription_included}</div>`;
+}
+async function loadP37FanMeetGreet() {
+  const r = await fetch('/api/fan/immersive/meet-greet/available');
+  const d = await r.json();
+  const items = d.upcoming.map(s => `${s.artist} (${s.date}) — ₹${s.price_inr.toLocaleString()} | ${s.available} slots`).join('<br>');
+  document.getElementById('p37-fan-output').innerHTML = `<div class="info-alert">🤝 Available Sessions:<br>${items}</div>`;
+}
+async function loadP37FanInteractive() {
+  const r = await fetch('/api/fan/immersive/interactive/dashboard');
+  const d = await r.json();
+  document.getElementById('p37-fan-output').innerHTML =
+    `<div class="success-alert">🎮 Active Polls: ${d.active_polls} | Quizzes: ${d.active_quizzes} | Reactions/min: ${d.reactions_pm.toLocaleString()} | Super Chat/min: ${d.super_chat_pm} | Fan Cams: ${d.fan_cam_submissions}</div>`;
+}
+</script>
+<!-- END PHASE 37 FAN PORTAL -->
 </body>
 </html>

@@ -5868,4 +5868,57 @@ async function loadP36ChainAnalytics() {
 }
 </script>
 <!-- END PHASE 36 ADMIN PORTAL -->
+
+<!-- PHASE 37 ADMIN PORTAL: AR/VR, Metaverse & Live Streaming -->
+<div class="phase-section" id="p37-admin-section">
+  <h3>🥽 Phase 37 — Immersive Experiences: AR/VR, Metaverse & Streaming</h3>
+  <div class="btn-row">
+    <button onclick="loadP37VirtualEvents()">Virtual Events</button>
+    <button onclick="loadP37Metaverse()">Metaverse</button>
+    <button onclick="loadP37Streaming()">Live Streaming</button>
+    <button onclick="loadP37XRStudio()">XR Studio</button>
+    <button onclick="loadP37Hardware()">Device Partners</button>
+    <button onclick="loadP37ImmersiveAnalytics()">Analytics</button>
+  </div>
+  <div id="p37-admin-output" class="output-box"></div>
+</div>
+<script>
+async function loadP37VirtualEvents() {
+  const r = await fetch('/api/admin/immersive/virtual-events/dashboard');
+  const d = await r.json();
+  document.getElementById('p37-admin-output').innerHTML =
+    `<div class="info-alert">🎬 Virtual: ${d.virtual_events_ytd} | Hybrid: ${d.hybrid_events_ytd} | Peak: ${d.peak_concurrent_viewers.toLocaleString()} viewers | Revenue: ₹${(d.total_virtual_revenue_inr/1e6).toFixed(0)}M | PPT: ₹${d.ppt_per_viewer_inr}</div>`;
+}
+async function loadP37Metaverse() {
+  const r = await fetch('/api/admin/immersive/metaverse/dashboard');
+  const d = await r.json();
+  document.getElementById('p37-admin-output').innerHTML =
+    `<div class="info-alert">🌐 Venues: ${d.virtual_venues} | MAU: ${d.mau_metaverse.toLocaleString()} | Platforms: ${d.metaverse_platforms.join(', ')} | Avg Session: ${d.avg_session_min}min | Revenue: ₹${(d.metaverse_revenue_inr/1e6).toFixed(0)}M</div>`;
+}
+async function loadP37Streaming() {
+  const r = await fetch('/api/admin/immersive/streaming/dashboard');
+  const d = await r.json();
+  document.getElementById('p37-admin-output').innerHTML =
+    `<div class="success-alert">📡 Live Streams: ${d.live_streams_today} | Viewers: ${d.concurrent_viewers_now.toLocaleString()} | Bandwidth: ${d.bandwidth_gbps}Gbps | PPV Sold: ${d.ppv_tickets_sold_today.toLocaleString()} | Revenue: ₹${(d.revenue_today_inr/1e6).toFixed(1)}M</div>`;
+}
+async function loadP37XRStudio() {
+  const r = await fetch('/api/admin/immersive/xr-studio/dashboard');
+  const d = await r.json();
+  document.getElementById('p37-admin-output').innerHTML =
+    `<div class="info-alert">🎨 Creators: ${d.creators_active.toLocaleString()} | Content: ${d.content_pieces_created.toLocaleString()} | Formats: ${d.formats.join(', ')} | Revenue: ₹${(d.revenue_inr/1e6).toFixed(0)}M</div>`;
+}
+async function loadP37Hardware() {
+  const r = await fetch('/api/admin/immersive/hardware/dashboard');
+  const d = await r.json();
+  document.getElementById('p37-admin-output').innerHTML =
+    `<div class="info-alert">🥽 Partners: ${d.device_partners} | Certified: ${d.certified_devices} | Platforms: ${d.platforms.join(', ')} | Active XR Devices: ${d.monthly_active_xr_devices.toLocaleString()}</div>`;
+}
+async function loadP37ImmersiveAnalytics() {
+  const r = await fetch('/api/admin/immersive/analytics/dashboard');
+  const d = await r.json();
+  document.getElementById('p37-admin-output').innerHTML =
+    `<div class="success-alert">📊 Sessions: ${d.total_immersive_sessions.toLocaleString()} | Avg: ${d.avg_session_min}min | NPS: ${d.nps_immersive} | Platforms: ${d.platforms_tracked} | AI Insights: ${d.ai_insights_generated.toLocaleString()}</div>`;
+}
+</script>
+<!-- END PHASE 37 ADMIN PORTAL -->
 </body></html>

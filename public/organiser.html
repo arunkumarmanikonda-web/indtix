@@ -5135,4 +5135,36 @@ async function loadP36OrgSettlement() {
 }
 </script>
 <!-- END PHASE 36 ORGANISER PORTAL -->
+
+<!-- PHASE 37 ORGANISER PORTAL: Virtual Events & Meet-Greet -->
+<div class="phase-section" id="p37-org-section">
+  <h3>🥽 Phase 37 — Virtual Events Control & Meet-Greet</h3>
+  <div class="btn-row">
+    <button onclick="loadP37OrgControl()">Control Room</button>
+    <button onclick="loadP37OrgReplay()">Replays</button>
+    <button onclick="loadP37OrgMeetGreet()">Meet-Greet Schedule</button>
+  </div>
+  <div id="p37-org-output" class="output-box"></div>
+</div>
+<script>
+async function loadP37OrgControl() {
+  const r = await fetch('/api/organiser/immersive/virtual-events/control-room');
+  const d = await r.json();
+  document.getElementById('p37-org-output').innerHTML =
+    `<div class="${d.health === 'green' ? 'success' : 'warning'}-alert">🎛️ Live: ${d.live} | Viewers: ${d.viewers_now.toLocaleString()} | Bitrate: ${d.bitrate_mbps}Mbps | Dropped: ${d.dropped_frames_pct}% | Chat/min: ${d.chat_messages_pm.toLocaleString()} | Health: ${d.health.toUpperCase()}</div>`;
+}
+async function loadP37OrgReplay() {
+  const r = await fetch('/api/organiser/immersive/virtual-events/replay');
+  const d = await r.json();
+  document.getElementById('p37-org-output').innerHTML =
+    `<div class="info-alert">▶️ Replays: ${d.replays_available} | Views: ${d.total_replay_views.toLocaleString()} | Avg Watch: ${d.avg_watch_time_min}min | Revenue: ₹${(d.replay_revenue_inr/1e6).toFixed(1)}M | DRM: ${d.drm_protected ? '✅' : '❌'}</div>`;
+}
+async function loadP37OrgMeetGreet() {
+  const r = await fetch('/api/admin/immersive/meet-greet/dashboard');
+  const d = await r.json();
+  document.getElementById('p37-org-output').innerHTML =
+    `<div class="success-alert">🤝 Sessions YTD: ${d.sessions_ytd.toLocaleString()} | Fans Served: ${d.fans_served.toLocaleString()} | Artists: ${d.artists_active} | Revenue: ₹${(d.revenue_inr/1e6).toFixed(0)}M | Satisfaction: ${d.satisfaction_pct}%</div>`;
+}
+</script>
+<!-- END PHASE 37 ORGANISER PORTAL -->
 </body></html>

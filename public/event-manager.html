@@ -3401,4 +3401,43 @@ async function loadP36EMRedemption() {
 }
 </script>
 <!-- END PHASE 36 EVENT MANAGER -->
+
+<!-- PHASE 37 EVENT MANAGER: Streaming, Audio & XR Studio -->
+<div class="phase-section" id="p37-em-section">
+  <h3>🥽 Phase 37 — Streaming Encoder, Spatial Audio & XR Tools</h3>
+  <div class="btn-row">
+    <button onclick="loadP37EMEncoder()">Encoder Settings</button>
+    <button onclick="loadP37EMAudio()">Spatial Audio Mix</button>
+    <button onclick="loadP37EMXRTools()">XR Studio Tools</button>
+    <button onclick="loadP37EMChat()">Chat Moderation</button>
+  </div>
+  <div id="p37-em-output" class="output-box"></div>
+</div>
+<script>
+async function loadP37EMEncoder() {
+  const r = await fetch('/api/event-manager/immersive/streaming/encoder-settings');
+  const d = await r.json();
+  document.getElementById('p37-em-output').innerHTML =
+    `<div class="info-alert">🎥 Codec: ${d.codec} | Bitrate: ${d.bitrate_mbps}Mbps | FPS: ${d.fps} | Res: ${d.resolution} | Audio: ${d.audio_codec} @ ${d.audio_bitrate_kbps}kbps</div>`;
+}
+async function loadP37EMAudio() {
+  const r = await fetch('/api/event-manager/immersive/audio/mix-settings');
+  const d = await r.json();
+  document.getElementById('p37-em-output').innerHTML =
+    `<div class="info-alert">🔊 Channels: ${d.channels} | Sample: ${d.sample_rate_hz}Hz | Depth: ${d.bit_depth}bit | Loudness: ${d.loudness_target_lufs} LUFS | Engine: ${d.spatial_engine}</div>`;
+}
+async function loadP37EMXRTools() {
+  const r = await fetch('/api/event-manager/immersive/xr-studio/tools');
+  const d = await r.json();
+  document.getElementById('p37-em-output').innerHTML =
+    `<div class="success-alert">🎨 Tools: ${d.tools.join(', ')} | Templates: ${d.templates} | AI Assist: ${d.ai_assist ? '✅' : '❌'} | Cloud Render: ${d.cloud_render ? '✅' : '❌'} | Avg Render: ${d.avg_render_min}min</div>`;
+}
+async function loadP37EMChat() {
+  const r = await fetch('/api/event-manager/immersive/streaming/chat-moderation');
+  const d = await r.json();
+  document.getElementById('p37-em-output').innerHTML =
+    `<div class="warning-alert">💬 Messages 24h: ${d.messages_24h.toLocaleString()} | Auto-Moderated: ${d.auto_moderated.toLocaleString()} | Spam Blocked: ${d.spam_blocked.toLocaleString()} | Sentiment: ${d.sentiment_positive_pct}% positive</div>`;
+}
+</script>
+<!-- END PHASE 37 EVENT MANAGER -->
 </body></html>
