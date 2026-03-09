@@ -6966,4 +6966,40 @@ async function loadAllP48Admin() { await loadP48Admin(); }
 loadAllP48Admin();
 </script>
 <!-- END PHASE 48 ADMIN PORTAL -->
+
+<!-- PHASE 49 ADMIN PORTAL — Growth, Virality & Acquisition Engine -->
+<script>
+async function loadP49Admin() {
+  const base = '/api/v49';
+  const sections = [
+    { id: 'p49-referral', title: '🔗 Referral Engine', endpoint: `${base}/referral/overview` },
+    { id: 'p49-viral', title: '🚀 Viral Mechanics', endpoint: `${base}/viral/overview` },
+    { id: 'p49-influencer', title: '⭐ Influencer Marketing', endpoint: `${base}/influencer/overview` },
+    { id: 'p49-seo', title: '🔍 SEO & Content Growth', endpoint: `${base}/seo/overview` },
+    { id: 'p49-paid', title: '💰 Paid Acquisition', endpoint: `${base}/paid/overview` },
+    { id: 'p49-cro', title: '📈 Conversion Optimisation', endpoint: `${base}/cro/overview` },
+    { id: 'p49-social-commerce', title: '🛍️ Social Commerce', endpoint: `${base}/social-commerce/overview` },
+    { id: 'p49-community', title: '👥 Community Growth', endpoint: `${base}/community/overview` },
+    { id: 'p49-plg', title: '🌱 Product-Led Growth', endpoint: `${base}/plg/overview` },
+    { id: 'p49-growth', title: '📊 Growth Analytics', endpoint: `${base}/growth/overview` },
+  ];
+  let html = '<div class="phase-section"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Growth, Virality & Acquisition Engine</h2><div class="metrics-grid">';
+  for (const s of sections) {
+    try {
+      const res = await fetch(s.endpoint);
+      const data = await res.json();
+      const m = data.metrics || {};
+      html += `<div class="metric-card" style="border-left:4px solid #6f42c1;">
+        <h3>${s.title}</h3>
+        <div class="metric-values">${Object.entries(m).slice(0,6).map(([k,v]) => `<div class="metric-item"><span class="metric-label">${k.replace(/_/g,' ')}</span><span class="metric-value">${typeof v === 'number' ? v.toLocaleString() : v}</span></div>`).join('')}</div>
+      </div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${s.title}</h3><p class="error">Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const container = document.getElementById('phase49-admin') || (() => { const d = document.createElement('div'); d.id = 'phase49-admin'; document.querySelector('.dashboard-content, main, #app, body').appendChild(d); return d; })();
+  container.innerHTML = html;
+}
+loadP49Admin();
+</script>
+<!-- END PHASE 49 ADMIN PORTAL -->
 </body></html>

@@ -5677,4 +5677,33 @@ async function loadAllP48Org() { await loadP48Org(); }
 loadAllP48Org();
 </script>
 <!-- END PHASE 48 ORGANISER PORTAL -->
+
+<!-- PHASE 49 ORGANISER PORTAL — Growth, Virality & Acquisition Engine -->
+<script>
+async function loadP49Org() {
+  const base = '/api/v49';
+  let html = '<div class="phase-section"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Grow Your Events</h2><div class="metrics-grid">';
+  const endpoints = [
+    ['🔗 Referral Engine', `${base}/referral/overview`, ['active_referrers','referrals_converted_mtd','revenue_from_referrals_cr','viral_coefficient']],
+    ['⭐ Influencer Marketing', `${base}/influencer/overview`, ['total_influencers','active_campaigns','influencer_revenue_cr','roas_influencer']],
+    ['🔍 SEO & Content', `${base}/seo/overview`, ['organic_sessions_mtd','keyword_rankings_top10','organic_revenue_cr','yoy_organic_growth_pct']],
+    ['💰 Paid Acquisition', `${base}/paid/overview`, ['total_ad_spend_cr','total_ad_revenue_cr','blended_roas','campaigns_active']],
+    ['📈 CRO', `${base}/cro/overview`, ['overall_cvr_pct','ab_tests_won','revenue_lift_from_cro_cr','checkout_cvr_pct']],
+    ['📊 Growth Analytics', `${base}/growth/overview`, ['total_users','mau','mom_growth_pct','revenue_run_rate_cr']],
+  ];
+  for (const [title, url, keys] of endpoints) {
+    try {
+      const data = await fetch(url).then(r=>r.json());
+      const m = data.metrics || {};
+      html += `<div class="metric-card" style="border-left:4px solid #6f42c1;"><h3>${title}</h3><div class="metric-values">${keys.map(k=>`<div class="metric-item"><span class="metric-label">${k.replace(/_/g,' ')}</span><span class="metric-value">${m[k] !== undefined ? (typeof m[k]==='number'?m[k].toLocaleString():m[k]) : '—'}</span></div>`).join('')}</div></div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const container = document.getElementById('phase49-org') || (() => { const d = document.createElement('div'); d.id = 'phase49-org'; document.querySelector('.organiser-content, main, #app, body').appendChild(d); return d; })();
+  container.innerHTML = html;
+}
+async function loadAllP49Org() { await loadP49Org(); }
+loadAllP49Org();
+</script>
+<!-- END PHASE 49 ORGANISER PORTAL -->
 </body></html>

@@ -3537,4 +3537,31 @@ async function loadAllP48Venue() { await loadP48Venue(); }
 loadAllP48Venue();
 </script>
 <!-- END PHASE 48 VENUE PORTAL -->
+
+<!-- PHASE 49 VENUE PORTAL — Growth, Virality & Acquisition Engine -->
+<script>
+async function loadP49Venue() {
+  const base = '/api/v49';
+  let html = '<div class="phase-section"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Venue Growth Tools</h2><div class="metrics-grid">';
+  const sections = [
+    ['🔗 Referral', `${base}/referral/overview`, ['active_referrers','referrals_converted_mtd','revenue_from_referrals_cr']],
+    ['🛍️ Social Commerce', `${base}/social-commerce/overview`, ['social_gmv_cr','social_orders_mtd','live_shopping_gmv_cr']],
+    ['👥 Community', `${base}/community/overview`, ['total_community_members','communities','community_revenue_cr']],
+    ['📊 Growth', `${base}/growth/overview`, ['total_users','mau','gmv_annualised_cr']],
+  ];
+  for (const [title, url, keys] of sections) {
+    try {
+      const data = await fetch(url).then(r=>r.json());
+      const m = data.metrics || {};
+      html += `<div class="metric-card" style="border-left:4px solid #6f42c1;"><h3>${title}</h3>${keys.map(k=>`<p><strong>${k.replace(/_/g,' ')}:</strong> ${m[k]?.toLocaleString() ?? '—'}</p>`).join('')}</div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const container = document.getElementById('phase49-venue') || (() => { const d = document.createElement('div'); d.id = 'phase49-venue'; document.querySelector('.venue-content, main, #app, body').appendChild(d); return d; })();
+  container.innerHTML = html;
+}
+async function loadAllP49Venue() { await loadP49Venue(); }
+loadAllP49Venue();
+</script>
+<!-- END PHASE 49 VENUE PORTAL -->
 </body></html>

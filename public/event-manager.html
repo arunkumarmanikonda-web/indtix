@@ -3904,4 +3904,32 @@ async function loadAllP48EM() { await loadP48EM(); }
 loadAllP48EM();
 </script>
 <!-- END PHASE 48 EVENT MANAGER -->
+
+<!-- PHASE 49 EVENT MANAGER PORTAL — Growth, Virality & Acquisition Engine -->
+<script>
+async function loadP49EM() {
+  const base = '/api/v49';
+  let html = '<div class="phase-section"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Event Growth & Acquisition</h2><div class="metrics-grid">';
+  const sections = [
+    ['🔗 Referral', `${base}/referral/overview`, ['active_referrers','revenue_from_referrals_cr','viral_coefficient']],
+    ['⭐ Influencer', `${base}/influencer/overview`, ['total_influencers','influencer_revenue_cr','roas_influencer']],
+    ['📈 CRO', `${base}/cro/overview`, ['overall_cvr_pct','revenue_lift_from_cro_cr','ab_tests_won']],
+    ['🛍️ Social Commerce', `${base}/social-commerce/overview`, ['social_gmv_cr','social_orders_mtd','live_shopping_events']],
+    ['📊 Growth', `${base}/growth/overview`, ['total_users','gmv_annualised_cr','nps']],
+  ];
+  for (const [title, url, keys] of sections) {
+    try {
+      const data = await fetch(url).then(r=>r.json());
+      const m = data.metrics || {};
+      html += `<div class="metric-card" style="border-left:4px solid #6f42c1;"><h3>${title}</h3>${keys.map(k=>`<p><strong>${k.replace(/_/g,' ')}:</strong> ${m[k] !== undefined ? (typeof m[k]==='number'?m[k].toLocaleString():m[k]) : '—'}</p>`).join('')}</div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const container = document.getElementById('phase49-em') || (() => { const d = document.createElement('div'); d.id = 'phase49-em'; document.querySelector('.em-content, main, #app, body').appendChild(d); return d; })();
+  container.innerHTML = html;
+}
+async function loadAllP49EM() { await loadP49EM(); }
+loadAllP49EM();
+</script>
+<!-- END PHASE 49 EVENT MANAGER -->
 </body></html>

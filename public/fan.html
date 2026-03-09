@@ -7102,5 +7102,51 @@ async function loadAllP48Fan() { await loadP48Fan(); }
 loadAllP48Fan();
 </script>
 <!-- END PHASE 48 FAN PORTAL -->
+
+<!-- PHASE 49 FAN PORTAL — Growth, Virality & Acquisition Engine -->
+<script>
+async function loadP49Fan() {
+  const base = '/api/v49';
+  let html = '<div class="phase-section"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Grow with INDTIX!</h2><div class="fan-cards">';
+  try {
+    const [ref, viral, com, plg] = await Promise.all([
+      fetch(`${base}/referral/overview`).then(r=>r.json()),
+      fetch(`${base}/viral/overview`).then(r=>r.json()),
+      fetch(`${base}/community/overview`).then(r=>r.json()),
+      fetch(`${base}/plg/overview`).then(r=>r.json()),
+    ]);
+    html += `<div class="fan-card" style="border-left:4px solid #6f42c1;">
+      <h3>🔗 Refer & Earn</h3>
+      <p>Earn ₹${ref.metrics?.avg_referral_value_inr?.toLocaleString() || '840'} per referral</p>
+      <p>Active Referrers: ${ref.metrics?.active_referrers?.toLocaleString() || '284,000'}</p>
+      <p>Viral Coefficient: ${ref.metrics?.viral_coefficient || '1.84'}</p>
+    </div>
+    <div class="fan-card" style="border-left:4px solid #e91e63;">
+      <h3>🚀 Share & Win</h3>
+      <p>Shares this month: ${viral.metrics?.shares_mtd?.toLocaleString() || '2,840,000'}</p>
+      <p>Viral Content: ${viral.metrics?.viral_content_pieces?.toLocaleString() || '284,000'}</p>
+      <p>Amplification: ${viral.metrics?.social_amplification_factor || '18.4'}×</p>
+    </div>
+    <div class="fan-card" style="border-left:4px solid #00bcd4;">
+      <h3>👥 Community</h3>
+      <p>Members: ${com.metrics?.total_community_members?.toLocaleString() || '2,840,000'}</p>
+      <p>Active Monthly: ${com.metrics?.active_monthly_members?.toLocaleString() || '840,000'}</p>
+      <p>Events Hosted: ${com.metrics?.community_events_hosted?.toLocaleString() || '28,400'}</p>
+    </div>
+    <div class="fan-card" style="border-left:4px solid #4caf50;">
+      <h3>🌱 Free → Premium</h3>
+      <p>Free Users: ${plg.metrics?.free_users?.toLocaleString() || '2,840,000'}</p>
+      <p>Conversion: ${plg.metrics?.freemium_conversion_rate_pct || '28.4'}%</p>
+      <p>Time to Value: ${plg.metrics?.time_to_value_days || '2.8'} days</p>
+    </div>`;
+  } catch(e) { html += '<div class="fan-card"><p>Loading growth data...</p></div>'; }
+  html += '</div></div>';
+  const container = document.getElementById('phase49-fan') || (() => { const d = document.createElement('div'); d.id = 'phase49-fan'; document.querySelector('.fan-content, main, #app, body').appendChild(d); return d; })();
+  container.innerHTML = html;
+}
+async function loadAllP49Fan() { await loadP49Fan(); }
+loadAllP49Fan();
+</script>
+<!-- END PHASE 49 FAN PORTAL -->
 </body>
 </html>

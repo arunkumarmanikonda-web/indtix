@@ -3883,5 +3883,32 @@ async function loadAllP48Ops() { await loadP48Ops(); }
 loadAllP48Ops();
 </script>
 <!-- END PHASE 48 OPS PORTAL -->
+
+<!-- PHASE 49 OPS PORTAL — Growth, Virality & Acquisition Engine -->
+<script>
+async function loadP49Ops() {
+  const base = '/api/v49';
+  let html = '<div class="phase-section"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Growth Operations Dashboard</h2><div class="metrics-grid">';
+  const sections = [
+    ['🔗 Referral', `${base}/referral/overview`, ['total_referral_programs','active_referrers','referrals_converted_mtd','revenue_from_referrals_cr','referral_fraud_blocked_pct']],
+    ['💰 Paid Acquisition', `${base}/paid/overview`, ['total_ad_spend_cr','total_ad_revenue_cr','blended_roas','campaigns_active','conversions_mtd']],
+    ['🌱 PLG', `${base}/plg/overview`, ['free_users','paid_users','freemium_conversion_rate_pct','nrr_pct','plg_revenue_cr']],
+    ['📊 Growth Analytics', `${base}/growth/overview`, ['total_users','mau','dau','mom_growth_pct','yoy_growth_pct','ltv_cac_ratio']],
+  ];
+  for (const [title, url, keys] of sections) {
+    try {
+      const data = await fetch(url).then(r=>r.json());
+      const m = data.metrics || {};
+      html += `<div class="metric-card" style="border-left:4px solid #6f42c1;"><h3>${title}</h3><div class="metric-values">${keys.map(k=>`<div class="metric-item"><span class="metric-label">${k.replace(/_/g,' ')}</span><span class="metric-value">${m[k] !== undefined ? (typeof m[k]==='number'?m[k].toLocaleString():m[k]) : '—'}</span></div>`).join('')}</div></div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const container = document.getElementById('phase49-ops') || (() => { const d = document.createElement('div'); d.id = 'phase49-ops'; document.querySelector('.ops-content, main, #app, body').appendChild(d); return d; })();
+  container.innerHTML = html;
+}
+async function loadAllP49Ops() { await loadP49Ops(); }
+loadAllP49Ops();
+</script>
+<!-- END PHASE 49 OPS PORTAL -->
 </body>
 </html>
