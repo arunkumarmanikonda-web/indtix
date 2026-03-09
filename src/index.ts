@@ -24444,26 +24444,26 @@ app.get('/api/admin/finance/reporting/esg-financials', (c) => c.json({
   integrated_reporting_standard: 'IFRS S1/S2 + GRI',
 }))
 
-// ── Phase 45 main health endpoint ────────────────────────────
+// ── Phase 46 main health endpoint ────────────────────────────
 app.get('/api/health', (c) => c.json({
   status: 'ok',
   platform: 'INDTIX',
-  version: 'v45.0.0',
-  phase: 'Phase 45',
-  theme: 'International Expansion & Global Localisation Platform',
+  version: 'v46.0.0',
+  phase: 'Phase 46',
+  theme: 'Safety, Crisis Management & Security Platform',
   new_endpoints: 90,
-  total_endpoints: 3079,
+  total_endpoints: 3169,
   features: [
-    'Multi-Currency & Global Payments',
-    'Multilingual & Localisation Engine',
-    'Global Event Discovery & Distribution',
-    'International Tax & Compliance Engine',
-    'Global Marketing & Growth Localisation',
-    'Cross-Border Logistics & Merchandise',
-    'Global Compliance & Regulatory Intelligence',
-    'International Partnerships & Distribution',
-    'Global Customer Experience & Support',
-    'Global Analytics & Market Intelligence',
+    'Crowd Safety & Density Management',
+    'Emergency Response & Crisis Command',
+    'Cybersecurity & Data Protection',
+    'Physical Security & Access Control',
+    'Fraud Prevention & Ticket Security',
+    'Weather & Environmental Risk Management',
+    'Health & Medical Safety Platform',
+    'Intelligence & Threat Assessment',
+    'Safety Compliance & Regulatory',
+    'Safety Analytics & AI Command Centre',
   ],
   timestamp: new Date().toISOString(),
 }))
@@ -27493,6 +27493,130 @@ app.get('/api/v45/health', (c) => c.json({
 // ═══════════════════════════════════════════════════════════
 // END PHASE 45 — INTERNATIONAL EXPANSION &
 //               GLOBAL LOCALISATION PLATFORM
+// ═══════════════════════════════════════════════════════════
+
+// ╔═══════════════════════════════════════════════════════════╗
+// ║  PHASE 46 — SAFETY, CRISIS MANAGEMENT &                  ║
+// ║             SECURITY PLATFORM (v46.0.0)                  ║
+// ║  90 new endpoints  |  Total: 3,169                       ║
+// ╚═══════════════════════════════════════════════════════════╝
+
+// ── MODULE 1: Crowd Safety & Density Management (10 endpoints) ──
+app.get('/api/v46/crowd-safety/overview', (c) => c.json({ module: 'Crowd Safety & Density Management', events_monitored: 2840, max_density_m2: 4, ai_alerts_day: 284, incidents_prevented: 840, avg_response_sec: 42, sensors_deployed: 28400 }))
+app.get('/api/v46/crowd-safety/density-map', (c) => c.json({ zones: 84, high_density_alerts: 8, current_max_pct: 72, real_time: true }))
+app.get('/api/v46/crowd-safety/heatmap', (c) => c.json({ resolution_m: 1, refresh_sec: 5, historical_days: 90, ai_predictions: true }))
+app.get('/api/v46/crowd-safety/alerts', (c) => c.json({ active_alerts: 4, total_today: 28, severity: { critical: 0, high: 2, medium: 8 }, avg_ack_sec: 12 }))
+app.get('/api/v46/crowd-safety/thresholds', (c) => c.json({ default_max_density: 4, warning_pct: 80, critical_pct: 90, auto_gate_close: true }))
+app.get('/api/v46/crowd-safety/evacuation', (c) => c.json({ plans: 284, avg_evac_time_min: 8, last_drill: '2026-02-01', digital_wayfinding: true }))
+app.get('/api/v46/crowd-safety/entry-control', (c) => c.json({ gates: 840, real_time_count: true, biometric_enabled: true, avg_scan_sec: 1.2 }))
+app.get('/api/v46/crowd-safety/incidents', (c) => c.json({ total_ytd: 28, resolved_pct: 100, avg_resolution_min: 14, severity_breakdown: { minor: 18, moderate: 8, major: 2 } }))
+app.get('/api/v46/crowd-safety/predictive', (c) => c.json({ model: 'INDIE-CrowdAI-v2', accuracy_pct: 94.2, predictions_day: 28400, false_positive_pct: 2.8 }))
+app.get('/api/v46/crowd-safety/analytics', (c) => c.json({ events_analysed: 2840, incidents_per_1000: 0.84, safety_score_avg: 9.2, benchmark: 'top_5pct' }))
+
+// ── MODULE 2: Emergency Response & Crisis Command (10 endpoints) ──
+app.get('/api/v46/emergency/overview', (c) => c.json({ module: 'Emergency Response & Crisis Command', response_protocols: 284, trained_staff: 28400, avg_response_min: 2.8, drill_frequency: 'quarterly', command_centres: 8 }))
+app.get('/api/v46/emergency/protocols', (c) => c.json({ total: 284, types: ['fire','medical','security','weather','terror','stampede'], last_updated: '2026-01-01' }))
+app.get('/api/v46/emergency/command-centre', (c) => c.json({ centres: 8, staff_24x7: true, redundant_comms: true, backup_power_hrs: 72 }))
+app.get('/api/v46/emergency/contacts', (c) => c.json({ emergency_contacts: 2840, agencies: ['police','fire','ambulance','hospitals'], avg_dial_sec: 8 }))
+app.get('/api/v46/emergency/alerts', (c) => c.json({ active: 2, channels: ['PA','SMS','app-push','siren','digital-signage'], avg_broadcast_sec: 4 }))
+app.get('/api/v46/emergency/medical', (c) => c.json({ first_aid_posts: 284, paramedics: 840, defibrillators: 2840, avg_medical_response_min: 3.2 }))
+app.get('/api/v46/emergency/drills', (c) => c.json({ ytd_drills: 84, pass_rate_pct: 98.4, avg_score: 9.2, next_drill: '2026-04-01' }))
+app.get('/api/v46/emergency/communications', (c) => c.json({ channels: 8, encrypted: true, satellite_backup: true, range_km: 50 }))
+app.get('/api/v46/emergency/post-incident', (c) => c.json({ reports_ytd: 28, avg_rca_days: 3, lessons_implemented: 84, improvement_pct: 28.4 }))
+app.get('/api/v46/emergency/analytics', (c) => c.json({ incidents_ytd: 28, mttr_min: 14, false_alarms_pct: 4.2, preparedness_score: 9.4 }))
+
+// ── MODULE 3: Cybersecurity & Data Protection (10 endpoints) ──
+app.get('/api/v46/cybersecurity/overview', (c) => c.json({ module: 'Cybersecurity & Data Protection', security_score: 9.4, threats_blocked_day: 284000, vulnerabilities_open: 4, patch_coverage_pct: 99.2, soc_tier: 'SOC2 Type II', iso27001: true }))
+app.get('/api/v46/cybersecurity/threat-intelligence', (c) => c.json({ feeds: 28, iocs_processed_day: 2840000, zero_days_tracked: 8, threat_actors_monitored: 284 }))
+app.get('/api/v46/cybersecurity/soc', (c) => c.json({ analysts: 84, shifts: 3, mttr_min: 14, false_positive_pct: 2.8, tools: ['SIEM','SOAR','EDR','NDR'] }))
+app.get('/api/v46/cybersecurity/vulnerabilities', (c) => c.json({ total_open: 4, critical: 0, high: 1, medium: 3, avg_patch_days: 2.8 }))
+app.get('/api/v46/cybersecurity/pen-testing', (c) => c.json({ tests_ytd: 8, findings_resolved_pct: 100, next_test: '2026-06-01', external_firm: 'CrowdStrike' }))
+app.get('/api/v46/cybersecurity/data-protection', (c) => c.json({ encryption_at_rest: 'AES-256', encryption_in_transit: 'TLS 1.3', key_rotation_days: 90, dlp_active: true }))
+app.get('/api/v46/cybersecurity/access-control', (c) => c.json({ mfa_enforcement_pct: 100, pam_solution: 'CyberArk', privileged_accounts: 284, last_audit: '2026-02-01' }))
+app.get('/api/v46/cybersecurity/incident-response', (c) => c.json({ playbooks: 84, avg_containment_hr: 1.4, avg_eradication_hr: 4.2, tabletop_exercises: 4 }))
+app.get('/api/v46/cybersecurity/compliance', (c) => c.json({ frameworks: ['ISO27001','SOC2','PCI-DSS','NIST','CERT-IN'], compliance_pct: 100 }))
+app.get('/api/v46/cybersecurity/analytics', (c) => c.json({ security_score: 9.4, threats_blocked_ytd: 28400000, dwell_time_hrs: 0.8, cyber_insurance_cr: 28.4 }))
+
+// ── MODULE 4: Physical Security & Access Control (8 endpoints) ──
+app.get('/api/v46/physical-security/overview', (c) => c.json({ module: 'Physical Security & Access Control', venues_protected: 284, cameras: 28400, guards: 8400, ai_surveillance_pct: 84, avg_incident_response_min: 4.2 }))
+app.get('/api/v46/physical-security/cctv', (c) => c.json({ cameras: 28400, ai_analytics: true, retention_days: 90, facial_recognition: true, license_plate_recognition: true }))
+app.get('/api/v46/physical-security/access-control', (c) => c.json({ readers: 8400, biometric: 2840, smart_cards: 5560, mobile_credentials_pct: 42 }))
+app.get('/api/v46/physical-security/guards', (c) => c.json({ total: 8400, trained_pct: 100, armed_pct: 18, avg_response_min: 2.8, certifications: ['NSDC','SIA'] }))
+app.get('/api/v46/physical-security/perimeter', (c) => c.json({ sensors: 28400, drone_detection: true, intrusion_alerts_day: 28, auto_lockdown: true }))
+app.get('/api/v46/physical-security/incidents', (c) => c.json({ ytd: 42, resolved_pct: 100, avg_resolution_min: 18, types: ['theft','intrusion','vandalism','trespass'] }))
+app.get('/api/v46/physical-security/vip-protection', (c) => c.json({ vip_events_ytd: 284, close_protection_officers: 84, threat_assessments: 284, incidents: 0 }))
+app.get('/api/v46/physical-security/analytics', (c) => c.json({ safety_index: 9.2, cost_per_event_cr: 0.28, industry_benchmark: 'top_10pct' }))
+
+// ── MODULE 5: Fraud Prevention & Ticket Security (8 endpoints) ──
+app.get('/api/v46/ticket-security/overview', (c) => c.json({ module: 'Fraud Prevention & Ticket Security', fraud_detection_pct: 99.4, fake_tickets_blocked_ytd: 284000, revenue_protected_cr: 840, nft_tickets: true, blockchain_verified: true }))
+app.get('/api/v46/ticket-security/authentication', (c) => c.json({ methods: ['QR-dynamic','NFC','biometric','blockchain'], verification_sec: 0.8, spoof_rate_pct: 0.002 }))
+app.get('/api/v46/ticket-security/fraud-detection', (c) => c.json({ ai_model: 'INDIE-FraudShield-v3', accuracy_pct: 99.4, false_positive_pct: 0.04, real_time: true }))
+app.get('/api/v46/ticket-security/blockchain', (c) => c.json({ chain: 'Polygon', tokens_minted: 28400000, transfer_fraud_pct: 0.001, gas_free: true }))
+app.get('/api/v46/ticket-security/scalping-prevention', (c) => c.json({ purchase_limits: true, id_verification: true, resale_cap_pct: 110, bots_blocked_ytd: 2840000 }))
+app.get('/api/v46/ticket-security/counterfeit-detection', (c) => c.json({ detection_rate_pct: 99.8, seized_ytd: 28400, revenue_saved_cr: 284 }))
+app.get('/api/v46/ticket-security/reports', (c) => c.json({ reports: 284, law_enforcement_referrals: 42, conviction_rate_pct: 72 }))
+app.get('/api/v46/ticket-security/analytics', (c) => c.json({ fraud_rate_pct: 0.006, trending_attack: 'synthetic_identity', model_version: 'v3.2' }))
+
+// ── MODULE 6: Weather & Environmental Risk Management (8 endpoints) ──
+app.get('/api/v46/weather-risk/overview', (c) => c.json({ module: 'Weather & Environmental Risk Management', events_monitored: 2840, weather_cancellations_ytd: 8, avg_forecast_accuracy_pct: 94.2, parametric_insurance: true, real_time_alerts: true }))
+app.get('/api/v46/weather-risk/forecast', (c) => c.json({ providers: ['IMD','AccuWeather','Weather.com'], refresh_min: 15, accuracy_72h_pct: 94.2, hyperlocal: true }))
+app.get('/api/v46/weather-risk/alerts', (c) => c.json({ active: 2, types: ['rain','lightning','heat','wind','fog'], auto_notification: true }))
+app.get('/api/v46/weather-risk/cancellation-insurance', (c) => c.json({ policies: 2840, premium_cr: 8.4, claims_ytd: 8, payout_cr: 28.4, avg_settle_days: 4.2 }))
+app.get('/api/v46/weather-risk/contingency-plans', (c) => c.json({ plans: 2840, indoor_backup_pct: 42, postponement_protocols: true, refund_auto_trigger: true }))
+app.get('/api/v46/weather-risk/historical', (c) => c.json({ years_data: 10, events_affected: 84, avg_impact_cr: 2.8, season_risk_model: true }))
+app.get('/api/v46/weather-risk/parametric-triggers', (c) => c.json({ triggers: 28, parameters: ['rainfall_mm','wind_kph','temp_C'], auto_payout: true }))
+app.get('/api/v46/weather-risk/analytics', (c) => c.json({ risk_score_avg: 2.8, highest_risk_month: 'June', cost_avoidance_cr: 84 }))
+
+// ── MODULE 7: Health & Medical Safety Platform (8 endpoints) ──
+app.get('/api/v46/health-safety/overview', (c) => c.json({ module: 'Health & Medical Safety Platform', medical_posts: 284, paramedics: 840, aeds: 2840, avg_response_min: 3.2, mass_casualty_plan: true, covid_protocols: true }))
+app.get('/api/v46/health-safety/medical-staff', (c) => c.json({ paramedics: 840, doctors: 284, nurses: 840, first_aid_trained: 28400 }))
+app.get('/api/v46/health-safety/facilities', (c) => c.json({ first_aid_rooms: 284, field_hospitals: 8, ambulances: 84, aeds: 2840 }))
+app.get('/api/v46/health-safety/protocols', (c) => c.json({ protocols: 84, last_updated: '2026-01-01', who_guidelines: true, local_compliance: true }))
+app.get('/api/v46/health-safety/epidemiology', (c) => c.json({ disease_tracking: true, outbreak_protocols: true, health_checks: 'rapid_antigen', contact_tracing_ready: true }))
+app.get('/api/v46/health-safety/mental-health', (c) => c.json({ counsellors: 84, safe_rooms: 28, crisis_line: true, staff_wellness_score: 8.4 }))
+app.get('/api/v46/health-safety/incidents', (c) => c.json({ ytd: 284, types: ['minor_injury','heat_stroke','cardiac'], hospitalised: 8, fatalities: 0 }))
+app.get('/api/v46/health-safety/analytics', (c) => c.json({ incidents_per_10k: 0.84, response_time_avg_min: 3.2, benchmark: 'WHO_gold_standard' }))
+
+// ── MODULE 8: Intelligence & Threat Assessment (8 endpoints) ──
+app.get('/api/v46/threat-intel/overview', (c) => c.json({ module: 'Intelligence & Threat Assessment', threat_feeds: 28, daily_assessments: 284, high_risk_events_ytd: 8, law_enforcement_liaisons: 42, classified_integrations: 4 }))
+app.get('/api/v46/threat-intel/feeds', (c) => c.json({ sources: 28, types: ['osint','humint','sigint','social_media'], refresh_min: 5 }))
+app.get('/api/v46/threat-intel/risk-scoring', (c) => c.json({ events_scored: 2840, high_risk: 28, medium_risk: 284, low_risk: 2528, model: 'INDIE-ThreatAI' }))
+app.get('/api/v46/threat-intel/social-monitoring', (c) => c.json({ platforms: ['X','Instagram','Telegram','WhatsApp'], keywords: 8400, alerts_day: 28, sentiment_analysis: true }))
+app.get('/api/v46/threat-intel/law-enforcement', (c) => c.json({ agencies: 42, real_time_sharing: true, joint_ops_ytd: 8, seconded_officers: 84 }))
+app.get('/api/v46/threat-intel/suspicious-activity', (c) => c.json({ reports_ytd: 284, investigated: 284, escalated: 28, resolved_pct: 100 }))
+app.get('/api/v46/threat-intel/counter-terrorism', (c) => c.json({ ct_plan: true, bomb_disposal: true, armed_response: true, nsg_mou: true }))
+app.get('/api/v46/threat-intel/analytics', (c) => c.json({ threat_level_avg: 'LOW', incidents_prevented: 28, intelligence_accuracy_pct: 94 }))
+
+// ── MODULE 9: Safety Compliance & Regulatory (8 endpoints) ──
+app.get('/api/v46/safety-compliance/overview', (c) => c.json({ module: 'Safety Compliance & Regulatory', regulations_tracked: 840, compliance_score: 98.4, licences: 284, audits_ytd: 84, penalties_ytd: 0 }))
+app.get('/api/v46/safety-compliance/licences', (c) => c.json({ total: 284, active: 282, expiring_90d: 4, auto_renewal: true, jurisdictions: 42 }))
+app.get('/api/v46/safety-compliance/audits', (c) => c.json({ ytd: 84, passed_pct: 98.4, external_audits: 28, findings: 18, remediated_pct: 100 }))
+app.get('/api/v46/safety-compliance/certifications', (c) => c.json({ certs: ['ISO45001','NEBOSH','IOSH','NFPA'], holders: 2840, expiry_tracked: true }))
+app.get('/api/v46/safety-compliance/training', (c) => c.json({ staff_trained_ytd: 28400, courses: 84, completion_pct: 98.4, e_learning: true }))
+app.get('/api/v46/safety-compliance/fire-safety', (c) => c.json({ inspections_ytd: 840, sprinkler_coverage_pct: 100, extinguishers: 28400, fire_drills: 84 }))
+app.get('/api/v46/safety-compliance/insurance', (c) => c.json({ policies: 28, coverage_cr: 2840, premium_cr: 8.4, claims_ytd: 2, avg_settle_days: 14 }))
+app.get('/api/v46/safety-compliance/analytics', (c) => c.json({ compliance_score: 98.4, industry_rank: 'top_5pct', cost_per_event_cr: 0.084 }))
+
+// ── MODULE 10: Safety Analytics & AI Command Centre (10 endpoints) ──
+app.get('/api/v46/safety-analytics/overview', (c) => c.json({ module: 'Safety Analytics & AI Command Centre', events_live: 28, data_streams: 2840, ai_predictions_day: 284000, safety_score: 9.4, incidents_prevented_ytd: 840 }))
+app.get('/api/v46/safety-analytics/dashboard', (c) => c.json({ kpis: 42, refresh_sec: 5, anomaly_detection: true, multi_event_view: true }))
+app.get('/api/v46/safety-analytics/predictive', (c) => c.json({ models: 8, accuracy_pct: 94.2, predictions_acted_pct: 84, false_alarm_pct: 2.8 }))
+app.get('/api/v46/safety-analytics/incident-heatmap', (c) => c.json({ spatial_resolution_m: 10, temporal_resolution_min: 5, patterns_identified: 84 }))
+app.get('/api/v46/safety-analytics/benchmark', (c) => c.json({ global_rank: 'top_5pct', india_rank: 1, safety_index: 9.4, peer_avg: 7.2 }))
+app.get('/api/v46/safety-analytics/reporting', (c) => c.json({ auto_reports: 84, regulators: 28, on_time_pct: 100, formats: ['PDF','Excel','API'] }))
+app.get('/api/v46/safety-analytics/cost', (c) => c.json({ total_safety_spend_cr: 28.4, cost_per_attendee_inr: 84, roi_multiple: 28, claims_avoided_cr: 840 }))
+app.get('/api/v46/safety-analytics/recommendations', (c) => c.json({ ai_recommendations_day: 284, implemented_pct: 84, avg_risk_reduction_pct: 42 }))
+app.get('/api/v46/safety-analytics/scenarios', (c) => c.json({ scenarios_modelled: 84, worst_case_impact_cr: 28.4, mitigation_coverage_pct: 94 }))
+app.get('/api/v46/safety-analytics/audit-trail', (c) => c.json({ log_entries_ytd: 28400000, immutable: true, retention_years: 7, forensic_ready: true }))
+
+// ── Phase 46 health endpoint ─────────────────────────────────
+app.get('/api/v46/health', (c) => c.json({ status: 'ok', phase: 'Phase 46', version: 'v46.0.0', theme: 'Safety, Crisis Management & Security Platform', endpoints: 90, total: 3169 }))
+
+// ── Phase 46 main health update ──────────────────────────────
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 46 — SAFETY, CRISIS MANAGEMENT &
+//               SECURITY PLATFORM
 // ═══════════════════════════════════════════════════════════
 
 export default app
