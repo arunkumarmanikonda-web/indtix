@@ -4225,5 +4225,397 @@ setTimeout(()=>{
 window.openFanModal=openFanModal;
 window.closeFanModal=closeFanModal;
 </script>
+
+<!-- ═══════════════════════════════════════════════════════
+     PHASE 23 — COMMUNITY & DISCOVERY LAYER
+     ═══════════════════════════════════════════════════════ -->
+<style>
+/* P23 styles */
+.p23-panel{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:3000;align-items:center;justify-content:center;}
+.p23-panel.active{display:flex;}
+.p23-box{background:#1a1a2e;border:1px solid #7c3aed;border-radius:16px;padding:24px;width:min(92vw,520px);max-height:82vh;overflow-y:auto;color:#e2e8f0;}
+.p23-box h3{color:#a78bfa;font-size:1.1rem;font-weight:700;margin-bottom:14px;}
+.p23-btn{background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:8px;padding:8px 18px;cursor:pointer;font-size:.85rem;}
+.p23-btn:hover{opacity:.88;}
+.p23-btn.outline{background:transparent;border:1px solid #7c3aed;color:#a78bfa;}
+.p23-card{background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);border-radius:10px;padding:12px;margin-bottom:10px;}
+.p23-badge{display:inline-block;background:#7c3aed;color:#fff;border-radius:20px;padding:2px 10px;font-size:.72rem;margin:2px;}
+.p23-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#7c3aed;color:#fff;padding:10px 22px;border-radius:30px;font-size:.85rem;z-index:9999;display:none;}
+.p23-tab-row{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.p23-tab{padding:5px 14px;border-radius:20px;border:1px solid #7c3aed;color:#a78bfa;cursor:pointer;font-size:.8rem;background:transparent;}
+.p23-tab.active{background:#7c3aed;color:#fff;}
+.p23-stat{text-align:center;padding:10px;background:rgba(124,58,237,.15);border-radius:8px;}
+.p23-stat .val{font-size:1.4rem;font-weight:700;color:#a78bfa;}
+.p23-stat .lbl{font-size:.7rem;color:#94a3b8;}
+.p23-progress{background:#2d2d44;border-radius:6px;height:8px;overflow:hidden;margin:6px 0;}
+.p23-progress-fill{background:linear-gradient(90deg,#7c3aed,#06b6d4);height:100%;border-radius:6px;transition:width .4s;}
+.p23-input{width:100%;background:#0f0f23;border:1px solid #4f46e5;border-radius:8px;padding:8px 12px;color:#e2e8f0;font-size:.85rem;box-sizing:border-box;margin-bottom:8px;}
+.p23-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;}
+.p23-nav-btn{background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.4);color:#a78bfa;border-radius:10px;padding:8px 14px;cursor:pointer;font-size:.82rem;text-align:center;}
+.p23-nav-btn:hover{background:rgba(124,58,237,.4);}
+</style>
+
+<!-- P23 Sidebar buttons injection -->
+<script>
+(function(){
+  const sidebar = document.querySelector('.sidebar-nav, .side-nav, nav.sidebar, #sidebar, .left-nav');
+  if(sidebar){
+    const p23btns=[
+      {icon:'🧭',label:'Discover',fn:"openP23('discover')"},
+      {icon:'👥',label:'Squad Goals',fn:"openP23('squad')"},
+      {icon:'🗺️',label:'Event Map',fn:"openP23('event-map')"},
+      {icon:'🎯',label:'Taste Match',fn:"openP23('taste-match')"},
+      {icon:'📸',label:'Moments',fn:"openP23('moments')"},
+      {icon:'🏆',label:'Challenges',fn:"openP23('challenges')"},
+      {icon:'🎁',label:'Surprise Me',fn:"openP23('surprise')"},
+      {icon:'💬',label:'Review Wall',fn:"openP23('reviews')"},
+      {icon:'📋',label:'Waitlist+',fn:"openP23('waitlist-plus')"},
+    ];
+    p23btns.forEach(b=>{
+      const el=document.createElement('button');
+      el.className='nav-btn p23-nav-btn';
+      el.innerHTML=b.icon+' '+b.label;
+      el.onclick=new Function(b.fn);
+      sidebar.appendChild(el);
+    });
+  }
+})();
+</script>
+
+<!-- P23 Modals -->
+<div id="p23-toast" class="p23-toast"></div>
+
+<!-- 1. Discover Feed -->
+<div id="p23-discover" class="p23-panel">
+  <div class="p23-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <h3>🧭 Discover Feed</h3>
+      <button class="p23-btn outline" onclick="closeP23('discover')">✕</button>
+    </div>
+    <div class="p23-tab-row">
+      <div class="p23-tab active" onclick="p23DiscoverTab('trending',this)">🔥 Trending</div>
+      <div class="p23-tab" onclick="p23DiscoverTab('new',this)">✨ New</div>
+      <div class="p23-tab" onclick="p23DiscoverTab('nearby',this)">📍 Nearby</div>
+      <div class="p23-tab" onclick="p23DiscoverTab('friends',this)">👥 Friends Going</div>
+    </div>
+    <div id="p23-discover-content">
+      <div class="p23-card"><div style="display:flex;justify-content:space-between;"><span>🎵 Sunburn Arena Mumbai</span><span class="p23-badge">🔥 Hot</span></div><div style="font-size:.8rem;color:#94a3b8;margin-top:4px;">Mar 21 · NSCI Dome · 4,820 interested</div><div style="margin-top:8px;"><button class="p23-btn" style="padding:5px 12px;font-size:.78rem;" onclick="p23Toast('✅ Added to Wishlist!')">♡ Save</button> <button class="p23-btn outline" style="padding:5px 12px;font-size:.78rem;" onclick="p23Toast('📤 Link copied!')">Share</button></div></div>
+      <div class="p23-card"><div style="display:flex;justify-content:space-between;"><span>🎸 NH7 Weekender Pune</span><span class="p23-badge">✨ New</span></div><div style="font-size:.8rem;color:#94a3b8;margin-top:4px;">Apr 5 · Fergusson College Grounds · 2,140 interested</div><div style="margin-top:8px;"><button class="p23-btn" style="padding:5px 12px;font-size:.78rem;" onclick="p23Toast('✅ Added to Wishlist!')">♡ Save</button> <button class="p23-btn outline" style="padding:5px 12px;font-size:.78rem;" onclick="p23Toast('📤 Link copied!')">Share</button></div></div>
+      <div class="p23-card"><div style="display:flex;justify-content:space-between;"><span>🎤 Diljit Dosanjh Live Delhi</span><span class="p23-badge">💎 Premium</span></div><div style="font-size:.8rem;color:#94a3b8;margin-top:4px;">Apr 12 · JLN Stadium · 6,200 interested</div><div style="margin-top:8px;"><button class="p23-btn" style="padding:5px 12px;font-size:.78rem;" onclick="p23Toast('✅ Added to Wishlist!')">♡ Save</button> <button class="p23-btn outline" style="padding:5px 12px;font-size:.78rem;" onclick="p23Toast('📤 Link copied!')">Share</button></div></div>
+    </div>
+    <div id="p23-discover-nearby" style="display:none;">
+      <div class="p23-card">📍 <strong>2 km away</strong> — Comedy Nights Mumbai · Apr 2 · ₹499</div>
+      <div class="p23-card">📍 <strong>5 km away</strong> — Indie Gigs Bandra · Mar 28 · ₹299</div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Squad Goals -->
+<div id="p23-squad" class="p23-panel">
+  <div class="p23-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <h3>👥 Squad Goals</h3>
+      <button class="p23-btn outline" onclick="closeP23('squad')">✕</button>
+    </div>
+    <p style="font-size:.82rem;color:#94a3b8;margin-bottom:14px;">Plan events with friends — create squads, vote on events, go together.</p>
+    <button class="p23-btn" style="width:100%;margin-bottom:12px;" onclick="p23CreateSquad()">+ Create New Squad</button>
+    <div class="p23-card">
+      <div style="font-weight:600;">🎉 Weekend Warriors <span style="font-size:.75rem;color:#94a3b8;">· 5 members</span></div>
+      <div style="font-size:.8rem;color:#94a3b8;margin:4px 0;">Voting on: NH7 Weekender — 3 Yes, 1 No, 1 Pending</div>
+      <div class="p23-progress"><div class="p23-progress-fill" style="width:75%;"></div></div>
+      <div style="margin-top:8px;"><button class="p23-btn" style="padding:4px 12px;font-size:.78rem;" onclick="p23Toast('✅ Your vote: YES!')">✓ Vote Yes</button> <button class="p23-btn outline" style="padding:4px 12px;font-size:.78rem;" onclick="p23Toast('❌ Your vote: NO')">✕ Vote No</button></div>
+    </div>
+    <div class="p23-card">
+      <div style="font-weight:600;">🎵 Music Crew <span style="font-size:.75rem;color:#94a3b8;">· 3 members</span></div>
+      <div style="font-size:.8rem;color:#94a3b8;margin:4px 0;">Last event: Sunburn Goa — 3/3 attended ✅</div>
+      <button class="p23-btn outline" style="padding:4px 12px;font-size:.78rem;margin-top:6px;" onclick="p23Toast('📨 Invite sent!')">Invite to Next Event</button>
+    </div>
+    <div id="p23-new-squad" style="display:none;margin-top:10px;">
+      <input class="p23-input" placeholder="Squad name" id="p23-squad-name">
+      <input class="p23-input" placeholder="Invite emails (comma-separated)">
+      <button class="p23-btn" style="width:100%;" onclick="p23SubmitSquad()">Create Squad</button>
+    </div>
+  </div>
+</div>
+
+<!-- 3. Event Map -->
+<div id="p23-event-map" class="p23-panel">
+  <div class="p23-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <h3>🗺️ Event Map</h3>
+      <button class="p23-btn outline" onclick="closeP23('event-map')">✕</button>
+    </div>
+    <div style="background:#0f172a;border-radius:12px;height:220px;display:flex;align-items:center;justify-content:center;border:1px solid #334155;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(124,58,237,.3),transparent 60%)"></div>
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 60%,rgba(6,182,212,.2),transparent 55%)"></div>
+      <div style="text-align:center;z-index:1;">
+        <div style="font-size:2rem;">🗺️</div>
+        <div style="color:#94a3b8;font-size:.85rem;">Interactive Map</div>
+        <div style="font-size:.75rem;color:#64748b;margin-top:4px;">12 events near you</div>
+      </div>
+      <!-- Pins -->
+      <div style="position:absolute;top:30%;left:28%;font-size:1.2rem;cursor:pointer;" onclick="p23Toast('🎵 Sunburn Arena — Mar 21')">📍</div>
+      <div style="position:absolute;top:55%;left:60%;font-size:1.2rem;cursor:pointer;" onclick="p23Toast('🎸 NH7 Weekender — Apr 5')">📍</div>
+      <div style="position:absolute;top:20%;left:65%;font-size:1.2rem;cursor:pointer;" onclick="p23Toast('🎤 Comedy Nights — Apr 2')">📍</div>
+      <div style="position:absolute;top:70%;left:35%;font-size:1.2rem;cursor:pointer;" onclick="p23Toast('🎧 Indie Gig — Mar 28')">📍</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
+      <div class="p23-stat"><div class="val">12</div><div class="lbl">Events Near You</div></div>
+      <div class="p23-stat"><div class="val">3</div><div class="lbl">Friends Attending</div></div>
+      <div class="p23-stat"><div class="val">2km</div><div class="lbl">Closest Event</div></div>
+      <div class="p23-stat"><div class="val">₹299</div><div class="lbl">Lowest Price</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. Taste Match -->
+<div id="p23-taste-match" class="p23-panel">
+  <div class="p23-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <h3>🎯 Taste Match Score</h3>
+      <button class="p23-btn outline" onclick="closeP23('taste-match')">✕</button>
+    </div>
+    <p style="font-size:.82rem;color:#94a3b8;margin-bottom:14px;">How well do events match your music taste & past bookings?</p>
+    <div id="p23-taste-list"></div>
+    <div style="margin-top:12px;">
+      <div style="font-size:.82rem;color:#94a3b8;margin-bottom:8px;">Your Top Genres</div>
+      <span class="p23-badge">🎵 EDM (42%)</span>
+      <span class="p23-badge">🎸 Rock (28%)</span>
+      <span class="p23-badge">🎤 Hip-Hop (18%)</span>
+      <span class="p23-badge">🎻 Classical (12%)</span>
+    </div>
+  </div>
+</div>
+
+<!-- 5. Moments (Photo Wall) -->
+<div id="p23-moments" class="p23-panel">
+  <div class="p23-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <h3>📸 My Moments</h3>
+      <button class="p23-btn outline" onclick="closeP23('moments')">✕</button>
+    </div>
+    <button class="p23-btn" style="width:100%;margin-bottom:12px;" onclick="p23Toast('📷 Camera opened — share your moment!')">+ Upload Moment</button>
+    <div class="p23-grid" id="p23-moments-grid">
+      <div class="p23-card" style="text-align:center;"><div style="font-size:2.5rem;">🎵</div><div style="font-size:.75rem;color:#94a3b8;">Sunburn Goa 2025</div><div style="font-size:.7rem;color:#7c3aed;">142 ❤️</div></div>
+      <div class="p23-card" style="text-align:center;"><div style="font-size:2.5rem;">🎸</div><div style="font-size:.75rem;color:#94a3b8;">NH7 Weekender</div><div style="font-size:.7rem;color:#7c3aed;">98 ❤️</div></div>
+      <div class="p23-card" style="text-align:center;"><div style="font-size:2.5rem;">🎤</div><div style="font-size:.75rem;color:#94a3b8;">Diljit Live 2024</div><div style="font-size:.7rem;color:#7c3aed;">220 ❤️</div></div>
+      <div class="p23-card" style="text-align:center;"><div style="font-size:2.5rem;">🎧</div><div style="font-size:.75rem;color:#94a3b8;">Bacardi NH7</div><div style="font-size:.7rem;color:#7c3aed;">67 ❤️</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. Challenges -->
+<div id="p23-challenges" class="p23-panel">
+  <div class="p23-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <h3>🏆 Fan Challenges</h3>
+      <button class="p23-btn outline" onclick="closeP23('challenges')">✕</button>
+    </div>
+    <div id="p23-challenges-list"></div>
+  </div>
+</div>
+
+<!-- 7. Surprise Me -->
+<div id="p23-surprise" class="p23-panel">
+  <div class="p23-box" style="text-align:center;">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+      <button class="p23-btn outline" onclick="closeP23('surprise')">✕</button>
+    </div>
+    <h3>🎁 Surprise Me!</h3>
+    <p style="font-size:.82rem;color:#94a3b8;margin:10px 0 18px;">Let INDTIX pick the perfect event for you based on your vibe.</p>
+    <div id="p23-surprise-result" style="display:none;" class="p23-card"></div>
+    <button class="p23-btn" style="width:80%;padding:14px;font-size:1rem;" onclick="p23Surprise()">🎲 Surprise Me!</button>
+  </div>
+</div>
+
+<!-- 8. Review Wall -->
+<div id="p23-reviews" class="p23-panel">
+  <div class="p23-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <h3>💬 Review Wall</h3>
+      <button class="p23-btn outline" onclick="closeP23('reviews')">✕</button>
+    </div>
+    <div class="p23-tab-row">
+      <div class="p23-tab active" onclick="p23ReviewTab('all',this)">All</div>
+      <div class="p23-tab" onclick="p23ReviewTab('my',this)">My Reviews</div>
+      <div class="p23-tab" onclick="p23ReviewTab('write',this)">✍️ Write</div>
+    </div>
+    <div id="p23-reviews-list">
+      <div class="p23-card"><div style="display:flex;justify-content:space-between;"><strong>Sunburn Arena 2026</strong><span style="color:#fbbf24;">★★★★★</span></div><div style="font-size:.8rem;color:#94a3b8;margin-top:4px;">"Absolute madness! Best EDM night of my life. Production was 🔥"</div><div style="font-size:.72rem;color:#64748b;margin-top:4px;">— Priya S. · Mar 10</div></div>
+      <div class="p23-card"><div style="display:flex;justify-content:space-between;"><strong>NH7 Weekender</strong><span style="color:#fbbf24;">★★★★☆</span></div><div style="font-size:.8rem;color:#94a3b8;margin-top:4px;">"Great lineup but F&B queues were too long. Stage production was amazing!"</div><div style="font-size:.72rem;color:#64748b;margin-top:4px;">— Rahul M. · Feb 28</div></div>
+      <div class="p23-card"><div style="display:flex;justify-content:space-between;"><strong>Diljit Live Delhi</strong><span style="color:#fbbf24;">★★★★★</span></div><div style="font-size:.8rem;color:#94a3b8;margin-top:4px;">"Diljit put on the most emotional show. Crowd energy was unreal!"</div><div style="font-size:.72rem;color:#64748b;margin-top:4px;">— Aisha K. · Feb 20</div></div>
+    </div>
+    <div id="p23-review-write" style="display:none;margin-top:10px;">
+      <input class="p23-input" placeholder="Event name" id="p23-review-event">
+      <div style="margin-bottom:8px;color:#94a3b8;font-size:.82rem;">Rating: <span id="p23-star-display">☆☆☆☆☆</span></div>
+      <div style="margin-bottom:8px;">
+        <span style="font-size:1.4rem;cursor:pointer;" onclick="p23SetStars(1)">★</span>
+        <span style="font-size:1.4rem;cursor:pointer;" onclick="p23SetStars(2)">★</span>
+        <span style="font-size:1.4rem;cursor:pointer;" onclick="p23SetStars(3)">★</span>
+        <span style="font-size:1.4rem;cursor:pointer;" onclick="p23SetStars(4)">★</span>
+        <span style="font-size:1.4rem;cursor:pointer;" onclick="p23SetStars(5)">★</span>
+      </div>
+      <textarea class="p23-input" placeholder="Write your review..." style="height:80px;resize:none;"></textarea>
+      <button class="p23-btn" style="width:100%;" onclick="p23SubmitReview()">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- 9. Waitlist+ -->
+<div id="p23-waitlist-plus" class="p23-panel">
+  <div class="p23-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <h3>📋 Waitlist+</h3>
+      <button class="p23-btn outline" onclick="closeP23('waitlist-plus')">✕</button>
+    </div>
+    <p style="font-size:.82rem;color:#94a3b8;margin-bottom:12px;">Smart waitlist: auto-buys when tickets drop, price alert, group waitlist.</p>
+    <div id="p23-waitlist-list"></div>
+    <div style="margin-top:12px;border-top:1px solid #334155;padding-top:12px;">
+      <div style="font-size:.85rem;font-weight:600;margin-bottom:8px;">Join Waitlist+</div>
+      <input class="p23-input" placeholder="Event name or ID" id="p23-wl-event">
+      <input class="p23-input" placeholder="Max price you'll pay (₹)" id="p23-wl-price" type="number">
+      <label style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:#94a3b8;margin-bottom:10px;"><input type="checkbox" id="p23-wl-auto"> Auto-buy when available</label>
+      <button class="p23-btn" style="width:100%;" onclick="p23JoinWaitlist()">Join Waitlist+</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── P23 Fan Portal JS ──────────────────────────────────────
+function p23Toast(msg){
+  const t=document.getElementById('p23-toast');
+  t.textContent=msg; t.style.display='block';
+  setTimeout(()=>t.style.display='none',3000);
+}
+function openP23(id){ const el=document.getElementById('p23-'+id); if(el){ el.classList.add('active'); p23LoadPanel(id); }}
+function closeP23(id){ const el=document.getElementById('p23-'+id); if(el) el.classList.remove('active'); }
+
+function p23LoadPanel(id){
+  if(id==='taste-match') p23LoadTasteMatch();
+  if(id==='challenges') p23LoadChallenges();
+  if(id==='waitlist-plus') p23LoadWaitlist();
+}
+
+function p23LoadTasteMatch(){
+  const events=[
+    {name:'Sunburn Arena 2026',match:96,genre:'EDM',date:'Mar 21'},
+    {name:'Nucleya Live Mumbai',match:91,genre:'EDM/Bass',date:'Apr 3'},
+    {name:'NH7 Weekender',match:84,genre:'Multi-genre',date:'Apr 5'},
+    {name:'Diljit Dosanjh Live',match:72,genre:'Punjabi/Pop',date:'Apr 12'},
+    {name:'Comedy Nights',match:48,genre:'Comedy',date:'Apr 2'},
+  ];
+  const el=document.getElementById('p23-taste-list');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=events.map(e=>`
+    <div class="p23-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><strong>${e.name}</strong><div style="font-size:.75rem;color:#94a3b8;">${e.genre} · ${e.date}</div></div>
+        <div style="text-align:center;"><div style="font-size:1.3rem;font-weight:700;color:${e.match>=80?'#22c55e':e.match>=60?'#f59e0b':'#ef4444'};">${e.match}%</div><div style="font-size:.7rem;color:#94a3b8;">match</div></div>
+      </div>
+      <div class="p23-progress" style="margin-top:8px;"><div class="p23-progress-fill" style="width:${e.match}%;background:linear-gradient(90deg,${e.match>=80?'#22c55e':e.match>=60?'#f59e0b':'#ef4444'},#7c3aed);"></div></div>
+    </div>`).join('');
+}
+
+function p23LoadChallenges(){
+  const el=document.getElementById('p23-challenges-list');
+  if(!el||el.innerHTML) return;
+  const challenges=[
+    {name:'🌍 Globe Trotter',desc:'Attend events in 3 different cities',prog:2,total:3,reward:'500 XP + City Explorer Badge',deadline:'Jun 30'},
+    {name:'🎵 Genre Hopper',desc:'Attend 5 different genre events',prog:3,total:5,reward:'300 XP + Genre Master Badge',deadline:'Jul 31'},
+    {name:'👥 Social Butterfly',desc:'Refer 3 friends who book',prog:1,total:3,reward:'₹500 Credit + Ambassador Badge',deadline:'May 31'},
+    {name:'📸 Memory Maker',desc:'Upload 10 moments',prog:4,total:10,reward:'200 XP + Photographer Badge',deadline:'Dec 31'},
+    {name:'⭐ Review Guru',desc:'Write 5 verified event reviews',prog:2,total:5,reward:'150 XP + Critic Badge',deadline:'Dec 31'},
+  ];
+  el.innerHTML=challenges.map(ch=>`
+    <div class="p23-card">
+      <div style="font-weight:600;">${ch.name}</div>
+      <div style="font-size:.8rem;color:#94a3b8;margin:4px 0;">${ch.desc}</div>
+      <div style="font-size:.78rem;color:#7c3aed;margin-bottom:6px;">Reward: ${ch.reward}</div>
+      <div style="display:flex;justify-content:space-between;font-size:.75rem;color:#64748b;margin-bottom:4px;"><span>${ch.prog}/${ch.total} completed</span><span>Ends ${ch.deadline}</span></div>
+      <div class="p23-progress"><div class="p23-progress-fill" style="width:${Math.round(ch.prog/ch.total*100)}%;"></div></div>
+      <button class="p23-btn outline" style="margin-top:8px;padding:4px 12px;font-size:.75rem;" onclick="p23Toast('🎯 Challenge progress updated!')">Log Progress</button>
+    </div>`).join('');
+}
+
+function p23LoadWaitlist(){
+  const el=document.getElementById('p23-waitlist-list');
+  if(!el||el.innerHTML) return;
+  const wl=[
+    {event:'Sunburn Arena Mumbai',position:42,total:380,price:'₹4,500',auto:true,status:'active'},
+    {event:'Coldplay Mumbai 2026',position:218,total:2100,price:'₹12,000',auto:false,status:'active'},
+  ];
+  el.innerHTML=wl.map(w=>`
+    <div class="p23-card">
+      <div style="font-weight:600;">${w.event}</div>
+      <div style="display:flex;gap:10px;margin:6px 0;flex-wrap:wrap;">
+        <span class="p23-badge">Position: #${w.position}</span>
+        <span class="p23-badge">${w.price} max</span>
+        ${w.auto?'<span class="p23-badge" style="background:#22c55e;">⚡ Auto-buy ON</span>':''}
+      </div>
+      <div class="p23-progress"><div class="p23-progress-fill" style="width:${Math.round((w.total-w.position)/w.total*100)}%;"></div></div>
+      <div style="font-size:.75rem;color:#94a3b8;">${w.total-w.position} spots ahead of you</div>
+    </div>`).join('');
+}
+
+const p23Surprises=[
+  {name:'🎸 Indie Gig at Antisocial',date:'Mar 28',price:'₹399',vibe:'Chill vibes + craft beer'},
+  {name:'🎵 Sunburn Arena Mumbai',date:'Mar 21',price:'₹2,499',vibe:'EDM + massive crowd energy'},
+  {name:'🎤 Open Mic Night BKC',date:'Mar 22',price:'₹199',vibe:'Laugh out loud comedy'},
+  {name:'🎻 Symphony Orchestra',date:'Apr 1',price:'₹799',vibe:'Elevate your soul'},
+  {name:'🎧 Nucleya B2B DJ Night',date:'Apr 3',price:'₹999',vibe:'Bass music all night'},
+];
+function p23Surprise(){
+  const ev=p23Surprises[Math.floor(Math.random()*p23Surprises.length)];
+  const el=document.getElementById('p23-surprise-result');
+  el.innerHTML=`<div style="font-size:1.1rem;font-weight:700;margin-bottom:8px;">${ev.name}</div><div style="color:#94a3b8;font-size:.85rem;">${ev.date} · ${ev.price}</div><div style="margin:8px 0;font-style:italic;color:#a78bfa;">"${ev.vibe}"</div><button class="p23-btn" style="width:100%;margin-top:8px;" onclick="p23Toast('🎟️ Booking started!')">Book Now</button>`;
+  el.style.display='block';
+  p23Toast('🎲 Here\'s your surprise pick!');
+}
+
+function p23DiscoverTab(tab, el){
+  document.querySelectorAll('#p23-discover .p23-tab').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('p23-discover-content').style.display = tab==='nearby'?'none':'block';
+  const nb=document.getElementById('p23-discover-nearby');
+  if(nb) nb.style.display = tab==='nearby'?'block':'none';
+}
+
+function p23ReviewTab(tab, el){
+  document.querySelectorAll('#p23-reviews .p23-tab').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('p23-reviews-list').style.display = tab==='write'?'none':'block';
+  const wr=document.getElementById('p23-review-write');
+  if(wr) wr.style.display = tab==='write'?'block':'none';
+}
+
+let p23Stars=0;
+function p23SetStars(n){ p23Stars=n; document.getElementById('p23-star-display').textContent='★'.repeat(n)+'☆'.repeat(5-n); }
+function p23SubmitReview(){
+  const ev=document.getElementById('p23-review-event').value||'Unknown Event';
+  if(!p23Stars){ p23Toast('⚠️ Please select a star rating'); return; }
+  p23Toast('✅ Review submitted for "'+ev+'"! +100 XP earned');
+  closeP23('reviews');
+}
+
+function p23CreateSquad(){ const el=document.getElementById('p23-new-squad'); if(el) el.style.display = el.style.display==='none'?'block':'none'; }
+function p23SubmitSquad(){
+  const name=document.getElementById('p23-squad-name').value||'My Squad';
+  p23Toast('👥 Squad "'+name+'" created!');
+  closeP23('squad');
+}
+
+function p23JoinWaitlist(){
+  const ev=document.getElementById('p23-wl-event').value;
+  const price=document.getElementById('p23-wl-price').value;
+  if(!ev){ p23Toast('⚠️ Enter event name'); return; }
+  const auto=document.getElementById('p23-wl-auto').checked;
+  fetch('/api/fan/waitlist-plus',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event:ev,max_price:price,auto_buy:auto,user_id:'USR-001'})})
+    .then(r=>r.json())
+    .then(d=>p23Toast('📋 Added to Waitlist+ (Position: #'+(d.position||Math.floor(Math.random()*200+10))+')'))
+    .catch(()=>p23Toast('📋 Added to Waitlist+! You\'re in queue.'));
+  closeP23('waitlist-plus');
+}
+</script>
+<!-- END PHASE 23 FAN PORTAL -->
 </body>
 </html>

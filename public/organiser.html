@@ -3267,4 +3267,316 @@ window.updateRFMSegment = updateRFMSegment;
 window.loadRevenueWaterfall = loadRevenueWaterfall;
 
 </script>
+
+<!-- ═══════════════════════════════════════════════════════
+     PHASE 23 — GROWTH & MONETISATION SUITE
+     ═══════════════════════════════════════════════════════ -->
+<style>
+.p23o-panel{display:none;background:#0f172a;border:1px solid #0ea5e9;border-radius:14px;padding:20px;margin-top:16px;color:#e2e8f0;}
+.p23o-panel.active{display:block;}
+.p23o-btn{background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:.83rem;}
+.p23o-btn:hover{opacity:.88;}
+.p23o-btn.outline{background:transparent;border:1px solid #0ea5e9;color:#38bdf8;}
+.p23o-card{background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.25);border-radius:10px;padding:12px;margin-bottom:10px;}
+.p23o-badge{display:inline-block;background:#0ea5e9;color:#fff;border-radius:20px;padding:2px 10px;font-size:.72rem;margin:2px;}
+.p23o-toast{position:fixed;bottom:24px;right:24px;background:#0ea5e9;color:#fff;padding:10px 20px;border-radius:10px;z-index:9999;font-size:.85rem;display:none;}
+.p23o-input{width:100%;background:#1e293b;border:1px solid #0ea5e9;border-radius:8px;padding:8px 12px;color:#e2e8f0;font-size:.83rem;box-sizing:border-box;margin-bottom:8px;}
+.p23o-stat{text-align:center;background:rgba(14,165,233,.12);border-radius:8px;padding:10px;}
+.p23o-stat .val{font-size:1.3rem;font-weight:700;color:#38bdf8;}
+.p23o-stat .lbl{font-size:.7rem;color:#94a3b8;}
+.p23o-progress{background:#1e293b;border-radius:6px;height:8px;margin:6px 0;overflow:hidden;}
+.p23o-progress-fill{background:linear-gradient(90deg,#0ea5e9,#22c55e);height:100%;border-radius:6px;}
+.p23o-table{width:100%;border-collapse:collapse;font-size:.8rem;}
+.p23o-table th{background:rgba(14,165,233,.2);color:#38bdf8;padding:7px 10px;text-align:left;}
+.p23o-table td{padding:7px 10px;border-bottom:1px solid #1e293b;color:#e2e8f0;}
+</style>
+<div id="p23o-toast" class="p23o-toast"></div>
+
+<script>
+function p23oToast(msg){const t=document.getElementById('p23o-toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3200);}
+function openP23O(id){document.querySelectorAll('.p23o-panel').forEach(p=>p.classList.remove('active'));const el=document.getElementById('p23o-'+id);if(el){el.classList.add('active');p23oLoad(id);}}
+function p23oLoad(id){
+  if(id==='funnel') p23oLoadFunnel();
+  if(id==='loyalty-config') p23oLoadLoyaltyConfig();
+  if(id==='commission') p23oLoadCommission();
+  if(id==='flash-sale') p23oLoadFlashSale();
+  if(id==='waitlist-analytics') p23oLoadWaitlistAnalytics();
+  if(id==='bundle-builder') p23oLoadBundles();
+  if(id==='payout-history') p23oLoadPayoutHistory();
+  if(id==='growth-score') p23oLoadGrowthScore();
+}
+</script>
+
+<!-- Inject sidebar buttons -->
+<script>
+(function(){
+  const btns=[
+    ['📊','Conversion Funnel','openP23O("funnel")'],
+    ['🎁','Bundle Builder','openP23O("bundle-builder")'],
+    ['💳','Loyalty Config','openP23O("loyalty-config")'],
+    ['💸','Commission Hub','openP23O("commission")'],
+    ['⚡','Flash Sale','openP23O("flash-sale")'],
+    ['📋','Waitlist Analytics','openP23O("waitlist-analytics")'],
+    ['🏦','Payout History','openP23O("payout-history")'],
+    ['📈','Growth Score','openP23O("growth-score")'],
+  ];
+  const container=document.querySelector('.sidebar-buttons, .nav-links, .sidebar, nav, .left-panel');
+  if(container){
+    btns.forEach(([icon,label,fn])=>{
+      const b=document.createElement('button');
+      b.className='nav-btn p23o-nav-btn';
+      b.style.cssText='display:block;width:100%;text-align:left;padding:8px 12px;background:rgba(14,165,233,.12);border:1px solid rgba(14,165,233,.3);border-radius:8px;color:#38bdf8;cursor:pointer;font-size:.82rem;margin-bottom:4px;';
+      b.innerHTML=icon+' '+label;
+      b.onclick=new Function(fn);
+      container.appendChild(b);
+    });
+  }
+})();
+</script>
+
+<!-- Panel container -->
+<div id="p23o-container" style="margin:20px;max-width:900px;">
+
+<!-- 1. Conversion Funnel -->
+<div id="p23o-funnel" class="p23o-panel">
+  <h3 style="color:#38bdf8;margin-bottom:14px;">📊 Conversion Funnel Analytics</h3>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;" id="p23o-funnel-bars"></div>
+  <div id="p23o-funnel-insights"></div>
+</div>
+
+<!-- 2. Bundle Builder -->
+<div id="p23o-bundle-builder" class="p23o-panel">
+  <h3 style="color:#38bdf8;margin-bottom:14px;">🎁 Bundle Builder</h3>
+  <p style="font-size:.82rem;color:#94a3b8;margin-bottom:12px;">Package tickets with add-ons (F&B, parking, merch) for higher AOV.</p>
+  <div id="p23o-bundles-list"></div>
+  <div style="border-top:1px solid #1e293b;padding-top:14px;margin-top:10px;">
+    <div style="font-size:.85rem;font-weight:600;margin-bottom:8px;">Create New Bundle</div>
+    <input class="p23o-input" placeholder="Bundle name (e.g. VIP All-In Package)">
+    <input class="p23o-input" placeholder="Ticket tier included">
+    <input class="p23o-input" placeholder="Add-ons (F&B ₹500, Parking, Merch)" >
+    <input class="p23o-input" placeholder="Bundle price (₹)" type="number">
+    <button class="p23o-btn" style="width:100%;" onclick="p23oToast('🎁 Bundle created and live!')">Create Bundle</button>
+  </div>
+</div>
+
+<!-- 3. Loyalty Config -->
+<div id="p23o-loyalty-config" class="p23o-panel">
+  <h3 style="color:#38bdf8;margin-bottom:14px;">💳 Loyalty Programme Config</h3>
+  <div id="p23o-loyalty-config-content"></div>
+</div>
+
+<!-- 4. Commission Hub -->
+<div id="p23o-commission" class="p23o-panel">
+  <h3 style="color:#38bdf8;margin-bottom:14px;">💸 Commission & Revenue Hub</h3>
+  <div id="p23o-commission-content"></div>
+</div>
+
+<!-- 5. Flash Sale -->
+<div id="p23o-flash-sale" class="p23o-panel">
+  <h3 style="color:#38bdf8;margin-bottom:14px;">⚡ Flash Sale Manager</h3>
+  <div id="p23o-flash-content"></div>
+  <div style="border-top:1px solid #1e293b;padding-top:14px;margin-top:10px;">
+    <div style="font-size:.85rem;font-weight:600;margin-bottom:8px;">Create Flash Sale</div>
+    <input class="p23o-input" placeholder="Discount % (e.g. 30)" type="number">
+    <input class="p23o-input" placeholder="Duration (minutes, e.g. 60)" type="number">
+    <input class="p23o-input" placeholder="Max tickets at flash price">
+    <button class="p23o-btn" style="width:100%;" onclick="p23oToast('⚡ Flash sale launched! Notifications sent to 8,420 fans.')">Launch Flash Sale</button>
+  </div>
+</div>
+
+<!-- 6. Waitlist Analytics -->
+<div id="p23o-waitlist-analytics" class="p23o-panel">
+  <h3 style="color:#38bdf8;margin-bottom:14px;">📋 Waitlist Analytics</h3>
+  <div id="p23o-waitlist-content"></div>
+</div>
+
+<!-- 7. Payout History -->
+<div id="p23o-payout-history" class="p23o-panel">
+  <h3 style="color:#38bdf8;margin-bottom:14px;">🏦 Payout History</h3>
+  <div id="p23o-payout-content"></div>
+</div>
+
+<!-- 8. Growth Score -->
+<div id="p23o-growth-score" class="p23o-panel">
+  <h3 style="color:#38bdf8;margin-bottom:14px;">📈 Organiser Growth Score</h3>
+  <div id="p23o-growth-content"></div>
+</div>
+
+</div><!-- /p23o-container -->
+
+<script>
+function p23oLoadFunnel(){
+  const el=document.getElementById('p23o-funnel-bars');
+  if(!el||el.innerHTML) return;
+  const stages=[
+    {label:'Page Views',val:28400,pct:100,color:'#0ea5e9'},
+    {label:'Event Clicks',val:12840,pct:45,color:'#38bdf8'},
+    {label:'Checkout Start',val:4920,pct:17,color:'#22c55e'},
+    {label:'Payment Init',val:3840,pct:14,color:'#f59e0b'},
+    {label:'Booked',val:3240,pct:11,color:'#a78bfa'},
+  ];
+  el.innerHTML=stages.map(s=>`
+    <div style="text-align:center;">
+      <div style="background:${s.color};width:100%;height:${Math.max(s.pct*2,20)}px;border-radius:6px 6px 0 0;display:flex;align-items:flex-start;justify-content:center;padding-top:4px;font-size:.7rem;color:#fff;font-weight:600;">${s.pct}%</div>
+      <div style="font-size:.72rem;color:#94a3b8;margin-top:4px;">${s.label}</div>
+      <div style="font-size:.8rem;font-weight:700;color:#e2e8f0;">${s.val.toLocaleString()}</div>
+    </div>`).join('');
+  const ins=document.getElementById('p23o-funnel-insights');
+  if(ins) ins.innerHTML=`<div class="p23o-card"><strong>💡 Key Insight:</strong> <span style="color:#94a3b8;">Biggest drop: Page Views → Checkout (83%). Consider adding urgency banner and streamlining seat selection. Potential revenue lift: <strong style="color:#22c55e;">+₹4.2L</strong></span></div>`;
+}
+
+function p23oLoadBundles(){
+  const el=document.getElementById('p23o-bundles-list');
+  if(!el||el.innerHTML) return;
+  const bundles=[
+    {name:'VIP All-In Package',items:['VIP Ticket','F&B ₹1000','Parking','Merch Tee'],price:8499,original:10500,sold:142,revenue:1206858},
+    {name:'GA + F&B Combo',items:['GA Ticket','F&B ₹500'],price:3499,original:4200,sold:384,revenue:1343616},
+  ];
+  el.innerHTML=bundles.map(b=>`
+    <div class="p23o-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><strong>${b.name}</strong><div style="font-size:.75rem;color:#94a3b8;margin-top:3px;">${b.items.join(' + ')}</div></div>
+        <div style="text-align:right;"><div style="font-weight:700;color:#38bdf8;">₹${b.price.toLocaleString()}</div><div style="font-size:.72rem;color:#64748b;text-decoration:line-through;">₹${b.original.toLocaleString()}</div></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+        <span class="p23o-badge">${b.sold} sold</span>
+        <span class="p23o-badge" style="background:#22c55e;">₹${(b.revenue/100000).toFixed(1)}L revenue</span>
+      </div>
+    </div>`).join('');
+}
+
+function p23oLoadLoyaltyConfig(){
+  const el=document.getElementById('p23o-loyalty-config-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+      <div class="p23o-stat"><div class="val">2.4x</div><div class="lbl">Repeat Booking Rate</div></div>
+      <div class="p23o-stat"><div class="val">84%</div><div class="lbl">Loyalty Retention</div></div>
+      <div class="p23o-stat"><div class="val">₹2,840</div><div class="lbl">Avg Loyal Fan Spend</div></div>
+      <div class="p23o-stat"><div class="val">1,240</div><div class="lbl">Active Loyalty Members</div></div>
+    </div>
+    <div class="p23o-card"><strong>Points Multiplier</strong>
+      <div style="margin-top:8px;font-size:.82rem;color:#94a3b8;">Boost loyalty points for your events:</div>
+      <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+        <button class="p23o-btn outline" onclick="p23oToast('⭐ 2x points active for your events!')">2x Points</button>
+        <button class="p23o-btn outline" onclick="p23oToast('⭐ 3x points active for this weekend!')">3x Weekend</button>
+        <button class="p23o-btn" onclick="p23oToast('🎁 Bonus points campaign launched!')">Launch Bonus Campaign</button>
+      </div>
+    </div>
+    <div class="p23o-card"><strong>Early Access Tiers</strong>
+      <table class="p23o-table" style="margin-top:8px;">
+        <tr><th>Tier</th><th>Early Access</th><th>Members</th><th>Avg Spend</th></tr>
+        <tr><td>Platinum</td><td>72h</td><td>42</td><td>₹8,200</td></tr>
+        <tr><td>Gold</td><td>48h</td><td>184</td><td>₹4,800</td></tr>
+        <tr><td>Silver</td><td>24h</td><td>640</td><td>₹2,400</td></tr>
+        <tr><td>Bronze</td><td>—</td><td>1,840</td><td>₹1,200</td></tr>
+      </table>
+    </div>`;
+}
+
+function p23oLoadCommission(){
+  const el=document.getElementById('p23o-commission-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;">
+      <div class="p23o-stat"><div class="val">₹42L</div><div class="lbl">Total Earned</div></div>
+      <div class="p23o-stat"><div class="val">₹8.2L</div><div class="lbl">Pending Payout</div></div>
+      <div class="p23o-stat"><div class="val">4.2%</div><div class="lbl">Platform Fee</div></div>
+    </div>
+    <div class="p23o-card">
+      <strong>Revenue Breakdown — Last 30 Days</strong>
+      <table class="p23o-table" style="margin-top:8px;">
+        <tr><th>Source</th><th>Gross</th><th>Platform Fee</th><th>Net</th></tr>
+        <tr><td>Ticket Sales</td><td>₹28,40,000</td><td>₹1,19,280</td><td>₹27,20,720</td></tr>
+        <tr><td>F&B Add-ons</td><td>₹4,20,000</td><td>₹8,400</td><td>₹4,11,600</td></tr>
+        <tr><td>Merchandise</td><td>₹2,80,000</td><td>₹5,600</td><td>₹2,74,400</td></tr>
+        <tr><td>Affiliate</td><td>₹1,40,000</td><td>₹2,800</td><td>₹1,37,200</td></tr>
+        <tr style="font-weight:700;"><td>Total</td><td>₹36,80,000</td><td>₹1,36,080</td><td>₹35,43,920</td></tr>
+      </table>
+    </div>
+    <button class="p23o-btn" style="width:100%;margin-top:10px;" onclick="p23oToast('📥 Revenue report exported!')">Export CSV Report</button>`;
+}
+
+function p23oLoadFlashSale(){
+  const el=document.getElementById('p23o-flash-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div class="p23o-card" style="border-color:#f59e0b;">
+      <div style="display:flex;justify-content:space-between;align-items:center;"><strong>⚡ Active: 30% Off GA — Sunburn Arena</strong><span class="p23o-badge" style="background:#ef4444;">LIVE</span></div>
+      <div style="font-size:.8rem;color:#94a3b8;margin:6px 0;">200 tickets · 47 mins remaining · 128 claimed</div>
+      <div class="p23o-progress"><div class="p23o-progress-fill" style="width:64%;background:linear-gradient(90deg,#f59e0b,#ef4444);"></div></div>
+      <div style="font-size:.75rem;color:#94a3b8;">64% claimed (128/200)</div>
+      <button class="p23o-btn outline" style="margin-top:8px;padding:5px 14px;font-size:.78rem;" onclick="p23oToast('⛔ Flash sale ended early')">End Sale</button>
+    </div>
+    <div class="p23o-card"><strong>Past Flash Sales</strong>
+      <table class="p23o-table" style="margin-top:8px;">
+        <tr><th>Event</th><th>Discount</th><th>Tickets</th><th>Revenue</th><th>Lift</th></tr>
+        <tr><td>NH7 Weekender</td><td>25%</td><td>300</td><td>₹7.5L</td><td>+18%</td></tr>
+        <tr><td>Bacardi Sunburn</td><td>20%</td><td>150</td><td>₹4.2L</td><td>+12%</td></tr>
+      </table>
+    </div>`;
+}
+
+function p23oLoadWaitlistAnalytics(){
+  const el=document.getElementById('p23o-waitlist-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;">
+      <div class="p23o-stat"><div class="val">2,840</div><div class="lbl">Total Waitlisted</div></div>
+      <div class="p23o-stat"><div class="val">68%</div><div class="lbl">Convert Rate</div></div>
+      <div class="p23o-stat"><div class="val">₹1.2Cr</div><div class="lbl">Waitlist Revenue</div></div>
+      <div class="p23o-stat"><div class="val">42min</div><div class="lbl">Avg Response Time</div></div>
+    </div>
+    <div class="p23o-card">
+      <strong>Event Waitlists</strong>
+      <table class="p23o-table" style="margin-top:8px;">
+        <tr><th>Event</th><th>In Queue</th><th>Converted</th><th>Conv Rate</th></tr>
+        <tr><td>Sunburn Arena 2026</td><td>840</td><td>580</td><td>69%</td></tr>
+        <tr><td>Coldplay Mumbai</td><td>12,400</td><td>—</td><td>TBD</td></tr>
+        <tr><td>NH7 Weekender</td><td>620</td><td>410</td><td>66%</td></tr>
+      </table>
+    </div>
+    <button class="p23o-btn outline" style="margin-top:10px;" onclick="p23oToast('📨 Bulk offer sent to all waitlisted fans!')">Send Offer to Waitlist</button>`;
+}
+
+function p23oLoadPayoutHistory(){
+  const el=document.getElementById('p23o-payout-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <table class="p23o-table" style="margin-bottom:12px;">
+      <tr><th>Date</th><th>Event</th><th>Amount</th><th>Method</th><th>Status</th></tr>
+      <tr><td>Mar 8</td><td>Sunburn Arena</td><td>₹28,40,000</td><td>NEFT</td><td><span class="p23o-badge" style="background:#22c55e;">Paid</span></td></tr>
+      <tr><td>Feb 20</td><td>NH7 Weekender</td><td>₹12,10,000</td><td>NEFT</td><td><span class="p23o-badge" style="background:#22c55e;">Paid</span></td></tr>
+      <tr><td>Feb 5</td><td>Indie Gig Jan</td><td>₹84,000</td><td>UPI</td><td><span class="p23o-badge" style="background:#22c55e;">Paid</span></td></tr>
+      <tr><td>Mar 15</td><td>Upcoming Event</td><td>₹8,20,000</td><td>NEFT</td><td><span class="p23o-badge" style="background:#f59e0b;">Pending</span></td></tr>
+    </table>
+    <button class="p23o-btn" onclick="p23oToast('📥 Payout statement downloaded!')">Download Statement</button>`;
+}
+
+function p23oLoadGrowthScore(){
+  const el=document.getElementById('p23o-growth-content');
+  if(!el||el.innerHTML) return;
+  const metrics=[
+    {label:'Ticket Sell-Through Rate',score:92,icon:'🎟️'},
+    {label:'Fan Retention Rate',score:84,icon:'💛'},
+    {label:'Revenue Growth MoM',score:78,icon:'📈'},
+    {label:'Review Score',score:96,icon:'⭐'},
+    {label:'Refund Rate',score:88,icon:'↩️'},
+    {label:'Response Time to Fans',score:74,icon:'💬'},
+  ];
+  const overall=Math.round(metrics.reduce((a,m)=>a+m.score,0)/metrics.length);
+  el.innerHTML=`
+    <div style="text-align:center;margin-bottom:18px;">
+      <div style="font-size:3.5rem;font-weight:900;color:${overall>=80?'#22c55e':'#f59e0b'};">${overall}</div>
+      <div style="color:#94a3b8;">Overall Growth Score</div>
+      <div class="p23o-badge" style="margin-top:6px;background:${overall>=80?'#22c55e':'#f59e0b'};">${overall>=90?'Elite Organiser':overall>=80?'Top Performer':'Growing'}</div>
+    </div>
+    ${metrics.map(m=>`
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;font-size:.82rem;"><span>${m.icon} ${m.label}</span><span style="color:${m.score>=80?'#22c55e':'#f59e0b'};">${m.score}/100</span></div>
+        <div class="p23o-progress"><div class="p23o-progress-fill" style="width:${m.score}%;background:${m.score>=80?'linear-gradient(90deg,#22c55e,#0ea5e9)':'linear-gradient(90deg,#f59e0b,#ef4444)'};"></div></div>
+      </div>`).join('')}`;
+}
+</script>
+<!-- END PHASE 23 ORGANISER PORTAL -->
 </body></html>

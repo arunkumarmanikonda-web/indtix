@@ -3677,4 +3677,281 @@ document.addEventListener('DOMContentLoaded', function() {
   window.editRateLimit = function(tier) { showAdminToast('Rate limit editor for tier: '+tier+' (modal coming soon)'); };
 });
 </script>
+
+<!-- ═══════════════════════════════════════════════════════
+     PHASE 23 — PLATFORM INTELLIGENCE & ML OPS
+     ═══════════════════════════════════════════════════════ -->
+<style>
+.p23a-section{background:#0f172a;border:1px solid #6366f1;border-radius:14px;padding:20px;margin:16px;color:#e2e8f0;display:none;}
+.p23a-section.active{display:block;}
+.p23a-btn{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:8px;padding:7px 16px;cursor:pointer;font-size:.82rem;}
+.p23a-btn:hover{opacity:.88;}
+.p23a-btn.danger{background:linear-gradient(135deg,#ef4444,#dc2626);}
+.p23a-btn.outline{background:transparent;border:1px solid #6366f1;color:#a5b4fc;}
+.p23a-card{background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:10px;padding:12px;margin-bottom:10px;}
+.p23a-toast-adm{position:fixed;top:20px;right:20px;background:#6366f1;color:#fff;padding:10px 20px;border-radius:10px;z-index:9999;font-size:.85rem;display:none;}
+.p23a-table{width:100%;border-collapse:collapse;font-size:.8rem;}
+.p23a-table th{background:rgba(99,102,241,.2);color:#a5b4fc;padding:7px 10px;text-align:left;}
+.p23a-table td{padding:7px 10px;border-bottom:1px solid #1e293b;color:#e2e8f0;}
+.p23a-badge{display:inline-block;background:#6366f1;color:#fff;border-radius:20px;padding:2px 9px;font-size:.72rem;margin:2px;}
+.p23a-stat{text-align:center;background:rgba(99,102,241,.12);border-radius:8px;padding:10px;}
+.p23a-stat .val{font-size:1.3rem;font-weight:700;color:#a5b4fc;}
+.p23a-stat .lbl{font-size:.7rem;color:#94a3b8;}
+.p23a-progress{background:#1e293b;border-radius:6px;height:8px;margin:6px 0;overflow:hidden;}
+.p23a-progress-fill{background:linear-gradient(90deg,#6366f1,#06b6d4);height:100%;border-radius:6px;}
+</style>
+<div id="p23a-toast" class="p23a-toast-adm"></div>
+
+<script>
+function p23aToast(msg){const t=document.getElementById('p23a-toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
+function openP23A(id){document.querySelectorAll('.p23a-section').forEach(s=>s.classList.remove('active'));const el=document.getElementById('p23a-'+id);if(el){el.classList.add('active');p23aLoad(id);window.scrollTo({top:el.offsetTop-20,behavior:'smooth'});}}
+function p23aLoad(id){
+  const loaders={'ml-models':p23aLoadML,'trust-score':p23aLoadTrust,'geo-analytics':p23aLoadGeo,'user-segments':p23aLoadSegments,'platform-health':p23aLoadPlatformHealth,'churn-predictor':p23aLoadChurn,'price-optimizer':p23aPriceOptimizer,'ops-budget':p23aLoadBudget};
+  if(loaders[id]) loaders[id]();
+}
+</script>
+
+<!-- Inject sidebar buttons for Phase 23 -->
+<script>
+(function(){
+  const items=[
+    ['🤖','ML Models','openP23A("ml-models")'],
+    ['🛡️','Trust Score','openP23A("trust-score")'],
+    ['🌍','Geo Analytics','openP23A("geo-analytics")'],
+    ['🧩','User Segments','openP23A("user-segments")'],
+    ['💚','Platform Health','openP23A("platform-health")'],
+    ['📉','Churn Predictor','openP23A("churn-predictor")'],
+    ['💰','Price Optimiser','openP23A("price-optimizer")'],
+    ['📦','Ops Budget','openP23A("ops-budget")'],
+  ];
+  setTimeout(()=>{
+    const container=document.querySelector('#p22-sidebar-extra, .sidebar-extra, .admin-sidebar, .sidebar, nav');
+    if(container){
+      const div=document.createElement('div');
+      div.innerHTML='<div style="color:#6366f1;font-size:.75rem;font-weight:700;padding:8px 0;text-transform:uppercase;letter-spacing:.08em;">Phase 23</div>';
+      items.forEach(([icon,label,fn])=>{
+        const b=document.createElement('button');
+        b.style.cssText='display:block;width:100%;text-align:left;padding:7px 12px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.25);border-radius:8px;color:#a5b4fc;cursor:pointer;font-size:.8rem;margin-bottom:3px;';
+        b.innerHTML=icon+' '+label;
+        b.onclick=new Function(fn);
+        div.appendChild(b);
+      });
+      container.appendChild(div);
+    }
+  },800);
+})();
+</script>
+
+<!-- Phase 23 Admin Panels -->
+<div id="p23a-ml-models" class="p23a-section">
+  <h3 style="color:#a5b4fc;margin-bottom:14px;">🤖 ML Model Registry</h3>
+  <div id="p23a-ml-content"></div>
+</div>
+
+<div id="p23a-trust-score" class="p23a-section">
+  <h3 style="color:#a5b4fc;margin-bottom:14px;">🛡️ User Trust Score Engine</h3>
+  <div id="p23a-trust-content"></div>
+</div>
+
+<div id="p23a-geo-analytics" class="p23a-section">
+  <h3 style="color:#a5b4fc;margin-bottom:14px;">🌍 Geo Analytics</h3>
+  <div id="p23a-geo-content"></div>
+</div>
+
+<div id="p23a-user-segments" class="p23a-section">
+  <h3 style="color:#a5b4fc;margin-bottom:14px;">🧩 Advanced User Segments</h3>
+  <div id="p23a-segments-content"></div>
+</div>
+
+<div id="p23a-platform-health" class="p23a-section">
+  <h3 style="color:#a5b4fc;margin-bottom:14px;">💚 Platform Health Score</h3>
+  <div id="p23a-health-content"></div>
+</div>
+
+<div id="p23a-churn-predictor" class="p23a-section">
+  <h3 style="color:#a5b4fc;margin-bottom:14px;">📉 Churn Risk Predictor</h3>
+  <div id="p23a-churn-content"></div>
+</div>
+
+<div id="p23a-price-optimizer" class="p23a-section">
+  <h3 style="color:#a5b4fc;margin-bottom:14px;">💰 AI Price Optimiser</h3>
+  <div id="p23a-price-content"></div>
+</div>
+
+<div id="p23a-ops-budget" class="p23a-section">
+  <h3 style="color:#a5b4fc;margin-bottom:14px;">📦 Ops Budget Tracker</h3>
+  <div id="p23a-budget-content"></div>
+</div>
+
+<script>
+function p23aLoadML(){
+  const el=document.getElementById('p23a-ml-content');
+  if(!el||el.innerHTML) return;
+  const models=[
+    {name:'Demand Forecast v3.2',type:'Regression',accuracy:94.2,status:'prod',last_trained:'Mar 8',predictions:'12,400/day'},
+    {name:'Fraud Classifier v2.1',type:'XGBoost',accuracy:98.7,status:'prod',last_trained:'Mar 5',predictions:'84,000/day'},
+    {name:'Churn Predictor v1.8',type:'LSTM',accuracy:87.4,status:'prod',last_trained:'Feb 28',predictions:'48,000/day'},
+    {name:'Price Optimiser v2.0',type:'RL',accuracy:91.3,status:'staging',last_trained:'Mar 9',predictions:'—'},
+    {name:'Recommendation Engine v4.1',type:'CollabFilter',accuracy:89.6,status:'prod',last_trained:'Mar 7',predictions:'240,000/day'},
+  ];
+  el.innerHTML=`<table class="p23a-table"><tr><th>Model</th><th>Type</th><th>Accuracy</th><th>Status</th><th>Predictions/Day</th><th>Action</th></tr>
+  ${models.map(m=>`<tr>
+    <td><strong>${m.name}</strong></td>
+    <td><span class="p23a-badge" style="background:#334155;">${m.type}</span></td>
+    <td style="color:${m.accuracy>=90?'#22c55e':'#f59e0b'};">${m.accuracy}%</td>
+    <td><span class="p23a-badge" style="background:${m.status==='prod'?'#22c55e':'#f59e0b'};">${m.status}</span></td>
+    <td>${m.predictions}</td>
+    <td><button class="p23a-btn outline" style="padding:3px 10px;font-size:.72rem;" onclick="p23aToast('🔄 Retraining ${m.name}...')">Retrain</button></td>
+  </tr>`).join('')}</table>
+  <div style="margin-top:12px;"><button class="p23a-btn" onclick="p23aToast('📊 ML report exported!')">Export Report</button></div>`;
+}
+
+function p23aLoadTrust(){
+  const el=document.getElementById('p23a-trust-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;">
+      <div class="p23a-stat"><div class="val">8.4M</div><div class="lbl">Users Scored</div></div>
+      <div class="p23a-stat"><div class="val">96.2%</div><div class="lbl">High Trust (&gt;70)</div></div>
+      <div class="p23a-stat"><div class="val">2,840</div><div class="lbl">Flagged This Week</div></div>
+      <div class="p23a-stat"><div class="val">142</div><div class="lbl">Blocked Today</div></div>
+    </div>
+    <div class="p23a-card"><strong>Trust Score Distribution</strong>
+      <div style="display:flex;align-items:flex-end;gap:4px;height:80px;margin-top:10px;">
+        ${['90-100','80-89','70-79','60-69','<60'].map((l,i)=>{const h=[48,32,14,4,2];return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;"><div style="background:#6366f1;width:100%;height:${h[i]}px;border-radius:4px 4px 0 0;"></div><div style="font-size:.65rem;color:#94a3b8;margin-top:3px;">${l}</div></div>`;}).join('')}
+      </div>
+    </div>
+    <div class="p23a-card"><strong>Recent Flagged Users</strong>
+      <table class="p23a-table" style="margin-top:8px;">
+        <tr><th>User</th><th>Score</th><th>Risk Signals</th><th>Action</th></tr>
+        <tr><td>USR-28491</td><td style="color:#ef4444;">24</td><td>Multiple chargebacks, VPN detected</td><td><button class="p23a-btn danger" style="padding:3px 8px;font-size:.72rem;" onclick="p23aToast('🚫 User blocked!')">Block</button></td></tr>
+        <tr><td>USR-19284</td><td style="color:#f59e0b;">48</td><td>Unusual booking pattern</td><td><button class="p23a-btn outline" style="padding:3px 8px;font-size:.72rem;" onclick="p23aToast('👁️ User flagged for review')">Flag</button></td></tr>
+      </table>
+    </div>`;
+}
+
+function p23aLoadGeo(){
+  const el=document.getElementById('p23a-geo-content');
+  if(!el||el.innerHTML) return;
+  const cities=[
+    {city:'Mumbai',gmv:'₹4.2Cr',users:'1.84M',events:142,growth:'+22%'},
+    {city:'Delhi NCR',gmv:'₹3.1Cr',users:'1.42M',events:98,growth:'+18%'},
+    {city:'Bengaluru',gmv:'₹2.8Cr',users:'1.28M',events:124,growth:'+31%'},
+    {city:'Pune',gmv:'₹1.2Cr',users:'620K',events:68,growth:'+24%'},
+    {city:'Hyderabad',gmv:'₹0.9Cr',users:'480K',events:52,growth:'+19%'},
+    {city:'Chennai',gmv:'₹0.7Cr',users:'380K',events:44,growth:'+15%'},
+  ];
+  el.innerHTML=`
+    <table class="p23a-table" style="margin-bottom:14px;">
+      <tr><th>City</th><th>GMV</th><th>Users</th><th>Events</th><th>MoM Growth</th></tr>
+      ${cities.map(c=>`<tr><td><strong>${c.city}</strong></td><td>${c.gmv}</td><td>${c.users}</td><td>${c.events}</td><td style="color:#22c55e;">${c.growth}</td></tr>`).join('')}
+    </table>
+    <div class="p23a-card"><strong>💡 Opportunity Zones:</strong> <span style="color:#94a3b8;">Ahmedabad (+0 events scheduled), Kolkata (high demand, low supply), Jaipur (emerging market)</span><button class="p23a-btn outline" style="padding:4px 12px;font-size:.78rem;margin-left:10px;" onclick="p23aToast('📨 Expansion report sent to BD team!')">Notify BD Team</button></div>`;
+}
+
+function p23aLoadSegments(){
+  const el=document.getElementById('p23a-segments-content');
+  if(!el||el.innerHTML) return;
+  const segments=[
+    {name:'High-Value EDM Fans',size:'142K',ltv:'₹8,400',retention:'84%',color:'#6366f1'},
+    {name:'Casual Weekend Goers',size:'840K',ltv:'₹1,200',retention:'42%',color:'#0ea5e9'},
+    {name:'Group Bookers (5+)',size:'84K',ltv:'₹12,000',retention:'78%',color:'#22c55e'},
+    {name:'First-Time Attendees',size:'280K',ltv:'₹800',retention:'28%',color:'#f59e0b'},
+    {name:'Lapsed (90d+)',size:'320K',ltv:'₹0',retention:'12%',color:'#ef4444'},
+    {name:'VIP / Platinum',size:'24K',ltv:'₹42,000',retention:'94%',color:'#a78bfa'},
+  ];
+  el.innerHTML=`<div class="p23a-card"><strong>Behaviour-Based Segments</strong><table class="p23a-table" style="margin-top:8px;">
+    <tr><th>Segment</th><th>Size</th><th>Avg LTV</th><th>Retention</th><th>Action</th></tr>
+    ${segments.map(s=>`<tr>
+      <td><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${s.color};margin-right:6px;"></span><strong>${s.name}</strong></td>
+      <td>${s.size}</td><td>${s.ltv}</td>
+      <td style="color:${parseInt(s.retention)>=70?'#22c55e':parseInt(s.retention)>=40?'#f59e0b':'#ef4444'};">${s.retention}</td>
+      <td><button class="p23a-btn outline" style="padding:3px 8px;font-size:.72rem;" onclick="p23aToast('📨 Campaign sent to ${s.name}!')">Campaign</button></td>
+    </tr>`).join('')}
+  </table></div>`;
+}
+
+function p23aLoadPlatformHealth(){
+  const el=document.getElementById('p23a-health-content');
+  if(!el||el.innerHTML) return;
+  const pillars=[
+    {name:'API Reliability',score:99.4,icon:'🔌'},
+    {name:'Payment Success Rate',score:98.2,icon:'💳'},
+    {name:'Search Relevance',score:91.8,icon:'🔍'},
+    {name:'Fraud Prevention',score:99.1,icon:'🛡️'},
+    {name:'Fan Satisfaction (NPS)',score:84.0,icon:'😊'},
+    {name:'Organiser NPS',score:78.0,icon:'🎫'},
+    {name:'Infra Cost Efficiency',score:86.0,icon:'⚙️'},
+    {name:'Data Privacy Compliance',score:100.0,icon:'🔒'},
+  ];
+  const overall=Math.round(pillars.reduce((a,p)=>a+p.score,0)/pillars.length);
+  el.innerHTML=`
+    <div style="text-align:center;margin-bottom:18px;">
+      <div style="font-size:3.5rem;font-weight:900;color:#22c55e;">${overall}</div>
+      <div style="color:#94a3b8;">Platform Health Score</div>
+    </div>
+    ${pillars.map(p=>`<div style="margin-bottom:8px;"><div style="display:flex;justify-content:space-between;font-size:.82rem;"><span>${p.icon} ${p.name}</span><span style="color:${p.score>=90?'#22c55e':p.score>=80?'#f59e0b':'#ef4444'};">${p.score}%</span></div>
+      <div class="p23a-progress"><div class="p23a-progress-fill" style="width:${p.score}%;background:${p.score>=90?'linear-gradient(90deg,#22c55e,#0ea5e9)':'linear-gradient(90deg,#f59e0b,#ef4444)'};"></div></div>
+    </div>`).join('')}`;
+}
+
+function p23aLoadChurn(){
+  const el=document.getElementById('p23a-churn-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;">
+      <div class="p23a-stat"><div class="val">320K</div><div class="lbl">At-Risk Users</div></div>
+      <div class="p23a-stat"><div class="val">4.2%</div><div class="lbl">30-Day Churn Rate</div></div>
+      <div class="p23a-stat"><div class="val">₹2.8Cr</div><div class="lbl">Revenue at Risk</div></div>
+    </div>
+    <div class="p23a-card"><strong>Churn Risk Segments</strong>
+      <table class="p23a-table" style="margin-top:8px;">
+        <tr><th>Segment</th><th>Users</th><th>Churn Prob</th><th>LTV at Risk</th><th>Intervention</th></tr>
+        <tr><td>90d+ Inactive</td><td>180K</td><td style="color:#ef4444;">72%</td><td>₹1.4Cr</td><td><button class="p23a-btn" style="padding:3px 8px;font-size:.72rem;" onclick="p23aToast('📨 Win-back campaign sent to 180K users!')">Win-Back</button></td></tr>
+        <tr><td>Downgraded Tier</td><td>84K</td><td style="color:#f59e0b;">48%</td><td>₹0.8Cr</td><td><button class="p23a-btn outline" style="padding:3px 8px;font-size:.72rem;" onclick="p23aToast('🎁 Loyalty bonus offered!')">Bonus XP</button></td></tr>
+        <tr><td>Single Booking</td><td>280K</td><td style="color:#f59e0b;">36%</td><td>₹0.6Cr</td><td><button class="p23a-btn outline" style="padding:3px 8px;font-size:.72rem;" onclick="p23aToast('📢 Discovery campaign launched!')">Discovery</button></td></tr>
+      </table>
+    </div>`;
+}
+
+function p23aPriceOptimizer(){
+  const el=document.getElementById('p23a-price-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div class="p23a-card" style="margin-bottom:12px;"><strong>AI Pricing Recommendations</strong>
+      <table class="p23a-table" style="margin-top:8px;">
+        <tr><th>Event</th><th>Current Price</th><th>AI Suggested</th><th>Expected Lift</th><th>Action</th></tr>
+        <tr><td>Sunburn Arena GA</td><td>₹3,499</td><td>₹3,999</td><td style="color:#22c55e;">+₹2.4L</td><td><button class="p23a-btn" style="padding:3px 8px;font-size:.72rem;" onclick="p23aToast('✅ Price updated to ₹3,999!')">Apply</button></td></tr>
+        <tr><td>NH7 VIP</td><td>₹8,499</td><td>₹7,999</td><td style="color:#22c55e;">+12% volume</td><td><button class="p23a-btn outline" style="padding:3px 8px;font-size:.72rem;" onclick="p23aToast('✅ Price adjusted!')">Apply</button></td></tr>
+        <tr><td>Indie Gig GA</td><td>₹399</td><td>₹449</td><td style="color:#22c55e;">+₹18K</td><td><button class="p23a-btn" style="padding:3px 8px;font-size:.72rem;" onclick="p23aToast('✅ Price updated!')">Apply</button></td></tr>
+      </table>
+    </div>
+    <div class="p23a-card"><strong>Elasticity Model:</strong> <span style="color:#94a3b8;">EDM events show price inelasticity at &gt;₹3,500. Comedy &amp; indie shows exhibit higher elasticity. Recommend time-based surge pricing for top-40 events.</span></div>`;
+}
+
+function p23aLoadBudget(){
+  const el=document.getElementById('p23a-budget-content');
+  if(!el||el.innerHTML) return;
+  const budget=[
+    {cat:'Cloudflare Workers',monthly:28000,used:21000,pct:75},
+    {cat:'SendGrid Email',monthly:12000,used:9400,pct:78},
+    {cat:'Razorpay API Fees',monthly:180000,used:142000,pct:79},
+    {cat:'AWS Data Transfer',monthly:42000,used:28000,pct:67},
+    {cat:'ML Inference',monthly:64000,used:38000,pct:59},
+    {cat:'Support Tools',monthly:18000,used:14000,pct:78},
+  ];
+  const total=budget.reduce((a,b)=>a+b.monthly,0);
+  const used=budget.reduce((a,b)=>a+b.used,0);
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
+      <div class="p23a-stat"><div class="val">₹${(total/1000).toFixed(0)}K</div><div class="lbl">Monthly Budget</div></div>
+      <div class="p23a-stat"><div class="val">₹${(used/1000).toFixed(0)}K</div><div class="lbl">Used (MTD)</div></div>
+      <div class="p23a-stat"><div class="val">${Math.round(used/total*100)}%</div><div class="lbl">Budget Utilisation</div></div>
+    </div>
+    ${budget.map(b=>`<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:.82rem;"><span>${b.cat}</span><span style="color:${b.pct>=90?'#ef4444':b.pct>=75?'#f59e0b':'#22c55e'};">₹${(b.used/1000).toFixed(0)}K / ₹${(b.monthly/1000).toFixed(0)}K</span></div>
+      <div class="p23a-progress"><div class="p23a-progress-fill" style="width:${b.pct}%;background:${b.pct>=90?'linear-gradient(90deg,#ef4444,#dc2626)':b.pct>=75?'linear-gradient(90deg,#f59e0b,#ea580c)':'linear-gradient(90deg,#22c55e,#0ea5e9)'};"></div></div>
+    </div>`).join('')}`;
+}
+</script>
+<!-- END PHASE 23 ADMIN PORTAL -->
 </body></html>

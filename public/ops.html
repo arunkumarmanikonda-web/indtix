@@ -1727,5 +1727,190 @@ document.addEventListener('DOMContentLoaded',()=>{
   <div id="p22-pipeline"><div style="text-align:center;padding:20px;color:#888">Loading pipeline health…</div></div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════
+     PHASE 23 — FINANCIAL & INFRA COMMAND
+     ═══════════════════════════════════════════════════════ -->
+<style>
+.p23ops{display:none;background:#080d1a;border:1px solid #22c55e;border-radius:14px;padding:18px;margin:12px;color:#e2e8f0;}
+.p23ops.show{display:block;}
+.p23ops h4{color:#4ade80;margin-bottom:12px;}
+.p23ops-btn{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;border-radius:7px;padding:6px 14px;cursor:pointer;font-size:.8rem;}
+.p23ops-btn.out{background:transparent;border:1px solid #22c55e;color:#4ade80;}
+.p23ops-card{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:9px;padding:10px;margin-bottom:8px;}
+.p23ops-tbl{width:100%;border-collapse:collapse;font-size:.78rem;}
+.p23ops-tbl th{background:rgba(34,197,94,.15);color:#4ade80;padding:6px 9px;text-align:left;}
+.p23ops-tbl td{padding:6px 9px;border-bottom:1px solid #0d2a1a;color:#e2e8f0;}
+.p23ops-badge{display:inline-block;background:#22c55e;color:#fff;border-radius:18px;padding:2px 9px;font-size:.7rem;}
+.p23ops-stat{text-align:center;background:rgba(34,197,94,.08);border-radius:8px;padding:9px;}
+.p23ops-stat .v{font-size:1.2rem;font-weight:700;color:#4ade80;}
+.p23ops-stat .l{font-size:.68rem;color:#94a3b8;}
+.p23ops-prog{background:#0d2a1a;border-radius:6px;height:7px;margin:5px 0;overflow:hidden;}
+.p23ops-prog-fill{background:linear-gradient(90deg,#22c55e,#06b6d4);height:100%;border-radius:6px;}
+</style>
+
+<script>
+function opsT23(msg){let t=document.getElementById('ops23-toast');if(!t){t=document.createElement('div');t.id='ops23-toast';t.style.cssText='position:fixed;top:20px;right:20px;background:#22c55e;color:#fff;padding:9px 18px;border-radius:10px;font-size:.82rem;z-index:9999;display:none;';document.body.appendChild(t);}t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
+function openOPS23(id){document.querySelectorAll('.p23ops').forEach(e=>e.classList.remove('show'));const el=document.getElementById('p23ops-'+id);if(el){el.classList.add('show');ops23Load(id);}}
+function ops23Load(id){
+  const map={'unit-economics':ops23UnitEcon,'infra-spend':ops23InfraSpend,'tax-dashboard':ops23TaxDash,'partner-health':ops23PartnerHealth,'release-tracker':ops23ReleaseTkr,'capacity-plan':ops23CapacityPlan,'security-ops':ops23SecurityOps};
+  if(map[id]) map[id]();
+}
+</script>
+
+<script>
+(function(){
+  const wrap=document.querySelector('.sidebar, nav, .ops-nav');
+  const btns=[['💹','Unit Economics','openOPS23("unit-economics")'],['🖥️','Infra Spend','openOPS23("infra-spend")'],['🧾','Tax Dashboard','openOPS23("tax-dashboard")'],['🤝','Partner Health','openOPS23("partner-health")'],['🚀','Release Tracker','openOPS23("release-tracker")'],['📐','Capacity Plan','openOPS23("capacity-plan")'],['🔐','Security Ops','openOPS23("security-ops")']];
+  if(wrap){btns.forEach(([i,l,f])=>{const b=document.createElement('button');b.style.cssText='display:block;width:100%;text-align:left;padding:7px 10px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:7px;color:#4ade80;cursor:pointer;font-size:.79rem;margin-bottom:3px;';b.innerHTML=i+' '+l;b.onclick=new Function(f);wrap.appendChild(b);});}
+})();
+</script>
+
+<div id="p23ops-unit-economics" class="p23ops"><h4>💹 Unit Economics</h4><div id="p23ops-ue-content"></div></div>
+<div id="p23ops-infra-spend" class="p23ops"><h4>🖥️ Infra Spend Monitor</h4><div id="p23ops-is-content"></div></div>
+<div id="p23ops-tax-dashboard" class="p23ops"><h4>🧾 Tax & Compliance Dashboard</h4><div id="p23ops-td-content"></div></div>
+<div id="p23ops-partner-health" class="p23ops"><h4>🤝 Partner Health Matrix</h4><div id="p23ops-ph-content"></div></div>
+<div id="p23ops-release-tracker" class="p23ops"><h4>🚀 Release Tracker</h4><div id="p23ops-rt-content"></div></div>
+<div id="p23ops-capacity-plan" class="p23ops"><h4>📐 Capacity Planning</h4><div id="p23ops-cp-content"></div></div>
+<div id="p23ops-security-ops" class="p23ops"><h4>🔐 Security Ops Centre</h4><div id="p23ops-so-content"></div></div>
+
+<script>
+function ops23UnitEcon(){
+  const el=document.getElementById('p23ops-ue-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;">
+      <div class="p23ops-stat"><div class="v">₹142</div><div class="l">CAC</div></div>
+      <div class="p23ops-stat"><div class="v">₹2,840</div><div class="l">LTV</div></div>
+      <div class="p23ops-stat"><div class="v">20x</div><div class="l">LTV:CAC</div></div>
+      <div class="p23ops-stat"><div class="v">₹4.2</div><div class="l">ARPU (monthly)</div></div>
+    </div>
+    <div class="p23ops-card"><strong>Per-Booking Unit Economics</strong>
+      <table class="p23ops-tbl" style="margin-top:8px;">
+        <tr><th>Metric</th><th>Value</th><th>vs Last Month</th></tr>
+        <tr><td>Avg Booking Value</td><td>₹2,480</td><td style="color:#22c55e;">+8.2%</td></tr>
+        <tr><td>Platform Fee (net)</td><td>₹104</td><td style="color:#22c55e;">+4.1%</td></tr>
+        <tr><td>Payment Processing Cost</td><td>₹34</td><td style="color:#f59e0b;">+2.1%</td></tr>
+        <tr><td>Support Cost/Booking</td><td>₹8</td><td style="color:#22c55e;">-12%</td></tr>
+        <tr><td><strong>Gross Profit/Booking</strong></td><td><strong>₹62</strong></td><td style="color:#22c55e;">+18%</td></tr>
+      </table>
+    </div>`;
+}
+
+function ops23InfraSpend(){
+  const el=document.getElementById('p23ops-is-content');
+  if(!el||el.innerHTML) return;
+  const items=[
+    {svc:'Cloudflare Workers',budget:28000,spent:21400,pct:76},
+    {svc:'D1 Database',budget:8000,spent:4200,pct:53},
+    {svc:'R2 Object Storage',budget:12000,spent:6800,pct:57},
+    {svc:'KV Namespace',budget:4000,spent:2100,pct:53},
+    {svc:'SendGrid',budget:12000,spent:9400,pct:78},
+    {svc:'Razorpay',budget:180000,spent:142000,pct:79},
+  ];
+  el.innerHTML=items.map(i=>`<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:.82rem;"><span>${i.svc}</span><span>₹${(i.spent/1000).toFixed(1)}K / ₹${(i.budget/1000).toFixed(0)}K</span></div>
+    <div class="p23ops-prog"><div class="p23ops-prog-fill" style="width:${i.pct}%;background:${i.pct>=90?'linear-gradient(90deg,#ef4444,#dc2626)':i.pct>=75?'linear-gradient(90deg,#f59e0b,#ea580c)':'linear-gradient(90deg,#22c55e,#0ea5e9)'};"></div></div>
+  </div>`).join('') + `<button class="p23ops-btn" onclick="opsT23('📥 Infra cost report exported!')">Export Report</button>`;
+}
+
+function ops23TaxDash(){
+  const el=document.getElementById('p23ops-td-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;">
+      <div class="p23ops-stat"><div class="v">₹4.2Cr</div><div class="l">GST Collected</div></div>
+      <div class="p23ops-stat"><div class="v">₹1.8Cr</div><div class="l">TDS Deducted</div></div>
+      <div class="p23ops-stat"><div class="v">100%</div><div class="l">Compliance Score</div></div>
+    </div>
+    <div class="p23ops-card"><strong>GST Breakdown — FY 2025-26</strong>
+      <table class="p23ops-tbl" style="margin-top:8px;">
+        <tr><th>Quarter</th><th>CGST</th><th>SGST</th><th>IGST</th><th>Total</th><th>Filed</th></tr>
+        <tr><td>Q3 (Oct-Dec)</td><td>₹84L</td><td>₹84L</td><td>₹42L</td><td>₹2.1Cr</td><td><span class="p23ops-badge">✓ Filed</span></td></tr>
+        <tr><td>Q4 (Jan-Mar)</td><td>₹84L</td><td>₹84L</td><td>₹48L</td><td>₹2.16Cr</td><td><span class="p23ops-badge" style="background:#f59e0b;">Pending</span></td></tr>
+      </table>
+    </div>
+    <button class="p23ops-btn" style="margin-top:10px;" onclick="opsT23('📋 Tax report downloaded!')">Download GSTR-1</button>`;
+}
+
+function ops23PartnerHealth(){
+  const el=document.getElementById('p23ops-ph-content');
+  if(!el||el.innerHTML) return;
+  const partners=[
+    {name:'Razorpay',type:'Payment Gateway',uptime:99.94,latency:142,incidents:0,score:98},
+    {name:'SendGrid',type:'Email',uptime:99.82,latency:280,incidents:1,score:94},
+    {name:'FCM / OneSignal',type:'Push Notifs',uptime:99.91,latency:89,incidents:0,score:97},
+    {name:'AWS S3',type:'File Storage',uptime:100,latency:48,incidents:0,score:100},
+    {name:'Cloudflare CDN',type:'CDN',uptime:100,latency:12,incidents:0,score:100},
+    {name:'Twilio',type:'SMS',uptime:99.64,latency:320,incidents:2,score:88},
+  ];
+  el.innerHTML=`<table class="p23ops-tbl">
+    <tr><th>Partner</th><th>Type</th><th>Uptime</th><th>Latency</th><th>Incidents</th><th>Score</th></tr>
+    ${partners.map(p=>`<tr>
+      <td><strong>${p.name}</strong></td>
+      <td><span class="p23ops-badge" style="background:#334155;color:#94a3b8;">${p.type}</span></td>
+      <td style="color:${p.uptime>=99.9?'#22c55e':'#f59e0b'};">${p.uptime}%</td>
+      <td>${p.latency}ms</td>
+      <td>${p.incidents}</td>
+      <td style="font-weight:700;color:${p.score>=95?'#22c55e':p.score>=85?'#f59e0b':'#ef4444'};">${p.score}/100</td>
+    </tr>`).join('')}
+  </table>`;
+}
+
+function ops23ReleaseTkr(){
+  const el=document.getElementById('p23ops-rt-content');
+  if(!el||el.innerHTML) return;
+  const releases=[
+    {version:'v22.0.0',date:'Mar 9',features:85,status:'live',rollback:'—'},
+    {version:'v22.1.0',date:'Mar 18',features:12,status:'staging',rollback:'v22.0.0'},
+    {version:'v23.0.0',date:'Mar 28',features:90,status:'dev',rollback:'v22.0.0'},
+  ];
+  el.innerHTML=`<table class="p23ops-tbl" style="margin-bottom:12px;">
+    <tr><th>Version</th><th>Release Date</th><th>Features</th><th>Status</th><th>Rollback</th><th>Action</th></tr>
+    ${releases.map(r=>`<tr>
+      <td><strong>${r.version}</strong></td>
+      <td>${r.date}</td><td>${r.features}</td>
+      <td><span class="p23ops-badge" style="background:${r.status==='live'?'#22c55e':r.status==='staging'?'#f59e0b':'#6366f1'};">${r.status}</span></td>
+      <td>${r.rollback}</td>
+      <td>${r.status==='staging'?`<button class="p23ops-btn" style="padding:3px 8px;font-size:.72rem;" onclick="opsT23('🚀 v22.1.0 promoted to prod!')">Promote</button>`:'—'}</td>
+    </tr>`).join('')}
+  </table>`;
+}
+
+function ops23CapacityPlan(){
+  const el=document.getElementById('p23ops-cp-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div class="p23ops-card"><strong>Traffic Forecast — Next 30 Days</strong>
+      <table class="p23ops-tbl" style="margin-top:8px;">
+        <tr><th>Event</th><th>Exp Traffic</th><th>Peak RPS</th><th>Current Capacity</th><th>Status</th></tr>
+        <tr><td>Sunburn Arena (Mar 21)</td><td>1.2M req/hr</td><td>340</td><td>800 RPS</td><td><span class="p23ops-badge">✓ Ready</span></td></tr>
+        <tr><td>Diljit Live (Apr 12)</td><td>2.8M req/hr</td><td>780</td><td>800 RPS</td><td><span class="p23ops-badge" style="background:#f59e0b;">⚠ Scale Up</span></td></tr>
+        <tr><td>NH7 Weekender (Apr 5)</td><td>0.9M req/hr</td><td>250</td><td>800 RPS</td><td><span class="p23ops-badge">✓ Ready</span></td></tr>
+      </table>
+    </div>
+    <button class="p23ops-btn" onclick="opsT23('⚡ Cloudflare Workers auto-scaled for Diljit Live!')">Scale for Diljit Live</button>`;
+}
+
+function ops23SecurityOps(){
+  const el=document.getElementById('p23ops-so-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;">
+      <div class="p23ops-stat"><div class="v" style="color:#22c55e;">A+</div><div class="l">SSL Grade</div></div>
+      <div class="p23ops-stat"><div class="v">2,840</div><div class="l">Threats Blocked Today</div></div>
+      <div class="p23ops-stat"><div class="v">0</div><div class="l">Active Breaches</div></div>
+      <div class="p23ops-stat"><div class="v">142</div><div class="l">IPs Blocked</div></div>
+    </div>
+    <div class="p23ops-card"><strong>Recent Security Events</strong>
+      <table class="p23ops-tbl" style="margin-top:8px;">
+        <tr><th>Time</th><th>Event</th><th>Severity</th><th>Action</th></tr>
+        <tr><td>19:42</td><td>DDoS probe from AS12345</td><td><span class="p23ops-badge" style="background:#f59e0b;">Medium</span></td><td>Rate-limited</td></tr>
+        <tr><td>18:21</td><td>SQL injection attempt /api/events</td><td><span class="p23ops-badge" style="background:#ef4444;">High</span></td><td>Blocked + alerted</td></tr>
+        <tr><td>17:05</td><td>Credential stuffing — 142 attempts</td><td><span class="p23ops-badge" style="background:#ef4444;">High</span></td><td>All blocked, IPs banned</td></tr>
+      </table>
+    </div>
+    <button class="p23ops-btn out" onclick="opsT23('🔐 Security audit report generated!')">Generate Audit Report</button>`;
+}
+</script>
+<!-- END PHASE 23 OPS PORTAL -->
 </body>
 </html>

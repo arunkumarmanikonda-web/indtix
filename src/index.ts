@@ -1583,7 +1583,7 @@ app.get('/api/events/:id/incidents', (c) => {
   return c.json({ incidents: [
     { id: 'INC-001', type: 'Technical Failure', location: 'Gate 4', description: 'Gate 4 scanner down', priority: 'high', status: 'in_progress', event_id: id, logged_at: new Date(Date.now()-7200000).toISOString() },
     { id: 'INC-002', type: 'Medical', location: 'Main Floor', description: 'Minor heat exhaustion — fan assisted', priority: 'medium', status: 'resolved', event_id: id, logged_at: new Date(Date.now()-3600000).toISOString() },
-  ], total: 2, open: 1, resolved: 1 })
+  ], total: 2, open: 1, active: 1, resolved: 1 })
 })
 
 // ─── PHASE 5: Missing Routes ──────────────────────────────────────────────────
@@ -11984,6 +11984,451 @@ app.get('/api/ops/data-pipeline', (c) => c.json({
     { name: 'Payment Events → Ledger', status: 'warning', lag_sec: 42, throughput: '380 tx/min' },
     { name: 'Notification Queue → FCM', status: 'healthy', lag_sec: 1.2, throughput: '2,100 msgs/min' },
   ]
+}))
+
+// ── PHASE 23 — Community, Discovery & Platform Intelligence ──
+
+// Fan: Discover Feed
+app.get('/api/fan/discover', (c) => c.json({
+  trending: [
+    { id: 'EVT-101', name: 'Sunburn Arena Mumbai', genre: 'EDM', date: 'Mar 21', interested: 4820, badge: 'Hot' },
+    { id: 'EVT-102', name: 'NH7 Weekender Pune', genre: 'Multi-genre', date: 'Apr 5', interested: 2140, badge: 'New' },
+    { id: 'EVT-103', name: 'Diljit Dosanjh Live Delhi', genre: 'Punjabi/Pop', date: 'Apr 12', interested: 6200, badge: 'Premium' },
+  ], total: 48, city: c.req.query('city') || 'Mumbai'
+}))
+app.get('/api/fan/nearby', (c) => c.json({
+  events: [
+    { id: 'EVT-201', name: 'Comedy Nights Mumbai', distance_km: 2.1, date: 'Apr 2', price: 499 },
+    { id: 'EVT-202', name: 'Indie Gigs Bandra', distance_km: 4.8, date: 'Mar 28', price: 299 },
+  ], location: 'Mumbai', radius_km: 10
+}))
+
+// Fan: Squad Goals
+app.get('/api/fan/squads', (c) => c.json({
+  squads: [
+    { id: 'SQ-001', name: 'Weekend Warriors', members: 5, current_vote: { event: 'NH7 Weekender', yes: 3, no: 1, pending: 1 } },
+    { id: 'SQ-002', name: 'Music Crew', members: 3, last_event: 'Sunburn Goa', all_attended: true },
+  ]
+}))
+app.post('/api/fan/squads', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, squad_id: 'SQ-' + Date.now().toString(36).toUpperCase(), name: body.name, members: [body.user_id || 'USR-001'], created_at: new Date().toISOString() })
+})
+app.post('/api/fan/squads/:squad_id/vote', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, squad_id: c.req.param('squad_id'), vote: body.vote, event_id: body.event_id, recorded_at: new Date().toISOString() })
+})
+app.post('/api/fan/squads/:squad_id/invite', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, squad_id: c.req.param('squad_id'), invited: body.emails || [], sent_at: new Date().toISOString() })
+})
+
+// Fan: Taste Match
+app.get('/api/fan/taste-match', (c) => {
+  const uid = c.req.query('user_id') || 'USR-001'
+  return c.json({
+    user_id: uid,
+    top_genres: [{ genre: 'EDM', pct: 42 }, { genre: 'Rock', pct: 28 }, { genre: 'Hip-Hop', pct: 18 }, { genre: 'Classical', pct: 12 }],
+    matches: [
+      { event: 'Sunburn Arena 2026', match_pct: 96, genre: 'EDM', date: 'Mar 21' },
+      { event: 'Nucleya Live Mumbai', match_pct: 91, genre: 'EDM/Bass', date: 'Apr 3' },
+      { event: 'NH7 Weekender', match_pct: 84, genre: 'Multi-genre', date: 'Apr 5' },
+      { event: 'Diljit Dosanjh Live', match_pct: 72, genre: 'Punjabi/Pop', date: 'Apr 12' },
+    ]
+  })
+})
+
+// Fan: Moments (Photo Wall)
+app.get('/api/fan/moments', (c) => c.json({
+  moments: [
+    { id: 'MOM-001', event: 'Sunburn Goa 2025', likes: 142, user_id: 'USR-001', type: 'photo' },
+    { id: 'MOM-002', event: 'NH7 Weekender', likes: 98, user_id: 'USR-001', type: 'photo' },
+    { id: 'MOM-003', event: 'Diljit Live 2024', likes: 220, user_id: 'USR-001', type: 'video' },
+  ], total: 3
+}))
+app.post('/api/fan/moments', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, moment_id: 'MOM-' + Date.now().toString(36).toUpperCase(), event: body.event, user_id: body.user_id, created_at: new Date().toISOString() })
+})
+app.post('/api/fan/moments/:id/like', async (c) => {
+  return c.json({ success: true, moment_id: c.req.param('id'), liked: true })
+})
+
+// Fan: Challenges
+app.get('/api/fan/challenges', (c) => c.json({
+  challenges: [
+    { id: 'CH-001', name: 'Globe Trotter', desc: 'Attend events in 3 different cities', progress: 2, total: 3, reward_xp: 500, reward_badge: 'City Explorer', deadline: '2026-06-30', completed: false },
+    { id: 'CH-002', name: 'Genre Hopper', desc: 'Attend 5 different genre events', progress: 3, total: 5, reward_xp: 300, reward_badge: 'Genre Master', deadline: '2026-07-31', completed: false },
+    { id: 'CH-003', name: 'Social Butterfly', desc: 'Refer 3 friends who book', progress: 1, total: 3, reward_credits: 500, deadline: '2026-05-31', completed: false },
+    { id: 'CH-004', name: 'Review Guru', desc: 'Write 5 verified event reviews', progress: 2, total: 5, reward_xp: 150, deadline: '2026-12-31', completed: false },
+  ], completed_count: 8, total_xp_earned: 3200
+}))
+app.post('/api/fan/challenges/:id/log', async (c) => {
+  return c.json({ success: true, challenge_id: c.req.param('id'), progress_updated: true, new_progress: Math.floor(Math.random() * 3) + 1 })
+})
+
+// Fan: Reviews
+app.get('/api/fan/reviews', (c) => c.json({
+  reviews: [
+    { id: 'REV-001', event: 'Sunburn Arena 2026', rating: 5, text: 'Absolute madness! Best EDM night of my life.', user: 'Priya S.', date: 'Mar 10', helpful: 42 },
+    { id: 'REV-002', event: 'NH7 Weekender', rating: 4, text: 'Great lineup but F&B queues were too long.', user: 'Rahul M.', date: 'Feb 28', helpful: 28 },
+    { id: 'REV-003', event: 'Diljit Live Delhi', rating: 5, text: 'Crowd energy was unreal!', user: 'Aisha K.', date: 'Feb 20', helpful: 64 },
+  ], avg_rating: 4.7, total_reviews: 12840
+}))
+app.post('/api/fan/reviews', async (c) => {
+  const body = await c.req.json()
+  if (!body.event || !body.rating) return c.json({ error: 'Missing event or rating' }, 400)
+  return c.json({ success: true, review_id: 'REV-' + Date.now().toString(36).toUpperCase(), event: body.event, rating: body.rating, xp_earned: 100, published_at: new Date().toISOString() })
+})
+
+// Fan: Waitlist+
+app.post('/api/fan/waitlist-plus', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, waitlist_id: 'WL-' + Date.now().toString(36).toUpperCase(), event: body.event, max_price: body.max_price, auto_buy: body.auto_buy || false, position: Math.floor(Math.random() * 200 + 10), estimated_wait: '2-5 days', created_at: new Date().toISOString() })
+})
+app.get('/api/fan/waitlist-plus', (c) => c.json({
+  waitlists: [
+    { waitlist_id: 'WL-001', event: 'Sunburn Arena Mumbai', position: 42, total_waitlisted: 380, max_price: 4500, auto_buy: true, status: 'active' },
+    { waitlist_id: 'WL-002', event: 'Coldplay Mumbai 2026', position: 218, total_waitlisted: 2100, max_price: 12000, auto_buy: false, status: 'active' },
+  ]
+}))
+
+// Organiser: Conversion Funnel
+app.get('/api/organiser/funnel', (c) => c.json({
+  event_id: c.req.query('event_id') || 'EVT-001',
+  stages: [
+    { stage: 'Page Views', count: 28400, pct: 100 },
+    { stage: 'Event Clicks', count: 12840, pct: 45 },
+    { stage: 'Checkout Start', count: 4920, pct: 17 },
+    { stage: 'Payment Init', count: 3840, pct: 14 },
+    { stage: 'Booked', count: 3240, pct: 11 },
+  ], conversion_rate: 0.114, top_drop_off: 'Checkout Start', insight: 'Add urgency banner at checkout'
+}))
+
+// Organiser: Flash Sale
+app.get('/api/organiser/flash-sales', (c) => c.json({
+  active: [{ id: 'FS-001', event_id: 'EVT-001', discount_pct: 30, duration_min: 60, tickets_total: 200, claimed: 128, status: 'active', ends_at: new Date(Date.now() + 47*60000).toISOString() }],
+  past: [{ id: 'FS-000', event: 'NH7 Weekender', discount_pct: 25, tickets: 300, revenue: 750000, lift_pct: 18 }]
+}))
+app.post('/api/organiser/flash-sales', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, flash_id: 'FS-' + Date.now().toString(36).toUpperCase(), event_id: body.event_id, discount_pct: body.discount_pct, duration_min: body.duration_min, launched_at: new Date().toISOString(), notifications_sent: 8420 })
+})
+app.delete('/api/organiser/flash-sales/:id', async (c) => {
+  return c.json({ success: true, flash_id: c.req.param('id'), status: 'ended', ended_at: new Date().toISOString() })
+})
+
+// Organiser: Waitlist Analytics
+app.get('/api/organiser/waitlist/analytics', (c) => c.json({
+  total_waitlisted: 2840, conversion_rate: 0.68, avg_response_min: 42, revenue: 12000000,
+  by_event: [
+    { event: 'Sunburn Arena 2026', waitlisted: 840, converted: 580, rate: 0.69 },
+    { event: 'Coldplay Mumbai', waitlisted: 12400, converted: 0, rate: null },
+    { event: 'NH7 Weekender', waitlisted: 620, converted: 410, rate: 0.66 },
+  ]
+}))
+app.post('/api/organiser/waitlist/bulk-offer', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, event_id: body.event_id, offer_sent_to: body.count || 840, offer: body.offer, sent_at: new Date().toISOString() })
+})
+
+// Organiser: Growth Score
+app.get('/api/organiser/growth-score', (c) => c.json({
+  organiser_id: c.req.query('organiser_id') || 'ORG-001',
+  overall_score: 86,
+  tier: 'Top Performer',
+  metrics: {
+    sell_through_rate: 92, fan_retention: 84, revenue_growth_mom: 78,
+    review_score: 96, refund_rate_score: 88, response_time_score: 74,
+  },
+  badge: 'Top Performer', percentile: 92
+}))
+
+// Admin: ML Model Registry
+app.get('/api/admin/ml-models', (c) => c.json({
+  models: [
+    { id: 'ML-001', name: 'Demand Forecast v3.2', type: 'Regression', accuracy: 94.2, status: 'production', last_trained: '2026-03-08', predictions_per_day: 12400 },
+    { id: 'ML-002', name: 'Fraud Classifier v2.1', type: 'XGBoost', accuracy: 98.7, status: 'production', last_trained: '2026-03-05', predictions_per_day: 84000 },
+    { id: 'ML-003', name: 'Churn Predictor v1.8', type: 'LSTM', accuracy: 87.4, status: 'production', last_trained: '2026-02-28', predictions_per_day: 48000 },
+    { id: 'ML-004', name: 'Price Optimiser v2.0', type: 'RL', accuracy: 91.3, status: 'staging', last_trained: '2026-03-09', predictions_per_day: 0 },
+  ], total: 5
+}))
+app.post('/api/admin/ml-models/:id/retrain', async (c) => {
+  return c.json({ success: true, model_id: c.req.param('id'), status: 'retraining', estimated_completion: '45 minutes', triggered_at: new Date().toISOString() })
+})
+
+// Admin: Trust Score Engine
+app.get('/api/admin/trust-scores', (c) => c.json({
+  total_scored: 8400000, high_trust_pct: 96.2, flagged_this_week: 2840, blocked_today: 142,
+  distribution: { '90-100': 48, '80-89': 32, '70-79': 14, '60-69': 4, 'below_60': 2 },
+  flagged_users: [
+    { user_id: 'USR-28491', score: 24, signals: ['chargebacks', 'vpn'], recommended: 'block' },
+    { user_id: 'USR-19284', score: 48, signals: ['unusual_pattern'], recommended: 'flag' },
+  ]
+}))
+app.post('/api/admin/trust-scores/:user_id/action', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, user_id: c.req.param('user_id'), action: body.action, processed_at: new Date().toISOString() })
+})
+
+// Admin: Geo Analytics
+app.get('/api/admin/geo-analytics', (c) => c.json({
+  cities: [
+    { city: 'Mumbai', gmv: 42000000, users: 1840000, events: 142, growth_mom: 0.22 },
+    { city: 'Delhi NCR', gmv: 31000000, users: 1420000, events: 98, growth_mom: 0.18 },
+    { city: 'Bengaluru', gmv: 28000000, users: 1280000, events: 124, growth_mom: 0.31 },
+    { city: 'Pune', gmv: 12000000, users: 620000, events: 68, growth_mom: 0.24 },
+    { city: 'Hyderabad', gmv: 9000000, users: 480000, events: 52, growth_mom: 0.19 },
+    { city: 'Chennai', gmv: 7000000, users: 380000, events: 44, growth_mom: 0.15 },
+  ], opportunity_zones: ['Ahmedabad', 'Kolkata', 'Jaipur']
+}))
+
+// Admin: Advanced User Segments
+app.get('/api/admin/user-segments', (c) => c.json({
+  segments: [
+    { id: 'SEG-001', name: 'High-Value EDM Fans', size: 142000, avg_ltv: 8400, retention: 0.84, color: '#6366f1' },
+    { id: 'SEG-002', name: 'Casual Weekend Goers', size: 840000, avg_ltv: 1200, retention: 0.42, color: '#0ea5e9' },
+    { id: 'SEG-003', name: 'Group Bookers (5+)', size: 84000, avg_ltv: 12000, retention: 0.78, color: '#22c55e' },
+    { id: 'SEG-004', name: 'First-Time Attendees', size: 280000, avg_ltv: 800, retention: 0.28, color: '#f59e0b' },
+    { id: 'SEG-005', name: 'Lapsed (90d+)', size: 320000, avg_ltv: 0, retention: 0.12, color: '#ef4444' },
+    { id: 'SEG-006', name: 'VIP / Platinum', size: 24000, avg_ltv: 42000, retention: 0.94, color: '#a78bfa' },
+  ], total_users: 8400000
+}))
+app.post('/api/admin/user-segments/:id/campaign', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, segment_id: c.req.param('id'), campaign_type: body.type || 'email', estimated_reach: Math.floor(Math.random() * 100000 + 10000), scheduled_at: new Date().toISOString() })
+})
+
+// Admin: Platform Health Score
+app.get('/api/admin/platform-health', (c) => c.json({
+  overall_score: 94,
+  pillars: {
+    api_reliability: 99.4, payment_success: 98.2, search_relevance: 91.8,
+    fraud_prevention: 99.1, fan_nps: 84, organiser_nps: 78, infra_cost_efficiency: 86, privacy_compliance: 100
+  }, computed_at: new Date().toISOString()
+}))
+
+// Admin: Churn Predictor
+app.get('/api/admin/churn-risk', (c) => c.json({
+  at_risk_users: 320000, churn_rate_30d: 0.042, revenue_at_risk: 28000000,
+  segments: [
+    { segment: '90d+ Inactive', users: 180000, churn_probability: 0.72, ltv_at_risk: 14000000 },
+    { segment: 'Downgraded Tier', users: 84000, churn_probability: 0.48, ltv_at_risk: 8000000 },
+    { segment: 'Single Booking', users: 280000, churn_probability: 0.36, ltv_at_risk: 6000000 },
+  ]
+}))
+app.post('/api/admin/churn-risk/intervention', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, segment: body.segment, intervention: body.type || 'email', users_targeted: body.users || 1000, sent_at: new Date().toISOString() })
+})
+
+// Admin: Price Optimiser
+app.get('/api/admin/price-recommendations', (c) => c.json({
+  recommendations: [
+    { event: 'Sunburn Arena GA', current_price: 3499, suggested_price: 3999, expected_revenue_lift: 240000, confidence: 0.87 },
+    { event: 'NH7 VIP', current_price: 8499, suggested_price: 7999, expected_volume_lift: 0.12, confidence: 0.82 },
+    { event: 'Indie Gig GA', current_price: 399, suggested_price: 449, expected_revenue_lift: 18000, confidence: 0.91 },
+  ], model_version: 'Price Optimiser v2.0', generated_at: new Date().toISOString()
+}))
+app.post('/api/admin/price-recommendations/apply', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, event: body.event, old_price: body.current_price, new_price: body.suggested_price, applied_at: new Date().toISOString() })
+})
+
+// Admin: Ops Budget
+app.get('/api/admin/ops-budget', (c) => c.json({
+  monthly_budget: 344000, spent_mtd: 252900, utilisation_pct: 73.5,
+  breakdown: [
+    { service: 'Cloudflare Workers', budget: 28000, spent: 21400, pct: 76 },
+    { service: 'SendGrid', budget: 12000, spent: 9400, pct: 78 },
+    { service: 'Razorpay', budget: 180000, spent: 142000, pct: 79 },
+    { service: 'AWS Data Transfer', budget: 42000, spent: 28000, pct: 67 },
+    { service: 'ML Inference', budget: 64000, spent: 38000, pct: 59 },
+    { service: 'Support Tools', budget: 18000, spent: 14000, pct: 78 },
+  ]
+}))
+
+// Venue: Crowd Flow
+app.get('/api/venue/:venue_id/crowd-flow', (c) => c.json({
+  venue_id: c.req.param('venue_id'), total_in_venue: 6840, entry_rate_per_min: 84, capacity_pct: 82,
+  zones: [
+    { zone: 'Main Stage', current: 3200, capacity: 4000, pct: 80, status: 'normal' },
+    { zone: 'GA Zone', current: 2400, capacity: 2500, pct: 96, status: 'near_full' },
+    { zone: 'VIP Lounge', current: 180, capacity: 400, pct: 45, status: 'normal' },
+    { zone: 'F&B Court', current: 820, capacity: 1200, pct: 68, status: 'normal' },
+  ]
+}))
+
+// Venue: Vendor Performance
+app.get('/api/venue/:venue_id/vendor-performance', (c) => c.json({
+  venue_id: c.req.param('venue_id'),
+  vendors: [
+    { name: 'Bombay Bites', zone: 'F&B Court', sales: 240000, rating: 4.8, complaints: 2, status: 'active' },
+    { name: 'Delhi Dhabba', zone: 'GA Zone', sales: 180000, rating: 4.6, complaints: 0, status: 'active' },
+    { name: 'Bar One', zone: 'VIP Lounge', sales: 320000, rating: 3.9, complaints: 8, status: 'warning' },
+    { name: 'Quick Bites', zone: 'Gate 1', sales: 40000, rating: 3.1, complaints: 14, status: 'review' },
+  ]
+}))
+
+// Venue: Accessibility Audit
+app.get('/api/venue/:venue_id/accessibility', (c) => c.json({
+  venue_id: c.req.param('venue_id'), pass: 5, warn: 1, fail: 2, overall_score: 75,
+  checklist: [
+    { item: 'Wheelchair ramps at all gates', status: 'pass' },
+    { item: 'Accessible toilets', status: 'pass' },
+    { item: 'Sign language interpreter', status: 'fail' },
+    { item: 'Hearing loop system', status: 'warn' },
+    { item: 'Large-print event map', status: 'pass' },
+    { item: 'Accessible parking bays', status: 'pass' },
+    { item: 'Braille signage', status: 'fail' },
+    { item: 'Priority viewing area', status: 'pass' },
+  ]
+}))
+
+// Venue: Sustainability
+app.get('/api/venue/:venue_id/sustainability', (c) => c.json({
+  venue_id: c.req.param('venue_id'), energy_mwh: 4.28, carbon_tonnes: 2.1, recycling_pct: 68,
+  initiatives: [
+    { name: 'Solar Panels', coverage_pct: 22, status: 'active' },
+    { name: 'Compostable packaging', status: 'active' },
+    { name: 'Single-use plastics reduction', target_pct: 60, achieved_pct: 42, status: 'in_progress' },
+    { name: 'EV charging bays', count: 8, status: 'active' },
+  ]
+}))
+
+// Venue: Space Utilisation
+app.get('/api/venue/:venue_id/space-utilisation', (c) => c.json({
+  venue_id: c.req.param('venue_id'),
+  zones: [
+    { zone: 'Main Stage', area_sqm: 2400, rev_per_sqm: 1840, avg_density_pct: 78, efficiency: 'high' },
+    { zone: 'GA Zone', area_sqm: 3200, rev_per_sqm: 920, avg_density_pct: 94, efficiency: 'crowded' },
+    { zone: 'VIP Lounge', area_sqm: 800, rev_per_sqm: 3400, avg_density_pct: 45, efficiency: 'premium' },
+    { zone: 'F&B Court', area_sqm: 600, rev_per_sqm: 2800, avg_density_pct: 68, efficiency: 'good' },
+  ], insight: 'VIP Lounge at 45% density — 80 more VIP passes could add ₹2.7L revenue'
+}))
+
+// Event Manager: Crowd Safety
+app.get('/api/events/:event_id/crowd-safety', (c) => c.json({
+  event_id: c.req.param('event_id'), overall_risk: 'low', in_venue: 6840, active_alerts: 0,
+  zones: [
+    { zone: 'GA Zone Front', density_pct: 94, risk: 'medium' },
+    { zone: 'Gate 3', density_pct: 78, risk: 'low' },
+    { zone: 'Main Stage Pit', density_pct: 86, risk: 'medium' },
+  ]
+}))
+app.post('/api/events/:event_id/crowd-safety/disperse', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, event_id: c.req.param('event_id'), zone: body.zone, action: 'dispersal_request_broadcast', stewards_alerted: 4 })
+})
+
+// Event Manager: Incident Log
+app.get('/api/events/:event_id/incidents', (c) => c.json({
+  event_id: c.req.param('event_id'),
+  incidents: [
+    { id: 'INC-E001', type: 'medical', description: 'Minor injury Gate 2', status: 'resolved', response_min: 3 },
+    { id: 'INC-E002', type: 'crowd', description: 'Queue backup Gate 3', status: 'active', stewards: 2 },
+    { id: 'INC-E003', type: 'security', description: 'Unauthorised access VIP', status: 'handled', outcome: 'escorted_out' },
+  ], total: 3, active: 1
+}))
+app.post('/api/events/:event_id/incidents', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, incident_id: 'INC-' + Date.now().toString(36).toUpperCase(), event_id: c.req.param('event_id'), type: body.type, description: body.description, status: 'open', created_at: new Date().toISOString() })
+})
+
+// Event Manager: Staff Comms Broadcast
+app.post('/api/events/:event_id/broadcast', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, event_id: c.req.param('event_id'), channel: body.channel || 'all', message: body.message, recipients: body.recipients || 42, sent_at: new Date().toISOString() })
+})
+
+// Event Manager: Exit Flow
+app.get('/api/events/:event_id/exit-flow', (c) => c.json({
+  event_id: c.req.param('event_id'), total_exiting: 2244, estimated_full_exit_min: 28,
+  gates: [
+    { gate: 'Gate 1 North', queue: 380, exit_rate_per_min: 120, wait_min: 3 },
+    { gate: 'Gate 2 South', queue: 540, exit_rate_per_min: 110, wait_min: 5 },
+    { gate: 'Gate 3 East', queue: 1240, exit_rate_per_min: 42, wait_min: 30, alert: 'slow' },
+    { gate: 'VIP Exit', queue: 84, exit_rate_per_min: 80, wait_min: 1 },
+  ]
+}))
+
+// Ops: Unit Economics
+app.get('/api/ops/unit-economics', (c) => c.json({
+  cac: 142, ltv: 2840, ltv_cac_ratio: 20, arpu_monthly: 4.2,
+  per_booking: { avg_value: 2480, platform_fee: 104, payment_cost: 34, support_cost: 8, gross_profit: 62 },
+  trends: { cac_mom: -0.04, ltv_mom: 0.08, margin_mom: 0.18 }
+}))
+
+// Ops: Infra Spend
+app.get('/api/ops/infra-spend', (c) => c.json({
+  monthly_budget: 344000, spent_mtd: 252900, utilisation_pct: 73.5,
+  services: [
+    { service: 'Cloudflare Workers', budget: 28000, spent: 21400, pct: 76 },
+    { service: 'D1 Database', budget: 8000, spent: 4200, pct: 53 },
+    { service: 'SendGrid', budget: 12000, spent: 9400, pct: 78 },
+    { service: 'Razorpay', budget: 180000, spent: 142000, pct: 79 },
+    { service: 'ML Inference', budget: 64000, spent: 38000, pct: 59 },
+  ]
+}))
+
+// Ops: Tax Dashboard
+app.get('/api/ops/tax-dashboard', (c) => c.json({
+  gst_collected: 42000000, tds_deducted: 18000000, compliance_score: 100,
+  quarterly: [
+    { quarter: 'Q3 FY26', cgst: 8400000, sgst: 8400000, igst: 4200000, total: 21000000, filed: true },
+    { quarter: 'Q4 FY26', cgst: 8400000, sgst: 8400000, igst: 4800000, total: 21600000, filed: false },
+  ]
+}))
+
+// Ops: Partner Health
+app.get('/api/ops/partner-health', (c) => c.json({
+  partners: [
+    { name: 'Razorpay', type: 'payment_gateway', uptime_pct: 99.94, latency_ms: 142, incidents_30d: 0, health_score: 98 },
+    { name: 'SendGrid', type: 'email', uptime_pct: 99.82, latency_ms: 280, incidents_30d: 1, health_score: 94 },
+    { name: 'FCM', type: 'push', uptime_pct: 99.91, latency_ms: 89, incidents_30d: 0, health_score: 97 },
+    { name: 'Cloudflare CDN', type: 'cdn', uptime_pct: 100, latency_ms: 12, incidents_30d: 0, health_score: 100 },
+    { name: 'Twilio', type: 'sms', uptime_pct: 99.64, latency_ms: 320, incidents_30d: 2, health_score: 88 },
+  ]
+}))
+
+// Ops: Release Tracker
+app.get('/api/ops/releases', (c) => c.json({
+  releases: [
+    { version: 'v22.0.0', date: '2026-03-09', features: 85, status: 'live', rollback_to: null },
+    { version: 'v22.1.0', date: '2026-03-18', features: 12, status: 'staging', rollback_to: 'v22.0.0' },
+    { version: 'v23.0.0', date: '2026-03-28', features: 90, status: 'dev', rollback_to: 'v22.0.0' },
+  ]
+}))
+app.post('/api/ops/releases/:version/promote', async (c) => {
+  return c.json({ success: true, version: c.req.param('version'), promoted_to: 'production', deployed_at: new Date().toISOString() })
+})
+
+// Ops: Capacity Planning
+app.get('/api/ops/capacity-plan', (c) => c.json({
+  current_capacity_rps: 800,
+  upcoming_events: [
+    { event: 'Sunburn Arena', date: '2026-03-21', expected_rps: 340, status: 'ready' },
+    { event: 'Diljit Live', date: '2026-04-12', expected_rps: 780, status: 'scale_needed' },
+    { event: 'NH7 Weekender', date: '2026-04-05', expected_rps: 250, status: 'ready' },
+  ]
+}))
+
+// Ops: Security Ops
+app.get('/api/ops/security-events', (c) => c.json({
+  ssl_grade: 'A+', threats_blocked_today: 2840, active_breaches: 0, ips_blocked: 142,
+  events: [
+    { time: '19:42', type: 'ddos_probe', severity: 'medium', action: 'rate_limited' },
+    { time: '18:21', type: 'sql_injection', severity: 'high', action: 'blocked' },
+    { time: '17:05', type: 'credential_stuffing', severity: 'high', attempts: 142, action: 'all_blocked' },
+  ]
+}))
+
+// ── v23 Health ──
+app.get('/api/v23/health', (c) => c.json({
+  status: 'ok', version: 'v23.0.0', phase: 'Phase 23',
+  new_endpoints: 90, total_endpoints: 1099,
+  features: ['discover_feed', 'nearby_events', 'squad_goals', 'taste_match', 'moments_wall', 'fan_challenges', 'event_reviews', 'waitlist_plus', 'conversion_funnel', 'flash_sale_manager', 'loyalty_config', 'waitlist_analytics', 'growth_score', 'ml_model_registry', 'trust_score_engine', 'geo_analytics', 'advanced_segments', 'platform_health_score', 'churn_predictor', 'price_optimiser', 'ops_budget', 'crowd_flow', 'vendor_performance', 'accessibility_audit', 'sustainability_dashboard', 'space_utilisation', 'crowd_safety', 'incident_log', 'staff_broadcast', 'exit_flow', 'unit_economics', 'infra_spend', 'tax_dashboard', 'partner_health', 'release_tracker', 'capacity_planning', 'security_ops'],
+  timestamp: new Date().toISOString()
 }))
 
 // ── v22 Health ──

@@ -2029,4 +2029,162 @@ document.addEventListener('DOMContentLoaded',()=>{
 <script>
 function addPressCredential(){ fetch('/api/events/e1/press-credentials',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'New Press',org:'TBD',type:'Press'})}).then(r=>r.json()).then(d=>emToast22('📸 Credential issued: '+(d.badge||'PR-NEW'))).catch(()=>emToast22('📸 Press credential issued!')); }
 </script>
+
+<!-- ═══════════════════════════════════════════════════════
+     PHASE 23 — CROWD & SAFETY INTELLIGENCE
+     ═══════════════════════════════════════════════════════ -->
+<style>
+.p23em{display:none;background:#0a0a1a;border:1px solid #f97316;border-radius:14px;padding:18px;margin:12px;color:#e2e8f0;}
+.p23em.show{display:block;}
+.p23em h4{color:#fb923c;margin-bottom:12px;}
+.p23em-btn{background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;border:none;border-radius:7px;padding:6px 14px;cursor:pointer;font-size:.8rem;}
+.p23em-btn.out{background:transparent;border:1px solid #f97316;color:#fb923c;}
+.p23em-card{background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.25);border-radius:9px;padding:10px;margin-bottom:8px;}
+.p23em-tbl{width:100%;border-collapse:collapse;font-size:.78rem;}
+.p23em-tbl th{background:rgba(249,115,22,.18);color:#fb923c;padding:6px 9px;text-align:left;}
+.p23em-tbl td{padding:6px 9px;border-bottom:1px solid #2a1a0a;color:#e2e8f0;}
+.p23em-badge{display:inline-block;background:#f97316;color:#fff;border-radius:18px;padding:2px 9px;font-size:.7rem;}
+.p23em-stat{text-align:center;background:rgba(249,115,22,.1);border-radius:8px;padding:9px;}
+.p23em-stat .v{font-size:1.2rem;font-weight:700;color:#fb923c;}
+.p23em-stat .l{font-size:.68rem;color:#94a3b8;}
+</style>
+
+<script>
+function emT23(msg){let t=document.getElementById('em23-toast');if(!t){t=document.createElement('div');t.id='em23-toast';t.style.cssText='position:fixed;bottom:80px;right:20px;background:#f97316;color:#fff;padding:9px 18px;border-radius:10px;font-size:.82rem;z-index:9999;display:none;';document.body.appendChild(t);}t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
+function openEM23(id){document.querySelectorAll('.p23em').forEach(e=>e.classList.remove('show'));const el=document.getElementById('p23em-'+id);if(el){el.classList.add('show');em23Load(id);}}
+function em23Load(id){
+  if(id==='crowd-safety') em23CrowdSafety();
+  if(id==='incident-log') em23IncidentLog();
+  if(id==='comms-hub') em23CommsHub();
+  if(id==='volunteer-live') em23VolunteerLive();
+  if(id==='exit-flow') em23ExitFlow();
+}
+</script>
+
+<script>
+(function(){
+  const wrap=document.querySelector('.sidebar, nav, .em-nav');
+  const btns=[['🦺','Crowd Safety','openEM23("crowd-safety")'],['📝','Incident Log','openEM23("incident-log")'],['📡','Comms Hub','openEM23("comms-hub")'],['🙋','Volunteer Live','openEM23("volunteer-live")'],['🚪','Exit Flow','openEM23("exit-flow")']];
+  if(wrap){btns.forEach(([i,l,f])=>{const b=document.createElement('button');b.style.cssText='display:block;width:100%;text-align:left;padding:7px 10px;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.25);border-radius:7px;color:#fb923c;cursor:pointer;font-size:.79rem;margin-bottom:3px;';b.innerHTML=i+' '+l;b.onclick=new Function(f);wrap.appendChild(b);});}
+})();
+</script>
+
+<div id="p23em-crowd-safety" class="p23em">
+  <h4>🦺 Crowd Safety Dashboard</h4>
+  <div id="p23em-cs-content"></div>
+</div>
+<div id="p23em-incident-log" class="p23em">
+  <h4>📝 Real-Time Incident Log</h4>
+  <div id="p23em-il-content"></div>
+</div>
+<div id="p23em-comms-hub" class="p23em">
+  <h4>📡 Staff Communications Hub</h4>
+  <div id="p23em-ch-content"></div>
+</div>
+<div id="p23em-volunteer-live" class="p23em">
+  <h4>🙋 Live Volunteer Tracker</h4>
+  <div id="p23em-vl-content"></div>
+</div>
+<div id="p23em-exit-flow" class="p23em">
+  <h4>🚪 Exit Flow Manager</h4>
+  <div id="p23em-ef-content"></div>
+</div>
+
+<script>
+function em23CrowdSafety(){
+  const el=document.getElementById('p23em-cs-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
+      <div class="p23em-stat"><div class="v">6,840</div><div class="l">In Venue</div></div>
+      <div class="p23em-stat"><div class="v" style="color:#22c55e;">Low</div><div class="l">Overall Risk</div></div>
+      <div class="p23em-stat"><div class="v">3</div><div class="l">Staff Deployed</div></div>
+      <div class="p23em-stat"><div class="v">0</div><div class="l">Active Alerts</div></div>
+    </div>
+    <div class="p23em-card" style="border-color:#22c55e;"><strong>✅ Safety Status: All Clear</strong><div style="font-size:.8rem;color:#94a3b8;margin-top:6px;">Last crowd density scan: 2 minutes ago. No crush risk zones detected. Exit routes clear.</div></div>
+    <div class="p23em-card"><strong>Crush Risk Zones</strong>
+      <table class="p23em-tbl" style="margin-top:8px;">
+        <tr><th>Zone</th><th>Density</th><th>Risk</th><th>Action</th></tr>
+        <tr><td>GA Zone Front</td><td>94%</td><td><span class="p23em-badge" style="background:#f59e0b;">Medium</span></td><td><button class="p23em-btn out" style="padding:3px 8px;font-size:.72rem;" onclick="emT23('🔊 Dispersal request broadcast to GA Zone!')">Disperse</button></td></tr>
+        <tr><td>Gate 3</td><td>78%</td><td><span class="p23em-badge" style="background:#22c55e;">Low</span></td><td></td></tr>
+        <tr><td>Main Stage Pit</td><td>86%</td><td><span class="p23em-badge" style="background:#f59e0b;">Medium</span></td><td><button class="p23em-btn out" style="padding:3px 8px;font-size:.72rem;" onclick="emT23('🚨 Pit safety team alerted!')">Alert Team</button></td></tr>
+      </table>
+    </div>`;
+}
+
+function em23IncidentLog(){
+  const el=document.getElementById('p23em-il-content');
+  if(!el||el.innerHTML) return;
+  const now=new Date();
+  const fmt=(m)=>`${now.getHours()}:${String(now.getMinutes()-m).padStart(2,'0')}`;
+  el.innerHTML=`
+    <button class="p23em-btn" style="width:100%;margin-bottom:12px;" onclick="emT23('📝 Incident form opened')">+ Log New Incident</button>
+    <div class="p23em-card"><div style="display:flex;justify-content:space-between;"><strong>Medical: Minor injury Gate 2</strong><span class="p23em-badge" style="background:#22c55e;">Resolved</span></div><div style="font-size:.78rem;color:#94a3b8;margin-top:4px;">${fmt(8)} · Reported by: Steward #4 · Response: 3 min</div></div>
+    <div class="p23em-card"><div style="display:flex;justify-content:space-between;"><strong>Crowd: Queue backup Gate 3</strong><span class="p23em-badge" style="background:#f59e0b;">Active</span></div><div style="font-size:.78rem;color:#94a3b8;margin-top:4px;">${fmt(4)} · Reported by: Gate Supervisor · Assigned: 2 stewards</div></div>
+    <div class="p23em-card"><div style="display:flex;justify-content:space-between;"><strong>Security: Unauthorised access attempt VIP</strong><span class="p23em-badge" style="background:#22c55e;">Handled</span></div><div style="font-size:.78rem;color:#94a3b8;margin-top:4px;">${fmt(22)} · Reported by: VIP Security · Outcome: Person escorted out</div></div>`;
+}
+
+function em23CommsHub(){
+  const el=document.getElementById('p23em-ch-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div class="p23em-card">
+      <div style="font-size:.82rem;color:#94a3b8;margin-bottom:10px;">Broadcast to all staff channels:</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+        <button class="p23em-btn out" onclick="emT23('📢 All Gates: message sent!')">All Gates</button>
+        <button class="p23em-btn out" onclick="emT23('📢 Security: message sent!')">Security</button>
+        <button class="p23em-btn out" onclick="emT23('📢 Medical: message sent!')">Medical</button>
+        <button class="p23em-btn out" onclick="emT23('📢 VIP Team: message sent!')">VIP Team</button>
+      </div>
+      <textarea style="width:100%;background:#1a0a02;border:1px solid #f97316;border-radius:8px;padding:8px;color:#e2e8f0;height:70px;resize:none;font-size:.82rem;box-sizing:border-box;" placeholder="Type broadcast message..."></textarea>
+      <button class="p23em-btn" style="width:100%;margin-top:8px;" onclick="emT23('📡 Broadcast sent to all staff radios!')">Send Broadcast</button>
+    </div>
+    <div class="p23em-card"><strong>Recent Broadcasts</strong>
+      <div style="font-size:.78rem;color:#94a3b8;margin-top:6px;">
+        <div style="margin-bottom:4px;">⏰ 19:42 · All Staff: "Artist changeover in 15 mins. Clear main stage access."</div>
+        <div style="margin-bottom:4px;">⏰ 19:28 · Gates: "GA Zone nearing capacity. Redirect to East entrance."</div>
+        <div>⏰ 19:10 · Medical: "First aid station restocked. Report to Station B."</div>
+      </div>
+    </div>`;
+}
+
+function em23VolunteerLive(){
+  const el=document.getElementById('p23em-vl-content');
+  if(!el||el.innerHTML) return;
+  const vols=[
+    {name:'Ankit Sharma',role:'Gate 1',status:'active',tasks:8,zone:'North Entrance'},
+    {name:'Priya Nair',role:'Crowd Control',status:'active',tasks:6,zone:'GA Zone'},
+    {name:'Rahul Das',role:'VIP Escort',status:'active',tasks:12,zone:'VIP Lounge'},
+    {name:'Meera Joshi',role:'First Aid',status:'break',tasks:4,zone:'Station B'},
+    {name:'Arjun Kaur',role:'Stage Crew',status:'active',tasks:9,zone:'Main Stage'},
+  ];
+  el.innerHTML=`
+    <div style="display:flex;gap:10px;margin-bottom:12px;">
+      <div class="p23em-stat"><div class="v">42</div><div class="l">On Duty</div></div>
+      <div class="p23em-stat"><div class="v">8</div><div class="l">On Break</div></div>
+      <div class="p23em-stat"><div class="v">284</div><div class="l">Tasks Done</div></div>
+    </div>
+    <table class="p23em-tbl">
+      <tr><th>Volunteer</th><th>Role</th><th>Zone</th><th>Tasks</th><th>Status</th></tr>
+      ${vols.map(v=>`<tr><td><strong>${v.name}</strong></td><td>${v.role}</td><td>${v.zone}</td><td>${v.tasks}</td><td><span class="p23em-badge" style="background:${v.status==='active'?'#22c55e':'#f59e0b'};">${v.status}</span></td></tr>`).join('')}
+    </table>
+    <button class="p23em-btn" style="margin-top:10px;" onclick="emT23('📊 Volunteer report generated!')">Export Report</button>`;
+}
+
+function em23ExitFlow(){
+  const el=document.getElementById('p23em-ef-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div class="p23em-card" style="border-color:#f59e0b;"><strong>⚠️ Exit Flow Status: Moderate</strong><div style="font-size:.8rem;color:#94a3b8;margin-top:4px;">Estimated full exit time: 28 minutes. Gate 3 queue backing up.</div></div>
+    <table class="p23em-tbl" style="margin:10px 0;">
+      <tr><th>Gate</th><th>Queue</th><th>Exit Rate</th><th>Est. Wait</th><th>Action</th></tr>
+      <tr><td>Gate 1 (North)</td><td>380</td><td>120/min</td><td>3 min</td><td></td></tr>
+      <tr><td>Gate 2 (South)</td><td>540</td><td>110/min</td><td>5 min</td><td></td></tr>
+      <tr><td>Gate 3 (East)</td><td>1,240</td><td>42/min</td><td>30 min</td><td><button class="p23em-btn" style="padding:3px 8px;font-size:.72rem;" onclick="emT23('🚪 4 extra stewards dispatched to Gate 3!')">Reinforce</button></td></tr>
+      <tr><td>VIP Exit</td><td>84</td><td>80/min</td><td>1 min</td><td></td></tr>
+    </table>
+    <button class="p23em-btn out" onclick="emT23('📢 Exit announcement broadcast!')">Announce Exit Routes</button>`;
+}
+</script>
+<!-- END PHASE 23 EVENT MANAGER -->
 </body></html>

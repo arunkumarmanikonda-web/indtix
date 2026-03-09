@@ -1841,4 +1841,166 @@ document.addEventListener('DOMContentLoaded',()=>{
   <button onclick="logMaintenanceTicket()" style="margin-top:10px;background:var(--dark3);border:1px solid var(--brand);border-radius:8px;padding:9px 16px;color:var(--brand);font-size:13px;cursor:pointer;width:100%">+ Log New Ticket</button>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════
+     PHASE 23 — VENUE ADVANCED OPERATIONS
+     ═══════════════════════════════════════════════════════ -->
+<style>
+.p23v{display:none;background:#0a1628;border:1px solid #0ea5e9;border-radius:14px;padding:18px;margin:12px;color:#e2e8f0;}
+.p23v.show{display:block;}
+.p23v h4{color:#38bdf8;margin-bottom:12px;}
+.p23v-btn{background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;border:none;border-radius:7px;padding:6px 14px;cursor:pointer;font-size:.8rem;}
+.p23v-btn:hover{opacity:.87;}
+.p23v-btn.out{background:transparent;border:1px solid #0ea5e9;color:#38bdf8;}
+.p23v-card{background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.2);border-radius:9px;padding:10px;margin-bottom:8px;}
+.p23v-tbl{width:100%;border-collapse:collapse;font-size:.78rem;}
+.p23v-tbl th{background:rgba(14,165,233,.18);color:#38bdf8;padding:6px 9px;text-align:left;}
+.p23v-tbl td{padding:6px 9px;border-bottom:1px solid #1e3a5f;color:#e2e8f0;}
+.p23v-badge{display:inline-block;background:#0ea5e9;color:#fff;border-radius:18px;padding:2px 9px;font-size:.7rem;margin:1px;}
+.p23v-stat{text-align:center;background:rgba(14,165,233,.1);border-radius:8px;padding:9px;}
+.p23v-stat .v{font-size:1.2rem;font-weight:700;color:#38bdf8;}
+.p23v-stat .l{font-size:.68rem;color:#94a3b8;}
+</style>
+
+<script>
+function vToast(msg){let t=document.getElementById('v23-toast');if(!t){t=document.createElement('div');t.id='v23-toast';t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#0ea5e9;color:#fff;padding:9px 20px;border-radius:25px;font-size:.83rem;z-index:9999;display:none;';document.body.appendChild(t);}t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
+function openV23(id){document.querySelectorAll('.p23v').forEach(e=>e.classList.remove('show'));const el=document.getElementById('p23v-'+id);if(el){el.classList.add('show');v23Load(id);}}
+function v23Load(id){
+  if(id==='crowd-flow') v23CrowdFlow();
+  if(id==='vendor-perf') v23VendorPerf();
+  if(id==='accessibility') v23Accessibility();
+  if(id==='sustainability') v23Sustainability();
+  if(id==='space-util') v23SpaceUtil();
+}
+</script>
+
+<!-- Venue P23 Nav Buttons -->
+<script>
+(function(){
+  const wrap=document.querySelector('.sidebar, nav, .venue-nav');
+  const btns=[['🌊','Crowd Flow','openV23("crowd-flow")'],['🏪','Vendor Perf','openV23("vendor-perf")'],['♿','Accessibility','openV23("accessibility")'],['🌿','Sustainability','openV23("sustainability")'],['📐','Space Util','openV23("space-util")']];
+  if(wrap){ btns.forEach(([i,l,f])=>{ const b=document.createElement('button'); b.style.cssText='display:block;width:100%;text-align:left;padding:7px 10px;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.25);border-radius:7px;color:#38bdf8;cursor:pointer;font-size:.79rem;margin-bottom:3px;'; b.innerHTML=i+' '+l; b.onclick=new Function(f); wrap.appendChild(b); }); }
+})();
+</script>
+
+<div id="p23v-crowd-flow" class="p23v">
+  <h4>🌊 Crowd Flow Analytics</h4>
+  <div id="p23v-cf-content"></div>
+</div>
+<div id="p23v-vendor-perf" class="p23v">
+  <h4>🏪 Vendor Performance</h4>
+  <div id="p23v-vp-content"></div>
+</div>
+<div id="p23v-accessibility" class="p23v">
+  <h4>♿ Accessibility Audit</h4>
+  <div id="p23v-ac-content"></div>
+</div>
+<div id="p23v-sustainability" class="p23v">
+  <h4>🌿 Sustainability Dashboard</h4>
+  <div id="p23v-su-content"></div>
+</div>
+<div id="p23v-space-util" class="p23v">
+  <h4>📐 Space Utilisation</h4>
+  <div id="p23v-sp-content"></div>
+</div>
+
+<script>
+function v23CrowdFlow(){
+  const el=document.getElementById('p23v-cf-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
+      <div class="p23v-stat"><div class="v">6,840</div><div class="l">Total In-Venue</div></div>
+      <div class="p23v-stat"><div class="v">84/min</div><div class="l">Entry Rate</div></div>
+      <div class="p23v-stat"><div class="v">Gate 3</div><div class="l">Slowest Gate</div></div>
+      <div class="p23v-stat"><div class="v">82%</div><div class="l">Capacity</div></div>
+    </div>
+    <div class="p23v-card"><strong>Zone Crowd Density</strong>
+      <table class="p23v-tbl" style="margin-top:8px;">
+        <tr><th>Zone</th><th>Current</th><th>Capacity</th><th>%</th><th>Alert</th></tr>
+        <tr><td>Main Stage</td><td>3,200</td><td>4,000</td><td style="color:#f59e0b;">80%</td><td></td></tr>
+        <tr><td>GA Zone</td><td>2,400</td><td>2,500</td><td style="color:#ef4444;">96%</td><td><span class="p23v-badge" style="background:#ef4444;">⚠️ Near Full</span></td></tr>
+        <tr><td>VIP Lounge</td><td>180</td><td>400</td><td style="color:#22c55e;">45%</td><td></td></tr>
+        <tr><td>F&amp;B Court</td><td>820</td><td>1,200</td><td style="color:#22c55e;">68%</td><td></td></tr>
+      </table>
+    </div>
+    <button class="p23v-btn" onclick="vToast('📢 Crowd dispersal alert sent to Gate 3 stewards!')">Disperse Alert</button>`;
+}
+
+function v23VendorPerf(){
+  const el=document.getElementById('p23v-vp-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <table class="p23v-tbl" style="margin-bottom:12px;">
+      <tr><th>Vendor</th><th>Zone</th><th>Sales</th><th>Rating</th><th>Complaints</th><th>Status</th></tr>
+      <tr><td>Bombay Bites</td><td>F&amp;B Court</td><td>₹2.4L</td><td style="color:#22c55e;">4.8⭐</td><td>2</td><td><span class="p23v-badge" style="background:#22c55e;">Active</span></td></tr>
+      <tr><td>Delhi Dhabba</td><td>GA Zone</td><td>₹1.8L</td><td style="color:#22c55e;">4.6⭐</td><td>0</td><td><span class="p23v-badge" style="background:#22c55e;">Active</span></td></tr>
+      <tr><td>Bar One</td><td>VIP Lounge</td><td>₹3.2L</td><td style="color:#f59e0b;">3.9⭐</td><td>8</td><td><span class="p23v-badge" style="background:#f59e0b;">Warning</span></td></tr>
+      <tr><td>Quick Bites</td><td>Gate 1</td><td>₹0.4L</td><td style="color:#ef4444;">3.1⭐</td><td>14</td><td><span class="p23v-badge" style="background:#ef4444;">Review</span></td></tr>
+    </table>
+    <button class="p23v-btn out" onclick="vToast('📨 Performance report sent to all vendors!')">Send Reports</button>`;
+}
+
+function v23Accessibility(){
+  const el=document.getElementById('p23v-ac-content');
+  if(!el||el.innerHTML) return;
+  const items=[
+    {check:'Wheelchair ramps at all gates',status:'pass'},
+    {check:'Accessible toilets (1 per 100 attendees)',status:'pass'},
+    {check:'Sign language interpreter at main stage',status:'fail'},
+    {check:'Hearing loop system in VIP area',status:'warn'},
+    {check:'Large-print event map available',status:'pass'},
+    {check:'Accessible parking bays (2% minimum)',status:'pass'},
+    {check:'Braille signage at entry points',status:'fail'},
+    {check:'Priority viewing area for wheelchair users',status:'pass'},
+  ];
+  el.innerHTML=`
+    <div style="display:flex;gap:10px;margin-bottom:14px;">
+      <div class="p23v-stat"><div class="v" style="color:#22c55e;">5</div><div class="l">Pass</div></div>
+      <div class="p23v-stat"><div class="v" style="color:#f59e0b;">1</div><div class="l">Warning</div></div>
+      <div class="p23v-stat"><div class="v" style="color:#ef4444;">2</div><div class="l">Fail</div></div>
+    </div>
+    ${items.map(i=>`<div class="p23v-card" style="display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-size:.82rem;">${i.check}</span>
+      <span class="p23v-badge" style="background:${i.status==='pass'?'#22c55e':i.status==='warn'?'#f59e0b':'#ef4444'};">${i.status==='pass'?'✓ Pass':i.status==='warn'?'⚠ Warn':'✗ Fail'}</span>
+    </div>`).join('')}
+    <button class="p23v-btn" style="margin-top:10px;" onclick="vToast('📋 Accessibility action plan generated!')">Generate Action Plan</button>`;
+}
+
+function v23Sustainability(){
+  const el=document.getElementById('p23v-su-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;">
+      <div class="p23v-stat"><div class="v">4.28 MWh</div><div class="l">Energy Used</div></div>
+      <div class="p23v-stat"><div class="v">2.1 t CO₂</div><div class="l">Carbon Footprint</div></div>
+      <div class="p23v-stat"><div class="v">68%</div><div class="l">Waste Recycled</div></div>
+    </div>
+    <div class="p23v-card"><strong>Green Initiatives</strong>
+      <div style="margin-top:8px;font-size:.82rem;color:#94a3b8;">
+        <div style="margin-bottom:4px;">✅ Solar panels covering 22% of energy needs</div>
+        <div style="margin-bottom:4px;">✅ Compostable F&amp;B packaging in use</div>
+        <div style="margin-bottom:4px;">⚠️ Single-use plastics reduction — 60% target, 42% achieved</div>
+        <div style="margin-bottom:4px;">✅ EV charging bays (8 installed)</div>
+        <div>⏳ Carbon offsetting programme — in progress</div>
+      </div>
+    </div>
+    <button class="p23v-btn" style="margin-top:10px;" onclick="vToast('🌿 Sustainability report shared with city council!')">Share Report</button>`;
+}
+
+function v23SpaceUtil(){
+  const el=document.getElementById('p23v-sp-content');
+  if(!el||el.innerHTML) return;
+  el.innerHTML=`
+    <table class="p23v-tbl" style="margin-bottom:12px;">
+      <tr><th>Zone</th><th>Area (sqm)</th><th>Rev/sqm</th><th>Avg Density</th><th>Efficiency</th></tr>
+      <tr><td>Main Stage</td><td>2,400</td><td>₹1,840</td><td>78%</td><td><span class="p23v-badge" style="background:#22c55e;">High</span></td></tr>
+      <tr><td>GA Zone</td><td>3,200</td><td>₹920</td><td>94%</td><td><span class="p23v-badge" style="background:#f59e0b;">Crowded</span></td></tr>
+      <tr><td>VIP Lounge</td><td>800</td><td>₹3,400</td><td>45%</td><td><span class="p23v-badge" style="background:#22c55e;">Premium</span></td></tr>
+      <tr><td>F&amp;B Court</td><td>600</td><td>₹2,800</td><td>68%</td><td><span class="p23v-badge" style="background:#22c55e;">Good</span></td></tr>
+      <tr><td>Backstage</td><td>400</td><td>—</td><td>—</td><td><span class="p23v-badge" style="background:#334155;">Reserved</span></td></tr>
+    </table>
+    <div class="p23v-card"><strong>💡 Insight:</strong> <span style="color:#94a3b8;">VIP Lounge at only 45% density. Consider selling 80 more VIP passes. Revenue upside: <strong style="color:#22c55e;">+₹2.7L</strong></span></div>`;
+}
+</script>
+<!-- END PHASE 23 VENUE PORTAL -->
 </body></html>

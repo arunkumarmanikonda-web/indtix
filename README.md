@@ -1,221 +1,210 @@
-# INDTIX Platform — v22.0.0
+# INDTIX Platform — v23.0.0
 
 ## Project Overview
 - **Name**: INDTIX — India's Live Event Platform
-- **Version**: v22.0.0 (Phase 22)
-- **Goal**: End-to-end live event ticketing platform with 1,009 API endpoints across 6 portals
+- **Version**: v23.0.0 (Phase 23)
+- **Goal**: End-to-end live event ticketing platform with 1,099 API endpoints across 6 portals
 - **Company**: Oye Imagine Private Limited | GSTIN: 27AABCO1234A1Z5
-- **QA Score**: 174/174 tests — 100% ✅
+- **QA Score**: 389/389 tests — 100% ✅
 
 ## Live URLs
-- **Production (Cloudflare)**: https://b6908330.indtix.pages.dev
-- **Fan Portal**: https://b6908330.indtix.pages.dev/fan
-- **Organiser Portal**: https://b6908330.indtix.pages.dev/organiser
-- **Admin Portal**: https://b6908330.indtix.pages.dev/admin
-- **Venue Portal**: https://b6908330.indtix.pages.dev/venue
-- **Event Manager**: https://b6908330.indtix.pages.dev/event-manager
-- **Ops Portal**: https://b6908330.indtix.pages.dev/ops
-- **Brand Guide**: https://b6908330.indtix.pages.dev/brand
-- **API Health**: https://b6908330.indtix.pages.dev/api/health
-- **v22 Health**: https://b6908330.indtix.pages.dev/api/v22/health
-- **v21 Health**: https://b6908330.indtix.pages.dev/api/v21/health
+- **Production (Cloudflare)**: https://51c60788.indtix.pages.dev
+- **Fan Portal**: https://51c60788.indtix.pages.dev/fan
+- **Organiser Portal**: https://51c60788.indtix.pages.dev/organiser
+- **Admin Portal**: https://51c60788.indtix.pages.dev/admin
+- **Venue Portal**: https://51c60788.indtix.pages.dev/venue
+- **Event Manager**: https://51c60788.indtix.pages.dev/event-manager
+- **Ops Portal**: https://51c60788.indtix.pages.dev/ops
+- **Brand Guide**: https://51c60788.indtix.pages.dev/brand
+- **API Health**: https://51c60788.indtix.pages.dev/api/health
+- **v23 Health**: https://51c60788.indtix.pages.dev/api/v23/health
+- **v22 Health**: https://51c60788.indtix.pages.dev/api/v22/health
+- **v21 Health**: https://51c60788.indtix.pages.dev/api/v21/health
 
-## Phase 22 New Features (85 new endpoints → 1,009 total)
+## Phase 23 New Features (90 new endpoints → 1,099 total)
 
-### Fan Portal — Super-Fan Social Layer
-- **Fan Clubs**: Create/join/leave artist-specific fan clubs; club feed with member activity
-- **Artist Follow**: Follow/unfollow artists with notification bell alerts
-- **Live Event Chat**: Simulated real-time chat wall during events
-- **Poll Voting**: Setlist prediction polls + pre-event fan preference surveys
-- **Merch Store**: Browse & add-to-cart artist/event merchandise with checkout flow
-- **AR Ticket Wallet**: QR code with augmented-reality frame overlay preview
-- **Gamified Check-in**: XP + confetti animation on event check-in
-- **Event Countdown**: Live countdown timer to event start
-- **Carbon Tracker Integration**: Per-event carbon footprint with offset progress
+### Fan Portal — Community & Discovery Layer
+- **Discover Feed**: Trending events personalised by city with interest counts and badges
+- **Nearby Events**: Location-aware events within configurable radius (km)
+- **Squad Goals**: Create friend squads, group-vote on events, send invite emails
+- **Taste Match**: ML genre-affinity scoring with top-4 matched events (match %)
+- **Moments (Photo Wall)**: Upload/browse fan photos+videos per event with likes
+- **Fan Challenges**: Multi-step gamified challenges (Globe Trotter, Genre Hopper, Review Guru)
+- **Event Reviews**: Star ratings + text reviews with helpful votes; validation enforced
+- **Waitlist+**: Smart waitlist with auto-buy, max-price ceiling, live position tracker
 
-### Organiser Portal — Revenue Intelligence
-- **Affiliate Link Builder**: Generate UTM-tagged affiliate URLs with custom payout %
-- **Upsell Engine Config**: Configure cross-sell rules (GA upgrade, F&B bundle, parking)
-- **Multi-Currency Payout Settings**: Select payout currency (INR, USD, EUR, GBP, AED)
-- **Co-Organiser Revenue Split Slider**: Define % splits per co-organiser with approval workflow
-- **Early-Bird Countdown Widget**: Time-pressure urgency banner on event page
-- **Presale Access Code Generator**: Batch-generate codes with tier assignment + CSV download
-- **Media Kit Builder**: Download logo pack, generate AI press release, export full kit ZIP
-- **Post-Event Video Highlight Uploader**: Upload/manage highlight reels with view stats
+### Organiser Portal — Growth Intelligence
+- **Conversion Funnel**: Page views → Checkout → Booked funnel with drop-off insight
+- **Flash Sale Manager**: Create time-limited discounts, push notifications, delete/end
+- **Waitlist Analytics**: Conversion rates, avg response time, bulk-offer send
+- **Growth Score**: Organiser health KPI (sell-through, fan retention, review score, NPS)
 
-### Admin Portal — Trust & Compliance
-- **AI Content Moderation Queue**: Auto-flagged event descriptions/artist bios with approve/reject
-- **DPDP Compliance Centre**: DSAR request management, consent log, erasure workflow
-- **Organiser Payout Ledger**: Full ledger with bulk-approve and individual approval
-- **Bulk Refund Processor**: CSV booking IDs → mass refund with batch ID tracking
-- **Platform A/B Test Manager**: Create/track experiments with conversion metrics
-- **Dark-Pattern Audit Panel**: Automated scan with violation/warning classification + resolve flow
-- **API Rate-Limit Manager**: Per-tier (Enterprise/Business/Starter) limit configuration
-- **SLA Dashboard**: Uptime %, latency, breach count, commitment matrix
+### Admin Portal — Platform Intelligence
+- **ML Model Registry**: Production model inventory (accuracy, last trained, predictions/day) + retrain trigger
+- **Trust Score Engine**: User trust distribution, flagged accounts, block/flag actions
+- **Geo Analytics**: City-level GMV, users, events, MoM growth + opportunity zones
+- **Advanced User Segments**: 6 behavioural segments with avg LTV + campaign launcher
+- **Platform Health Score**: 8-pillar composite score (API, Payments, Search, Fraud, NPS…)
+- **Churn Predictor**: At-risk users, 30d churn rate, LTV at risk + intervention workflow
+- **Price Optimiser**: AI-driven price recommendations with expected lift + apply action
+- **Ops Budget**: Monthly budget vs spend by service with utilisation %
 
-### Venue Portal — Smart Infrastructure
-- **IoT Sensor Dashboard**: Real-time temp/humidity/crowd-density per zone with status alerts
-- **Energy Usage Monitor**: kWh today + cost + savings % + zone breakdown
-- **Catering Forecast AI**: PAX-driven demand forecast per menu category
-- **Multi-Zone Sound/Lighting Control**: Zone-level dB and light % setter
-- **Maintenance Ticket System**: Create/resolve maintenance tickets with priority levels
+### Venue Portal — Intelligent Spaces
+- **Crowd Flow Monitor**: Real-time in-venue count, entry rate/min, per-zone density
+- **Vendor Performance**: Sales, ratings, complaints per food/bar vendor with status
+- **Accessibility Audit**: Checklist (ramps, toilets, hearing loops, Braille) with pass/warn/fail
+- **Sustainability Dashboard**: Energy, carbon, recycling %, EV bays, solar initiatives
+- **Space Utilisation**: Revenue/sqm, density %, efficiency rating per zone + upsell insight
 
-### Event Manager — Day-of Operations
-- **Wristband NFC Scan Log**: Real-time scan feed with valid/flagged/duplicate tagging
-- **Gate Throughput Speedometer**: Scans/min per gate + queue length indicator
-- **VIP Concierge Queue**: Request management with priority + fulfilment workflow
-- **Real-Time Social Sentiment Wall**: Mention count, sentiment score, top tweets
-- **Live Merchandise Sales Dashboard**: Item-level sales + revenue in real time
-- **Artist Rider Tracker**: Rider requirement checklist with ready/pending status
-- **Press/Photographer Credential Manager**: Badge issuance with org/type tracking
+### Event Manager — Live Safety & Comms
+- **Crowd Safety Monitor**: Zone-level density + risk level + emergency disperse broadcast
+- **Incident Log**: Live incident tracking (medical/crowd/security) with status management
+- **Staff Broadcast**: Multi-channel (all/security/medical) staff comms with recipient count
+- **Exit Flow Manager**: Per-gate queue, exit rate/min, wait times with slow-gate alert
 
-### Ops Portal — Platform Nerve Centre
-- **Global Anomaly Detector**: Z-score alerts (Revenue Spike, Error Rate, CPU Usage)
-- **Revenue Forecasting Panel**: 7-day daily forecast chart with confidence score
-- **Carrier/Gateway Redundancy Matrix**: Primary + fallback latency per service
-- **MTTR Tracker**: Average/P1 MTTR with incident history table
-- **On-Call Rotation Schedule**: Current/next/upcoming engineer shifts + PagerDuty paging
-- **Automated Post-Incident Report Generator**: Root cause, action items, impact summary
-- **Data-Pipeline Health Monitor**: Per-pipeline lag (seconds) + throughput metrics
+### Ops Portal — Business Intelligence
+- **Unit Economics**: CAC, LTV, LTV:CAC ratio, per-booking P&L with MoM trends
+- **Infra Spend**: Service-level budget vs spend tracking (Workers, D1, SendGrid, etc.)
+- **Tax Dashboard**: GST/TDS totals, quarterly breakdown, compliance score
+- **Partner Health**: Uptime, latency, incident count + health score per integration
+- **Release Tracker**: Version history with status (live/staging/dev) + promote to prod
+- **Capacity Planning**: Current RPS capacity vs upcoming event demand with readiness
+- **Security Events**: SSL grade, threats blocked, IP blocks, recent event feed
 
 ## Architecture
 - **Runtime**: Cloudflare Workers (Edge)
 - **Framework**: Hono v4 (TypeScript)
 - **Frontend**: HTML5 + Tailwind CSS + Font Awesome + Chart.js
 - **Build**: Vite + @hono/vite-cloudflare-pages
-- **Worker Size**: ~496 KB
+- **Worker Size**: ~515 KB
 
-## API Surface (1,009 endpoints)
+## API Surface (1,099 endpoints)
 | Category | Endpoints |
 |----------|-----------|
 | Auth & Users | ~85 |
-| Events & Discovery | ~75 |
+| Events & Discovery | ~80 |
 | Booking Engine | ~80 |
 | KYC Workflow | ~30 |
 | Seat Map & Add-ons | ~40 |
 | Checkout & Payments | ~50 |
 | Communications | ~45 |
-| Organiser Portal | ~120 |
-| Admin Portal | ~145 |
-| Venue Portal | ~65 |
-| Event Manager | ~65 |
-| Ops Portal | ~60 |
+| Organiser Portal | ~130 |
+| Admin Portal | ~160 |
+| Venue Portal | ~75 |
+| Event Manager | ~75 |
+| Ops Portal | ~75 |
 | Analytics & BI | ~40 |
-| AI/ML Layer | ~25 |
+| AI/ML Layer | ~35 |
 | Loyalty & Gamification | ~30 |
-| Fan Clubs & Social | ~29 |
+| Fan Community & Social | ~45 |
 | RBAC & Security | ~15 |
 | Reports & Exports | ~20 |
-| **Total** | **1,009** |
+| **Total** | **1,099** |
 
-## Phase 22 Backend API Reference
+## Phase 23 Backend API Reference
 | Group | Key Endpoints |
 |-------|--------------|
-| Fan Clubs | GET/POST /api/fan/clubs, POST /api/fan/clubs/:id/join |
-| Artist Follow | GET /api/fan/artists, POST/DELETE /api/fan/artists/:id/follow |
-| Live Chat | GET /api/fan/chat/:event_id, POST /api/fan/chat/send |
-| Polls | GET /api/fan/polls, POST /api/fan/polls/vote |
-| Fan Merch | GET /api/fan/merch, POST /api/fan/merch/checkout |
-| Gamified Check-in | POST /api/fan/checkin |
-| Org Affiliates | POST /api/organiser/affiliates/generate, GET /api/organiser/affiliates |
-| Upsell | GET/POST /api/organiser/upsell/config |
-| Multi-Currency | GET /api/organiser/payouts/currencies, POST /api/organiser/payouts/request |
-| Revenue Split | GET/PUT /api/organiser/revenue-split/:event_id |
-| Presale Codes | POST/GET /api/organiser/presale/codes |
-| Media Kit | POST /api/organiser/media-kit/download|press-release|export |
-| Highlights | POST /api/organiser/highlights/upload, GET /api/organiser/highlights/:event_id |
-| Content Moderation | GET /api/admin/moderation/queue, POST /api/admin/moderation/:item_id |
-| DPDP | GET/POST /api/admin/dpdp/dsar, GET /api/admin/dpdp/consent-log |
-| Payout Ledger | GET /api/admin/payouts, POST /api/admin/payouts/bulk-approve |
-| Bulk Refunds | POST /api/admin/refunds/bulk |
-| A/B Tests | GET/POST /api/admin/ab-tests |
-| Dark Patterns | GET /api/admin/dark-patterns, POST audit/resolve |
-| Rate Limits | GET /api/admin/rate-limits, PUT /api/admin/rate-limits/:tier |
-| SLA Dashboard | GET /api/admin/sla-dashboard |
-| IoT Sensors | GET /api/venue/:id/iot-sensors |
-| Energy | GET /api/venue/:id/energy |
-| Catering Forecast | POST /api/venue/:id/catering-forecast |
-| Zone Control | PUT /api/venue/:id/zone-control |
-| Maintenance | GET/POST /api/venue/:id/maintenance, POST .../resolve |
-| NFC Scans | GET /api/events/:id/nfc-scans |
-| Gate Throughput | GET /api/events/:id/gate-throughput |
-| VIP Concierge | GET /api/events/:id/vip-concierge, POST .../fulfil |
-| Social Sentiment | GET /api/events/:id/social-sentiment |
-| Merch Sales | GET /api/events/:id/merch-sales |
-| Artist Rider | GET /api/events/:id/artist-rider |
-| Press Credentials | GET/POST /api/events/:id/press-credentials |
-| Anomaly Detector | GET /api/ops/anomalies |
-| Revenue Forecast | GET /api/ops/revenue-forecast |
-| Redundancy Matrix | GET /api/ops/redundancy-matrix |
-| MTTR | GET /api/ops/mttr |
-| On-Call | GET /api/ops/oncall-schedule, POST /api/ops/oncall/page |
-| Post-Incident | POST /api/ops/incidents/:id/report |
-| Data Pipeline | GET /api/ops/data-pipeline |
-| v22 Health | GET /api/v22/health |
+| Discover Feed | GET /api/fan/discover?city= |
+| Nearby Events | GET /api/fan/nearby |
+| Squad Goals | GET/POST /api/fan/squads, POST /api/fan/squads/:id/vote, .../invite |
+| Taste Match | GET /api/fan/taste-match?user_id= |
+| Moments | GET/POST /api/fan/moments, POST /api/fan/moments/:id/like |
+| Challenges | GET /api/fan/challenges, POST /api/fan/challenges/:id/log |
+| Reviews | GET/POST /api/fan/reviews |
+| Waitlist+ | GET/POST /api/fan/waitlist-plus |
+| Conversion Funnel | GET /api/organiser/funnel?event_id= |
+| Flash Sales | GET/POST /api/organiser/flash-sales, DELETE /api/organiser/flash-sales/:id |
+| Waitlist Analytics | GET /api/organiser/waitlist/analytics, POST .../bulk-offer |
+| Growth Score | GET /api/organiser/growth-score?organiser_id= |
+| ML Models | GET /api/admin/ml-models, POST /api/admin/ml-models/:id/retrain |
+| Trust Scores | GET /api/admin/trust-scores, POST /api/admin/trust-scores/:id/action |
+| Geo Analytics | GET /api/admin/geo-analytics |
+| User Segments | GET /api/admin/user-segments, POST .../campaign |
+| Platform Health | GET /api/admin/platform-health |
+| Churn Risk | GET /api/admin/churn-risk, POST .../intervention |
+| Price Optimiser | GET /api/admin/price-recommendations, POST .../apply |
+| Ops Budget | GET /api/admin/ops-budget |
+| Crowd Flow | GET /api/venue/:id/crowd-flow |
+| Vendor Performance | GET /api/venue/:id/vendor-performance |
+| Accessibility | GET /api/venue/:id/accessibility |
+| Sustainability | GET /api/venue/:id/sustainability |
+| Space Utilisation | GET /api/venue/:id/space-utilisation |
+| Crowd Safety | GET /api/events/:id/crowd-safety, POST .../disperse |
+| Incident Log | GET/POST /api/events/:id/incidents |
+| Staff Broadcast | POST /api/events/:id/broadcast |
+| Exit Flow | GET /api/events/:id/exit-flow |
+| Unit Economics | GET /api/ops/unit-economics |
+| Infra Spend | GET /api/ops/infra-spend |
+| Tax Dashboard | GET /api/ops/tax-dashboard |
+| Partner Health | GET /api/ops/partner-health |
+| Release Tracker | GET /api/ops/releases, POST /api/ops/releases/:ver/promote |
+| Capacity Plan | GET /api/ops/capacity-plan |
+| Security Events | GET /api/ops/security-events |
+| v23 Health | GET /api/v23/health |
 
 ## Data Models
 - **User**: id, name, email, phone, role, kyc_status, wallet_balance, loyalty_points, tier
 - **Event**: id, name, venue, date, tiers[], addons[], pricing_model, capacity, carbon_footprint
 - **Booking**: id, user_id, event_id, tickets[], total, status, payment, qr_code, transfer_status
-- **FanClub**: id, name, artist, members[], feed[], created_by, created_at
-- **AffiliateLink**: id, event_id, organiser_id, code, url, commission_pct, clicks, conversions
-- **DSAR**: id, user_email, type, status, deadline, processed_at
-- **PresaleCode**: code, batch_id, tier, event_id, redeemed, redeemed_by
-- **IoTSensor**: type, name, zone, temp, humidity, crowd_density, status
-- **Incident**: id, title, severity, duration_min, root_cause, action_items[], resolved_at
+- **Squad**: id, name, members[], current_vote{event, yes, no, pending}, last_event
+- **FanReview**: id, event, rating, text, user, helpful, xp_earned, published_at
+- **WaitlistEntry**: id, event, position, max_price, auto_buy, status, total_waitlisted
+- **FlashSale**: id, event_id, discount_pct, duration_min, tickets_total, claimed, ends_at
+- **MLModel**: id, name, type, accuracy, status, last_trained, predictions_per_day
+- **TrustScore**: user_id, score, signals[], recommended_action
+- **CrowdSafety**: event_id, overall_risk, in_venue, active_alerts, zones[{zone, density_pct, risk}]
+- **Incident**: id, type, description, status, response_min, created_at
+- **UnitEconomics**: cac, ltv, ltv_cac_ratio, per_booking{avg_value, gross_profit}, trends
 
 ## User Guide
 
 ### Fan Portal (/fan)
-1. Browse events → AI recommendations carousel → seat selection → checkout
-2. **Fan Clubs** tab: join artist fan clubs, see member feed, participate in polls
-3. **Merch Store**: browse and buy event merchandise
-4. **Gamified Check-in**: scan ticket at gate → earn XP + badge confetti
-5. **Carbon Tracker**: view per-event footprint, track offset progress
-6. **Loyalty**: Account → Rewards → view points, tier (Bronze→Platinum), redeem
+1. **Discover** tab: browse trending events by city; filter by genre
+2. **Nearby**: events within 10km; view distance and price
+3. **Squads**: create a group → vote on events together → invite friends
+4. **Taste Match**: AI matches you to events based on your genre history
+5. **Moments**: upload event photos → get likes from other fans
+6. **Challenges**: complete multi-event challenges to earn XP and badges
+7. **Reviews**: write verified post-event reviews (+100 XP per review)
+8. **Waitlist+**: join waitlist with max-price ceiling and optional auto-buy
 
 ### Organiser Portal (/organiser)
-1. **Affiliate Links**: generate UTM links with custom payout %, share with influencers
-2. **Upsell Engine**: configure which cross-sells to show (parking, F&B, upgrades)
-3. **Revenue Split**: set co-organiser % shares before publish
-4. **Presale Codes**: batch-generate VIP/early-access codes
-5. **Media Kit**: download brand assets, auto-generate press release
-6. **Video Highlights**: upload post-event recap videos
+1. **Funnel Analytics**: see where fans drop off in the booking journey
+2. **Flash Sales**: create time-limited discounts with push notifications
+3. **Waitlist**: view demand data, send bulk offers to waitlisted fans
+4. **Growth Score**: track your organiser health KPIs and tier badge
 
 ### Admin Portal (/admin)
-1. **Content Moderation**: review AI-flagged content, approve or reject
-2. **DPDP Centre**: manage DSAR requests, view consent records
-3. **Payout Ledger**: bulk-approve organiser payouts
-4. **Bulk Refunds**: upload booking IDs → mass refund processing
-5. **A/B Tests**: create and monitor platform experiments
-6. **Dark Pattern Audit**: run scan, resolve identified patterns
-7. **Rate Limits**: adjust API quota per tier
-8. **SLA Dashboard**: track uptime and latency commitments
+1. **ML Models**: view production model accuracy, trigger retraining
+2. **Trust Engine**: review flagged accounts, take block/flag actions
+3. **Geo Analytics**: explore city-level GMV and growth opportunities
+4. **Segments**: launch targeted campaigns to specific user segments
+5. **Platform Health**: monitor composite 8-pillar platform health score
+6. **Churn Predictor**: identify at-risk users and launch interventions
+7. **Price Optimiser**: review AI price suggestions, apply with one click
+8. **Ops Budget**: track service spend vs monthly budget
 
 ### Venue Portal (/venue)
-1. **IoT Sensors**: real-time zone temperature, humidity, crowd density
-2. **Energy Monitor**: live kWh usage with cost and savings tracking
-3. **Catering Forecast**: enter expected PAX → AI forecasts per item demand
-4. **Zone Control**: adjust sound dB and lighting % per zone
-5. **Maintenance Tickets**: log and resolve infrastructure issues
+1. **Crowd Flow**: real-time in-venue count, entry rate, and zone densities
+2. **Vendors**: monitor F&B vendor performance and complaint flags
+3. **Accessibility**: audit checklist for disability compliance
+4. **Sustainability**: track energy, carbon, and recycling metrics
+5. **Space Utilisation**: identify under-utilised zones for revenue uplift
 
 ### Event Manager Portal (/event-manager)
-1. **NFC Scan Log**: live feed of attendee entries with status flags
-2. **Gate Throughput**: speedometer view of scans/min per gate
-3. **VIP Concierge**: manage VIP requests with priority queue
-4. **Social Sentiment**: live Twitter/Instagram mention sentiment
-5. **Live Merch Sales**: real-time item-level sales dashboard
-6. **Artist Rider**: check off rider requirements as fulfilled
-7. **Press Credentials**: issue and track press/photographer badges
+1. **Crowd Safety**: zone-level density with risk indicators; trigger steward dispersal
+2. **Incidents**: log and track live incidents (medical, crowd, security)
+3. **Broadcast**: push real-time messages to all or specific staff groups
+4. **Exit Flow**: monitor gate queues and wait times for smooth exit management
 
 ### Ops Portal (/ops)
-1. **Anomaly Detector**: z-score alerts for revenue spikes, error rate spikes
-2. **Revenue Forecast**: 7-day projection with confidence band
-3. **Redundancy Matrix**: check primary/fallback gateway health
-4. **MTTR**: track mean-time-to-resolve across incidents
-5. **On-Call**: view current shift, page engineer via PagerDuty
-6. **Post-Incident Reports**: auto-generate PIRs with root cause + action items
-7. **Data Pipeline Health**: monitor ETL pipeline lag and throughput
+1. **Unit Economics**: drill into CAC, LTV, and per-booking P&L
+2. **Infra Spend**: service-level cost tracking vs budget
+3. **Tax Dashboard**: GST/TDS compliance with quarterly breakdown
+4. **Partner Health**: monitor third-party integration uptime and latency
+5. **Release Tracker**: manage version rollouts, promote staging to production
+6. **Capacity Plan**: pre-event demand planning vs current RPS capacity
+7. **Security Events**: threat feed, SSL grade, IP block counts
 
 ## Deployment
 - **Platform**: Cloudflare Pages (project: `indtix`)
@@ -230,13 +219,14 @@
 npm run build          # Build project
 npm run dev:sandbox    # Local dev server (port 3000)
 pm2 start ecosystem.config.cjs  # Start with PM2
-curl http://localhost:3000/api/v22/health  # Health check
-python3 /tmp/qa_phase22.py      # Run Phase 22 QA suite (174 tests)
+curl http://localhost:3000/api/v23/health  # Health check
+python3 /tmp/qa_phase23.py      # Run Phase 23 QA suite (389 tests)
 ```
 
 ## Version History
 | Version | Phase | Endpoints | QA |
 |---------|-------|-----------|-----|
+| v23.0.0 | Phase 23 | 1,099 | 389/389 ✅ |
 | v22.0.0 | Phase 22 | 1,009 | 174/174 ✅ |
 | v21.0.0 | Phase 21 | 924 | 149/149 ✅ |
 | v20.0.0 | Phase 20 | 842 | 110/110 ✅ |
