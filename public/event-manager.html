@@ -3496,4 +3496,60 @@ async function loadAllP38EM() { await Promise.all([loadEMFnB(), loadEMGaming()])
 loadAllP38EM();
 </script>
 <!-- END PHASE 38 EVENT MANAGER -->
+
+<!-- PHASE 39 EVENT MANAGER PORTAL: Predictive Intelligence & CV -->
+<div id="phase39-em" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#06b6d4;font-size:1.3rem;margin-bottom:4px;">🧠 Phase 39 — Event AI: Demand, CV & Experiments</h2>
+  <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Real-time demand signals · CV ticket validation · Pricing recommendations · A/B test results</p>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.3rem;font-weight:700;color:#10b981;">94.2%</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Forecast Accuracy</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #f59e0b;">
+      <div style="font-size:1.3rem;font-weight:700;color:#f59e0b;">+14.2%</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">AI Pricing Uplift</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #06b6d4;">
+      <div style="font-size:1.3rem;font-weight:700;color:#06b6d4;">84ms</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">CV Ticket Scan Time</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #8b5cf6;">
+      <div style="font-size:1.3rem;font-weight:700;color:#8b5cf6;">42</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Live A/B Experiments</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #f59e0b;">
+      <h4 style="color:#f59e0b;margin:0 0 6px;font-size:0.85rem;">📈 Demand Signals</h4>
+      <div id="p39em-signals" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadEMSignals()" style="margin-top:6px;background:#f59e0b;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Live Signals</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #10b981;">
+      <h4 style="color:#10b981;margin:0 0 6px;font-size:0.85rem;">💡 Pricing Recommendations</h4>
+      <div id="p39em-pricing" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadEMPricing()" style="margin-top:6px;background:#10b981;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View Recs</button>
+    </div>
+  </div>
+
+  <button onclick="loadAllP39EM()" style="background:linear-gradient(135deg,#06b6d4,#0891b2);color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:700;">🧠 Refresh All</button>
+</div>
+
+<script>
+async function loadEMSignals() {
+  const d = await fetch('/api/admin/intelligence/demand/signals').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39em-signals').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Demand Index: ${d.composite_demand_index} | Top: ${d.signals?.[0]?.signal||'social_buzz'} (${d.signals?.[0]?.current_score||8.4}) | Trend: ${d.signals?.[0]?.trend||'rising'}</span>`;
+}
+async function loadEMPricing() {
+  const d = await fetch('/api/admin/intelligence/pricing/recommendations').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39em-pricing').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Pending Reviews: ${d.pending_manual_review} | Auto-Approve Threshold: ${(d.auto_approve_threshold*100).toFixed(0)}% confidence</span>`;
+}
+async function loadAllP39EM() { await Promise.all([loadEMSignals(), loadEMPricing()]); }
+loadAllP39EM();
+</script>
+<!-- END PHASE 39 EVENT MANAGER -->
 </body></html>

@@ -3422,5 +3422,81 @@ async function loadAllP38Ops() { await Promise.all([loadOpsBNPL(), loadOpsPartne
 loadAllP38Ops();
 </script>
 <!-- END PHASE 38 OPS PORTAL -->
+
+<!-- PHASE 39 OPS PORTAL: AIOps, Data Streaming & Graph Intelligence -->
+<div id="phase39-ops" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#06b6d4;font-size:1.3rem;margin-bottom:4px;">🧠 Phase 39 — Ops: AIOps, Streaming & Graph Intel</h2>
+  <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Real-time pipeline health · Observability & incident management · Fraud graph · Capacity forecasting</p>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.3rem;font-weight:700;color:#10b981;">green</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Platform Health</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #f59e0b;">
+      <div style="font-size:1.3rem;font-weight:700;color:#f59e0b;">99.94%</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">SLI Compliance</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #06b6d4;">
+      <div style="font-size:1.3rem;font-weight:700;color:#06b6d4;">8.4min</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">MTTR</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #ef4444;">
+      <div style="font-size:1.3rem;font-weight:700;color:#ef4444;">4</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Active Alerts</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #10b981;">
+      <h4 style="color:#10b981;margin:0 0 6px;font-size:0.85rem;">🏗️ Stream Pipeline Health</h4>
+      <div id="p39ops-stream" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadOpsStream()" style="margin-top:6px;background:#10b981;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Check Health</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #ef4444;">
+      <h4 style="color:#ef4444;margin:0 0 6px;font-size:0.85rem;">🚨 Active Anomalies</h4>
+      <div id="p39ops-anomaly" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadOpsAnomalies()" style="margin-top:6px;background:#ef4444;color:#fff;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View Alerts</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #8b5cf6;">
+      <h4 style="color:#8b5cf6;margin:0 0 6px;font-size:0.85rem;">🕸️ Fraud Graph Detection</h4>
+      <div id="p39ops-fraud" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadOpsFraud()" style="margin-top:6px;background:#8b5cf6;color:#fff;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View Rings</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #06b6d4;">
+      <h4 style="color:#06b6d4;margin:0 0 6px;font-size:0.85rem;">📊 Capacity Forecast</h4>
+      <div id="p39ops-capacity" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadOpsCapacity()" style="margin-top:6px;background:#06b6d4;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View Forecast</button>
+    </div>
+  </div>
+
+  <button onclick="loadAllP39Ops()" style="background:linear-gradient(135deg,#06b6d4,#0891b2);color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:700;">🧠 Refresh All</button>
+</div>
+
+<script>
+async function loadOpsStream() {
+  const d = await fetch('/api/ops/data/stream/health').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39ops-stream').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Kafka: ${d.kafka_health} | Flink: ${d.flink_health} | Lag: ${d.total_lag_events} events | p99: ${d.p99_latency_ms}ms</span>`;
+}
+async function loadOpsAnomalies() {
+  const d = await fetch('/api/ops/aiops/anomaly/active').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39ops-anomaly').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Active: ${d.anomalies?.length||0} | Model: ${d.model} | Precision: ${d.precision_pct}% | Recall: ${d.recall_pct}%</span>`;
+}
+async function loadOpsFraud() {
+  const d = await fetch('/api/admin/graph/fraud/rings').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39ops-fraud').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Rings: ${d.fraud_rings_detected} | Accounts Flagged: ${d.accounts_flagged} | Prevented: ₹${(d.total_fraud_prevented_inr||0).toLocaleString()}</span>`;
+}
+async function loadOpsCapacity() {
+  const d = await fetch('/api/ops/aiops/capacity/forecast').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39ops-capacity').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Current: ${d.current_utilisation_pct}% | Peak: ${d.predicted_peak_pct}% on ${d.peak_event} | Scale-Up: ${d.scale_up_recommendation?.date}</span>`;
+}
+async function loadAllP39Ops() { await Promise.all([loadOpsStream(), loadOpsAnomalies(), loadOpsFraud(), loadOpsCapacity()]); }
+loadAllP39Ops();
+</script>
+<!-- END PHASE 39 OPS PORTAL -->
 </body>
 </html>

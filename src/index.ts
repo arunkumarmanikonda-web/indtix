@@ -22870,27 +22870,788 @@ app.post('/api/fan/superapp/rewards/transfer-points', (c) => c.json({
   conversion_rate: 0.5, bonvoy_points: 1420, status: 'completed'
 }))
 
-// ── Phase 38 health endpoint ─────────────────────────────────
-app.get('/api/health', (c) => c.json({
+// ── Phase 38 versioned health alias ──────────────────────────
+app.get('/api/v38/health', (c) => c.json({
   status: 'ok', platform: 'INDTIX', version: 'v38.0.0',
   phase: 'Phase 38', theme: 'Super-App, Lifestyle & Fan Commerce Ecosystem',
   new_endpoints: 90, total_endpoints: 2449,
-  features: [
-    'Super-App Hub & Mini-Programs',
-    'Food, Beverage & In-Venue Commerce',
-    'Travel, Hotels & Transport Bundle',
-    'Fan Fashion & Merchandise Store',
-    'Health, Wellness & Fitness Events',
-    'Gaming, Esports & Fantasy Leagues',
-    'Social Commerce & Group Buying',
-    'Subscriptions, Passes & Bundles',
-    'Fan Credit, BNPL & Financial Services',
-    'Lifestyle Rewards & Partner Network'
-  ]
 }))
 
 // ═══════════════════════════════════════════════════════════
 // END PHASE 38 — SUPER-APP, LIFESTYLE & FAN COMMERCE ECOSYSTEM
+// ═══════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 39 — ADVANCED DATA PLATFORM, AI/ML INFRASTRUCTURE
+//            & PREDICTIVE INTELLIGENCE (v39.0.0)
+// 90 new endpoints | Total: 2,539
+// ═══════════════════════════════════════════════════════════
+
+// ── Module 1: Real-Time Data Lakehouse & Stream Processing (10 endpoints) ──
+app.get('/api/admin/data/lakehouse/dashboard', (c) => c.json({
+  total_events_processed_today: 284000000,
+  stream_throughput_mbps: 2840,
+  active_pipelines: 42,
+  data_freshness_sec: 1.4,
+  storage_tb: 284,
+  query_p99_ms: 84,
+  cost_per_tb_inr: 840,
+  uptime_pct: 99.97,
+  topics: ['ticket_events','payment_events','fan_activity','venue_sensors','nft_mints'],
+  engines: ['Apache Kafka','Apache Flink','Apache Iceberg','ClickHouse'],
+}))
+app.get('/api/admin/data/lakehouse/pipelines', (c) => c.json({
+  pipelines: [
+    { id:'pipe-001', name:'TicketSales→DW', status:'running', lag_ms:42, throughput_kps:840 },
+    { id:'pipe-002', name:'FanActivity→ML', status:'running', lag_ms:18, throughput_kps:2840 },
+    { id:'pipe-003', name:'PaymentStream→Fraud', status:'running', lag_ms:8, throughput_kps:284 },
+    { id:'pipe-004', name:'VenueSensors→Ops', status:'running', lag_ms:4, throughput_kps:84 },
+    { id:'pipe-005', name:'NFTMints→Chain', status:'running', lag_ms:840, throughput_kps:42 },
+  ],
+  total: 42,
+  healthy: 40,
+  degraded: 2,
+}))
+app.post('/api/admin/data/lakehouse/query', (c) => c.json({
+  query_id: 'qry-' + Math.random().toString(36).slice(2,10),
+  status: 'completed',
+  rows_returned: 28400,
+  execution_ms: 84,
+  bytes_scanned_gb: 2.84,
+  cache_hit: true,
+  engine: 'ClickHouse',
+}))
+app.get('/api/admin/data/lakehouse/schemas', (c) => c.json({
+  databases: ['tickets_db','fans_db','events_db','payments_db','analytics_db','ml_features_db'],
+  total_tables: 284,
+  total_columns: 2840,
+  last_schema_change: '2026-03-09T08:00:00Z',
+  data_catalog_url: 'https://catalog.indtix.internal',
+}))
+app.get('/api/admin/data/stream/kafka/topics', (c) => c.json({
+  topics: [
+    { name:'ticket.events', partitions:42, lag:0, throughput_kps:840, retention_hours:168 },
+    { name:'fan.activity', partitions:84, lag:0, throughput_kps:2840, retention_hours:72 },
+    { name:'payment.stream', partitions:18, lag:0, throughput_kps:284, retention_hours:720 },
+    { name:'venue.sensors', partitions:8, lag:2, throughput_kps:84, retention_hours:24 },
+  ],
+  broker_count: 18,
+  cluster_health: 'green',
+}))
+app.get('/api/admin/data/stream/flink/jobs', (c) => c.json({
+  running_jobs: 18,
+  failed_jobs: 0,
+  total_checkpoints_today: 2840,
+  avg_checkpoint_ms: 84,
+  state_backend: 'RocksDB',
+  jobs: [
+    { name:'FraudDetectionStream', parallelism:8, uptime_hrs:720, tps:28400 },
+    { name:'DynamicPricingStream', parallelism:4, uptime_hrs:720, tps:8400 },
+    { name:'RecommendationStream', parallelism:16, uptime_hrs:720, tps:84000 },
+  ],
+}))
+app.get('/api/admin/data/lakehouse/iceberg/snapshots', (c) => c.json({
+  total_snapshots: 2840,
+  latest_snapshot_id: 'snap-' + Date.now(),
+  compaction_status: 'idle',
+  last_compaction: '2026-03-09T04:00:00Z',
+  files_pruned_today: 840,
+  storage_saved_gb: 28.4,
+}))
+app.post('/api/admin/data/stream/pipeline/create', async (c) => {
+  const b = await c.req.json()
+  return c.json({ pipeline_id:'pipe-'+Math.random().toString(36).slice(2,8), name:b.name||'new-pipeline', status:'provisioning', estimated_start_sec:30 })
+})
+app.get('/api/ops/data/stream/health', (c) => c.json({
+  kafka_health:'green', flink_health:'green', iceberg_health:'green',
+  clickhouse_health:'green', total_lag_events:284, p99_latency_ms:42, error_rate_ppm:1.4,
+}))
+app.get('/api/admin/data/lakehouse/cost-analysis', (c) => c.json({
+  total_cost_inr_month: 2840000,
+  storage_cost_pct:42, compute_cost_pct:38, network_cost_pct:12, other_pct:8,
+  cost_per_query_inr: 0.84,
+  cost_trend_mom_pct: -8.4,
+  optimization_savings_inr: 840000,
+}))
+
+// ── Module 2: ML Model Registry & Feature Store (10 endpoints) ──
+app.get('/api/admin/ml/registry/dashboard', (c) => c.json({
+  total_models: 284,
+  production_models: 84,
+  staging_models: 42,
+  experiments_active: 18,
+  feature_pipelines: 140,
+  avg_model_accuracy_pct: 94.2,
+  predictions_today: 28400000,
+  model_drift_alerts: 4,
+  frameworks: ['TensorFlow','PyTorch','XGBoost','LightGBM','scikit-learn','Hugging Face'],
+  serving_infrastructure: 'KServe on K8s',
+}))
+app.get('/api/admin/ml/registry/models', (c) => c.json({
+  models: [
+    { id:'mdl-001', name:'DynamicPricingV3', version:'3.2.1', status:'production', accuracy:0.942, latency_ms:8, predictions_day:2840000 },
+    { id:'mdl-002', name:'FraudDetectionV2', version:'2.4.0', status:'production', accuracy:0.984, latency_ms:4, predictions_day:840000 },
+    { id:'mdl-003', name:'ChurnPredictorV4', version:'4.0.2', status:'production', accuracy:0.914, latency_ms:18, predictions_day:284000 },
+    { id:'mdl-004', name:'RecommenderV5', version:'5.1.0', status:'production', accuracy:0.874, latency_ms:42, predictions_day:8400000 },
+    { id:'mdl-005', name:'SentimentAnalyserV2', version:'2.3.0', status:'production', accuracy:0.934, latency_ms:28, predictions_day:1840000 },
+    { id:'mdl-006', name:'DemandForecastV6', version:'6.0.0', status:'staging', accuracy:0.961, latency_ms:84, predictions_day:0 },
+  ],
+  total_versions: 840,
+}))
+app.post('/api/admin/ml/registry/models/register', async (c) => {
+  const b = await c.req.json()
+  return c.json({ model_id:'mdl-'+Math.random().toString(36).slice(2,8), name:b.name, version:b.version||'1.0.0', status:'registered', registry_url:'https://mlflow.indtix.internal/models/'+b.name })
+})
+app.get('/api/admin/ml/feature-store/features', (c) => c.json({
+  total_features: 2840,
+  online_features: 840,
+  offline_features: 2000,
+  feature_groups: ['fan_profile','ticket_history','event_context','pricing_signals','venue_ops','social_graph'],
+  freshness_p95_sec: 4.2,
+  serving_p99_ms: 8,
+  storage_backend: 'Redis + BigTable',
+}))
+app.get('/api/admin/ml/feature-store/feature-groups', (c) => c.json({
+  groups: [
+    { name:'fan_profile', features:284, freshness_sec:60, serving_ms:4 },
+    { name:'ticket_history', features:140, freshness_sec:300, serving_ms:8 },
+    { name:'pricing_signals', features:84, freshness_sec:1, serving_ms:2 },
+    { name:'event_context', features:140, freshness_sec:60, serving_ms:4 },
+    { name:'social_graph', features:42, freshness_sec:3600, serving_ms:18 },
+  ],
+}))
+app.post('/api/admin/ml/experiments/create', async (c) => {
+  const b = await c.req.json()
+  return c.json({ experiment_id:'exp-'+Math.random().toString(36).slice(2,8), name:b.name, status:'running', tracking_url:'https://mlflow.indtix.internal/experiments/'+b.name })
+})
+app.get('/api/admin/ml/experiments/active', (c) => c.json({
+  experiments: [
+    { id:'exp-001', name:'PricingElasticityV4', status:'running', runs:42, best_metric:0.961, started:'2026-03-01' },
+    { id:'exp-002', name:'RecSysTransformer', status:'running', runs:18, best_metric:0.891, started:'2026-03-05' },
+    { id:'exp-003', name:'FraudGBMv3', status:'completed', runs:84, best_metric:0.987, started:'2026-02-20' },
+  ],
+  total_active: 18,
+  total_runs_today: 284,
+}))
+app.post('/api/admin/ml/models/deploy', async (c) => {
+  const b = await c.req.json()
+  return c.json({ deployment_id:'dep-'+Math.random().toString(36).slice(2,8), model_id:b.model_id, environment:b.environment||'production', status:'deploying', endpoint:'https://ml-serve.indtix.internal/v1/models/'+b.model_id, estimated_ready_sec:120 })
+})
+app.get('/api/admin/ml/registry/model-performance', (c) => c.json({
+  drift_alerts: [
+    { model:'DynamicPricingV3', metric:'PSI', value:0.142, threshold:0.2, status:'ok' },
+    { model:'ChurnPredictorV4', metric:'KS', value:0.084, threshold:0.1, status:'ok' },
+  ],
+  retraining_queue: ['DemandForecastV6'],
+  champion_challenger: { champion:'RecSysV5', challenger:'RecSysTransformer', traffic_split_pct:10 },
+}))
+app.get('/api/admin/ml/infrastructure/gpu-cluster', (c) => c.json({
+  total_gpus: 84,
+  gpus_in_use: 42,
+  gpu_utilisation_pct: 74,
+  gpu_type: 'NVIDIA A100 80GB',
+  training_jobs_running: 8,
+  inference_replicas: 42,
+  cost_per_gpu_hour_inr: 840,
+  monthly_gpu_cost_inr: 2840000,
+}))
+
+// ── Module 3: Predictive Demand & Pricing Intelligence (10 endpoints) ──
+app.get('/api/admin/intelligence/demand/dashboard', (c) => c.json({
+  forecast_horizon_days: 90,
+  active_forecasts: 284,
+  forecast_accuracy_mape: 4.2,
+  events_repriced_today: 840,
+  revenue_uplift_pct: 14.2,
+  demand_signals: ['weather','social_buzz','competitor_events','transport','holidays','artist_popularity'],
+  model: 'LightGBM + LSTM ensemble',
+  confidence_avg: 0.924,
+}))
+app.get('/api/admin/intelligence/demand/forecasts', (c) => c.json({
+  forecasts: [
+    { event_id:'evt-001', name:'Coldplay Mumbai Night 1', date:'2026-04-15', predicted_demand:84000, current_sold:42000, fill_rate_pct:50, recommendation:'price_up' },
+    { event_id:'evt-002', name:'IPL Final 2026', date:'2026-05-28', predicted_demand:92000, current_sold:88000, fill_rate_pct:96, recommendation:'hold' },
+    { event_id:'evt-003', name:'Lollapalooza Day 1', date:'2026-01-10', predicted_demand:28000, current_sold:18000, fill_rate_pct:64, recommendation:'promo' },
+  ],
+  next_refresh_min: 15,
+}))
+app.get('/api/admin/intelligence/pricing/engine', (c) => c.json({
+  model: 'ElasticNet v4 + RL Policy',
+  rules_active: 42,
+  price_bands: 8,
+  avg_uplift_pct: 14.2,
+  events_live_pricing: 284,
+  constraints: { min_discount_pct:0, max_surge_pct:200, blackout_periods:['D-1'] },
+  last_global_reprice: '2026-03-09T06:00:00Z',
+}))
+app.post('/api/admin/intelligence/pricing/simulate', async (c) => {
+  const b = await c.req.json()
+  return c.json({ scenario: b.scenario||'surge_10pct', predicted_revenue_inr: 8400000*(1+(b.surge_pct||10)/100), predicted_tickets_sold: 28400, elasticity: -1.42, confidence:0.924, recommendation:'approve' })
+})
+app.get('/api/admin/intelligence/demand/signals', (c) => c.json({
+  signals: [
+    { signal:'social_buzz', weight:0.28, current_score:8.4, trend:'rising' },
+    { signal:'weather_forecast', weight:0.14, current_score:7.2, trend:'stable' },
+    { signal:'transport_availability', weight:0.18, current_score:9.1, trend:'stable' },
+    { signal:'competitor_events', weight:0.12, current_score:3.4, trend:'falling' },
+    { signal:'artist_popularity', weight:0.28, current_score:9.4, trend:'rising' },
+  ],
+  composite_demand_index: 8.42,
+  last_updated: '2026-03-09T09:00:00Z',
+}))
+app.get('/api/admin/intelligence/demand/seasonality', (c) => c.json({
+  peak_months: ['November','December','January','March'],
+  low_months: ['July','August'],
+  weekly_pattern: { Friday:1.42, Saturday:1.84, Sunday:1.28, weekdays:0.74 },
+  holiday_uplift_pct: 84,
+  festive_calendar: ['Diwali','New Year','Holi','IPL Season','Concert Season'],
+}))
+app.get('/api/ops/intelligence/demand/live-tracker', (c) => c.json({
+  events_live_now: 42,
+  total_scans_hour: 28400,
+  demand_surge_alerts: 4,
+  underperforming_events: 8,
+  recommended_actions: ['Reprice Lollapalooza Day 3 -15%','Push promo for Pune Comedy Fest','Activate waitlist for IPL Final'],
+}))
+app.post('/api/admin/intelligence/pricing/bulk-reprice', async (c) => {
+  const b = await c.req.json()
+  return c.json({ job_id:'rpjob-'+Math.random().toString(36).slice(2,8), events_queued: b.event_ids?.length||42, estimated_completion_sec:30, expected_uplift_inr:8400000 })
+})
+app.get('/api/admin/intelligence/demand/cohort-forecast', (c) => c.json({
+  cohorts: [
+    { name:'Super Fan', size:28400, predicted_ltv_inr:28400, churn_risk_pct:4.2 },
+    { name:'Casual Fan', size:284000, predicted_ltv_inr:2840, churn_risk_pct:18.4 },
+    { name:'First-Timer', size:84000, predicted_ltv_inr:840, churn_risk_pct:42.1 },
+  ],
+  model_accuracy: 0.914,
+}))
+app.get('/api/admin/intelligence/pricing/recommendations', (c) => c.json({
+  recommendations: [
+    { event:'Coldplay Night 1', action:'increase', amount_pct:18, expected_uplift_inr:840000, confidence:0.934 },
+    { event:'Lollapalooza Day 1', action:'promo', discount_pct:15, expected_fill_increase:12, confidence:0.874 },
+    { event:'Pune Comedy Fest', action:'dynamic_floor', new_floor_inr:499, expected_sell_through:94, confidence:0.904 },
+  ],
+  auto_approve_threshold: 0.95,
+  pending_manual_review: 8,
+}))
+
+// ── Module 4: Customer 360 & Audience Intelligence (10 endpoints) ──
+app.get('/api/admin/audience/c360/dashboard', (c) => c.json({
+  total_profiles: 28400000,
+  enriched_profiles_pct: 84.2,
+  identity_resolved_pct: 74.1,
+  avg_data_points_per_profile: 284,
+  segments_active: 840,
+  real_time_updates_sec: 2.8,
+  data_sources: 42,
+  compliance: 'PDPB 2023 + GDPR ready',
+}))
+app.get('/api/admin/audience/c360/segments', (c) => c.json({
+  segments: [
+    { id:'seg-001', name:'High-Value Fans', size:284000, avg_ltv_inr:28400, churn_risk:'low', engagement:'high' },
+    { id:'seg-002', name:'Lapsed Buyers', size:840000, avg_ltv_inr:2840, churn_risk:'high', engagement:'low' },
+    { id:'seg-003', name:'Esports Enthusiasts', size:284000, avg_ltv_inr:4200, churn_risk:'medium', engagement:'high' },
+    { id:'seg-004', name:'Bharat Tier-2 Fans', size:2840000, avg_ltv_inr:840, churn_risk:'medium', engagement:'medium' },
+    { id:'seg-005', name:'NFT Holders', size:84000, avg_ltv_inr:84000, churn_risk:'low', engagement:'very_high' },
+  ],
+  total_segments: 840,
+}))
+app.get('/api/admin/audience/c360/profile/:fan_id', (c) => c.json({
+  fan_id: c.req.param('fan_id'),
+  name: 'Priya Sharma',
+  tier: 'Super Fan Gold',
+  ltv_inr: 28400,
+  tickets_purchased: 42,
+  preferred_genres: ['Bollywood','Electronic','Indie'],
+  preferred_venues: ['Jio World Drive','MMRDA Grounds'],
+  nft_holdings: 8,
+  bnpl_eligible: true,
+  churn_score: 0.08,
+  next_best_offer: 'Coldplay Floor Upgrade ₹4,999',
+  engagement_score: 9.4,
+}))
+app.get('/api/admin/audience/identity/resolution', (c) => c.json({
+  total_identities: 28400000,
+  resolved_pct: 74.1,
+  cross_device_links: 8400000,
+  email_phone_match_pct: 84.2,
+  third_party_enrichment_sources: ['Experian','Signal','Truecaller','CIBIL'],
+  match_rate_pct: 84.2,
+  deterministic_links: 18400000,
+  probabilistic_links: 4200000,
+}))
+app.get('/api/admin/audience/propensity/models', (c) => c.json({
+  models: [
+    { name:'UpgradePropensity', coverage_pct:84, lift:4.2, auc:0.874 },
+    { name:'ChurnRisk', coverage_pct:94, lift:8.4, auc:0.924 },
+    { name:'NextPurchaseTiming', coverage_pct:74, lift:2.8, auc:0.844 },
+    { name:'BNPLPropensity', coverage_pct:64, lift:6.4, auc:0.904 },
+    { name:'NFTPropensity', coverage_pct:42, lift:12.4, auc:0.944 },
+  ],
+}))
+app.get('/api/admin/audience/c360/journey-map', (c) => c.json({
+  avg_touchpoints_to_purchase: 4.2,
+  top_journeys: [
+    { path:['social_ad','search','app','purchase'], freq_pct:28.4, conv_pct:18.4 },
+    { path:['email','app','purchase'], freq_pct:18.4, conv_pct:42.1 },
+    { path:['referral','web','purchase'], freq_pct:14.2, conv_pct:28.4 },
+  ],
+  avg_days_to_purchase: 4.2,
+  attribution_model: 'Data-Driven (Shapley)',
+}))
+app.post('/api/admin/audience/c360/segment/create', async (c) => {
+  const b = await c.req.json()
+  return c.json({ segment_id:'seg-'+Math.random().toString(36).slice(2,8), name:b.name, estimated_size:Math.floor(Math.random()*1000000), status:'building', ready_in_sec:30 })
+})
+app.get('/api/organiser/audience/event-insights', (c) => c.json({
+  event_id: 'evt-current',
+  audience_breakdown: { age_18_24:28, age_25_34:42, age_35_44:18, age_45plus:12 },
+  gender: { male:58, female:38, other:4 },
+  city_mix: { Mumbai:42, Delhi:18, Bangalore:14, Pune:8, others:18 },
+  super_fans_pct: 18.4,
+  first_timers_pct: 28.4,
+  avg_spend_inr: 4284,
+}))
+app.get('/api/admin/audience/lookalike/generate', (c) => c.json({
+  source_segment: 'High-Value Fans',
+  lookalike_size: 2840000,
+  similarity_score: 0.84,
+  expansion_factor: 10,
+  platforms: ['Meta Ads','Google Ads','TradeDesk'],
+  estimated_cpa_reduction_pct: 28.4,
+}))
+app.get('/api/admin/audience/c360/health', (c) => c.json({
+  profile_freshness_hours: 4.2,
+  data_quality_score: 94.2,
+  missing_email_pct: 8.4,
+  missing_phone_pct: 4.2,
+  duplicate_rate_ppm: 84,
+  consent_opt_in_pct: 84.2,
+}))
+
+// ── Module 5: Experiment Platform & A/B Testing (8 endpoints) ──
+app.get('/api/admin/experiments/platform/dashboard', (c) => c.json({
+  active_experiments: 42,
+  experiments_concluded_month: 84,
+  avg_experiment_duration_days: 14,
+  win_rate_pct: 42.1,
+  cumulative_revenue_lift_inr: 28400000,
+  experiments_by_type: { ab_test:28, multivariate:8, bandit:4, holdout:2 },
+  platform: 'Statsig + custom Bayesian engine',
+}))
+app.get('/api/admin/experiments/platform/active', (c) => c.json({
+  experiments: [
+    { id:'exp-ab-001', name:'Checkout Flow V2', type:'ab_test', traffic_pct:20, started:'2026-03-01', days_running:8, p_value:0.042, winner:'variant_b', lift_pct:8.4, metric:'conversion_rate' },
+    { id:'exp-ab-002', name:'Homepage Hero Banner', type:'multivariate', traffic_pct:50, started:'2026-03-05', days_running:4, p_value:0.18, winner:null, lift_pct:null, metric:'ctr' },
+    { id:'exp-ab-003', name:'BNPL Placement', type:'ab_test', traffic_pct:30, started:'2026-02-28', days_running:9, p_value:0.008, winner:'variant_a', lift_pct:14.2, metric:'bnpl_adoption' },
+  ],
+}))
+app.post('/api/admin/experiments/platform/create', async (c) => {
+  const b = await c.req.json()
+  return c.json({ experiment_id:'exp-'+Math.random().toString(36).slice(2,8), name:b.name, status:'running', allocation_pct:b.traffic_pct||10, start_time: new Date().toISOString() })
+})
+app.get('/api/admin/experiments/platform/results/:exp_id', (c) => c.json({
+  experiment_id: c.req.param('exp_id'),
+  control: { users:14200, conversion_pct:4.2, revenue_per_user:840 },
+  variant: { users:14200, conversion_pct:5.1, revenue_per_user:1020 },
+  lift_pct: 21.4,
+  p_value: 0.024,
+  confidence_pct: 97.6,
+  recommendation: 'ship_variant',
+  statistical_power: 0.84,
+}))
+app.post('/api/admin/experiments/platform/stop', async (c) => {
+  const b = await c.req.json()
+  return c.json({ experiment_id:b.experiment_id, status:'stopped', reason:b.reason||'manual', final_winner:b.winner||'variant', rollout_recommended:true })
+})
+app.get('/api/admin/experiments/bandits/active', (c) => c.json({
+  bandits: [
+    { id:'bandit-001', name:'Push Notification Timing', arms:4, best_arm:'8pm_local', regret_minimised_pct:84.2, reward_rate:0.184 },
+    { id:'bandit-002', name:'Pricing CTA Colour', arms:3, best_arm:'orange', regret_minimised_pct:74.1, reward_rate:0.284 },
+  ],
+  algorithm: 'Thompson Sampling',
+}))
+app.get('/api/admin/experiments/platform/history', (c) => c.json({
+  total_experiments: 840,
+  won: 284,
+  lost: 284,
+  inconclusive: 272,
+  top_wins: [
+    { name:'Dynamic Price Display', lift_pct:18.4, revenue_impact_inr:28400000 },
+    { name:'BNPL at Checkout', lift_pct:14.2, revenue_impact_inr:18400000 },
+    { name:'Personalized Homepage', lift_pct:8.4, revenue_impact_inr:8400000 },
+  ],
+}))
+app.get('/api/admin/experiments/feature-flags', (c) => c.json({
+  total_flags: 284,
+  flags_enabled: 184,
+  gradual_rollouts: 42,
+  kill_switches: 18,
+  flags: [
+    { name:'new_checkout_v3', enabled:true, rollout_pct:100, variants:[] },
+    { name:'bnpl_v2', enabled:true, rollout_pct:50, variants:['v2a','v2b'] },
+    { name:'ar_try_on', enabled:false, rollout_pct:0, variants:[] },
+    { name:'web3_wallet', enabled:true, rollout_pct:20, variants:[] },
+  ],
+}))
+
+// ── Module 6: Observability & AIOps Platform (8 endpoints) ──
+app.get('/api/ops/aiops/observability/dashboard', (c) => c.json({
+  overall_health: 'green',
+  services_monitored: 284,
+  active_alerts: 4,
+  incidents_open: 1,
+  sli_compliance_pct: 99.94,
+  error_budget_consumed_pct: 28.4,
+  p99_latency_ms: 42,
+  anomalies_detected_today: 18,
+  auto_remediated_today: 14,
+  mttr_min: 8.4,
+}))
+app.get('/api/ops/aiops/observability/traces', (c) => c.json({
+  sampling_rate_pct: 10,
+  traces_per_sec: 2840,
+  p50_trace_ms: 8,
+  p99_trace_ms: 84,
+  error_traces_pct: 0.14,
+  slow_traces_pct: 0.84,
+  top_slow_endpoints: ['/api/admin/ml/registry/models','/api/admin/audience/c360/segments','/api/admin/data/lakehouse/query'],
+  tracing_backend: 'Jaeger + OpenTelemetry',
+}))
+app.get('/api/ops/aiops/anomaly/active', (c) => c.json({
+  anomalies: [
+    { id:'ano-001', service:'payment-gateway', metric:'error_rate', current:0.42, baseline:0.08, severity:'high', detected_min_ago:8, auto_remediation:'scaling_up' },
+    { id:'ano-002', service:'ml-serving', metric:'p99_latency', current:284, baseline:42, severity:'medium', detected_min_ago:4, auto_remediation:'cache_warm' },
+  ],
+  model: 'Isolation Forest + LSTM',
+  precision_pct: 94.2,
+  recall_pct: 88.4,
+}))
+app.get('/api/ops/aiops/incidents/active', (c) => c.json({
+  incidents: [
+    { id:'inc-001', title:'Payment Gateway Elevated Error Rate', severity:'P2', status:'investigating', opened_min_ago:12, affected_services:['checkout','payment-gateway'], war_room:'https://slack.indtix.internal/inc-001' },
+  ],
+  mttr_30d_min: 8.4,
+  mtta_30d_min: 2.8,
+  incidents_30d: 18,
+  p0_incidents_30d: 0,
+}))
+app.post('/api/ops/aiops/incidents/create', async (c) => {
+  const b = await c.req.json()
+  return c.json({ incident_id:'inc-'+Math.random().toString(36).slice(2,8), title:b.title, severity:b.severity||'P3', status:'created', runbook_url:'https://runbooks.indtix.internal/'+b.service })
+})
+app.get('/api/ops/aiops/slo/dashboard', (c) => c.json({
+  slos: [
+    { service:'checkout', slo:'99.9% availability', compliance_pct:99.94, error_budget_remaining_pct:71.6 },
+    { service:'api-gateway', slo:'p99<100ms', compliance_pct:99.84, error_budget_remaining_pct:84.0 },
+    { service:'ml-serving', slo:'p99<200ms', compliance_pct:99.74, error_budget_remaining_pct:74.0 },
+    { service:'data-pipeline', slo:'lag<10s', compliance_pct:99.97, error_budget_remaining_pct:97.0 },
+  ],
+  burn_rate_alert: false,
+}))
+app.get('/api/ops/aiops/capacity/forecast', (c) => c.json({
+  current_utilisation_pct: 42,
+  predicted_peak_pct: 84,
+  peak_event: 'IPL Final 2026',
+  peak_date: '2026-05-28',
+  scale_up_recommendation: { workers:84, date:'2026-05-25', cost_inr:2840000 },
+  autoscaling_enabled: true,
+  k8s_cluster_nodes: 284,
+}))
+app.post('/api/ops/aiops/runbook/execute', async (c) => {
+  const b = await c.req.json()
+  return c.json({ execution_id:'rbk-'+Math.random().toString(36).slice(2,8), runbook:b.runbook, steps_completed:b.steps||4, status:'success', duration_sec:18, rollback_available:true })
+})
+
+// ── Module 7: Natural Language Processing Suite (8 endpoints) ──
+app.get('/api/admin/nlp/suite/dashboard', (c) => c.json({
+  models_deployed: 18,
+  languages_supported: 22,
+  requests_today: 8400000,
+  avg_latency_ms: 42,
+  accuracy_avg: 0.934,
+  use_cases: ['sentiment_analysis','ticket_classification','chatbot','review_moderation','search','translation','summarisation','intent_detection'],
+  base_models: ['IndicBERT','MuRIL','Llama-3','GPT-4o-mini','Gemini Flash'],
+}))
+app.post('/api/admin/nlp/sentiment/analyze', async (c) => {
+  const b = await c.req.json()
+  const texts = b.texts || ['Great show!']
+  return c.json({ results: texts.map((t: string) => ({ text:t, sentiment:Math.random()>0.3?'positive':'negative', score: parseFloat((Math.random()*0.4+0.6).toFixed(2)), language:'en' })), model:'IndicBERT-Sentiment-v2', latency_ms:18 })
+})
+app.post('/api/admin/nlp/classification/ticket', async (c) => {
+  const b = await c.req.json()
+  return c.json({ ticket_id:b.ticket_id, category:['refund','technical','complaint','enquiry'][Math.floor(Math.random()*4)], priority:['P1','P2','P3'][Math.floor(Math.random()*3)], confidence:parseFloat((Math.random()*0.2+0.8).toFixed(2)), suggested_team:'customer-ops', auto_resolve_eligible:Math.random()>0.5 })
+})
+app.post('/api/admin/nlp/translation/batch', async (c) => {
+  const b = await c.req.json()
+  return c.json({ job_id:'trans-'+Math.random().toString(36).slice(2,8), source_lang:b.source||'en', target_langs:b.targets||['hi','ta','te','bn'], items_translated:b.texts?.length||1, model:'IndicTrans2', quality_score:0.924 })
+})
+app.post('/api/admin/nlp/search/semantic', async (c) => {
+  const b = await c.req.json()
+  return c.json({ query: b.query, results: [
+    { id:'evt-001', title:'Coldplay World Tour Mumbai', score:0.94, highlights:['Music of the Spheres','April 2026','DY Patil Stadium'] },
+    { id:'evt-002', title:'Coldplay Mumbai Night 2', score:0.91, highlights:['same tour','April 16','DY Patil'] },
+  ], latency_ms:28, model:'text-embedding-3-large' })
+})
+app.get('/api/fan/nlp/chatbot/session', (c) => c.json({
+  session_id: 'sess-'+Math.random().toString(36).slice(2,10),
+  bot_name: 'INDY',
+  languages: ['en','hi','ta','te','bn','mr','gu'],
+  capabilities: ['ticket_booking','refund','event_info','venue_navigation','recommendations'],
+  avg_resolution_turns: 2.4,
+  auto_resolution_pct: 84.2,
+}))
+app.post('/api/admin/nlp/moderation/review', async (c) => {
+  const b = await c.req.json()
+  return c.json({ review_id:b.review_id||'rev-001', is_spam:false, is_offensive:false, is_authentic:true, sentiment:'positive', score:parseFloat((Math.random()*0.3+0.7).toFixed(2)), action:'approve', model:'ContentShield-v2' })
+})
+app.get('/api/admin/nlp/voice/analytics', (c) => c.json({
+  ivr_calls_today: 28400,
+  voice_ai_handled_pct: 74.2,
+  avg_call_duration_sec: 84,
+  intent_accuracy_pct: 91.4,
+  languages: ['Hindi','English','Tamil','Telugu','Kannada','Bengali'],
+  escalation_rate_pct: 8.4,
+  csat_voice: 4.2,
+}))
+
+// ── Module 8: Computer Vision & Image Intelligence (8 endpoints) ──
+app.get('/api/admin/cv/platform/dashboard', (c) => c.json({
+  models_active: 12,
+  images_processed_today: 2840000,
+  videos_analysed_today: 28400,
+  avg_inference_ms: 18,
+  use_cases: ['crowd_density','face_recognition','ticket_barcode','merchandise_recognition','safety_monitoring','ar_overlay','content_moderation','event_photography'],
+  gpu_utilisation_pct: 74,
+  accuracy_avg: 0.944,
+}))
+app.post('/api/admin/cv/crowd/analyze', async (c) => {
+  return c.json({ venue: 'DY Patil Stadium', timestamp: new Date().toISOString(), sections: [
+    { section:'A', density:'low', headcount:2840, capacity:8000, fill_pct:35.5, flow_dir:'entering' },
+    { section:'B', density:'medium', headcount:6400, capacity:8000, fill_pct:80, flow_dir:'stable' },
+    { section:'C', density:'high', headcount:7600, capacity:8000, fill_pct:95, flow_dir:'stable' },
+  ], safety_alert: false, recommended_action: 'open_gate_5' })
+})
+app.post('/api/admin/cv/ticket/validate', async (c) => {
+  const b = await c.req.json()
+  return c.json({ ticket_id: b.ticket_id||'TKT-001', valid: true, method: 'qr_scan', confidence: 0.994, seat:'Block B Row 14 Seat 22', fan_name:'Priya Sharma', tier:'Gold', duplicate_attempt: false, scan_time_ms: 84 })
+})
+app.get('/api/venue/cv/safety/alerts', (c) => c.json({
+  active_alerts: [],
+  crowd_crush_risk: 'low',
+  evacuation_route_clear: true,
+  restricted_area_intrusions: 0,
+  unattended_objects: 0,
+  cameras_online: 284,
+  cameras_offline: 2,
+  last_scan: new Date().toISOString(),
+}))
+app.post('/api/admin/cv/merchandise/recognize', async (c) => {
+  return c.json({ detected_items: [
+    { sku:'MERCH-001', name:'Coldplay Official Tee', confidence:0.984, count:42, age_group_est:'20-30', purchase_intent:'high' },
+    { sku:'MERCH-002', name:'INDY Tote Bag', confidence:0.944, count:18, age_group_est:'25-35', purchase_intent:'medium' },
+  ], processing_ms:84, model:'EfficientDet-Merch-v2' })
+})
+app.get('/api/admin/cv/photography/highlights', (c) => c.json({
+  event_id: 'evt-current',
+  photos_captured: 28400,
+  ai_curated_highlights: 284,
+  avg_quality_score: 8.4,
+  facial_blur_applied: true,
+  auto_album_url: 'https://photos.indtix.in/evt-current',
+  delivery_min: 8.4,
+}))
+app.post('/api/admin/cv/content/moderate', async (c) => {
+  const b = await c.req.json()
+  return c.json({ content_id:b.content_id||'cnt-001', nsfw_score:0.02, violence_score:0.01, spam_score:0.04, action:'approve', confidence:0.984, model:'SafeGuard-CV-v3', latency_ms:18 })
+})
+app.get('/api/admin/cv/ar/overlay-config', (c) => c.json({
+  active_overlays: 42,
+  supported_devices: ['iPhone 12+','Pixel 6+','Samsung S21+'],
+  overlays: [
+    { id:'ar-001', name:'Coldplay Stars', trigger:'stage_area', reach:28400 },
+    { id:'ar-002', name:'Seat Navigator', trigger:'qr_scan', reach:84000 },
+    { id:'ar-003', name:'Artist Info Bubble', trigger:'face_recognition', reach:18400 },
+  ],
+  avg_engagement_sec: 42,
+}))
+
+// ── Module 9: Graph Analytics & Network Intelligence (8 endpoints) ──
+app.get('/api/admin/graph/analytics/dashboard', (c) => c.json({
+  total_nodes: 28400000,
+  total_edges: 284000000,
+  graph_db: 'Neo4j Enterprise',
+  queries_per_sec: 2840,
+  avg_query_ms: 18,
+  use_cases: ['social_network','fraud_ring','recommendation_graph','venue_flow','event_co_attendance','artist_collaboration'],
+  community_count: 28400,
+  graph_density: 0.000284,
+}))
+app.get('/api/admin/graph/social/influencers', (c) => c.json({
+  influencers: [
+    { fan_id:'fan-001', name:'Arjun K', followers:840000, reach:2840000, pagerank:0.942, community:'Mumbai Music Scene', verified:true },
+    { fan_id:'fan-002', name:'Priya S', followers:284000, reach:840000, pagerank:0.884, community:'Bollywood Fans', verified:true },
+    { fan_id:'fan-003', name:'Dev M', followers:184000, reach:284000, pagerank:0.824, community:'EDM Community', verified:false },
+  ],
+  total_influencers: 2840,
+  avg_influence_score: 7.4,
+}))
+app.get('/api/admin/graph/fraud/rings', (c) => c.json({
+  fraud_rings_detected: 8,
+  accounts_flagged: 284,
+  transactions_blocked: 42,
+  total_fraud_prevented_inr: 8400000,
+  ring_types: ['ticket_scalping','payment_fraud','fake_reviews','bot_accounts'],
+  algorithms: ['PageRank','Community Detection','Link Prediction','Betweenness Centrality'],
+}))
+app.get('/api/admin/graph/recommendations/collab-filter', (c) => c.json({
+  algorithm: 'Graph Neural Network (GraphSAGE)',
+  training_nodes: 28400000,
+  training_edges: 284000000,
+  model_accuracy_ndcg: 0.874,
+  cold_start_strategy: 'content_based_fallback',
+  recommendations_served_today: 84000000,
+  click_through_rate_pct: 8.4,
+}))
+app.get('/api/admin/graph/venue/flow-analysis', (c) => c.json({
+  venue: 'DY Patil Stadium',
+  peak_flow_gate: 'Gate 3',
+  bottleneck_nodes: ['Gate 3 Security','Level 2 Concession B'],
+  avg_traverse_min: 8.4,
+  recommendations: ['Add 2 security lanes at Gate 3','Open overflow concession D'],
+  simulation_confidence: 0.924,
+}))
+app.get('/api/admin/graph/co-attendance/patterns', (c) => c.json({
+  top_co_attended_pairs: [
+    { event_a:'Bollywood Night', event_b:'EDM Festival', co_attendance_pct:28.4, lift:4.2 },
+    { event_a:'IPL Final', event_b:'T20 League', co_attendance_pct:42.1, lift:8.4 },
+  ],
+  bundle_opportunities: 4,
+  estimated_bundle_uplift_inr: 28400000,
+}))
+app.get('/api/ops/graph/anomaly/network', (c) => c.json({
+  network_anomalies: [
+    { type:'velocity_fraud', accounts:42, pattern:'bulk_purchase_single_ip', risk:'high' },
+    { type:'review_manipulation', accounts:18, pattern:'coordinated_5star', risk:'medium' },
+  ],
+  detection_model: 'GNN-AnomalyNet-v2',
+  false_positive_rate_pct: 1.4,
+}))
+app.get('/api/admin/graph/artist/collaboration-network', (c) => c.json({
+  artists: 2840,
+  collaborations: 18400,
+  top_hubs: ['A.R. Rahman','Arijit Singh','Nucleya'],
+  genre_bridges: ['Prateek Kuhad connects Indie-Pop','Divine connects Hip-Hop-Bollywood'],
+  opportunity_collabs: [
+    { artist_a:'Anuv Jain', artist_b:'Prateek Kuhad', predicted_audience_overlap_pct:74, revenue_opportunity_inr:8400000 },
+  ],
+}))
+
+// ── Module 10: Federated Learning & Privacy-Preserving AI (10 endpoints) ──
+app.get('/api/admin/privacy-ai/federated/dashboard', (c) => c.json({
+  federated_nodes: 284,
+  active_training_rounds: 8,
+  models_trained_federated: 18,
+  differential_privacy_epsilon: 2.84,
+  data_never_leaves_device_pct: 100,
+  compliance: ['PDPB 2023','GDPR','CCPA','ISO 27701'],
+  accuracy_vs_centralised_pct: 94.2,
+  communication_rounds_avg: 42,
+}))
+app.get('/api/admin/privacy-ai/federated/nodes', (c) => c.json({
+  nodes: [
+    { node_id:'node-IN-MH-001', region:'Maharashtra', devices:28400, last_round:'2026-03-09T08:00:00Z', contribution_pct:18.4, model_version:'r42' },
+    { node_id:'node-IN-KA-001', region:'Karnataka', devices:18400, last_round:'2026-03-09T08:00:00Z', contribution_pct:14.2, model_version:'r42' },
+    { node_id:'node-IN-DL-001', region:'Delhi', devices:14200, last_round:'2026-03-09T08:00:00Z', contribution_pct:12.4, model_version:'r42' },
+  ],
+  total_participating_devices: 284000,
+}))
+app.post('/api/admin/privacy-ai/federated/round/start', async (c) => {
+  const b = await c.req.json()
+  return c.json({ round_id:'rnd-'+Math.random().toString(36).slice(2,8), model:b.model||'ChurnPredictor', participating_nodes:284, aggregation:'FedAvg', noise_multiplier:1.1, clip_norm:1.0, estimated_duration_min:18 })
+})
+app.get('/api/admin/privacy-ai/differential-privacy/config', (c) => c.json({
+  mechanism: 'Gaussian Noise + Laplace',
+  epsilon_values: { analytics:2.84, model_training:1.14, reporting:8.42 },
+  delta: 1e-5,
+  accounting_method: 'Rényi DP',
+  privacy_budget_consumed_pct: 28.4,
+  reset_policy: 'monthly',
+}))
+app.get('/api/admin/privacy-ai/encryption/homomorphic', (c) => c.json({
+  library: 'Microsoft SEAL + OpenFHE',
+  scheme: 'CKKS',
+  use_cases: ['encrypted_model_training','secure_aggregation','private_set_intersection'],
+  ops_per_sec: 2840,
+  overhead_vs_plaintext: '8-14x',
+  security_level_bits: 128,
+}))
+app.get('/api/admin/privacy-ai/consent/ledger', (c) => c.json({
+  total_consents: 28400000,
+  opt_in_rate_pct: 84.2,
+  consent_types: { analytics:91.4, personalisation:84.2, third_party_sharing:42.1, federated_learning:74.2 },
+  consent_changes_today: 2840,
+  immutable_ledger: 'Hyperledger Fabric',
+  audit_trail_entries: 284000000,
+}))
+app.post('/api/admin/privacy-ai/consent/update', async (c) => {
+  const b = await c.req.json()
+  return c.json({ fan_id:b.fan_id, consent_type:b.consent_type, granted:b.granted, timestamp: new Date().toISOString(), ledger_tx:'0x'+Math.random().toString(16).slice(2,18), immutable:true })
+})
+app.get('/api/admin/privacy-ai/secure-computation/mpc', (c) => c.json({
+  protocol: 'SPDZ + ABY3',
+  parties: 3,
+  use_cases: ['cross_org_fraud_detection','government_data_collab','bank_partnership_scoring'],
+  computations_today: 284,
+  avg_latency_ms: 840,
+  accuracy_pct: 99.8,
+}))
+app.get('/api/admin/privacy-ai/audit/report', (c) => c.json({
+  report_date: '2026-03-09',
+  total_data_accesses: 28400000,
+  policy_violations: 0,
+  dsr_requests_handled: 284,
+  dsr_avg_response_hours: 4.2,
+  certifications: ['ISO 27001','SOC 2 Type II','PCI DSS Level 1','PDPB 2023 compliant'],
+  next_audit: '2026-06-01',
+}))
+app.get('/api/admin/privacy-ai/synthetic-data/generator', (c) => c.json({
+  models: ['CTGAN','TVAE','GaussianCopula'],
+  datasets_generated: 84,
+  fidelity_score_avg: 0.924,
+  use_cases: ['model_testing','dev_environments','partner_data_sharing','regulatory_submissions'],
+  rows_generated_today: 28400000,
+  privacy_guarantee: 'DP-SGD epsilon=2.84',
+}))
+
+// ── Phase 39 Health Endpoint ──
+// ── Phase 39 main health endpoint (canonical) ────────────────
+app.get('/api/health', (c) => c.json({
+  status: 'ok',
+  platform: 'INDTIX',
+  version: 'v39.0.0',
+  phase: 'Phase 39',
+  theme: 'Advanced Data Platform, AI/ML Infrastructure & Predictive Intelligence',
+  new_endpoints: 90,
+  total_endpoints: 2539,
+  features: [
+    'Real-Time Data Lakehouse & Stream Processing',
+    'ML Model Registry & Feature Store',
+    'Predictive Demand & Pricing Intelligence',
+    'Customer 360 & Audience Intelligence',
+    'Experiment Platform & A/B Testing',
+    'Observability & AIOps Platform',
+    'Natural Language Processing Suite',
+    'Computer Vision & Image Intelligence',
+    'Graph Analytics & Network Intelligence',
+    'Federated Learning & Privacy-Preserving AI',
+  ],
+  timestamp: new Date().toISOString(),
+}))
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 39 — ADVANCED DATA PLATFORM, AI/ML INFRASTRUCTURE
+//               & PREDICTIVE INTELLIGENCE
 // ═══════════════════════════════════════════════════════════
 
 export default app

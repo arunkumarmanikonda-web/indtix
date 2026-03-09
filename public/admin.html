@@ -6045,4 +6045,131 @@ async function loadAllP38Admin() {
 loadAllP38Admin();
 </script>
 <!-- END PHASE 38 ADMIN PORTAL -->
+
+<!-- PHASE 39 ADMIN PORTAL: Advanced Data Platform, AI/ML Infrastructure & Predictive Intelligence -->
+<div id="phase39-admin" style="background:#0f172a;color:#e2e8f0;padding:24px;margin-top:24px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#06b6d4;font-size:1.4rem;margin-bottom:4px;">🧠 Phase 39 — Advanced Data Platform & AI/ML Infrastructure</h2>
+  <p style="color:#94a3b8;font-size:0.85rem;margin-bottom:16px;">Data Lakehouse · ML Registry · Predictive Intelligence · Customer 360 · Experiments · AIOps · NLP · CV · Graph Analytics · Federated AI</p>
+
+  <!-- KPI Row -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:18px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #06b6d4;">
+      <div style="font-size:1.4rem;font-weight:700;color:#06b6d4;">284M</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Events/Day (Lakehouse)</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #8b5cf6;">
+      <div style="font-size:1.4rem;font-weight:700;color:#8b5cf6;">284</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">ML Models in Registry</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.4rem;font-weight:700;color:#10b981;">94.2%</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Forecast Accuracy</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #f59e0b;">
+      <div style="font-size:1.4rem;font-weight:700;color:#f59e0b;">28.4M</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">C360 Profiles</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #f472b6;">
+      <div style="font-size:1.4rem;font-weight:700;color:#f472b6;">99.97%</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Data Pipeline SLA</div>
+    </div>
+  </div>
+
+  <!-- Module Panels Grid -->
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:18px;">
+    <!-- Lakehouse -->
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #06b6d4;">
+      <h4 style="color:#06b6d4;margin:0 0 8px;font-size:0.9rem;">🏗️ Data Lakehouse & Streaming</h4>
+      <div id="p39-lakehouse" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP39Lakehouse()" style="margin-top:8px;background:#06b6d4;color:#0f172a;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+    <!-- ML Registry -->
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #8b5cf6;">
+      <h4 style="color:#8b5cf6;margin:0 0 8px;font-size:0.9rem;">🤖 ML Model Registry</h4>
+      <div id="p39-ml" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP39ML()" style="margin-top:8px;background:#8b5cf6;color:#fff;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+    <!-- Predictive Intelligence -->
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #10b981;">
+      <h4 style="color:#10b981;margin:0 0 8px;font-size:0.9rem;">📈 Predictive Demand & Pricing</h4>
+      <div id="p39-demand" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP39Demand()" style="margin-top:8px;background:#10b981;color:#0f172a;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+    <!-- Customer 360 -->
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #f59e0b;">
+      <h4 style="color:#f59e0b;margin:0 0 8px;font-size:0.9rem;">👤 Customer 360 & Audience</h4>
+      <div id="p39-c360" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP39C360()" style="margin-top:8px;background:#f59e0b;color:#0f172a;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+    <!-- AIOps -->
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #ef4444;">
+      <h4 style="color:#ef4444;margin:0 0 8px;font-size:0.9rem;">🛠️ Observability & AIOps</h4>
+      <div id="p39-aiops" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP39AIOps()" style="margin-top:8px;background:#ef4444;color:#fff;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+    <!-- Privacy AI -->
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #f472b6;">
+      <h4 style="color:#f472b6;margin:0 0 8px;font-size:0.9rem;">🔐 Federated & Privacy-Preserving AI</h4>
+      <div id="p39-privai" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP39PrivAI()" style="margin-top:8px;background:#f472b6;color:#0f172a;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <button onclick="loadAllP39Admin()" style="background:linear-gradient(135deg,#06b6d4,#0891b2);color:#fff;border:none;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:0.85rem;font-weight:700;">🧠 Load All Modules</button>
+    <button onclick="loadP39Graph()" style="background:#1e293b;color:#8b5cf6;border:1px solid #8b5cf6;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;">🕸️ Graph Analytics</button>
+    <button onclick="loadP39Experiments()" style="background:#1e293b;color:#10b981;border:1px solid #10b981;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;">🧪 A/B Experiments</button>
+    <button onclick="loadP39NLP()" style="background:#1e293b;color:#f59e0b;border:1px solid #f59e0b;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;">💬 NLP Suite</button>
+  </div>
+</div>
+
+<script>
+async function loadP39Lakehouse() {
+  const d = await fetch('/api/admin/data/lakehouse/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39-lakehouse').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">📦 Events/Day: ${(d.total_events_processed_today||0).toLocaleString()} | Throughput: ${d.stream_throughput_mbps}Mbps | Pipelines: ${d.active_pipelines} | Freshness: ${d.data_freshness_sec}s | Storage: ${d.storage_tb}TB</div>`;
+}
+async function loadP39ML() {
+  const d = await fetch('/api/admin/ml/registry/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39-ml').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">🤖 Models: ${d.total_models} | Prod: ${d.production_models} | Accuracy: ${d.avg_model_accuracy_pct}% | Predictions/Day: ${(d.predictions_today||0).toLocaleString()} | Drift Alerts: ${d.model_drift_alerts}</div>`;
+}
+async function loadP39Demand() {
+  const d = await fetch('/api/admin/intelligence/demand/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39-demand').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">📈 Forecasts: ${d.active_forecasts} | Accuracy: ${(100-d.forecast_accuracy_mape).toFixed(1)}% | Repriced Today: ${d.events_repriced_today} | Revenue Uplift: +${d.revenue_uplift_pct}%</div>`;
+}
+async function loadP39C360() {
+  const d = await fetch('/api/admin/audience/c360/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39-c360').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">👤 Profiles: ${(d.total_profiles||0).toLocaleString()} | Enriched: ${d.enriched_profiles_pct}% | Segments: ${d.segments_active} | Sources: ${d.data_sources}</div>`;
+}
+async function loadP39AIOps() {
+  const d = await fetch('/api/ops/aiops/observability/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39-aiops').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">🛠️ Health: ${d.overall_health} | Alerts: ${d.active_alerts} | SLI: ${d.sli_compliance_pct}% | MTTR: ${d.mttr_min}min | Auto-Remediated: ${d.auto_remediated_today}</div>`;
+}
+async function loadP39PrivAI() {
+  const d = await fetch('/api/admin/privacy-ai/federated/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39-privai').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">🔐 Nodes: ${d.federated_nodes} | Models Fed-Trained: ${d.models_trained_federated} | DP ε: ${d.differential_privacy_epsilon} | Accuracy vs Central: ${d.accuracy_vs_centralised_pct}%</div>`;
+}
+async function loadP39Graph() {
+  const d = await fetch('/api/admin/graph/analytics/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  alert(d.error ? 'Error' : `🕸️ Nodes: ${(d.total_nodes||0).toLocaleString()} | Edges: ${(d.total_edges||0).toLocaleString()} | Communities: ${d.community_count} | QPS: ${d.queries_per_sec}`);
+}
+async function loadP39Experiments() {
+  const d = await fetch('/api/admin/experiments/platform/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  alert(d.error ? 'Error' : `🧪 Active: ${d.active_experiments} | Win Rate: ${d.win_rate_pct}% | Revenue Lift: ₹${(d.cumulative_revenue_lift_inr||0).toLocaleString()}`);
+}
+async function loadP39NLP() {
+  const d = await fetch('/api/admin/nlp/suite/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  alert(d.error ? 'Error' : `💬 Models: ${d.models_deployed} | Languages: ${d.languages_supported} | Requests/Day: ${(d.requests_today||0).toLocaleString()} | Accuracy: ${(d.accuracy_avg*100).toFixed(1)}%`);
+}
+async function loadAllP39Admin() {
+  await Promise.all([loadP39Lakehouse(), loadP39ML(), loadP39Demand(), loadP39C360(), loadP39AIOps(), loadP39PrivAI()]);
+}
+loadAllP39Admin();
+</script>
+<!-- END PHASE 39 ADMIN PORTAL -->
 </body></html>

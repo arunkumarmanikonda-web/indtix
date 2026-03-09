@@ -6661,5 +6661,71 @@ async function loadFanSubs() {
 loadFanFnB(); loadFanTravel(); loadFanGaming(); loadFanBNPL();
 </script>
 <!-- END PHASE 38 FAN PORTAL -->
+
+<!-- PHASE 39 FAN PORTAL: Advanced Data Platform & AI/ML Intelligence -->
+<div id="phase39-fan" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#06b6d4;font-size:1.3rem;margin-bottom:4px;">🧠 Phase 39 — AI-Powered Fan Intelligence</h2>
+  <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Personalised recommendations · Smart chatbot · Voice AI · Privacy-first data management</p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #06b6d4;">
+      <div style="font-size:1.4rem;font-weight:700;color:#06b6d4;">84M+</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">AI Recs/Day</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.4rem;font-weight:700;color:#10b981;">22</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Languages Supported</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #8b5cf6;">
+      <div style="font-size:1.4rem;font-weight:700;color:#8b5cf6;">84.2%</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Auto-Resolution Rate</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #06b6d4;">
+      <h4 style="color:#06b6d4;margin:0 0 6px;font-size:0.85rem;">💬 INDY AI Chatbot</h4>
+      <div id="p39f-chat" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadFanChat()" style="margin-top:6px;background:#06b6d4;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Chat Now</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #8b5cf6;">
+      <h4 style="color:#8b5cf6;margin:0 0 6px;font-size:0.85rem;">🔐 My Privacy Settings</h4>
+      <div id="p39f-privacy" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadFanPrivacy()" style="margin-top:6px;background:#8b5cf6;color:#fff;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Manage</button>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;">
+    <button onclick="loadFanSemanticSearch()" style="background:linear-gradient(135deg,#06b6d4,#0891b2);color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:700;">🔍 AI Event Search</button>
+    <button onclick="loadFanSentiment()" style="background:#1e293b;color:#10b981;border:1px solid #10b981;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:0.82rem;">💬 Share Feedback</button>
+  </div>
+</div>
+
+<script>
+async function loadFanChat() {
+  const d = await fetch('/api/fan/nlp/chatbot/session').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39f-chat').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Bot: ${d.bot_name} | Languages: ${d.languages?.length||7} | Resolution: ${d.auto_resolution_pct}% auto</span>`;
+}
+async function loadFanPrivacy() {
+  const d = await fetch('/api/admin/privacy-ai/consent/ledger').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39f-privacy').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Consent: ${d.opt_in_rate_pct}% opted in | Compliance: PDPB 2023 ✅ | Immutable Ledger ✅</span>`;
+}
+async function loadFanSemanticSearch() {
+  const q = prompt('Search for events:','Coldplay Mumbai') || 'concerts';
+  const d = await fetch('/api/admin/nlp/search/semantic',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query:q})}).then(r=>r.json()).catch(()=>({error:true}));
+  alert(d.error ? 'Error' : `🔍 Results for "${q}":\n` + (d.results||[]).map((r,i)=>`${i+1}. ${r.title} (score: ${r.score})`).join('\n'));
+}
+async function loadFanSentiment() {
+  const text = prompt('Share your feedback:','Amazing event, loved it!') || '';
+  if (!text) return;
+  const d = await fetch('/api/admin/nlp/sentiment/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({texts:[text]})}).then(r=>r.json()).catch(()=>({error:true}));
+  const r = d.results?.[0];
+  alert(r ? `Sentiment: ${r.sentiment} (${(r.score*100).toFixed(0)}% confidence) 😊` : 'Error');
+}
+loadFanChat(); loadFanPrivacy();
+</script>
+<!-- END PHASE 39 FAN PORTAL -->
 </body>
 </html>

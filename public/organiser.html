@@ -5239,4 +5239,56 @@ async function loadAllP38Org() { await Promise.all([loadOrgMerch(), loadOrgTrave
 loadAllP38Org();
 </script>
 <!-- END PHASE 38 ORGANISER PORTAL -->
+
+<!-- PHASE 39 ORGANISER PORTAL: Data & AI Intelligence -->
+<div id="phase39-org" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#06b6d4;font-size:1.3rem;margin-bottom:4px;">🧠 Phase 39 — Audience & Predictive Intelligence</h2>
+  <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Customer 360 audience insights · Demand forecasting · Experiment results · Event-level AI analytics</p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #f59e0b;">
+      <div style="font-size:1.4rem;font-weight:700;color:#f59e0b;" id="p39o-demand-idx">8.42</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Demand Index</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.4rem;font-weight:700;color:#10b981;">14.2%</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Revenue Uplift (AI Pricing)</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #8b5cf6;">
+      <div style="font-size:1.4rem;font-weight:700;color:#8b5cf6;">840</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Active Audience Segments</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #f59e0b;">
+      <h4 style="color:#f59e0b;margin:0 0 6px;font-size:0.85rem;">📈 Demand Forecast</h4>
+      <div id="p39o-demand" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadOrgDemand()" style="margin-top:6px;background:#f59e0b;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View Forecasts</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #10b981;">
+      <h4 style="color:#10b981;margin:0 0 6px;font-size:0.85rem;">👥 Audience Insights</h4>
+      <div id="p39o-audience" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadOrgAudience()" style="margin-top:6px;background:#10b981;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View Breakdown</button>
+    </div>
+  </div>
+
+  <button onclick="loadAllP39Org()" style="background:linear-gradient(135deg,#06b6d4,#0891b2);color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:700;">🧠 Refresh All</button>
+</div>
+
+<script>
+async function loadOrgDemand() {
+  const d = await fetch('/api/admin/intelligence/demand/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39o-demand').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Forecasts: ${d.active_forecasts} | Accuracy: ${(100-d.forecast_accuracy_mape).toFixed(1)}% | Repriced: ${d.events_repriced_today} | Uplift: +${d.revenue_uplift_pct}%</span>`;
+}
+async function loadOrgAudience() {
+  const d = await fetch('/api/organiser/audience/event-insights').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p39o-audience').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Super Fans: ${d.super_fans_pct}% | First-Timers: ${d.first_timers_pct}% | Avg Spend: ₹${(d.avg_spend_inr||0).toLocaleString()}</span>`;
+}
+async function loadAllP39Org() { await Promise.all([loadOrgDemand(), loadOrgAudience()]); }
+loadAllP39Org();
+</script>
+<!-- END PHASE 39 ORGANISER PORTAL -->
 </body></html>
