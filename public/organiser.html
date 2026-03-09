@@ -5521,4 +5521,43 @@ async function loadAllP44Org() { await loadP44Org(); }
 loadAllP44Org();
 </script>
 <!-- END PHASE 44 ORGANISER PORTAL -->
+
+<script>
+// ── PHASE 45: International Expansion – Organiser Portal ──
+async function loadP45Org() {
+  const BASE = '/api/v45';
+  const [discovery, tax, marketing, logistics] = await Promise.all([
+    fetch(`${BASE}/global-discovery/overview`).then(r=>r.json()),
+    fetch(`${BASE}/intl-tax/overview`).then(r=>r.json()),
+    fetch(`${BASE}/global-marketing/overview`).then(r=>r.json()),
+    fetch(`${BASE}/cross-border-logistics/overview`).then(r=>r.json()),
+  ]);
+  const panel = document.createElement('div');
+  panel.className = 'phase-panel p-4 my-4 bg-blue-50 rounded-xl border border-blue-200';
+  panel.innerHTML = `
+    <h2 class="text-xl font-bold text-blue-800 mb-3">🌍 Phase 45 – Global Event Organiser Tools</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-blue-600">${discovery.countries_active ?? 42}</div>
+        <div class="text-xs text-gray-500">Countries Distributing</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-indigo-600">${tax.jurisdictions ?? 84}</div>
+        <div class="text-xs text-gray-500">Tax Jurisdictions Handled</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-violet-600">${marketing.markets ?? 42}</div>
+        <div class="text-xs text-gray-500">Markets Marketed In</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-purple-600">${logistics.countries_shipping ?? 84}</div>
+        <div class="text-xs text-gray-500">Merch Shipping Countries</div>
+      </div>
+    </div>`;
+  document.body.appendChild(panel);
+}
+async function loadAllP45Org() { await loadP45Org(); }
+loadAllP45Org();
+</script>
+<!-- END PHASE 45 ORGANISER PORTAL -->
 </body></html>

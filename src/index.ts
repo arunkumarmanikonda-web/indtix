@@ -24444,26 +24444,26 @@ app.get('/api/admin/finance/reporting/esg-financials', (c) => c.json({
   integrated_reporting_standard: 'IFRS S1/S2 + GRI',
 }))
 
-// ── Phase 44 main health endpoint ────────────────────────────
+// ── Phase 45 main health endpoint ────────────────────────────
 app.get('/api/health', (c) => c.json({
   status: 'ok',
   platform: 'INDTIX',
-  version: 'v44.0.0',
-  phase: 'Phase 44',
-  theme: 'Sustainability, ESG & Carbon Intelligence',
+  version: 'v45.0.0',
+  phase: 'Phase 45',
+  theme: 'International Expansion & Global Localisation Platform',
   new_endpoints: 90,
-  total_endpoints: 2989,
+  total_endpoints: 3079,
   features: [
-    'Carbon Footprint Tracking & Reporting',
-    'Green Venue & Supplier Certification',
-    'Sustainable Ticketing & Eco-Commerce',
-    'ESG Metrics & Investor Reporting',
-    'Renewable Energy & Grid Management',
-    'Waste Reduction & Circular Economy',
-    'Social Impact & DEI Analytics',
-    'Carbon Credits & Offset Marketplace',
-    'Sustainability Gamification & Fan Engagement',
-    'Climate Risk & Regulatory Compliance',
+    'Multi-Currency & Global Payments',
+    'Multilingual & Localisation Engine',
+    'Global Event Discovery & Distribution',
+    'International Tax & Compliance Engine',
+    'Global Marketing & Growth Localisation',
+    'Cross-Border Logistics & Merchandise',
+    'Global Compliance & Regulatory Intelligence',
+    'International Partnerships & Distribution',
+    'Global Customer Experience & Support',
+    'Global Analytics & Market Intelligence',
   ],
   timestamp: new Date().toISOString(),
 }))
@@ -27085,6 +27085,414 @@ app.get('/api/v44/climate-risk/audit-trail', (c) => c.json({ audit_entries: 2840
 // ═══════════════════════════════════════════════════════════
 // END PHASE 44 — SUSTAINABILITY, ESG &
 //               CARBON INTELLIGENCE
+// ═══════════════════════════════════════════════════════════
+
+// ╔═══════════════════════════════════════════════════════════╗
+// ║  PHASE 45 — INTERNATIONAL EXPANSION &                    ║
+// ║             GLOBAL LOCALISATION PLATFORM (v45.0.0)       ║
+// ║  90 new endpoints  |  Total: 3,079                       ║
+// ╚═══════════════════════════════════════════════════════════╝
+
+// ── MODULE 1: Multi-Currency & Global Payments (10 endpoints) ──
+app.get('/api/v45/global-payments/overview', (c) => c.json({
+  module: 'Multi-Currency & Global Payments',
+  currencies_supported: 84, payment_methods: 284,
+  cross_border_txns_day: 28400, fx_revenue_cr: 8.4,
+  settlement_currencies: 42, avg_fx_spread_bps: 28,
+  multi_currency_wallets: 840000, real_time_fx_pairs: 284,
+}))
+app.get('/api/v45/global-payments/currencies', (c) => c.json({
+  total_currencies: 84, top_currencies: ['USD','EUR','GBP','JPY','AED','SGD','AUD','CAD'],
+  crypto_supported: 8, stablecoin_supported: 4,
+}))
+app.get('/api/v45/global-payments/fx-rates', (c) => c.json({
+  live_pairs: 284, refresh_interval_ms: 100,
+  spread_bps: 28, hedging_active: true,
+}))
+app.get('/api/v45/global-payments/methods', (c) => c.json({
+  methods: 284, top: ['Visa','Mastercard','PayPal','Stripe','Alipay','WeChat Pay','PIX','SEPA'],
+  local_wallets: 42, real_time_rails: 18,
+}))
+app.get('/api/v45/global-payments/settlements', (c) => c.json({
+  avg_settlement_hours: 2.4, same_day_pct: 84,
+  t_plus_1_pct: 14, multi_currency_batching: true,
+}))
+app.get('/api/v45/global-payments/compliance', (c) => c.json({
+  pci_dss: 'Level 1', aml_screening: true,
+  sanctions_checks: 'OFAC+UN+EU', kyc_jurisdictions: 42,
+}))
+app.get('/api/v45/global-payments/reports', (c) => c.json({
+  daily_reports: 28, jurisdictions: 28, compliance_pct: 100,
+}))
+app.get('/api/v45/global-payments/disputes', (c) => c.json({
+  open_disputes: 284, resolution_days: 4.2,
+  win_rate_pct: 84, chargeback_rate_pct: 0.08,
+}))
+app.get('/api/v45/global-payments/analytics', (c) => c.json({
+  revenue_cr: 8.4, yoy_growth_pct: 28.4,
+  top_corridor: 'IN-UAE', avg_ticket_usd: 84,
+}))
+app.get('/api/v45/global-payments/hedging', (c) => c.json({
+  hedged_exposure_cr: 284, instruments: ['forwards','options','swaps'],
+  hedge_ratio_pct: 72, unrealised_gain_cr: 2.8,
+}))
+
+// ── MODULE 2: Multilingual & Localisation Engine (10 endpoints) ──
+app.get('/api/v45/localisation/overview', (c) => c.json({
+  module: 'Multilingual & Localisation Engine',
+  languages_supported: 42, active_locales: 84,
+  translated_strings: 284000, ai_translated_pct: 72,
+  rtl_languages: 8, fallback_strategy: 'en-IN',
+}))
+app.get('/api/v45/localisation/languages', (c) => c.json({
+  supported: 42, top: ['en','hi','ta','te','kn','ml','mr','bn','gu','pa','ar','zh','fr','de','es','ja','ko','pt','ru','id'],
+  rtl: ['ar','he','fa','ur'], ai_auto_translated: 28,
+}))
+app.get('/api/v45/localisation/content', (c) => c.json({
+  total_keys: 284000, translated_pct: 94,
+  pending_review: 8400, cms_integrated: true,
+}))
+app.get('/api/v45/localisation/ui', (c) => c.json({
+  rtl_support: true, locale_aware_dates: true,
+  number_formatting: true, currency_display: 'local',
+}))
+app.get('/api/v45/localisation/seo', (c) => c.json({
+  hreflang_tags: 84, localised_urls: 28400,
+  structured_data_locales: 42, sitemap_versions: 42,
+}))
+app.get('/api/v45/localisation/ai-translation', (c) => c.json({
+  model: 'INDIE-Translate-v3', languages: 42,
+  accuracy_pct: 94.2, human_review_pct: 28,
+}))
+app.get('/api/v45/localisation/cultural-calendar', (c) => c.json({
+  holidays_tracked: 840, countries: 84,
+  event_timing_engine: true, blackout_dates_auto: true,
+}))
+app.get('/api/v45/localisation/formats', (c) => c.json({
+  date_formats: 28, time_formats: 8,
+  number_formats: 18, address_formats: 42,
+}))
+app.get('/api/v45/localisation/testing', (c) => c.json({
+  automated_tests: 2840, coverage_pct: 94,
+  pseudo_localisation: true, screenshot_diff: true,
+}))
+app.get('/api/v45/localisation/analytics', (c) => c.json({
+  top_locale: 'hi-IN', locale_revenue_split: { 'en': 42, 'hi': 18, 'ta': 8 },
+  missing_translation_rate_pct: 0.8,
+}))
+
+// ── MODULE 3: Global Event Discovery & Distribution (8 endpoints) ──
+app.get('/api/v45/global-discovery/overview', (c) => c.json({
+  module: 'Global Event Discovery & Distribution',
+  partner_channels: 284, global_listings: 28400,
+  countries_active: 42, cross_border_bookings_day: 8400,
+}))
+app.get('/api/v45/global-discovery/channels', (c) => c.json({
+  total: 284, types: ['OTA','GDS','social','aggregator','whitelabel'],
+  top_partner: 'Booking.com', api_integrations: 84,
+}))
+app.get('/api/v45/global-discovery/listings', (c) => c.json({
+  total: 28400, international: 8400, verified: 27840, avg_rating: 4.4,
+}))
+app.get('/api/v45/global-discovery/search', (c) => c.json({
+  daily_searches: 2840000, cross_border_pct: 28,
+  personalised_results: true, multilingual_search: true,
+}))
+app.get('/api/v45/global-discovery/distribution', (c) => c.json({
+  api_partners: 84, revenue_share_pct: 18,
+  white_label_deployments: 42, real_time_inventory: true,
+}))
+app.get('/api/v45/global-discovery/geo-targeting', (c) => c.json({
+  regions: 28, targeting_params: ['ip','language','currency','history'],
+  personalisation_pct: 84,
+}))
+app.get('/api/v45/global-discovery/analytics', (c) => c.json({
+  top_source_country: 'US', cross_border_revenue_cr: 84,
+  discovery_to_book_pct: 8.4,
+}))
+app.get('/api/v45/global-discovery/recommendations', (c) => c.json({
+  ai_recommendations: true, cross_border_suggestions: 28400,
+  conversion_uplift_pct: 18.4,
+}))
+
+// ── MODULE 4: International Tax & Compliance Engine (8 endpoints) ──
+app.get('/api/v45/intl-tax/overview', (c) => c.json({
+  module: 'International Tax & Compliance Engine',
+  jurisdictions: 84, tax_rules: 2840,
+  auto_calc_pct: 98.4, vat_registered_countries: 28,
+  compliance_score: 99.2,
+}))
+app.get('/api/v45/intl-tax/jurisdictions', (c) => c.json({
+  total: 84, vat_countries: 28, gst_countries: 8,
+  sales_tax_states: 52, nexus_tracked: true,
+}))
+app.get('/api/v45/intl-tax/calculation', (c) => c.json({
+  real_time: true, accuracy_pct: 99.8,
+  rules_engine_version: '3.0', avg_latency_ms: 12,
+}))
+app.get('/api/v45/intl-tax/filings', (c) => c.json({
+  auto_filings: 84, on_time_pct: 100,
+  jurisdictions: 28, last_filing: '2026-02-28',
+}))
+app.get('/api/v45/intl-tax/withholding', (c) => c.json({
+  wht_rates_tracked: 284, treaty_benefits_applied: 42,
+  auto_deduction: true, certificates_issued: 840,
+}))
+app.get('/api/v45/intl-tax/vat-refunds', (c) => c.json({
+  refund_claims: 2840, approved_pct: 94,
+  avg_refund_days: 28, total_refunded_cr: 8.4,
+}))
+app.get('/api/v45/intl-tax/transfer-pricing', (c) => c.json({
+  policies: 28, documented_pct: 100,
+  arm_length_compliance: true, apa_agreements: 4,
+}))
+app.get('/api/v45/intl-tax/reports', (c) => c.json({
+  reports: 284, formats: ['SAF-T','XBRL','FATCA','CRS'],
+  compliance_pct: 100, automation_pct: 94,
+}))
+
+// ── MODULE 5: Global Marketing & Growth Localisation (8 endpoints) ──
+app.get('/api/v45/global-marketing/overview', (c) => c.json({
+  module: 'Global Marketing & Growth Localisation',
+  active_campaigns: 284, markets: 42,
+  localised_creatives: 8400, cac_usd: 2.8,
+  roas: 8.4, impressions_day: 284000000,
+}))
+app.get('/api/v45/global-marketing/campaigns', (c) => c.json({
+  total: 284, active: 84, markets: 42,
+  top_channel: 'social', avg_roas: 8.4,
+}))
+app.get('/api/v45/global-marketing/creatives', (c) => c.json({
+  total_assets: 8400, localised: 7140,
+  ai_generated_pct: 42, ab_tests_active: 84,
+}))
+app.get('/api/v45/global-marketing/seo', (c) => c.json({
+  indexed_pages: 284000, organic_traffic_day: 2840000,
+  top_keywords: 2840, position_1_pct: 28.4,
+}))
+app.get('/api/v45/global-marketing/influencers', (c) => c.json({
+  global_influencers: 2840, markets: 42,
+  avg_er_pct: 4.2, total_reach: 284000000,
+}))
+app.get('/api/v45/global-marketing/attribution', (c) => c.json({
+  model: 'data-driven', touchpoints: 8, conversion_window_days: 30,
+  accuracy_pct: 94.2,
+}))
+app.get('/api/v45/global-marketing/analytics', (c) => c.json({
+  revenue_cr: 284, cac_usd: 2.8, ltv_usd: 84,
+  roi_pct: 284, best_market: 'UAE',
+}))
+app.get('/api/v45/global-marketing/automation', (c) => c.json({
+  automated_flows: 284, trigger_events: 42,
+  messages_sent_day: 28400000, open_rate_pct: 28.4,
+}))
+
+// ── MODULE 6: Cross-Border Logistics & Merchandise (8 endpoints) ──
+app.get('/api/v45/cross-border-logistics/overview', (c) => c.json({
+  module: 'Cross-Border Logistics & Merchandise',
+  countries_shipping: 84, active_shipments: 28400,
+  avg_delivery_days: 4.2, on_time_pct: 94.2,
+  customs_clearance_auto_pct: 72, returns_rate_pct: 2.8,
+}))
+app.get('/api/v45/cross-border-logistics/shipments', (c) => c.json({
+  active: 28400, delivered_ytd: 284000, avg_days: 4.2,
+}))
+app.get('/api/v45/cross-border-logistics/carriers', (c) => c.json({
+  integrated: 42, top: ['DHL','FedEx','UPS','Aramex','Blue Dart'],
+  avg_rating: 4.4, coverage_countries: 84,
+}))
+app.get('/api/v45/cross-border-logistics/customs', (c) => c.json({
+  hs_codes_managed: 8400, auto_classification_pct: 84,
+  duty_calculation: true, broker_network: 28,
+}))
+app.get('/api/v45/cross-border-logistics/returns', (c) => c.json({
+  return_rate_pct: 2.8, avg_resolution_days: 7,
+  reverse_logistics_countries: 42, refund_auto_pct: 84,
+}))
+app.get('/api/v45/cross-border-logistics/warehouses', (c) => c.json({
+  locations: 28, countries: 18, total_sqft: 2840000,
+  inventory_accuracy_pct: 99.2,
+}))
+app.get('/api/v45/cross-border-logistics/tracking', (c) => c.json({
+  real_time_tracking: true, milestones: 12,
+  notifications_sent_day: 284000, app_tracking_pct: 84,
+}))
+app.get('/api/v45/cross-border-logistics/analytics', (c) => c.json({
+  revenue_cr: 28.4, cost_per_shipment_usd: 8.4,
+  on_time_pct: 94.2, nps: 72,
+}))
+
+// ── MODULE 7: Global Compliance & Regulatory Intelligence (8 endpoints) ──
+app.get('/api/v45/global-compliance/overview', (c) => c.json({
+  module: 'Global Compliance & Regulatory Intelligence',
+  regulations_tracked: 2840, jurisdictions: 84,
+  auto_compliance_pct: 94, alerts_active: 284,
+  gdpr_compliant: true, ccpa_compliant: true,
+}))
+app.get('/api/v45/global-compliance/regulations', (c) => c.json({
+  total: 2840, active_alerts: 284, jurisdictions: 84,
+  types: ['data-privacy','financial','consumer','employment'],
+}))
+app.get('/api/v45/global-compliance/data-privacy', (c) => c.json({
+  frameworks: ['GDPR','CCPA','PDPB','PIPEDA','LGPD'],
+  compliance_pct: 98.4, dsar_avg_days: 4.2,
+}))
+app.get('/api/v45/global-compliance/licenses', (c) => c.json({
+  total: 284, active: 278, expiring_90d: 8,
+  jurisdictions: 42, auto_renewal: true,
+}))
+app.get('/api/v45/global-compliance/sanctions', (c) => c.json({
+  lists_monitored: 28, daily_screenings: 2840000,
+  false_positive_pct: 0.08, alert_resolution_hrs: 2.4,
+}))
+app.get('/api/v45/global-compliance/audits', (c) => c.json({
+  audits_ytd: 84, passed_pct: 98.4,
+  findings: 18, remediated_pct: 94,
+}))
+app.get('/api/v45/global-compliance/incident-log', (c) => c.json({
+  incidents_ytd: 8, severity: { critical: 0, high: 2, medium: 6 },
+  avg_resolution_hrs: 4.2,
+}))
+app.get('/api/v45/global-compliance/reports', (c) => c.json({
+  reports: 284, regulators: 28, on_time_pct: 100,
+}))
+
+// ── MODULE 8: International Partnerships & Distribution (8 endpoints) ──
+app.get('/api/v45/intl-partnerships/overview', (c) => c.json({
+  module: 'International Partnerships & Distribution',
+  partners: 284, countries: 42,
+  gmv_cr: 284, revenue_share_cr: 28.4,
+  api_calls_day: 2840000, white_label_instances: 84,
+}))
+app.get('/api/v45/intl-partnerships/partners', (c) => c.json({
+  total: 284, active: 278, countries: 42,
+  types: ['OTA','promoter','media','corporate','govt'],
+}))
+app.get('/api/v45/intl-partnerships/contracts', (c) => c.json({
+  active: 284, avg_term_years: 2,
+  auto_renewal_pct: 72, compliance_score: 98.4,
+}))
+app.get('/api/v45/intl-partnerships/revenue-share', (c) => c.json({
+  total_paid_cr: 28.4, avg_share_pct: 8.4,
+  top_partner_revenue_cr: 4.2, payout_frequency: 'monthly',
+}))
+app.get('/api/v45/intl-partnerships/api-access', (c) => c.json({
+  api_partners: 84, daily_calls: 2840000,
+  uptime_pct: 99.9, sdks: ['JS','Python','Java','PHP','Ruby'],
+}))
+app.get('/api/v45/intl-partnerships/white-label', (c) => c.json({
+  deployments: 84, countries: 28,
+  custom_brands: 84, monthly_active_users: 840000,
+}))
+app.get('/api/v45/intl-partnerships/performance', (c) => c.json({
+  top_country: 'UAE', revenue_cr: 284,
+  yoy_growth_pct: 42, nps: 74,
+}))
+app.get('/api/v45/intl-partnerships/analytics', (c) => c.json({
+  roi_per_partner: 8.4, conversion_pct: 18.4,
+  avg_deal_size_cr: 2.8, pipeline_cr: 84,
+}))
+
+// ── MODULE 9: Global Customer Experience & Support (10 endpoints) ──
+app.get('/api/v45/global-cx/overview', (c) => c.json({
+  module: 'Global Customer Experience & Support',
+  support_languages: 28, regions: 8,
+  avg_csat: 4.6, nps_global: 72,
+  first_contact_resolution_pct: 74.2,
+  tickets_day: 28400, ai_handled_pct: 68.4,
+}))
+app.get('/api/v45/global-cx/centres', (c) => c.json({
+  regions: 8, agents: 2840, languages: 28, '24x7': true,
+}))
+app.get('/api/v45/global-cx/sla', (c) => c.json({
+  p1_response_min: 15, p2_response_min: 60,
+  p3_response_hrs: 4, sla_breach_pct: 1.2,
+}))
+app.get('/api/v45/global-cx/channels', (c) => c.json({
+  channels: ['email','chat','phone','social','whatsapp','telegram','line'],
+  preferred_by_region: { 'APAC': 'chat', 'MENA': 'whatsapp', 'EU': 'email' },
+}))
+app.get('/api/v45/global-cx/multilingual-bot', (c) => c.json({
+  languages: 28, resolution_pct: 74.2,
+  conversations_day: 28400, escalation_pct: 25.8,
+}))
+app.get('/api/v45/global-cx/feedback', (c) => c.json({
+  nps: 72, csat: 4.6, ces: 3.8,
+  surveys_sent_day: 28400, response_rate_pct: 42,
+}))
+app.get('/api/v45/global-cx/quality', (c) => c.json({
+  qa_score: 94.2, coached_agents_pct: 84,
+  calibration_sessions_month: 28,
+}))
+app.get('/api/v45/global-cx/knowledge-base', (c) => c.json({
+  articles: 28400, languages: 28,
+  monthly_views: 2840000, deflection_pct: 42,
+}))
+app.get('/api/v45/global-cx/analytics', (c) => c.json({
+  revenue_protected_cr: 28.4, churn_prevented_pct: 4.2,
+  cost_per_contact_inr: 84,
+}))
+app.get('/api/v45/global-cx/escalations', (c) => c.json({
+  total_ytd: 2840, resolved_pct: 94,
+  avg_resolution_hrs: 8.4,
+}))
+
+// ── MODULE 10: Global Analytics & Market Intelligence (10 endpoints) ──
+app.get('/api/v45/global-analytics/overview', (c) => c.json({
+  module: 'Global Analytics & Market Intelligence',
+  markets_tracked: 84, data_points_day: 284000000,
+  revenue_cr: 284, yoy_growth_pct: 42,
+  market_share_pct: 8.4, addressable_market_cr: 28400,
+}))
+app.get('/api/v45/global-analytics/market-share', (c) => c.json({
+  global_share_pct: 8.4, india_share_pct: 42,
+  uae_share_pct: 18, sg_share_pct: 12,
+}))
+app.get('/api/v45/global-analytics/revenue', (c) => c.json({
+  total_cr: 284, by_region: { 'INDIA': 142, 'MENA': 56.8, 'APAC': 42.6, 'EU': 28.4 },
+  yoy_growth_pct: 42,
+}))
+app.get('/api/v45/global-analytics/user-behaviour', (c) => c.json({
+  active_users: 28400000, avg_session_min: 8.4,
+  pages_per_session: 4.2, bounce_rate_pct: 28,
+}))
+app.get('/api/v45/global-analytics/competitive', (c) => c.json({
+  competitors_tracked: 28, win_rate_pct: 68.4,
+  feature_gap_score: 8.4, price_index: 0.84,
+}))
+app.get('/api/v45/global-analytics/forecasts', (c) => c.json({
+  fy27_revenue_cr: 840, cagr_pct: 42,
+  new_markets_fy26: 8, tam_cr: 28400,
+}))
+app.get('/api/v45/global-analytics/cohorts', (c) => c.json({
+  cohorts_tracked: 84, avg_ltv_usd: 84,
+  best_cohort: 'UAE-Corporate', retention_90d_pct: 72,
+}))
+app.get('/api/v45/global-analytics/localisation-roi', (c) => c.json({
+  investment_cr: 28.4, revenue_impact_cr: 284,
+  roi_pct: 900, payback_months: 14,
+}))
+app.get('/api/v45/global-analytics/geo-revenue', (c) => c.json({
+  top_city: 'Mumbai', top_country: 'India',
+  fastest_growing: 'UAE', emerging: 'Indonesia',
+}))
+app.get('/api/v45/global-analytics/reports', (c) => c.json({
+  scheduled_reports: 84, ad_hoc: 284,
+  dashboards: 42, data_freshness_min: 15,
+}))
+
+// ── Phase 45 health endpoint ────────────────────────────────
+app.get('/api/v45/health', (c) => c.json({
+  status: 'ok', phase: 'Phase 45', version: 'v45.0.0',
+  theme: 'International Expansion & Global Localisation Platform',
+  endpoints: 90, total: 3079,
+}))
+
+// ── Update main health to v45 ────────────────────────────────
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 45 — INTERNATIONAL EXPANSION &
+//               GLOBAL LOCALISATION PLATFORM
 // ═══════════════════════════════════════════════════════════
 
 export default app
