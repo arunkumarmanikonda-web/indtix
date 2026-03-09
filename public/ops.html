@@ -1758,10 +1758,31 @@ function ops23Load(id){
 </script>
 
 <script>
+// Phase 23 Ops nav injection
 (function(){
-  const wrap=document.querySelector('.sidebar, nav, .ops-nav');
-  const btns=[['💹','Unit Economics','openOPS23("unit-economics")'],['🖥️','Infra Spend','openOPS23("infra-spend")'],['🧾','Tax Dashboard','openOPS23("tax-dashboard")'],['🤝','Partner Health','openOPS23("partner-health")'],['🚀','Release Tracker','openOPS23("release-tracker")'],['📐','Capacity Plan','openOPS23("capacity-plan")'],['🔐','Security Ops','openOPS23("security-ops")']];
-  if(wrap){btns.forEach(([i,l,f])=>{const b=document.createElement('button');b.style.cssText='display:block;width:100%;text-align:left;padding:7px 10px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:7px;color:#4ade80;cursor:pointer;font-size:.79rem;margin-bottom:3px;';b.innerHTML=i+' '+l;b.onclick=new Function(f);wrap.appendChild(b);});}
+  document.addEventListener('DOMContentLoaded', function(){
+    const wrap = document.querySelector('.ops-nav');
+    const items = [
+      ['💹','Unit Econ','unit-economics'],['🖥️','Infra','infra-spend'],
+      ['🧾','Tax','tax-dashboard'],['🤝','Partners','partner-health'],
+      ['🚀','Releases','release-tracker'],['📐','Capacity','capacity-plan'],
+      ['🔐','Security','security-ops']
+    ];
+    if(wrap){
+      items.forEach(function([icon, label, id]){
+        const b = document.createElement('button');
+        b.className = 'ops-nav-btn';
+        b.style.cssText = 'font-size:11px;min-width:65px;';
+        b.innerHTML = icon + '<br><span style="font-size:10px">' + label + '</span><br><span style="font-size:9px;background:#22c55e;color:#fff;padding:1px 4px;border-radius:3px">P23</span>';
+        b.onclick = function(){
+          document.querySelectorAll('.ops-nav-btn').forEach(x=>x.classList.remove('active'));
+          b.classList.add('active');
+          openOPS23(id);
+        };
+        wrap.appendChild(b);
+      });
+    }
+  });
 })();
 </script>
 
@@ -1914,14 +1935,38 @@ function ops23SecurityOps(){
 <!-- END PHASE 23 OPS PORTAL -->
 
 <script>
+// Phase 24 Ops nav injection - adds buttons to the ops-nav bar
 (function(){
-  const wrap=document.querySelector('.sidebar, nav, .ops-nav');
-  const btns=[['💰','Cost Opt','showP24Ops()'],['🚩','Feat Flags','showP24Ops()'],['📊','Load Tests','showP24Ops()'],['🆘','DR Runbook','showP24Ops()'],['📦','Deprecations','showP24Ops()'],['🧾','Billing Rec','showP24Ops()']];
-  if(wrap){btns.forEach(([i,l,f])=>{const b=document.createElement('button');b.style.cssText='display:block;width:100%;text-align:left;padding:7px 10px;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:7px;color:#a78bfa;cursor:pointer;font-size:.79rem;margin-bottom:3px;';b.innerHTML=i+' '+l+' <span style="font-size:9px;background:#7c3aed;color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">P24</span>';b.onclick=function(){showP24Ops();};wrap.appendChild(b);});}
+  document.addEventListener('DOMContentLoaded', function(){
+    const wrap = document.querySelector('.ops-nav');
+    const items = [
+      ['💰','Cost Opt'],['🚩','Flags'],['📊','Load Test'],
+      ['🆘','DR Book'],['📦','Deprec'],['🧾','Billing']
+    ];
+    if(wrap){
+      items.forEach(function([icon, label]){
+        const b = document.createElement('button');
+        b.className = 'ops-nav-btn';
+        b.style.cssText = 'font-size:11px;min-width:70px;position:relative;';
+        b.innerHTML = icon + '<br><span style="font-size:10px">' + label + '</span><br><span style="font-size:9px;background:#7c3aed;color:#fff;padding:1px 4px;border-radius:3px">P24</span>';
+        b.onclick = function(){
+          document.querySelectorAll('.ops-nav-btn').forEach(x=>x.classList.remove('active'));
+          b.classList.add('active');
+          showP24Ops();
+        };
+        wrap.appendChild(b);
+      });
+    }
+  });
 })();
 function showP24Ops(){
-  const el=document.getElementById('p24ops');
-  if(el){el.style.display=el.style.display==='none'?'block':'none';}
+  const el = document.getElementById('p24ops');
+  if(!el) return;
+  // Hide standard panels
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('[id^="ops-"]').forEach(p=>{if(p.style) p.style.display='none';});
+  // Show Phase 24 panel
+  el.style.display = 'block';
 }
 </script>
 

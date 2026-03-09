@@ -4643,14 +4643,23 @@ function p23JoinWaitlist(){
 <!-- Phase 24 Bottom Nav Tab -->
 <script>
 (function(){
-  const nav = document.querySelector('.fan-bottom-nav') || document.querySelector('nav');
-  if(nav){
-    const btn = document.createElement('button');
-    btn.className='fan-nav-btn'; btn.id='nav-p24';
-    btn.innerHTML='<i class="fas fa-magic"></i><span>More</span>';
-    btn.onclick=()=>scrollToP24();
-    nav.appendChild(btn);
-  }
+  // Add Phase 24 hub button to bottom nav (mobile) or as floating button
+  document.addEventListener('DOMContentLoaded', function(){
+    const nav = document.querySelector('.bottom-nav');
+    if(nav){
+      const btn = document.createElement('button');
+      btn.className='bn-item'; btn.id='nav-p24';
+      btn.style.cssText='position:relative;';
+      btn.innerHTML='<i class="fas fa-magic" style="font-size:18px"></i><span style="font-size:10px;display:block">P24</span>';
+      btn.onclick=()=>scrollToP24();
+      nav.appendChild(btn);
+    }
+    // Also ensure P24 hub is visible by default on desktop
+    const hub = document.getElementById('p24-hub');
+    if(hub && window.innerWidth > 768) {
+      hub.style.maxWidth = '100%';
+    }
+  });
 })();
 function scrollToP24(){ document.getElementById('p24-hub') && document.getElementById('p24-hub').scrollIntoView({behavior:'smooth'}); }
 </script>

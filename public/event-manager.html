@@ -130,6 +130,8 @@
     <div class="sb-section">Post-Event</div>
     <button class="sb-item" onclick="showPanel('report',this)"><i class="fas fa-file-chart-line"></i>Event Report</button>
     <button class="sb-item" onclick="showPanel('feedback',this)"><i class="fas fa-star"></i>Attendee Feedback</button>
+    <div class="sb-section" style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#f97316;padding:8px 8px 4px;margin-top:4px">Phase 24 Ops</div>
+    <button class="sb-item" onclick="showPanel('p24-event-ops',this)"><i class="fas fa-tools"></i>Live Event Ops <span style="background:#f97316;color:#fff;border-radius:10px;padding:1px 6px;font-size:10px;margin-left:4px">NEW</span></button>
   </nav>
   <div class="sb-footer"><a href="/"><i class="fas fa-arrow-left"></i>Back to Fan Portal</a></div>
 </div>
@@ -1307,7 +1309,8 @@ function showPanel(name, btn) {
     team:'Team & Zones', tasks:'Task Manager', checkin:'Live Check-In Monitor',
     wristbands:'Wristband / LED Bands', pos:'POS Overview', fb:'F&B Order Tracker',
     announce:'Announcements', incidents:'Incident Log', timeline:'Timeline',
-    report:'Event Report', feedback:'Attendee Feedback'
+    report:'Event Report', feedback:'Attendee Feedback',
+    'p24-event-ops':'Phase 24 — Live Event Ops Suite'
   };
   const el = document.getElementById('emTopbarTitle') || document.querySelector('.topbar-title');
   if (el) el.textContent = titles[name] || name;
@@ -2189,6 +2192,7 @@ function em23ExitFlow(){
 <!-- END PHASE 23 EVENT MANAGER -->
 
 <!-- PHASE 24: Live Polling, Setlist Manager, Photo Wall Mod, Volunteer Coord, Lost & Found, Weather -->
+<div class="panel" id="panel-p24-event-ops">
 <style>
 .p24em-s{background:#0f172a;border:1px solid #1e293b;border-radius:14px;padding:16px;margin:12px 0;}
 .p24em-c{background:#1e293b;border-radius:10px;padding:11px;margin:7px 0;font-size:.82rem;}
@@ -2350,4 +2354,5 @@ function p24emLogLF(){
 }
 </script>
 <!-- END PHASE 24 EVENT MANAGER -->
+</div><!-- end panel-p24-event-ops -->
 </body></html>

@@ -106,6 +106,8 @@ textarea{resize:vertical;min-height:80px}
     <button class="sb-item" onclick="showPanel('p21-queue',this);loadQueueEstimator()"><i class="fas fa-people-arrows"></i>Queue Estimator</button>
     <button class="sb-item" onclick="showPanel('p21-parking',this);loadParking()"><i class="fas fa-parking"></i>Parking</button>
     <button class="sb-item" onclick="showPanel('p21-twin',this);renderDigitalTwin('p21-digital-twin')"><i class="fas fa-cube"></i>Digital Twin</button>
+    <div class="sb-section" style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#10b981;padding:8px 8px 4px;margin-top:4px">Phase 24 Smart Venue</div>
+    <button class="sb-item" onclick="showPanel('p24-smart-venue',this)"><i class="fas fa-building"></i>Smart Venue Suite <span style="background:#10b981;color:#fff;border-radius:10px;padding:1px 6px;font-size:10px;margin-left:4px">NEW</span></button>
   </nav>
   <div class="sb-footer"><a href="/"><i class="fas fa-arrow-left"></i>Back to Fan Portal</a></div>
 </div>
@@ -1149,7 +1151,7 @@ function showPanel(name, btn) {
     profile:'Venue Profile', floorplan:'Floor Plan & Zones', capacity:'Capacity Management',
     amenities:'Amenities & Services', pricing:'Pricing & Packages', docs:'Documents & KYC',
     revenue:'Revenue & Finance', invoices:'GST Invoices', staff:'Staff Management',
-    incidents:'Incident Log'
+    incidents:'Incident Log', 'p24-smart-venue':'Phase 24 — Smart Venue Suite'
   };
   const el = document.querySelector('.topbar-title, #venueTopbarTitle');
   if (el) el.textContent = titles[name] || name;
@@ -2005,6 +2007,7 @@ function v23SpaceUtil(){
 <!-- END PHASE 23 VENUE PORTAL -->
 
 <!-- PHASE 24: Digital Twin, Smart Parking, Calendar, Emergency Drills, Suppliers -->
+<div class="panel" id="panel-p24-smart-venue">
 <style>
 .p24v-s{background:#0f172a;border:1px solid #1e293b;border-radius:14px;padding:16px;margin:12px 0;}
 .p24v-c{background:#1e293b;border-radius:10px;padding:12px;margin:8px 0;font-size:.83rem;}
@@ -2107,4 +2110,5 @@ function p24vShow(s,btn){ ['twin','parking','cal','drill','suppliers'].forEach(x
 function p24vToast(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:10px 20px;border-radius:10px;z-index:9999;font-size:.85rem;border:1px solid #10b981;max-width:320px;text-align:center;'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
 </script>
 <!-- END PHASE 24 VENUE PORTAL -->
+</div><!-- end panel-p24-smart-venue -->
 </body></html>

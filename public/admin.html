@@ -920,6 +920,52 @@ tr:hover td{background:rgba(108,60,247,0.04)}
   </div>
 </div>
 
+<!-- BASE showPanel — must be defined BEFORE any overrides -->
+<script>
+// ─── BASE showPanel: shows/hides .panel divs ─────────────────────────────────
+window.showPanel = function(name, btn) {
+  // Hide all panels
+  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+  // Remove active from all sidebar items
+  document.querySelectorAll('.sb-item').forEach(function(b){ b.classList.remove('active'); });
+  // Show target panel
+  var panel = document.getElementById('panel-' + name);
+  if (panel) { panel.classList.add('active'); }
+  // Mark button active
+  if (btn) { btn.classList.add('active'); }
+  // Update topbar title
+  var titles = {
+    dashboard:'Platform Dashboard', health:'System Health',
+    organisers:'Organiser Approvals', venues:'Venue Approvals',
+    events:'Event Approvals', kyc:'KYC Review Queue',
+    finance:'Platform Revenue', settlements:'Settlements & Payouts',
+    refunds:'Refund Management', gst:'GST Engine',
+    cms:'Content Management', users:'User Management',
+    bi:'BI & AI Analytics', promo:'Promo / Coupons',
+    notifications:'Notifications Hub', security:'Security Centre',
+    audit:'Audit Logs', config:'Platform Config', rbac:'RBAC / Permissions',
+    support:'Support Desk', cities:'City & Category Manager',
+    compliance:'Legal & Compliance', affiliate:'Affiliate Programme',
+    partnercrm:'Partner CRM', risk:'Risk & Fraud Queue',
+    hrteam:'HR-lite / Team Management', sponsors_admin:'Sponsor Platform',
+    whitelabel_admin:'White-Label SaaS', developer_admin:'Developer API',
+    aiforecast:'AI Forecast', reports:'Reports', platformhealth:'Platform Health',
+    search_admin:'Search Admin',
+    'p21-fraud':'Fraud Heatmap', 'p21-gst':'GST Reconciliation',
+    'p21-pricing-override':'Pricing Override', 'p21-refund-rules':'Refund Rules',
+    'p21-scorecard':'Org Scorecard', 'p21-terminal':'Dev Terminal',
+    'p21-webhooks':'Webhooks', 'p21-whitelabel':'White-Label Settings',
+    'p22-abtest':'A/B Testing', 'p22-bulkrefund':'Bulk Refunds',
+    'p22-darkpattern':'Dark Pattern Audit', 'p22-dpdp':'DPDP / Privacy',
+    'p22-moderation':'Content Moderation', 'p22-payout-ledger':'Payout Ledger',
+    'p22-ratelimit':'Rate Limiting', 'p22-sla-admin':'SLA Admin',
+    'p24-intelligence':'Phase 24 — Intelligence Suite'
+  };
+  var titleEl = document.getElementById('topbarTitle');
+  if (titleEl && titles[name]) { titleEl.textContent = titles[name]; }
+};
+</script>
+
 <!-- SUPPORT DESK PANEL injected via JS showPanel -->
 <script>
 // Inject additional panels after DOM
@@ -934,27 +980,9 @@ document.addEventListener('DOMContentLoaded', function() {
   if (navSec) {
     const extra = document.createElement('div');
     extra.innerHTML = `
-      <div class="sb-section">ERP Extended</div>
-      <button class="sb-item" onclick="showPanel('support',this)"><i class="fas fa-headset"></i>Support Desk<span class="sb-dot" style="background:var(--brand2);margin-left:auto"></span></button>
-      <button class="sb-item" onclick="showPanel('cities',this)"><i class="fas fa-city"></i>City / Category Mgr</button>
-      <button class="sb-item" onclick="showPanel('compliance',this)"><i class="fas fa-balance-scale"></i>Legal & Compliance</button>
-      <button class="sb-item" onclick="showPanel('affiliate',this)"><i class="fas fa-link"></i>Affiliate Programme</button>
-      <button class="sb-item" onclick="showPanel('partnercrm',this)"><i class="fas fa-handshake"></i>Partner CRM</button>
-      <button class="sb-item" onclick="showPanel('risk',this)"><i class="fas fa-shield-virus"></i>Risk & Fraud Queue</button>
-      <button class="sb-item" onclick="showPanel('hrteam',this)"><i class="fas fa-users"></i>HR-lite / Team Mgmt</button>
-      <div class="sb-section">Phase 3 ERP</div>
-      <button class="sb-item" onclick="showPanel('sponsors_admin',this)"><i class="fas fa-handshake"></i>Sponsor Platform</button>
-      <button class="sb-item" onclick="showPanel('whitelabel_admin',this)"><i class="fas fa-server"></i>White-Label SaaS</button>
-      <button class="sb-item" onclick="showPanel('developer_admin',this)"><i class="fas fa-code"></i>Developer API</button>
-      <div class="sb-section">Phase 20 Tools</div>
-      <button class="sb-item" onclick="openFeatureFlags()"><i class="fas fa-flag"></i>Feature Flags</button>
-      <button class="sb-item" onclick="openFraudRuleBuilder()"><i class="fas fa-shield-virus"></i>Fraud Rule Builder</button>
-      <button class="sb-item" onclick="openTaxConfig()"><i class="fas fa-percentage"></i>Tax Configuration</button>
-      <button class="sb-item" onclick="openDisputeQueue()"><i class="fas fa-balance-scale"></i>Dispute Resolution</button>
-      <button class="sb-item" onclick="openDynamicPricingAdmin()"><i class="fas fa-chart-line"></i>Dynamic Pricing</button>
-      <button class="sb-item" onclick="openPlatformFeeConfig()"><i class="fas fa-coins"></i>Platform Fee Config</button>
-      <button class="sb-item" onclick="openTemplateManager()"><i class="fas fa-envelope"></i>Msg Templates</button>
-      <button class="sb-item" onclick="openExportScheduler()"><i class="fas fa-download"></i>Data Exports</button>
+      <!-- ERP Extended nav injected dynamically via JS -->
+      <div class="sb-section">Phase 24 Intelligence</div>
+      <button class="sb-item" onclick="showPanel('p24-intelligence',this)"><i class="fas fa-brain"></i>Intelligence Suite <span style="background:#8b5cf6;color:#fff;border-radius:10px;padding:1px 6px;font-size:10px;margin-left:4px">NEW</span></button>
     `;
     navSec.appendChild(extra);
   }
@@ -3956,6 +3984,7 @@ function p23aLoadBudget(){
 <!-- END PHASE 23 ADMIN PORTAL -->
 
 <!-- PHASE 24: Revenue Intelligence, Compliance Autopilot, Partner Marketplace, Content Calendar, Audit Logs, Support Triage -->
+<div class="panel" id="panel-p24-intelligence">
 <style>
 .p24a-section{background:#0f172a;border:1px solid #1e293b;border-radius:14px;padding:16px;margin:14px 0;}
 .p24a-card{background:#1e293b;border-radius:10px;padding:12px;margin:8px 0;}
@@ -4099,4 +4128,5 @@ function p24aTogglePartner(name,btn){
 function p24aAssign(ticketId){ p24aToast('🎫 '+ticketId+' assigned to agent — SLA clock started!'); }
 </script>
 <!-- END PHASE 24 ADMIN PORTAL -->
+</div><!-- end panel-p24-intelligence -->
 </body></html>

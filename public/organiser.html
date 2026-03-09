@@ -227,6 +227,8 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
     <button class="sb-item" onclick="showPanel('p22-presale',this)"><i class="fas fa-key"></i>Presale Access Codes 🆕</button>
     <button class="sb-item" onclick="showPanel('p22-mediakit',this)"><i class="fas fa-photo-video"></i>Media Kit Builder 🆕</button>
     <button class="sb-item" onclick="showPanel('p22-highlights',this)"><i class="fas fa-film"></i>Video Highlights 🆕</button>
+    <div class="sb-section" style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#0ea5e9;padding:8px 8px 4px;margin-top:4px">Phase 24 Growth</div>
+    <button class="sb-item" onclick="showPanel('p24-growth-suite',this)"><i class="fas fa-chart-line"></i>Growth Suite <span style="background:#0ea5e9;color:#fff;border-radius:10px;padding:1px 6px;font-size:10px;margin-left:4px">NEW</span></button>
   </nav>
   <div class="sb-footer"><a href="/"><i class="fas fa-arrow-left"></i>Back to Fan Portal</a></div>
 </div>
@@ -1377,6 +1379,47 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
     </div>
 
     <!-- ─── PHASE 3: AI DEMAND FORECAST PANEL ──────────────────────────── -->
+    <!-- ─── DYNAMIC PRICING PANEL ──────────────────────────────────────── -->
+    <div class="panel" id="panel-dynamic-pricing">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px">
+        <div class="card" style="text-align:center"><div style="font-size:28px;font-weight:800;color:var(--brand)">+18%</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Avg Revenue Lift</div></div>
+        <div class="card" style="text-align:center"><div style="font-size:28px;font-weight:800;color:var(--brand2)">3</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Active Rules</div></div>
+        <div class="card" style="text-align:center"><div style="font-size:28px;font-weight:800;color:var(--brand3)">₹4.2L</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Extra Revenue This Month</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">⚡ Dynamic Pricing Rules <span>Auto-adjusts ticket prices based on demand</span></div>
+        <div id="dyn-pricing-rules">
+          <div style="background:var(--dark3);border-radius:10px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px">
+            <div style="flex:1"><div style="font-size:13px;font-weight:700">Sunburn Arena — GA Tier</div><div style="font-size:11px;color:var(--muted);margin-top:2px">Threshold: 70% sold → +10% price · Cap: +30%</div></div>
+            <span style="background:rgba(0,245,196,0.15);color:var(--brand3);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">ACTIVE</span>
+            <button class="ab ab-reject" onclick="showAdminToastOrg('⏸ Rule paused')">Pause</button>
+          </div>
+          <div style="background:var(--dark3);border-radius:10px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px">
+            <div style="flex:1"><div style="font-size:13px;font-weight:700">NH7 Weekender — VIP</div><div style="font-size:11px;color:var(--muted);margin-top:2px">Threshold: 50% sold → +8% · Last 48h: +15%</div></div>
+            <span style="background:rgba(0,245,196,0.15);color:var(--brand3);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">ACTIVE</span>
+            <button class="ab ab-reject" onclick="showAdminToastOrg('⏸ Rule paused')">Pause</button>
+          </div>
+          <div style="background:var(--dark3);border-radius:10px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px">
+            <div style="flex:1"><div style="font-size:13px;font-weight:700">All Events — Early Bird</div><div style="font-size:11px;color:var(--muted);margin-top:2px">First 30 days: -15% · After threshold: revert to base</div></div>
+            <span style="background:rgba(255,180,0,0.15);color:var(--gold);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">PAUSED</span>
+            <button class="ab ab-approve" onclick="showAdminToastOrg('▶ Rule activated')">Activate</button>
+          </div>
+        </div>
+        <button class="btn-sm btn-primary" style="margin-top:10px" onclick="addDynamicRule()"><i class="fas fa-plus"></i> Add Pricing Rule</button>
+      </div>
+      <div class="card">
+        <div class="card-title">📊 Price History — Sunburn Arena GA</div>
+        <div style="display:flex;align-items:flex-end;gap:8px;height:80px;margin-bottom:8px">
+          <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:60%;opacity:0.8" title="₹1499 base"></div>
+          <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:65%;opacity:0.8" title="₹1649 +10%"></div>
+          <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:72%;opacity:0.8" title="₹1799 +20%"></div>
+          <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:80%;opacity:0.8" title="₹1949 +30%"></div>
+          <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:90%;opacity:0.8" title="₹2099 cap reached"></div>
+          <div style="flex:1;background:var(--grad1);border-radius:3px 3px 0 0;height:95%;opacity:0.8" title="₹2099 (cap held)"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted)"><span>Day 1</span><span>Day 10</span><span>Day 20</span><span>Day 30</span><span>Day 40</span><span>Now</span></div>
+      </div>
+    </div>
     <div class="panel" id="panel-forecast">
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px">
         <div class="card" style="text-align:center"><div style="font-size:28px;font-weight:800;color:var(--brand)">94%</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Forecast Accuracy</div></div>
@@ -2068,7 +2111,7 @@ function showPanel(name,btn){
   const panel=document.getElementById('panel-'+name);
   if(panel)panel.classList.add('active');
   if(btn)btn.classList.add('active');
-  const titles={dashboard:'Dashboard',create:'Create New Event',events:'My Events',tickets:'Ticket Builder',seatmap:'Seat Map Configuration',addons:'Add-Ons & Merchandise',revenue:'Revenue Overview',settlements:'Settlements & Payouts',invoices:'GST Invoices',attendees:'Attendee Management',checkin:'Check-In Configuration',marketing:'Marketing Tools',analytics:'Analytics & Insights',kyc:'KYC Verification',settings:'Account Settings',team:'Team & Permissions',ledband:'LED Band Configuration',crm:'Brand & CRM',sponsors:'Sponsor Activation',forecast:'AI Demand Forecast'};
+  const titles={dashboard:'Dashboard',create:'Create New Event',events:'My Events',tickets:'Ticket Builder',seatmap:'Seat Map Configuration',addons:'Add-Ons & Merchandise',revenue:'Revenue Overview',settlements:'Settlements & Payouts',invoices:'GST Invoices',attendees:'Attendee Management',checkin:'Check-In Configuration',marketing:'Marketing Tools',analytics:'Analytics & Insights',kyc:'KYC Verification',settings:'Account Settings',team:'Team & Permissions',ledband:'LED Band Configuration',crm:'Brand & CRM',sponsors:'Sponsor Activation',forecast:'AI Demand Forecast','dynamic-pricing':'Dynamic Pricing','p24-growth-suite':'Phase 24 — Growth Suite'};
   document.getElementById('topbarTitle').textContent=titles[name]||'Dashboard';
 }
 async function submitForApproval(){
@@ -3581,6 +3624,7 @@ function p23oLoadGrowthScore(){
 <!-- END PHASE 23 ORGANISER PORTAL -->
 
 <!-- PHASE 24: Smart Pricing, Bundle Creator, Co-Marketing, Wallet, CRM, Post-Event Analytics -->
+<div class="panel" id="panel-p24-growth-suite">
 <style>
 .p24o-section{background:#0f172a;border:1px solid #1e3a5f;border-radius:14px;padding:18px;margin:14px 0;}
 .p24o-card{background:#1e293b;border-radius:10px;padding:12px;margin:8px 0;}
@@ -3828,6 +3872,19 @@ function p24oCloneEvent(){
     .then(r=>r.json()).then(d=>p24oToast('🔁 Event cloned! New ID: '+(d.new_event_id||'EVT-NEW')+' — Status: Draft'))
     .catch(()=>p24oToast('🔁 Event cloned as draft! New ID: EVT-NEW'));
 }
+function showAdminToastOrg(msg){ showOrgToast(msg); }
+function addDynamicRule(){
+  const name=prompt('Rule name (e.g. "Sunburn VIP Surge")','New Pricing Rule');
+  if(!name)return;
+  const rules=document.getElementById('dyn-pricing-rules');
+  if(!rules)return;
+  const div=document.createElement('div');
+  div.style.cssText='background:var(--dark3);border-radius:10px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px';
+  div.innerHTML=`<div style="flex:1"><div style="font-size:13px;font-weight:700">${name}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">Threshold: 60% sold → +10% · Cap: +25%</div></div><span style="background:rgba(255,180,0,0.15);color:var(--gold);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">NEW</span><button class="ab ab-approve" onclick="showOrgToast('✅ Rule activated!')">Activate</button>`;
+  rules.appendChild(div);
+  showOrgToast('✅ Rule "'+name+'" created!');
+}
 </script>
 <!-- END PHASE 24 ORGANISER PORTAL -->
+</div><!-- end panel-p24-growth-suite -->
 </body></html>
