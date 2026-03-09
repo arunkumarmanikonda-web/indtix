@@ -7347,4 +7347,85 @@ loadP52Admin();
   </div>
 </div>
 <!-- END PHASE 55 ADMIN PORTAL — FINAL -->
+
+<!-- ========== PHASE 56: AUTONOMOUS ECONOMY & TOKENISED EVENTS (ADMIN) ========== -->
+<div class="phase-section" id="phase56-admin">
+  <div class="phase-header" style="background:linear-gradient(135deg,#1a0533,#3d0f6e,#6a1fa0)">
+    <h2>🪙 Phase 56 — Autonomous Economy &amp; Tokenised Events <span class="badge">v56.0.0</span></h2>
+    <p>Token Economy · Event DAO 2.0 · Creator Economy · Micro-Economy · Royalty Engine · Fan Investment · Token Sponsorship · AI Escrow · DID 2.0 · Auto Revenue Distribution</p>
+  </div>
+  <div class="metrics-grid">
+    <div class="metric-card"><span class="metric-value">4,069</span><span class="metric-label">Total Endpoints</span></div>
+    <div class="metric-card"><span class="metric-value">₹1,840 Cr</span><span class="metric-label">Token Economy GMV</span></div>
+    <div class="metric-card"><span class="metric-value">28.4M</span><span class="metric-label">DID Wallets</span></div>
+    <div class="metric-card"><span class="metric-value">2,840</span><span class="metric-label">Active DAOs</span></div>
+    <div class="metric-card"><span class="metric-value">₹840 Cr</span><span class="metric-label">Auto-Distributed YTD</span></div>
+    <div class="metric-card"><span class="metric-value">4.2 sec</span><span class="metric-label">Settlement Time</span></div>
+    <div class="metric-card"><span class="metric-value">99.994%</span><span class="metric-label">Distribution Accuracy</span></div>
+    <div class="metric-card"><span class="metric-value">0</span><span class="metric-label">Identity Theft Cases</span></div>
+  </div>
+  <div class="module-grid">
+    <div class="module-card">
+      <h4>🎟️ Tokenised Ticket Economy</h4>
+      <p>2.84M tickets tokenised/day · 5 token types · ₹1,840 Cr GMV · 28.4% avg appreciation · 10% creator royalty</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/token-economy/token-types','GET',this)">Token Types</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/token-economy/mint','POST',this)">Mint Token</button>
+    </div>
+    <div class="module-card">
+      <h4>🗳️ Event DAO 2.0</h4>
+      <p>2,840 DAOs · 28.4M members · 48% voter participation · ₹840 Cr treasury · quadratic voting · 84% proposals implemented</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/event-dao/proposals','GET',this)">Live Proposals</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/event-dao/vote','POST',this)">Cast Vote</button>
+    </div>
+    <div class="module-card">
+      <h4>🎨 Creator Economy</h4>
+      <p>284K creators · ₹840 Cr distributed · avg ₹28,400 earnings · 28.4M content pieces · 28.4% ticket discovery</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/creator-economy/leaderboard','GET',this)">Creator Leaderboard</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/creator-economy/analytics','GET',this)">Creator Analytics</button>
+    </div>
+    <div class="module-card">
+      <h4>💰 Micro-Economy Engine</h4>
+      <p>28.4M micro-txns/day · ₹28 avg · ₹284 Cr in-event GMV · digital glow sticks · artist shoutouts · crowd votes</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/micro-economy/virtual-goods','GET',this)">Virtual Goods</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/micro-economy/analytics','GET',this)">Micro Analytics</button>
+    </div>
+    <div class="module-card">
+      <h4>⚖️ Dynamic Royalty Engine</h4>
+      <p>28,400 contracts · ₹840 Cr royalties YTD · 4.2s settlement · 0.04% dispute rate · 84 countries · 99.94% accuracy</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/royalty-engine/contracts','GET',this)">View Contracts</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/royalty-engine/settle','POST',this)">Settle Revenue</button>
+    </div>
+    <div class="module-card">
+      <h4>📈 Fan Investment Club</h4>
+      <p>2,840 clubs · 840K investors · ₹840 Cr invested · 28.4% avg return · ₹840 min investment · SEBI sandbox approved</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/fan-investment/opportunities','GET',this)">Opportunities</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/fan-investment/invest','POST',this)">Invest Now</button>
+    </div>
+    <div class="module-card">
+      <h4>🏷️ Tokenised Sponsorship</h4>
+      <p>840 sponsors · ₹284 Cr volume · 42% fan engagement lift · 84% ROI improvement · 2,840 micro-campaigns</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/token-sponsorship/brands','GET',this)">Featured Brands</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/token-sponsorship/analytics','GET',this)">Sponsor Analytics</button>
+    </div>
+    <div class="module-card">
+      <h4>🔐 AI Escrow &amp; Settlement</h4>
+      <p>284K active contracts · ₹840 Cr in escrow · 8.4s settlement · 94.2% auto-resolve · 0 fraud · INDT-Arbiter-v2</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/ai-escrow/contracts','GET',this)">Active Contracts</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/ai-escrow/create','POST',this)">Create Escrow</button>
+    </div>
+    <div class="module-card">
+      <h4>🪪 Decentralised Identity 2.0</h4>
+      <p>28.4M DID wallets · 84M VCs · ZK proofs · W3C DID + OpenID4VC · 0 identity theft · privacy score 9.8</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/did2/credentials','GET',this)">Credential Types</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/did2/verify','POST',this)">ZK Verify</button>
+    </div>
+    <div class="module-card">
+      <h4>🤖 Autonomous Revenue Distribution</h4>
+      <p>284 streams automated · ₹84 Cr/day · 2.84M payees · 4.2s latency · 84 currencies · 8% cost vs traditional</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/auto-revenue/streams','GET',this)">Revenue Streams</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/auto-revenue/analytics','GET',this)">Distribution Analytics</button>
+    </div>
+  </div>
+</div>
+<!-- END PHASE 56 ADMIN PORTAL -->
 </body></html>

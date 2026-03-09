@@ -4136,4 +4136,45 @@ loadAllP52EM();
   </div>
 </div>
 <!-- END PHASE 55 EVENT MANAGER — FINAL -->
+
+<!-- ========== PHASE 56: AUTONOMOUS ECONOMY (EVENT MANAGER) ========== -->
+<div class="phase-section" id="phase56-eventmgr">
+  <div class="phase-header" style="background:linear-gradient(135deg,#1a0533,#3d0f6e,#6a1fa0)">
+    <h2>🪙 Tokenised Event Finance <span class="badge">v56.0.0</span></h2>
+    <p>Token fundraising · DAO governance · Royalty automation · AI escrow · Creator monetisation</p>
+  </div>
+  <div class="metrics-grid">
+    <div class="metric-card"><span class="metric-value">28.4%</span><span class="metric-label">Avg Investor Return</span></div>
+    <div class="metric-card"><span class="metric-value">84%</span><span class="metric-label">Settlement Cost Saved</span></div>
+    <div class="metric-card"><span class="metric-value">42%</span><span class="metric-label">Creator-Driven Discovery</span></div>
+    <div class="metric-card"><span class="metric-value">0</span><span class="metric-label">Escrow Disputes</span></div>
+  </div>
+  <div class="module-grid">
+    <div class="module-card">
+      <h4>🎟️ Launch Token Tickets</h4>
+      <p>Mint collector, fractional and VIP tokens. Set royalties on resale (up to 15%). Tokens appreciate as your event trends.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/token-economy/mint','POST',this)">Mint Tickets</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/token-economy/analytics','GET',this)">Token Analytics</button>
+    </div>
+    <div class="module-card">
+      <h4>💰 Raise Capital from Fans</h4>
+      <p>Open investment round. Set target, min ticket size, projected returns. Fans co-fund your event — avg 72% oversubscribed.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/fan-investment/opportunities','GET',this)">View Raises</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/fan-investment/analytics','GET',this)">Investment Analytics</button>
+    </div>
+    <div class="module-card">
+      <h4>🎨 Activate Creator Network</h4>
+      <p>84K active creators drive 28.4% of ticket discovery. Commission-based. Auto-paid via royalty engine. Track ROI per creator.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/creator-economy/overview','GET',this)">Creator Network</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/creator-economy/analytics','GET',this)">Creator Analytics</button>
+    </div>
+    <div class="module-card">
+      <h4>⚖️ Smart Revenue Contracts</h4>
+      <p>Define splits for artist, venue, creators, charity. AI auto-settles in 4.2 seconds. Immutable. Auditable. Trusted by all.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/royalty-engine/settle','POST',this)">Create Revenue Contract</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/royalty-engine/analytics','GET',this)">Royalty Analytics</button>
+    </div>
+  </div>
+</div>
+<!-- END PHASE 56 EVENT MANAGER -->
 </body></html>

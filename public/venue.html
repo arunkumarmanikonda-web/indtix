@@ -3745,4 +3745,39 @@ loadAllP52Venue();
   </div>
 </div>
 <!-- END PHASE 55 VENUE PORTAL — FINAL -->
+
+<!-- ========== PHASE 56: AUTONOMOUS ECONOMY (VENUE) ========== -->
+<div class="phase-section" id="phase56-venue">
+  <div class="phase-header" style="background:linear-gradient(135deg,#1a0533,#3d0f6e,#6a1fa0)">
+    <h2>🪙 Tokenised Venue Economy <span class="badge">v56.0.0</span></h2>
+    <p>Automated revenue splits · AI escrow · Token sponsorship · Micro-economy · DID check-in</p>
+  </div>
+  <div class="metrics-grid">
+    <div class="metric-card"><span class="metric-value">₹84 Cr</span><span class="metric-label">Daily Auto-Distribution</span></div>
+    <div class="metric-card"><span class="metric-value">0.4%</span><span class="metric-label">Manual Intervention Rate</span></div>
+    <div class="metric-card"><span class="metric-value">28.4M</span><span class="metric-label">Daily Micro-Transactions</span></div>
+    <div class="metric-card"><span class="metric-value">4.2 sec</span><span class="metric-label">Escrow Settlement</span></div>
+  </div>
+  <div class="module-grid">
+    <div class="module-card">
+      <h4>💸 Auto Revenue Distribution</h4>
+      <p>Venue share auto-distributed 4.2 seconds after event settlement. 84 currencies. 99.994% accuracy. Zero delays.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/auto-revenue/streams','GET',this)">Revenue Streams</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/auto-revenue/distribute','POST',this)">Trigger Distribution</button>
+    </div>
+    <div class="module-card">
+      <h4>🏷️ Tokenised Sponsor Activations</h4>
+      <p>Brands sponsor via tokens. Real-time ROI tracking. 42% fan engagement lift. Jio token: 2.84M holders, 84% ROI.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/token-sponsorship/brands','GET',this)">Sponsor Brands</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/token-sponsorship/analytics','GET',this)">Sponsor ROI</button>
+    </div>
+    <div class="module-card">
+      <h4>🪪 DID-Powered Entry</h4>
+      <p>Fans check in with zero-knowledge proof. Age verified without exposing DOB. Identity secured without data exposure.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/did2/verify','POST',this)">ZK Verify Entry</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/did2/analytics','GET',this)">DID Analytics</button>
+    </div>
+  </div>
+</div>
+<!-- END PHASE 56 VENUE PORTAL -->
 </body></html>

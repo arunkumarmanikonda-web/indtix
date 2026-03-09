@@ -5914,4 +5914,45 @@ loadAllP52Org();
   </div>
 </div>
 <!-- END PHASE 55 ORGANISER PORTAL — FINAL -->
+
+<!-- ========== PHASE 56: AUTONOMOUS ECONOMY (ORGANISER) ========== -->
+<div class="phase-section" id="phase56-organiser">
+  <div class="phase-header" style="background:linear-gradient(135deg,#1a0533,#3d0f6e,#6a1fa0)">
+    <h2>🪙 Tokenised Event Finance for Organisers <span class="badge">v56.0.0</span></h2>
+    <p>Token fundraising · DAO community · AI escrow · Dynamic royalties · Autonomous revenue distribution</p>
+  </div>
+  <div class="metrics-grid">
+    <div class="metric-card"><span class="metric-value">4.2 sec</span><span class="metric-label">Revenue Settlement</span></div>
+    <div class="metric-card"><span class="metric-value">₹840 Cr</span><span class="metric-label">Royalties Distributed</span></div>
+    <div class="metric-card"><span class="metric-value">0.04%</span><span class="metric-label">Dispute Rate</span></div>
+    <div class="metric-card"><span class="metric-value">92%</span><span class="metric-label">Cost vs Traditional</span></div>
+  </div>
+  <div class="module-grid">
+    <div class="module-card">
+      <h4>💰 Token-Based Fundraising</h4>
+      <p>Raise event capital from fans via Fan Investment Club. Sunburn 2027 raised ₹21.4 Cr from 8,400 fan investors.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/fan-investment/opportunities','GET',this)">Raise Capital</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/fan-investment/analytics','GET',this)">Investment Analytics</button>
+    </div>
+    <div class="module-card">
+      <h4>⚖️ Automated Revenue Splits</h4>
+      <p>Set royalty splits once. AI auto-distributes to artist, venue, creators, charity in 4.2 seconds. 0.04% dispute rate.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/royalty-engine/contracts','GET',this)">My Contracts</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/royalty-engine/settle','POST',this)">Settle Event Revenue</button>
+    </div>
+    <div class="module-card">
+      <h4>🔐 AI Escrow Protection</h4>
+      <p>All advance payments held in smart contract escrow. Auto-released on event completion. Artist fees protected. Zero fraud.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/ai-escrow/create','POST',this)">Create Escrow</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/ai-escrow/analytics','GET',this)">Escrow Analytics</button>
+    </div>
+    <div class="module-card">
+      <h4>🗳️ Build Your Event DAO</h4>
+      <p>Engage your community in event decisions. 48% voter participation avg. Community-shaped events sell out 72% faster.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/event-dao/overview','GET',this)">Launch DAO</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/event-dao/analytics','GET',this)">DAO Analytics</button>
+    </div>
+  </div>
+</div>
+<!-- END PHASE 56 ORGANISER PORTAL -->
 </body></html>

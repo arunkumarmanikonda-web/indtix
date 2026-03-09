@@ -7398,5 +7398,49 @@ loadAllP52Fan();
   </div>
 </div>
 <!-- END PHASE 55 FAN PORTAL — FINAL -->
+
+<!-- ========== PHASE 56: AUTONOMOUS ECONOMY (FAN) ========== -->
+<div class="phase-section" id="phase56-fan">
+  <div class="phase-header" style="background:linear-gradient(135deg,#1a0533,#3d0f6e,#6a1fa0)">
+    <h2>🪙 Own Your Events — Tokenised Fan Economy <span class="badge">v56.0.0</span></h2>
+    <p>Co-own events · Vote on lineups · Invest in festivals · Trade collectible tickets · Earn creator royalties</p>
+  </div>
+  <div class="metrics-grid">
+    <div class="metric-card"><span class="metric-value">28.4%</span><span class="metric-label">Avg Token Appreciation</span></div>
+    <div class="metric-card"><span class="metric-value">₹840</span><span class="metric-label">Min Event Investment</span></div>
+    <div class="metric-card"><span class="metric-value">48%</span><span class="metric-label">DAO Voter Participation</span></div>
+    <div class="metric-card"><span class="metric-value">9.8</span><span class="metric-label">Privacy Score (DID)</span></div>
+  </div>
+  <div class="module-grid">
+    <div class="module-card">
+      <h4>🎟️ Collectible Token Tickets</h4>
+      <p>Your ticket is an NFT. Trade it, hold it, frame it. Collector editions appreciate on average 28.4%. Your memories have value.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/token-economy/token-types','GET',this)">My Token Tickets</button>
+    </div>
+    <div class="module-card">
+      <h4>🗳️ Vote on Your Event</h4>
+      <p>Should Sunburn add an Arctic Stage? Vote with your INDT tokens. 48% of fans participate. Your voice shapes the show.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/event-dao/proposals','GET',this)">Active Proposals</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/event-dao/vote','POST',this)">Cast Your Vote</button>
+    </div>
+    <div class="module-card">
+      <h4>📈 Invest in Festivals</h4>
+      <p>Co-own upcoming events from ₹840. Avg 28.4% returns. Sunburn 2027 is now raising — 8,400 fans already in.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/fan-investment/opportunities','GET',this)">Investment Opportunities</button>
+      <button class="btn-api" onclick="apiCall('/api/v56/fan-investment/invest','POST',this)">Invest Now</button>
+    </div>
+    <div class="module-card">
+      <h4>🎨 Create &amp; Earn</h4>
+      <p>Publish reviews, videos, tips about events. Top creators earn ₹8.4 Cr/year. You own your content and royalties.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/creator-economy/leaderboard','GET',this)">Creator Leaderboard</button>
+    </div>
+    <div class="module-card">
+      <h4>🪪 Your Digital Identity</h4>
+      <p>One self-sovereign identity. No passwords. Zero-knowledge proofs. Your data stays yours — always. Privacy score 9.8/10.</p>
+      <button class="btn-api" onclick="apiCall('/api/v56/did2/overview','GET',this)">My Digital ID</button>
+    </div>
+  </div>
+</div>
+<!-- END PHASE 56 FAN PORTAL -->
 </body>
 </html>
