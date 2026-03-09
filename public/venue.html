@@ -3050,4 +3050,29 @@ async function loadP34VenueSus(){const r=await fetch('/api/admin/ai-ops/operatio
 async function loadP34VenueStaff(){const r=await fetch('/api/admin/ai-ops/operations/staffing-ai');const d=await r.json();document.getElementById('p34-venue-staff-output').innerHTML='Scheduled: '+d.staff_scheduled_today.toLocaleString()+' | AI-Optimised: '+d.ai_optimised_pct+'%<br>Savings: ₹'+d.overstaffing_cost_saved_cr+'Cr | Fairness: '+d.fairness_score+'%';}
 </script>
 <!-- END PHASE 34 VENUE PORTAL -->
+
+<!-- PHASE 35 VENUE PORTAL: Risk & Compliance -->
+<div class="phase-section" id="p35-venue-section">
+  <h3>⚖️ Phase 35 — Risk & Regulatory Compliance</h3>
+  <div class="btn-row">
+    <button onclick="loadP35VenueRisk()">Risk Dashboard</button>
+    <button onclick="loadP35VenueBCP()">BCP/DRP Status</button>
+  </div>
+  <div id="p35-venue-output" class="output-box"></div>
+</div>
+<script>
+async function loadP35VenueRisk() {
+  const r = await fetch('/api/admin/risk/dashboard');
+  const d = await r.json();
+  document.getElementById('p35-venue-output').innerHTML =
+    `<div class="warning-alert">⚠️ Top Risks: ${d.top_risks.slice(0,3).join(', ')} | Risk Score: ${d.risk_score} | Residual: ${d.residual_risks} | Appetite Breaches: ${d.appetite_breaches}</div>`;
+}
+async function loadP35VenueBCP() {
+  const r = await fetch('/api/admin/risk/bcp-drp');
+  const d = await r.json();
+  document.getElementById('p35-venue-output').innerHTML =
+    `<div class="success-alert">🛡️ BCP Tested: ${d.bcp_tested ? '✅' : '❌'} | Last Drill: ${d.last_drill} | RTO: ${d.rto_hours}h | RPO: ${d.rpo_hours}h | Sites: ${d.sites.join(', ')}</div>`;
+}
+</script>
+<!-- END PHASE 35 VENUE PORTAL -->
 </body></html>

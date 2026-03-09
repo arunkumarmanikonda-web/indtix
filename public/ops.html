@@ -3269,5 +3269,38 @@ async function loadP34OpsCost(){const r=await fetch('/api/ops/ai-ops/sre/cost-op
 async function loadP34OpsObs(){const r=await fetch('/api/ops/ai-ops/sre/observability');const d=await r.json();document.getElementById('p34-ops-obs-output').innerHTML='Traces/day: '+d.traces_per_day.toLocaleString()+' | Logs: '+d.logs_per_day_gb+'GB<br>AI Correlation: '+d.ai_correlation+' | Root Cause Acc: '+d.root_cause_accuracy_pct+'%';}
 </script>
 <!-- END PHASE 34 OPS PORTAL -->
+
+<!-- PHASE 35 OPS PORTAL: IPO & Governance Ops -->
+<div class="phase-section" id="p35-ops-section">
+  <h3>⚖️ Phase 35 — IPO Ops, Regulatory Calendar & SOX Controls</h3>
+  <div class="btn-row">
+    <button onclick="loadP35OpsRegCalendar()">Regulatory Calendar</button>
+    <button onclick="loadP35OpsSOX()">SOX Controls</button>
+    <button onclick="loadP35OpsInsurance()">Insurance Coverage</button>
+  </div>
+  <div id="p35-ops-output" class="output-box"></div>
+</div>
+<script>
+async function loadP35OpsRegCalendar() {
+  const r = await fetch('/api/ops/compliance/regulatory-calendar');
+  const d = await r.json();
+  const events = d.events.map(e => `${e.date}: ${e.event}`).join(' | ');
+  document.getElementById('p35-ops-output').innerHTML =
+    `<div class="info-alert">📅 Upcoming 90d Events: ${d.total_upcoming_90d}<br>${events}</div>`;
+}
+async function loadP35OpsSOX() {
+  const r = await fetch('/api/ops/audit/sox-controls');
+  const d = await r.json();
+  document.getElementById('p35-ops-output').innerHTML =
+    `<div class="success-alert">📑 SOX Controls Tested: ${d.controls_tested} | Passed: ${d.passed} | Failed: ${d.failed} | Remediated: ${d.remediated} | Readiness: ${d.sox_readiness_pct}%</div>`;
+}
+async function loadP35OpsInsurance() {
+  const r = await fetch('/api/ops/risk/insurance-coverage');
+  const d = await r.json();
+  document.getElementById('p35-ops-output').innerHTML =
+    `<div class="info-alert">🛡️ Policies: ${d.policies} | Cover: ₹${(d.total_cover_inr/1e9).toFixed(1)}B | Premium: ₹${(d.premiums_inr/1e5).toFixed(1)}L<br>Types: ${d.types.join(', ')}</div>`;
+}
+</script>
+<!-- END PHASE 35 OPS PORTAL -->
 </body>
 </html>

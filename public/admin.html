@@ -5761,4 +5761,58 @@ async function loadP34Mktg(){const r=await fetch('/api/admin/ai-ops/marketing/da
 async function loadP34Legal(){const r=await fetch('/api/admin/ai-ops/legal/dashboard');const d=await r.json();document.getElementById('p34-legal-output').innerHTML='<b>Contracts reviewed:</b> '+d.contracts_ai_reviewed_today+' | <b>Risk flagged:</b> '+d.risk_clauses_flagged+'<br><b>Saved:</b> ₹'+d.legal_spend_saved_cr+'Cr | <b>Accuracy:</b> '+d.accuracy_pct+'%';}
 </script>
 <!-- END PHASE 34 ADMIN PORTAL -->
+
+<!-- PHASE 35 ADMIN PORTAL: IPO Readiness, Governance & Investor Suite -->
+<div class="phase-section" id="p35-admin-section">
+  <h3>⚖️ Phase 35 — IPO Readiness, Governance & Investor Suite</h3>
+  <div class="btn-row">
+    <button onclick="loadP35IPODashboard()">IPO Dashboard</button>
+    <button onclick="loadP35Governance()">Governance</button>
+    <button onclick="loadP35IR()">Investor Relations</button>
+    <button onclick="loadP35ESG()">ESG Report</button>
+    <button onclick="loadP35Risk()">Risk Register</button>
+    <button onclick="loadP35Capital()">Capital Markets</button>
+  </div>
+  <div id="p35-admin-output" class="output-box"></div>
+</div>
+<script>
+async function loadP35IPODashboard() {
+  const r = await fetch('/api/admin/ipo/dashboard');
+  const d = await r.json();
+  document.getElementById('p35-admin-output').innerHTML =
+    `<div class="success-alert">🚀 IPO Status: <b>${d.ipo_status}</b> | Target: <b>${d.target_listing}</b> | Date: <b>${d.target_date}</b><br>
+    Valuation: ₹${(d.valuation_inr/1e9).toFixed(1)}B | DRHP: ${d.drhp_completion_pct}% | Anchors: ${d.anchor_investors_confirmed} confirmed</div>`;
+}
+async function loadP35Governance() {
+  const r = await fetch('/api/admin/governance/dashboard');
+  const d = await r.json();
+  document.getElementById('p35-admin-output').innerHTML =
+    `<div class="info-alert">🏛️ Board: ${d.board_size} directors (${d.independent_directors} independent, ${d.women_directors} women) | Score: ${d.governance_score}/100 | SEBI LODR: ${d.sebi_lodr_compliant ? '✅' : '❌'}</div>`;
+}
+async function loadP35IR() {
+  const r = await fetch('/api/admin/ir/dashboard');
+  const d = await r.json();
+  document.getElementById('p35-admin-output').innerHTML =
+    `<div class="info-alert">📊 Shareholders: ${d.shareholders.toLocaleString()} | Mkt Cap: ₹${(d.market_cap_inr/1e9).toFixed(1)}B | Coverage: ${d.analyst_coverage} analysts | Consensus: ${d.buy_ratings} Buy / ${d.hold} Hold / ${d.sell} Sell</div>`;
+}
+async function loadP35ESG() {
+  const r = await fetch('/api/admin/esg/dashboard');
+  const d = await r.json();
+  document.getElementById('p35-admin-output').innerHTML =
+    `<div class="success-alert">🌿 ESG Score: ${d.esg_score}/100 | Carbon: ${d.carbon_footprint_tco2}t CO₂ | Renewable: ${d.renewable_energy_pct}% | Waste Recycled: ${d.waste_recycled_pct}%</div>`;
+}
+async function loadP35Risk() {
+  const r = await fetch('/api/admin/risk/risk-register');
+  const d = await r.json();
+  document.getElementById('p35-admin-output').innerHTML =
+    `<div class="warning-alert">⚠️ Risks: ${d.total_risks} total | High: ${d.high} | Medium: ${d.medium} | Low: ${d.low} | Last reviewed: ${d.last_reviewed}</div>`;
+}
+async function loadP35Capital() {
+  const r = await fetch('/api/admin/capital/dashboard');
+  const d = await r.json();
+  document.getElementById('p35-admin-output').innerHTML =
+    `<div class="info-alert">💹 Mkt Cap: ₹${(d.market_cap_inr/1e9).toFixed(1)}B | Promoter: ${d.promoter_holding_pct}% | FII: ${d.fii_pct}% | DII: ${d.dii_pct}% | Free Float: ₹${(d.free_float_inr/1e9).toFixed(1)}B</div>`;
+}
+</script>
+<!-- END PHASE 35 ADMIN PORTAL -->
 </body></html>

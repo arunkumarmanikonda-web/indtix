@@ -6457,5 +6457,30 @@ async function loadP34FanPrice(){const r=await fetch('/api/admin/ai-ops/revenue/
 async function loadP34FanForecast(){const r=await fetch('/api/admin/ai-ops/revenue/forecasting');const d=await r.json();document.getElementById('p34-fan-forecast-output').innerHTML='🔮 Next 30d: ₹'+d.revenue_next_30d_cr+'Cr | Next 90d: ₹'+d.revenue_next_90d_cr+'Cr<br>Accuracy: '+d.accuracy_last_quarter_pct+'% | MAPE: '+d.mape_pct+'%';}
 </script>
 <!-- END PHASE 34 FAN PORTAL -->
+
+<!-- PHASE 35 FAN PORTAL: IPO Readiness -->
+<div class="phase-section" id="p35-fan-section">
+  <h3>⚖️ Phase 35 — Platform Governance & Investor Info</h3>
+  <div class="btn-row">
+    <button onclick="loadP35FanIR()">Investor Relations</button>
+    <button onclick="loadP35FanESG()">ESG & Sustainability</button>
+  </div>
+  <div id="p35-fan-output" class="output-box"></div>
+</div>
+<script>
+async function loadP35FanIR() {
+  const r = await fetch('/api/admin/ir/quarterly-results');
+  const d = await r.json();
+  document.getElementById('p35-fan-output').innerHTML =
+    `<div class="info-alert">📈 ${d.quarter} Revenue: ₹${(d.revenue_inr/1e6).toFixed(0)}M | Growth: +${d.yoy_growth_pct}% YoY | EBITDA Margin: ${d.ebitda_margin_pct}%</div>`;
+}
+async function loadP35FanESG() {
+  const r = await fetch('/api/admin/esg/csr-report');
+  const d = await r.json();
+  document.getElementById('p35-fan-output').innerHTML =
+    `<div class="success-alert">🌿 CSR Spend: ₹${(d.spent_inr/1e5).toFixed(1)}L | Projects: ${d.projects.join(', ')} | Beneficiaries: ${d.beneficiaries.toLocaleString()}</div>`;
+}
+</script>
+<!-- END PHASE 35 FAN PORTAL -->
 </body>
 </html>

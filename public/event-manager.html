@@ -3344,4 +3344,29 @@ async function loadP34EMContent(){const r=await fetch('/api/admin/ai-ops/marketi
 async function loadP34EMHR(){const r=await fetch('/api/admin/ai-ops/hr/dashboard');const d=await r.json();document.getElementById('p34-em-hr-output').innerHTML='Employees: '+d.employees+' | AI Decisions: '+d.ai_hr_decisions_today+'<br>Attrition Risk: '+d.attrition_risk_flagged+' | Engagement: '+d.engagement_score;}
 </script>
 <!-- END PHASE 34 EVENT MANAGER -->
+
+<!-- PHASE 35 EVENT MANAGER: Audit & Compliance -->
+<div class="phase-section" id="p35-em-section">
+  <h3>⚖️ Phase 35 — Financial Audit & Compliance</h3>
+  <div class="btn-row">
+    <button onclick="loadP35EMAudit()">Audit Dashboard</button>
+    <button onclick="loadP35EMCompliance()">Compliance Status</button>
+  </div>
+  <div id="p35-em-output" class="output-box"></div>
+</div>
+<script>
+async function loadP35EMAudit() {
+  const r = await fetch('/api/admin/audit/dashboard');
+  const d = await r.json();
+  document.getElementById('p35-em-output').innerHTML =
+    `<div class="info-alert">📋 Auditor: ${d.auditor} | Status: ${d.audit_status} | Findings Open: ${d.findings_open} | High Priority: ${d.high_priority}</div>`;
+}
+async function loadP35EMCompliance() {
+  const r = await fetch('/api/admin/compliance/dashboard');
+  const d = await r.json();
+  document.getElementById('p35-em-output').innerHTML =
+    `<div class="success-alert">✅ Regulators: ${d.regulators.join(', ')}<br>Filings YTD: ${d.filings_ytd} | Pending: ${d.pending} | Overdue: ${d.overdue} | Auto-Filed: ${d.auto_filed} | Score: ${d.compliance_score_pct}%</div>`;
+}
+</script>
+<!-- END PHASE 35 EVENT MANAGER -->
 </body></html>

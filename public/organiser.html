@@ -5071,4 +5071,36 @@ async function loadP34OrgAB(){const r=await fetch('/api/admin/ai-ops/revenue/ab-
 async function loadP34OrgC360(){const r=await fetch('/api/admin/ai-ops/bi/customer-360');const d=await r.json();document.getElementById('p34-org-c360-output').innerHTML='Profiles: '+d.profiles_unified.toLocaleString()+' | Sources: '+d.data_sources_merged+'<br>Resolution: '+d.identity_resolution_pct+'% | Segments: '+d.segment_count;}
 </script>
 <!-- END PHASE 34 ORGANISER PORTAL -->
+
+<!-- PHASE 35 ORGANISER PORTAL: ESG & IR -->
+<div class="phase-section" id="p35-org-section">
+  <h3>⚖️ Phase 35 — ESG, Compliance & Investor Suite</h3>
+  <div class="btn-row">
+    <button onclick="loadP35OrgESG()">Green Events</button>
+    <button onclick="loadP35OrgIR()">Event Metrics (IR)</button>
+    <button onclick="loadP35OrgMA()">M&A Portfolio</button>
+  </div>
+  <div id="p35-org-output" class="output-box"></div>
+</div>
+<script>
+async function loadP35OrgESG() {
+  const r = await fetch('/api/organiser/esg/green-events');
+  const d = await r.json();
+  document.getElementById('p35-org-output').innerHTML =
+    `<div class="success-alert">🌿 Green Events: ${d.green_certified_events} | Carbon Neutral: ${d.carbon_neutral_events} | Trees Planted: ${d.tree_planted.toLocaleString()} | NGO Partners: ${d.partner_ngos}</div>`;
+}
+async function loadP35OrgIR() {
+  const r = await fetch('/api/organiser/ir/event-metrics');
+  const d = await r.json();
+  document.getElementById('p35-org-output').innerHTML =
+    `<div class="info-alert">📊 Events/Year: ${d.events_per_year.toLocaleString()} | Avg Ticket: ₹${d.avg_ticket_price_inr} | NPS: ${d.net_promoter_score} | Repeat Attendee: ${d.repeat_attendee_pct}%</div>`;
+}
+async function loadP35OrgMA() {
+  const r = await fetch('/api/admin/ma/portfolio-performance');
+  const d = await r.json();
+  document.getElementById('p35-org-output').innerHTML =
+    `<div class="info-alert">🤝 Acquisitions: ${d.acquisitions} | Avg IRR: ${d.avg_irr_pct}% | MOIC: ${d.moic_avg}x | Exit Route: ${d.exit_route}</div>`;
+}
+</script>
+<!-- END PHASE 35 ORGANISER PORTAL -->
 </body></html>

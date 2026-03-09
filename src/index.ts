@@ -21025,7 +21025,7 @@ app.get('/api/v33/health', (c) => c.json({
 }))
 
 // Phase 34 main health
-app.get('/api/health', (c) => c.json({
+app.get('/api/v34/health', (c) => c.json({
   status: 'ok',
   platform: 'INDTIX',
   version: 'v34.0.0',
@@ -21139,6 +21139,435 @@ app.get('/api/admin/ai-ops/meta/governance-ai', (c) => c.json({ policies_enforce
 
 // ═══════════════════════════════════════════════════════════
 // END PHASE 34 — AI-NATIVE OPERATIONS & AUTONOMOUS BUSINESS
+// ═══════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 35 — IPO READINESS, GOVERNANCE & INVESTOR SUITE
+// Version: v35.0.0 | New endpoints: 90 | Total: 2179
+// ═══════════════════════════════════════════════════════════
+
+// ── Module 1: IPO Preparation & SEBI Compliance ─────────────
+app.get('/api/admin/ipo/dashboard', (c) => c.json({
+  ipo_status: 'DRHP Preparation', target_listing: 'NSE/BSE', target_date: '2027-Q1',
+  valuation_inr: 28400000000, lead_managers: ['Kotak', 'JM Financial', 'Axis Capital'],
+  sebi_queries: 4, drhp_completion_pct: 68, anchor_investors_confirmed: 8
+}))
+app.get('/api/admin/ipo/sebi-compliance', (c) => c.json({
+  sebi_filings_complete: 42, pending: 8, last_filed: '2026-03-01',
+  compliance_score_pct: 91, observations: 4, legal_counsel: 'AZB & Partners'
+}))
+app.get('/api/admin/ipo/drhp-tracker', (c) => c.json({
+  sections_complete: 18, sections_pending: 6, total_pages: 284,
+  last_updated: '2026-03-08', sebi_submission_date: '2026-06-30',
+  lock_up_period_months: 6
+}))
+app.post('/api/admin/ipo/valuation-model', (c) => c.json({
+  model_id: `VAL-${Date.now()}`, method: 'DCF + Comparable', ev_inr: 28400000000,
+  ev_ebitda: 42, p_e: 84, premium_to_peers_pct: 28
+}))
+app.get('/api/admin/ipo/roadshow-planner', (c) => c.json({
+  cities: ['Mumbai', 'Delhi', 'Bangalore', 'Singapore', 'London', 'New York'],
+  investor_meetings_scheduled: 84, one_on_one: 42, group_presentations: 18,
+  virtual_sessions: 24
+}))
+app.get('/api/admin/ipo/anchor-investors', (c) => c.json({
+  anchor_quota_pct: 30, confirmed_anchors: 8, committed_inr: 8400000000,
+  categories: ['FII', 'Domestic MF', 'Insurance', 'Family Office']
+}))
+app.get('/api/admin/ipo/ipo-pricing', (c) => c.json({
+  price_band_lower: 284, price_band_upper: 312, face_value: 2,
+  lot_size: 48, issue_size_inr: 28400000000, ipo_type: 'Book Building'
+}))
+app.get('/api/ops/ipo/regulatory-calendar', (c) => c.json({
+  upcoming_filings: [{ date: '2026-04-15', filing: 'Annual Report' }, { date: '2026-06-30', filing: 'DRHP Submission' }],
+  compliance_deadlines: 18, auto_reminders: true
+}))
+app.post('/api/admin/ipo/legal-due-diligence', (c) => c.json({
+  dd_id: `DD-${Date.now()}`, scope: 'full-legal', completion_pct: 74,
+  issues_found: 4, cleared: 2, pending_legal_opinion: 1
+}))
+app.get('/api/admin/ipo/listing-readiness', (c) => c.json({
+  readiness_score_pct: 74, checklist_complete: 42, checklist_pending: 18,
+  critical_gaps: ['related-party-disclosures', 'auditor-sign-off'],
+  estimated_ready_date: '2026-09-01'
+}))
+
+// ── Module 2: Corporate Governance Engine ───────────────────
+app.get('/api/admin/governance/dashboard', (c) => c.json({
+  board_size: 8, independent_directors: 4, women_directors: 2,
+  governance_score: 84, sebi_lodr_compliant: true, audit_committee: true
+}))
+app.get('/api/admin/governance/board-composition', (c) => c.json({
+  directors: [
+    { name: 'Vikram Mehta', role: 'Chairman', independent: false },
+    { name: 'Priya Nair', role: 'CEO & MD', independent: false },
+    { name: 'Rahul Gupta', role: 'Independent Director', independent: true },
+    { name: 'Anjali Singh', role: 'Independent Director', independent: true }
+  ],
+  avg_board_tenure_years: 4.2, avg_age: 52
+}))
+app.get('/api/admin/governance/committee-tracker', (c) => c.json({
+  committees: ['Audit', 'Nomination & Remuneration', 'Risk Management', 'CSR', 'Stakeholder Relationship'],
+  meetings_ytd: 42, attendance_rate_pct: 94, resolutions_passed: 284
+}))
+app.post('/api/admin/governance/resolution-log', (c) => c.json({
+  resolution_id: `RES-${Date.now()}`, status: 'passed', votes_for: 7, votes_against: 0, abstain: 1
+}))
+app.get('/api/admin/governance/insider-trading', (c) => c.json({
+  trading_window_open: false, next_open: '2026-04-16', DP_registered: 42,
+  violations_detected: 0, upsi_holders: 28
+}))
+app.get('/api/admin/governance/related-party', (c) => c.json({
+  transactions_ytd: 18, total_value_inr: 84000000, audit_committee_approved: 18,
+  shareholder_approved: 4, arm_length_certified: true
+}))
+app.get('/api/admin/governance/whistle-blower', (c) => c.json({
+  policy_active: true, complaints_received_ytd: 4, resolved: 4, pending: 0,
+  ombudsman: 'External - Deloitte'
+}))
+app.get('/api/admin/governance/disclosures', (c) => c.json({
+  pending_disclosures: 2, filed_ytd: 84, exchange_filings: 42, sebi_filings: 28,
+  next_deadline: '2026-04-14', auto_filing: true
+}))
+
+// ── Module 3: Investor Relations Platform ───────────────────
+app.get('/api/admin/ir/dashboard', (c) => c.json({
+  shareholders: 284000, institutional_pct: 42, retail_pct: 48, promoter_pct: 10,
+  market_cap_inr: 28400000000, analyst_coverage: 18, buy_ratings: 14, hold: 3, sell: 1
+}))
+app.get('/api/admin/ir/shareholder-register', (c) => c.json({
+  total_shareholders: 284000, top_10_pct: 62, fii_pct: 28, dii_pct: 14,
+  promoter_pledged_pct: 0, demat_pct: 99.8
+}))
+app.get('/api/admin/ir/analyst-coverage', (c) => c.json({
+  analysts: 18, brokerages: 14, avg_target_price: 380, consensus: 'BUY',
+  last_report: '2026-03-07', next_update: '2026-04-01'
+}))
+app.post('/api/admin/ir/earnings-call', (c) => c.json({
+  call_id: `EC-${Date.now()}`, quarter: 'Q4-FY26', date: '2026-04-28',
+  registrations: 284, analysts_invited: 42, live_webcast: true
+}))
+app.get('/api/admin/ir/quarterly-results', (c) => c.json({
+  quarter: 'Q3-FY26', revenue_inr: 284000000, yoy_growth_pct: 84,
+  ebitda_inr: 80736000, ebitda_margin_pct: 28.4, pat_inr: 42600000, eps: 5.07
+}))
+app.get('/api/admin/ir/investor-grievances', (c) => c.json({
+  open_complaints: 4, resolved_30d: 42, avg_resolution_days: 3.2,
+  sebi_scores: 'A', escalated: 0
+}))
+app.get('/api/organiser/ir/event-metrics', (c) => c.json({
+  events_per_year: 8400, avg_ticket_price_inr: 840, net_promoter_score: 72,
+  repeat_attendee_pct: 48, organic_growth_pct: 28
+}))
+app.get('/api/admin/ir/esg-rating', (c) => c.json({
+  overall_esg_score: 74, environment_score: 72, social_score: 78, governance_score: 84,
+  rating_agency: 'CRISIL ESG', last_rated: '2025-12-01', trend: 'improving'
+}))
+app.post('/api/admin/ir/investor-presentation', (c) => c.json({
+  presentation_id: `PRES-${Date.now()}`, version: 'v14.2', pages: 42,
+  last_updated: '2026-03-09', approved_by: 'CEO+CFO'
+}))
+app.get('/api/admin/ir/dividend-history', (c) => c.json({
+  policy: 'No dividend (growth phase)', retained_earnings_inr: 8400000000,
+  buyback_history: [], next_review: '2027-Q1'
+}))
+
+// ── Module 4: Financial Reporting & Audit Suite ─────────────
+app.get('/api/admin/audit/dashboard', (c) => c.json({
+  auditor: 'Deloitte Haskins & Sells', audit_status: 'Q3 signed-off',
+  annual_audit_status: 'in-progress', findings_open: 4, high_priority: 1,
+  internal_auditor: 'Grant Thornton'
+}))
+app.get('/api/admin/audit/financial-statements', (c) => c.json({
+  period: 'FY26-Q3', revenue_inr: 852000000, ebitda_inr: 241968000,
+  pat_inr: 127800000, total_assets_inr: 2840000000, net_worth_inr: 1420000000
+}))
+app.get('/api/admin/audit/ind-as-compliance', (c) => c.json({
+  ind_as_standards: 28, compliant: 28, restatements: 0,
+  new_standards_effective_fy27: 2, auditor_qualified: false
+}))
+app.post('/api/admin/audit/internal-audit', (c) => c.json({
+  audit_id: `IA-${Date.now()}`, scope: 'Operations-Q4', status: 'initiated',
+  auditor: 'Grant Thornton', findings_expected_date: '2026-05-01'
+}))
+app.get('/api/admin/audit/tax-compliance', (c) => c.json({
+  direct_tax_pct: 25.17, gst_compliance_score: 99, tds_default: 0,
+  advance_tax_paid: true, scrutiny_notices: 0, tax_litigation_value_inr: 0
+}))
+app.get('/api/ops/audit/sox-controls', (c) => c.json({
+  controls_tested: 284, passed: 280, failed: 4, remediated: 4,
+  sox_readiness_pct: 97, auditor_reliance: 'high'
+}))
+app.get('/api/admin/audit/restatement-risk', (c) => c.json({
+  risk_score: 2, areas_of_concern: [], last_restatement: 'none',
+  auditor_comfort: 'high', management_assessment: 'low'
+}))
+app.get('/api/ops/audit/cost-audit', (c) => c.json({
+  applicable: false, threshold_met: false, voluntary_audit: false,
+  note: 'Cost audit not applicable for ticketing services'
+}))
+
+// ── Module 5: Board & Committee Management ──────────────────
+app.get('/api/admin/board/meetings', (c) => c.json({
+  meetings_fy26: 8, quorum_maintained: true, avg_duration_hours: 4.2,
+  next_meeting: '2026-04-14', agenda_items_next: 12
+}))
+app.get('/api/admin/board/agm-tracker', (c) => c.json({
+  agm_date: '2026-09-28', venue: 'Mumbai', e_voting_enabled: true,
+  proxy_advisory: 'Institutional Investor Advisory Services',
+  resolutions_proposed: 8
+}))
+app.get('/api/admin/board/remuneration', (c) => c.json({
+  ceo_fixed_inr: 42000000, ceo_variable_pct: 84, esop_pool_pct: 8,
+  nrc_approved: true, say_on_pay: 'approved', peer_benchmark: 'P75'
+}))
+app.post('/api/admin/board/board-evaluation', (c) => c.json({
+  evaluation_id: `BEVAL-${Date.now()}`, period: 'FY26', method: 'third-party',
+  evaluator: 'Spencer Stuart', completion_date: '2026-05-31'
+}))
+app.get('/api/admin/board/succession-planning', (c) => c.json({
+  ceo_succession_ready: true, internal_candidates: 2, external_search: false,
+  critical_roles_covered: 8, next_review: '2026-06-30'
+}))
+app.get('/api/admin/board/d_and_o_insurance', (c) => c.json({
+  cover_inr: 840000000, insurer: 'Tata AIG', premium_inr: 4200000,
+  renewal_date: '2026-11-01', claims_history: 0
+}))
+app.get('/api/admin/board/conflicts-register', (c) => c.json({
+  declared_interests: 8, waived_out_meetings: 2, conflict_free_pct: 97.5,
+  last_updated: '2026-01-15'
+}))
+app.get('/api/admin/board/board-charter', (c) => c.json({
+  version: 'v4.0', last_reviewed: '2025-10-01', next_review: '2026-10-01',
+  approved_by: 'Full Board', sebi_aligned: true
+}))
+
+// ── Module 6: ESG Reporting & Sustainability ────────────────
+app.get('/api/admin/esg/dashboard', (c) => c.json({
+  esg_score: 74, carbon_footprint_tco2: 840, renewable_energy_pct: 42,
+  water_usage_kl: 18400, waste_recycled_pct: 74, social_impact_score: 78
+}))
+app.get('/api/admin/esg/brsr-report', (c) => c.json({
+  brsr_version: 'FY26', filed: false, filing_deadline: '2026-08-31',
+  principles_covered: 9, indicators_reported: 284, third_party_verified: true
+}))
+app.get('/api/admin/esg/carbon-tracker', (c) => c.json({
+  scope1_tco2: 42, scope2_tco2: 280, scope3_tco2: 518,
+  offset_tco2: 420, net_carbon_tco2: 420, target_net_zero_year: 2040
+}))
+app.get('/api/admin/esg/diversity-inclusion', (c) => c.json({
+  women_in_workforce_pct: 42, women_in_leadership_pct: 28,
+  differently_abled_pct: 2.1, regional_diversity_index: 0.84,
+  equal_pay_audited: true
+}))
+app.get('/api/organiser/esg/green-events', (c) => c.json({
+  green_certified_events: 284, carbon_neutral_events: 84,
+  avg_plastic_reduction_pct: 68, tree_planted: 28400, partner_ngos: 8
+}))
+app.post('/api/admin/esg/sustainability-target', (c) => c.json({
+  target_id: `ESG-${Date.now()}`, category: 'carbon', target: '-50% by 2030',
+  baseline_year: 2024, progress_pct: 18, on_track: true
+}))
+app.get('/api/admin/esg/csr-report', (c) => c.json({
+  csr_obligation_inr: 8400000, spent_inr: 8820000, overshent_pct: 5,
+  projects: ['Digital Literacy', 'Artist Support Fund', 'Rural Connectivity'],
+  beneficiaries: 28400
+}))
+app.get('/api/admin/esg/gri-alignment', (c) => c.json({
+  gri_standards_reported: 28, material_topics: 12, stakeholder_engagement: 8,
+  assurance_provider: 'KPMG', sdg_aligned: [4, 8, 10, 11, 13, 17]
+}))
+
+// ── Module 7: Risk Management & Internal Controls ───────────
+app.get('/api/admin/risk/dashboard', (c) => c.json({
+  top_risks: ['Regulatory change', 'Cyber security', 'FX volatility', 'Competition'],
+  risk_score: 42, residual_risks: 18, mitigated_ytd: 28, appetite_breaches: 0
+}))
+app.get('/api/admin/risk/risk-register', (c) => c.json({
+  total_risks: 84, high: 8, medium: 28, low: 48, owned_by_board: 8,
+  last_reviewed: '2026-03-01'
+}))
+app.get('/api/admin/risk/cyber-risk', (c) => c.json({
+  iso_27001_certified: true, pen_test_last: '2026-01-15', vulnerabilities_open: 4,
+  critical: 0, high: 1, soc2_type2: true, gdpr_dpa: true
+}))
+app.post('/api/admin/risk/risk-assessment', (c) => c.json({
+  assessment_id: `RISK-${Date.now()}`, areas: 8, methodology: 'COSO-ERM',
+  status: 'initiated', completion_date: '2026-04-30'
+}))
+app.get('/api/admin/risk/bcp-drp', (c) => c.json({
+  bcp_tested: true, last_drill: '2026-01-20', rto_hours: 4, rpo_hours: 1,
+  sites: ['Mumbai-Primary', 'Hyderabad-DR'], cloud_backup: true
+}))
+app.get('/api/ops/risk/insurance-coverage', (c) => c.json({
+  policies: 8, total_cover_inr: 8400000000, premiums_inr: 42000000,
+  types: ['D&O', 'Cyber', 'E&O', 'Property', 'Workers Comp', 'Event Cancellation']
+}))
+app.get('/api/admin/risk/fraud-risk', (c) => c.json({
+  fraud_cases_ytd: 4, recovered_pct: 84, prevention_system: 'AI-ML-Hybrid',
+  controls_layered: 8, false_positive_pct: 0.8
+}))
+app.get('/api/ops/risk/operational-risk', (c) => c.json({
+  incidents_ytd: 18, operational_losses_inr: 1200000, rcsa_complete: true,
+  kri_breaches: 2, escalated_to_board: 1
+}))
+app.get('/api/admin/risk/market-risk', (c) => c.json({
+  fx_exposure_usd: 2840000, interest_rate_sensitivity_inr: 1400000,
+  var_95_inr: 4200000, stress_test_worst_inr: 28000000, hedged_pct: 74
+}))
+app.get('/api/ops/risk/compliance-risk', (c) => c.json({
+  regulatory_changes_tracked: 42, impact_assessed: 42, actions_required: 8,
+  completed: 6, risk_of_non_compliance_inr: 0
+}))
+
+// ── Module 8: Regulatory & Compliance Intelligence ──────────
+app.get('/api/admin/compliance/dashboard', (c) => c.json({
+  regulators: ['SEBI', 'RBI', 'MCA', 'GSTN', 'DPIIT', 'CCI', 'TRAI'],
+  filings_ytd: 284, pending: 4, overdue: 0, auto_filed: 214, compliance_score_pct: 99
+}))
+app.get('/api/admin/compliance/sebi-lodr', (c) => c.json({
+  lodr_compliant: true, clauses_applicable: 84, compliant: 84,
+  last_audit: '2026-02-28', next_review: '2026-05-31', exchange_intimations: 42
+}))
+app.get('/api/admin/compliance/companies-act', (c) => c.json({
+  mca_filings: 18, roc_compliant: true, annual_return_filed: true,
+  mgmt_reports: 4, csr_report: true, related_party_disclosures: true
+}))
+app.get('/api/admin/compliance/data-privacy', (c) => c.json({
+  dpdp_act_compliant: true, gdpr_compliant: true, pdp_filings: 8,
+  consent_management: 'active', data_audits_ytd: 4, breaches: 0
+}))
+app.get('/api/admin/compliance/competition-law', (c) => c.json({
+  market_share_pct: 42, cci_monitoring: true, merger_notifications: 2,
+  antitrust_counsel: 'Shardul Amarchand', dawn_raids: 0
+}))
+app.post('/api/admin/compliance/compliance-check', (c) => c.json({
+  check_id: `CC-${Date.now()}`, jurisdiction: 'IN', areas: 8,
+  status: 'complete', score_pct: 98, issues: 2
+}))
+app.get('/api/ops/compliance/licences-register', (c) => c.json({
+  total_licences: 42, active: 40, expiring_30d: 4, renewed: 38,
+  categories: ['Entertainment', 'Payment Aggregator', 'DPIIT Startup', 'Import-Export']
+}))
+app.get('/api/admin/compliance/kyc-aml', (c) => c.json({
+  kyc_enabled: true, aml_policy: 'v4.2', suspicious_transactions: 2,
+  reported_to_fiu: 2, customer_due_diligence: 'risk-based'
+}))
+app.get('/api/admin/compliance/ip-compliance', (c) => c.json({
+  trademarks_registered: 42, domains_protected: 84, content_licences: 284,
+  infringements_detected_ytd: 8, takedowns_issued: 8
+}))
+app.get('/api/ops/compliance/regulatory-calendar', (c) => c.json({
+  events: [
+    { date: '2026-04-14', event: 'Board Meeting + Q4 Results' },
+    { date: '2026-04-30', event: 'Annual Report Dispatch' },
+    { date: '2026-06-30', event: 'DRHP Filing' }
+  ], total_upcoming_90d: 18
+}))
+
+// ── Module 9: M&A Strategy & Deal Management ────────────────
+app.get('/api/admin/ma/dashboard', (c) => c.json({
+  active_deals: 4, pipeline_deals: 8, closed_ytd: 2, total_deal_value_inr: 4200000000,
+  deal_types: ['strategic-acquisition', 'minority-stake', 'tech-acqui-hire']
+}))
+app.get('/api/admin/ma/target-screening', (c) => c.json({
+  targets_screened: 284, shortlisted: 18, in_diligence: 4,
+  top_target: 'BookMyShow SEA operations', strategic_fit_score: 84
+}))
+app.post('/api/admin/ma/nda-execute', (c) => c.json({
+  nda_id: `MNA-NDA-${Date.now()}`, counterparty: 'Target Corp', signed: true,
+  expiry_days: 180, counsel: 'Cyril Amarchand'
+}))
+app.get('/api/admin/ma/due-diligence', (c) => c.json({
+  active_dd: 2, financial_dd_pct: 74, legal_dd_pct: 68, tech_dd_pct: 82,
+  red_flags: 2, deal_breakers: 0, data_room_files: 2840
+}))
+app.get('/api/admin/ma/deal-structuring', (c) => c.json({
+  deal_structure: 'Share Purchase Agreement', consideration: 'Cash + Equity',
+  earn_out_months: 24, escrow_pct: 10, reps_warranty_cover: true
+}))
+app.post('/api/admin/ma/loi-generate', (c) => c.json({
+  loi_id: `LOI-${Date.now()}`, indicative_value_inr: 840000000,
+  exclusivity_days: 45, conditions: 3, status: 'draft'
+}))
+app.get('/api/admin/ma/integration-plan', (c) => c.json({
+  workstreams: 8, day1_ready: true, synergy_target_inr: 420000000,
+  integration_months: 18, risks: ['culture-fit', 'tech-migration', 'retention']
+}))
+app.get('/api/admin/ma/portfolio-performance', (c) => c.json({
+  acquisitions: 4, avg_irr_pct: 28, moic_avg: 2.8,
+  underperforming: 0, exits_planned: 1, exit_route: 'strategic-sale'
+}))
+
+// ── Module 10: Capital Markets & Equity Intelligence ────────
+app.get('/api/admin/capital/dashboard', (c) => c.json({
+  market_cap_inr: 28400000000, shares_outstanding: 840000000,
+  promoter_holding_pct: 52, fii_pct: 28, dii_pct: 14, public_pct: 6,
+  free_float_inr: 8500000000
+}))
+app.get('/api/admin/capital/equity-research', (c) => c.json({
+  coverage_banks: 14, target_prices: { high: 420, low: 310, consensus: 380 },
+  earnings_upgrades: 8, downgrades: 1, initiations_ytd: 4
+}))
+app.get('/api/admin/capital/secondary-market', (c) => c.json({
+  avg_daily_volume_shares: 2840000, avg_daily_turnover_inr: 840000000,
+  beta: 1.28, vol_30d_pct: 42, pe_ratio: 84, pb_ratio: 4.2
+}))
+app.get('/api/admin/capital/pre-ipo-round', (c) => c.json({
+  series: 'Series D', amount_raised_inr: 8400000000, valuation_inr: 28400000000,
+  investors: ['Tiger Global', 'SoftBank Vision', 'Peak XV', 'Prosus'],
+  use_of_funds: ['growth', 'international', 'tech-infra']
+}))
+app.get('/api/admin/capital/esop-management', (c) => c.json({
+  esop_pool_pct: 8, granted: 6.4, vested: 3.2, unvested: 3.2,
+  options_outstanding: 53760000, strike_price_inr: 120, current_fmv_inr: 312
+}))
+app.post('/api/admin/capital/buyback-analysis', (c) => c.json({
+  analysis_id: `BBK-${Date.now()}`, trigger_price_inr: 250, max_buyback_pct: 10,
+  estimated_eps_accretion_pct: 8, board_approval: 'pending'
+}))
+app.get('/api/admin/capital/debt-profile', (c) => c.json({
+  total_debt_inr: 840000000, net_debt_inr: 420000000, debt_equity: 0.28,
+  credit_rating: 'CRISIL A+', interest_cover: 14.2, maturity_profile_yrs: 3.4
+}))
+app.get('/api/admin/capital/treasury', (c) => c.json({
+  cash_equivalents_inr: 8400000000, short_term_investments_inr: 2840000000,
+  treasury_yield_pct: 7.2, liquid_mutual_funds: true, bank_fds: true
+}))
+app.get('/api/admin/capital/share-transfer', (c) => c.json({
+  registrar: 'KFintech', transfer_requests_mtd: 284, avg_turnaround_days: 2,
+  demat_ratio_pct: 99.8, isin: 'INE-INDT-01-XXXX'
+}))
+app.get('/api/admin/capital/investor-calendar', (c) => c.json({
+  events: [
+    { date: '2026-04-28', event: 'Q4 FY26 Earnings Call' },
+    { date: '2026-06-15', event: 'Analyst Day' },
+    { date: '2026-09-28', event: 'AGM' },
+    { date: '2027-Q1', event: 'IPO Listing' }
+  ]
+}))
+
+// ── Phase 35 health endpoint ─────────────────────────────────
+app.get('/api/health', (c) => c.json({
+  status: 'ok', platform: 'INDTIX', version: 'v35.0.0',
+  phase: 'Phase 35', theme: 'IPO Readiness, Governance & Investor Suite',
+  new_endpoints: 90, total_endpoints: 2179,
+  features: [
+    'IPO Preparation & SEBI Compliance',
+    'Corporate Governance Engine',
+    'Investor Relations Platform',
+    'Financial Reporting & Audit Suite',
+    'Board & Committee Management',
+    'ESG Reporting & Sustainability',
+    'Risk Management & Internal Controls',
+    'Regulatory & Compliance Intelligence',
+    'M&A Strategy & Deal Management',
+    'Capital Markets & Equity Intelligence'
+  ]
+}))
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 35 — IPO READINESS, GOVERNANCE & INVESTOR SUITE
 // ═══════════════════════════════════════════════════════════
 
 export default app
