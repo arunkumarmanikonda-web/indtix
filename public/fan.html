@@ -7234,5 +7234,52 @@ async function loadAllP51Fan() { await loadP51Fan(); }
 loadAllP51Fan();
 </script>
 <!-- END PHASE 51 FAN PORTAL -->
+
+<!-- PHASE 52 FAN PORTAL — Web3, NFT & Blockchain Ticketing -->
+<script>
+async function loadP52Fan() {
+  const base = '/api/v52';
+  let html = '<div class="phase-section"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Own Your Event Experience with Web3!</h2><div class="fan-cards">';
+  try {
+    const [nft, mkt, tok, id] = await Promise.all([
+      fetch(`${base}/nft-tickets/overview`).then(r=>r.json()),
+      fetch(`${base}/nft-marketplace/overview`).then(r=>r.json()),
+      fetch(`${base}/token/overview`).then(r=>r.json()),
+      fetch(`${base}/web3-identity/overview`).then(r=>r.json()),
+    ]);
+    html += `
+    <div class="fan-card" style="border-left:4px solid #f7931a;">
+      <h3>🎫 NFT Tickets</h3>
+      <p>NFTs minted: ${nft.metrics?.nft_tickets_minted?.toLocaleString()}</p>
+      <p>Resale volume: ₹${nft.metrics?.resale_volume_cr} Cr</p>
+      <p>Royalties earned: ₹${nft.metrics?.royalty_earned_cr} Cr</p>
+    </div>
+    <div class="fan-card" style="border-left:4px solid #9c27b0;">
+      <h3>🛒 NFT Marketplace</h3>
+      <p>Total volume: ₹${mkt.metrics?.total_volume_cr} Cr</p>
+      <p>Active listings: ${mkt.metrics?.active_listings?.toLocaleString()}</p>
+      <p>Floor trend: ${mkt.metrics?.floor_price_trend}</p>
+    </div>
+    <div class="fan-card" style="border-left:4px solid #4caf50;">
+      <h3>🪙 INDT Token</h3>
+      <p>Price: ₹${tok.metrics?.price_inr}</p>
+      <p>Holders: ${tok.metrics?.holders?.toLocaleString()}</p>
+      <p>Market cap: ₹${tok.metrics?.market_cap_cr} Cr</p>
+    </div>
+    <div class="fan-card" style="border-left:4px solid #2196f3;">
+      <h3>🪪 Web3 Identity</h3>
+      <p>Wallets connected: ${id.metrics?.web3_wallets_connected?.toLocaleString()}</p>
+      <p>SBTs issued: ${id.metrics?.soulbound_tokens_issued?.toLocaleString()}</p>
+      <p>Privacy score: ${id.metrics?.privacy_score_avg}/10</p>
+    </div>`;
+  } catch(e) { html += '<div class="fan-card"><p>Loading Web3 data...</p></div>'; }
+  html += '</div></div>';
+  const el = document.getElementById('p52-fan') || (() => { const d=document.createElement('div'); d.id='p52-fan'; document.querySelector('.fan-content,main,#app,body').appendChild(d); return d; })();
+  el.innerHTML = html;
+}
+async function loadAllP52Fan() { await loadP52Fan(); }
+loadAllP52Fan();
+</script>
+<!-- END PHASE 52 FAN PORTAL -->
 </body>
 </html>

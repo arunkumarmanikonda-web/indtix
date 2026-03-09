@@ -5763,4 +5763,32 @@ async function loadAllP51Org() { await loadP51Org(); }
 loadAllP51Org();
 </script>
 <!-- END PHASE 51 ORGANISER PORTAL -->
+
+<!-- PHASE 52 ORGANISER PORTAL — Web3, NFT & Blockchain Ticketing -->
+<script>
+async function loadP52Org() {
+  const base = '/api/v52';
+  const sections = [
+    ['🎫 NFT Tickets', `${base}/nft-tickets/overview`, ['nft_tickets_minted','nft_ticket_revenue_cr','resale_volume_cr','royalty_earned_cr']],
+    ['📜 Smart Contracts', `${base}/smart-contracts/overview`, ['contracts_deployed','automated_settlements_cr','dispute_rate_pct','auto_resolution_pct']],
+    ['💸 Crypto Payments', `${base}/crypto-payments/overview`, ['crypto_payment_volume_cr','currencies_accepted','payment_success_rate_pct','fx_savings_vs_traditional_pct']],
+    ['🏛️ DAO', `${base}/dao/overview`, ['dao_members','proposals_passed','voter_participation_pct','treasury_value_cr']],
+    ['🛒 NFT Marketplace', `${base}/nft-marketplace/overview`, ['total_volume_cr','volume_24h_cr','unique_traders','platform_fee_pct']],
+    ['📊 On-Chain', `${base}/on-chain/overview`, ['transactions_indexed','addresses_tracked','whale_alerts_today','api_calls_per_day']],
+  ];
+  let html = '<div class="phase-section"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Web3 Event Tools for Organisers</h2><div class="metrics-grid">';
+  for (const [title, url, keys] of sections) {
+    try {
+      const data = await fetch(url).then(r=>r.json()); const m = data.metrics||{};
+      html += `<div class="metric-card" style="border-left:4px solid #f7931a;"><h3>${title}</h3><div class="metric-values">${keys.map(k=>`<div class="metric-item"><span class="metric-label">${k.replace(/_/g,' ')}</span><span class="metric-value">${m[k]!==undefined?(typeof m[k]==='number'?m[k].toLocaleString():m[k]):'—'}</span></div>`).join('')}</div></div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const el = document.getElementById('p52-org') || (() => { const d=document.createElement('div'); d.id='p52-org'; document.querySelector('.organiser-content,main,#app,body').appendChild(d); return d; })();
+  el.innerHTML = html;
+}
+async function loadAllP52Org() { await loadP52Org(); }
+loadAllP52Org();
+</script>
+<!-- END PHASE 52 ORGANISER PORTAL -->
 </body></html>

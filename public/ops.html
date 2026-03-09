@@ -3966,5 +3966,32 @@ async function loadAllP51Ops() { await loadP51Ops(); }
 loadAllP51Ops();
 </script>
 <!-- END PHASE 51 OPS PORTAL -->
+
+<!-- PHASE 52 OPS PORTAL — Web3, NFT & Blockchain Ticketing -->
+<script>
+async function loadP52Ops() {
+  const base = '/api/v52';
+  const sections = [
+    ['⛓️ Blockchain', `${base}/blockchain/overview`, ['chains_integrated','transactions_per_day','avg_confirmation_sec','uptime_pct','smart_contracts_deployed']],
+    ['📜 Smart Contracts', `${base}/smart-contracts/overview`, ['contracts_deployed','total_value_locked_cr','automated_settlements_cr','dispute_rate_pct','auto_resolution_pct']],
+    ['💸 Crypto Payments', `${base}/crypto-payments/overview`, ['crypto_payment_volume_cr','crypto_transactions_daily','currencies_accepted','payment_success_rate_pct','defi_yield_earned_cr']],
+    ['📊 On-Chain Analytics', `${base}/on-chain/overview`, ['transactions_indexed','addresses_tracked','smart_contracts_monitored','suspicious_tx_flagged','whale_alerts_today']],
+    ['🏛️ DAO Treasury', `${base}/dao/overview`, ['dao_members','governance_tokens_issued','proposals_passed','voter_participation_pct','treasury_value_cr']],
+  ];
+  let html = '<div class="phase-section"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Web3 Ops & Blockchain Intelligence</h2><div class="metrics-grid">';
+  for (const [title, url, keys] of sections) {
+    try {
+      const data = await fetch(url).then(r=>r.json()); const m = data.metrics||{};
+      html += `<div class="metric-card" style="border-left:4px solid #f7931a;"><h3>${title}</h3><div class="metric-values">${keys.map(k=>`<div class="metric-item"><span class="metric-label">${k.replace(/_/g,' ')}</span><span class="metric-value">${m[k]!==undefined?(typeof m[k]==='number'?m[k].toLocaleString():m[k]):'—'}</span></div>`).join('')}</div></div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const el = document.getElementById('p52-ops') || (() => { const d=document.createElement('div'); d.id='p52-ops'; document.querySelector('.ops-content,main,#app,body').appendChild(d); return d; })();
+  el.innerHTML = html;
+}
+async function loadAllP52Ops() { await loadP52Ops(); }
+loadAllP52Ops();
+</script>
+<!-- END PHASE 52 OPS PORTAL -->
 </body>
 </html>

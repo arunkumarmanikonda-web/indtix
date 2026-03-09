@@ -7070,4 +7070,36 @@ async function loadP51Admin() {
 loadP51Admin();
 </script>
 <!-- END PHASE 51 ADMIN PORTAL -->
+
+<!-- PHASE 52 ADMIN PORTAL — Web3, NFT & Blockchain Ticketing -->
+<script>
+async function loadP52Admin() {
+  const base = '/api/v52';
+  const sections = [
+    { title: '🎫 NFT Tickets', endpoint: `${base}/nft-tickets/overview` },
+    { title: '⛓️ Blockchain Infra', endpoint: `${base}/blockchain/overview` },
+    { title: '📜 Smart Contracts', endpoint: `${base}/smart-contracts/overview` },
+    { title: '💸 Crypto Payments', endpoint: `${base}/crypto-payments/overview` },
+    { title: '🏛️ DAO Governance', endpoint: `${base}/dao/overview` },
+    { title: '🌾 DeFi Rewards', endpoint: `${base}/defi/overview` },
+    { title: '🛒 NFT Marketplace', endpoint: `${base}/nft-marketplace/overview` },
+    { title: '🪙 INDT Token', endpoint: `${base}/token/overview` },
+    { title: '📊 On-Chain Analytics', endpoint: `${base}/on-chain/overview` },
+    { title: '🪪 Web3 Identity', endpoint: `${base}/web3-identity/overview` },
+  ];
+  let html = '<div class="phase-section"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Web3, NFT & Blockchain Ticketing</h2><div class="metrics-grid">';
+  for (const s of sections) {
+    try {
+      const data = await fetch(s.endpoint).then(r => r.json());
+      const m = data.metrics || {};
+      html += `<div class="metric-card" style="border-left:4px solid #f7931a;"><h3>${s.title}</h3><div class="metric-values">${Object.entries(m).slice(0,5).map(([k,v])=>`<div class="metric-item"><span class="metric-label">${k.replace(/_/g,' ')}</span><span class="metric-value">${typeof v==='number'?v.toLocaleString():v}</span></div>`).join('')}</div></div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${s.title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const el = document.getElementById('p52-admin') || (() => { const d=document.createElement('div'); d.id='p52-admin'; document.querySelector('.dashboard-content,main,#app,body').appendChild(d); return d; })();
+  el.innerHTML = html;
+}
+loadP52Admin();
+</script>
+<!-- END PHASE 52 ADMIN PORTAL -->
 </body></html>

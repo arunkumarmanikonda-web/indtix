@@ -3616,4 +3616,29 @@ async function loadAllP51Venue() { await loadP51Venue(); }
 loadAllP51Venue();
 </script>
 <!-- END PHASE 51 VENUE PORTAL -->
+
+<!-- PHASE 52 VENUE PORTAL — Web3, NFT & Blockchain Ticketing -->
+<script>
+async function loadP52Venue() {
+  const base = '/api/v52';
+  const sections = [
+    ['🎫 NFT Tickets', `${base}/nft-tickets/overview`, ['nft_tickets_minted','counterfeit_rate_pct','secondary_market_premium_pct']],
+    ['⛓️ Blockchain', `${base}/blockchain/overview`, ['chains_integrated','transactions_per_day','uptime_pct']],
+    ['🪪 Web3 Identity', `${base}/web3-identity/overview`, ['web3_wallets_connected','identity_verifications','privacy_score_avg']],
+  ];
+  let html = '<div class="phase-section"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Venue Web3 & NFT Tools</h2><div class="metrics-grid">';
+  for (const [title, url, keys] of sections) {
+    try {
+      const data = await fetch(url).then(r=>r.json()); const m = data.metrics||{};
+      html += `<div class="metric-card" style="border-left:4px solid #f7931a;"><h3>${title}</h3>${keys.map(k=>`<p><strong>${k.replace(/_/g,' ')}:</strong> ${m[k]!==undefined?(typeof m[k]==='number'?m[k].toLocaleString():m[k]):'—'}</p>`).join('')}</div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const el = document.getElementById('p52-venue') || (() => { const d=document.createElement('div'); d.id='p52-venue'; document.querySelector('.venue-content,main,#app,body').appendChild(d); return d; })();
+  el.innerHTML = html;
+}
+async function loadAllP52Venue() { await loadP52Venue(); }
+loadAllP52Venue();
+</script>
+<!-- END PHASE 52 VENUE PORTAL -->
 </body></html>

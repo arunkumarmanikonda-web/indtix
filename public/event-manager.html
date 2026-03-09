@@ -3986,4 +3986,31 @@ async function loadAllP51EM() { await loadP51EM(); }
 loadAllP51EM();
 </script>
 <!-- END PHASE 51 EVENT MANAGER -->
+
+<!-- PHASE 52 EVENT MANAGER PORTAL — Web3, NFT & Blockchain Ticketing -->
+<script>
+async function loadP52EM() {
+  const base = '/api/v52';
+  const sections = [
+    ['🎫 NFT Tickets', `${base}/nft-tickets/overview`, ['nft_tickets_minted','nft_ticket_revenue_cr','royalty_earned_cr']],
+    ['📜 Smart Contracts', `${base}/smart-contracts/overview`, ['contracts_deployed','automated_settlements_cr','dispute_rate_pct']],
+    ['💸 Crypto Payments', `${base}/crypto-payments/overview`, ['crypto_payment_volume_cr','currencies_accepted','payment_success_rate_pct']],
+    ['🏛️ DAO', `${base}/dao/overview`, ['dao_members','proposals_passed','treasury_value_cr']],
+    ['🌾 DeFi', `${base}/defi/overview`, ['total_value_staked_cr','staking_apy_pct','unique_stakers']],
+  ];
+  let html = '<div class="phase-section"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Web3 Event Management</h2><div class="metrics-grid">';
+  for (const [title, url, keys] of sections) {
+    try {
+      const data = await fetch(url).then(r=>r.json()); const m = data.metrics||{};
+      html += `<div class="metric-card" style="border-left:4px solid #f7931a;"><h3>${title}</h3>${keys.map(k=>`<p><strong>${k.replace(/_/g,' ')}:</strong> ${m[k]!==undefined?(typeof m[k]==='number'?m[k].toLocaleString():m[k]):'—'}</p>`).join('')}</div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const el = document.getElementById('p52-em') || (() => { const d=document.createElement('div'); d.id='p52-em'; document.querySelector('.em-content,main,#app,body').appendChild(d); return d; })();
+  el.innerHTML = html;
+}
+async function loadAllP52EM() { await loadP52EM(); }
+loadAllP52EM();
+</script>
+<!-- END PHASE 52 EVENT MANAGER -->
 </body></html>
