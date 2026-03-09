@@ -6862,5 +6862,35 @@ async function loadAllP40Fan() { await Promise.all([loadFanGroups(), loadFanWLEv
 loadAllP40Fan();
 </script>
 <!-- END PHASE 41 FAN PORTAL -->
+
+<!-- PHASE 42 FAN PORTAL -->
+<div class="phase-section" id="phase42-fan">
+  <h2 class="phase-title">Phase 42 — Creator Economy & Fan Monetisation</h2>
+  <div class="module-card"><h3>🎨 Discover Creators</h3><div id="p42-fan-creators" class="stats-grid"></div></div>
+  <div class="module-card"><h3>⭐ Fan Subscriptions</h3><div id="p42-fan-subs" class="stats-grid"></div></div>
+  <div class="module-card"><h3>🎁 Tipping & Gifts</h3><div id="p42-fan-tips" class="stats-grid"></div></div>
+  <div class="module-card"><h3>🏘️ Fan Clubs</h3><div id="p42-fan-clubs" class="info-alert"></div></div>
+</div>
+<script>
+async function loadP42Fan() {
+  const [featured, subs, tips, clubs] = await Promise.all([
+    fetch('/api/v42/marketplace/featured').then(r=>r.json()),
+    fetch('/api/v42/subscriptions/tiers').then(r=>r.json()),
+    fetch('/api/v42/tipping/overview').then(r=>r.json()),
+    fetch('/api/v42/fanclub/overview').then(r=>r.json())
+  ]);
+  document.getElementById('p42-fan-creators').innerHTML =
+    `<span>Featured Creators: ${featured.featured_creators.length}</span><span>Live Now: ${featured.live_now}</span><span>Upcoming Events: ${featured.upcoming_events}</span>`;
+  document.getElementById('p42-fan-subs').innerHTML =
+    subs.tiers.map(t=>`<span>${t.name}: ₹${t.price_inr}/mo</span>`).join('');
+  document.getElementById('p42-fan-tips').innerHTML =
+    `<span>Tips Today: ₹${(tips.total_tips_today_inr/100000).toFixed(1)}L</span><span>Avg Tip: ₹${tips.avg_tip_inr}</span><span>Gifts: ${tips.virtual_gifts_sent_today.toLocaleString()}</span><span>Creator Share: ${tips.creator_share_pct}%</span>`;
+  document.getElementById('p42-fan-clubs').innerHTML =
+    `Fan Clubs: ${clubs.total_fan_clubs.toLocaleString()} | Members: ${(clubs.total_members/1000000).toFixed(1)}M | Engagement: ${clubs.engagement_rate_pct}%`;
+}
+async function loadAllP42Fan() { await loadP42Fan(); }
+loadAllP42Fan();
+</script>
+<!-- END PHASE 42 FAN PORTAL -->
 </body>
 </html>

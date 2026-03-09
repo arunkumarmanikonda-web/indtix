@@ -3666,5 +3666,30 @@ async function loadAllP41Ops() { await Promise.all([loadOpsAPI41(), loadOpsCompl
 loadAllP41Ops();
 </script>
 <!-- END PHASE 41 OPS PORTAL -->
+
+<!-- PHASE 42 OPS PORTAL -->
+<div class="phase-section" id="phase42-ops">
+  <h2 class="phase-title">Phase 42 — Creator Economy Platform Operations</h2>
+  <div class="module-card"><h3>💳 Tipping & NFT Ops</h3><div id="p42-ops-tips" class="stats-grid"></div></div>
+  <div class="module-card"><h3>💰 Creator Payouts</h3><div id="p42-ops-payouts" class="stats-grid"></div><div id="p42-ops-info" class="info-alert"></div></div>
+</div>
+<script>
+async function loadP42Ops() {
+  const [tips, fund, nft] = await Promise.all([
+    fetch('/api/v42/tipping/analytics').then(r=>r.json()),
+    fetch('/api/v42/creator-analytics/platform/summary').then(r=>r.json()),
+    fetch('/api/v42/nft/analytics').then(r=>r.json())
+  ]);
+  document.getElementById('p42-ops-tips').innerHTML =
+    `<span>Tipping Revenue Q1: ₹${tips.total_tipping_revenue_cr}Cr</span><span>Creator Payouts: ₹${tips.creator_payouts_cr}Cr</span><span>Avg Tip: ₹${tips.avg_tip_inr}</span><span>Platform: ₹${tips.platform_revenue_cr}Cr</span>`;
+  document.getElementById('p42-ops-payouts').innerHTML =
+    `<span>Total Payouts Q1: ₹${fund.total_creator_payouts_cr}Cr</span><span>Earning >₹1L: ${fund.creators_earning_above_1L.toLocaleString()}</span><span>Earning >₹10L: ${fund.creators_earning_above_10L}</span><span>Earning >₹1Cr: ${fund.creators_earning_above_1Cr}</span>`;
+  document.getElementById('p42-ops-info').innerHTML =
+    `NFT Volume Q1: ₹${nft.total_volume_cr}Cr | Unique Holders: ${nft.unique_holders.toLocaleString()} | Creator Royalties: ₹${nft.creator_royalties_cr}Cr`;
+}
+async function loadAllP42Ops() { await loadP42Ops(); }
+loadAllP42Ops();
+</script>
+<!-- END PHASE 42 OPS PORTAL -->
 </body>
 </html>

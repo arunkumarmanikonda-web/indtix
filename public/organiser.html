@@ -5435,4 +5435,29 @@ async function loadAllP41Org() { await Promise.all([loadOrgRFP(), loadOrgPipelin
 loadAllP41Org();
 </script>
 <!-- END PHASE 41 ORGANISER PORTAL -->
+
+<!-- PHASE 42 ORGANISER PORTAL -->
+<div class="phase-section" id="phase42-organiser">
+  <h2 class="phase-title">Phase 42 — Influencer & Creator Partnerships</h2>
+  <div class="module-card"><h3>📣 Influencer Campaigns</h3><div id="p42-org-inf" class="stats-grid"></div></div>
+  <div class="module-card"><h3>🏷️ Brand Deal Marketplace</h3><div id="p42-org-brands" class="stats-grid"></div><div id="p42-org-forecast" class="success-alert"></div></div>
+</div>
+<script>
+async function loadP42Org() {
+  const [inf, brands, analytics] = await Promise.all([
+    fetch('/api/v42/influencer/campaigns').then(r=>r.json()),
+    fetch('/api/v42/brand-deals/marketplace').then(r=>r.json()),
+    fetch('/api/v42/influencer/analytics').then(r=>r.json())
+  ]);
+  document.getElementById('p42-org-inf').innerHTML =
+    `<span>Active Campaigns: ${inf.active_campaigns}</span><span>Influencers: ${inf.influencers_active.toLocaleString()}</span><span>Campaign Value: ₹${inf.total_campaign_value_cr}Cr</span><span>Avg ROI: ${inf.avg_campaign_roi_x}x</span>`;
+  document.getElementById('p42-org-brands').innerHTML =
+    `<span>Brand Listings: ${brands.active_brand_listings}</span><span>Deals Closed: ${brands.deals_closed_ytd}</span><span>Total Value: ₹${brands.total_deal_value_cr}Cr</span><span>Avg Deal: ₹${(brands.avg_deal_inr/1000).toFixed(0)}K</span>`;
+  document.getElementById('p42-org-forecast').innerHTML =
+    `Q1 Influencer Spend: ₹${analytics.total_spend_cr}Cr | Reach: ${(analytics.total_reach/1000000).toFixed(0)}M | Platform Commission: ₹${analytics.platform_commission_cr}Cr`;
+}
+async function loadAllP42Org() { await loadP42Org(); }
+loadAllP42Org();
+</script>
+<!-- END PHASE 42 ORGANISER PORTAL -->
 </body></html>

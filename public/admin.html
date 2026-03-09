@@ -6573,4 +6573,44 @@ async function loadAllP41Admin() {
 loadAllP41Admin();
 </script>
 <!-- END PHASE 41 ADMIN PORTAL -->
+
+<!-- PHASE 42 ADMIN PORTAL -->
+<div class="phase-section" id="phase42-admin">
+  <h2 class="phase-title">Phase 42 — Creator Economy, Influencer & Fan Monetisation Platform</h2>
+  <div class="module-card"><h3>🎨 Creator Marketplace</h3><div id="p42-creators" class="stats-grid"></div></div>
+  <div class="module-card"><h3>📣 Influencer Campaigns</h3><div id="p42-influencer" class="stats-grid"></div></div>
+  <div class="module-card"><h3>💰 Creator Fund & Earnings</h3><div id="p42-fund" class="stats-grid"></div><div id="p42-leaderboard" class="success-alert"></div></div>
+  <div class="module-card"><h3>🏷️ Brand Deals & NFTs</h3><div id="p42-brands" class="stats-grid"></div></div>
+  <div class="module-card"><h3>🛒 Creator Commerce</h3><div id="p42-commerce" class="stats-grid"></div></div>
+  <div class="module-card"><h3>📊 Platform Summary</h3><div id="p42-summary" class="info-alert"></div></div>
+</div>
+<script>
+async function loadP42Admin() {
+  const [creators, inf, fund, brands, nft, commerce, subs] = await Promise.all([
+    fetch('/api/v42/creators/analytics/platform').then(r=>r.json()),
+    fetch('/api/v42/influencer/analytics').then(r=>r.json()),
+    fetch('/api/v42/creator-fund/overview').then(r=>r.json()),
+    fetch('/api/v42/brand-deals/marketplace').then(r=>r.json()),
+    fetch('/api/v42/nft/analytics').then(r=>r.json()),
+    fetch('/api/v42/creator-commerce/analytics/platform').then(r=>r.json()),
+    fetch('/api/v42/subscriptions/overview').then(r=>r.json())
+  ]);
+  document.getElementById('p42-creators').innerHTML =
+    `<span>Creator Earnings: ₹${creators.total_creator_earnings_cr}Cr</span><span>Platform Rev: ₹${creators.platform_revenue_from_creators_cr}Cr</span><span>Top Earner: ₹${(creators.top_earner_inr_monthly/100000).toFixed(1)}L/mo</span><span>NPS: ${creators.creator_satisfaction_nps}</span>`;
+  document.getElementById('p42-influencer').innerHTML =
+    `<span>Campaigns Q1: ${inf.total_campaigns}</span><span>Spend: ₹${inf.total_spend_cr}Cr</span><span>Avg ROI: ${inf.avg_roi_x}x</span><span>Tickets: ${inf.tickets_attributed.toLocaleString()}</span>`;
+  document.getElementById('p42-fund').innerHTML =
+    `<span>Fund Size: ₹${fund.fund_size_cr}Cr</span><span>Disbursed YTD: ₹${fund.disbursed_ytd_cr}Cr</span><span>Eligible Creators: ${fund.eligible_creators.toLocaleString()}</span><span>Max Grant: ₹${(fund.max_grant_inr/100000).toFixed(1)}L</span>`;
+  document.getElementById('p42-leaderboard').innerHTML =
+    `Creator Economy GMV: ₹84Cr | MRR: ₹${subs.mrr_cr}Cr | Paid Subscribers: ${(subs.paid_subscribers/1000).toFixed(0)}K`;
+  document.getElementById('p42-brands').innerHTML =
+    `<span>Brand Deals: ${brands.deals_closed_ytd}</span><span>Value: ₹${brands.total_deal_value_cr}Cr</span><span>NFT Volume: ₹${nft.total_volume_cr}Cr</span><span>NFT Mints: ${nft.total_mints.toLocaleString()}</span>`;
+  document.getElementById('p42-commerce').innerHTML =
+    `<span>Store GMV: ₹${commerce.total_gmv_cr}Cr</span><span>Orders: ${commerce.total_orders.toLocaleString()}</span><span>Creator Payouts: ₹${commerce.creator_payouts_cr}Cr</span><span>NPS: ${commerce.nps}</span>`;
+  document.getElementById('p42-summary').innerHTML =
+    `Total Creator Economy: ₹284Cr | Platform Share: ₹56.8Cr | Tipping: ₹8.4Cr | NFT Royalties: ₹2.84Cr`;
+}
+loadP42Admin();
+</script>
+<!-- END PHASE 42 ADMIN PORTAL -->
 </body></html>

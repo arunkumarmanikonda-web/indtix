@@ -24444,23 +24444,26 @@ app.get('/api/admin/finance/reporting/esg-financials', (c) => c.json({
   integrated_reporting_standard: 'IFRS S1/S2 + GRI',
 }))
 
-// ── Phase 41 main health endpoint ────────────────────────────
+// ── Phase 42 main health endpoint ────────────────────────────
 app.get('/api/health', (c) => c.json({
   status: 'ok',
   platform: 'INDTIX',
-  version: 'v41.0.0',
-  phase: 'Phase 41',
-  theme: 'Enterprise B2B, Corporate Events & Government/MICE Platform',
+  version: 'v42.0.0',
+  phase: 'Phase 42',
+  theme: 'Creator Economy, Influencer & Fan Monetisation Platform',
   new_endpoints: 90,
-  total_endpoints: 2719,
+  total_endpoints: 2809,
   features: [
-    'Corporate Event Management & RFP Engine',
-    'Government & Institutional Ticketing',
-    'MICE Platform',
-    'Enterprise Account Management & SSO',
-    'B2B Marketplace & Vendor Management',
-    'Corporate Travel & Expense Integration',
-    'Bulk Ticketing & Group Booking Engine',
+    'Creator Profiles & Content Marketplace',
+    'Influencer Campaign Management',
+    'Fan Subscription & Membership Engine',
+    'Live Tipping, Super Chat & Virtual Gifts',
+    'Creator Analytics & Earnings Dashboard',
+    'Brand Deal & Sponsorship Marketplace',
+    'NFT Drops & Digital Collectibles for Creators',
+    'Creator Fund & Revenue Sharing',
+    'Fan Club & Community Management',
+    'Creator Commerce & Merch Integration',
     'Compliance, Audit & Contract Management',
     'B2B Analytics & ROI Reporting',
     'White-Label & API-First Partner Platform',
@@ -25109,6 +25112,684 @@ app.get('/api/v41/health', (c) => c.json({
 // ═══════════════════════════════════════════════════════════
 // END PHASE 41 — ENTERPRISE B2B, CORPORATE EVENTS &
 //               GOVERNMENT/MICE PLATFORM
+// ═══════════════════════════════════════════════════════════
+
+// ╔═══════════════════════════════════════════════════════════╗
+// ║  PHASE 42 — CREATOR ECONOMY, INFLUENCER &                ║
+// ║             FAN MONETISATION PLATFORM (v42.0.0)          ║
+// ║  90 new endpoints  |  Total: 2,809                       ║
+// ╚═══════════════════════════════════════════════════════════╝
+
+// ── MODULE 1: Creator Profiles & Content Marketplace (10 endpoints) ──
+app.get('/api/v42/creators', (c) => c.json({
+  module: 'Creator Profiles & Content Marketplace',
+  total_creators: 28400, verified_creators: 8400, premium_creators: 2840,
+  content_items: 284000, avg_followers_per_creator: 84000,
+  categories: ['music','comedy','sports','dance','art','gaming','fitness','cooking','travel','tech'],
+  creator_gmv_cr: 284, monthly_active_creators: 18400, content_views_per_day: 28400000
+}))
+app.post('/api/v42/creators/register', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ creator_id: `CRE-${Date.now()}`, name: b.name||'Creator Name',
+    handle: b.handle||`@creator_${Date.now()}`, category: b.category||'music',
+    tier: 'standard', profile_url: `https://indtix.com/creator/${b.handle||'creator'}`,
+    verification_status: 'pending', monetisation_enabled: false,
+    onboarding_steps: ['kyc','bank_link','content_upload','first_event'],
+    created_at: new Date().toISOString() })
+})
+app.get('/api/v42/creators/:id', (c) => c.json({
+  creator_id: c.req.param('id'), name: 'Priya Sharma', handle: '@priyasharma',
+  category: 'music', tier: 'platinum', followers: 2840000, verified: true,
+  monthly_earnings_inr: 2840000, content_count: 284, events_hosted: 42,
+  avg_engagement_rate_pct: 8.4, nps: 78, badges: ['verified','top_creator','event_host']
+}))
+app.get('/api/v42/creators/:id/content', (c) => c.json({
+  creator_id: c.req.param('id'), total_items: 284, published: 242, drafts: 28, scheduled: 14,
+  by_type: { video: 142, audio: 84, photo: 42, livestream: 16 },
+  total_views: 28400000, avg_completion_rate_pct: 72.4,
+  top_content: [
+    { id:'C001', title:'Live at Mumbai', type:'video', views:2840000, earnings_inr:284000 },
+    { id:'C002', title:'Acoustic Sessions EP', type:'audio', plays:840000, earnings_inr:84000 }
+  ]
+}))
+app.post('/api/v42/creators/:id/content/upload', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ content_id: `CON-${Date.now()}`, creator_id: c.req.param('id'),
+    title: b.title||'New Content', type: b.type||'video', duration_sec: b.duration||180,
+    thumbnail: `https://cdn.indtix.com/thumbs/${Date.now()}.jpg`,
+    processing_status: 'queued', monetisation: b.paid?'paid':'free',
+    price_inr: b.price_inr||0, estimated_reach: 840000 })
+})
+app.get('/api/v42/marketplace/featured', (c) => c.json({
+  featured_creators: [
+    { id:'CRE001', name:'AR Rahman Tribute', category:'music', followers:'2.84M', next_event:'2026-04-15' },
+    { id:'CRE002', name:'Kapil Fitness', category:'fitness', followers:'840K', next_live:'tomorrow' },
+    { id:'CRE003', name:'TechTalk India', category:'tech', followers:'1.2M', next_event:'2026-04-20' }
+  ], trending_content: 42, live_now: 8, upcoming_events: 284
+}))
+app.get('/api/v42/marketplace/search', (c) => {
+  const q = c.req.query('q')||'music'
+  return c.json({ query: q, results: 284, creators: 42, content: 242,
+    top_match: { id:'CRE001', name:'Priya Sharma', relevance_score: 0.94 } })
+})
+app.get('/api/v42/marketplace/categories', (c) => c.json({
+  categories: [
+    { name:'music', creators:8400, content:84000, avg_earning_inr:280000 },
+    { name:'comedy', creators:4200, content:42000, avg_earning_inr:140000 },
+    { name:'sports', creators:2840, content:28400, avg_earning_inr:184000 },
+    { name:'gaming', creators:2400, content:24000, avg_earning_inr:120000 },
+    { name:'fitness', creators:1840, content:18400, avg_earning_inr:84000 }
+  ]
+}))
+app.post('/api/v42/creators/:id/follow', async (c) => {
+  return c.json({ creator_id: c.req.param('id'), followed: true,
+    notifications_enabled: true, follower_count_now: 2840001,
+    exclusive_content_access: false, timestamp: new Date().toISOString() })
+})
+app.get('/api/v42/creators/analytics/platform', (c) => c.json({
+  total_creator_earnings_cr: 84, platform_take_rate_pct: 20,
+  platform_revenue_from_creators_cr: 21, avg_earning_per_creator_inr: 29577,
+  top_earner_inr_monthly: 2840000, creator_satisfaction_nps: 72,
+  payment_on_time_pct: 99.2
+}))
+
+// ── MODULE 2: Influencer Campaign Management (10 endpoints) ──
+app.get('/api/v42/influencer/campaigns', (c) => c.json({
+  module: 'Influencer Campaign Management',
+  active_campaigns: 284, brands: 84, influencers_active: 2840,
+  total_campaign_value_cr: 84, avg_campaign_roi_x: 8.4,
+  avg_cpe_inr: 18, reach_per_campaign: 2840000,
+  top_categories: ['music_events','sports','fashion','food','tech']
+}))
+app.post('/api/v42/influencer/campaigns/create', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ campaign_id: `CAMP-${Date.now()}`, brand: b.brand||'Brand Name',
+    event_id: b.event_id||'EVT001', budget_inr: b.budget||500000,
+    objective: b.objective||'ticket_sales', target_reach: b.reach||1000000,
+    influencer_tiers: b.tiers||['macro','micro','nano'],
+    matching_influencers: 42, start_date: b.start||'2026-04-01',
+    end_date: b.end||'2026-04-30', status: 'draft' })
+})
+app.get('/api/v42/influencer/campaigns/:id', (c) => c.json({
+  campaign_id: c.req.param('id'), status: 'active',
+  brand: 'Sunburn Festival', budget_inr: 5000000, spent_inr: 3200000,
+  reach_achieved: 18400000, impressions: 28400000, clicks: 840000,
+  tickets_sold_attributed: 2840, roi_x: 12.4, influencers: 28,
+  top_performer: { handle:'@priyasharma', reach:2840000, tickets_attributed:284 }
+}))
+app.get('/api/v42/influencer/directory', (c) => c.json({
+  total_influencers: 8400, mega: 84, macro: 840, micro: 4200, nano: 3276,
+  avg_engagement_rate: { mega:2.4, macro:4.2, micro:6.8, nano:8.4 },
+  verified_pct: 72.4, active_in_30d_pct: 64.8,
+  top_niches: ['music','bollywood','cricket','fitness','comedy']
+}))
+app.post('/api/v42/influencer/match', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ event_id: b.event_id||'EVT001', matches: [
+    { id:'INF001', handle:'@priyasharma', tier:'macro', followers:'2.84M', niche:'music', engagement_pct:8.4, est_cost_inr:284000 },
+    { id:'INF002', handle:'@kapilsports', tier:'micro', followers:'184K', niche:'sports', engagement_pct:9.2, est_cost_inr:42000 },
+    { id:'INF003', handle:'@techpriya', tier:'micro', followers:'84K', niche:'tech', engagement_pct:10.4, est_cost_inr:18000 }
+  ], match_score_avg: 0.84, recommended_budget_inr: b.budget||500000 })
+})
+app.post('/api/v42/influencer/campaigns/:id/brief', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ brief_id: `BRF-${Date.now()}`, campaign_id: c.req.param('id'),
+    content_guidelines: b.guidelines||['mention_event_date','include_promo_code','tag_@indtix'],
+    deliverables: b.deliverables||['2_reels','3_stories','1_post'],
+    promo_code: `INFL${Math.random().toString(36).substr(2,6).toUpperCase()}`,
+    deadline: b.deadline||'2026-03-25', payment_on_completion: true })
+})
+app.get('/api/v42/influencer/campaigns/:id/performance', (c) => c.json({
+  campaign_id: c.req.param('id'), period: 'last_30d',
+  total_posts: 84, total_stories: 142, total_reels: 42,
+  impressions: 28400000, reach: 18400000, engagements: 1840000,
+  link_clicks: 284000, promo_code_uses: 8400, tickets_sold: 2840,
+  revenue_attributed_cr: 2.84, roi_x: 12.4
+}))
+app.post('/api/v42/influencer/payments/process', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ payment_id: `IPAY-${Date.now()}`, influencer_id: b.influencer_id||'INF001',
+    campaign_id: b.campaign_id||'CAMP001', amount_inr: b.amount||284000,
+    tds_deducted_inr: Math.round((b.amount||284000)*0.1),
+    net_payable_inr: Math.round((b.amount||284000)*0.9),
+    payment_method: 'NEFT', utr: `UTR${Date.now()}`, status: 'processed' })
+})
+app.get('/api/v42/influencer/analytics', (c) => c.json({
+  period: 'Q1-2026', total_campaigns: 84, total_spend_cr: 28.4,
+  total_reach: 840000000, avg_roi_x: 8.4, best_tier_roi: 'micro',
+  tickets_attributed: 28400, revenue_attributed_cr: 28.4,
+  platform_commission_cr: 2.84
+}))
+app.get('/api/v42/influencer/trends', (c) => c.json({
+  trending_formats: ['short_video_reels','live_streams','collab_posts'],
+  best_posting_time: '6PM-9PM_IST', avg_reel_completion_pct: 72.4,
+  top_hashtags: ['#IndtixEvents','#LiveMusic','#FestivalSeason'],
+  engagement_trend: 'up_18pct_qoq', creator_economy_growth_pct: 42
+}))
+
+// ── MODULE 3: Fan Subscription & Membership Engine (10 endpoints) ──
+app.get('/api/v42/subscriptions/overview', (c) => c.json({
+  module: 'Fan Subscription & Membership Engine',
+  total_subscribers: 2840000, paid_subscribers: 840000, free_tier: 2000000,
+  mrr_cr: 28.4, arr_cr: 340, avg_subscription_inr: 338,
+  tiers: ['fan_free','fan_plus','fan_pro','superfan','vip_all_access'],
+  churn_rate_pct: 3.4, ltv_inr: 8400, nps: 74
+}))
+app.get('/api/v42/subscriptions/tiers', (c) => c.json({
+  tiers: [
+    { name:'fan_free', price_inr:0, benefits:['basic_access','newsletter'], subscribers:2000000 },
+    { name:'fan_plus', price_inr:99, benefits:['early_access','10pct_discount','creator_content'], subscribers:400000 },
+    { name:'fan_pro', price_inr:299, benefits:['priority_queues','exclusive_events','merch_discount'], subscribers:280000 },
+    { name:'superfan', price_inr:799, benefits:['backstage_passes','meet_greet_credits','nft_drops'], subscribers:120000 },
+    { name:'vip_all_access', price_inr:2499, benefits:['all_events_free','annual_festival_pass','concierge'], subscribers:40000 }
+  ]
+}))
+app.post('/api/v42/subscriptions/subscribe', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ subscription_id: `SUB-${Date.now()}`, user_id: b.user_id||'USR001',
+    tier: b.tier||'fan_plus', amount_inr: b.tier==='superfan'?799:b.tier==='fan_pro'?299:99,
+    billing_cycle: b.cycle||'monthly', next_billing: new Date(Date.now()+2592000000).toISOString(),
+    benefits_activated: true, welcome_bonus: '10% off next ticket', status: 'active' })
+})
+app.post('/api/v42/subscriptions/:id/upgrade', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ subscription_id: c.req.param('id'), old_tier: b.from||'fan_plus',
+    new_tier: b.to||'fan_pro', prorate_credit_inr: 84, new_amount_inr: 299,
+    upgraded_at: new Date().toISOString(), new_benefits: ['priority_queues','exclusive_events'] })
+})
+app.get('/api/v42/subscriptions/:id/benefits', (c) => c.json({
+  subscription_id: c.req.param('id'), tier: 'fan_pro', active: true,
+  benefits_used: { early_access_events: 4, discount_savings_inr: 840, exclusive_content_viewed: 28 },
+  credits_remaining: { meet_greet: 0, backstage: 0, concierge_requests: 0 },
+  renewal_date: new Date(Date.now()+604800000).toISOString()
+}))
+app.post('/api/v42/subscriptions/:id/pause', async (c) => {
+  return c.json({ subscription_id: c.req.param('id'), paused: true,
+    pause_start: new Date().toISOString(), resume_date: new Date(Date.now()+2592000000).toISOString(),
+    reason_recorded: true, retention_offer: '50% off next month' })
+})
+app.post('/api/v42/subscriptions/:id/cancel', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ subscription_id: c.req.param('id'), cancelled: true,
+    effective_date: new Date(Date.now()+2592000000).toISOString(),
+    reason: b.reason||'not_specified', retention_offer_shown: true,
+    exit_survey_url: 'https://survey.indtix.com/cancel', access_until: new Date(Date.now()+2592000000).toISOString() })
+})
+app.get('/api/v42/subscriptions/analytics', (c) => c.json({
+  mrr_cr: 28.4, mrr_growth_pct: 18.4, new_subscribers_month: 84000,
+  churned_month: 28560, net_new: 55440, trial_conversion_pct: 42.4,
+  upgrade_rate_pct: 18.4, ltv_to_cac_ratio: 8.4
+}))
+app.get('/api/v42/subscriptions/cohort', (c) => c.json({
+  cohorts: [
+    { month:'2025-10', subscribers:42000, m1_retention:94, m2_retention:88, m3_retention:84 },
+    { month:'2025-11', subscribers:48000, m1_retention:95, m2_retention:89 },
+    { month:'2025-12', subscribers:54000, m1_retention:96 },
+    { month:'2026-01', subscribers:62000 }
+  ], avg_6m_retention_pct: 72.4
+}))
+app.post('/api/v42/subscriptions/gift', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ gift_id: `GIFT-${Date.now()}`, gifter: b.from||'Anonymous',
+    recipient_email: b.to||'friend@example.com', tier: b.tier||'fan_plus',
+    duration_months: b.months||3, amount_paid_inr: 297,
+    redemption_code: `GIFT-${Math.random().toString(36).substr(2,8).toUpperCase()}`,
+    message: b.message||'Enjoy the shows!', status: 'sent' })
+})
+
+// ── MODULE 4: Live Tipping, Super Chat & Virtual Gifts (8 endpoints) ──
+app.get('/api/v42/tipping/overview', (c) => c.json({
+  module: 'Live Tipping, Super Chat & Virtual Gifts',
+  total_tips_today_inr: 2840000, total_tips_month_cr: 28.4,
+  active_tippers: 84000, avg_tip_inr: 338, max_tip_inr: 84000,
+  virtual_gifts_sent_today: 28400, gift_revenue_cr: 8.4,
+  creator_share_pct: 80, platform_share_pct: 20
+}))
+app.post('/api/v42/tipping/send', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  const amt = b.amount_inr||100
+  return c.json({ tip_id: `TIP-${Date.now()}`, creator_id: b.creator_id||'CRE001',
+    event_id: b.event_id||'EVT001', amount_inr: amt,
+    creator_receives_inr: Math.round(amt*0.8), platform_fee_inr: Math.round(amt*0.2),
+    message: b.message||'🔥', highlighted_in_chat: amt>=500, pinned_duration_sec: amt>=1000?30:0,
+    badge_earned: amt>=5000?'super_tipper':null, timestamp: new Date().toISOString() })
+})
+app.get('/api/v42/tipping/gifts/catalog', (c) => c.json({
+  gifts: [
+    { id:'G001', name:'Rose', price_coins:10, price_inr:10, animation:'bloom', rarity:'common' },
+    { id:'G002', name:'Fire', price_coins:50, price_inr:50, animation:'flames', rarity:'uncommon' },
+    { id:'G003', name:'Crown', price_coins:500, price_inr:500, animation:'sparkle', rarity:'rare' },
+    { id:'G004', name:'Diamond Stage', price_coins:5000, price_inr:5000, animation:'explode', rarity:'legendary' },
+    { id:'G005', name:'Golden Mic', price_coins:10000, price_inr:10000, animation:'concert', rarity:'mythic' }
+  ], total_gifts: 42, new_this_week: 4
+}))
+app.post('/api/v42/tipping/gifts/send', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ gift_transaction_id: `GIFTX-${Date.now()}`, gift_id: b.gift_id||'G002',
+    creator_id: b.creator_id||'CRE001', sender: b.sender||'Fan', coins_spent: b.coins||50,
+    creator_coins_earned: Math.round((b.coins||50)*0.8), animation_played: true,
+    shown_in_stream: true, leaderboard_updated: true })
+})
+app.get('/api/v42/tipping/leaderboard/:event_id', (c) => c.json({
+  event_id: c.req.param('event_id'), period: 'live',
+  top_tippers: [
+    { rank:1, name:'SuperFan_Raj', total_inr:84000, gifts_sent:42, badge:'gold_tipper' },
+    { rank:2, name:'MusicLover_Priya', total_inr:42000, gifts_sent:28, badge:'silver_tipper' },
+    { rank:3, name:'FestivalKing', total_inr:18000, gifts_sent:14, badge:'bronze_tipper' }
+  ], total_tipped_inr: 840000, total_tippers: 2840
+}))
+app.get('/api/v42/tipping/creator/:id/earnings', (c) => c.json({
+  creator_id: c.req.param('id'), period: 'this_month',
+  total_tips_inr: 840000, total_gifts_value_inr: 284000,
+  total_earnings_inr: 1124000, platform_fee_inr: 224000,
+  net_payout_inr: 900000, pending_payout_inr: 280000, next_payout_date: '2026-04-07',
+  top_tipper: { name:'SuperFan_Raj', total_inr:84000 }
+}))
+app.post('/api/v42/tipping/coins/purchase', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  const packs: Record<string,any> = { starter:{coins:100,inr:100}, popular:{coins:550,inr:500}, value:{coins:1200,inr:1000}, premium:{coins:6500,inr:5000} }
+  const p = packs[b.pack||'popular']
+  return c.json({ transaction_id: `COIN-${Date.now()}`, pack: b.pack||'popular',
+    coins_purchased: p.coins, bonus_coins: Math.round(p.coins*0.1),
+    total_coins: Math.round(p.coins*1.1), amount_paid_inr: p.inr,
+    balance_after: 1650, payment_method: b.method||'upi' })
+})
+app.get('/api/v42/tipping/analytics', (c) => c.json({
+  period: 'Q1-2026', total_tipping_revenue_cr: 8.4, creator_payouts_cr: 6.72,
+  platform_revenue_cr: 1.68, avg_tips_per_event: 2840, avg_tip_inr: 338,
+  top_tipping_category: 'live_concerts', gift_revenue_pct_of_total: 42
+}))
+
+// ── MODULE 5: Creator Analytics & Earnings Dashboard (8 endpoints) ──
+app.get('/api/v42/creator-analytics/overview', (c) => c.json({
+  module: 'Creator Analytics & Earnings Dashboard',
+  total_creator_earnings_cr: 84, platform_deductions_cr: 21, creator_payouts_cr: 63,
+  avg_monthly_earning_inr: 29577, top_earner_monthly_inr: 2840000,
+  earnings_sources: ['ticket_sales','subscriptions','tipping','brand_deals','merch','nft'],
+  payment_cycle_days: 7, on_time_payment_pct: 99.2
+}))
+app.get('/api/v42/creator-analytics/:id/dashboard', (c) => c.json({
+  creator_id: c.req.param('id'), period: 'last_30d',
+  total_earnings_inr: 840000, breakdown: {
+    ticket_commissions: 280000, subscription_revenue: 142000, tips_and_gifts: 168000,
+    brand_deals: 200000, merchandise: 42000, nft_royalties: 8000
+  }, followers_gained: 28400, content_views: 2840000,
+  engagement_rate_pct: 8.4, top_revenue_source: 'ticket_commissions'
+}))
+app.get('/api/v42/creator-analytics/:id/audience', (c) => c.json({
+  creator_id: c.req.param('id'), total_followers: 2840000,
+  demographics: { age_18_24:42, age_25_34:34, age_35_44:16, age_45_plus:8 },
+  top_cities: ['Mumbai','Delhi','Bengaluru','Hyderabad','Chennai'],
+  gender: { male:54, female:44, other:2 },
+  peak_online_time: '7PM-10PM_IST', device: { mobile:84, desktop:14, tablet:2 }
+}))
+app.get('/api/v42/creator-analytics/:id/content-performance', (c) => c.json({
+  creator_id: c.req.param('id'), total_content: 284,
+  avg_views_per_post: 100000, avg_likes_rate_pct: 8.4, avg_comment_rate_pct: 2.4,
+  avg_share_rate_pct: 1.8, best_performing_type: 'reels',
+  optimal_post_length_sec: 42, best_day: 'Friday', best_time: '7PM'
+}))
+app.get('/api/v42/creator-analytics/:id/earnings-history', (c) => c.json({
+  creator_id: c.req.param('id'), history: [
+    { month:'2025-10', earnings_inr:420000, payout_inr:336000, status:'paid' },
+    { month:'2025-11', earnings_inr:540000, payout_inr:432000, status:'paid' },
+    { month:'2025-12', earnings_inr:680000, payout_inr:544000, status:'paid' },
+    { month:'2026-01', earnings_inr:780000, payout_inr:624000, status:'paid' },
+    { month:'2026-02', earnings_inr:840000, payout_inr:672000, status:'paid' },
+    { month:'2026-03', earnings_inr:900000, payout_inr:0, status:'pending' }
+  ], ytd_earnings_inr: 4160000, growth_pct: 28.4
+}))
+app.post('/api/v42/creator-analytics/:id/payout/request', async (c) => {
+  return c.json({ payout_id: `POT-${Date.now()}`, creator_id: c.req.param('id'),
+    amount_inr: 672000, tds_inr: 67200, net_inr: 604800,
+    bank_account: 'XXXX1234', utr: `UTR${Date.now()}`,
+    estimated_credit_date: new Date(Date.now()+86400000*2).toISOString(), status: 'processing' })
+})
+app.get('/api/v42/creator-analytics/platform/summary', (c) => c.json({
+  period: 'Q1-2026', total_creator_payouts_cr: 63, total_earnings_pool_cr: 84,
+  avg_earnings_growth_pct: 28.4, creators_earning_above_1L: 2840,
+  creators_earning_above_10L: 284, creators_earning_above_1Cr: 18
+}))
+app.get('/api/v42/creator-analytics/:id/growth-tips', (c) => c.json({
+  creator_id: c.req.param('id'), ai_recommendations: [
+    'Post Reels between 6-8PM on Fridays for 42% higher reach',
+    'Enable Super Chat during live streams — your audience tips 3x more during Q&A',
+    'Add merch link to bio — similar creators earn ₹42K/month extra',
+    'Collaborate with @kapilsports for 2.8x audience overlap boost'
+  ], predicted_earning_increase_pct: 28.4
+}))
+
+// ── MODULE 6: Brand Deal & Sponsorship Marketplace (8 endpoints) ──
+app.get('/api/v42/brand-deals/marketplace', (c) => c.json({
+  module: 'Brand Deal & Sponsorship Marketplace',
+  active_brand_listings: 284, total_brands: 84, active_creators: 2840,
+  deals_closed_ytd: 840, total_deal_value_cr: 84,
+  avg_deal_inr: 100000, platform_commission_pct: 15,
+  categories: ['fashion','food_beverage','tech','beauty','sports','finance','travel']
+}))
+app.get('/api/v42/brand-deals/listings', (c) => c.json({
+  listings: [
+    { id:'BD001', brand:'Boat Audio', category:'tech', budget_inr:500000, duration_days:30, deliverables:['2_reels','5_stories'], niche_match:['music','tech'], status:'open' },
+    { id:'BD002', brand:'Zomato', category:'food', budget_inr:200000, duration_days:14, deliverables:['3_stories','1_post'], niche_match:['lifestyle','comedy'], status:'open' },
+    { id:'BD003', brand:'Myntra', category:'fashion', budget_inr:800000, duration_days:60, deliverables:['4_reels','1_collab'], niche_match:['fashion','dance'], status:'open' }
+  ], total: 284, new_today: 18
+}))
+app.post('/api/v42/brand-deals/apply', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ application_id: `APP-${Date.now()}`, deal_id: b.deal_id||'BD001',
+    creator_id: b.creator_id||'CRE001', pitch: b.pitch||'Default pitch',
+    proposed_rate_inr: b.rate||400000, match_score: 0.84,
+    brand_review_eta_days: 3, status: 'submitted' })
+})
+app.get('/api/v42/brand-deals/:id/contract', (c) => c.json({
+  deal_id: c.req.param('id'), brand: 'Boat Audio', creator: 'Priya Sharma',
+  deal_value_inr: 500000, deliverables: ['2_reels_30s','5_stories_24h','1_sponsored_post'],
+  usage_rights: '6_months_digital', exclusivity: 'category_30_days',
+  payment_schedule: [{ milestone:'contract_sign', pct:50 }, { milestone:'content_delivery', pct:50 }],
+  platform_fee_inr: 75000, creator_net_inr: 425000, status: 'draft'
+}))
+app.post('/api/v42/brand-deals/:id/deliver', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ delivery_id: `DEL-${Date.now()}`, deal_id: c.req.param('id'),
+    content_links: b.links||['https://instagram.com/p/abc','https://instagram.com/stories/xyz'],
+    submitted_at: new Date().toISOString(), brand_review_days: 3,
+    performance_tracking_enabled: true, status: 'under_review' })
+})
+app.get('/api/v42/brand-deals/:id/analytics', (c) => c.json({
+  deal_id: c.req.param('id'), brand: 'Boat Audio',
+  content_reach: 2840000, impressions: 4200000, engagements: 238000,
+  link_clicks: 28400, promo_code_uses: 2840, conversion_rate_pct: 10,
+  brand_sentiment_score: 8.4, roi_for_brand_x: 12.4
+}))
+app.get('/api/v42/brand-deals/analytics/platform', (c) => c.json({
+  total_deals_q1: 284, total_value_cr: 28.4, platform_revenue_cr: 4.26,
+  avg_deal_duration_days: 28, avg_roi_for_brands_x: 8.4,
+  top_category: 'tech', creator_satisfaction_with_brands_pct: 84.2
+}))
+app.get('/api/v42/brand-deals/recommendations/:creator_id', (c) => c.json({
+  creator_id: c.req.param('creator_id'), recommended_deals: [
+    { id:'BD001', brand:'Boat Audio', match_pct:94, estimated_earning_inr:400000 },
+    { id:'BD004', brand:'Myntra', match_pct:88, estimated_earning_inr:700000 }
+  ], potential_monthly_brand_income_inr: 840000
+}))
+
+// ── MODULE 7: NFT Drops & Digital Collectibles for Creators (8 endpoints) ──
+app.get('/api/v42/nft/creator-drops', (c) => c.json({
+  module: 'NFT Drops & Digital Collectibles for Creators',
+  total_drops: 284, active_drops: 42, sold_out: 184,
+  total_nfts_minted: 28400, total_volume_inr: 284000000,
+  floor_price_avg_inr: 10000, creators_with_nfts: 840,
+  blockchain: 'Polygon', gas_fee_model: 'gasless_meta_transactions'
+}))
+app.post('/api/v42/nft/drops/create', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ drop_id: `DROP-${Date.now()}`, creator_id: b.creator_id||'CRE001',
+    name: b.name||'Exclusive Collection #1', description: b.desc||'Limited edition NFT',
+    supply: b.supply||100, price_inr: b.price||10000, royalty_pct: b.royalty||10,
+    blockchain: 'Polygon', mint_date: b.mint_date||'2026-04-01',
+    preview_url: `https://nft.indtix.com/preview/${Date.now()}`,
+    status: 'draft', estimated_gas_inr: 0 })
+})
+app.get('/api/v42/nft/drops/:id', (c) => c.json({
+  drop_id: c.req.param('id'), creator: 'Priya Sharma', name: 'Live at Mumbai — Golden Ticket NFT',
+  supply: 100, minted: 84, remaining: 16, price_inr: 10000,
+  floor_price_inr: 12000, total_volume_inr: 840000,
+  benefits: ['backstage_access_2026','signed_poster','exclusive_audio'],
+  holders: 84, secondary_sales: 28, royalty_earned_inr: 28000
+}))
+app.post('/api/v42/nft/drops/:id/mint', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ mint_id: `MINT-${Date.now()}`, drop_id: c.req.param('id'),
+    buyer: b.user_id||'USR001', token_id: Math.floor(Math.random()*100)+1,
+    price_paid_inr: 10000, wallet_address: b.wallet||'0xabc...def',
+    tx_hash: `0x${Date.now().toString(16)}`, blockchain: 'Polygon',
+    metadata_url: `https://metadata.indtix.com/nft/${Date.now()}.json`,
+    status: 'minted', benefits_unlocked: true })
+})
+app.get('/api/v42/nft/marketplace', (c) => c.json({
+  total_listings: 2840, floor_price_inr: 8400, total_volume_24h_inr: 840000,
+  top_collections: [
+    { name:'Priya Sharma — Genesis', floor_inr:12000, volume_inr:240000 },
+    { name:'Sunburn 2026 VIP Pass', floor_inr:28400, volume_inr:568000 }
+  ], trending: true
+}))
+app.post('/api/v42/nft/marketplace/list', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ listing_id: `LST-${Date.now()}`, token_id: b.token_id||1,
+    collection: b.collection||'Creator Drop', asking_price_inr: b.price||15000,
+    royalty_to_creator_pct: 10, platform_fee_pct: 2.5,
+    expires_at: new Date(Date.now()+86400000*30).toISOString(), status: 'listed' })
+})
+app.get('/api/v42/nft/analytics', (c) => c.json({
+  period: 'Q1-2026', total_volume_cr: 28.4, total_mints: 8400,
+  unique_holders: 4200, creator_royalties_cr: 2.84, platform_fees_cr: 0.71,
+  avg_holding_days: 42, top_blockchain: 'Polygon', secondary_market_pct: 28.4
+}))
+app.get('/api/v42/nft/creator/:id/portfolio', (c) => c.json({
+  creator_id: c.req.param('id'), total_nfts_issued: 284, total_volume_cr: 2.84,
+  royalties_earned_inr: 284000, active_drops: 4, sold_out_drops: 12,
+  floor_price_inr: 12000, top_holder_wallets: 42, secondary_volume_inr: 840000
+}))
+
+// ── MODULE 8: Creator Fund & Revenue Sharing (8 endpoints) ──
+app.get('/api/v42/creator-fund/overview', (c) => c.json({
+  module: 'Creator Fund & Revenue Sharing',
+  fund_size_cr: 84, disbursed_ytd_cr: 28.4, eligible_creators: 8400,
+  avg_grant_inr: 33810, max_grant_inr: 500000,
+  criteria: ['min_1000_followers','min_10_events','active_last_90d','kyc_complete'],
+  revenue_share_model: 'tiered_80_20', advance_program: true
+}))
+app.get('/api/v42/creator-fund/tiers', (c) => c.json({
+  revenue_tiers: [
+    { tier:'emerging', followers:'1K-10K', revenue_share_pct:85, advance_eligible:false },
+    { tier:'rising', followers:'10K-100K', revenue_share_pct:82, advance_eligible:true, max_advance_inr:100000 },
+    { tier:'established', followers:'100K-1M', revenue_share_pct:80, advance_eligible:true, max_advance_inr:500000 },
+    { tier:'star', followers:'1M+', revenue_share_pct:78, advance_eligible:true, max_advance_inr:2000000 }
+  ]
+}))
+app.post('/api/v42/creator-fund/apply', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ application_id: `FA-${Date.now()}`, creator_id: b.creator_id||'CRE001',
+    requested_amount_inr: b.amount||100000, purpose: b.purpose||'equipment_upgrade',
+    eligibility_score: 84.2, likely_approved: true,
+    review_days: 5, status: 'submitted' })
+})
+app.get('/api/v42/creator-fund/applications/:id', (c) => c.json({
+  application_id: c.req.param('id'), creator: 'Priya Sharma',
+  requested_inr: 500000, approved_inr: 400000, purpose: 'studio_setup',
+  repayment_model: 'revenue_share_15pct_until_repaid',
+  disbursed_at: '2026-02-15', repaid_so_far_inr: 120000, outstanding_inr: 280000,
+  status: 'active'
+}))
+app.get('/api/v42/creator-fund/advances', (c) => c.json({
+  total_advances_disbursed_cr: 8.4, active_advances: 284,
+  avg_advance_inr: 295775, repayment_rate_pct: 94.2,
+  avg_repayment_days: 84, default_rate_pct: 0.8,
+  advance_to_earnings_ratio: 3.4
+}))
+app.post('/api/v42/creator-fund/advances/request', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ advance_id: `ADV-${Date.now()}`, creator_id: b.creator_id||'CRE001',
+    amount_inr: b.amount||200000, repayment_share_pct: 15,
+    estimated_repayment_months: Math.ceil((b.amount||200000)/((b.monthly_earning||100000)*0.15)),
+    disbursement_eta_days: 3, status: 'approved_pending_agreement' })
+})
+app.get('/api/v42/creator-fund/analytics', (c) => c.json({
+  period: 'Q1-2026', total_distributed_cr: 8.4, creators_supported: 840,
+  avg_revenue_increase_post_fund_pct: 42.4, retention_of_funded_creators_pct: 94.2,
+  roi_for_platform_x: 12.4
+}))
+app.get('/api/v42/creator-fund/leaderboard', (c) => c.json({
+  top_earners: [
+    { rank:1, creator:'Priya Sharma', category:'music', monthly_inr:2840000, growth_pct:42 },
+    { rank:2, creator:'Rohan Comedy', category:'comedy', monthly_inr:1840000, growth_pct:28 },
+    { rank:3, creator:'Kapil Fitness', category:'fitness', monthly_inr:840000, growth_pct:84 }
+  ], total_creator_economy_value_cr: 84, yoy_growth_pct: 42
+}))
+
+// ── MODULE 9: Fan Club & Community Management (10 endpoints) ──
+app.get('/api/v42/fanclub/overview', (c) => c.json({
+  module: 'Fan Club & Community Management',
+  total_fan_clubs: 8400, total_members: 28400000, avg_members_per_club: 3381,
+  active_clubs: 2840, premium_clubs: 840,
+  activities: ['polls','challenges','watch_parties','exclusive_posts','ama_sessions'],
+  engagement_rate_pct: 42.4, monthly_active_members: 18400000
+}))
+app.post('/api/v42/fanclub/create', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ club_id: `FC-${Date.now()}`, creator_id: b.creator_id||'CRE001',
+    name: b.name||'Priya Sharma Fan Club', description: b.description||'Official fan club',
+    membership_type: b.type||'free', membership_fee_inr: b.fee||0,
+    perks: b.perks||['exclusive_content','early_access','community_chat'],
+    url: `https://fans.indtix.com/${b.slug||'creator-fanclub'}`, status: 'created' })
+})
+app.get('/api/v42/fanclub/:id', (c) => c.json({
+  club_id: c.req.param('id'), name: 'Priya Sharma Official Fan Club',
+  creator: 'Priya Sharma', members: 284000, premium_members: 28400,
+  posts_this_week: 28, upcoming_events: 4, active_challenges: 3,
+  top_fans: [
+    { name:'SuperFan_Raj', points:28400, badge:'diamond_fan' },
+    { name:'MusicLover42', points:18400, badge:'gold_fan' }
+  ], club_nps: 82
+}))
+app.post('/api/v42/fanclub/:id/join', async (c) => {
+  return c.json({ club_id: c.req.param('id'), joined: true,
+    tier: 'free', welcome_message: 'Welcome to the fan club! 🎉',
+    first_task: 'Introduce yourself in #introductions',
+    points_awarded: 100, badge_earned: 'new_member',
+    total_members_now: 284001 })
+})
+app.post('/api/v42/fanclub/:id/post', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ post_id: `FCP-${Date.now()}`, club_id: c.req.param('id'),
+    author: b.author||'Creator', content_type: b.type||'text',
+    content: b.content||'New exclusive post for fans!',
+    visibility: b.visibility||'members_only', scheduled_at: b.schedule||null,
+    notified_members: 284000, reactions_enabled: true })
+})
+app.post('/api/v42/fanclub/:id/poll', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ poll_id: `POLL-${Date.now()}`, club_id: c.req.param('id'),
+    question: b.question||'Which city should I perform in next?',
+    options: b.options||['Mumbai','Delhi','Bengaluru','Hyderabad'],
+    duration_hours: b.hours||24, votes_so_far: 0,
+    notified_members: 284000, status: 'active' })
+})
+app.post('/api/v42/fanclub/:id/challenge', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ challenge_id: `CHAL-${Date.now()}`, club_id: c.req.param('id'),
+    title: b.title||'Dance to my new song!', hashtag: b.hashtag||'#PriyaDanceChallenge',
+    prize: b.prize||'Meet & Greet ticket', duration_days: b.days||7,
+    entries_so_far: 0, viral_potential_score: 8.4 })
+})
+app.get('/api/v42/fanclub/:id/analytics', (c) => c.json({
+  club_id: c.req.param('id'), members: 284000, mau: 184000,
+  avg_posts_per_week: 28, avg_engagement_per_post: 18400,
+  top_content_type: 'exclusive_videos', member_growth_pct_month: 8.4,
+  premium_conversion_pct: 10, revenue_from_club_cr: 0.84
+}))
+app.get('/api/v42/fanclub/:id/events', (c) => c.json({
+  club_id: c.req.param('id'), upcoming: [
+    { event_id:'EVT001', name:'Exclusive Live Q&A', date:'2026-04-05', type:'virtual', members_access:'premium' },
+    { event_id:'EVT002', name:'Secret Acoustic Show', date:'2026-04-18', type:'physical', members_access:'all', city:'Mumbai' }
+  ], watch_parties_this_month: 4, ama_sessions_this_month: 2
+}))
+app.get('/api/v42/fanclub/analytics/platform', (c) => c.json({
+  total_clubs: 8400, total_members: 28400000, mau: 18400000,
+  premium_revenue_cr: 8.4, top_engagement_activity: 'polls',
+  avg_club_retention_pct: 84.2, creator_satisfaction_nps: 74
+}))
+
+// ── MODULE 10: Creator Commerce & Merch Integration (10 endpoints) ──
+app.get('/api/v42/creator-commerce/overview', (c) => c.json({
+  module: 'Creator Commerce & Merch Integration',
+  total_creator_stores: 2840, active_stores: 1840, total_skus: 28400,
+  gmv_month_cr: 28.4, avg_store_revenue_inr: 100000,
+  product_categories: ['apparel','music_merch','prints','digital_downloads','accessories','limited_editions'],
+  fulfilment_partners: ['Printify','Shiprocket','Delhivery','Blue_Dart'], avg_delivery_days: 4.2
+}))
+app.post('/api/v42/creator-commerce/store/create', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ store_id: `STORE-${Date.now()}`, creator_id: b.creator_id||'CRE001',
+    store_name: b.name||'Priya Sharma Official Store',
+    url: `https://store.indtix.com/${b.slug||'priya-sharma'}`,
+    template: b.template||'artist_default', currency: 'INR',
+    payment_methods: ['UPI','cards','wallets','COD'],
+    commission_pct: 15, go_live_eta_hours: 1, status: 'setup' })
+})
+app.post('/api/v42/creator-commerce/products/add', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ product_id: `PRD-${Date.now()}`, store_id: b.store_id||'STORE001',
+    name: b.name||'Tour T-Shirt 2026', category: b.category||'apparel',
+    variants: b.variants||[{size:'S',color:'black'},{size:'M',color:'black'},{size:'L',color:'white'}],
+    price_inr: b.price||799, cost_inr: b.cost||350, margin_pct: Math.round((1-(b.cost||350)/(b.price||799))*100),
+    inventory: b.stock||200, images_uploaded: 3, status: 'draft' })
+})
+app.get('/api/v42/creator-commerce/store/:id', (c) => c.json({
+  store_id: c.req.param('id'), creator: 'Priya Sharma', products: 42,
+  orders_this_month: 840, revenue_this_month_inr: 840000,
+  top_product: 'Tour T-Shirt 2026', avg_order_value_inr: 1000,
+  return_rate_pct: 4.2, rating: 4.7, reviews: 284
+}))
+app.post('/api/v42/creator-commerce/orders/:id/fulfil', async (c) => {
+  return c.json({ order_id: c.req.param('id'), status: 'dispatched',
+    courier: 'Delhivery', tracking_id: `DL${Date.now()}`,
+    tracking_url: `https://track.delhivery.com/DL${Date.now()}`,
+    estimated_delivery: new Date(Date.now()+86400000*3).toISOString(),
+    customer_notified: true })
+})
+app.get('/api/v42/creator-commerce/store/:id/analytics', (c) => c.json({
+  store_id: c.req.param('id'), period: 'last_30d',
+  revenue_inr: 840000, orders: 840, units_sold: 1260,
+  avg_order_value_inr: 1000, conversion_rate_pct: 4.2,
+  top_traffic_source: 'creator_profile', return_rate_pct: 4.2,
+  net_revenue_after_commission_inr: 714000
+}))
+app.get('/api/v42/creator-commerce/merch/print-on-demand', (c) => c.json({
+  pod_enabled: true, partners: ['Printify','Printful'],
+  product_types: ['tshirt','hoodie','poster','mug','phone_case','tote_bag'],
+  base_cost_range_inr: { tshirt:'250-400', hoodie:'600-900', poster:'150-250' },
+  setup_cost: 0, min_order: 1, print_quality: 'DTG_premium'
+}))
+app.post('/api/v42/creator-commerce/merchandise/limited-edition', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ drop_id: `MERCH-${Date.now()}`, creator_id: b.creator_id||'CRE001',
+    name: b.name||'Limited Edition Concert Hoodie', quantity: b.qty||200,
+    price_inr: b.price||2499, drop_date: b.date||'2026-04-10',
+    countdown_timer: true, waitlist_enabled: true, nft_bundle_option: true,
+    expected_sellout_hours: 2, status: 'scheduled' })
+})
+app.get('/api/v42/creator-commerce/analytics/platform', (c) => c.json({
+  period: 'Q1-2026', total_gmv_cr: 84, creator_payouts_cr: 71.4,
+  platform_commission_cr: 12.6, total_orders: 84000,
+  avg_order_value_inr: 1000, top_category: 'apparel',
+  repeat_customer_rate_pct: 42.4, nps: 72
+}))
+app.get('/api/v42/creator-commerce/shipping/rates', (c) => c.json({
+  domestic: [
+    { zone:'same_city', partner:'Delhivery', rate_inr:49, eta_days:1 },
+    { zone:'metro_to_metro', partner:'Blue_Dart', rate_inr:79, eta_days:2 },
+    { zone:'tier2_tier3', partner:'Shiprocket', rate_inr:99, eta_days:4 }
+  ],
+  international: { base_rate_inr:499, eta_days:10, partners:['DHL','FedEx'] },
+  free_shipping_threshold_inr: 999
+}))
+
+// ── Phase 42 Health ──
+app.get('/api/v42/health', (c) => c.json({
+  status: 'ok', platform: 'INDTIX', version: 'v42.0.0',
+  phase: 'Phase 42', theme: 'Creator Economy, Influencer & Fan Monetisation Platform',
+  new_endpoints: 90, total_endpoints: 2809,
+  features: ['Creator Profiles & Content Marketplace','Influencer Campaign Management',
+    'Fan Subscription & Membership Engine','Live Tipping, Super Chat & Virtual Gifts',
+    'Creator Analytics & Earnings Dashboard','Brand Deal & Sponsorship Marketplace',
+    'NFT Drops & Digital Collectibles for Creators','Creator Fund & Revenue Sharing',
+    'Fan Club & Community Management','Creator Commerce & Merch Integration']
+}))
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 42 — CREATOR ECONOMY, INFLUENCER &
+//               FAN MONETISATION PLATFORM
 // ═══════════════════════════════════════════════════════════
 
 export default app

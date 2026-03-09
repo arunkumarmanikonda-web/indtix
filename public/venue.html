@@ -3327,4 +3327,25 @@ async function loadAllP41Venue() { await Promise.all([loadVenueMICE(), loadVenue
 loadAllP41Venue();
 </script>
 <!-- END PHASE 41 VENUE PORTAL -->
+
+<!-- PHASE 42 VENUE PORTAL -->
+<div class="phase-section" id="phase42-venue">
+  <h2 class="phase-title">Phase 42 — Creator Events at Venue</h2>
+  <div class="module-card"><h3>🎤 Creator & Fan Club Events</h3><div id="p42-venue-creator" class="stats-grid"></div><div id="p42-venue-merch" class="info-alert"></div></div>
+</div>
+<script>
+async function loadP42Venue() {
+  const [creators, commerce] = await Promise.all([
+    fetch('/api/v42/creators').then(r=>r.json()),
+    fetch('/api/v42/creator-commerce/overview').then(r=>r.json())
+  ]);
+  document.getElementById('p42-venue-creator').innerHTML =
+    `<span>Total Creators: ${creators.total_creators.toLocaleString()}</span><span>Verified: ${creators.verified_creators.toLocaleString()}</span><span>Events Hosted: N/A</span><span>Views/Day: ${(creators.content_views_per_day/1000000).toFixed(1)}M</span>`;
+  document.getElementById('p42-venue-merch').innerHTML =
+    `Creator Stores: ${commerce.total_creator_stores.toLocaleString()} | GMV: ₹${commerce.gmv_month_cr}Cr/mo | Avg Delivery: ${commerce.avg_delivery_days}d`;
+}
+async function loadAllP42Venue() { await loadP42Venue(); }
+loadAllP42Venue();
+</script>
+<!-- END PHASE 42 VENUE PORTAL -->
 </body></html>

@@ -3690,4 +3690,28 @@ async function loadAllP41EM() { await Promise.all([loadEMBulk(), loadEMBulkAnaly
 loadAllP41EM();
 </script>
 <!-- END PHASE 41 EVENT MANAGER -->
+
+<!-- PHASE 42 EVENT MANAGER PORTAL -->
+<div class="phase-section" id="phase42-em">
+  <h2 class="phase-title">Phase 42 — Creator Event & Campaign Tools</h2>
+  <div class="module-card"><h3>📣 Influencer Campaign Ops</h3><div id="p42-em-campaigns" class="stats-grid"></div></div>
+  <div class="module-card"><h3>🎟️ Fan Subscription Status</h3><div id="p42-em-subs" class="stats-grid"></div><div id="p42-em-warning" class="warning-alert"></div></div>
+</div>
+<script>
+async function loadP42EM() {
+  const [campaigns, subs] = await Promise.all([
+    fetch('/api/v42/influencer/campaigns').then(r=>r.json()),
+    fetch('/api/v42/subscriptions/analytics').then(r=>r.json())
+  ]);
+  document.getElementById('p42-em-campaigns').innerHTML =
+    `<span>Active Campaigns: ${campaigns.active_campaigns}</span><span>Brands: ${campaigns.brands}</span><span>Value: ₹${campaigns.total_campaign_value_cr}Cr</span><span>Avg CPE: ₹${campaigns.avg_cpe_inr}</span>`;
+  document.getElementById('p42-em-subs').innerHTML =
+    `<span>MRR: ₹${subs.mrr_cr}Cr</span><span>Growth: +${subs.mrr_growth_pct}%</span><span>New/Month: ${subs.new_subscribers_month.toLocaleString()}</span><span>Churn: ${subs.churned_month.toLocaleString()}</span>`;
+  document.getElementById('p42-em-warning').innerHTML =
+    `Net New Subscribers: +${subs.net_new.toLocaleString()} | Trial Conversion: ${subs.trial_conversion_pct}% | LTV/CAC: ${subs.ltv_to_cac_ratio}x`;
+}
+async function loadAllP42EM() { await loadP42EM(); }
+loadAllP42EM();
+</script>
+<!-- END PHASE 42 EVENT MANAGER -->
 </body></html>
