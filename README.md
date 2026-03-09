@@ -1,26 +1,40 @@
-# INDTIX Platform — v24.0.0
+# INDTIX Platform — v24.0.0 (Portal Fix)
 
 ## Project Overview
 - **Name**: INDTIX — India's Live Event Platform
-- **Version**: v24.0.0 (Phase 24)
+- **Version**: v24.0.0 (Phase 24 + Portal Navigation Fix)
 - **Goal**: End-to-end live event ticketing platform with **1,189 API endpoints** across 6 portals
 - **Company**: Oye Imagine Private Limited | GSTIN: 27AABCO1234A1Z5
 - **QA Score**: 286/286 tests — 100% ✅
+- **Portal Nav Fix**: All 6 portals fully wired — every sidebar/nav button functional ✅
 
 ## Live URLs
-- **Production (Cloudflare)**: https://2655f223.indtix.pages.dev
-- **Fan Portal**: https://2655f223.indtix.pages.dev/fan
-- **Organiser Portal**: https://2655f223.indtix.pages.dev/organiser
-- **Admin Portal**: https://2655f223.indtix.pages.dev/admin
-- **Venue Portal**: https://2655f223.indtix.pages.dev/venue
-- **Event Manager**: https://2655f223.indtix.pages.dev/event-manager
-- **Ops Portal**: https://2655f223.indtix.pages.dev/ops
-- **Brand Guide**: https://2655f223.indtix.pages.dev/brand
-- **API Health**: https://2655f223.indtix.pages.dev/api/health
-- **v24 Health**: https://2655f223.indtix.pages.dev/api/v24/health
-- **v23 Health**: https://2655f223.indtix.pages.dev/api/v23/health
-- **v22 Health**: https://2655f223.indtix.pages.dev/api/v22/health
-- **v21 Health**: https://2655f223.indtix.pages.dev/api/v21/health
+- **Production (Latest)**: https://6177fc84.indtix.pages.dev
+- **Fan Portal**: https://6177fc84.indtix.pages.dev/fan
+- **Organiser Portal**: https://6177fc84.indtix.pages.dev/organiser
+- **Admin Portal**: https://6177fc84.indtix.pages.dev/admin
+- **Venue Portal**: https://6177fc84.indtix.pages.dev/venue
+- **Event Manager**: https://6177fc84.indtix.pages.dev/event-manager
+- **Ops Portal**: https://6177fc84.indtix.pages.dev/ops
+- **Brand Guide**: https://6177fc84.indtix.pages.dev/brand
+- **API Health**: https://6177fc84.indtix.pages.dev/api/health
+- **v24 Health**: https://6177fc84.indtix.pages.dev/api/v24/health
+- **v23 Health**: https://6177fc84.indtix.pages.dev/api/v23/health
+- **v22 Health**: https://6177fc84.indtix.pages.dev/api/v22/health
+- **v21 Health**: https://6177fc84.indtix.pages.dev/api/v21/health
+
+## Portal Navigation Fix (applied after Phase 24)
+### Root Causes Fixed
+| Portal | Issue | Fix Applied |
+|--------|-------|-------------|
+| **Admin** | No base `showPanel()` — ALL 40+ nav clicks did nothing | Added base `showPanel()` before all overrides; removed duplicate static sidebar items |
+| **Admin** | Phase 24 Intelligence Suite floating outside any panel | Wrapped in `panel-p24-intelligence`; added sidebar link |
+| **Organiser** | Missing `panel-dynamic-pricing` — crash on click | Built full Dynamic Pricing panel with rules UI |
+| **Organiser** | Phase 24 Growth Suite floating outside any panel | Wrapped in `panel-p24-growth-suite`; added sidebar link |
+| **Venue** | Phase 24 Smart Venue floating outside any panel | Wrapped in `panel-p24-smart-venue`; added sidebar link |
+| **Event Manager** | Phase 24 Live Event Ops floating outside any panel | Wrapped in `panel-p24-event-ops`; added sidebar link |
+| **Ops** | Phase 23/24 nav buttons injected into `.sidebar` (doesn't exist) | Fixed to inject into `.ops-nav`; buttons now visible in nav bar |
+| **Fan** | Phase 24 hub button tried to add to `.fan-bottom-nav` (wrong class) | Fixed to `.bottom-nav`; P24 hub accessible |
 
 ## Phase 24 New Features (90 new endpoints → 1,189 total)
 *Monetisation, Personalisation & Operational Excellence*
