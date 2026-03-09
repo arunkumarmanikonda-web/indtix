@@ -24444,26 +24444,26 @@ app.get('/api/admin/finance/reporting/esg-financials', (c) => c.json({
   integrated_reporting_standard: 'IFRS S1/S2 + GRI',
 }))
 
-// ── Phase 47 main health endpoint ────────────────────────────
+// ── Phase 48 main health endpoint ────────────────────────────
 app.get('/api/health', (c) => c.json({
   status: 'ok',
   platform: 'INDTIX',
-  version: 'v47.0.0',
-  phase: 'Phase 47',
-  theme: 'Accessibility & Inclusive Experience Platform',
+  version: 'v48.0.0',
+  phase: 'Phase 48',
+  theme: 'Ecosystem & App Store Platform',
   new_endpoints: 90,
-  total_endpoints: 3259,
+  total_endpoints: 3349,
   features: [
-    'WCAG & Digital Accessibility',
-    'Assistive Technology & Adaptive UX',
-    'Physical Venue Accessibility',
-    'Inclusive Content & Communications',
-    'Neurodiversity & Sensory Support',
-    'Disability-Inclusive Ticketing',
-    'Multilingual Accessibility & Language Support',
-    'Accessibility Data, Reporting & DEI',
-    'Accessible Mobile & App Experience',
-    'Inclusive Event Experience & Community',
+    'Developer Platform & API Marketplace',
+    'App Store & Plugin Marketplace',
+    'Third-Party Integrations Hub',
+    'White-Label & Embedded Ticketing Platform',
+    'Data Exchange & Open Data Platform',
+    'Partner & ISV Programme',
+    'Webhook & Event-Driven Architecture',
+    'Ecosystem Analytics & Intelligence',
+    'No-Code / Low-Code Event Builder',
+    'Platform Governance & Trust',
   ],
   timestamp: new Date().toISOString(),
 }))
@@ -27741,6 +27741,128 @@ app.get('/api/v47/health', (c) => c.json({ status: 'ok', phase: 'Phase 47', vers
 // ═══════════════════════════════════════════════════════════
 // END PHASE 47 — ACCESSIBILITY & INCLUSIVE
 //               EXPERIENCE PLATFORM
+// ═══════════════════════════════════════════════════════════
+
+// ╔═══════════════════════════════════════════════════════════╗
+// ║  PHASE 48 — ECOSYSTEM & APP STORE PLATFORM (v48.0.0)     ║
+// ║  90 new endpoints  |  Total: 3,349                       ║
+// ╚═══════════════════════════════════════════════════════════╝
+
+// ── MODULE 1: Developer Platform & API Marketplace (10 endpoints) ──
+app.get('/api/v48/dev-platform/overview', (c) => c.json({ module: 'Developer Platform & API Marketplace', registered_developers: 28400, published_apps: 840, api_calls_day: 284000000, sdks: 8, sandbox_users: 8400, docs_monthly_views: 2840000 }))
+app.get('/api/v48/dev-platform/apis', (c) => c.json({ total_apis: 284, public: 142, partner: 84, private: 58, versioned: true, graphql: true, rest: true, webhooks: true }))
+app.get('/api/v48/dev-platform/sdks', (c) => c.json({ sdks: ['JavaScript','Python','Java','Swift','Kotlin','PHP','Ruby','.NET'], downloads_month: 284000, github_stars: 8400 }))
+app.get('/api/v48/dev-platform/sandbox', (c) => c.json({ active_sandboxes: 8400, free_tier_calls: 100000, test_data_sets: 84, reset_on_demand: true }))
+app.get('/api/v48/dev-platform/documentation', (c) => c.json({ pages: 8400, interactive_examples: 840, postman_collection: true, openapi_spec: true, changelog_automated: true }))
+app.get('/api/v48/dev-platform/authentication', (c) => c.json({ methods: ['OAuth2','API_Key','JWT','PKCE'], mfa_support: true, key_rotation_days: 90 }))
+app.get('/api/v48/dev-platform/rate-limits', (c) => c.json({ free_tier: 10000, starter: 100000, pro: 1000000, enterprise: 'unlimited', burst_support: true }))
+app.get('/api/v48/dev-platform/webhooks', (c) => c.json({ events: 284, delivery_pct: 99.9, retry_attempts: 5, signature_verification: true, payload_size_kb: 256 }))
+app.get('/api/v48/dev-platform/analytics', (c) => c.json({ top_api: '/api/events', avg_latency_ms: 42, error_rate_pct: 0.08, uptime_pct: 99.98 }))
+app.get('/api/v48/dev-platform/community', (c) => c.json({ forum_members: 28400, monthly_posts: 8400, stack_overflow_tags: 284, discord_members: 18400 }))
+
+// ── MODULE 2: App Store & Plugin Marketplace (10 endpoints) ──
+app.get('/api/v48/app-store/overview', (c) => c.json({ module: 'App Store & Plugin Marketplace', total_apps: 840, active_installs: 28400000, categories: 28, avg_rating: 4.4, gmv_cr: 84, revenue_share_pct: 30 }))
+app.get('/api/v48/app-store/apps', (c) => c.json({ total: 840, featured: 28, new_this_month: 42, categories: ['payments','marketing','analytics','crm','operations','content'], top_app: 'INDIE Analytics Pro' }))
+app.get('/api/v48/app-store/categories', (c) => c.json({ total: 28, top: ['Payments','Marketing','Analytics','CRM','Venue Ops','Fan Engagement'], apps_per_category_avg: 30 }))
+app.get('/api/v48/app-store/reviews', (c) => c.json({ total_reviews: 284000, avg_rating: 4.4, verified_pct: 84, response_rate_pct: 72 }))
+app.get('/api/v48/app-store/revenue', (c) => c.json({ gmv_cr: 84, platform_cut_pct: 30, developer_payout_cr: 58.8, top_earner_cr: 8.4 }))
+app.get('/api/v48/app-store/discovery', (c) => c.json({ search_queries_day: 284000, conversion_pct: 18.4, featured_slots: 12, personalised_recs: true }))
+app.get('/api/v48/app-store/security', (c) => c.json({ review_days: 5, malware_scan: true, sandboxed_execution: true, permission_model: 'least-privilege' }))
+app.get('/api/v48/app-store/pricing', (c) => c.json({ models: ['free','freemium','paid','subscription','usage'], avg_price_usd: 28, free_pct: 42 }))
+app.get('/api/v48/app-store/installs', (c) => c.json({ total_active: 28400000, installs_month: 840000, uninstall_rate_pct: 4.2, top_region: 'IN' }))
+app.get('/api/v48/app-store/analytics', (c) => c.json({ dau: 2840000, conversion_free_to_paid_pct: 8.4, nps: 72, churn_pct: 2.8 }))
+
+// ── MODULE 3: Third-Party Integrations Hub (10 endpoints) ──
+app.get('/api/v48/integrations/overview', (c) => c.json({ module: 'Third-Party Integrations Hub', total_integrations: 284, active: 278, categories: 18, data_flows_day: 28400000, uptime_pct: 99.94 }))
+app.get('/api/v48/integrations/crm', (c) => c.json({ platforms: ['Salesforce','HubSpot','Zoho','Freshsales'], bidirectional: true, sync_interval_min: 5 }))
+app.get('/api/v48/integrations/marketing', (c) => c.json({ platforms: ['Mailchimp','Klaviyo','Braze','CleverTap','MoEngage'], events_synced_day: 2840000 }))
+app.get('/api/v48/integrations/payments', (c) => c.json({ gateways: ['Razorpay','Stripe','PayU','Cashfree','PhonePe','GPay'], reconciliation_auto: true }))
+app.get('/api/v48/integrations/analytics', (c) => c.json({ platforms: ['GA4','Mixpanel','Amplitude','Segment','Heap'], real_time: true }))
+app.get('/api/v48/integrations/accounting', (c) => c.json({ platforms: ['Tally','QuickBooks','Zoho Books','SAP','Oracle Netsuite'], journal_auto: true }))
+app.get('/api/v48/integrations/communication', (c) => c.json({ platforms: ['Twilio','Exotel','WhatsApp Business','SendGrid','Firebase'], channels: 8 }))
+app.get('/api/v48/integrations/venue-systems', (c) => c.json({ pos_systems: 28, access_control: 18, catering: 8, parking: 12, total_protocols: ['REST','MQTT','AMQP'] }))
+app.get('/api/v48/integrations/status', (c) => c.json({ healthy: 274, degraded: 4, down: 0, incidents_month: 2, mttr_min: 14 }))
+app.get('/api/v48/integrations/analytics', (c) => c.json({ data_events_day: 28400000, error_rate_pct: 0.04, top_integration: 'Salesforce', latency_avg_ms: 84 }))
+
+// ── MODULE 4: White-Label & Embedded Ticketing Platform (8 endpoints) ──
+app.get('/api/v48/white-label/overview', (c) => c.json({ module: 'White-Label & Embedded Ticketing Platform', partners: 284, branded_instances: 284, monthly_tickets: 2840000, gmv_cr: 284, custom_domains: 284 }))
+app.get('/api/v48/white-label/instances', (c) => c.json({ total: 284, active: 280, regions: 28, custom_domain_pct: 100, ssl_auto: true }))
+app.get('/api/v48/white-label/branding', (c) => c.json({ logo: true, colours: true, fonts: true, email_templates: true, sms_templates: true, custom_css: true }))
+app.get('/api/v48/white-label/features', (c) => c.json({ ticketing: true, seating: true, payments: true, streaming: true, merchandise: true, analytics_portal: true }))
+app.get('/api/v48/white-label/revenue', (c) => c.json({ partner_gmv_cr: 284, platform_fee_cr: 28.4, top_partner_gmv_cr: 42, payout_frequency: 'weekly' }))
+app.get('/api/v48/white-label/onboarding', (c) => c.json({ avg_go_live_days: 14, self_serve_pct: 72, dedicated_csm: true, sla_uptime_pct: 99.9 }))
+app.get('/api/v48/white-label/compliance', (c) => c.json({ gdpr_inherit: true, pci_pass_through: true, data_residency_options: 8 }))
+app.get('/api/v48/white-label/analytics', (c) => c.json({ partner_nps: 74, growth_yoy_pct: 42, churn_pct: 2.8, expansion_revenue_pct: 28 }))
+
+// ── MODULE 5: Data Exchange & Open Data Platform (8 endpoints) ──
+app.get('/api/v48/data-exchange/overview', (c) => c.json({ module: 'Data Exchange & Open Data Platform', data_products: 84, subscribers: 2840, daily_data_events: 284000000, open_datasets: 28, revenue_cr: 28.4 }))
+app.get('/api/v48/data-exchange/products', (c) => c.json({ total: 84, categories: ['events','fans','venues','transactions','analytics'], avg_price_cr: 0.84 }))
+app.get('/api/v48/data-exchange/streaming', (c) => c.json({ kafka_topics: 284, consumers: 840, lag_ms: 84, throughput_mbps: 2840 }))
+app.get('/api/v48/data-exchange/open-data', (c) => c.json({ datasets: 28, records: 284000000, api_access: true, licence: 'CC-BY-4.0', downloads_month: 84000 }))
+app.get('/api/v48/data-exchange/governance', (c) => c.json({ data_catalog: true, lineage_tracking: true, quality_score: 9.2, classification: 'auto' }))
+app.get('/api/v48/data-exchange/privacy', (c) => c.json({ anonymisation: true, synthetic_data: true, consent_ledger: true, data_vault: true }))
+app.get('/api/v48/data-exchange/monetisation', (c) => c.json({ revenue_cr: 28.4, subscribers: 2840, top_product: 'Fan Behaviour Dataset', growth_pct: 42 }))
+app.get('/api/v48/data-exchange/analytics', (c) => c.json({ query_volume_day: 28400000, avg_query_ms: 42, cache_hit_pct: 84, sla_pct: 99.9 }))
+
+// ── MODULE 6: Partner & ISV Programme (8 endpoints) ──
+app.get('/api/v48/partner-programme/overview', (c) => c.json({ module: 'Partner & ISV Programme', partners: 840, tiers: 4, certified_partners: 284, revenue_influenced_cr: 840, pipeline_cr: 2840 }))
+app.get('/api/v48/partner-programme/tiers', (c) => c.json({ tiers: ['Community','Silver','Gold','Platinum'], requirements: 'MRR+certifications', top_tier_count: 42 }))
+app.get('/api/v48/partner-programme/certification', (c) => c.json({ certifications: 8, holders: 2840, validity_months: 12, exam_pass_rate_pct: 84 }))
+app.get('/api/v48/partner-programme/benefits', (c) => c.json({ co_marketing: true, deal_registration: true, nfr_licenses: true, dedicated_se: true, mdf_cr: 8.4 }))
+app.get('/api/v48/partner-programme/training', (c) => c.json({ courses: 84, certified_completions: 2840, e_learning_hrs: 28400, lab_access: true }))
+app.get('/api/v48/partner-programme/co-sell', (c) => c.json({ joint_deals: 284, win_rate_pct: 72, avg_deal_cr: 2.8, marketplace_listings: 840 }))
+app.get('/api/v48/partner-programme/mdf', (c) => c.json({ total_cr: 8.4, allocated_pct: 84, roi_per_cr: 4.2, campaigns_funded: 28 }))
+app.get('/api/v48/partner-programme/analytics', (c) => c.json({ partner_nps: 76, revenue_per_partner_cr: 1.0, yoy_growth_pct: 42, top_region: 'IN' }))
+
+// ── MODULE 7: Webhook & Event-Driven Architecture (8 endpoints) ──
+app.get('/api/v48/event-driven/overview', (c) => c.json({ module: 'Webhook & Event-Driven Architecture', event_types: 284, consumers: 28400, events_day: 284000000, delivery_pct: 99.94, avg_latency_ms: 42 }))
+app.get('/api/v48/event-driven/topics', (c) => c.json({ kafka_topics: 284, partitions: 2840, retention_days: 7, compaction: true }))
+app.get('/api/v48/event-driven/consumers', (c) => c.json({ active_groups: 840, lag_avg: 42, auto_scale: true, dlq_enabled: true }))
+app.get('/api/v48/event-driven/schema', (c) => c.json({ registry: 'Confluent', schemas: 284, compatibility: 'BACKWARD', evolution_safe: true }))
+app.get('/api/v48/event-driven/replay', (c) => c.json({ max_replay_days: 30, replay_speed: '100x', selective_replay: true, audit_trail: true }))
+app.get('/api/v48/event-driven/monitoring', (c) => c.json({ dashboards: 8, alerts: 84, consumer_lag_alert_ms: 5000, throughput_monitor: true }))
+app.get('/api/v48/event-driven/dlq', (c) => c.json({ dlq_topics: 28, messages_today: 284, auto_retry_attempts: 5, manual_requeue: true }))
+app.get('/api/v48/event-driven/analytics', (c) => c.json({ peak_events_sec: 284000, avg_processing_ms: 8, error_pct: 0.06, sla_pct: 99.94 }))
+
+// ── MODULE 8: Ecosystem Analytics & Intelligence (8 endpoints) ──
+app.get('/api/v48/ecosystem-analytics/overview', (c) => c.json({ module: 'Ecosystem Analytics & Intelligence', ecosystem_gmv_cr: 840, apps_active: 840, partners_active: 840, api_economy_value_cr: 284, network_effects_score: 8.4 }))
+app.get('/api/v48/ecosystem-analytics/network-effects', (c) => c.json({ nodes: 28400, edges: 284000, clustering_coefficient: 0.42, avg_path_length: 4.2 }))
+app.get('/api/v48/ecosystem-analytics/revenue', (c) => c.json({ platform_revenue_cr: 284, ecosystem_revenue_cr: 840, multiplier: 2.96, yoy_growth_pct: 42 }))
+app.get('/api/v48/ecosystem-analytics/health', (c) => c.json({ health_score: 9.0, new_apps_month: 42, churn_apps_month: 4, net_growth_pct: 38 }))
+app.get('/api/v48/ecosystem-analytics/developer-metrics', (c) => c.json({ active_devs: 8400, new_this_month: 840, avg_apps_per_dev: 3, retention_pct: 84 }))
+app.get('/api/v48/ecosystem-analytics/partner-metrics', (c) => c.json({ active_partners: 840, avg_revenue_cr: 1.0, top_quartile_cr: 4.2, nps: 76 }))
+app.get('/api/v48/ecosystem-analytics/benchmarks', (c) => c.json({ rank: 'top_3pct', peer_avg_gmv_cr: 284, our_gmv_cr: 840, index: 2.96 }))
+app.get('/api/v48/ecosystem-analytics/forecasts', (c) => c.json({ fy27_ecosystem_gmv_cr: 2840, new_apps_fy27: 840, new_partners_fy27: 284, tam_cr: 28400 }))
+
+// ── MODULE 9: No-Code / Low-Code Event Builder (8 endpoints) ──
+app.get('/api/v48/no-code/overview', (c) => c.json({ module: 'No-Code / Low-Code Event Builder', templates: 840, events_built_ytd: 28400, avg_build_min: 8, non_tech_users_pct: 72, ai_assist: true }))
+app.get('/api/v48/no-code/templates', (c) => c.json({ total: 840, categories: ['concert','conference','sports','festival','corporate','exhibition'], customisable: true }))
+app.get('/api/v48/no-code/drag-drop', (c) => c.json({ components: 284, drag_drop: true, responsive_preview: true, undo_redo: true }))
+app.get('/api/v48/no-code/ai-assist', (c) => c.json({ model: 'INDIE-Builder-AI', text_to_event: true, smart_suggestions: true, auto_pricing: true }))
+app.get('/api/v48/no-code/workflows', (c) => c.json({ workflow_templates: 84, triggers: 42, actions: 84, conditional_logic: true }))
+app.get('/api/v48/no-code/publishing', (c) => c.json({ one_click_publish: true, custom_domain: true, embed_widget: true, mobile_preview: true }))
+app.get('/api/v48/no-code/integrations', (c) => c.json({ native_integrations: 84, zapier_actions: 284, make_scenarios: 84 }))
+app.get('/api/v48/no-code/analytics', (c) => c.json({ events_live: 8400, avg_setup_min: 8, satisfaction: 9.0, nps: 74 }))
+
+// ── MODULE 10: Platform Governance & Trust (10 endpoints) ──
+app.get('/api/v48/governance/overview', (c) => c.json({ module: 'Platform Governance & Trust', policies: 284, compliance_pct: 100, trust_score: 9.4, appeals_resolved_pct: 98.4, transparency_report: true }))
+app.get('/api/v48/governance/policies', (c) => c.json({ total: 284, developer_policies: 84, partner_policies: 42, content_policies: 84, last_updated: '2026-01-01' }))
+app.get('/api/v48/governance/review-process', (c) => c.json({ avg_review_days: 5, automated_pct: 72, manual_pct: 28, appeals_accepted_pct: 18 }))
+app.get('/api/v48/governance/trust-safety', (c) => c.json({ bad_actors_removed_ytd: 28, fraud_apps_removed: 8, proactive_detection_pct: 84 }))
+app.get('/api/v48/governance/transparency', (c) => c.json({ reports_published: 4, removal_reasons_disclosed: true, appeal_stats: true, url: 'https://transparency.indtix.com' }))
+app.get('/api/v48/governance/data-sharing', (c) => c.json({ data_shared_with_devs: 'anonymised', consent_required: true, audit_trail: true }))
+app.get('/api/v48/governance/compliance-monitoring', (c) => c.json({ automated_checks: 28400, violation_alerts: 8, avg_remediation_days: 2.8 }))
+app.get('/api/v48/governance/sla', (c) => c.json({ platform_uptime_sla_pct: 99.9, api_latency_sla_ms: 200, breach_credits: true }))
+app.get('/api/v48/governance/dispute-resolution', (c) => c.json({ open_disputes: 8, avg_resolution_days: 7, arbitration_option: true, satisfaction_pct: 94 }))
+app.get('/api/v48/governance/analytics', (c) => c.json({ trust_score: 9.4, developer_satisfaction: 8.8, compliance_pct: 100, industry_rank: 'top_5pct' }))
+
+// ── Phase 48 health endpoint ─────────────────────────────────
+app.get('/api/v48/health', (c) => c.json({ status: 'ok', phase: 'Phase 48', version: 'v48.0.0', theme: 'Ecosystem & App Store Platform', endpoints: 90, total: 3349 }))
+
+// ── Phase 48 main health update ──────────────────────────────
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 48 — ECOSYSTEM & APP STORE PLATFORM
 // ═══════════════════════════════════════════════════════════
 
 export default app

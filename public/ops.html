@@ -3849,5 +3849,39 @@ async function loadAllP47Ops() { await loadP47Ops(); }
 loadAllP47Ops();
 </script>
 <!-- END PHASE 47 OPS PORTAL -->
+
+<script>
+// ── PHASE 48: Ecosystem – Ops Portal ──
+async function loadP48Ops() {
+  const BASE = '/api/v48';
+  const [gov, ed, eco] = await Promise.all([
+    fetch(`${BASE}/governance/overview`).then(r=>r.json()),
+    fetch(`${BASE}/event-driven/overview`).then(r=>r.json()),
+    fetch(`${BASE}/ecosystem-analytics/overview`).then(r=>r.json()),
+  ]);
+  const panel = document.createElement('div');
+  panel.className = 'phase-panel p-4 my-4 bg-orange-50 rounded-xl border border-orange-200';
+  panel.innerHTML = `
+    <h2 class="text-xl font-bold text-orange-800 mb-3">🔧 Phase 48 – Platform Governance & Ops</h2>
+    <div class="grid grid-cols-3 gap-3">
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-orange-600">${gov.trust_score ?? '9.4'}/10</div>
+        <div class="text-xs text-gray-500">Platform Trust Score</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-amber-600">${ed.delivery_pct ?? '99.94'}%</div>
+        <div class="text-xs text-gray-500">Event Delivery SLA</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-yellow-600">₹${eco.ecosystem_gmv_cr ?? '840'}Cr</div>
+        <div class="text-xs text-gray-500">Ecosystem GMV</div>
+      </div>
+    </div>`;
+  document.body.appendChild(panel);
+}
+async function loadAllP48Ops() { await loadP48Ops(); }
+loadAllP48Ops();
+</script>
+<!-- END PHASE 48 OPS PORTAL -->
 </body>
 </html>

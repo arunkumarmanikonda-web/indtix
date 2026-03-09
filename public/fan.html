@@ -7068,5 +7068,39 @@ async function loadAllP47Fan() { await loadP47Fan(); }
 loadAllP47Fan();
 </script>
 <!-- END PHASE 47 FAN PORTAL -->
+
+<script>
+// ── PHASE 48: Ecosystem – Fan Portal ──
+async function loadP48Fan() {
+  const BASE = '/api/v48';
+  const [store, nocode, dataEx] = await Promise.all([
+    fetch(`${BASE}/app-store/overview`).then(r=>r.json()),
+    fetch(`${BASE}/no-code/overview`).then(r=>r.json()),
+    fetch(`${BASE}/data-exchange/overview`).then(r=>r.json()),
+  ]);
+  const panel = document.createElement('div');
+  panel.className = 'phase-panel p-4 my-4 bg-orange-50 rounded-xl border border-orange-200';
+  panel.innerHTML = `
+    <h2 class="text-xl font-bold text-orange-800 mb-3">🔧 Phase 48 – Fan App Ecosystem</h2>
+    <div class="grid grid-cols-3 gap-3">
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-orange-600">${store.total_apps ?? '840'}</div>
+        <div class="text-xs text-gray-500">Apps Available</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-amber-600">${store.avg_rating ?? '4.4'}★</div>
+        <div class="text-xs text-gray-500">Avg App Rating</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-yellow-600">${store.active_installs?.toLocaleString?.() ?? '28.4M'}</div>
+        <div class="text-xs text-gray-500">Active Installs</div>
+      </div>
+    </div>`;
+  document.body.appendChild(panel);
+}
+async function loadAllP48Fan() { await loadP48Fan(); }
+loadAllP48Fan();
+</script>
+<!-- END PHASE 48 FAN PORTAL -->
 </body>
 </html>

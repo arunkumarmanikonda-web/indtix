@@ -5638,4 +5638,43 @@ async function loadAllP47Org() { await loadP47Org(); }
 loadAllP47Org();
 </script>
 <!-- END PHASE 47 ORGANISER PORTAL -->
+
+<script>
+// ── PHASE 48: Ecosystem – Organiser Portal ──
+async function loadP48Org() {
+  const BASE = '/api/v48';
+  const [wl, integ, nocode, partner] = await Promise.all([
+    fetch(`${BASE}/white-label/overview`).then(r=>r.json()),
+    fetch(`${BASE}/integrations/overview`).then(r=>r.json()),
+    fetch(`${BASE}/no-code/overview`).then(r=>r.json()),
+    fetch(`${BASE}/partner-programme/overview`).then(r=>r.json()),
+  ]);
+  const panel = document.createElement('div');
+  panel.className = 'phase-panel p-4 my-4 bg-orange-50 rounded-xl border border-orange-200';
+  panel.innerHTML = `
+    <h2 class="text-xl font-bold text-orange-800 mb-3">🔧 Phase 48 – Organiser Ecosystem Tools</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-orange-600">${wl.branded_instances ?? '284'}</div>
+        <div class="text-xs text-gray-500">White-Label Instances</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-amber-600">${integ.total_integrations ?? '284'}</div>
+        <div class="text-xs text-gray-500">Integrations Available</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-yellow-600">${nocode.templates ?? '840'}</div>
+        <div class="text-xs text-gray-500">No-Code Templates</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-lime-600">${partner.certified_partners ?? '284'}</div>
+        <div class="text-xs text-gray-500">Certified ISV Partners</div>
+      </div>
+    </div>`;
+  document.body.appendChild(panel);
+}
+async function loadAllP48Org() { await loadP48Org(); }
+loadAllP48Org();
+</script>
+<!-- END PHASE 48 ORGANISER PORTAL -->
 </body></html>
