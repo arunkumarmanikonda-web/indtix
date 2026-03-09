@@ -24448,22 +24448,22 @@ app.get('/api/admin/finance/reporting/esg-financials', (c) => c.json({
 app.get('/api/health', (c) => c.json({
   status: 'ok',
   platform: 'INDTIX',
-  version: 'v57.0.0',
-  phase: 'Phase 57',
-  theme: 'Hyper-Local & Community Commerce',
+  version: 'v58.0.0',
+  phase: 'Phase 58',
+  theme: 'Intelligent Supply Chain & Vendor Ecosystem',
   new_endpoints: 90,
-  total_endpoints: 4159,
+  total_endpoints: 4249,
   features: [
-    'Neighbourhood Events Engine',
-    'Local Vendor Marketplace',
-    'Community Group Ticketing',
-    'Hyperlocal Discovery Engine',
-    'Local Artist Discovery & Booking Platform',
-    'Street Food & Beverage Marketplace',
-    'Community Sports & Recreation Events',
-    'Local Media Hub & Community Content Platform',
-    'Civic & Cultural Events Platform',
-    'Grassroots Fundraising & Charity Events',
+    'Smart Procurement & Sourcing Engine',
+    'Vendor Intelligence Platform',
+    'Real-Time Inventory Optimisation',
+    'Cold-Chain & Logistics Automation',
+    'Supplier Risk & Compliance',
+    'Demand-Driven Supply Planning',
+    'Warehouse Automation & Robotics',
+    'Reverse Logistics & Returns',
+    'Supply Chain Finance & Payments',
+    'Supply Chain Analytics & Control Tower',
   ],
   timestamp: new Date().toISOString(),
 }))
@@ -32070,6 +32070,113 @@ app.get('/api/v57/health', (c) => c.json({
 
 // ═══════════════════════════════════════════════════════════
 // END PHASE 57 — HYPER-LOCAL & COMMUNITY COMMERCE
+// ═══════════════════════════════════════════════════════════
+
+// ╔═══════════════════════════════════════════════════════════╗
+// ║  PHASE 58 — INTELLIGENT SUPPLY CHAIN & VENDOR ECOSYSTEM  ║
+// ║  Version: v58.0.0  |  Endpoints: +90  |  Total: 4,249   ║
+// ╚═══════════════════════════════════════════════════════════╝
+
+// ── MODULE 1: Smart Procurement & Sourcing Engine ──
+app.get('/api/v58/procurement/overview', (c) => c.json({ success: true, module: 'Smart Procurement', total_suppliers: 28400, active_rfqs: 2840, po_value_cr: 840, ai_recommendations: 284, savings_pct: 18.4, cycle_time_days: 4.2, auto_approval_pct: 84, compliance_rate: 99.2, spend_visibility: '100%', preferred_vendor_pct: 72 }))
+app.get('/api/v58/procurement/suppliers', (c) => c.json({ success: true, suppliers: [
+  { id: 'SUP001', name: 'EventPro Supplies', category: 'AV Equipment', rating: 4.9, ontime_pct: 98.4, spend_cr: 84, contracts: 284, risk: 'low' },
+  { id: 'SUP002', name: 'StageWorks India', category: 'Stage & Rigging', rating: 4.7, ontime_pct: 96.2, spend_cr: 42, contracts: 140, risk: 'low' },
+  { id: 'SUP003', name: 'CaterExpress', category: 'F&B', rating: 4.6, ontime_pct: 94.8, spend_cr: 28, contracts: 840, risk: 'medium' },
+  { id: 'SUP004', name: 'LightMasters', category: 'Lighting', rating: 4.8, ontime_pct: 97.4, spend_cr: 18, contracts: 284, risk: 'low' },
+  { id: 'SUP005', name: 'SecurityShield', category: 'Security Services', rating: 4.5, ontime_pct: 99.4, spend_cr: 12, contracts: 184, risk: 'low' }
+], total: 28400, new_this_month: 284 }))
+app.on(['GET','POST'], '/api/v58/procurement/rfq', (c) => c.json({ success: true, rfq_id: 'RFQ58-2026-001', item: 'LED Stage Panels 50x', quantity: 200, deadline: '2026-03-20', invited_suppliers: 12, ai_shortlist: 5, estimated_value_cr: 2.84, status: 'published', expected_savings_pct: 18.4 }))
+app.get('/api/v58/procurement/analytics', (c) => c.json({ success: true, total_spend_cr: 840, savings_ytd_cr: 84, maverick_spend_pct: 2.8, supplier_consolidation: '72%', po_cycle_days: 4.2, invoice_match_rate: 99.2, early_payment_discount_cr: 8.4, carbon_score: 8.4, diversity_spend_pct: 28.4, roi: '18.4x' }))
+
+// ── MODULE 2: Vendor Intelligence Platform ──
+app.get('/api/v58/vendor-intelligence/overview', (c) => c.json({ success: true, module: 'Vendor Intelligence', vendors_profiled: 28400, ai_scored: 28400, risk_alerts: 42, performance_reviews: 2840, predictive_churn_risk: 284, golden_vendors: 840, benchmarks_active: 284, market_intelligence_feeds: 42, vendor_nps: 84, fraud_detected_ytd: 8 }))
+app.get('/api/v58/vendor-intelligence/profiles', (c) => c.json({ success: true, profiles: [
+  { vendor_id: 'V001', name: 'EventPro Supplies', score: 94.2, reliability: 98.4, quality: 9.4, financial_health: 'A+', years_partner: 8, risk_level: 'low', innovation_index: 8.4 },
+  { vendor_id: 'V002', name: 'StageWorks India', score: 91.8, reliability: 96.2, quality: 9.2, financial_health: 'A', years_partner: 5, risk_level: 'low', innovation_index: 7.8 },
+  { vendor_id: 'V003', name: 'CaterExpress', score: 88.4, reliability: 94.8, quality: 8.8, financial_health: 'B+', years_partner: 3, risk_level: 'medium', innovation_index: 7.2 }
+], scoring_model: 'INDT-VendorAI-v3' }))
+app.on(['GET','POST'], '/api/v58/vendor-intelligence/evaluate', (c) => c.json({ success: true, vendor_id: 'V004', evaluation_id: 'VEV58-001', overall_score: 87.4, quality_score: 8.8, delivery_score: 9.2, price_competitiveness: 8.4, sustainability_score: 8.0, recommendation: 'Approve for Tier-2 contracts', risk_flags: [], next_review: '2026-09-01' }))
+app.get('/api/v58/vendor-intelligence/analytics', (c) => c.json({ success: true, avg_vendor_score: 91.2, top_quartile_vendors: 7100, at_risk_vendors: 284, churn_prevented_value_cr: 42, fraud_savings_cr: 8.4, benchmark_improvement_pct: 18.4, nps_improvement_ytd: 12, roi: '28.4x' }))
+
+// ── MODULE 3: Real-Time Inventory Optimisation ──
+app.get('/api/v58/inventory/overview', (c) => c.json({ success: true, module: 'Inventory Optimisation', skus_tracked: 284000, warehouses: 84, inventory_value_cr: 2840, stockout_rate_pct: 0.4, overstock_cost_cr: 12, turnover_ratio: 18.4, forecast_accuracy: 96.2, reorder_automation_pct: 84, shrinkage_pct: 0.2, carrying_cost_pct: 8.4 }))
+app.get('/api/v58/inventory/levels', (c) => c.json({ success: true, critical_items: [
+  { sku: 'AV-LED-001', name: 'LED Panel 4K', current: 840, reorder_point: 200, max: 2000, status: 'optimal', days_cover: 28 },
+  { sku: 'AUD-SPK-002', name: 'Line Array Speaker', current: 42, reorder_point: 50, max: 200, status: 'reorder', days_cover: 4 },
+  { sku: 'STG-RIG-003', name: 'Stage Truss 6m', current: 284, reorder_point: 100, max: 500, status: 'optimal', days_cover: 42 }
+], total_skus: 284000, healthy_pct: 94.2, reorder_alerts: 284 }))
+app.on(['GET','POST'], '/api/v58/inventory/replenish', (c) => c.json({ success: true, replenishment_id: 'REP58-001', sku: 'AUD-SPK-002', quantity: 200, supplier: 'SoundPro India', expected_delivery: '2026-03-14', cost_cr: 0.84, auto_approved: true, priority: 'high' }))
+app.get('/api/v58/inventory/analytics', (c) => c.json({ success: true, savings_carrying_cost_cr: 28.4, stockout_loss_prevented_cr: 84, overstock_reduction_pct: 42, forecast_accuracy: 96.2, auto_replenish_orders: 28400, avg_lead_time_days: 4.2, inventory_roi: '18.4x', waste_reduction_pct: 28.4 }))
+
+// ── MODULE 4: Cold-Chain & Logistics Automation ──
+app.get('/api/v58/cold-chain/overview', (c) => c.json({ success: true, module: 'Cold-Chain & Logistics', iot_sensors: 28400, monitored_shipments: 2840, temperature_violations: 4, on_time_delivery_pct: 99.2, cold_chain_value_cr: 284, routes_optimised: 8400, fuel_savings_pct: 28.4, carbon_reduction_pct: 42, automated_gates: 840, avg_temp_celsius: 4.2 }))
+app.get('/api/v58/cold-chain/shipments', (c) => c.json({ success: true, active_shipments: [
+  { id: 'SHP001', product: 'Premium F&B Catering', temp_c: 3.8, humidity: 72, status: 'in-transit', eta: '2026-03-10T08:00', route: 'Mumbai-Pune', alerts: 0 },
+  { id: 'SHP002', product: 'Flowers & Decor', temp_c: 12.4, humidity: 65, status: 'delivered', eta: '2026-03-09T18:00', route: 'Delhi-Gurugram', alerts: 0 },
+  { id: 'SHP003', product: 'Medical Supplies', temp_c: 5.1, humidity: 68, status: 'at-risk', eta: '2026-03-09T22:00', route: 'Bangalore-Mysore', alerts: 1 }
+], total: 2840 }))
+app.on(['GET','POST'], '/api/v58/cold-chain/alert', (c) => c.json({ success: true, alert_id: 'ALC58-001', shipment_id: 'SHP003', type: 'temperature_deviation', current_temp: 8.4, threshold: 8.0, action: 'notify_driver', backup_route: 'activated', estimated_resolution: '45 min' }))
+app.get('/api/v58/cold-chain/analytics', (c) => c.json({ success: true, spoilage_prevented_cr: 28.4, fuel_saved_litres: 284000, carbon_offset_tonnes: 840, violations_ytd: 4, on_time_rate: 99.2, cost_per_km: 18.4, digital_twin_accuracy: 97.8, roi: '28.4x' }))
+
+// ── MODULE 5: Supplier Risk & Compliance ──
+app.get('/api/v58/supplier-risk/overview', (c) => c.json({ success: true, module: 'Supplier Risk & Compliance', suppliers_monitored: 28400, high_risk: 42, medium_risk: 840, low_risk: 27518, compliance_rate: 99.2, audits_completed: 2840, incidents_ytd: 8, insurance_coverage: '100%', esg_score: 8.4, sanctions_checked: 28400 }))
+app.get('/api/v58/supplier-risk/alerts', (c) => c.json({ success: true, active_alerts: [
+  { supplier: 'XYZ Logistics', risk: 'financial_stress', severity: 'high', detected: '2026-03-08', action: 'payment_hold', impact_cr: 2.4 },
+  { supplier: 'ABC Catering', risk: 'compliance_gap', severity: 'medium', detected: '2026-03-07', action: 'audit_scheduled', impact_cr: 0.8 }
+], total_active: 42, resolved_ytd: 840 }))
+app.on(['GET','POST'], '/api/v58/supplier-risk/audit', (c) => c.json({ success: true, audit_id: 'AUD58-001', supplier: 'CaterExpress', type: 'compliance', scheduled: '2026-03-20', checklist_items: 84, previous_score: 88.4, ai_risk_score: 72.4, recommendation: 'Conduct before contract renewal' }))
+app.get('/api/v58/supplier-risk/analytics', (c) => c.json({ success: true, risk_prevented_value_cr: 84, compliance_improvement_pct: 28.4, audit_cycle_days: 90, zero_fraud_quarters: 4, esg_improvement_pct: 18.4, insurance_claims_avoided: 8, regulatory_fines_avoided_cr: 42, roi: '42x' }))
+
+// ── MODULE 6: Demand-Driven Supply Planning ──
+app.get('/api/v58/supply-planning/overview', (c) => c.json({ success: true, module: 'Supply Planning', events_planned: 2840, ai_forecasts_active: 28400, plan_accuracy: 96.2, supply_gap_alerts: 42, scenarios_modelled: 284, collaboration_active: 840, lead_time_reduction_pct: 42, service_level: 99.2, planning_cycle_hours: 4.2, cost_optimisation_cr: 84 }))
+app.get('/api/v58/supply-planning/forecasts', (c) => c.json({ success: true, forecasts: [
+  { event: 'Sunburn 2026', date: '2026-12-27', attendees: 84000, equipment_demand: 2840, catering_units: 840000, security_guards: 2840, confidence: 96.2 },
+  { event: 'NH7 Weekender', date: '2026-11-15', attendees: 28400, equipment_demand: 840, catering_units: 284000, security_guards: 840, confidence: 94.8 }
+], model: 'INDT-DemandPlan-v4', updated: '2026-03-09' }))
+app.on(['GET','POST'], '/api/v58/supply-planning/plan', (c) => c.json({ success: true, plan_id: 'PLN58-001', event_id: 'EVT-SB-2026', horizon_days: 90, items_planned: 28400, critical_path_items: 42, earliest_order_date: '2026-09-01', risk_buffer_pct: 18.4, estimated_cost_cr: 28.4, ai_recommendations: 84 }))
+app.get('/api/v58/supply-planning/analytics', (c) => c.json({ success: true, plan_adherence_pct: 94.2, last_minute_costs_avoided_cr: 42, supplier_collaboration_score: 8.8, demand_volatility_index: 2.8, stockout_events_prevented: 2840, total_savings_cr: 84, service_level_improvement: '18.4%', roi: '28.4x' }))
+
+// ── MODULE 7: Warehouse Automation & Robotics ──
+app.get('/api/v58/warehouse/overview', (c) => c.json({ success: true, module: 'Warehouse Automation', warehouses: 84, robots_deployed: 2840, automated_tasks_pct: 84, pick_accuracy: 99.8, throughput_orders_hr: 28400, space_utilisation: 94.2, energy_savings_pct: 42, labor_efficiency_gain: 284, avg_pick_time_sec: 8.4, damage_rate_pct: 0.04 }))
+app.get('/api/v58/warehouse/robots', (c) => c.json({ success: true, robots: [
+  { id: 'BOT001', type: 'AMR', location: 'Mumbai-WH1', status: 'active', tasks_today: 2840, accuracy: 99.8, battery: 84 },
+  { id: 'BOT002', type: 'Sorting-Robot', location: 'Delhi-WH2', status: 'active', tasks_today: 8400, accuracy: 99.4, battery: 72 },
+  { id: 'BOT003', type: 'Palletiser', location: 'Bangalore-WH3', status: 'charging', tasks_today: 1420, accuracy: 99.6, battery: 18 }
+], total: 2840, utilisation_pct: 84 }))
+app.on(['GET','POST'], '/api/v58/warehouse/task', (c) => c.json({ success: true, task_id: 'WH58-001', type: 'pick_and_pack', assigned_robot: 'BOT001', items: 42, estimated_time_sec: 84, priority: 'high', location_zone: 'A-12', status: 'queued' }))
+app.get('/api/v58/warehouse/analytics', (c) => c.json({ success: true, orders_fulfilled_daily: 28400, error_rate_pct: 0.04, cost_per_order: 18.4, automation_savings_cr: 84, labor_hours_saved_daily: 2840, sustainability_score: 8.4, throughput_improvement_pct: 284, roi: '42x' }))
+
+// ── MODULE 8: Reverse Logistics & Returns ──
+app.get('/api/v58/reverse-logistics/overview', (c) => c.json({ success: true, module: 'Reverse Logistics', returns_daily: 2840, return_rate_pct: 2.4, processing_time_hours: 4.2, recovery_rate_pct: 94.2, refund_sla_hours: 24, auto_grading: true, resale_value_cr: 28.4, donation_items: 840, recycled_pct: 28.4, nps_impact: '+8.4' }))
+app.get('/api/v58/reverse-logistics/returns', (c) => c.json({ success: true, recent_returns: [
+  { id: 'RET001', item: 'AV Equipment', reason: 'event_cancelled', quantity: 42, condition: 'good', recovery_action: 'restock', value_cr: 0.84 },
+  { id: 'RET002', item: 'Stage Decor', reason: 'excess_order', quantity: 28, condition: 'fair', recovery_action: 'refurbish', value_cr: 0.28 },
+  { id: 'RET003', item: 'F&B Items', reason: 'spoilage_prevented', quantity: 840, condition: 'donated', recovery_action: 'charity', value_cr: 0 }
+], total_daily: 2840 }))
+app.on(['GET','POST'], '/api/v58/reverse-logistics/initiate', (c) => c.json({ success: true, return_id: 'RET58-001', pickup_scheduled: '2026-03-11', label_generated: true, carrier: 'BlueDart', tracking: 'BD9876543210', estimated_refund_cr: 2.84, processing_sla: '24hrs', qr_code: 'https://cdn.indtix.com/returns/qr_ret58.png' }))
+app.get('/api/v58/reverse-logistics/analytics', (c) => c.json({ success: true, recovery_value_cr: 28.4, return_rate_reduction_pct: 42, processing_automation_pct: 84, customer_satisfaction: 4.6, waste_diverted_tonnes: 840, charity_value_cr: 2.84, circular_economy_score: 9.2, roi: '18.4x' }))
+
+// ── MODULE 9: Supply Chain Finance & Payments ──
+app.get('/api/v58/sc-finance/overview', (c) => c.json({ success: true, module: 'Supply Chain Finance', total_financing_cr: 840, active_programs: 284, suppliers_enrolled: 8400, early_payment_take_up: 72, avg_discount_pct: 1.8, days_payable_outstanding: 42, working_capital_freed_cr: 284, dynamic_discounting_cr: 84, invoice_finance_cr: 284, risk_score: 'AA' }))
+app.get('/api/v58/sc-finance/programs', (c) => c.json({ success: true, programs: [
+  { id: 'SCF001', name: 'Early Payment Advantage', enrolled: 2840, volume_cr: 284, avg_discount: 1.8, status: 'active' },
+  { id: 'SCF002', name: 'Dynamic Discounting', enrolled: 840, volume_cr: 84, avg_discount: 2.4, status: 'active' },
+  { id: 'SCF003', name: 'Reverse Factoring', enrolled: 284, volume_cr: 184, avg_discount: 1.4, status: 'active' }
+], total_cr: 840 }))
+app.on(['GET','POST'], '/api/v58/sc-finance/early-pay', (c) => c.json({ success: true, payment_id: 'SCF58-001', supplier: 'EventPro Supplies', invoice_cr: 8.4, early_pay_date: '2026-03-12', discount_pct: 1.8, saving_lakh: 15.12, approved_by: 'INDT-FinanceBot-v2', settlement_time: '4 hours' }))
+app.get('/api/v58/sc-finance/analytics', (c) => c.json({ success: true, total_savings_cr: 84, supplier_financial_health_improvement: '28.4%', dpo_reduction_days: 18.4, working_capital_uplift_cr: 284, fintech_partners: 42, default_rate_pct: 0.04, roi: '28.4x', net_promoter_score: 84 }))
+
+// ── MODULE 10: Supply Chain Analytics & Control Tower ──
+app.get('/api/v58/control-tower/overview', (c) => c.json({ success: true, module: 'Supply Chain Control Tower', data_sources: 2840, realtime_alerts: 42, kpis_tracked: 284, events_monitored: 8400, disruptions_detected: 8, auto_resolved: 6, resolution_time_min: 18.4, visibility_score: 98.4, collaboration_nodes: 840, ai_recommendations_daily: 2840 }))
+app.get('/api/v58/control-tower/dashboard', (c) => c.json({ success: true, summary: { on_time_delivery: 99.2, supplier_health: 94.2, inventory_health: 96.4, risk_score: 8.4, cost_efficiency: 94.2, sustainability: 8.4 }, active_disruptions: [
+  { id: 'DIS001', type: 'weather_delay', impact: 'medium', affected_shipments: 12, resolution: 'route_change', eta_recovery: '4 hours' }
+], top_kpis: { fill_rate: 99.2, perfect_order_pct: 97.8, cash_to_cash_days: 28 } }))
+app.on(['GET','POST'], '/api/v58/control-tower/resolve', (c) => c.json({ success: true, disruption_id: 'DIS001', resolution_action: 'alternate_route_activated', new_eta: '2026-03-10T14:00', cost_impact_cr: 0.28, automated: true, notification_sent: true, lessons_learned: 'Flagged for future route planning model training' }))
+app.get('/api/v58/control-tower/analytics', (c) => c.json({ success: true, supply_chain_health_score: 9.4, disruptions_prevented_cr: 84, visibility_improvement_pct: 42, collaboration_efficiency_pct: 28.4, data_driven_decisions_pct: 94.2, avg_resolution_time_min: 18.4, roi: '42x', benchmark_rank: 'Global Top 5%', total_value_chain_savings_cr: 284 }))
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 58 — INTELLIGENT SUPPLY CHAIN & VENDOR ECOSYSTEM
 // ═══════════════════════════════════════════════════════════
 
 export default app
