@@ -3204,4 +3204,26 @@ async function loadP30EMEventAssets(){const eid=document.getElementById('p30-em-
 async function loadP30EMVoiceOver(){const r=await fetch('/api/event-manager/ai-content/voice-over');const d=await r.json();document.getElementById('p30-em-content-output').innerHTML='<div class="alert alert-info">🎤 Languages: '+d.supported_languages+' | Voices: '+d.available_voices?.join(', ')+'<br>TTS Model: '+d.tts_model+' | Quality: '+d.quality+'</div>';}
 </script>
 <!-- END PHASE 30 EVENT MANAGER -->
+
+<!-- ═══ PHASE 31 — Event Manager Portal ═══ -->
+<div class="card mt-4 border-success">
+  <div class="card-header bg-success text-white d-flex justify-content-between">
+    <span>🎵 Regional Artist Tools & Discovery</span><span class="badge bg-dark">Phase 31</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-2">
+      <div class="col-md-4"><button class="btn btn-success btn-sm w-100 mb-1" onclick="loadP31EMDiscovery()">🔍 Artist Discovery</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-success btn-sm w-100 mb-1" onclick="loadP31EMLiveTools()">🎤 Live Performance Tools</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-dark btn-sm w-100 mb-1" onclick="loadP31EMMicroTrends()">📈 Micro-Event Trends</button></div>
+    </div>
+    <div id="p31-em-output" class="mt-2"></div>
+  </div>
+</div>
+
+<script>
+async function loadP31EMDiscovery(){const r=await fetch('/api/event-manager/bharat/indie-artists/discovery-engine');const d=await r.json();document.getElementById('p31-em-output').innerHTML='<div class="alert alert-success">🔍 Trending: '+d.trending_regional?.map(a=>a.artist+' ('+a.genre+') ₹'+a.booking_fee).join(', ')+'<br>Viral: '+d.viral_newcomers?.map(a=>a.artist+' +'+a.monthly_growth+' growth').join(', ')+'</div>';}
+async function loadP31EMLiveTools(){const r=await fetch('/api/event-manager/bharat/indie-artists/live-performance-tools');const d=await r.json();document.getElementById('p31-em-output').innerHTML='<div class="alert alert-dark">🎤 Tools: '+d.tools?.map(t=>t.name+' ('+t.status+')').join(', ')+'<br>Avg Revenue Boost: '+d.avg_revenue_boost_per_tool+'</div>';}
+async function loadP31EMMicroTrends(){const r=await fetch('/api/admin/bharat/micro-events/trend-signals');const d=await r.json();document.getElementById('p31-em-output').innerHTML='<div class="alert alert-info">📈 '+d.trending_formats?.map(f=>f.format+' +'+f.growth_mom).join(' | ')+'<br>AI Forecast: '+d.ai_generated_forecast+'</div>';}
+</script>
+<!-- END PHASE 31 EVENT MANAGER -->
 </body></html>

@@ -2904,4 +2904,32 @@ async function loadP30CrowdStaffDeploy(){const vid=document.getElementById('p30-
 async function loadP30EmergencyActivate(){if(!confirm('Activate Emergency Protocol?'))return;const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/emergency-activate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'medical',level:1})});const d=await r.json();document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-danger">🚨 Emergency ID: '+d.emergency_id+' | Protocol: '+d.protocol_activated+' | Staff Notified: '+d.staff_notified+'</div>';}
 </script>
 <!-- END PHASE 30 VENUE PORTAL -->
+
+<!-- ═══ PHASE 31 — Venue Portal ═══ -->
+<div class="card mt-4 border-success">
+  <div class="card-header bg-success text-white d-flex justify-content-between">
+    <span>🏟️ Bharat Distribution & Local Ops</span><span class="badge bg-dark">Phase 31</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5>28,400</h5><small>Ground Agents</small></div></div>
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5>₹18.4 Cr</h5><small>Offline Ticket Sales/Mo</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5>420</h5><small>Districts Covered</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5>8,400</h5><small>Kirana Partners</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-4"><button class="btn btn-success btn-sm w-100 mb-1" onclick="loadP31VenueDistDash()">📦 Distribution Network</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-success btn-sm w-100 mb-1" onclick="loadP31VenueInventory()">📋 Inventory Levels</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-dark btn-sm w-100 mb-1" onclick="loadP31VenueLastMile()">🚚 Last-Mile Analytics</button></div>
+    </div>
+    <div id="p31-venue-dist-output" class="mt-2"></div>
+  </div>
+</div>
+
+<script>
+async function loadP31VenueDistDash(){const r=await fetch('/api/ops/bharat/distribution/network-dashboard');const d=await r.json();document.getElementById('p31-venue-dist-output').innerHTML='<div class="alert alert-success">📦 Agents: '+d.agent_network?.total_agents?.toLocaleString()+' | Kirana: '+d.kirana_partners?.toLocaleString()+' | CSC: '+d.csc_centers?.toLocaleString()+'<br>Avg Agent Earnings: '+d.avg_agent_monthly_earnings+'</div>';}
+async function loadP31VenueInventory(){const r=await fetch('/api/ops/bharat/distribution/inventory-levels');const d=await r.json();document.getElementById('p31-venue-dist-output').innerHTML='<div class="alert alert-info">📋 Physical Tickets: '+d.total_physical_tickets_in_circulation?.toLocaleString()+' | Digital Codes: '+d.digital_codes_issued?.toLocaleString()+' | Sell-Through: '+d.avg_sell_through_rate+'</div>';}
+async function loadP31VenueLastMile(){const r=await fetch('/api/ops/bharat/distribution/last-mile-analytics');const d=await r.json();document.getElementById('p31-venue-dist-output').innerHTML='<div class="alert alert-dark">🚚 Digital WhatsApp: '+d.delivery_channels?.digital_whatsapp+' | Agent Printout: '+d.delivery_channels?.agent_printout+'<br>Failed Rate: '+d.failed_deliveries_rate+' | Satisfaction: '+d.customer_satisfaction+'</div>';}
+</script>
+<!-- END PHASE 31 VENUE PORTAL -->
 </body></html>

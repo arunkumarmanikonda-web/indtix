@@ -6286,5 +6286,58 @@ async function loadP30FanCredentials(){const r=await fetch('/api/fan/decentralis
 async function loadP30SecondaryMarket(){const r=await fetch('/api/fan/decentralised-id/secondary-market');const d=await r.json();document.getElementById('p30-fan-market-output').innerHTML='<div class="alert alert-warning">🛒 Listings: '+d.total_listings?.toLocaleString()+' | Platform Fee: '+d.platform_fee+' | Max Markup: '+d.max_markup_policy+'<br>'+d.listings?.map(l=>'🎟️ '+l.event+' | '+l.seat+' | ₹'+l.asking_price+' (Face: '+l.face_value+') | Seller Rep: '+l.seller_reputation).join('<br>')+'</div>';}
 </script>
 <!-- END PHASE 30 FAN PORTAL -->
+
+<!-- ═══ PHASE 31 — Fan Portal ═══ -->
+<div class="card mt-4 border-success">
+  <div class="card-header bg-success text-white d-flex justify-content-between">
+    <span>🇮🇳 Bharat Experience — Local Events, UPI & Loyalty</span><span class="badge bg-dark">Phase 31</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5 id="p31-fan-points">8,400</h5><small>INDIE Points</small></div></div>
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5 id="p31-fan-tier">Gold</h5><small>Loyalty Tier</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5 id="p31-fan-cashback">₹2,840</h5><small>Lifetime Cashback</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5>42</h5><small>Kirana Partners Nearby</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-3"><button class="btn btn-success btn-sm w-100 mb-1" onclick="loadP31FanLoyalty()">🎁 My Loyalty</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-success btn-sm w-100 mb-1" onclick="loadP31FanKirana()">🏪 Kirana Partners</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-dark btn-sm w-100 mb-1" onclick="loadP31FanGamification()">🎮 Challenges & Badges</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-info btn-sm w-100 mb-1" onclick="loadP31FanEarnHistory()">📜 Earn History</button></div>
+    </div>
+    <div id="p31-fan-loyalty-output" class="mt-2"></div>
+  </div>
+</div>
+
+<div class="card mt-4 border-success">
+  <div class="card-header bg-success text-white d-flex justify-content-between">
+    <span>🎵 Micro-Events & Hyper-Local Discovery</span><span class="badge bg-warning text-dark">Phase 31</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-2">
+      <div class="col-md-4"><button class="btn btn-success btn-sm w-100 mb-1" onclick="loadP31FanMicroEvents()">📍 Nearby Micro-Events</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-dark btn-sm w-100 mb-1" onclick="loadP31FanMicroDetails()">🎷 Event Details</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-info btn-sm w-100 mb-1" onclick="loadP31FanSocialPlan()">👥 Social Plan</button></div>
+    </div>
+    <div class="row g-2 mt-1">
+      <div class="col-md-6"><button class="btn btn-outline-success btn-sm w-100" onclick="loadP31FanPayMethods()">💳 Payment Methods</button></div>
+      <div class="col-md-6"><button class="btn btn-outline-warning btn-sm w-100" onclick="loadP31FanLangPref()">🌐 Language Preferences</button></div>
+    </div>
+    <div id="p31-fan-micro-output" class="mt-2"></div>
+  </div>
+</div>
+
+<script>
+async function loadP31FanLoyalty(){const r=await fetch('/api/fan/bharat/loyalty/dashboard');const d=await r.json();document.getElementById('p31-fan-points').textContent=d.points?.toLocaleString()||'8,400';document.getElementById('p31-fan-tier').textContent=d.tier||'Gold';document.getElementById('p31-fan-cashback').textContent=d.cashback_earned_lifetime||'₹2,840';document.getElementById('p31-fan-loyalty-output').innerHTML='<div class="alert alert-success">🎁 Program: '+d.program_name+' | Events Attended: '+d.events_attended+' | Streak: '+d.streak_days+' days<br>Next Perks: '+d.upcoming_perks?.join(', ')+'</div>';}
+async function loadP31FanKirana(){const r=await fetch('/api/fan/bharat/loyalty/kirana-partners');const d=await r.json();document.getElementById('p31-fan-loyalty-output').innerHTML='<div class="alert alert-dark">🏪 '+d.nearby_partners?.map(p=>p.name+': '+p.cashback).join('<br>')+'</div>';}
+async function loadP31FanGamification(){const r=await fetch('/api/fan/bharat/loyalty/gamification');const d=await r.json();document.getElementById('p31-fan-loyalty-output').innerHTML='<div class="alert alert-warning">🎮 Challenges: '+d.challenges?.map(c=>c.name+' ('+c.progress+') → '+c.reward).join('<br>')+'<br>Leaderboard Rank: #'+d.leaderboard_rank+'</div>';}
+async function loadP31FanEarnHistory(){const r=await fetch('/api/fan/bharat/loyalty/earning-history');const d=await r.json();document.getElementById('p31-fan-loyalty-output').innerHTML='<div class="alert alert-info">📜 Balance: '+d.current_balance?.toLocaleString()+' pts | Earned All Time: '+d.total_earned_all_time?.toLocaleString()+'<br>'+d.history?.slice(0,3).map(h=>h.type+': '+(h.points>0?'+':'')+h.points+' pts').join(', ')+'</div>';}
+async function loadP31FanMicroEvents(){const r=await fetch('/api/fan/bharat/micro-events/discover');const d=await r.json();document.getElementById('p31-fan-micro-output').innerHTML='<div class="alert alert-success">📍 Nearby: '+d.total_micro_events_nearby+' events<br>'+d.nearby_events?.map(e=>'🎫 '+e.name+' @ '+e.venue+' | '+e.date+' | '+e.price+' | '+e.ai_match+' match').join('<br>')+'</div>';}
+async function loadP31FanMicroDetails(){const r=await fetch('/api/fan/bharat/micro-events/event/ME-001');const d=await r.json();document.getElementById('p31-fan-micro-output').innerHTML='<div class="alert alert-dark">🎷 '+d.name+' @ '+d.venue?.name+'<br>Date: '+d.date+' '+d.time+' | Spots Left: '+d.spots_left+'<br>Price: '+d.price?.general+' | '+d.includes+'</div>';}
+async function loadP31FanSocialPlan(){const r=await fetch('/api/fan/bharat/micro-events/social-plan/ME-001');const d=await r.json();document.getElementById('p31-fan-micro-output').innerHTML='<div class="alert alert-info">👥 Friends Attending: '+d.friends_attending+' | Group Discount: '+d.group_booking_discount+'<br>📸 '+d.photo_spot+'</div>';}
+async function loadP31FanPayMethods(){const r=await fetch('/api/fan/bharat/payments/methods');const d=await r.json();document.getElementById('p31-fan-micro-output').innerHTML='<div class="alert alert-warning">💳 Recommended: '+d.recommended+'<br>Offers: '+d.offers?.map(o=>o.method+': '+o.cashback).join(' | ')+'</div>';}
+async function loadP31FanLangPref(){const r=await fetch('/api/fan/bharat/language/preferences');const d=await r.json();document.getElementById('p31-fan-micro-output').innerHTML='<div class="alert alert-secondary">🌐 Language: '+d.ui_language+' | Script: '+d.detected_language+' | Voice Search: '+d.voice_search_language+'</div>';}
+</script>
+<!-- END PHASE 31 FAN PORTAL -->
 </body>
 </html>

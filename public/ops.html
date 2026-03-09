@@ -3113,5 +3113,43 @@ async function loadP30OpsIncidentResponse(){const r=await fetch('/api/ops/quantu
 async function loadP30OpsCrowdAIInsights(){const r=await fetch('/api/ops/crowd-intelligence/ai-insights');const d=await r.json();document.getElementById('p30-ops-security-output').innerHTML='<div class="alert alert-info">🧠 Insights: '+d.insights_generated_today?.toLocaleString()+' | Actionable: '+d.actionable+' | Action Rate: '+d.action_rate+'<br>'+d.top_insights?.map(i=>i.insight).join('<br>')+'</div>';}
 </script>
 <!-- END PHASE 30 OPS PORTAL -->
+
+<!-- ═══ PHASE 31 — Ops Portal ═══ -->
+<div class="card mt-4 border-success">
+  <div class="card-header bg-success text-white d-flex justify-content-between">
+    <span>🇮🇳 Bharat Ops — Distribution, GST & Loyalty</span><span class="badge bg-dark">Phase 31</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5>2.84M</h5><small>Loyalty Members</small></div></div>
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5>29.6%</h5><small>Redemption Rate</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5>₹28.4 Cr</h5><small>Loyalty Revenue/Month</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5>96%</h5><small>GST Compliance</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-3"><button class="btn btn-success btn-sm w-100 mb-1" onclick="loadP31OpsLoyaltyMetrics()">🎁 Loyalty Metrics</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-success btn-sm w-100 mb-1" onclick="loadP31OpsCityOps()">🏙️ City Ops</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-dark btn-sm w-100 mb-1" onclick="loadP31OpsGSTReconciliation()">📊 GST Reconciliation</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-info btn-sm w-100 mb-1" onclick="loadP31OpsMicroMetrics()">📈 Micro-Event Metrics</button></div>
+    </div>
+    <div class="row g-2 mt-1">
+      <div class="col-md-4"><button class="btn btn-outline-warning btn-sm w-100" onclick="loadP31OpsCSCIntegration()">🏦 CSC Integration</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-secondary btn-sm w-100" onclick="loadP31OpsGSTEntTax()">🎭 Entertainment Tax</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-dark btn-sm w-100" onclick="loadP31OpsGSTAudit()">✅ Audit Readiness</button></div>
+    </div>
+    <div id="p31-ops-output" class="mt-2"></div>
+  </div>
+</div>
+
+<script>
+async function loadP31OpsLoyaltyMetrics(){const r=await fetch('/api/ops/bharat/loyalty/program-metrics');const d=await r.json();document.getElementById('p31-ops-output').innerHTML='<div class="alert alert-success">🎁 Members: '+d.total_members?.toLocaleString()+' | Active: '+d.active_30d?.toLocaleString()+' | Churn Loyal: '+d.churn_rate_loyal+' vs Non-Loyal: '+d.churn_rate_non_loyal+'</div>';}
+async function loadP31OpsCityOps(){const r=await fetch('/api/ops/bharat/city-launch/operations/Surat');const d=await r.json();document.getElementById('p31-ops-output').innerHTML='<div class="alert alert-dark">🏙️ '+d.city+' | Agents: '+d.print_ticket_agents+' | Kiosks: '+d.self_service_kiosks+' | Support Language: '+d.customer_support_language?.join(', ')+'</div>';}
+async function loadP31OpsGSTReconciliation(){const r=await fetch('/api/admin/bharat/gst/reconciliation');const d=await r.json();document.getElementById('p31-ops-output').innerHTML='<div class="alert alert-info">📊 Matched: '+d.gstr2a_vs_purchase_register?.matched+' | ITC at Risk: '+d.itc_at_risk+' | Action: '+d.recovery_actions_taken+'</div>';}
+async function loadP31OpsMicroMetrics(){const r=await fetch('/api/admin/bharat/micro-events/platform-metrics');const d=await r.json();document.getElementById('p31-ops-output').innerHTML='<div class="alert alert-warning">📈 Listed: '+d.total_micro_events_listed?.toLocaleString()+' | Cities: '+d.cities_covered+' | GMV: '+d.gmv_monthly+' | Growth: '+d.gmv_growth_mom+'</div>';}
+async function loadP31OpsCSCIntegration(){const r=await fetch('/api/admin/bharat/distribution/csc-integration');const d=await r.json();document.getElementById('p31-ops-output').innerHTML='<div class="alert alert-dark">🏦 CSC Centers: '+d.csc_centers_integrated?.toLocaleString()+' | Volume: '+d.csc_transaction_volume+' | Avg Txn: '+d.avg_transaction_size+'</div>';}
+async function loadP31OpsGSTEntTax(){const r=await fetch('/api/ops/bharat/gst/entertainment-tax');const d=await r.json();document.getElementById('p31-ops-output').innerHTML='<div class="alert alert-secondary">🎭 Local Tax Liability: '+d.total_local_tax_liability_mtd+' | UP: '+d.entertainment_tax_states?.UP+' | Bihar: '+d.entertainment_tax_states?.Bihar+'</div>';}
+async function loadP31OpsGSTAudit(){const r=await fetch('/api/admin/bharat/gst/audit-readiness');const d=await r.json();document.getElementById('p31-ops-output').innerHTML='<div class="alert alert-success">✅ Audit Score: '+d.audit_score+' | Ready: '+d.ready_for_external+' | Risk Areas: '+d.risk_areas?.join(', ')+'</div>';}
+</script>
+<!-- END PHASE 31 OPS PORTAL -->
 </body>
 </html>

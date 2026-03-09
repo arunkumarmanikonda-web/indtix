@@ -5516,4 +5516,67 @@ async function loadP30GrowthModel(){const r=await fetch('/api/admin/ecosystem/gr
 async function loadP30CompMoat(){const r=await fetch('/api/admin/ecosystem/competitive-moat');const d=await r.json();document.getElementById('p30-flywheel-output').innerHTML='<div class="alert alert-warning">🏰 Moat Score: '+d.overall_moat_score+' | Category: '+d.category+' | '+d.comparable+'</div>';}
 </script>
 <!-- END PHASE 30 ADMIN PORTAL -->
+
+<!-- ═══ PHASE 31 — HYPER-SCALE INDIA & BHARAT EXPANSION — Admin ═══ -->
+<div class="card mt-4 border-success">
+  <div class="card-header bg-success text-white d-flex justify-content-between">
+    <span>🗺️ Tier-2/3 City Launch Engine</span><span class="badge bg-warning text-dark">Phase 31</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5 id="p31-cities-active">134</h5><small>Active Cities</small></div></div>
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5>₹84 Cr</h5><small>Tier-2/3 GMV/Month</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5>29.6%</h5><small>Share of Total GMV</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5>+28.4%</h5><small>MoM Growth</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-3"><button class="btn btn-success btn-sm w-100 mb-1" onclick="loadP31CityDash()">🗺️ Dashboard</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-success btn-sm w-100 mb-1" onclick="loadP31CityLeague()">🏆 Performance League</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-dark btn-sm w-100 mb-1" onclick="loadP31MarketSize()">📊 Market Sizing</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-warning btn-sm w-100 mb-1" onclick="loadP31ExpansionMap()">🔭 Expansion Map</button></div>
+    </div>
+    <div id="p31-city-output" class="mt-2"></div>
+  </div>
+</div>
+
+<div class="card mt-4 border-success">
+  <div class="card-header bg-success text-white d-flex justify-content-between">
+    <span>🇮🇳 Bharat Language & ONDC & GST Suite</span><span class="badge bg-dark">Phase 31</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5>22</h5><small>Languages Supported</small></div></div>
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5>₹8.4 Cr</h5><small>ONDC GMV/Month</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5>96%</h5><small>GST Compliance Score</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5>28</h5><small>States GST Registered</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-3"><button class="btn btn-success btn-sm w-100 mb-1" onclick="loadP31LangDash()">🌐 Language Dashboard</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-success btn-sm w-100 mb-1" onclick="loadP31ONDCDash()">🛒 ONDC Dashboard</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-dark btn-sm w-100 mb-1" onclick="loadP31GSTDash()">📋 GST Dashboard</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-info btn-sm w-100 mb-1" onclick="loadP31GSTCalendar()">📅 Compliance Calendar</button></div>
+    </div>
+    <div class="row g-2 mt-1">
+      <div class="col-md-4"><button class="btn btn-outline-warning btn-sm w-100" onclick="loadP31UPIDash()">💳 UPI Dashboard</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-secondary btn-sm w-100" onclick="loadP31GovtDash()">🏛️ Govt Events</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-dark btn-sm w-100" onclick="loadP31GSTFilings()">📑 State GST Filings</button></div>
+    </div>
+    <div id="p31-admin-misc-output" class="mt-2"></div>
+  </div>
+</div>
+
+<script>
+async function loadP31CityDash(){const r=await fetch('/api/admin/bharat/city-launch/dashboard');const d=await r.json();document.getElementById('p31-cities-active').textContent=d.active_cities||134;document.getElementById('p31-city-output').innerHTML='<div class="alert alert-success">🗺️ Total Cities: T1:'+d.total_cities?.tier1+' T2:'+d.total_cities?.tier2+' T3:'+d.total_cities?.tier3+' | Pipeline Q2: '+d.pipeline_q2+'<br>Top T2: '+d.top_cities_t2?.slice(0,4).join(', ')+'</div>';}
+async function loadP31CityLeague(){const r=await fetch('/api/admin/bharat/city-launch/performance-league');const d=await r.json();document.getElementById('p31-city-output').innerHTML='<div class="alert alert-dark">🏆 '+d.city_performance?.map(c=>'#'+c.rank+' '+c.city+': '+c.gmv_monthly+' (+'+c.growth_mom+')').join(' | ')+'</div>';}
+async function loadP31MarketSize(){const r=await fetch('/api/admin/bharat/city-launch/market-sizing');const d=await r.json();document.getElementById('p31-city-output').innerHTML='<div class="alert alert-info">📊 Market Size: '+d.india_live_events_market_size_2026+' | INDTIX: '+d.addressed_by_indtix+' | Whitespace: '+d.whitespace_opportunity+'</div>';}
+async function loadP31ExpansionMap(){const r=await fetch('/api/admin/bharat/city-launch/expansion-map');const d=await r.json();document.getElementById('p31-city-output').innerHTML='<div class="alert alert-warning">🔭 '+d.expansion_waves?.map(w=>'Wave '+w.wave+': '+w.cities?.join(', ')+' ('+w.status+')').join('<br>')+'</div>';}
+async function loadP31LangDash(){const r=await fetch('/api/admin/bharat/language/dashboard');const d=await r.json();document.getElementById('p31-admin-misc-output').innerHTML='<div class="alert alert-success">🌐 Languages: '+d.supported_languages+' | AI Translation: '+d.ai_translation_engine+' | Accuracy: '+d.translation_accuracy+'</div>';}
+async function loadP31ONDCDash(){const r=await fetch('/api/admin/bharat/ondc/dashboard');const d=await r.json();document.getElementById('p31-admin-misc-output').innerHTML='<div class="alert alert-dark">🛒 ONDC GMV: '+d.gmv_via_ondc_monthly+' | Buyer NPs: '+d.buyer_nps_connected+' | Success Rate: '+d.order_success_rate+'</div>';}
+async function loadP31GSTDash(){const r=await fetch('/api/admin/bharat/gst/dashboard');const d=await r.json();document.getElementById('p31-admin-misc-output').innerHTML='<div class="alert alert-info">📋 GST Collected MTD: '+d.gst_collected_mtd+' | ITC: '+d.itc_available+' | Score: '+d.compliance_score+'</div>';}
+async function loadP31GSTCalendar(){const r=await fetch('/api/admin/bharat/gst/auto-compliance-calendar');const d=await r.json();document.getElementById('p31-admin-misc-output').innerHTML='<div class="alert alert-warning">📅 '+d.upcoming_deadlines?.map(dl=>dl.form+' due '+dl.due+' ('+dl.days_left+' days)').join(' | ')+'</div>';}
+async function loadP31UPIDash(){const r=await fetch('/api/admin/bharat/payments/upi-dashboard');const d=await r.json();document.getElementById('p31-admin-misc-output').innerHTML='<div class="alert alert-dark">💳 UPI Share: '+d.upi_transaction_share+' | Daily Volume: '+d.daily_upi_volume+' | Success: '+d.upi_success_rate+'</div>';}
+async function loadP31GovtDash(){const r=await fetch('/api/admin/bharat/govt-events/dashboard');const d=await r.json();document.getElementById('p31-admin-misc-output').innerHTML='<div class="alert alert-secondary">🏛️ Govt Events: '+d.govt_events_hosted+' | Ministry Partners: '+d.ministry_partners+' | GMV: '+d.total_revenue+'</div>';}
+async function loadP31GSTFilings(){const r=await fetch('/api/admin/bharat/gst/state-filings');const d=await r.json();document.getElementById('p31-admin-misc-output').innerHTML='<div class="alert alert-info">📑 States: '+d.total_states+' | Filed: '+d.filed+' | Pending: '+d.pending+' | Total Liability: '+d.total_gst_liability_mtd+'</div>';}
+</script>
+<!-- END PHASE 31 ADMIN PORTAL -->
 </body></html>

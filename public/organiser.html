@@ -4915,4 +4915,42 @@ async function loadP30OrgCoCreate(){const r=await fetch('/api/organiser/ecosyste
 async function loadP30OrgRevenueShare(){const r=await fetch('/api/organiser/super-app/revenue-share');const d=await r.json();document.getElementById('p30-org-ecosystem-output').innerHTML='<div class="alert alert-success">💰 Total Partner Revenue: '+d.total_partner_revenue+' | Commission: '+d.total_commission+'</div>';}
 </script>
 <!-- END PHASE 30 ORGANISER PORTAL -->
+
+<!-- ═══ PHASE 31 — Organiser Portal ═══ -->
+<div class="card mt-4 border-success">
+  <div class="card-header bg-success text-white d-flex justify-content-between">
+    <span>🎵 Regional Artist Launchpad & Micro-Events</span><span class="badge bg-dark">Phase 31</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5>2,840</h5><small>Artists on Platform</small></div></div>
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5>₹18.4 Cr</h5><small>Artist Earnings/Month</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5>28,400</h5><small>Micro-Events Listed</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5>₹8.4 Cr</h5><small>Micro-Event GMV/Month</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-3"><button class="btn btn-success btn-sm w-100 mb-1" onclick="loadP31OrgArtistDash()">🎵 Artist Launchpad</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-success btn-sm w-100 mb-1" onclick="loadP31OrgGenreHeatmap()">🔥 Genre Heatmap</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-dark btn-sm w-100 mb-1" onclick="loadP31OrgMicroHostDash()">🎤 Micro-Event Host</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-warning btn-sm w-100 mb-1" onclick="loadP31OrgMicroPayout()">💰 Micro Payout</button></div>
+    </div>
+    <div class="row g-2 mt-1">
+      <div class="col-md-4"><button class="btn btn-outline-info btn-sm w-100" onclick="loadP31OrgONDCSales()">🛒 ONDC Sales</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-secondary btn-sm w-100" onclick="loadP31OrgGovtCalendar()">🏛️ Cultural Calendar</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-dark btn-sm w-100" onclick="loadP31OrgCityProfile()">🏙️ City Profile</button></div>
+    </div>
+    <div id="p31-org-output" class="mt-2"></div>
+  </div>
+</div>
+
+<script>
+async function loadP31OrgArtistDash(){const r=await fetch('/api/organiser/bharat/indie-artists/launchpad-dashboard');const d=await r.json();document.getElementById('p31-org-output').innerHTML='<div class="alert alert-success">🎵 Artists: '+d.total_artists_onboarded+' | Earnings: '+d.total_artist_earnings+' | Platforms: '+d.platforms_integrated?.join(', ')+'</div>';}
+async function loadP31OrgGenreHeatmap(){const r=await fetch('/api/organiser/bharat/indie-artists/genre-heatmap');const d=await r.json();document.getElementById('p31-org-output').innerHTML='<div class="alert alert-warning">🔥 Top Emerging: '+d.top_emerging_genre+'<br>'+Object.entries(d.genres_by_demand||{}).map(([g,v])=>g+': '+v.demand_score+' | Avg Ticket '+v.avg_ticket).join('<br>')+'</div>';}
+async function loadP31OrgMicroHostDash(){const r=await fetch('/api/organiser/bharat/micro-events/host-dashboard');const d=await r.json();document.getElementById('p31-org-output').innerHTML='<div class="alert alert-dark">🎤 Events Hosted: '+d.total_events_hosted+' | Revenue: '+d.total_revenue+' | Avg Attendance: '+d.avg_attendance_rate+' | Rating: '+d.host_rating+'</div>';}
+async function loadP31OrgMicroPayout(){const r=await fetch('/api/organiser/bharat/micro-events/payout-summary');const d=await r.json();document.getElementById('p31-org-output').innerHTML='<div class="alert alert-success">💰 Events: '+d.events+' | Revenue: '+d.total_revenue+' | Net Payout: '+d.net_payout+' | Payout Date: '+d.payout_date+'</div>';}
+async function loadP31OrgONDCSales(){const r=await fetch('/api/organiser/bharat/ondc/sales-via-ondc');const d=await r.json();document.getElementById('p31-org-output').innerHTML='<div class="alert alert-info">🛒 ONDC Sales: '+d.total_ondc_sales_30d?.toLocaleString()+' | Revenue: '+d.revenue_ondc+' | Top: '+d.top_events_ondc?.[0]?.event+'</div>';}
+async function loadP31OrgGovtCalendar(){const r=await fetch('/api/organiser/bharat/govt-events/cultural-calendar');const d=await r.json();document.getElementById('p31-org-output').innerHTML='<div class="alert alert-dark">🏛️ '+d.upcoming?.map(e=>e.event+' | '+e.location+' | From '+e.tickets_from).join('<br>')+'</div>';}
+async function loadP31OrgCityProfile(){const r=await fetch('/api/admin/bharat/city-launch/city-profile/Surat');const d=await r.json();document.getElementById('p31-org-output').innerHTML='<div class="alert alert-secondary">🏙️ '+d.city+' ('+d.tier+') | Pop: '+d.population?.toLocaleString()+' | Active Fans: '+d.active_fans?.toLocaleString()+' | Launch Readiness: '+d.launch_readiness_score+'</div>';}
+</script>
+<!-- END PHASE 31 ORGANISER PORTAL -->
 </body></html>
