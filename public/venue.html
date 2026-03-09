@@ -3268,4 +3268,63 @@ async function loadVenuePayments() {
 loadVenuePayments();
 </script>
 <!-- END PHASE 40 VENUE PORTAL -->
+
+<!-- PHASE 41 VENUE PORTAL -->
+<div class="phase-section" id="phase41-venue">
+  <h2 class="phase-title">Phase 41 — MICE & Corporate Venue Intelligence</h2>
+  <div class="module-card">
+    <h3>🏛️ MICE Venue Directory</h3>
+    <div id="p41-venue-mice" class="stats-grid"></div>
+  </div>
+  <div class="module-card">
+    <h3>🎪 Exhibition & Conference Capacity</h3>
+    <div id="p41-venue-exh" class="info-alert"></div>
+  </div>
+</div>
+<script>
+async function loadVenueMICE() {
+  const [venues, exh, conf] = await Promise.all([
+    fetch('/api/v41/mice/venues').then(r=>r.json()),
+    fetch('/api/v41/mice/exhibitions').then(r=>r.json()),
+    fetch('/api/v41/mice/conferences').then(r=>r.json())
+  ]);
+  document.getElementById('p41-venue-mice').innerHTML =
+    `<span>Partner Venues: ${venues.total_partner_venues}</span><span>Convention Centres: ${venues.convention_centres}</span>` +
+    `<span>Capacity Range: ${venues.seating_capacity_range}</span><span>AV Equipped: ${venues.av_equipped_pct}%</span>`;
+  document.getElementById('p41-venue-exh').innerHTML =
+    `Exhibitions: ${exh.active_exhibitions} | Stalls: ${exh.total_stalls.toLocaleString()} | Conferences: ${conf.active_conferences} | Avg Delegates: ${conf.avg_delegates.toLocaleString()}`;
+}
+async function loadAllP41Venue() { await loadVenueMICE(); }
+loadAllP41Venue();
+</script>
+<!-- END PHASE 41 VENUE PORTAL -->
+
+<!-- PHASE 41 VENUE PORTAL -->
+<div class="phase-section" id="phase41-venue">
+  <h2 class="phase-title">Phase 41 — MICE & Corporate Venue Operations</h2>
+  <div class="metrics-grid">
+    <div class="metric-card"><div class="metric-label">Partner Venues</div><div class="metric-value" id="p41v-venues">—</div></div>
+    <div class="metric-card"><div class="metric-label">AV-Equipped (%)</div><div class="metric-value" id="p41v-av">—</div></div>
+    <div class="metric-card"><div class="metric-label">Convention Centres</div><div class="metric-value" id="p41v-conv">—</div></div>
+    <div class="metric-card"><div class="metric-label">Exhibition Stalls</div><div class="metric-value" id="p41v-stalls">—</div></div>
+  </div>
+  <div class="info-alert" id="p41v-summary">Phase 41 — loading MICE venue metrics…</div>
+</div>
+<script>
+async function loadVenueMICE() {
+  const d = await fetch('/api/v41/mice/venues').then(r=>r.json());
+  document.getElementById('p41v-venues').textContent = (d.total_partner_venues||0).toLocaleString();
+  document.getElementById('p41v-av').textContent = `${d.av_equipped_pct||0}%`;
+  document.getElementById('p41v-conv').textContent = (d.convention_centres||0).toLocaleString();
+}
+async function loadVenueExhibitions() {
+  const d = await fetch('/api/v41/mice/exhibitions').then(r=>r.json());
+  document.getElementById('p41v-stalls').textContent = (d.total_stalls||0).toLocaleString();
+  document.getElementById('p41v-summary').textContent =
+    `Phase 41 ✅ | Partner Venues: ${d.exhibitors||0} exhibitors | Visitors Expected: ${(d.visitors_expected||0).toLocaleString()} | Stalls: ${(d.total_stalls||0).toLocaleString()}`;
+}
+async function loadAllP41Venue() { await Promise.all([loadVenueMICE(), loadVenueExhibitions()]); }
+loadAllP41Venue();
+</script>
+<!-- END PHASE 41 VENUE PORTAL -->
 </body></html>

@@ -3574,5 +3574,97 @@ async function loadAllP40Ops() { await Promise.all([loadOpsGateway(), loadOpsFra
 loadAllP40Ops();
 </script>
 <!-- END PHASE 40 OPS PORTAL -->
+
+<!-- PHASE 41 OPS PORTAL -->
+<div class="phase-section" id="phase41-ops">
+  <h2 class="phase-title">Phase 41 — B2B Operations & Platform Health</h2>
+  <div class="module-card">
+    <h3>🔧 API & White-Label Platform Ops</h3>
+    <div id="p41-ops-api" class="stats-grid"></div>
+    <div id="p41-ops-sdk" class="info-alert"></div>
+  </div>
+  <div class="module-card">
+    <h3>🔐 Enterprise SSO & Audit</h3>
+    <div id="p41-ops-sso" class="stats-grid"></div>
+  </div>
+  <div class="module-card">
+    <h3>📋 Compliance & Risk</h3>
+    <div id="p41-ops-risk" class="warning-alert"></div>
+  </div>
+</div>
+<script>
+async function loadOpsAPI() {
+  const [usage, sdk, wl] = await Promise.all([
+    fetch('/api/v41/whitelabel/api/usage').then(r=>r.json()),
+    fetch('/api/v41/whitelabel/sdk/status').then(r=>r.json()),
+    fetch('/api/v41/whitelabel/overview').then(r=>r.json())
+  ]);
+  document.getElementById('p41-ops-api').innerHTML =
+    `<span>API Calls/Day: ${(usage.calls_today/1000000).toFixed(2)}M</span><span>Latency: ${usage.avg_latency_ms}ms</span>` +
+    `<span>Error Rate: ${usage.error_rate_pct}%</span><span>Partners: ${wl.active_partners}</span>` +
+    `<span>Uptime SLA: ${wl.uptime_sla_pct}%</span><span>Partner GMV: ₹${wl.partner_gmv_cr}Cr</span>`;
+  document.getElementById('p41-ops-sdk').innerHTML =
+    `SDK Latest: JS ${sdk.versions.javascript} | Python ${sdk.versions.python} | Flutter ${sdk.versions.flutter} | Breaking Changes: ${sdk.breaking_changes?'⚠️Yes':'✅None'}`;
+}
+async function loadOpsSSO() {
+  const [audit, sso] = await Promise.all([
+    fetch('/api/v41/enterprise/audit-log').then(r=>r.json()),
+    fetch('/api/v41/enterprise/sso/analytics').then(r=>r.json())
+  ]);
+  document.getElementById('p41-ops-sso').innerHTML =
+    `<span>Audit Events 24h: ${audit.events_24h.toLocaleString()}</span><span>Critical: ${audit.critical_events}</span>` +
+    `<span>SSO Logins/Day: ${sso.daily_sso_logins.toLocaleString()}</span><span>Failed Auth: ${sso.failed_auth_rate_pct}%</span>`;
+}
+async function loadOpsRisk() {
+  const d = await fetch('/api/v41/compliance/risk').then(r=>r.json());
+  document.getElementById('p41-ops-risk').innerHTML =
+    `Risk Score: ${d.overall_risk_score} | Regulatory: ${d.categories.regulatory} | Cyber: ${d.categories.cyber} | Open Risks: ${d.open_risks} | Coverage: ₹${d.insurance_coverage_cr}Cr`;
+}
+async function loadAllP41Ops() { await Promise.all([loadOpsAPI(), loadOpsSSO(), loadOpsRisk()]); }
+loadAllP41Ops();
+</script>
+<!-- END PHASE 41 OPS PORTAL -->
+
+<!-- PHASE 41 OPS PORTAL -->
+<div class="phase-section" id="phase41-ops">
+  <h2 class="phase-title">Phase 41 — B2B Operations, Compliance & API Platform</h2>
+  <div class="metrics-grid">
+    <div class="metric-card"><div class="metric-label">API Calls/Day</div><div class="metric-value" id="p41ops-api">—</div></div>
+    <div class="metric-card"><div class="metric-label">API Error Rate (%)</div><div class="metric-value" id="p41ops-err">—</div></div>
+    <div class="metric-card"><div class="metric-label">Compliance Score (%)</div><div class="metric-value" id="p41ops-comp">—</div></div>
+    <div class="metric-card"><div class="metric-label">Open Risk Items</div><div class="metric-value" id="p41ops-risk">—</div></div>
+    <div class="metric-card"><div class="metric-label">Audit Events (24h)</div><div class="metric-value" id="p41ops-audit">—</div></div>
+    <div class="metric-card"><div class="metric-label">SSO Logins/Day</div><div class="metric-value" id="p41ops-sso">—</div></div>
+  </div>
+  <div class="info-alert" id="p41ops-summary">Phase 41 — loading ops & compliance metrics…</div>
+</div>
+<script>
+async function loadOpsAPI41() {
+  const d = await fetch('/api/v41/whitelabel/api/usage').then(r=>r.json());
+  document.getElementById('p41ops-api').textContent = (d.calls_today||0).toLocaleString();
+  document.getElementById('p41ops-err').textContent = `${d.error_rate_pct||0}%`;
+}
+async function loadOpsCompliance41() {
+  const d = await fetch('/api/v41/compliance/overview').then(r=>r.json());
+  document.getElementById('p41ops-comp').textContent = `${d.compliance_score||0}%`;
+}
+async function loadOpsRisk41() {
+  const d = await fetch('/api/v41/compliance/risk').then(r=>r.json());
+  document.getElementById('p41ops-risk').textContent = (d.open_risks||0).toLocaleString();
+}
+async function loadOpsAudit41() {
+  const d = await fetch('/api/v41/compliance/audit-log').then(r=>r.json());
+  document.getElementById('p41ops-audit').textContent = (d.log_entries_24h||0).toLocaleString();
+}
+async function loadOpsSSO41() {
+  const d = await fetch('/api/v41/enterprise/sso/analytics').then(r=>r.json());
+  document.getElementById('p41ops-sso').textContent = (d.daily_sso_logins||0).toLocaleString();
+  document.getElementById('p41ops-summary').textContent =
+    `Phase 41 ✅ | API: ${(d.daily_sso_logins||0).toLocaleString()} SSO logins/day | Avg Session: ${d.avg_session_minutes||0} min | MFA Challenges: ${(d.mfa_challenges_24h||0).toLocaleString()} | Auth Fail: ${d.failed_auth_rate_pct||0}%`;
+}
+async function loadAllP41Ops() { await Promise.all([loadOpsAPI41(), loadOpsCompliance41(), loadOpsRisk41(), loadOpsAudit41(), loadOpsSSO41()]); }
+loadAllP41Ops();
+</script>
+<!-- END PHASE 41 OPS PORTAL -->
 </body>
 </html>

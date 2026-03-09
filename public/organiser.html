@@ -5343,4 +5343,96 @@ async function loadAllP40Org() { await Promise.all([loadOrgPayouts(), loadOrgRec
 loadAllP40Org();
 </script>
 <!-- END PHASE 40 ORGANISER PORTAL -->
+
+<!-- PHASE 41 ORGANISER PORTAL -->
+<div class="phase-section" id="phase41-organiser">
+  <h2 class="phase-title">Phase 41 — Corporate & B2B Event Tools</h2>
+  <div class="module-card">
+    <h3>🏢 Corporate Accounts & RFP</h3>
+    <div id="p41-org-rfp" class="stats-grid"></div>
+  </div>
+  <div class="module-card">
+    <h3>🌐 MICE & Exhibition Management</h3>
+    <div id="p41-org-mice" class="stats-grid"></div>
+  </div>
+  <div class="module-card">
+    <h3>📊 B2B ROI & Analytics</h3>
+    <div id="p41-org-analytics" class="stats-grid"></div>
+    <div id="p41-org-forecast" class="success-alert"></div>
+  </div>
+</div>
+<script>
+async function loadOrgRFP() {
+  const [rfp, accounts] = await Promise.all([
+    fetch('/api/v41/corporate/rfp').then(r=>r.json()),
+    fetch('/api/v41/corporate/accounts').then(r=>r.json())
+  ]);
+  document.getElementById('p41-org-rfp').innerHTML =
+    `<span>Active RFPs: ${rfp.active_rfps}</span><span>Win Rate: ${rfp.win_rate_pct}%</span>` +
+    `<span>Total Accounts: ${accounts.total_accounts}</span><span>Enterprise: ${accounts.enterprise_accounts}</span>` +
+    `<span>Account Value: ₹${accounts.total_account_value_cr}Cr</span><span>Repeat Rate: ${accounts.repeat_client_rate_pct}%</span>`;
+}
+async function loadOrgMICE() {
+  const [mice, exhibitions] = await Promise.all([
+    fetch('/api/v41/mice/overview').then(r=>r.json()),
+    fetch('/api/v41/mice/exhibitions').then(r=>r.json())
+  ]);
+  document.getElementById('p41-org-mice').innerHTML =
+    `<span>MICE Revenue: ₹${mice.annual_mice_revenue_cr}Cr</span><span>Events/Year: ${mice.events_per_year.toLocaleString()}</span>` +
+    `<span>Active Exhibitions: ${exhibitions.active_exhibitions}</span><span>Total Stalls: ${exhibitions.total_stalls.toLocaleString()}</span>`;
+}
+async function loadOrgAnalytics() {
+  const [analytics, forecast] = await Promise.all([
+    fetch('/api/v41/b2b/analytics/overview').then(r=>r.json()),
+    fetch('/api/v41/b2b/analytics/forecast').then(r=>r.json())
+  ]);
+  document.getElementById('p41-org-analytics').innerHTML =
+    `<span>B2B Revenue: ₹${analytics.total_b2b_revenue_cr}Cr</span><span>YoY: +${analytics.yoy_growth_pct}%</span>` +
+    `<span>Clients: ${analytics.client_count}</span><span>Forecast Accuracy: ${analytics.forecast_accuracy_pct}%</span>`;
+  document.getElementById('p41-org-forecast').innerHTML =
+    `FY2026-27 Forecast: ₹${forecast.fy2026_27_forecast_cr}Cr | Q2: ₹${forecast.q2_2026_forecast_cr}Cr | Q3: ₹${forecast.q3_2026_forecast_cr}Cr`;
+}
+async function loadAllP41Org() { await Promise.all([loadOrgRFP(), loadOrgMICE(), loadOrgAnalytics()]); }
+loadAllP41Org();
+</script>
+<!-- END PHASE 41 ORGANISER PORTAL -->
+
+<!-- PHASE 41 ORGANISER PORTAL -->
+<div class="phase-section" id="phase41-org">
+  <h2 class="phase-title">Phase 41 — B2B & Corporate Event Tools</h2>
+  <div class="metrics-grid">
+    <div class="metric-card"><div class="metric-label">Active RFPs</div><div class="metric-value" id="p41o-rfps">—</div></div>
+    <div class="metric-card"><div class="metric-label">RFP Win Rate (%)</div><div class="metric-value" id="p41o-win">—</div></div>
+    <div class="metric-card"><div class="metric-label">Corporate Clients</div><div class="metric-value" id="p41o-clients">—</div></div>
+    <div class="metric-card"><div class="metric-label">B2B Pipeline (₹Cr)</div><div class="metric-value" id="p41o-pipeline">—</div></div>
+    <div class="metric-card"><div class="metric-label">MICE Events/yr</div><div class="metric-value" id="p41o-mice">—</div></div>
+    <div class="metric-card"><div class="metric-label">ROI Multiplier</div><div class="metric-value" id="p41o-roi">—</div></div>
+  </div>
+  <div class="success-alert" id="p41o-summary">Phase 41 — loading B2B organiser metrics…</div>
+</div>
+<script>
+async function loadOrgRFP() {
+  const d = await fetch('/api/v41/corporate/rfp').then(r=>r.json());
+  document.getElementById('p41o-rfps').textContent = (d.active_rfps||0).toLocaleString();
+  document.getElementById('p41o-win').textContent = `${d.win_rate_pct||0}%`;
+  document.getElementById('p41o-clients').textContent = (d.top_clients||[]).length;
+}
+async function loadOrgPipeline() {
+  const d = await fetch('/api/v41/b2b/analytics/pipeline').then(r=>r.json());
+  document.getElementById('p41o-pipeline').textContent = `₹${d.total_pipeline_cr||0}Cr`;
+}
+async function loadOrgMICE() {
+  const d = await fetch('/api/v41/mice/overview').then(r=>r.json());
+  document.getElementById('p41o-mice').textContent = (d.events_per_year||0).toLocaleString();
+}
+async function loadOrgROI() {
+  const d = await fetch('/api/v41/b2b/analytics/benchmarks').then(r=>r.json());
+  document.getElementById('p41o-roi').textContent = `${d.industix_avg_roi_x||0}×`;
+  document.getElementById('p41o-summary').textContent =
+    `Phase 41 ✅ | Pipeline: ₹${d.industix_avg_roi_x||0}× ROI | Industry Beat: +${d.outperformance_pct||0}% | NPS: ${d.industix_nps||0}`;
+}
+async function loadAllP41Org() { await Promise.all([loadOrgRFP(), loadOrgPipeline(), loadOrgMICE(), loadOrgROI()]); }
+loadAllP41Org();
+</script>
+<!-- END PHASE 41 ORGANISER PORTAL -->
 </body></html>

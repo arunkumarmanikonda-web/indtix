@@ -3608,4 +3608,86 @@ async function loadAllP40EM() { await Promise.all([loadEMPnL(), loadEMTax()]); }
 loadAllP40EM();
 </script>
 <!-- END PHASE 40 EVENT MANAGER -->
+
+<!-- PHASE 41 EVENT MANAGER PORTAL -->
+<div class="phase-section" id="phase41-em">
+  <h2 class="phase-title">Phase 41 — Corporate & Bulk Event Operations</h2>
+  <div class="module-card">
+    <h3>🎟️ Bulk Ticketing Operations</h3>
+    <div id="p41-em-bulk" class="stats-grid"></div>
+  </div>
+  <div class="module-card">
+    <h3>✈️ Corporate Travel & Expense</h3>
+    <div id="p41-em-travel" class="stats-grid"></div>
+    <div id="p41-em-policy" class="info-alert"></div>
+  </div>
+  <div class="module-card">
+    <h3>⚖️ Compliance Status</h3>
+    <div id="p41-em-compliance" class="success-alert"></div>
+  </div>
+</div>
+<script>
+async function loadEMBulk() {
+  const [bulk, bulkAnalytics] = await Promise.all([
+    fetch('/api/v41/bulk/overview').then(r=>r.json()),
+    fetch('/api/v41/bulk/analytics').then(r=>r.json())
+  ]);
+  document.getElementById('p41-em-bulk').innerHTML =
+    `<span>Bulk Orders YTD: ${bulk.bulk_orders_ytd.toLocaleString()}</span><span>Total Tickets: ${(bulk.total_tickets_bulk/1000000).toFixed(2)}M</span>` +
+    `<span>Fulfillment: ${bulk.fulfilment_time_hrs}h</span><span>Revenue: ₹${bulk.bulk_revenue_cr}Cr</span>` +
+    `<span>Fulfillment Rate: ${bulkAnalytics.fulfillment_rate_pct}%</span><span>Avg Discount: ${bulkAnalytics.avg_discount_pct}%</span>`;
+}
+async function loadEMTravel() {
+  const [travel, policy] = await Promise.all([
+    fetch('/api/v41/corporate/travel').then(r=>r.json()),
+    fetch('/api/v41/corporate/travel/policy').then(r=>r.json())
+  ]);
+  document.getElementById('p41-em-travel').innerHTML =
+    `<span>Bookings YTD: ${travel.travel_bookings_ytd.toLocaleString()}</span><span>Spend: ₹${travel.total_travel_spend_cr}Cr</span>` +
+    `<span>Compliance: ${travel.policy_compliance_pct}%</span><span>Avg Lead: ${travel.avg_booking_lead_days}d</span>`;
+  document.getElementById('p41-em-policy').innerHTML =
+    `Domestic: ${policy.flight_class.domestic} | Hotel Tier-1: ₹${policy.hotel_limits_inr.tier1_city}/night | Advance Booking: ${policy.advance_booking_required_days}d`;
+}
+async function loadEMCompliance() {
+  const d = await fetch('/api/v41/compliance/overview').then(r=>r.json());
+  document.getElementById('p41-em-compliance').innerHTML =
+    `Active Contracts: ${d.active_contracts} | Score: ${d.compliance_score}% | Open Observations: ${d.open_observations} | Critical: ${d.critical_observations}`;
+}
+async function loadAllP41EM() { await Promise.all([loadEMBulk(), loadEMTravel(), loadEMCompliance()]); }
+loadAllP41EM();
+</script>
+<!-- END PHASE 41 EVENT MANAGER -->
+
+<!-- PHASE 41 EVENT MANAGER PORTAL -->
+<div class="phase-section" id="phase41-em">
+  <h2 class="phase-title">Phase 41 — Corporate & Bulk Event Management</h2>
+  <div class="metrics-grid">
+    <div class="metric-card"><div class="metric-label">Bulk Orders (YTD)</div><div class="metric-value" id="p41em-bulk">—</div></div>
+    <div class="metric-card"><div class="metric-label">Avg Order Size</div><div class="metric-value" id="p41em-avg">—</div></div>
+    <div class="metric-card"><div class="metric-label">Fulfillment Rate (%)</div><div class="metric-value" id="p41em-fulfil">—</div></div>
+    <div class="metric-card"><div class="metric-label">Active Groups</div><div class="metric-value" id="p41em-groups">—</div></div>
+  </div>
+  <div class="warning-alert" id="p41em-summary">Phase 41 — loading bulk & group management…</div>
+</div>
+<script>
+async function loadEMBulk() {
+  const d = await fetch('/api/v41/bulk/overview').then(r=>r.json());
+  document.getElementById('p41em-bulk').textContent = (d.bulk_orders_ytd||0).toLocaleString();
+  document.getElementById('p41em-avg').textContent = (d.avg_order_size||0).toLocaleString();
+  document.getElementById('p41em-fulfil').textContent = '—';
+}
+async function loadEMBulkAnalytics() {
+  const d = await fetch('/api/v41/bulk/analytics').then(r=>r.json());
+  document.getElementById('p41em-fulfil').textContent = `${d.fulfillment_rate_pct||0}%`;
+}
+async function loadEMGroups() {
+  const d = await fetch('/api/v41/bulk/groups').then(r=>r.json());
+  document.getElementById('p41em-groups').textContent = (d.active_groups||0).toLocaleString();
+  document.getElementById('p41em-summary').textContent =
+    `Phase 41 ✅ | Bulk Orders YTD: ${(d.active_groups||0).toLocaleString()} groups | Avg Group: ${d.avg_group_size||0} fans | Services: ${(d.special_services||[]).join(', ')}`;
+}
+async function loadAllP41EM() { await Promise.all([loadEMBulk(), loadEMBulkAnalytics(), loadEMGroups()]); }
+loadAllP41EM();
+</script>
+<!-- END PHASE 41 EVENT MANAGER -->
 </body></html>

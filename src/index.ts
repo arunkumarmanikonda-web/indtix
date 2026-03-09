@@ -24444,27 +24444,26 @@ app.get('/api/admin/finance/reporting/esg-financials', (c) => c.json({
   integrated_reporting_standard: 'IFRS S1/S2 + GRI',
 }))
 
-// ── Phase 40 versioned health alias ──────────────────────────
-// ── Phase 40 main health endpoint ────────────────────────────
+// ── Phase 41 main health endpoint ────────────────────────────
 app.get('/api/health', (c) => c.json({
   status: 'ok',
   platform: 'INDTIX',
-  version: 'v40.0.0',
-  phase: 'Phase 40',
-  theme: 'Global Payments, Financial Infrastructure & Embedded Finance',
+  version: 'v41.0.0',
+  phase: 'Phase 41',
+  theme: 'Enterprise B2B, Corporate Events & Government/MICE Platform',
   new_endpoints: 90,
-  total_endpoints: 2629,
+  total_endpoints: 2719,
   features: [
-    'Unified Payments Orchestration',
-    'UPI 2.0 & India Stack Payments',
-    'International Payments & Multi-Currency',
-    'Embedded Finance & Banking-as-a-Service',
-    'Real-Time Fraud Prevention & Risk Engine',
-    'Revenue Accounting & Financial Close',
-    'Organiser & Artist Payouts',
-    'Tax Automation & Compliance',
-    'Treasury & Cash Management',
-    'Financial Reporting & Investor Metrics',
+    'Corporate Event Management & RFP Engine',
+    'Government & Institutional Ticketing',
+    'MICE Platform',
+    'Enterprise Account Management & SSO',
+    'B2B Marketplace & Vendor Management',
+    'Corporate Travel & Expense Integration',
+    'Bulk Ticketing & Group Booking Engine',
+    'Compliance, Audit & Contract Management',
+    'B2B Analytics & ROI Reporting',
+    'White-Label & API-First Partner Platform',
   ],
   timestamp: new Date().toISOString(),
 }))
@@ -24472,6 +24471,644 @@ app.get('/api/health', (c) => c.json({
 // ═══════════════════════════════════════════════════════════
 // END PHASE 40 — GLOBAL PAYMENTS, FINANCIAL INFRASTRUCTURE
 //               & EMBEDDED FINANCE
+// ═══════════════════════════════════════════════════════════
+
+// ╔═══════════════════════════════════════════════════════════╗
+// ║  PHASE 41 — ENTERPRISE B2B, CORPORATE EVENTS &           ║
+// ║             GOVERNMENT/MICE PLATFORM (v41.0.0)           ║
+// ║  90 new endpoints  |  Total: 2,719                       ║
+// ╚═══════════════════════════════════════════════════════════╝
+
+// ── MODULE 1: Corporate Event Management & RFP Engine (10 endpoints) ──
+app.get('/api/v41/corporate/rfp', (c) => c.json({
+  module: 'Corporate RFP Engine', active_rfps: 284, avg_response_time_hrs: 4.2,
+  win_rate_pct: 68.4, total_rfp_value_cr: 28.4, top_clients: ['TCS','Infosys','Wipro','HCL','Accenture'],
+  rfp_templates: 42, auto_match_vendors: true, sla_compliance_pct: 97.2
+}))
+app.post('/api/v41/corporate/rfp/create', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ rfp_id: `RFP-${Date.now()}`, title: b.title||'Corporate Event RFP',
+    client: b.client||'Enterprise Corp', budget_cr: b.budget_cr||10, deadline: b.deadline||'2026-04-30',
+    matched_vendors: 18, status: 'published', created_at: new Date().toISOString() })
+})
+app.get('/api/v41/corporate/rfp/:id', (c) => c.json({
+  rfp_id: c.req.param('id'), status: 'shortlisting', bids_received: 12,
+  shortlisted: 4, budget_utilized_pct: 0, approval_stage: 'procurement',
+  timeline: [{ stage:'published', date:'2026-03-01'},{ stage:'bid_close', date:'2026-03-15'},
+             { stage:'shortlist', date:'2026-03-20'},{ stage:'award', date:'2026-03-25'}]
+}))
+app.post('/api/v41/corporate/rfp/:id/award', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ rfp_id: c.req.param('id'), awarded_to: b.vendor_id||'V001',
+    contract_value_cr: b.value||8.4, contract_id: `CON-${Date.now()}`,
+    start_date: '2026-04-01', end_date: '2026-04-03', status: 'contracted' })
+})
+app.get('/api/v41/corporate/events', (c) => c.json({
+  total_corporate_events: 284, events_ytd: 84, active_bookings: 42,
+  avg_attendees: 840, avg_event_value_cr: 2.84, top_formats: ['conference','townhall','product_launch','AGM','incentive_trip'],
+  repeat_client_rate_pct: 74.2, nps: 78
+}))
+app.get('/api/v41/corporate/events/calendar', (c) => c.json({
+  upcoming: [
+    { id:'CE001', client:'TCS', event:'Annual Leadership Summit', date:'2026-04-10', attendees:2400, value_cr:8.4, venue:'Mumbai' },
+    { id:'CE002', client:'Infosys', event:'Product Launch Q2', date:'2026-04-18', attendees:840, value_cr:2.84, venue:'Bengaluru' },
+    { id:'CE003', client:'GOI-DPIIT', event:'Startup India Conclave', date:'2026-04-25', attendees:5000, value_cr:18.4, venue:'New Delhi' }
+  ], total_upcoming: 42, monthly_revenue_cr: 28.4
+}))
+app.post('/api/v41/corporate/events/book', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ booking_id: `CB-${Date.now()}`, client: b.client||'Corp Client',
+    event_type: b.event_type||'conference', attendees: b.attendees||500,
+    venue: b.venue||'Hyderabad International Convention Centre',
+    dates: b.dates||['2026-05-10','2026-05-11'], estimated_value_cr: (b.attendees||500)*0.004,
+    status: 'tentative', account_manager: 'Priya Sharma', sla_response_hrs: 4 })
+})
+app.get('/api/v41/corporate/accounts', (c) => c.json({
+  total_accounts: 284, enterprise_accounts: 84, mid_market: 142, smb: 58,
+  total_account_value_cr: 284, top_accounts: ['TCS','Infosys','Wipro','HCL','Reliance','HDFC','SBI','GOI'],
+  avg_events_per_account: 3.4, churn_rate_pct: 4.2, expansion_revenue_pct: 28.4
+}))
+app.get('/api/v41/corporate/accounts/:id', (c) => c.json({
+  account_id: c.req.param('id'), name: 'TCS Ltd', tier: 'enterprise',
+  annual_spend_cr: 28.4, events_booked: 12, dedicated_manager: 'Arjun Mehta',
+  credit_limit_cr: 50, payment_terms_days: 30, contract_expiry: '2026-12-31',
+  satisfaction_score: 9.2
+}))
+app.get('/api/v41/corporate/reporting', (c) => c.json({
+  period: 'Q1-2026', corporate_revenue_cr: 84, events_delivered: 42,
+  client_satisfaction_avg: 9.1, on_time_delivery_pct: 97.2, budget_adherence_pct: 98.4,
+  nps: 78, referral_rate_pct: 28.4, top_event_type: 'conference'
+}))
+
+// ── MODULE 2: Government & Institutional Ticketing (10 endpoints) ──
+app.get('/api/v41/govt/overview', (c) => c.json({
+  module: 'Government & Institutional Ticketing',
+  active_govt_clients: 84, events_per_month: 42, total_tickets_managed: 840000,
+  compliance_frameworks: ['GFR-2017','CVC_Guidelines','GeM_Integration','CPWD_norms'],
+  portal_integrations: ['UMANG','DigiLocker','Aadhaar','GeM','PFMS'],
+  tender_win_rate_pct: 72.4, avg_contract_cr: 8.4
+}))
+app.get('/api/v41/govt/tenders', (c) => c.json({
+  active_tenders: 18, tenders_won_ytd: 14, total_value_cr: 84,
+  tender_categories: ['national_events','state_events','diplomatic','cultural','sports'],
+  portals: ['GEM','CPPP','state_tenders'], compliance_score: 98.4,
+  l1_win_rate_pct: 68.4
+}))
+app.post('/api/v41/govt/tenders/bid', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ bid_id: `BID-GOVT-${Date.now()}`, tender_ref: b.tender_ref||'GEM/2026/001',
+    ministry: b.ministry||'Ministry of Culture', bid_value_cr: b.value||18.4,
+    technical_score: 94.2, financial_score: 88.4, submitted_at: new Date().toISOString(),
+    expected_result_date: '2026-04-15', status: 'submitted' })
+})
+app.get('/api/v41/govt/events', (c) => c.json({
+  active_events: 18, event_types: ['republic_day_parade','independence_day','g20_summit','state_visits','cultural_festivals'],
+  total_beneficiaries: 2840000, avg_event_size: 50000,
+  security_clearance_status: 'active', protocol_compliance: 100,
+  ministries_served: ['MEA','MoC','MoI&B','DPIIT','PMO-events']
+}))
+app.post('/api/v41/govt/events/register', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ event_id: `GOVT-${Date.now()}`, name: b.name||'National Cultural Festival',
+    ministry: b.ministry||'Ministry of Culture', date: b.date||'2026-08-15',
+    venue: b.venue||'Pragati Maidan', capacity: b.capacity||100000,
+    ticketing_mode: b.mode||'free_registration', aadhaar_verification: true,
+    status: 'approved', security_clearance: 'pending_MHA' })
+})
+app.get('/api/v41/govt/compliance', (c) => c.json({
+  gfr_compliance: true, gem_registered: true, msme_benefits_applied: true,
+  startup_india_recognized: true, pan_status: 'verified', gst_status: 'compliant',
+  annual_report_filed: true, audit_status: 'clean', blacklist_status: 'clear',
+  security_clearance: 'active', data_localization: 'compliant_with_PDPB'
+}))
+app.get('/api/v41/govt/payments', (c) => c.json({
+  payment_modes: ['PFMS','RTGS','NEFT','cheque','DD'],
+  pending_invoices_cr: 8.4, avg_payment_cycle_days: 28.4,
+  pfms_integration: true, ucr_tracking: true,
+  utilization_certificates_filed: 42, total_received_ytd_cr: 84
+}))
+app.get('/api/v41/govt/institutions', (c) => c.json({
+  universities: 84, schools: 284, hospitals: 42, defence_establishments: 18,
+  psu_clients: 28, total_institutional_revenue_cr: 42,
+  avg_recurring_events: 2.4, institutional_nps: 82
+}))
+app.get('/api/v41/govt/analytics', (c) => c.json({
+  period: 'FY2025-26', govt_revenue_cr: 84, tenders_won: 14, events_managed: 42,
+  beneficiaries_served: 2840000, compliance_score: 98.4,
+  on_time_delivery_pct: 99.2, citizen_satisfaction: 4.7
+}))
+app.post('/api/v41/govt/aadhaar/verify', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ verification_id: `AADH-${Date.now()}`, masked_aadhaar: `XXXX-XXXX-${b.last4||'1234'}`,
+    verified: true, name_match: true, kyc_status: 'complete',
+    consent_logged: true, timestamp: new Date().toISOString() })
+})
+
+// ── MODULE 3: MICE Platform (10 endpoints) ──
+app.get('/api/v41/mice/overview', (c) => c.json({
+  module: 'MICE Platform — Meetings, Incentives, Conferences, Exhibitions',
+  annual_mice_revenue_cr: 284, events_per_year: 1840,
+  avg_event_size: 1200, countries_served: 28, top_destinations: ['Mumbai','Delhi','Bengaluru','Hyderabad','Dubai','Singapore'],
+  corporate_clients: 284, international_clients: 84, nps: 76
+}))
+app.get('/api/v41/mice/venues', (c) => c.json({
+  total_partner_venues: 284, convention_centres: 42, hotels_with_banquets: 184, stadiums: 28, unique_venues: 30,
+  seating_capacity_range: '50 - 100,000', av_equipped_pct: 94.2,
+  catering_partners: 84, avg_venue_nps: 74
+}))
+app.post('/api/v41/mice/venue/search', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ query: b, results: [
+    { venue_id:'V001', name:'HICC Hyderabad', city:'Hyderabad', capacity:5000, rate_per_day_cr:0.84,
+      facilities:['plenary','breakout_rooms','exhibition_hall','AV','catering'], availability: true },
+    { venue_id:'V002', name:'Bombay Exhibition Centre', city:'Mumbai', capacity:10000,
+      rate_per_day_cr:1.84, facilities:['exhibition_hall','outdoor_space','parking'], availability: true },
+    { venue_id:'V003', name:'Vigyan Bhavan', city:'New Delhi', capacity:1400,
+      rate_per_day_cr:0.28, facilities:['plenary','simultaneous_interpretation','state_dining'], availability: false }
+  ], total_results: 3 })
+})
+app.get('/api/v41/mice/incentive-travel', (c) => c.json({
+  active_programs: 84, avg_group_size: 84, destinations: ['Bali','Maldives','Europe','Southeast_Asia','Dubai'],
+  avg_spend_per_person_inr: 284000, total_pax_ytd: 28400, corporate_clients: 42,
+  top_reward_categories: ['luxury_resort','cruise','adventure','cultural_immersion'],
+  roi_reported_by_clients_x: 4.2
+}))
+app.post('/api/v41/mice/incentive-travel/quote', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ quote_id: `IT-${Date.now()}`, destination: b.destination||'Maldives',
+    pax: b.pax||50, duration_nights: b.nights||4,
+    package_cost_per_person_inr: 280000, total_cost_inr: (b.pax||50)*280000,
+    inclusions: ['flights','luxury_resort','all_meals','activities','team_building'],
+    validity_days: 14, status: 'quoted' })
+})
+app.get('/api/v41/mice/exhibitions', (c) => c.json({
+  active_exhibitions: 28, total_stalls: 2840, avg_stall_size_sqft: 100,
+  exhibitors: 1840, visitors_expected: 284000, international_exhibitors_pct: 28.4,
+  sponsorship_revenue_cr: 8.4, ticket_revenue_cr: 2.84, b2b_meetings_facilitated: 28400
+}))
+app.post('/api/v41/mice/exhibitions/stall-book', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ stall_id: `STL-${Date.now()}`, exhibition_id: b.exhibition_id||'EXH001',
+    company: b.company||'Tech Startup', stall_size_sqft: b.sqft||100,
+    location: b.location||'Hall A, Row 3', cost_inr: (b.sqft||100)*1200,
+    amenities: ['power_points','wifi','fascia_board','table_chairs'],
+    confirmation: true, setup_date: '2026-05-14' })
+})
+app.get('/api/v41/mice/conferences', (c) => c.json({
+  active_conferences: 42, avg_delegates: 840, avg_conference_days: 2.4,
+  revenue_per_delegate_inr: 28400, keynote_speakers_db: 284,
+  virtual_hybrid_capability: true, simultaneous_interpretation_languages: 12,
+  live_streaming_capability: true, on_demand_content_retention_days: 90
+}))
+app.post('/api/v41/mice/conferences/register', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ registration_id: `CONF-${Date.now()}`, conference: b.conference||'IndTech Summit 2026',
+    delegate: b.name||'Delegate Name', category: b.category||'full_delegate',
+    pass_type: 'full_conference', amount_paid_inr: 28400,
+    sessions_unlocked: 42, networking_app_access: true, certificate: 'issued' })
+})
+app.get('/api/v41/mice/analytics', (c) => c.json({
+  period: 'Q1-2026', total_mice_events: 284, total_pax: 284000,
+  revenue_cr: 84, avg_client_roi_x: 4.2, delegate_satisfaction: 4.6,
+  top_segment: 'technology_conferences', repeat_client_pct: 68.4,
+  carbon_offset_events: 84, sustainability_score: 74.2
+}))
+
+// ── MODULE 4: Enterprise Account Management & SSO (8 endpoints) ──
+app.get('/api/v41/enterprise/accounts', (c) => c.json({
+  module: 'Enterprise Account Management & SSO',
+  total_enterprise_clients: 284, active_sso_integrations: 84,
+  supported_sso_protocols: ['SAML2.0','OAuth2.0','OIDC','LDAP','Active_Directory'],
+  avg_users_per_enterprise: 2840, total_enterprise_users: 806160,
+  provisioning_methods: ['SCIM2.0','manual','CSV_import'], mfa_enforcement_pct: 97.2
+}))
+app.post('/api/v41/enterprise/sso/configure', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ config_id: `SSO-${Date.now()}`, company: b.company||'Enterprise Corp',
+    protocol: b.protocol||'SAML2.0', entity_id: `https://auth.indtix.com/${b.company||'corp'}`,
+    acs_url: `https://api.indtix.com/sso/acs/${b.company||'corp'}`,
+    metadata_url: `https://api.indtix.com/sso/metadata/${b.company||'corp'}`,
+    scim_token: `scim_${Date.now()}`, status: 'configured', test_required: true })
+})
+app.post('/api/v41/enterprise/sso/provision', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ provisioned: b.users?.length||1, skipped: 0, failed: 0,
+    groups_synced: b.groups?.length||3, roles_mapped: ['admin','manager','viewer','attendee'],
+    last_sync: new Date().toISOString(), next_sync: new Date(Date.now()+3600000).toISOString() })
+})
+app.get('/api/v41/enterprise/accounts/:id/dashboard', (c) => c.json({
+  account_id: c.req.param('id'), company: 'Wipro Technologies',
+  total_users: 4200, active_users_30d: 2840, events_booked_ytd: 18,
+  spend_ytd_cr: 4.2, upcoming_events: 4, pending_approvals: 8,
+  budget_utilization_pct: 68.4, preferred_venues: ['Bengaluru','Mumbai','Hyderabad']
+}))
+app.post('/api/v41/enterprise/accounts/:id/budget', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ account_id: c.req.param('id'), budget_id: `BUD-${Date.now()}`,
+    fy: b.fy||'FY2026-27', total_budget_cr: b.total||10,
+    categories: { conferences: b.conf||4, incentive_travel: b.travel||3, townhalls: b.town||2, misc: b.misc||1 },
+    approval_workflow: ['dept_head','finance','cpo'], status: 'approved' })
+})
+app.get('/api/v41/enterprise/permissions', (c) => c.json({
+  roles: [
+    { role:'super_admin', permissions: 284, users: 8 },
+    { role:'event_admin', permissions: 142, users: 42 },
+    { role:'approver', permissions: 84, users: 84 },
+    { role:'booking_manager', permissions: 42, users: 284 },
+    { role:'viewer', permissions: 18, users: 2840 }
+  ], custom_roles: 28, abac_enabled: true, audit_logging: true
+}))
+app.get('/api/v41/enterprise/audit-log', (c) => c.json({
+  events_24h: 2840, critical_events: 4, user_provisioning: 42, login_events: 840,
+  permission_changes: 18, failed_logins: 8, sso_authentications: 2840,
+  export_format: ['JSON','CSV','SIEM_CEF'], retention_days: 365
+}))
+app.get('/api/v41/enterprise/sso/analytics', (c) => c.json({
+  daily_sso_logins: 2840, avg_session_minutes: 42.4, mfa_challenges_24h: 284,
+  failed_auth_rate_pct: 0.4, top_sso_providers: ['Azure_AD','Okta','Google_Workspace','OneLogin'],
+  active_sessions_now: 284, geographic_access: ['India','USA','UK','Singapore','UAE']
+}))
+
+// ── MODULE 5: B2B Marketplace & Vendor Management (8 endpoints) ──
+app.get('/api/v41/b2b/marketplace', (c) => c.json({
+  module: 'B2B Marketplace & Vendor Management',
+  registered_vendors: 2840, verified_vendors: 1840, active_listings: 8400,
+  categories: ['AV_tech','staging','catering','decor','entertainment','security','photography','translation','transport'],
+  total_gmv_cr: 84, avg_rating: 4.4, dispute_resolution_days: 3.2
+}))
+app.get('/api/v41/b2b/vendors', (c) => c.json({
+  total: 2840, by_category: {
+    av_tech: 284, staging: 184, catering: 840, decor: 284, entertainment: 284,
+    security: 184, photography: 284, transport: 284, translation: 84
+  }, verified_pct: 64.8, insurance_verified_pct: 84.2,
+  avg_response_time_hrs: 2.4, top_rated_threshold: 4.7
+}))
+app.post('/api/v41/b2b/vendors/onboard', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ vendor_id: `VND-${Date.now()}`, company: b.company||'Event Vendor Co',
+    category: b.category||'av_tech', gstin: b.gstin||'29ABCDE1234F1Z5',
+    verification_status: 'in_review', documents_required: ['GST_cert','PAN','insurance','portfolio'],
+    expected_approval_days: 3, onboarding_fee_inr: 0, commission_pct: 8.4 })
+})
+app.post('/api/v41/b2b/marketplace/rfq', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ rfq_id: `RFQ-${Date.now()}`, category: b.category||'catering',
+    event_date: b.date||'2026-05-10', attendees: b.attendees||500,
+    location: b.location||'Mumbai', budget_inr: b.budget||500000,
+    quotes_invited: 8, expected_quotes_by: new Date(Date.now()+86400000*2).toISOString(),
+    status: 'open' })
+})
+app.get('/api/v41/b2b/contracts', (c) => c.json({
+  active_contracts: 284, total_contract_value_cr: 84,
+  avg_contract_duration_days: 28.4, e_signed_pct: 94.2,
+  dispute_rate_pct: 1.4, renewal_rate_pct: 74.2,
+  contract_templates: ['event_services','annual_empanelment','SLA_based','project_based']
+}))
+app.post('/api/v41/b2b/contracts/create', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ contract_id: `CON-${Date.now()}`, vendor_id: b.vendor_id||'VND001',
+    type: b.type||'event_services', value_inr: b.value||500000,
+    start_date: b.start||'2026-04-01', end_date: b.end||'2026-04-03',
+    sla_terms: { delivery_compliance:'98%', quality_score_min:4.0, response_time_hrs:2 },
+    e_sign_required: true, status: 'draft' })
+})
+app.get('/api/v41/b2b/analytics', (c) => c.json({
+  period: 'Q1-2026', gmv_cr: 28.4, transactions: 2840, avg_order_value_inr: 100000,
+  vendor_utilization_pct: 72.4, client_satisfaction_avg: 4.4,
+  top_category: 'catering', cost_savings_vs_market_pct: 18.4
+}))
+app.get('/api/v41/b2b/vendor/:id/scorecard', (c) => c.json({
+  vendor_id: c.req.param('id'), overall_score: 4.6, events_delivered: 42,
+  on_time_delivery_pct: 97.2, quality_score: 4.7, responsiveness_score: 4.5,
+  compliance_score: 4.8, dispute_history: 0, recommended: true, tier: 'platinum'
+}))
+
+// ── MODULE 6: Corporate Travel & Expense Integration (8 endpoints) ──
+app.get('/api/v41/corporate/travel', (c) => c.json({
+  module: 'Corporate Travel & Expense Integration',
+  travel_bookings_ytd: 28400, total_travel_spend_cr: 28.4,
+  policy_compliance_pct: 94.2, avg_booking_lead_days: 14,
+  integrations: ['SAP_Concur','Oracle_Expenses','Workday','Zoho_Expense','manual'],
+  preferred_airlines: ['Air_India','IndiGo','Vistara','Emirates'], hotel_partners: 840
+}))
+app.post('/api/v41/corporate/travel/book', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ booking_id: `TRV-${Date.now()}`, traveller: b.employee||'Employee Name',
+    origin: b.from||'BLR', destination: b.to||'DEL', travel_date: b.date||'2026-04-10',
+    flight: 'AI-501', fare_inr: b.class==='business'?28400:8400, hotel: b.hotel||'Taj Diplomatic Enclave',
+    hotel_rate_per_night_inr: 14000, expense_code: b.expense_code||'CONF-2026-041',
+    approval_status: 'auto_approved', within_policy: true })
+})
+app.get('/api/v41/corporate/travel/policy', (c) => c.json({
+  policy_version: '2026.1', flight_class: { domestic:'economy', international:'business_for_8h_plus' },
+  hotel_limits_inr: { tier1_city:12000, tier2_city:7000, international:20000 },
+  advance_booking_required_days: 7, meal_allowance_inr_per_day: 1500,
+  local_transport_inr_per_day: 800, exceptions_require: 'vp_approval'
+}))
+app.post('/api/v41/corporate/expenses/submit', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ claim_id: `EXP-${Date.now()}`, employee: b.employee||'Employee',
+    event_id: b.event_id||'EVT001', total_claimed_inr: b.total||25000,
+    within_policy: true, auto_approved_inr: b.total||25000, manual_review_inr: 0,
+    reimbursement_eta_days: 3, category_breakdown: b.breakdown||{ travel:18000, hotel:5000, meals:2000 }
+  })
+})
+app.get('/api/v41/corporate/expenses/analytics', (c) => c.json({
+  monthly_expense_cr: 2.84, policy_violations: 18, avg_claim_days: 3.4,
+  top_expense_category: 'travel', savings_from_policy_cr: 0.84,
+  digital_receipts_pct: 84.2, auto_approval_rate_pct: 74.2
+}))
+app.get('/api/v41/corporate/travel/analytics', (c) => c.json({
+  quarterly_spend_cr: 8.4, trips_taken: 2840, avg_cost_per_trip_inr: 29577,
+  policy_compliance_pct: 94.2, carbon_emissions_tonnes: 284,
+  carbon_offset_purchased: true, green_travel_score: 68.4
+}))
+app.post('/api/v41/corporate/travel/visa', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ visa_application_id: `VISA-${Date.now()}`, traveller: b.name||'Traveller',
+    destination_country: b.country||'Singapore', visa_type: b.type||'business',
+    processing_days: 5, fee_inr: 8400, documents_checklist: ['passport','photos','invitation_letter','bank_statement','itr'],
+    status: 'application_submitted' })
+})
+app.get('/api/v41/corporate/travel/suppliers', (c) => c.json({
+  airline_contracts: 12, hotel_chain_contracts: 8, car_rental_contracts: 4,
+  travel_insurance_partners: 3, negotiated_savings_pct: 18.4,
+  preferred_suppliers: ['Air India','IndiGo','Taj Hotels','ITC Hotels','Avis','Europcar']
+}))
+
+// ── MODULE 7: Bulk Ticketing & Group Booking Engine (8 endpoints) ──
+app.get('/api/v41/bulk/overview', (c) => c.json({
+  module: 'Bulk Ticketing & Group Booking Engine',
+  bulk_orders_ytd: 2840, total_tickets_bulk: 2840000, avg_order_size: 1000,
+  largest_order: 50000, enterprise_clients: 284, bulk_revenue_cr: 84,
+  discount_tiers: [
+    { min:100, max:499, discount_pct:5 }, { min:500, max:1999, discount_pct:10 },
+    { min:2000, max:4999, discount_pct:15 }, { min:5000, discount_pct:20 }
+  ], fulfilment_time_hrs: 2.4
+}))
+app.post('/api/v41/bulk/quote', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  const qty = b.quantity||500
+  const base = b.face_value_inr||1000
+  const disc = qty>=5000?0.2:qty>=2000?0.15:qty>=500?0.10:0.05
+  return c.json({ quote_id: `BQ-${Date.now()}`, event_id: b.event_id||'EVT001',
+    quantity: qty, ticket_category: b.category||'general', face_value_inr: base,
+    discount_pct: disc*100, discounted_price_inr: base*(1-disc),
+    total_inr: qty*base*(1-disc), validity_hours: 48,
+    delivery_method: ['email_pdf','physical_courier','QR_bulk_file'], status: 'quoted' })
+})
+app.post('/api/v41/bulk/order', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ order_id: `BO-${Date.now()}`, quote_id: b.quote_id||'BQ001',
+    company: b.company||'Corporate Client', quantity: b.quantity||500,
+    total_inr: b.total_inr||450000, payment_due_date: new Date(Date.now()+86400000*3).toISOString(),
+    ticket_delivery_hrs: 2, bulk_qr_file: `https://files.indtix.com/bulk/${Date.now()}.zip`,
+    allocation_list_required: b.quantity>1000, status: 'confirmed' })
+})
+app.get('/api/v41/bulk/orders', (c) => c.json({
+  active_orders: 84, pending_payment: 18, fulfilled_today: 42,
+  total_tickets_pending_delivery: 28400,
+  recent_orders: [
+    { id:'BO-001', company:'TCS', quantity:5000, event:'Tech Summit', status:'fulfilled', value_cr:0.4 },
+    { id:'BO-002', company:'GOI-DPIIT', quantity:20000, event:'Startup India', status:'processing', value_cr:0.8 },
+    { id:'BO-003', company:'Reliance', quantity:2000, event:'RIL AGM', status:'delivered', value_cr:0.1 }
+  ]
+}))
+app.post('/api/v41/bulk/allocate', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ allocation_id: `ALLOC-${Date.now()}`, order_id: b.order_id||'BO001',
+    total_allocated: b.attendees?.length||500, method: b.method||'csv_upload',
+    emails_sent: b.attendees?.length||500, sms_sent: b.attendees?.length||500,
+    invalid_entries: 0, duplicate_entries: 0, status: 'allocated' })
+})
+app.get('/api/v41/bulk/groups', (c) => c.json({
+  active_groups: 284, avg_group_size: 84, top_use_cases: ['team_outing','client_entertainment','employee_rewards','csr'],
+  group_coordinators: 284, check_in_mode: 'coordinator_batch_scan',
+  special_services: ['dedicated_entrance','reserved_seating','catering_preorder','merchandise_pack']
+}))
+app.post('/api/v41/bulk/groups/create', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ group_id: `GRP-${Date.now()}`, company: b.company||'Corp',
+    event_id: b.event_id||'EVT001', size: b.size||100, coordinator: b.coordinator||'HR Manager',
+    access_code: `GRP-${Math.random().toString(36).substr(2,8).toUpperCase()}`,
+    check_in_window_minutes: 30, reserved_seats: b.seats||true, status: 'confirmed' })
+})
+app.get('/api/v41/bulk/analytics', (c) => c.json({
+  period: 'Q1-2026', bulk_revenue_cr: 28.4, orders: 840, tickets: 840000,
+  avg_discount_pct: 12.4, fulfillment_rate_pct: 99.2,
+  top_client_type: 'corporate_it', avg_lead_time_days: 14
+}))
+
+// ── MODULE 8: Compliance, Audit & Contract Management (8 endpoints) ──
+app.get('/api/v41/compliance/overview', (c) => c.json({
+  module: 'Compliance, Audit & Contract Management',
+  active_contracts: 840, compliance_frameworks: ['PDPB_2023','FEMA','GST','Companies_Act','IT_Act'],
+  audit_status: 'clean', last_audit_date: '2026-01-15', next_audit_date: '2026-07-15',
+  compliance_score: 98.4, open_observations: 4, critical_observations: 0
+}))
+app.get('/api/v41/compliance/contracts', (c) => c.json({
+  total_contracts: 840, active: 284, expiring_30d: 42, expired: 18,
+  by_type: { vendor:284, client:284, employment:142, nda:84, partnership:46 },
+  e_signed_pct: 94.2, avg_contract_value_cr: 0.84, renewal_alert_days: 30
+}))
+app.post('/api/v41/compliance/contracts/generate', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ contract_id: `CTR-${Date.now()}`, type: b.type||'vendor_agreement',
+    parties: b.parties||['INDTIX Pvt Ltd', 'Vendor Co'], template: b.template||'standard_vendor_v2026',
+    clauses: ['payment_terms','sla','ip_ownership','confidentiality','dispute_resolution','governing_law'],
+    jurisdiction: 'Telangana, India', governing_law: 'Indian Contract Act 1872',
+    doc_url: `https://contracts.indtix.com/draft/${Date.now()}.pdf`, status: 'draft' })
+})
+app.get('/api/v41/compliance/audit-log', (c) => c.json({
+  log_entries_24h: 28400, by_category: {
+    data_access: 8400, financial_transactions: 2840, admin_actions: 284,
+    failed_auth: 18, config_changes: 42, pii_access: 840
+  }, retention_policy_years: 7, immutable_storage: true, siem_integrated: true
+}))
+app.get('/api/v41/compliance/data-privacy', (c) => c.json({
+  pdpb_compliant: true, data_fiduciary_registered: true,
+  dpo_appointed: true, privacy_policy_version: '2026.1',
+  consent_records: 28400000, data_deletion_requests_ytd: 284,
+  breach_incidents_ytd: 0, cross_border_transfer_countries: ['UAE','Singapore','USA'],
+  data_localization_compute: 'India', data_localization_storage: 'India'
+}))
+app.get('/api/v41/compliance/gst', (c) => c.json({
+  gstin: '36ABCDE1234F1Z5', registration_state: 'Telangana',
+  gst_compliance_status: 'compliant', gstr1_status: 'filed', gstr3b_status: 'filed',
+  input_credit_balance_cr: 2.84, total_tax_collected_ytd_cr: 8.4,
+  tds_deducted_ytd_cr: 0.84, e_invoice_enabled: true, e_way_bill_enabled: true
+}))
+app.post('/api/v41/compliance/nda/generate', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ nda_id: `NDA-${Date.now()}`, party_a: 'INDTIX Pvt Ltd',
+    party_b: b.party||'Corporate Client', type: b.type||'mutual',
+    effective_date: new Date().toISOString().split('T')[0],
+    term_years: b.term||2, jurisdiction: 'Hyderabad, Telangana',
+    doc_url: `https://contracts.indtix.com/nda/${Date.now()}.pdf`, status: 'ready_for_signature' })
+})
+app.get('/api/v41/compliance/risk', (c) => c.json({
+  overall_risk_score: 18.4, categories: {
+    regulatory: 'low', financial: 'low', operational: 'medium', reputational: 'low', cyber: 'medium'
+  }, open_risks: 8, mitigated_ytd: 28, risk_appetite: 'moderate',
+  insurance_coverage_cr: 84, last_assessment: '2026-03-01'
+}))
+
+// ── MODULE 9: B2B Analytics & ROI Reporting (10 endpoints) ──
+app.get('/api/v41/b2b/analytics/overview', (c) => c.json({
+  module: 'B2B Analytics & ROI Reporting',
+  reporting_period: 'Q1-2026', total_b2b_revenue_cr: 284,
+  yoy_growth_pct: 28.4, client_count: 284, avg_client_value_cr: 1.0,
+  top_revenue_segment: 'enterprise_it', pipeline_value_cr: 84,
+  forecast_accuracy_pct: 92.4
+}))
+app.get('/api/v41/b2b/analytics/revenue', (c) => c.json({
+  q1_2026_cr: 84, q4_2025_cr: 74.2, yoy_growth_pct: 28.4,
+  by_segment: { enterprise:42, mid_market:28, govt:14, institutional:8, mice:12 },
+  by_category: { conferences:28, corporate_events:24, incentive_travel:14, exhibitions:10, bulk_tickets:8 },
+  arr_cr: 284, nrr_pct: 118.4, logo_retention_pct: 94.2
+}))
+app.get('/api/v41/b2b/analytics/clients', (c) => c.json({
+  total_clients: 284, new_ytd: 42, churned_ytd: 12, net_new: 30,
+  avg_ltv_cr: 8.4, avg_payback_months: 4.2, nps: 74,
+  segments: { enterprise:84, mid_market:142, smb:58 },
+  top_industries: ['technology','banking','pharma','manufacturing','retail']
+}))
+app.get('/api/v41/b2b/analytics/roi/:client_id', (c) => c.json({
+  client_id: c.req.param('client_id'), period: 'Q1-2026',
+  events_run: 4, total_spend_cr: 2.84, estimated_revenue_generated_cr: 11.84,
+  roi_x: 4.2, employee_engagement_lift_pct: 28.4, brand_awareness_lift_pct: 14.2,
+  leads_generated: 284, deals_closed_from_events: 18,
+  cost_per_attendee_inr: 14000, nps_from_event: 76
+}))
+app.get('/api/v41/b2b/analytics/pipeline', (c) => c.json({
+  total_pipeline_cr: 84, stages: {
+    prospecting: { deals:42, value_cr:12 }, qualification: { deals:28, value_cr:18 },
+    proposal: { deals:18, value_cr:24 }, negotiation: { deals:8, value_cr:18 }, closed_won: { deals:14, value_cr:12 }
+  }, avg_deal_cycle_days: 28.4, win_rate_pct: 68.4, avg_deal_cr: 2.84
+}))
+app.get('/api/v41/b2b/analytics/events-performance', (c) => c.json({
+  events_analyzed: 284, avg_roi_x: 4.2, avg_attendance_rate_pct: 84.2,
+  avg_nps: 74, avg_cost_efficiency_score: 8.4,
+  top_performing_format: 'hybrid_conference',
+  ai_insights: ['Thursday_events_20pct_higher_ROI','hybrid_format_best_engagement','morning_sessions_preferred']
+}))
+app.post('/api/v41/b2b/analytics/report/generate', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ report_id: `RPT-${Date.now()}`, client: b.client||'Enterprise Corp',
+    period: b.period||'Q1-2026', type: b.type||'roi_summary',
+    sections: ['executive_summary','financial_performance','event_roi','employee_engagement','recommendations'],
+    format: b.format||'PDF', pages: 24,
+    url: `https://reports.indtix.com/${Date.now()}.pdf`, ready_in_minutes: 2 })
+})
+app.get('/api/v41/b2b/analytics/benchmarks', (c) => c.json({
+  industry_avg_roi_x: 3.2, industix_avg_roi_x: 4.2, outperformance_pct: 31.3,
+  industry_nps: 62, industix_nps: 74, cost_vs_competitor_pct: -18.4,
+  feature_parity_score: 9.4, client_recommendation_rate_pct: 84.2
+}))
+app.get('/api/v41/b2b/analytics/forecast', (c) => c.json({
+  q2_2026_forecast_cr: 94.2, q3_2026_forecast_cr: 104.2, q4_2026_forecast_cr: 114.2,
+  fy2026_27_forecast_cr: 420, confidence_interval_pct: 85,
+  key_assumptions: ['15pct_new_client_growth','8pct_price_increase','3_new_enterprise_logos'],
+  risk_factors: ['global_macro','event_cancellation_risk']
+}))
+app.get('/api/v41/b2b/analytics/cohort', (c) => c.json({
+  cohorts: [
+    { cohort: 'Q1-2025', size: 42, retention_q2: 92.8, retention_q3: 88.1, retention_q4: 84.2, avg_expansion_pct: 18.4 },
+    { cohort: 'Q2-2025', size: 38, retention_q3: 94.7, retention_q4: 89.5, avg_expansion_pct: 22.1 },
+    { cohort: 'Q3-2025', size: 54, retention_q4: 96.3, avg_expansion_pct: 24.7 },
+    { cohort: 'Q4-2025', size: 62, avg_expansion_pct: 0 }
+  ], avg_logo_retention_pct: 94.2, nrr_trailing_12m_pct: 118.4
+}))
+
+// ── MODULE 10: White-Label & API-First Partner Platform (10 endpoints) ──
+app.get('/api/v41/whitelabel/overview', (c) => c.json({
+  module: 'White-Label & API-First Partner Platform',
+  active_partners: 84, white_label_deployments: 42, api_partners: 42,
+  api_calls_per_day: 2840000, partner_gmv_cr: 284, revenue_share_pct: 12.4,
+  sdk_languages: ['JavaScript','Python','Java','PHP','Go','Ruby','Flutter'],
+  uptime_sla_pct: 99.9
+}))
+app.post('/api/v41/whitelabel/partner/onboard', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ partner_id: `PART-${Date.now()}`, company: b.company||'Partner Co',
+    type: b.type||'white_label', subdomain: `${b.slug||'partner'}.tickets.co.in`,
+    api_key: `pk_live_${Date.now()}`, api_secret: `sk_live_${Date.now()}`,
+    webhook_url: b.webhook||null, rate_limit: '1000/min', sandbox_access: true,
+    go_live_eta_days: 7, revenue_share_pct: 12.4, status: 'onboarding' })
+})
+app.get('/api/v41/whitelabel/partner/:id/config', (c) => c.json({
+  partner_id: c.req.param('id'), branding: {
+    primary_color: '#1a56db', logo_url: 'https://cdn.partner.com/logo.png',
+    font_family: 'Inter', custom_domain: 'tickets.partnerco.com'
+  }, enabled_modules: ['ticketing','payments','analytics','check_in'],
+  payment_split: { partner_pct: 87.6, platform_pct: 12.4 },
+  custom_fees: true, email_domain: 'tickets.partnerco.com'
+}))
+app.get('/api/v41/whitelabel/api/docs', (c) => c.json({
+  api_version: 'v41', base_url: 'https://api.indtix.com/v41',
+  auth_method: 'Bearer JWT + API Key', rate_limits: { standard:'1000/min', premium:'10000/min' },
+  endpoints_count: 2719, sdk_available: true,
+  postman_collection: 'https://api.indtix.com/docs/postman_v41.json',
+  openapi_spec: 'https://api.indtix.com/docs/openapi_v41.yaml',
+  webhooks: ['ticket.sold','event.created','checkin.completed','payment.processed']
+}))
+app.get('/api/v41/whitelabel/api/usage', (c) => c.json({
+  calls_today: 2840000, calls_month: 84000000, top_endpoints: [
+    '/api/v41/events/search','POST /api/v41/tickets/purchase','/api/v41/tickets/validate'
+  ], avg_latency_ms: 28.4, error_rate_pct: 0.04,
+  top_partners_by_calls: ['BookMyShow_partner','PVR_Cinemas','Zomato_Events'],
+  bandwidth_gb_today: 284
+}))
+app.post('/api/v41/whitelabel/api/webhook/test', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ test_id: `WHK-${Date.now()}`, event_type: b.event||'ticket.sold',
+    payload_sent: true, response_status: 200, response_time_ms: 84,
+    retry_policy: '3_retries_exponential_backoff', status: 'success' })
+})
+app.get('/api/v41/whitelabel/partners', (c) => c.json({
+  total_partners: 84, by_type: { white_label:42, api_integration:28, embed_widget:14 },
+  top_partners: ['BookMyShow','PVR','INOX','Zomato','Swiggy','MakeMyTrip','Yatra'],
+  active_events_via_partners: 2840, partner_gmv_cr: 284,
+  avg_partner_revenue_cr: 3.38
+}))
+app.get('/api/v41/whitelabel/partner/:id/analytics', (c) => c.json({
+  partner_id: c.req.param('id'), period: 'Q1-2026',
+  gmv_cr: 28.4, transactions: 28400, avg_ticket_value_inr: 1000,
+  api_uptime_pct: 99.94, support_tickets: 4, csat: 9.2,
+  revenue_share_earned_cr: 3.52, growth_vs_q4_pct: 18.4
+}))
+app.get('/api/v41/whitelabel/sdk/status', (c) => c.json({
+  versions: {
+    javascript: '4.1.0', python: '4.1.0', java: '4.1.0',
+    php: '4.1.0', go: '4.1.0', flutter: '4.1.0'
+  }, latest_release: '2026-03-01', breaking_changes: false,
+  deprecation_notices: ['v38_endpoints_sunset_2026-09-01'],
+  npm_weekly_downloads: 28400, pypi_weekly_downloads: 8400
+}))
+app.post('/api/v41/whitelabel/embed/generate', async (c) => {
+  const b = await c.req.json().catch(() => ({})) as any
+  return c.json({ embed_id: `EMB-${Date.now()}`, event_id: b.event_id||'EVT001',
+    widget_type: b.type||'ticket_button', partner_id: b.partner_id||'PART001',
+    embed_code: `<script src="https://cdn.indtix.com/widget.js" data-event="${b.event_id||'EVT001'}" data-partner="${b.partner_id||'PART001'}"></script>`,
+    iframe_url: `https://widget.indtix.com/embed/${b.event_id||'EVT001'}`,
+    customization: { color: b.color||'#1a56db', size: b.size||'medium' }, status: 'ready' })
+})
+
+// ── Phase 41 Health ──
+app.get('/api/v41/health', (c) => c.json({
+  status: 'ok', platform: 'INDTIX', version: 'v41.0.0',
+  phase: 'Phase 41', theme: 'Enterprise B2B, Corporate Events & Government/MICE Platform',
+  new_endpoints: 90, total_endpoints: 2719,
+  features: ['Corporate RFP Engine','Government & Institutional Ticketing','MICE Platform',
+    'Enterprise Account Management & SSO','B2B Marketplace & Vendor Management',
+    'Corporate Travel & Expense Integration','Bulk Ticketing & Group Booking Engine',
+    'Compliance, Audit & Contract Management','B2B Analytics & ROI Reporting',
+    'White-Label & API-First Partner Platform']
+}))
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 41 — ENTERPRISE B2B, CORPORATE EVENTS &
+//               GOVERNMENT/MICE PLATFORM
 // ═══════════════════════════════════════════════════════════
 
 export default app

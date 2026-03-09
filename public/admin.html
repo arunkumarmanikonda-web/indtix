@@ -6293,4 +6293,284 @@ async function loadAllP40Admin() {
 loadAllP40Admin();
 </script>
 <!-- END PHASE 40 ADMIN PORTAL -->
+
+<!-- ═══════════════════════════════════════════════════════
+     PHASE 41 — ENTERPRISE B2B, CORPORATE EVENTS & GOVT/MICE
+     ═══════════════════════════════════════════════════════ -->
+<div class="phase-section" id="phase41-admin">
+  <h2 class="phase-title">Phase 41 — Enterprise B2B, Corporate Events & Government/MICE Platform</h2>
+
+  <!-- Corporate RFP & Events -->
+  <div class="module-card">
+    <h3>🏢 Corporate Event Management & RFP Engine</h3>
+    <div id="p41-rfp-stats" class="stats-grid"></div>
+    <div id="p41-events-calendar" class="data-table"></div>
+  </div>
+
+  <!-- Government & Institutional -->
+  <div class="module-card">
+    <h3>🏛️ Government & Institutional Ticketing</h3>
+    <div id="p41-govt-stats" class="stats-grid"></div>
+    <div id="p41-tender-status" class="info-alert"></div>
+  </div>
+
+  <!-- MICE Platform -->
+  <div class="module-card">
+    <h3>🌐 MICE Platform (Meetings, Incentives, Conferences, Exhibitions)</h3>
+    <div id="p41-mice-stats" class="stats-grid"></div>
+    <div id="p41-mice-events" class="data-table"></div>
+  </div>
+
+  <!-- Enterprise SSO -->
+  <div class="module-card">
+    <h3>🔐 Enterprise Account Management & SSO</h3>
+    <div id="p41-sso-stats" class="stats-grid"></div>
+    <div id="p41-sso-providers" class="info-alert"></div>
+  </div>
+
+  <!-- B2B Marketplace -->
+  <div class="module-card">
+    <h3>🛒 B2B Marketplace & Vendor Management</h3>
+    <div id="p41-b2b-stats" class="stats-grid"></div>
+  </div>
+
+  <!-- B2B Analytics -->
+  <div class="module-card">
+    <h3>📊 B2B Analytics & ROI Reporting</h3>
+    <div id="p41-b2b-analytics" class="stats-grid"></div>
+    <div id="p41-pipeline" class="success-alert"></div>
+  </div>
+
+  <!-- White-Label Platform -->
+  <div class="module-card">
+    <h3>🏷️ White-Label & API-First Partner Platform</h3>
+    <div id="p41-whitelabel-stats" class="stats-grid"></div>
+    <div id="p41-api-usage" class="info-alert"></div>
+  </div>
+
+  <!-- Compliance & Bulk -->
+  <div class="module-card">
+    <h3>⚖️ Compliance & Bulk Ticketing</h3>
+    <div id="p41-compliance-stats" class="stats-grid"></div>
+  </div>
+</div>
+
+<script>
+async function loadP41RFP() {
+  const [rfp, events, reporting] = await Promise.all([
+    fetch('/api/v41/corporate/rfp').then(r=>r.json()),
+    fetch('/api/v41/corporate/events').then(r=>r.json()),
+    fetch('/api/v41/corporate/reporting').then(r=>r.json())
+  ]);
+  document.getElementById('p41-rfp-stats').innerHTML =
+    `<span>Active RFPs: ${rfp.active_rfps}</span><span>Win Rate: ${rfp.win_rate_pct}%</span>` +
+    `<span>Avg Response: ${rfp.avg_response_time_hrs}h</span><span>RFP Value: ₹${rfp.total_rfp_value_cr}Cr</span>`;
+  document.getElementById('p41-events-calendar').innerHTML =
+    `<span>Events YTD: ${events.events_ytd}</span><span>Avg Attendees: ${events.avg_attendees.toLocaleString()}</span>` +
+    `<span>Repeat Clients: ${events.repeat_client_rate_pct}%</span><span>NPS: ${events.nps}</span>` +
+    `<span>Q1 Revenue: ₹${reporting.corporate_revenue_cr}Cr</span><span>Satisfaction: ${reporting.client_satisfaction_avg}/10</span>`;
+}
+async function loadP41Govt() {
+  const [govt, tenders, compliance] = await Promise.all([
+    fetch('/api/v41/govt/overview').then(r=>r.json()),
+    fetch('/api/v41/govt/tenders').then(r=>r.json()),
+    fetch('/api/v41/govt/compliance').then(r=>r.json())
+  ]);
+  document.getElementById('p41-govt-stats').innerHTML =
+    `<span>Govt Clients: ${govt.active_govt_clients}</span><span>Tickets Managed: ${(govt.total_tickets_managed/1000).toFixed(0)}K</span>` +
+    `<span>Active Tenders: ${tenders.active_tenders}</span><span>Tenders Won YTD: ${tenders.tenders_won_ytd}</span>`;
+  document.getElementById('p41-tender-status').innerHTML =
+    `Compliance Score: ${tenders.compliance_score}% | GFR: ${compliance.gfr_compliance?'✅':'❌'} | GeM: ${compliance.gem_registered?'✅':'❌'} | PFMS: ${compliance.pfms_integration||true?'✅':'❌'}`;
+}
+async function loadP41MICE() {
+  const [overview, venues, exhibitions] = await Promise.all([
+    fetch('/api/v41/mice/overview').then(r=>r.json()),
+    fetch('/api/v41/mice/venues').then(r=>r.json()),
+    fetch('/api/v41/mice/exhibitions').then(r=>r.json())
+  ]);
+  document.getElementById('p41-mice-stats').innerHTML =
+    `<span>Annual Revenue: ₹${overview.annual_mice_revenue_cr}Cr</span><span>Events/Year: ${overview.events_per_year.toLocaleString()}</span>` +
+    `<span>Countries: ${overview.countries_served}</span><span>NPS: ${overview.nps}</span>`;
+  document.getElementById('p41-mice-events').innerHTML =
+    `<span>Partner Venues: ${venues.total_partner_venues}</span><span>Active Exhibitions: ${exhibitions.active_exhibitions}</span>` +
+    `<span>Exhibitors: ${exhibitions.exhibitors.toLocaleString()}</span><span>Expected Visitors: ${(exhibitions.visitors_expected/1000).toFixed(0)}K</span>`;
+}
+async function loadP41SSO() {
+  const [accounts, audit] = await Promise.all([
+    fetch('/api/v41/enterprise/accounts').then(r=>r.json()),
+    fetch('/api/v41/enterprise/sso/analytics').then(r=>r.json())
+  ]);
+  document.getElementById('p41-sso-stats').innerHTML =
+    `<span>Enterprise Clients: ${accounts.total_enterprise_clients}</span><span>SSO Integrations: ${accounts.active_sso_integrations}</span>` +
+    `<span>Enterprise Users: ${(accounts.total_enterprise_users/1000).toFixed(0)}K</span><span>MFA Enforced: ${accounts.mfa_enforcement_pct}%</span>`;
+  document.getElementById('p41-sso-providers').innerHTML =
+    `Daily SSO Logins: ${audit.daily_sso_logins.toLocaleString()} | Failed Auth: ${audit.failed_auth_rate_pct}% | Active Sessions: ${audit.active_sessions_now}`;
+}
+async function loadP41B2B() {
+  const [marketplace, analytics] = await Promise.all([
+    fetch('/api/v41/b2b/marketplace').then(r=>r.json()),
+    fetch('/api/v41/b2b/analytics').then(r=>r.json())
+  ]);
+  document.getElementById('p41-b2b-stats').innerHTML =
+    `<span>Vendors: ${marketplace.registered_vendors.toLocaleString()}</span><span>Verified: ${marketplace.verified_vendors.toLocaleString()}</span>` +
+    `<span>GMV: ₹${marketplace.total_gmv_cr}Cr</span><span>Avg Rating: ${marketplace.avg_rating}⭐</span>`;
+}
+async function loadP41Analytics() {
+  const [analytics, forecast, benchmarks] = await Promise.all([
+    fetch('/api/v41/b2b/analytics/overview').then(r=>r.json()),
+    fetch('/api/v41/b2b/analytics/forecast').then(r=>r.json()),
+    fetch('/api/v41/b2b/analytics/benchmarks').then(r=>r.json())
+  ]);
+  document.getElementById('p41-b2b-analytics').innerHTML =
+    `<span>B2B Revenue: ₹${analytics.total_b2b_revenue_cr}Cr</span><span>YoY Growth: ${analytics.yoy_growth_pct}%</span>` +
+    `<span>Clients: ${analytics.client_count}</span><span>NRR: ${benchmarks.industix_nps} NPS</span>`;
+  document.getElementById('p41-pipeline').innerHTML =
+    `FY26-27 Forecast: ₹${forecast.fy2026_27_forecast_cr}Cr | Confidence: ${forecast.confidence_interval_pct}% | ROI vs Industry: +${benchmarks.outperformance_pct}%`;
+}
+async function loadP41Whitelabel() {
+  const [overview, usage] = await Promise.all([
+    fetch('/api/v41/whitelabel/overview').then(r=>r.json()),
+    fetch('/api/v41/whitelabel/api/usage').then(r=>r.json())
+  ]);
+  document.getElementById('p41-whitelabel-stats').innerHTML =
+    `<span>Active Partners: ${overview.active_partners}</span><span>WL Deployments: ${overview.white_label_deployments}</span>` +
+    `<span>Partner GMV: ₹${overview.partner_gmv_cr}Cr</span><span>API Calls/Day: ${(overview.api_calls_per_day/1000000).toFixed(2)}M</span>`;
+  document.getElementById('p41-api-usage').innerHTML =
+    `API Calls Today: ${(usage.calls_today/1000000).toFixed(2)}M | Latency: ${usage.avg_latency_ms}ms | Error Rate: ${usage.error_rate_pct}%`;
+}
+async function loadP41Compliance() {
+  const [compliance, bulk] = await Promise.all([
+    fetch('/api/v41/compliance/overview').then(r=>r.json()),
+    fetch('/api/v41/bulk/overview').then(r=>r.json())
+  ]);
+  document.getElementById('p41-compliance-stats').innerHTML =
+    `<span>Active Contracts: ${compliance.active_contracts}</span><span>Compliance Score: ${compliance.compliance_score}%</span>` +
+    `<span>Bulk Orders YTD: ${bulk.bulk_orders_ytd.toLocaleString()}</span><span>Bulk Tickets: ${(bulk.total_tickets_bulk/1000000).toFixed(2)}M</span>` +
+    `<span>Fulfillment: ${bulk.fulfilment_time_hrs}h</span><span>Bulk Revenue: ₹${bulk.bulk_revenue_cr}Cr</span>`;
+}
+async function loadAllP41Admin() {
+  await Promise.all([loadP41RFP(), loadP41Govt(), loadP41MICE(), loadP41SSO(), loadP41B2B(), loadP41Analytics(), loadP41Whitelabel(), loadP41Compliance()]);
+}
+loadAllP41Admin();
+</script>
+<!-- END PHASE 41 ADMIN PORTAL -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     PHASE 41 — ENTERPRISE B2B, CORPORATE EVENTS & MICE
+     Admin Portal Panel
+     ═══════════════════════════════════════════════════════════ -->
+<div class="phase-section" id="phase41-admin">
+  <h2 class="phase-title">Phase 41 — Enterprise B2B, Corporate Events & Government/MICE Platform</h2>
+
+  <div class="metrics-grid">
+    <div class="metric-card" id="p41-rfp-card">
+      <div class="metric-label">Active RFPs</div>
+      <div class="metric-value" id="p41-rfp-active">—</div>
+    </div>
+    <div class="metric-card" id="p41-rfp-val-card">
+      <div class="metric-label">Total RFP Value (₹Cr)</div>
+      <div class="metric-value" id="p41-rfp-value">—</div>
+    </div>
+    <div class="metric-card" id="p41-b2b-rev-card">
+      <div class="metric-label">B2B Revenue Q1 (₹Cr)</div>
+      <div class="metric-value" id="p41-b2b-rev">—</div>
+    </div>
+    <div class="metric-card" id="p41-clients-card">
+      <div class="metric-label">Enterprise Clients</div>
+      <div class="metric-value" id="p41-clients">—</div>
+    </div>
+    <div class="metric-card" id="p41-mice-card">
+      <div class="metric-label">MICE Revenue (₹Cr/yr)</div>
+      <div class="metric-value" id="p41-mice-rev">—</div>
+    </div>
+    <div class="metric-card" id="p41-compliance-card">
+      <div class="metric-label">Compliance Score (%)</div>
+      <div class="metric-value" id="p41-compliance">—</div>
+    </div>
+  </div>
+
+  <div class="metrics-grid">
+    <div class="metric-card" id="p41-govt-card">
+      <div class="metric-label">Govt Clients</div>
+      <div class="metric-value" id="p41-govt-clients">—</div>
+    </div>
+    <div class="metric-card" id="p41-sso-card">
+      <div class="metric-label">SSO Integrations</div>
+      <div class="metric-value" id="p41-sso">—</div>
+    </div>
+    <div class="metric-card" id="p41-vendors-card">
+      <div class="metric-label">Verified Vendors</div>
+      <div class="metric-value" id="p41-vendors">—</div>
+    </div>
+    <div class="metric-card" id="p41-bulk-card">
+      <div class="metric-label">Bulk Tickets (YTD)</div>
+      <div class="metric-value" id="p41-bulk">—</div>
+    </div>
+    <div class="metric-card" id="p41-wl-card">
+      <div class="metric-label">White-Label Partners</div>
+      <div class="metric-value" id="p41-wl">—</div>
+    </div>
+    <div class="metric-card" id="p41-nrr-card">
+      <div class="metric-label">NRR (%)</div>
+      <div class="metric-value" id="p41-nrr">—</div>
+    </div>
+  </div>
+
+  <div class="success-alert" id="p41-admin-summary">
+    Phase 41 — loading B2B & MICE metrics…
+  </div>
+</div>
+
+<script>
+async function loadP41RFP() {
+  const d = await fetch('/api/v41/corporate/rfp').then(r=>r.json());
+  document.getElementById('p41-rfp-active').textContent = (d.active_rfps||0).toLocaleString();
+  document.getElementById('p41-rfp-value').textContent = `₹${d.total_rfp_value_cr||0}Cr`;
+}
+async function loadP41B2BAnalytics() {
+  const d = await fetch('/api/v41/b2b/analytics/overview').then(r=>r.json());
+  document.getElementById('p41-b2b-rev').textContent = `₹${d.total_b2b_revenue_cr||0}Cr`;
+  document.getElementById('p41-clients').textContent = (d.client_count||0).toLocaleString();
+}
+async function loadP41MICE() {
+  const d = await fetch('/api/v41/mice/overview').then(r=>r.json());
+  document.getElementById('p41-mice-rev').textContent = `₹${d.annual_mice_revenue_cr||0}Cr`;
+}
+async function loadP41Govt() {
+  const d = await fetch('/api/v41/govt/overview').then(r=>r.json());
+  document.getElementById('p41-govt-clients').textContent = (d.active_govt_clients||0).toLocaleString();
+}
+async function loadP41Enterprise() {
+  const d = await fetch('/api/v41/enterprise/accounts').then(r=>r.json());
+  document.getElementById('p41-sso').textContent = (d.active_sso_integrations||0).toLocaleString();
+}
+async function loadP41Vendors() {
+  const d = await fetch('/api/v41/b2b/vendors').then(r=>r.json());
+  document.getElementById('p41-vendors').textContent = (d.verified_pct?`${d.total} (${d.verified_pct}% verified)`:'—');
+}
+async function loadP41Bulk() {
+  const d = await fetch('/api/v41/bulk/overview').then(r=>r.json());
+  document.getElementById('p41-bulk').textContent = (d.total_tickets_bulk||0).toLocaleString();
+}
+async function loadP41WL() {
+  const d = await fetch('/api/v41/whitelabel/overview').then(r=>r.json());
+  document.getElementById('p41-wl').textContent = (d.active_partners||0).toLocaleString();
+}
+async function loadP41Compliance() {
+  const d = await fetch('/api/v41/compliance/overview').then(r=>r.json());
+  document.getElementById('p41-compliance').textContent = `${d.compliance_score||0}%`;
+}
+async function loadP41NRR() {
+  const d = await fetch('/api/v41/b2b/analytics/revenue').then(r=>r.json());
+  document.getElementById('p41-nrr').textContent = `${d.nrr_pct||0}%`;
+  document.getElementById('p41-admin-summary').textContent =
+    `Phase 41 ✅ | B2B Revenue: ₹${d.q1_2026_cr||0}Cr | NRR: ${d.nrr_pct||0}% | Logo Retention: ${d.logo_retention_pct||0}% | ARR: ₹${d.arr_cr||0}Cr`;
+}
+async function loadAllP41Admin() {
+  await Promise.all([loadP41RFP(), loadP41B2BAnalytics(), loadP41MICE(), loadP41Govt(),
+    loadP41Enterprise(), loadP41Vendors(), loadP41Bulk(), loadP41WL(), loadP41Compliance(), loadP41NRR()]);
+}
+loadAllP41Admin();
+</script>
+<!-- END PHASE 41 ADMIN PORTAL -->
 </body></html>

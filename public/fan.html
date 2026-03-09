@@ -6799,5 +6799,68 @@ async function loadAllP40Fan() { await Promise.all([loadFanWallet(), loadFanUPI(
 loadAllP40Fan();
 </script>
 <!-- END PHASE 40 FAN PORTAL -->
+
+<!-- PHASE 41 FAN PORTAL -->
+<div class="phase-section" id="phase41-fan">
+  <h2 class="phase-title">Phase 41 — B2B & Corporate Event Discovery</h2>
+  <div class="module-card">
+    <h3>🏢 Corporate & MICE Events Near You</h3>
+    <div id="p41-fan-mice" class="stats-grid"></div>
+    <div id="p41-fan-conferences" class="info-alert"></div>
+  </div>
+  <div class="module-card">
+    <h3>🎟️ Bulk & Group Tickets</h3>
+    <div id="p41-fan-bulk" class="stats-grid"></div>
+  </div>
+</div>
+<script>
+async function loadFanMICE() {
+  const [mice, conf, bulk] = await Promise.all([
+    fetch('/api/v41/mice/overview').then(r=>r.json()),
+    fetch('/api/v41/mice/conferences').then(r=>r.json()),
+    fetch('/api/v41/bulk/groups').then(r=>r.json())
+  ]);
+  document.getElementById('p41-fan-mice').innerHTML =
+    `<span>MICE Events: ${mice.events_per_year.toLocaleString()}/yr</span><span>Countries: ${mice.countries_served}</span>` +
+    `<span>NPS: ${mice.nps}</span><span>Avg Size: ${mice.avg_event_size.toLocaleString()}</span>`;
+  document.getElementById('p41-fan-conferences').innerHTML =
+    `Conferences: ${conf.active_conferences} | Avg Delegates: ${conf.avg_delegates.toLocaleString()} | Hybrid: ${conf.virtual_hybrid_capability?'✅':'❌'} | Languages: ${conf.simultaneous_interpretation_languages}`;
+  document.getElementById('p41-fan-bulk').innerHTML =
+    `<span>Active Groups: ${bulk.active_groups}</span><span>Avg Group Size: ${bulk.avg_group_size}</span>` +
+    `<span>Check-In: ${bulk.check_in_mode}</span>`;
+}
+async function loadAllP41Fan() { await loadFanMICE(); }
+loadAllP41Fan();
+</script>
+<!-- END PHASE 41 FAN PORTAL -->
+
+<!-- PHASE 41 FAN PORTAL -->
+<div class="phase-section" id="phase41-fan">
+  <h2 class="phase-title">Phase 41 — Enterprise B2B & Partner Offers for Fans</h2>
+  <div class="metrics-grid">
+    <div class="metric-card"><div class="metric-label">Bulk Group Offers</div><div class="metric-value" id="p41f-groups">—</div></div>
+    <div class="metric-card"><div class="metric-label">White-Label Events</div><div class="metric-value" id="p41f-wl-events">—</div></div>
+    <div class="metric-card"><div class="metric-label">Partner API Calls/Day</div><div class="metric-value" id="p41f-api">—</div></div>
+    <div class="metric-card"><div class="metric-label">Corporate Fan Packages</div><div class="metric-value" id="p41f-packages">—</div></div>
+  </div>
+  <div class="success-alert" id="p41f-summary">Phase 41 — loading partner & group data…</div>
+</div>
+<script>
+async function loadFanGroups() {
+  const d = await fetch('/api/v41/bulk/groups').then(r=>r.json());
+  document.getElementById('p41f-groups').textContent = (d.active_groups||0).toLocaleString();
+  document.getElementById('p41f-packages').textContent = `Avg ${d.avg_group_size||0} fans/group`;
+}
+async function loadFanWLEvents() {
+  const d = await fetch('/api/v41/whitelabel/overview').then(r=>r.json());
+  document.getElementById('p41f-wl-events').textContent = (d.active_partners||0).toLocaleString();
+  document.getElementById('p41f-api').textContent = (d.api_calls_per_day||0).toLocaleString();
+  document.getElementById('p41f-summary').textContent =
+    `Phase 41 ✅ | Active Groups: ${d.active_partners||0} partner platforms | API: ${(d.api_calls_per_day||0).toLocaleString()} calls/day | GMV: ₹${d.partner_gmv_cr||0}Cr`;
+}
+async function loadAllP40Fan() { await Promise.all([loadFanGroups(), loadFanWLEvents()]); }
+loadAllP40Fan();
+</script>
+<!-- END PHASE 41 FAN PORTAL -->
 </body>
 </html>
