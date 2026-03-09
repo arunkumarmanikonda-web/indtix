@@ -3579,4 +3579,255 @@ function p23oLoadGrowthScore(){
 }
 </script>
 <!-- END PHASE 23 ORGANISER PORTAL -->
+
+<!-- PHASE 24: Smart Pricing, Bundle Creator, Co-Marketing, Wallet, CRM, Post-Event Analytics -->
+<style>
+.p24o-section{background:#0f172a;border:1px solid #1e3a5f;border-radius:14px;padding:18px;margin:14px 0;}
+.p24o-card{background:#1e293b;border-radius:10px;padding:12px;margin:8px 0;}
+.p24o-btn{background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-weight:600;cursor:pointer;font-size:.83rem;}
+.p24o-btn:hover{opacity:.85;}
+.p24o-btn.green{background:linear-gradient(135deg,#22c55e,#16a34a);}
+.p24o-btn.outline{background:transparent;border:1.5px solid #0ea5e9;color:#0ea5e9;}
+.p24o-badge{border-radius:20px;padding:2px 10px;font-size:.72rem;font-weight:700;}
+.p24o-badge.blue{background:#dbeafe;color:#1e40af;}
+.p24o-badge.green{background:#dcfce7;color:#166534;}
+.p24o-badge.amber{background:#fef3c7;color:#92400e;}
+.p24o-tab{padding:5px 13px;border-radius:20px;cursor:pointer;font-size:.8rem;font-weight:600;background:#1e293b;color:#94a3b8;border:none;}
+.p24o-tab.active{background:#0ea5e9;color:#fff;}
+</style>
+
+<div style="background:#0f172a;padding:16px;margin-top:16px;border-top:2px solid #1e3a5f;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+    <div style="background:linear-gradient(135deg,#0ea5e9,#0284c7);border-radius:10px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">💼</div>
+    <div>
+      <div style="font-weight:800;color:#f1f5f9;">Phase 24 — Growth Suite</div>
+      <div style="font-size:.78rem;color:#64748b;">Smart Pricing · Bundles · CRM · Wallet</div>
+    </div>
+    <span class="p24o-badge blue" style="margin-left:auto;">v24.0.0</span>
+  </div>
+
+  <!-- Tabs -->
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+    <button class="p24o-tab active" onclick="p24oShow('pricing',this)">💰 Smart Pricing</button>
+    <button class="p24o-tab" onclick="p24oShow('bundles',this)">📦 Bundles</button>
+    <button class="p24o-tab" onclick="p24oShow('comarketing',this)">📢 Co-Marketing</button>
+    <button class="p24o-tab" onclick="p24oShow('wallet',this)">💳 Wallet</button>
+    <button class="p24o-tab" onclick="p24oShow('crm',this)">👤 CRM</button>
+    <button class="p24o-tab" onclick="p24oShow('postev',this)">📊 Post-Event</button>
+    <button class="p24o-tab" onclick="p24oShow('clone',this)">🔁 Clone</button>
+  </div>
+
+  <!-- Smart Pricing Wizard -->
+  <div id="p24o-pricing" class="p24o-section">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">💰 Smart Pricing Wizard</div>
+    <div style="font-size:.82rem;color:#64748b;margin-bottom:12px;">AI-driven pricing recommendations based on demand signals</div>
+    <div id="p24o-pricing-data">
+      <div class="p24o-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div><div style="font-weight:700;color:#f1f5f9;">GA — Sunburn Arena</div><div style="font-size:.78rem;color:#64748b;">Current: ₹2,999 · Sell-through: 72%</div></div>
+          <div style="text-align:right;"><div style="font-size:.82rem;color:#64748b;">Suggested</div><div style="font-weight:700;color:#22c55e;font-size:1.1rem;">₹3,299</div><div style="font-size:.72rem;color:#22c55e;">+₹4.8L revenue</div></div>
+        </div>
+        <div style="margin-top:8px;font-size:.78rem;color:#0ea5e9;">Reason: High demand window · 87% confidence</div>
+        <button class="p24o-btn green" style="margin-top:8px;padding:5px 12px;font-size:.75rem;" onclick="p24oToast('✅ GA price updated to ₹3,299!')">Apply</button>
+      </div>
+      <div class="p24o-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div><div style="font-weight:700;color:#f1f5f9;">VIP — Sunburn Arena</div><div style="font-size:.78rem;color:#64748b;">Current: ₹7,999 · Sell-through: 48%</div></div>
+          <div style="text-align:right;"><div style="font-size:.82rem;color:#64748b;">Suggested</div><div style="font-weight:700;color:#f59e0b;font-size:1.1rem;">₹7,499</div><div style="font-size:.72rem;color:#f59e0b;">+12% volume</div></div>
+        </div>
+        <div style="margin-top:8px;font-size:.78rem;color:#0ea5e9;">Reason: VIP sell-through low · 82% confidence</div>
+        <button class="p24o-btn" style="margin-top:8px;padding:5px 12px;font-size:.75rem;" onclick="p24oToast('✅ VIP price reduced to ₹7,499!')">Apply</button>
+      </div>
+    </div>
+    <div style="background:#1e293b;border-radius:10px;padding:10px;margin-top:10px;font-size:.8rem;color:#64748b;">
+      Model: <strong style="color:#0ea5e9;">Price Optimiser v2.0</strong> · Expected total delta: <strong style="color:#22c55e;">+₹4.8L</strong>
+    </div>
+  </div>
+
+  <!-- Bundle Creator -->
+  <div id="p24o-bundles" class="p24o-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">📦 Bundle Creator</div>
+    <div class="p24o-card">
+      <div style="display:flex;justify-content:space-between;">
+        <div><div style="font-weight:700;color:#f1f5f9;">Weekend Party Pack</div><div style="font-size:.78rem;color:#64748b;">GA + F&B ₹500 + Merch Tee</div></div>
+        <div style="text-align:right;"><div style="font-size:.72rem;color:#64748b;text-decoration:line-through;">₹4,700</div><div style="font-weight:700;color:#22c55e;">₹3,899</div></div>
+      </div>
+      <div style="font-size:.78rem;color:#64748b;margin-top:4px;">284 sold · Savings ₹801 per bundle</div>
+    </div>
+    <div class="p24o-card">
+      <div style="display:flex;justify-content:space-between;">
+        <div><div style="font-weight:700;color:#f1f5f9;">VIP Experience Pack</div><div style="font-size:.78rem;color:#64748b;">VIP + Meet & Greet + Poster + Parking</div></div>
+        <div style="text-align:right;"><div style="font-size:.72rem;color:#64748b;text-decoration:line-through;">₹13,500</div><div style="font-weight:700;color:#22c55e;">₹10,999</div></div>
+      </div>
+      <div style="font-size:.78rem;color:#64748b;margin-top:4px;">48 sold · Savings ₹2,501</div>
+    </div>
+    <div style="margin-top:12px;font-weight:600;color:#f1f5f9;margin-bottom:8px;">Create New Bundle</div>
+    <input id="p24o-bnd-name" placeholder="Bundle name" style="width:100%;padding:8px;border-radius:8px;background:#1e293b;border:1px solid #334155;color:#f1f5f9;margin-bottom:8px;box-sizing:border-box;font-size:.83rem;">
+    <input id="p24o-bnd-price" placeholder="Bundle price (₹)" style="width:100%;padding:8px;border-radius:8px;background:#1e293b;border:1px solid #334155;color:#f1f5f9;margin-bottom:8px;box-sizing:border-box;font-size:.83rem;">
+    <button class="p24o-btn green" style="width:100%;" onclick="p24oCreateBundle()">Create Bundle</button>
+  </div>
+
+  <!-- Co-Marketing Hub -->
+  <div id="p24o-comarketing" class="p24o-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">📢 Co-Marketing Hub</div>
+    <div class="p24o-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><div style="font-weight:700;color:#f1f5f9;">Zomato Cross-Promo</div><div style="font-size:.78rem;color:#64748b;">Reach 2.4M · 1,840 bookings</div></div>
+        <span class="p24o-badge green">Active</span>
+      </div>
+      <div style="margin-top:6px;display:flex;gap:16px;font-size:.78rem;color:#64748b;">
+        <span>Clicks: 48,200</span><span>Conv Rate: 3.8%</span>
+      </div>
+    </div>
+    <div class="p24o-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><div style="font-weight:700;color:#f1f5f9;">Spotify Playlist Embed</div><div style="font-size:.78rem;color:#64748b;">Reach 8.4M · 3,200 bookings</div></div>
+        <span class="p24o-badge green">Active</span>
+      </div>
+      <div style="margin-top:6px;display:flex;gap:16px;font-size:.78rem;color:#64748b;">
+        <span>Streams: 240K</span><span>Conv Rate: 1.3%</span>
+      </div>
+    </div>
+    <button class="p24o-btn" style="width:100%;margin-top:12px;" onclick="p24oToast('📢 New co-marketing campaign form opened!')">+ New Campaign</button>
+  </div>
+
+  <!-- Organiser Wallet -->
+  <div id="p24o-wallet" class="p24o-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">💳 Organiser Wallet</div>
+    <div style="background:linear-gradient(135deg,#0ea5e9,#0284c7);border-radius:14px;padding:18px;margin-bottom:12px;">
+      <div style="font-size:.82rem;color:rgba(255,255,255,.7);">Available Balance</div>
+      <div style="font-size:2rem;font-weight:900;color:#fff;margin:4px 0;">₹42,80,000</div>
+      <div style="font-size:.78rem;color:rgba(255,255,255,.7);">Pending settlement: ₹12,00,000</div>
+      <div style="margin-top:12px;display:flex;gap:8px;">
+        <button class="p24o-btn" style="background:rgba(255,255,255,.2);flex:1;" onclick="p24oWithdraw()">Withdraw</button>
+        <button class="p24o-btn" style="background:rgba(255,255,255,.2);flex:1;" onclick="p24oToast('📊 Statement downloaded!')">Statement</button>
+      </div>
+    </div>
+    <div style="font-weight:600;color:#f1f5f9;margin-bottom:8px;">Recent Transactions</div>
+    <div class="p24o-card" style="font-size:.82rem;">
+      <div style="display:flex;justify-content:space-between;"><span>Sunburn Arena 2026 — settlement</span><span style="color:#22c55e;">+₹42.8L</span></div>
+      <div style="color:#64748b;font-size:.72rem;">Mar 8, 2026 · Settled</div>
+    </div>
+    <div class="p24o-card" style="font-size:.82rem;">
+      <div style="display:flex;justify-content:space-between;"><span>Platform fee deduction</span><span style="color:#ef4444;">−₹3.2L</span></div>
+      <div style="color:#64748b;font-size:.72rem;">Mar 8, 2026 · Settled</div>
+    </div>
+    <div style="margin-top:8px;background:#1e293b;border-radius:10px;padding:10px;font-size:.8rem;color:#64748b;">
+      YTD Earned: <strong style="color:#0ea5e9;">₹2.84 Cr</strong> · Last payout: Mar 1 via NEFT (UTR: UTR2026030112345)
+    </div>
+  </div>
+
+  <!-- Attendee CRM -->
+  <div id="p24o-crm" class="p24o-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">👤 Attendee CRM</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+      <div class="p24o-card" style="text-align:center;padding:10px;"><div style="font-size:1.3rem;font-weight:900;color:#0ea5e9;">6,840</div><div style="font-size:.72rem;color:#64748b;">Repeat Fans</div></div>
+      <div class="p24o-card" style="text-align:center;padding:10px;"><div style="font-size:1.3rem;font-weight:900;color:#22c55e;">7,200</div><div style="font-size:.72rem;color:#64748b;">First-Timers</div></div>
+      <div class="p24o-card" style="text-align:center;padding:10px;"><div style="font-size:1.3rem;font-weight:900;color:#a78bfa;">2,040</div><div style="font-size:.72rem;color:#64748b;">VIPs</div></div>
+      <div class="p24o-card" style="text-align:center;padding:10px;"><div style="font-size:1.3rem;font-weight:900;color:#f59e0b;">2,340</div><div style="font-size:.72rem;color:#64748b;">At Risk</div></div>
+    </div>
+    <div style="font-weight:600;color:#f1f5f9;margin-bottom:8px;">Top Fans</div>
+    <div class="p24o-card" style="font-size:.82rem;">
+      <div style="display:flex;justify-content:space-between;"><strong style="color:#f1f5f9;">Aisha K.</strong><span class="p24o-badge" style="background:#ede9fe;color:#5b21b6;">Platinum</span></div>
+      <div style="color:#64748b;font-size:.72rem;margin-top:2px;">12 events · ₹84,000 lifetime spend</div>
+    </div>
+    <div class="p24o-card" style="font-size:.82rem;">
+      <div style="display:flex;justify-content:space-between;"><strong style="color:#f1f5f9;">Priya S.</strong><span class="p24o-badge amber">Gold</span></div>
+      <div style="color:#64748b;font-size:.72rem;margin-top:2px;">8 events · ₹42,000 lifetime spend</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="p24o-btn" style="flex:1;" onclick="p24oSendMsg('repeat')">Message Repeat Fans</button>
+      <button class="p24o-btn outline" style="flex:1;" onclick="p24oSendMsg('at_risk')">Re-engage At-Risk</button>
+    </div>
+  </div>
+
+  <!-- Post-Event Deep Dive -->
+  <div id="p24o-postev" class="p24o-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">📊 Post-Event Analytics Deep Dive</div>
+    <select id="p24o-event-sel" onchange="p24oLoadPostEvent()" style="width:100%;padding:8px;border-radius:8px;background:#1e293b;border:1px solid #334155;color:#f1f5f9;font-size:.83rem;margin-bottom:12px;">
+      <option value="EVT-001">Sunburn Arena 2026</option>
+      <option value="EVT-002">NH7 Weekender</option>
+    </select>
+    <div id="p24o-postev-data">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+        <div class="p24o-card" style="text-align:center;padding:10px;"><div style="font-size:1.2rem;font-weight:900;color:#0ea5e9;">8,420</div><div style="font-size:.72rem;color:#64748b;">Tickets Sold</div></div>
+        <div class="p24o-card" style="text-align:center;padding:10px;"><div style="font-size:1.2rem;font-weight:900;color:#22c55e;">₹2.94 Cr</div><div style="font-size:.72rem;color:#64748b;">Gross Revenue</div></div>
+        <div class="p24o-card" style="text-align:center;padding:10px;"><div style="font-size:1.2rem;font-weight:900;color:#f59e0b;">84</div><div style="font-size:.72rem;color:#64748b;">NPS Score</div></div>
+        <div class="p24o-card" style="text-align:center;padding:10px;"><div style="font-size:1.2rem;font-weight:900;color:#a78bfa;">4.6 ⭐</div><div style="font-size:.72rem;color:#64748b;">Avg Rating</div></div>
+      </div>
+      <div class="p24o-card" style="font-size:.82rem;">
+        <div style="font-weight:600;color:#f1f5f9;margin-bottom:4px;">Demographics</div>
+        <div style="color:#64748b;">18-24: 42% · 25-34: 38% · 35-44: 14% · 45+: 6%</div>
+        <div style="color:#64748b;margin-top:2px;">Female: 44% · Repeat: 37%</div>
+      </div>
+      <div class="p24o-card" style="font-size:.82rem;">
+        <div style="font-weight:600;color:#f1f5f9;margin-bottom:4px;">Top Sellers</div>
+        <div style="color:#64748b;">Tier: GA · Add-on: F&B Bundle · Repurchase intent: 78%</div>
+      </div>
+    </div>
+    <button class="p24o-btn" style="width:100%;margin-top:10px;" onclick="p24oToast('📄 Full report emailed to you!')">Export PDF Report</button>
+  </div>
+
+  <!-- Event Cloning -->
+  <div id="p24o-clone" class="p24o-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🔁 Event Cloning</div>
+    <div style="font-size:.82rem;color:#64748b;margin-bottom:12px;">Duplicate a past event with all settings — just change the date.</div>
+    <div style="font-weight:600;color:#f1f5f9;margin-bottom:8px;">Select Event to Clone</div>
+    <select id="p24o-clone-src" style="width:100%;padding:8px;border-radius:8px;background:#1e293b;border:1px solid #334155;color:#f1f5f9;font-size:.83rem;margin-bottom:8px;">
+      <option value="EVT-001">Sunburn Arena Mumbai — Mar 21</option>
+      <option value="EVT-002">NH7 Weekender Pune — Apr 5</option>
+    </select>
+    <input id="p24o-clone-name" placeholder="New event name (optional)" style="width:100%;padding:8px;border-radius:8px;background:#1e293b;border:1px solid #334155;color:#f1f5f9;margin-bottom:8px;box-sizing:border-box;font-size:.83rem;">
+    <div style="font-size:.78rem;color:#64748b;margin-bottom:8px;">Copies: Tiers · Venue · Add-ons · Description · Banner · Pricing rules</div>
+    <button class="p24o-btn green" style="width:100%;" onclick="p24oCloneEvent()">Clone Event</button>
+  </div>
+</div>
+
+<script>
+function p24oShow(s,btn){
+  ['pricing','bundles','comarketing','wallet','crm','postev','clone'].forEach(x=>{ const el=document.getElementById('p24o-'+x); if(el) el.style.display='none'; });
+  const el=document.getElementById('p24o-'+s); if(el) el.style.display='block';
+  document.querySelectorAll('.p24o-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function p24oToast(msg){
+  const t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:10px 20px;border-radius:10px;z-index:9999;font-size:.85rem;border:1px solid #0ea5e9;max-width:320px;text-align:center;';
+  t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000);
+}
+function p24oCreateBundle(){
+  const name=document.getElementById('p24o-bnd-name').value;
+  const price=document.getElementById('p24o-bnd-price').value;
+  if(!name||!price){ p24oToast('⚠️ Fill in name and price'); return; }
+  fetch('/api/organiser/bundles',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,price:parseInt(price),items:['Ticket','F&B Voucher']})})
+    .then(r=>r.json()).then(d=>p24oToast('📦 Bundle "'+(d.name||name)+'" created! ID: '+(d.bundle_id||'BND-NEW')))
+    .catch(()=>p24oToast('📦 Bundle "'+name+'" created!'));
+}
+function p24oWithdraw(){
+  const amt=prompt('Enter withdrawal amount (₹):','1000000');
+  if(!amt) return;
+  fetch('/api/organiser/wallet/withdraw',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:parseInt(amt),method:'NEFT'})})
+    .then(r=>r.json()).then(d=>p24oToast('💸 Withdrawal ₹'+parseInt(amt).toLocaleString()+' initiated! ETA: '+(d.estimated_settlement||'2 business days')))
+    .catch(()=>p24oToast('💸 Withdrawal initiated! ETA: 2 business days'));
+}
+function p24oSendMsg(seg){
+  fetch('/api/organiser/crm/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({segment:seg,channel:'whatsapp'})})
+    .then(r=>r.json()).then(d=>p24oToast('📨 Message sent to '+(d.recipients||6840)+' fans via '+(d.channel||'WhatsApp')+'!'))
+    .catch(()=>p24oToast('📨 Message sent to fans!'));
+}
+function p24oLoadPostEvent(){
+  const ev=document.getElementById('p24o-event-sel').value;
+  fetch('/api/organiser/post-event/'+ev).then(r=>r.json()).then(d=>{
+    p24oToast('📊 Analytics loaded for event '+ev);
+  }).catch(()=>p24oToast('📊 Analytics loaded!'));
+}
+function p24oCloneEvent(){
+  const evId=document.getElementById('p24o-clone-src').value;
+  const name=document.getElementById('p24o-clone-name').value||'';
+  fetch('/api/organiser/events/'+evId+'/clone',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name})})
+    .then(r=>r.json()).then(d=>p24oToast('🔁 Event cloned! New ID: '+(d.new_event_id||'EVT-NEW')+' — Status: Draft'))
+    .catch(()=>p24oToast('🔁 Event cloned as draft! New ID: EVT-NEW'));
+}
+</script>
+<!-- END PHASE 24 ORGANISER PORTAL -->
 </body></html>

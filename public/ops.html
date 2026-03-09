@@ -1912,5 +1912,166 @@ function ops23SecurityOps(){
 }
 </script>
 <!-- END PHASE 23 OPS PORTAL -->
+
+<script>
+(function(){
+  const wrap=document.querySelector('.sidebar, nav, .ops-nav');
+  const btns=[['💰','Cost Opt','showP24Ops()'],['🚩','Feat Flags','showP24Ops()'],['📊','Load Tests','showP24Ops()'],['🆘','DR Runbook','showP24Ops()'],['📦','Deprecations','showP24Ops()'],['🧾','Billing Rec','showP24Ops()']];
+  if(wrap){btns.forEach(([i,l,f])=>{const b=document.createElement('button');b.style.cssText='display:block;width:100%;text-align:left;padding:7px 10px;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:7px;color:#a78bfa;cursor:pointer;font-size:.79rem;margin-bottom:3px;';b.innerHTML=i+' '+l+' <span style="font-size:9px;background:#7c3aed;color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">P24</span>';b.onclick=function(){showP24Ops();};wrap.appendChild(b);});}
+})();
+function showP24Ops(){
+  const el=document.getElementById('p24ops');
+  if(el){el.style.display=el.style.display==='none'?'block':'none';}
+}
+</script>
+
+<!-- ═══════════════════════════════════════════════════════ PHASE 24 OPS PORTAL ═══ -->
+<style>
+.p24ops-wrap{padding:24px;background:#0f172a;min-height:100vh;color:#e2e8f0;font-family:'Inter',sans-serif}
+.p24ops-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px;margin-top:20px}
+.p24ops-card{background:#1e293b;border-radius:14px;padding:20px;border:1px solid #334155}
+.p24ops-title{font-size:20px;font-weight:700;color:#a78bfa;margin-bottom:16px}
+.p24ops-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;margin:2px}
+.p24ops-badge.green{background:#065f46;color:#6ee7b7}.p24ops-badge.blue{background:#1e3a5f;color:#93c5fd}
+.p24ops-badge.red{background:#7f1d1d;color:#fca5a5}.p24ops-badge.yellow{background:#78350f;color:#fcd34d}
+.p24ops-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #334155;font-size:13px}
+.p24ops-val{font-weight:700;color:#a78bfa}.p24ops-btn{background:#7c3aed;color:#fff;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;margin-top:10px;font-size:13px}
+.p24ops-kpi{text-align:center;background:#1e293b;border-radius:12px;padding:16px;border:1px solid #334155}
+.p24ops-kpi-val{font-size:28px;font-weight:800;color:#a78bfa}.p24ops-kpi-lbl{font-size:12px;color:#64748b;margin-top:4px}
+.p24ops-flag{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #334155;font-size:13px}
+.toggle-on{width:40px;height:22px;background:#7c3aed;border-radius:11px;cursor:pointer;display:flex;align-items:center;justify-content:flex-end;padding:2px}
+.toggle-off{width:40px;height:22px;background:#475569;border-radius:11px;cursor:pointer;display:flex;align-items:center;justify-content:flex-start;padding:2px}
+.toggle-thumb{width:18px;height:18px;background:#fff;border-radius:50%}
+</style>
+<div id="p24ops" class="p24ops-wrap" style="display:none">
+  <h2 style="color:#a78bfa;font-size:24px;font-weight:800;margin-bottom:8px">⚙️ Ops Portal — Phase 24</h2>
+  <p style="color:#64748b;margin-bottom:20px">Cost Optimiser · Feature Flags · Load Tests · DR Runbook · API Deprecation · Billing Reconciliation</p>
+
+  <!-- KPI Row -->
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:24px">
+    <div class="p24ops-kpi"><div class="p24ops-kpi-val">₹46k</div><div class="p24ops-kpi-lbl">Cost Savings Potential</div></div>
+    <div class="p24ops-kpi"><div class="p24ops-kpi-val">4</div><div class="p24ops-kpi-lbl">Feature Flags Active</div></div>
+    <div class="p24ops-kpi"><div class="p24ops-kpi-val">1,240</div><div class="p24ops-kpi-lbl">Peak RPS (Load Test)</div></div>
+    <div class="p24ops-kpi"><div class="p24ops-kpi-val">4</div><div class="p24ops-kpi-lbl">DR Scenarios Covered</div></div>
+    <div class="p24ops-kpi"><div class="p24ops-kpi-val">2</div><div class="p24ops-kpi-lbl">Deprecated Endpoints</div></div>
+    <div class="p24ops-kpi"><div class="p24ops-kpi-val">3.3%</div><div class="p24ops-kpi-lbl">Billing Variance</div></div>
+  </div>
+
+  <div class="p24ops-grid">
+    <!-- Cost Optimiser -->
+    <div class="p24ops-card">
+      <div class="p24ops-title">💰 Cost Optimiser</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div style="background:#0f172a;border-radius:8px;padding:12px;text-align:center"><div style="font-size:22px;font-weight:800;color:#f87171">₹3.44L</div><div style="font-size:11px;color:#64748b">Current Monthly</div></div>
+        <div style="background:#0f172a;border-radius:8px;padding:12px;text-align:center"><div style="font-size:22px;font-weight:800;color:#6ee7b7">₹2.98L</div><div style="font-size:11px;color:#64748b">Optimised Monthly</div></div>
+      </div>
+      <div id="p24ops-cost-list"></div>
+      <button class="p24ops-btn" onclick="loadOps24CostOpt()">🔄 Refresh Recommendations</button>
+    </div>
+
+    <!-- Feature Flags -->
+    <div class="p24ops-card">
+      <div class="p24ops-title">🚩 Feature Flag Manager</div>
+      <div id="p24ops-flags-list"></div>
+      <button class="p24ops-btn" onclick="loadOps24Flags()">🔄 Refresh Flags</button>
+    </div>
+
+    <!-- Load Tests -->
+    <div class="p24ops-card">
+      <div class="p24ops-title">📊 Load Test Results</div>
+      <div id="p24ops-lt-result"></div>
+      <button class="p24ops-btn" onclick="loadOps24LT()">🔄 Latest Results</button>
+    </div>
+
+    <!-- DR Runbook -->
+    <div class="p24ops-card">
+      <div class="p24ops-title">🆘 DR Runbook</div>
+      <div id="p24ops-dr-list"></div>
+      <button class="p24ops-btn" onclick="loadOps24DR()">🔄 Refresh Runbook</button>
+    </div>
+
+    <!-- API Deprecation -->
+    <div class="p24ops-card">
+      <div class="p24ops-title">📦 API Deprecation Tracker</div>
+      <div id="p24ops-dep-list"></div>
+      <button class="p24ops-btn" onclick="loadOps24Dep()">🔄 Refresh</button>
+    </div>
+
+    <!-- Billing Reconciliation -->
+    <div class="p24ops-card">
+      <div class="p24ops-title">🧾 Billing Reconciliation</div>
+      <div id="p24ops-billing-list"></div>
+      <button class="p24ops-btn" onclick="loadOps24Billing()">🔄 Refresh</button>
+    </div>
+  </div>
+</div>
+
+<script>
+async function loadOps24CostOpt(){
+  const d=await fetch('/api/ops/cost-optimiser').then(r=>r.json())
+  document.getElementById('p24ops-cost-list').innerHTML=d.recommendations.map(r=>`
+    <div class="p24ops-row"><span>${r.area}</span><span class="p24ops-val" style="color:#6ee7b7">₹${(r.saving_usd*83).toLocaleString()}</span></div>
+    <div style="font-size:11px;color:#64748b;padding:4px 0 8px">${r.action} | Effort: ${r.effort} | ROI: ${r.roi_days}d</div>
+  `).join('')
+}
+async function loadOps24Flags(){
+  const d=await fetch('/api/ops/feature-flags').then(r=>r.json())
+  document.getElementById('p24ops-flags-list').innerHTML=d.flags.map(f=>`
+    <div class="p24ops-flag">
+      <div><div style="font-weight:600">${f.flag}</div><div style="font-size:11px;color:#64748b">${f.rollout_pct}% rollout</div></div>
+      <div class="${f.enabled?'toggle-on':'toggle-off'}" onclick="opsT24('Flag ${f.flag} toggled')"><div class="toggle-thumb"></div></div>
+    </div>
+  `).join('')
+}
+async function loadOps24LT(){
+  const d=await fetch('/api/ops/load-tests').then(r=>r.json())
+  const lt=d.latest
+  document.getElementById('p24ops-lt-result').innerHTML=`
+    <div class="p24ops-row"><span>Test ID</span><span class="p24ops-val">${lt.test_id}</span></div>
+    <div class="p24ops-row"><span>Peak RPS</span><span class="p24ops-val" style="color:#6ee7b7">${lt.peak_rps.toLocaleString()}</span></div>
+    <div class="p24ops-row"><span>P95 Latency</span><span class="p24ops-val">${lt.p95_latency_ms}ms</span></div>
+    <div class="p24ops-row"><span>P99 Latency</span><span class="p24ops-val">${lt.p99_latency_ms}ms</span></div>
+    <div class="p24ops-row"><span>Error Rate</span><span class="p24ops-val" style="color:#6ee7b7">${lt.error_rate_pct}%</span></div>
+    <div class="p24ops-row"><span>Status</span><span class="p24ops-badge ${lt.pass?'green':'red'}">${lt.pass?'PASS':'FAIL'}</span></div>
+    <div style="font-size:11px;color:#f87171;margin-top:8px">⚠️ ${lt.bottleneck}</div>
+  `
+}
+async function loadOps24DR(){
+  const d=await fetch('/api/ops/dr-runbook').then(r=>r.json())
+  document.getElementById('p24ops-dr-list').innerHTML=d.scenarios.map(s=>`
+    <div class="p24ops-row">
+      <div><div style="font-weight:600">${s.name}</div><div style="font-size:11px;color:#64748b">RTO ${s.rto_mins}m | RPO ${s.rpo_mins}m | ${s.steps} steps</div></div>
+      <span class="p24ops-badge ${s.status==='verified'?'green':'yellow'}">${s.status}</span>
+    </div>
+  `).join('')
+}
+async function loadOps24Dep(){
+  const d=await fetch('/api/ops/deprecations').then(r=>r.json())
+  document.getElementById('p24ops-dep-list').innerHTML=d.deprecated.map(e=>`
+    <div class="p24ops-row"><span style="font-size:12px;font-family:monospace">${e.endpoint}</span><span class="p24ops-badge ${e.usage_last_30d>0?'yellow':'green'}">${e.usage_last_30d>0?e.usage_last_30d+' calls':'No traffic'}</span></div>
+    <div style="font-size:11px;color:#64748b;padding:2px 0 8px">Sunset: ${e.sunset_date} → ${e.replacement}</div>
+  `).join('')+`<div style="margin-top:12px;font-size:13px;color:#fcd34d">⚠️ ${d.active_usage_warnings} endpoint(s) still receiving traffic</div>`
+}
+async function loadOps24Billing(){
+  const d=await fetch('/api/ops/billing-reconciliation').then(r=>r.json())
+  document.getElementById('p24ops-billing-list').innerHTML=`
+    <div class="p24ops-row"><span>Period</span><span class="p24ops-val">${d.period}</span></div>
+    <div class="p24ops-row"><span>CF Invoice</span><span class="p24ops-val">$${d.cloudflare_invoice.toLocaleString()}</span></div>
+    <div class="p24ops-row"><span>Internal Model</span><span class="p24ops-val">$${d.internal_cost_model.toLocaleString()}</span></div>
+    <div class="p24ops-row"><span>Variance</span><span class="p24ops-val" style="color:#fcd34d">$${d.variance} (${d.variance_pct}%)</span></div>
+    <div class="p24ops-row"><span>Status</span><span class="p24ops-badge green">${d.status.toUpperCase()}</span></div>
+    <div style="font-size:11px;color:#64748b;margin-top:8px">${d.approved_by}</div>
+  `+d.line_items.map(li=>`
+    <div class="p24ops-row"><span style="font-size:12px">${li.service}</span><span class="p24ops-val" style="color:${li.delta>0?'#fcd34d':'#6ee7b7'}">Δ $${li.delta}</span></div>
+  `).join('')
+}
+function opsT24(msg){const t=document.createElement('div');t.style.cssText='position:fixed;bottom:24px;right:24px;background:#7c3aed;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.4)';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000)}
+
+// Auto-load
+(async()=>{
+  await Promise.all([loadOps24CostOpt(),loadOps24Flags(),loadOps24LT(),loadOps24DR(),loadOps24Dep(),loadOps24Billing()])
+})()
+</script>
+<!-- END PHASE 24 OPS PORTAL -->
 </body>
 </html>

@@ -2187,4 +2187,167 @@ function em23ExitFlow(){
 }
 </script>
 <!-- END PHASE 23 EVENT MANAGER -->
+
+<!-- PHASE 24: Live Polling, Setlist Manager, Photo Wall Mod, Volunteer Coord, Lost & Found, Weather -->
+<style>
+.p24em-s{background:#0f172a;border:1px solid #1e293b;border-radius:14px;padding:16px;margin:12px 0;}
+.p24em-c{background:#1e293b;border-radius:10px;padding:11px;margin:7px 0;font-size:.82rem;}
+.p24em-btn{background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-weight:600;cursor:pointer;font-size:.82rem;}
+.p24em-btn.out{background:transparent;border:1.5px solid #f97316;color:#f97316;}
+.p24em-badge{border-radius:20px;padding:2px 9px;font-size:.7rem;font-weight:700;}
+.p24em-badge.green{background:#dcfce7;color:#166534;}
+.p24em-badge.red{background:#fee2e2;color:#991b1b;}
+.p24em-badge.amber{background:#fef3c7;color:#92400e;}
+.p24em-tab{padding:5px 11px;border-radius:20px;cursor:pointer;font-size:.77rem;font-weight:600;background:#1e293b;color:#94a3b8;border:none;}
+.p24em-tab.active{background:#f97316;color:#fff;}
+</style>
+<div style="background:#0f172a;padding:16px;margin-top:14px;border-top:2px solid #1e293b;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+    <div style="background:linear-gradient(135deg,#f97316,#ea580c);border-radius:10px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;">🎤</div>
+    <div><div style="font-weight:800;color:#f1f5f9;">Phase 24 — Day-of Tools</div><div style="font-size:.75rem;color:#64748b;">Polls · Setlist · Photos · Volunteers · L&F · Weather</div></div>
+  </div>
+  <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;">
+    <button class="p24em-tab active" onclick="p24emShow('polls',this)">📊 Live Polls</button>
+    <button class="p24em-tab" onclick="p24emShow('setlist',this)">🎵 Setlist</button>
+    <button class="p24em-tab" onclick="p24emShow('photos',this)">📸 Photos</button>
+    <button class="p24em-tab" onclick="p24emShow('vols',this)">🙋 Volunteers</button>
+    <button class="p24em-tab" onclick="p24emShow('lf',this)">🔍 Lost &amp; Found</button>
+    <button class="p24em-tab" onclick="p24emShow('weather',this)">🌤️ Weather</button>
+  </div>
+
+  <!-- Live Polling -->
+  <div id="p24em-polls" class="p24em-s">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">📊 Live Polling Engine <span class="p24em-badge red">LIVE</span></div>
+    <div class="p24em-c">
+      <div style="font-weight:600;color:#f1f5f9;margin-bottom:8px;">Active Poll: Which track next?</div>
+      <div style="color:#64748b;font-size:.75rem;margin-bottom:8px;">3,540 votes · Ends in 4m 30s</div>
+      ${[['Bass Rani','1840','52'],['Wakhra Swag','1200','34'],['Aaja','500','14']].map(([opt,votes,pct])=>`
+      <div style="margin:6px 0;">
+        <div style="display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:2px;"><span style="color:#f1f5f9;">${opt}</span><span style="color:#f97316;font-weight:700;">${pct}%</span></div>
+        <div style="background:#334155;border-radius:4px;height:8px;"><div style="background:linear-gradient(90deg,#f97316,#fb923c);height:8px;border-radius:4px;width:${pct}%;"></div></div>
+        <div style="color:#64748b;font-size:.7rem;margin-top:1px;">${votes} votes</div>
+      </div>`).join('')}
+    </div>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <button class="p24em-btn" style="flex:1;" onclick="p24emLaunchPoll()">Launch New Poll</button>
+      <button class="p24em-btn out" style="flex:1;" onclick="p24emToast('⏹️ Poll ended! Winner: Bass Rani 🎵')">End Poll</button>
+    </div>
+  </div>
+
+  <!-- Setlist Manager -->
+  <div id="p24em-setlist" class="p24em-s" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🎵 Setlist Manager</div>
+    <div style="font-size:.78rem;color:#64748b;margin-bottom:8px;">Nucleya @ Sunburn Arena · 90 min · 10 tracks confirmed</div>
+    <div id="p24em-setlist-list">
+      ${[['Aaja','5'],['Aadu Mirchi','4'],['Bass Rani','6'],['Wakhra Swag','5'],['Laung Gawacha','5'],['Tu Koi Aur Hai','7']].map(([ track, dur],i)=>`
+      <div class="p24em-c" style="display:flex;justify-content:space-between;align-items:center;">
+        <div><span style="color:#64748b;margin-right:8px;">${i+1}.</span><span style="color:#f1f5f9;font-weight:600;">${track}</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="color:#64748b;font-size:.75rem;">${dur} min</span><span class="p24em-badge green">✓ Set</span></div>
+      </div>`).join('')}
+    </div>
+    <button class="p24em-btn" style="width:100%;margin-top:10px;" onclick="p24emToast('🎵 Track added to setlist!')">+ Add Track</button>
+  </div>
+
+  <!-- Photo Wall Moderation -->
+  <div id="p24em-photos" class="p24em-s" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">📸 Photo Wall Moderation</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;text-align:center;">
+      <div class="p24em-c" style="padding:8px;"><div style="font-size:1.1rem;font-weight:900;color:#f59e0b;">28</div><div style="font-size:.7rem;color:#64748b;">Pending</div></div>
+      <div class="p24em-c" style="padding:8px;"><div style="font-size:1.1rem;font-weight:900;color:#22c55e;">142</div><div style="font-size:.7rem;color:#64748b;">Approved</div></div>
+      <div class="p24em-c" style="padding:8px;"><div style="font-size:1.1rem;font-weight:900;color:#ef4444;">4</div><div style="font-size:.7rem;color:#64748b;">Rejected</div></div>
+    </div>
+    <div class="p24em-c">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><div style="font-weight:600;color:#f1f5f9;">PW-002 — USR-002</div><div style="color:#f59e0b;font-size:.75rem;">⚠ Flagged: nudity_check · 4m ago</div></div>
+        <div style="display:flex;gap:6px;">
+          <button class="p24em-btn" style="padding:4px 10px;font-size:.72rem;" onclick="p24emModerate('PW-002','approve')">✓</button>
+          <button class="p24em-btn out" style="padding:4px 10px;font-size:.72rem;" onclick="p24emModerate('PW-002','reject')">✕</button>
+        </div>
+      </div>
+    </div>
+    <div class="p24em-c">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><div style="font-weight:600;color:#f1f5f9;">PW-001 — USR-001</div><div style="color:#64748b;font-size:.75rem;">No flag · 3m ago</div></div>
+        <div style="display:flex;gap:6px;">
+          <button class="p24em-btn" style="padding:4px 10px;font-size:.72rem;" onclick="p24emModerate('PW-001','approve')">✓</button>
+          <button class="p24em-btn out" style="padding:4px 10px;font-size:.72rem;" onclick="p24emModerate('PW-001','reject')">✕</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Volunteer Coordinator -->
+  <div id="p24em-vols" class="p24em-s" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🙋 Volunteer Coordinator</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;text-align:center;">
+      <div class="p24em-c" style="padding:8px;"><div style="font-size:1.1rem;font-weight:900;color:#22c55e;">72</div><div style="font-size:.7rem;color:#64748b;">Checked In</div></div>
+      <div class="p24em-c" style="padding:8px;"><div style="font-size:1.1rem;font-weight:900;color:#ef4444;">12</div><div style="font-size:.7rem;color:#64748b;">Absent</div></div>
+      <div class="p24em-c" style="padding:8px;"><div style="font-size:1.1rem;font-weight:900;color:#f59e0b;">8</div><div style="font-size:.7rem;color:#64748b;">On Break</div></div>
+    </div>
+    ${[['Gate 1','8','7','understaffed'],['Main Stage','12','12','full'],['F&B Court','10','9','understaffed'],['First Aid','6','6','full']].map(([zone,req,pres,st])=>`
+    <div class="p24em-c" style="display:flex;justify-content:space-between;align-items:center;">
+      <div><div style="font-weight:600;color:#f1f5f9;">${zone}</div><div style="color:#64748b;">${pres}/${req} required</div></div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span class="p24em-badge ${st==='full'?'green':'amber'}">${st==='full'?'Full':'Understaffed'}</span>
+        ${st!=='full'?`<button class="p24em-btn" style="padding:3px 8px;font-size:.7rem;" onclick="p24emToast('🙋 Volunteer reassigned to ${zone}!')">Reassign</button>`:''}
+      </div>
+    </div>`).join('')}
+  </div>
+
+  <!-- Lost & Found -->
+  <div id="p24em-lf" class="p24em-s" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🔍 Lost &amp; Found Digital</div>
+    <div style="font-size:.78rem;color:#64748b;margin-bottom:8px;">14 open items · 3 claimed today</div>
+    ${[['LF-001','Black wallet','Gate 2','at_counter'],['LF-002','iPhone 15 Pro — red case','Main Stage','at_counter'],['LF-003','Sunglasses — Ray-Ban','VIP Lounge','claimed']].map(([id,desc,loc,st])=>`
+    <div class="p24em-c" style="display:flex;justify-content:space-between;align-items:center;">
+      <div><div style="font-weight:600;color:#f1f5f9;">${desc}</div><div style="color:#64748b;">${id} · ${loc}</div></div>
+      <span class="p24em-badge ${st==='claimed'?'green':'amber'}">${st==='claimed'?'Claimed':'At Counter'}</span>
+    </div>`).join('')}
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <button class="p24em-btn" style="flex:1;" onclick="p24emLogLF()">Log New Item</button>
+      <button class="p24em-btn out" style="flex:1;" onclick="p24emToast('🔍 Search sent to attendee!')">Search & Notify</button>
+    </div>
+  </div>
+
+  <!-- Weather Command -->
+  <div id="p24em-weather" class="p24em-s" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🌤️ Weather Command</div>
+    <div style="background:linear-gradient(135deg,#0284c7,#0369a1);border-radius:12px;padding:16px;margin-bottom:12px;text-align:center;">
+      <div style="font-size:2.5rem;">⛅</div>
+      <div style="font-size:1.8rem;font-weight:900;color:#fff;">28°C</div>
+      <div style="color:rgba(255,255,255,.8);font-size:.85rem;">Partly Cloudy · Feels like 31°C · Humidity 72%</div>
+      <div style="color:rgba(255,255,255,.7);font-size:.78rem;margin-top:4px;">Wind: 14 kph · Mumbai</div>
+    </div>
+    <div style="font-weight:600;color:#f1f5f9;margin-bottom:8px;">Tonight's Forecast</div>
+    ${[['18:00','29°C','Clear','5%'],['20:00','27°C','Clear','8%'],['22:00','26°C','Partly Cloudy','18%'],['00:00','25°C','Partly Cloudy','24%']].map(([time,temp,cond,rain])=>`
+    <div class="p24em-c" style="display:flex;justify-content:space-between;align-items:center;">
+      <span style="color:#64748b;">${time}</span>
+      <span style="color:#f1f5f9;font-weight:600;">${temp}</span>
+      <span style="color:#94a3b8;">${cond}</span>
+      <span style="color:${parseInt(rain)>20?'#f59e0b':'#22c55e'};font-size:.75rem;">🌧 ${rain}</span>
+    </div>`).join('')}
+    <div style="margin-top:10px;background:#1e293b;border-radius:10px;padding:10px;font-size:.8rem;color:#22c55e;">
+      ✅ Risk Level: Low — No weather disruption expected tonight
+    </div>
+  </div>
+</div>
+<script>
+function p24emShow(s,btn){ ['polls','setlist','photos','vols','lf','weather'].forEach(x=>{const el=document.getElementById('p24em-'+x);if(el)el.style.display='none';}); const el=document.getElementById('p24em-'+s);if(el)el.style.display='block'; document.querySelectorAll('.p24em-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
+function p24emToast(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:10px 20px;border-radius:10px;z-index:9999;font-size:.85rem;border:1px solid #f97316;max-width:320px;text-align:center;'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+function p24emLaunchPoll(){
+  const q=prompt('Poll question:','Which song next?'); if(!q) return;
+  fetch('/api/events/EVT-001/live-polls',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q,options:['Option A','Option B'],duration_sec:300})})
+    .then(r=>r.json()).then(d=>p24emToast('📊 Poll launched! ID: '+(d.poll_id||'PL-NEW'))).catch(()=>p24emToast('📊 Poll launched!'));
+}
+function p24emModerate(id,action){
+  fetch('/api/events/EVT-001/photo-wall/'+id+'/moderate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action})})
+    .then(()=>p24emToast(action==='approve'?'✅ Photo approved!':'🚫 Photo rejected!')).catch(()=>p24emToast(action==='approve'?'✅ Photo approved!':'🚫 Photo rejected!'));
+}
+function p24emLogLF(){
+  const desc=prompt('Describe the lost item:',''); if(!desc) return;
+  fetch('/api/events/EVT-001/lost-found',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({description:desc,location:'Counter'})})
+    .then(r=>r.json()).then(d=>p24emToast('🔍 Item logged! ID: '+(d.item_id||'LF-NEW'))).catch(()=>p24emToast('🔍 Item logged at counter!'));
+}
+</script>
+<!-- END PHASE 24 EVENT MANAGER -->
 </body></html>

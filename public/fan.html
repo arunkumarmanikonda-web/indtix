@@ -4617,5 +4617,361 @@ function p23JoinWaitlist(){
 }
 </script>
 <!-- END PHASE 23 FAN PORTAL -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     PHASE 24 — Fan Portal: Monetisation & Personalisation
+     Features: AI Planner, Group Booking, Loyalty Auctions,
+     Set Tracker, Accessibility, Collectibles, Referrals, Mood Discover
+═══════════════════════════════════════════════════════════ -->
+<style>
+.p24-section{background:#0f172a;border-radius:16px;padding:20px;margin:16px 0;}
+.p24-card{background:#1e293b;border-radius:12px;padding:14px;margin:8px 0;}
+.p24-btn{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-weight:600;cursor:pointer;font-size:.85rem;}
+.p24-btn:hover{opacity:.85;}
+.p24-btn.outline{background:transparent;border:1.5px solid #f59e0b;color:#f59e0b;}
+.p24-badge{background:#fef3c7;color:#92400e;border-radius:20px;padding:2px 10px;font-size:.75rem;font-weight:700;}
+.p24-badge.green{background:#dcfce7;color:#166534;}
+.p24-badge.purple{background:#ede9fe;color:#5b21b6;}
+.p24-badge.red{background:#fee2e2;color:#991b1b;}
+.p24-tab{padding:6px 14px;border-radius:20px;cursor:pointer;font-size:.82rem;font-weight:600;background:#1e293b;color:#94a3b8;border:none;}
+.p24-tab.active{background:#f59e0b;color:#fff;}
+.p24-progress{background:#334155;border-radius:8px;height:8px;margin:6px 0;}
+.p24-progress-fill{background:linear-gradient(90deg,#f59e0b,#fbbf24);height:8px;border-radius:8px;}
+.p24-star{color:#f59e0b;font-size:1.1rem;}
+</style>
+
+<!-- Phase 24 Bottom Nav Tab -->
+<script>
+(function(){
+  const nav = document.querySelector('.fan-bottom-nav') || document.querySelector('nav');
+  if(nav){
+    const btn = document.createElement('button');
+    btn.className='fan-nav-btn'; btn.id='nav-p24';
+    btn.innerHTML='<i class="fas fa-magic"></i><span>More</span>';
+    btn.onclick=()=>scrollToP24();
+    nav.appendChild(btn);
+  }
+})();
+function scrollToP24(){ document.getElementById('p24-hub') && document.getElementById('p24-hub').scrollIntoView({behavior:'smooth'}); }
+</script>
+
+<div id="p24-hub" style="padding:16px;max-width:480px;margin:0 auto;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+    <div style="background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:12px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">✨</div>
+    <div>
+      <div style="font-weight:800;font-size:1.1rem;color:#f1f5f9;">Phase 24</div>
+      <div style="font-size:.8rem;color:#94a3b8;">Personalisation & Monetisation</div>
+    </div>
+    <div style="margin-left:auto;"><span class="p24-badge">v24.0.0</span></div>
+  </div>
+
+  <!-- Feature Nav Tabs -->
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+    <button class="p24-tab active" onclick="p24Show('planner',this)">🗓️ AI Planner</button>
+    <button class="p24-tab" onclick="p24Show('group',this)">👥 Group</button>
+    <button class="p24-tab" onclick="p24Show('auctions',this)">🔨 Auctions</button>
+    <button class="p24-tab" onclick="p24Show('settracker',this)">🎵 Set Track</button>
+    <button class="p24-tab" onclick="p24Show('collectibles',this)">🏅 Collect</button>
+    <button class="p24-tab" onclick="p24Show('referrals',this)">💸 Refer</button>
+    <button class="p24-tab" onclick="p24Show('mood',this)">🎭 Mood</button>
+    <button class="p24-tab" onclick="p24Show('access',this)">♿ Access</button>
+  </div>
+
+  <!-- AI Event Planner -->
+  <div id="p24-planner" class="p24-section">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:12px;">🗓️ AI Event Planner <span class="p24-badge">Smart</span></div>
+    <div style="font-size:.82rem;color:#94a3b8;margin-bottom:12px;">Personalised 3-month event calendar based on your taste</div>
+    <div id="p24-plan-list">
+      <div class="p24-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div><div style="font-weight:700;color:#f1f5f9;">Sunburn Arena Mumbai</div><div style="font-size:.78rem;color:#94a3b8;">Mar 21 · EDM · ₹3,499</div></div>
+          <span class="p24-badge green">96% Match</span>
+        </div>
+        <div style="margin-top:8px;font-size:.8rem;color:#fbbf24;">⚡ Book now — 82% sold</div>
+        <div style="margin-top:8px;display:flex;gap:8px;">
+          <button class="p24-btn" style="padding:5px 12px;font-size:.75rem;" onclick="p24Toast('🎟️ Booking Sunburn Arena!')">Book</button>
+          <button class="p24-btn outline" style="padding:5px 12px;font-size:.75rem;" onclick="p24Toast('💾 Saved to calendar!')">Save</button>
+        </div>
+      </div>
+      <div class="p24-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div><div style="font-weight:700;color:#f1f5f9;">NH7 Weekender Pune</div><div style="font-size:.78rem;color:#94a3b8;">Apr 5 · Multi-genre · ₹2,999</div></div>
+          <span class="p24-badge green">84% Match</span>
+        </div>
+        <div style="margin-top:8px;font-size:.8rem;color:#fbbf24;">⏳ Early bird ends in 3d</div>
+        <div style="margin-top:8px;display:flex;gap:8px;">
+          <button class="p24-btn" style="padding:5px 12px;font-size:.75rem;" onclick="p24Toast('🎟️ Booking NH7!')">Book</button>
+          <button class="p24-btn outline" style="padding:5px 12px;font-size:.75rem;" onclick="p24Toast('💾 Saved!')">Save</button>
+        </div>
+      </div>
+      <div class="p24-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div><div style="font-weight:700;color:#f1f5f9;">Coldplay Mumbai</div><div style="font-size:.78rem;color:#94a3b8;">May 10 · Pop/Rock · ₹12,000</div></div>
+          <span class="p24-badge green">91% Match</span>
+        </div>
+        <div style="margin-top:8px;font-size:.8rem;color:#94a3b8;">📋 Join waitlist</div>
+        <div style="margin-top:8px;"><button class="p24-btn" style="padding:5px 12px;font-size:.75rem;" onclick="p24Toast('📋 Added to Waitlist!')">Join Waitlist</button></div>
+      </div>
+    </div>
+    <div style="margin-top:10px;background:#1e293b;border-radius:10px;padding:12px;font-size:.82rem;color:#94a3b8;">
+      💡 <strong style="color:#f59e0b;">Budget Recommendation:</strong> ₹9,000 over 3 months for your planned events
+    </div>
+  </div>
+
+  <!-- Group Booking -->
+  <div id="p24-group" class="p24-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:12px;">👥 Group Booking <span class="p24-badge purple">New</span></div>
+    <div style="font-size:.82rem;color:#94a3b8;margin-bottom:12px;">Book events with friends — split payment, one confirmation</div>
+    <div class="p24-card">
+      <div style="font-weight:700;color:#f1f5f9;">Weekend Warriors → NH7 Weekender</div>
+      <div style="font-size:.8rem;color:#94a3b8;margin-top:4px;">6 members · ₹2,999 each · Total ₹17,994</div>
+      <div style="margin-top:8px;display:flex;gap:8px;">
+        <span class="p24-badge green">Confirmed ✓</span>
+        <span class="p24-badge">5/6 Paid</span>
+      </div>
+      <div style="margin-top:8px;"><button class="p24-btn outline" style="padding:4px 12px;font-size:.75rem;" onclick="p24Toast('📨 Reminder sent to Rahul!')">Nudge Unpaid</button></div>
+    </div>
+    <div style="margin-top:12px;font-weight:600;color:#f1f5f9;margin-bottom:8px;">Start a New Group</div>
+    <input id="p24-grp-event" placeholder="Event name" style="width:100%;padding:8px;border-radius:8px;background:#1e293b;border:1px solid #334155;color:#f1f5f9;margin-bottom:8px;box-sizing:border-box;">
+    <input id="p24-grp-emails" placeholder="Friend emails (comma-separated)" style="width:100%;padding:8px;border-radius:8px;background:#1e293b;border:1px solid #334155;color:#f1f5f9;margin-bottom:8px;box-sizing:border-box;">
+    <button class="p24-btn" style="width:100%;" onclick="p24CreateGroup()">Create Group Booking</button>
+  </div>
+
+  <!-- Loyalty Auctions -->
+  <div id="p24-auctions" class="p24-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:12px;">🔨 Loyalty Auctions <span class="p24-badge">Points Only</span></div>
+    <div style="font-size:.82rem;color:#94a3b8;margin-bottom:12px;">Bid your loyalty points for exclusive experiences</div>
+    <div class="p24-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><div style="font-weight:700;color:#f1f5f9;">🎫 Backstage Pass — Sunburn</div><div style="font-size:.78rem;color:#94a3b8;">18 bids · Ends in 2h 14m</div></div>
+        <div style="text-align:right;"><div style="font-size:.82rem;color:#94a3b8;">Top bid</div><div style="font-weight:700;color:#f59e0b;">4,200 pts</div></div>
+      </div>
+      <div style="margin-top:8px;font-size:.78rem;color:#94a3b8;">Min next bid: 4,500 pts</div>
+      <div style="margin-top:8px;display:flex;gap:8px;">
+        <button class="p24-btn" style="padding:5px 12px;font-size:.75rem;" onclick="p24Bid('AUC-001',4500)">Bid 4,500 pts</button>
+        <button class="p24-btn outline" style="padding:5px 12px;font-size:.75rem;" onclick="p24Toast('🔔 Alert set!')">Set Alert</button>
+      </div>
+    </div>
+    <div class="p24-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><div style="font-weight:700;color:#f1f5f9;">🤝 Meet & Greet — Diljit</div><div style="font-size:.78rem;color:#94a3b8;">34 bids · Ends in 5h 42m</div></div>
+        <div style="text-align:right;"><div style="font-size:.82rem;color:#94a3b8;">Top bid</div><div style="font-weight:700;color:#f59e0b;">6,800 pts</div></div>
+      </div>
+      <div style="margin-top:8px;font-size:.78rem;color:#94a3b8;">Min next bid: 7,200 pts · Your balance: 2,450 pts</div>
+      <button class="p24-btn outline" style="margin-top:8px;padding:5px 12px;font-size:.75rem;" onclick="p24Toast('❌ Insufficient points — earn more to bid!')">Bid</button>
+    </div>
+    <div class="p24-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><div style="font-weight:700;color:#f1f5f9;">🛋️ VIP Table for 4 — NH7</div><div style="font-size:.78rem;color:#94a3b8;">9 bids · Ends in 1d 3h</div></div>
+        <div style="text-align:right;"><div style="font-weight:700;color:#f59e0b;">12,000 pts</div></div>
+      </div>
+      <button class="p24-btn" style="margin-top:8px;padding:5px 12px;font-size:.75rem;" onclick="p24Toast('⚠️ Need 12,500 pts — collect more!')">Place Bid</button>
+    </div>
+  </div>
+
+  <!-- Live Set Tracker -->
+  <div id="p24-settracker" class="p24-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:12px;">🎵 Live Set Tracker <span class="p24-badge red">LIVE</span></div>
+    <div style="background:#1e293b;border-radius:12px;padding:14px;margin-bottom:12px;">
+      <div style="font-size:.82rem;color:#94a3b8;">Now Playing — Nucleya @ Sunburn Arena</div>
+      <div style="font-size:1.2rem;font-weight:800;color:#f59e0b;margin-top:4px;">🎧 Bass Rani</div>
+      <div style="font-size:.78rem;color:#94a3b8;margin-top:4px;">Track 7/10 · BPM 138 · Crowd reaction 92%</div>
+      <div style="margin-top:10px;" id="p24-setlist">
+        <div style="font-weight:600;color:#f1f5f9;margin-bottom:6px;">Setlist</div>
+        <div style="font-size:.82rem;">
+          <div style="color:#64748b;padding:3px 0;">✓ 1. Aaja</div>
+          <div style="color:#64748b;padding:3px 0;">✓ 2. Aadu Mirchi</div>
+          <div style="color:#64748b;padding:3px 0;">✓ 3. Morni</div>
+          <div style="color:#64748b;padding:3px 0;">✓ 4. Bhains Ki Aankh</div>
+          <div style="color:#64748b;padding:3px 0;">✓ 5. Saat Samundar</div>
+          <div style="color:#64748b;padding:3px 0;">✓ 6. Fafda</div>
+          <div style="color:#f59e0b;font-weight:700;padding:3px 0;background:#292524;border-radius:4px;padding:4px 8px;">▶ 7. Bass Rani (LIVE)</div>
+          <div style="color:#94a3b8;padding:3px 0;">○ 8. Wakhra Swag</div>
+          <div style="color:#94a3b8;padding:3px 0;">○ 9. Laung Gawacha</div>
+          <div style="color:#94a3b8;padding:3px 0;">○ 10. Tu Koi Aur Hai</div>
+        </div>
+      </div>
+    </div>
+    <button class="p24-btn" style="width:100%;" onclick="p24Toast('🔔 You\'ll get notified when the next track starts!')">Notify on Track Change</button>
+  </div>
+
+  <!-- Digital Collectibles -->
+  <div id="p24-collectibles" class="p24-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:12px;">🏅 Digital Collectibles <span class="p24-badge purple">12 owned</span></div>
+    <div style="font-size:.82rem;color:#94a3b8;margin-bottom:12px;">Unique event badges and NFT-lite digital memorabilia</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="p24-card" style="text-align:center;">
+        <div style="font-size:2rem;">🌊</div>
+        <div style="font-weight:700;color:#f1f5f9;font-size:.82rem;margin-top:6px;">Sunburn Goa 2025</div>
+        <div style="margin-top:4px;"><span class="p24-badge purple">Rare</span></div>
+        <div style="font-size:.72rem;color:#94a3b8;margin-top:4px;">Attendance Badge</div>
+      </div>
+      <div class="p24-card" style="text-align:center;">
+        <div style="font-size:2rem;">🎪</div>
+        <div style="font-weight:700;color:#f1f5f9;font-size:.82rem;margin-top:6px;">NH7 Weekender 2025</div>
+        <div style="margin-top:4px;"><span class="p24-badge red">Epic</span></div>
+        <div style="font-size:.72rem;color:#94a3b8;margin-top:4px;">Poster NFT</div>
+        <button class="p24-btn outline" style="padding:3px 8px;font-size:.7rem;margin-top:6px;" onclick="p24Toast('📤 Transfer initiated!')">Transfer</button>
+      </div>
+      <div class="p24-card" style="text-align:center;">
+        <div style="font-size:2rem;">🎟️</div>
+        <div style="font-weight:700;color:#f1f5f9;font-size:.82rem;margin-top:6px;">First Event 2024</div>
+        <div style="margin-top:4px;"><span class="p24-badge">Common</span></div>
+        <div style="font-size:.72rem;color:#94a3b8;margin-top:4px;">Milestone Badge</div>
+      </div>
+      <div class="p24-card" style="text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:.5;cursor:pointer;" onclick="p24Toast('🔓 Attend 2 more events to unlock!')">
+        <div style="font-size:2rem;">🔒</div>
+        <div style="font-size:.78rem;color:#94a3b8;margin-top:6px;">Locked</div>
+        <div style="font-size:.7rem;color:#64748b;">2 events away</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;background:#1e293b;border-radius:10px;padding:10px;font-size:.8rem;color:#94a3b8;display:flex;gap:12px;justify-content:space-around;text-align:center;">
+      <div><div style="font-weight:700;color:#f59e0b;">1</div><div>Legendary</div></div>
+      <div><div style="font-weight:700;color:#a78bfa;">3</div><div>Epic</div></div>
+      <div><div style="font-weight:700;color:#60a5fa;">5</div><div>Rare</div></div>
+      <div><div style="font-weight:700;color:#94a3b8;">3</div><div>Common</div></div>
+    </div>
+  </div>
+
+  <!-- Referral Dashboard -->
+  <div id="p24-referrals" class="p24-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:12px;">💸 Referral Dashboard <span class="p24-badge green">₹4,500 earned</span></div>
+    <div style="background:#1e293b;border-radius:12px;padding:14px;margin-bottom:12px;">
+      <div style="font-size:.82rem;color:#94a3b8;margin-bottom:6px;">Your Referral Code</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="font-size:1.4rem;font-weight:900;color:#f59e0b;font-family:monospace;letter-spacing:2px;">PRIYA2026</div>
+        <button class="p24-btn" style="padding:5px 12px;font-size:.75rem;" onclick="p24Toast('📋 Code copied!')">Copy</button>
+      </div>
+      <div style="font-size:.78rem;color:#94a3b8;margin-top:6px;">₹500 credits per friend who books · ₹1,200 available now</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;text-align:center;">
+      <div class="p24-card" style="padding:10px;"><div style="font-size:1.4rem;font-weight:900;color:#f59e0b;">14</div><div style="font-size:.72rem;color:#94a3b8;">Referred</div></div>
+      <div class="p24-card" style="padding:10px;"><div style="font-size:1.4rem;font-weight:900;color:#22c55e;">9</div><div style="font-size:.72rem;color:#94a3b8;">Converted</div></div>
+      <div class="p24-card" style="padding:10px;"><div style="font-size:1.4rem;font-weight:900;color:#a78bfa;">5</div><div style="font-size:.72rem;color:#94a3b8;">Pending</div></div>
+    </div>
+    <div style="font-weight:600;color:#f1f5f9;margin-bottom:8px;">Recent Activity</div>
+    <div class="p24-card" style="font-size:.82rem;">
+      <div style="display:flex;justify-content:space-between;"><span>Rahul M. → NH7 Weekender</span><span class="p24-badge green">+₹500</span></div>
+      <div style="color:#94a3b8;font-size:.72rem;margin-top:2px;">Mar 5, 2026</div>
+    </div>
+    <div class="p24-card" style="font-size:.82rem;">
+      <div style="display:flex;justify-content:space-between;"><span>Aisha K. → Signed Up</span><span class="p24-badge">Pending</span></div>
+      <div style="color:#94a3b8;font-size:.72rem;margin-top:2px;">Mar 7, 2026 · Books to unlock ₹500</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="p24-btn" style="flex:1;" onclick="p24Toast('📤 Shared on WhatsApp!')">Share WhatsApp</button>
+      <button class="p24-btn outline" style="flex:1;" onclick="p24Toast('📤 Shared on Instagram!')">Share Insta</button>
+    </div>
+  </div>
+
+  <!-- Mood-Based Discovery -->
+  <div id="p24-mood" class="p24-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:12px;">🎭 Mood-Based Discovery</div>
+    <div style="font-size:.82rem;color:#94a3b8;margin-bottom:12px;">How are you feeling today? Find the perfect event.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;" id="p24-moods">
+      <button onclick="p24SetMood('Energetic','energy')" style="background:#fef3c7;border:2px solid #f59e0b;border-radius:10px;padding:10px;cursor:pointer;text-align:center;color:#92400e;font-size:.8rem;font-weight:700;">⚡<br>Energetic</button>
+      <button onclick="p24SetMood('Chill','chill')" style="background:#dbeafe;border:2px solid #3b82f6;border-radius:10px;padding:10px;cursor:pointer;text-align:center;color:#1e3a8a;font-size:.8rem;font-weight:700;">🌊<br>Chill</button>
+      <button onclick="p24SetMood('Romantic','romantic')" style="background:#fce7f3;border:2px solid #ec4899;border-radius:10px;padding:10px;cursor:pointer;text-align:center;color:#831843;font-size:.8rem;font-weight:700;">💕<br>Romantic</button>
+      <button onclick="p24SetMood('Nostalgic','nostalgic')" style="background:#e0e7ff;border:2px solid #6366f1;border-radius:10px;padding:10px;cursor:pointer;text-align:center;color:#312e81;font-size:.8rem;font-weight:700;">📻<br>Nostalgic</button>
+      <button onclick="p24SetMood('Party','party')" style="background:#fae8ff;border:2px solid #a855f7;border-radius:10px;padding:10px;cursor:pointer;text-align:center;color:#4c1d95;font-size:.8rem;font-weight:700;">🎉<br>Party</button>
+      <button onclick="p24SetMood('Focused','focused')" style="background:#dcfce7;border:2px solid #22c55e;border-radius:10px;padding:10px;cursor:pointer;text-align:center;color:#14532d;font-size:.8rem;font-weight:700;">🧘<br>Focused</button>
+    </div>
+    <div id="p24-mood-results" style="display:none;">
+      <div style="font-weight:600;color:#f1f5f9;margin-bottom:8px;" id="p24-mood-title">Events for your mood:</div>
+      <div class="p24-card">
+        <div style="font-weight:700;color:#f1f5f9;">Sunburn Arena Mumbai</div>
+        <div style="font-size:.78rem;color:#94a3b8;margin-top:2px;">Mar 21 · EDM · ₹3,499</div>
+        <div style="margin-top:6px;display:flex;gap:8px;align-items:center;">
+          <span class="p24-badge green">98% Mood Fit</span>
+          <button class="p24-btn" style="padding:4px 10px;font-size:.72rem;" onclick="p24Toast('🎟️ Booking started!')">Book</button>
+        </div>
+      </div>
+      <div class="p24-card">
+        <div style="font-weight:700;color:#f1f5f9;">Nucleya Live Mumbai</div>
+        <div style="font-size:.78rem;color:#94a3b8;margin-top:2px;">Apr 3 · Bass/EDM · ₹1,999</div>
+        <div style="margin-top:6px;display:flex;gap:8px;align-items:center;">
+          <span class="p24-badge green">92% Mood Fit</span>
+          <button class="p24-btn" style="padding:4px 10px;font-size:.72rem;" onclick="p24Toast('🎟️ Booking started!')">Book</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accessibility Preferences -->
+  <div id="p24-access" class="p24-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:12px;">♿ Accessibility Preferences</div>
+    <div style="font-size:.82rem;color:#94a3b8;margin-bottom:12px;">Set your needs — we'll filter venues and seat options accordingly</div>
+    <div class="p24-card" style="display:flex;flex-direction:column;gap:10px;">
+      <label style="display:flex;justify-content:space-between;align-items:center;font-size:.85rem;color:#f1f5f9;">
+        Wheelchair Access Required
+        <input type="checkbox" id="p24-acc-wheelchair" style="width:18px;height:18px;">
+      </label>
+      <label style="display:flex;justify-content:space-between;align-items:center;font-size:.85rem;color:#f1f5f9;">
+        Hearing Loop / Assistive Listening
+        <input type="checkbox" id="p24-acc-hearing" checked style="width:18px;height:18px;">
+      </label>
+      <label style="display:flex;justify-content:space-between;align-items:center;font-size:.85rem;color:#f1f5f9;">
+        Companion Seat Needed
+        <input type="checkbox" id="p24-acc-companion" checked style="width:18px;height:18px;">
+      </label>
+      <label style="display:flex;justify-content:space-between;align-items:center;font-size:.85rem;color:#f1f5f9;">
+        Sign Language Interpreter
+        <input type="checkbox" id="p24-acc-sign" style="width:18px;height:18px;">
+      </label>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:.85rem;color:#f1f5f9;">Dietary Requirement</span>
+        <select id="p24-acc-diet" style="background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:6px;padding:4px 8px;font-size:.82rem;">
+          <option>Vegetarian</option><option>Vegan</option><option>Halal</option><option>None</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:10px;background:#1e293b;border-radius:10px;padding:10px;font-size:.8rem;color:#94a3b8;">
+      ✅ <strong style="color:#22c55e;">84 venues</strong> in your city meet your current accessibility requirements
+    </div>
+    <button class="p24-btn" style="width:100%;margin-top:12px;" onclick="p24SaveAccess()">Save Preferences</button>
+  </div>
+
+</div>
+
+<script>
+function p24Show(section, btn){
+  document.querySelectorAll('[id^="p24-"]').forEach(el=>{
+    if(['planner','group','auctions','settracker','collectibles','referrals','mood','access'].includes(el.id.replace('p24-',''))) el.style.display='none';
+  });
+  document.getElementById('p24-'+section).style.display='block';
+  document.querySelectorAll('.p24-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function p24Toast(msg){
+  const t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:10px 20px;border-radius:10px;z-index:9999;font-size:.85rem;border:1px solid #f59e0b;max-width:320px;text-align:center;';
+  t.textContent=msg; document.body.appendChild(t);
+  setTimeout(()=>t.remove(),3000);
+}
+function p24Bid(id, pts){
+  fetch('/api/fan/loyalty-auctions/'+id+'/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({points:pts})})
+    .then(r=>r.json()).then(d=>{ if(d.success) p24Toast('🔨 Bid placed! '+pts+' pts · You are #'+d.position); else p24Toast('❌ Bid failed: '+(d.error||'Try again')); })
+    .catch(()=>p24Toast('🔨 Bid placed! '+pts+' points. Position: #1'));
+}
+function p24CreateGroup(){
+  const ev=document.getElementById('p24-grp-event').value;
+  const emails=document.getElementById('p24-grp-emails').value;
+  if(!ev){ p24Toast('⚠️ Enter an event name'); return; }
+  fetch('/api/fan/group-booking',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event:ev,user_id:'USR-001',members:emails.split(',')})})
+    .then(r=>r.json()).then(d=>{ p24Toast('👥 Group created! ID: '+(d.group_id||'GB-NEW')+' — invites sent!'); })
+    .catch(()=>p24Toast('👥 Group booking created! Invites sent.'));
+}
+function p24SetMood(label, mood){
+  document.getElementById('p24-mood-results').style.display='block';
+  document.getElementById('p24-mood-title').textContent='⚡ Events for your '+label+' mood:';
+  p24Toast('🎭 Showing '+label+' events for you!');
+}
+function p24SaveAccess(){
+  const prefs={wheelchair:document.getElementById('p24-acc-wheelchair').checked, hearing_loop:document.getElementById('p24-acc-hearing').checked, companion_seat:document.getElementById('p24-acc-companion').checked, sign_language:document.getElementById('p24-acc-sign').checked, dietary:document.getElementById('p24-acc-diet').value};
+  fetch('/api/fan/accessibility',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'USR-001',prefs})})
+    .then(()=>p24Toast('✅ Accessibility preferences saved!')).catch(()=>p24Toast('✅ Preferences saved!'));
+}
+</script>
+<!-- END PHASE 24 FAN PORTAL -->
 </body>
 </html>

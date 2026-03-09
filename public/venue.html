@@ -2003,4 +2003,108 @@ function v23SpaceUtil(){
 }
 </script>
 <!-- END PHASE 23 VENUE PORTAL -->
+
+<!-- PHASE 24: Digital Twin, Smart Parking, Calendar, Emergency Drills, Suppliers -->
+<style>
+.p24v-s{background:#0f172a;border:1px solid #1e293b;border-radius:14px;padding:16px;margin:12px 0;}
+.p24v-c{background:#1e293b;border-radius:10px;padding:12px;margin:8px 0;font-size:.83rem;}
+.p24v-btn{background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-weight:600;cursor:pointer;font-size:.82rem;}
+.p24v-btn.outline{background:transparent;border:1.5px solid #10b981;color:#10b981;}
+.p24v-badge{border-radius:20px;padding:2px 9px;font-size:.7rem;font-weight:700;}
+.p24v-badge.green{background:#dcfce7;color:#166534;}
+.p24v-badge.amber{background:#fef3c7;color:#92400e;}
+.p24v-badge.red{background:#fee2e2;color:#991b1b;}
+.p24v-tab{padding:5px 12px;border-radius:20px;cursor:pointer;font-size:.78rem;font-weight:600;background:#1e293b;color:#94a3b8;border:none;}
+.p24v-tab.active{background:#10b981;color:#fff;}
+</style>
+<div style="background:#0f172a;padding:16px;margin-top:14px;border-top:2px solid #1e293b;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+    <div style="background:linear-gradient(135deg,#10b981,#059669);border-radius:10px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;">🏗️</div>
+    <div><div style="font-weight:800;color:#f1f5f9;">Phase 24 — Smart Venue</div><div style="font-size:.75rem;color:#64748b;">Digital Twin · Parking · Calendar · Safety</div></div>
+  </div>
+  <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;">
+    <button class="p24v-tab active" onclick="p24vShow('twin',this)">🏗️ Digital Twin</button>
+    <button class="p24v-tab" onclick="p24vShow('parking',this)">🚗 Parking</button>
+    <button class="p24v-tab" onclick="p24vShow('cal',this)">📅 Calendar</button>
+    <button class="p24v-tab" onclick="p24vShow('drill',this)">🚨 Drills</button>
+    <button class="p24v-tab" onclick="p24vShow('suppliers',this)">📋 Suppliers</button>
+  </div>
+
+  <!-- Digital Twin -->
+  <div id="p24v-twin" class="p24v-s">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🏗️ Digital Twin Dashboard <span class="p24v-badge green">Live</span></div>
+    <div style="font-size:.78rem;color:#64748b;margin-bottom:10px;">Real-time venue model v2.4.1 · 1 active alert</div>
+    <div id="p24v-twin-zones">
+      ${[['Main Stage','4000','3200','80','28.4','normal'],['GA Zone','2500','2410','96','29.1','near_full'],['VIP Lounge','400','180','45','24.2','normal'],['F&B Court','1200','820','68','26.8','normal']].map(([z,cap,cur,pct,temp,st])=>`
+      <div class="p24v-c">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div><div style="font-weight:600;color:#f1f5f9;">${z}</div><div style="color:#64748b;">${cur}/${cap} · ${temp}°C</div></div>
+          <span class="p24v-badge ${st==='near_full'?'amber':'green'}">${pct}%</span>
+        </div>
+        <div style="background:#334155;border-radius:4px;height:6px;margin-top:6px;"><div style="background:${parseInt(pct)>90?'#f59e0b':'#10b981'};height:6px;border-radius:4px;width:${pct}%;"></div></div>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <!-- Smart Parking -->
+  <div id="p24v-parking" class="p24v-s" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🚗 Smart Parking Manager</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;text-align:center;">
+      <div class="p24v-c" style="padding:10px;"><div style="font-size:1.2rem;font-weight:900;color:#10b981;">276</div><div style="font-size:.7rem;color:#64748b;">Available</div></div>
+      <div class="p24v-c" style="padding:10px;"><div style="font-size:1.2rem;font-weight:900;color:#f59e0b;">924</div><div style="font-size:.7rem;color:#64748b;">Occupied</div></div>
+      <div class="p24v-c" style="padding:10px;"><div style="font-size:1.2rem;font-weight:900;color:#0ea5e9;">18</div><div style="font-size:.7rem;color:#64748b;">EV Charging</div></div>
+    </div>
+    ${[['P1 — Main Entry','400','380','almost_full'],['P2 — East Gate','400','284','available'],['P3 — VIP','200','190','almost_full'],['P4 — Staff','200','70','available']].map(([sec,total,occ,st])=>`
+    <div class="p24v-c" style="display:flex;justify-content:space-between;align-items:center;">
+      <div><div style="font-weight:600;color:#f1f5f9;">${sec}</div><div style="color:#64748b;">${occ}/${total} bays</div></div>
+      <span class="p24v-badge ${st==='available'?'green':'amber'}">${st==='available'?'Available':'Near Full'}</span>
+    </div>`).join('')}
+    <button class="p24v-btn" style="width:100%;margin-top:10px;" onclick="p24vToast('🚗 Parking bay reserved! QR code sent to your phone.')">Reserve Bay</button>
+  </div>
+
+  <!-- Venue Calendar -->
+  <div id="p24v-cal" class="p24v-s" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">📅 Multi-Event Calendar <span class="p24v-badge green">14 events</span></div>
+    ${[['Sunburn Arena Mumbai','Mar 21','8,500','7,240'],['Comedy Night Live','Apr 2','1,200','880'],['NH7 Weekender','Apr 5','12,000','9,840'],['Tech Summit 2026','Jun 10','1,200','240']].map(([name,date,cap,booked])=>`
+    <div class="p24v-c" style="display:flex;justify-content:space-between;align-items:center;">
+      <div><div style="font-weight:600;color:#f1f5f9;">${name}</div><div style="color:#64748b;">${date} · Cap ${cap} · Booked ${booked}</div></div>
+      <span class="p24v-badge green">Confirmed</span>
+    </div>`).join('')}
+    <button class="p24v-btn" style="width:100%;margin-top:10px;" onclick="p24vToast('📅 New event slot form opened!')">+ Add Event</button>
+  </div>
+
+  <!-- Emergency Drills -->
+  <div id="p24v-drill" class="p24v-s" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🚨 Emergency Drill Tracker</div>
+    <div class="p24v-c">
+      <div style="font-weight:600;color:#f1f5f9;">Last Drill — Fire Evacuation</div>
+      <div style="color:#64748b;margin-top:4px;">Feb 15, 2026 · Duration: 8 min · 42 staff · <span style="color:#22c55e;">PASSED</span></div>
+      <div style="color:#64748b;font-size:.75rem;margin-top:2px;">All exits cleared in 7m 40s</div>
+    </div>
+    <div class="p24v-c">
+      <div style="font-weight:600;color:#f59e0b;">Next Drill — Mass Casualty Response</div>
+      <div style="color:#64748b;margin-top:4px;">Scheduled: Apr 15, 2026 · Lead: Safety Officer Rajan</div>
+    </div>
+    <div style="margin-top:8px;background:#1e293b;border-radius:10px;padding:10px;font-size:.78rem;color:#64748b;">
+      Annual compliance: <strong style="color:#22c55e;">1/4 completed</strong> · On track ✓ · Fire Safety Cert valid until Oct 2026
+    </div>
+    <button class="p24v-btn" style="width:100%;margin-top:10px;" onclick="p24vToast('🚨 Drill scheduled! Lead notified.')">Schedule New Drill</button>
+  </div>
+
+  <!-- Supplier Contracts -->
+  <div id="p24v-suppliers" class="p24v-s" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">📋 Supplier Contracts</div>
+    ${[['SoundPro AV','Audio/Visual','₹24L','Dec 31','4.8','active'],['EventGuard Security','Security','₹18L','Dec 31','4.6','active'],['FreshBite Catering','F&B','₹36L','Jun 30','4.2','active'],['CleanCity Services','Sanitation','₹8.4L','Dec 31','4.4','expiring_soon']].map(([name,cat,val,end,rating,st])=>`
+    <div class="p24v-c" style="display:flex;justify-content:space-between;align-items:center;">
+      <div><div style="font-weight:600;color:#f1f5f9;">${name}</div><div style="color:#64748b;">${cat} · ${val} · Until ${end} · ⭐${rating}</div></div>
+      <span class="p24v-badge ${st==='active'?'green':'amber'}">${st==='active'?'Active':'Expiring'}</span>
+    </div>`).join('')}
+    <button class="p24v-btn outline" style="width:100%;margin-top:10px;" onclick="p24vToast('📋 Supplier contract form opened!')">+ Add Supplier</button>
+  </div>
+</div>
+<script>
+function p24vShow(s,btn){ ['twin','parking','cal','drill','suppliers'].forEach(x=>{const el=document.getElementById('p24v-'+x);if(el)el.style.display='none';}); const el=document.getElementById('p24v-'+s);if(el)el.style.display='block'; document.querySelectorAll('.p24v-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
+function p24vToast(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:10px 20px;border-radius:10px;z-index:9999;font-size:.85rem;border:1px solid #10b981;max-width:320px;text-align:center;'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+</script>
+<!-- END PHASE 24 VENUE PORTAL -->
 </body></html>
