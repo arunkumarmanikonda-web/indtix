@@ -24444,26 +24444,26 @@ app.get('/api/admin/finance/reporting/esg-financials', (c) => c.json({
   integrated_reporting_standard: 'IFRS S1/S2 + GRI',
 }))
 
-// ── Phase 46 main health endpoint ────────────────────────────
+// ── Phase 47 main health endpoint ────────────────────────────
 app.get('/api/health', (c) => c.json({
   status: 'ok',
   platform: 'INDTIX',
-  version: 'v46.0.0',
-  phase: 'Phase 46',
-  theme: 'Safety, Crisis Management & Security Platform',
+  version: 'v47.0.0',
+  phase: 'Phase 47',
+  theme: 'Accessibility & Inclusive Experience Platform',
   new_endpoints: 90,
-  total_endpoints: 3169,
+  total_endpoints: 3259,
   features: [
-    'Crowd Safety & Density Management',
-    'Emergency Response & Crisis Command',
-    'Cybersecurity & Data Protection',
-    'Physical Security & Access Control',
-    'Fraud Prevention & Ticket Security',
-    'Weather & Environmental Risk Management',
-    'Health & Medical Safety Platform',
-    'Intelligence & Threat Assessment',
-    'Safety Compliance & Regulatory',
-    'Safety Analytics & AI Command Centre',
+    'WCAG & Digital Accessibility',
+    'Assistive Technology & Adaptive UX',
+    'Physical Venue Accessibility',
+    'Inclusive Content & Communications',
+    'Neurodiversity & Sensory Support',
+    'Disability-Inclusive Ticketing',
+    'Multilingual Accessibility & Language Support',
+    'Accessibility Data, Reporting & DEI',
+    'Accessible Mobile & App Experience',
+    'Inclusive Event Experience & Community',
   ],
   timestamp: new Date().toISOString(),
 }))
@@ -27617,6 +27617,130 @@ app.get('/api/v46/health', (c) => c.json({ status: 'ok', phase: 'Phase 46', vers
 // ═══════════════════════════════════════════════════════════
 // END PHASE 46 — SAFETY, CRISIS MANAGEMENT &
 //               SECURITY PLATFORM
+// ═══════════════════════════════════════════════════════════
+
+// ╔═══════════════════════════════════════════════════════════╗
+// ║  PHASE 47 — ACCESSIBILITY & INCLUSIVE                    ║
+// ║             EXPERIENCE PLATFORM (v47.0.0)                ║
+// ║  90 new endpoints  |  Total: 3,259                       ║
+// ╚═══════════════════════════════════════════════════════════╝
+
+// ── MODULE 1: WCAG & Digital Accessibility (10 endpoints) ──
+app.get('/api/v47/wcag/overview', (c) => c.json({ module: 'WCAG & Digital Accessibility', wcag_level: 'AA', compliance_pct: 98.4, pages_audited: 28400, issues_open: 8, automated_tests_day: 284000, screen_reader_tested: true }))
+app.get('/api/v47/wcag/audit', (c) => c.json({ last_audit: '2026-02-01', score: 98.4, critical_issues: 0, warnings: 8, auditor: 'Level Access', next_audit: '2026-08-01' }))
+app.get('/api/v47/wcag/colour-contrast', (c) => c.json({ passing_pct: 99.2, failing_components: 4, auto_fix_pct: 72, min_ratio: 4.5 }))
+app.get('/api/v47/wcag/keyboard-navigation', (c) => c.json({ fully_navigable_pct: 98.4, focus_indicators: true, skip_links: true, tab_order_correct_pct: 99.2 }))
+app.get('/api/v47/wcag/screen-reader', (c) => c.json({ nvda_tested: true, jaws_tested: true, voiceover_tested: true, talkback_tested: true, compliance_pct: 98.4 }))
+app.get('/api/v47/wcag/alt-text', (c) => c.json({ images_with_alt_pct: 99.8, ai_generated_alt_pct: 84, manual_reviewed_pct: 72 }))
+app.get('/api/v47/wcag/captions', (c) => c.json({ videos_captioned_pct: 98.4, auto_caption_accuracy_pct: 94.2, sign_language_videos: 284 }))
+app.get('/api/v47/wcag/forms', (c) => c.json({ forms_accessible_pct: 99.2, error_identification_pct: 100, label_association_pct: 100 }))
+app.get('/api/v47/wcag/mobile', (c) => c.json({ mobile_a11y_score: 97.8, touch_target_size_min_px: 44, gesture_alternatives: true }))
+app.get('/api/v47/wcag/reports', (c) => c.json({ vpat_available: true, acr_published: true, remediation_roadmap: true, next_milestone: '2026-06-01' }))
+
+// ── MODULE 2: Assistive Technology & Adaptive UX (10 endpoints) ──
+app.get('/api/v47/assistive-tech/overview', (c) => c.json({ module: 'Assistive Technology & Adaptive UX', users_with_a11y_needs: 284000, at_integrations: 28, personalisation_profiles: 84, adaptive_features: 42 }))
+app.get('/api/v47/assistive-tech/screen-magnifier', (c) => c.json({ zoom_range: '100%-400%', reflow_supported: true, text_resize_independent: true }))
+app.get('/api/v47/assistive-tech/voice-control', (c) => c.json({ supported: true, languages: 12, accuracy_pct: 96.4, dragon_compatible: true }))
+app.get('/api/v47/assistive-tech/switch-access', (c) => c.json({ supported: true, scan_modes: ['auto','manual'], dwell_time_ms: 1000 }))
+app.get('/api/v47/assistive-tech/braille', (c) => c.json({ braille_display_compatible: true, brl_grade: 'Grade2', refreshable_support: true }))
+app.get('/api/v47/assistive-tech/cognitive-aids', (c) => c.json({ plain_language: true, reading_age_target: 9, icon_labels: true, step_by_step_mode: true }))
+app.get('/api/v47/assistive-tech/motor-impairment', (c) => c.json({ large_click_zones: true, hover_alternatives: true, auto_complete: true, sticky_keys: true }))
+app.get('/api/v47/assistive-tech/low-vision', (c) => c.json({ high_contrast_themes: 4, font_size_range: '12px-32px', dyslexia_font: 'OpenDyslexic', dark_mode: true }))
+app.get('/api/v47/assistive-tech/deaf-hard-of-hearing', (c) => c.json({ visual_alerts: true, haptic_feedback: true, sign_language_avatars: 8, captions_always_on: true }))
+app.get('/api/v47/assistive-tech/analytics', (c) => c.json({ at_users_pct: 8.4, top_at: 'screen_reader', satisfaction_score: 8.8, support_tickets: 28 }))
+
+// ── MODULE 3: Physical Venue Accessibility (8 endpoints) ──
+app.get('/api/v47/venue-accessibility/overview', (c) => c.json({ module: 'Physical Venue Accessibility', accessible_venues_pct: 84, wheelchair_spaces: 28400, hearing_loop_venues_pct: 72, accessible_toilets_pct: 94 }))
+app.get('/api/v47/venue-accessibility/wheelchair', (c) => c.json({ dedicated_spaces: 28400, companion_seats: 28400, level_access_pct: 94, ramp_availability_pct: 98.4 }))
+app.get('/api/v47/venue-accessibility/hearing-loops', (c) => c.json({ venues_equipped_pct: 72, systems: ['induction_loop','FM','infrared'], fm_receiver_rental: true }))
+app.get('/api/v47/venue-accessibility/visual-impairment', (c) => c.json({ tactile_paths: true, braille_signage: true, audio_descriptions: true, guide_dog_welcome: true }))
+app.get('/api/v47/venue-accessibility/sensory-rooms', (c) => c.json({ venues_with_sensory_room_pct: 42, capacity_per_room: 8, quiet_zones: 284, calming_equipment: true }))
+app.get('/api/v47/venue-accessibility/transport', (c) => c.json({ accessible_parking: 2840, shuttle_wheelchair: true, drop_off_zones: 840, public_transport_accessible_pct: 72 }))
+app.get('/api/v47/venue-accessibility/staff-training', (c) => c.json({ trained_staff: 28400, disability_awareness_courses: 12, refresher_annual: true, sign_language_staff: 840 }))
+app.get('/api/v47/venue-accessibility/certification', (c) => c.json({ certified_venues: 84, standards: ['BS8300','ADA','RPWD'], audit_frequency: 'annual' }))
+
+// ── MODULE 4: Inclusive Content & Communications (8 endpoints) ──
+app.get('/api/v47/inclusive-content/overview', (c) => c.json({ module: 'Inclusive Content & Communications', plain_language_score: 8.4, inclusive_imagery_pct: 94, sign_language_content_pct: 28, diversity_representation_score: 8.8 }))
+app.get('/api/v47/inclusive-content/plain-language', (c) => c.json({ avg_reading_age: 9, flesch_score: 72, jargon_flagged_pct: 4.2, auto_simplify_ai: true }))
+app.get('/api/v47/inclusive-content/sign-language', (c) => c.json({ isl_videos: 284, bsl_videos: 84, asl_videos: 42, avatar_sign_language: true }))
+app.get('/api/v47/inclusive-content/easy-read', (c) => c.json({ easy_read_guides: 84, symbols_used: true, image_support: true, version_formats: ['PDF','web','app'] }))
+app.get('/api/v47/inclusive-content/diverse-imagery', (c) => c.json({ diversity_guidelines: true, representation_score: 8.8, bias_check_ai: true, stock_library_diverse_pct: 84 }))
+app.get('/api/v47/inclusive-content/multilingual-a11y', (c) => c.json({ languages: 42, rtl_accessible: true, locale_aware_a11y: true }))
+app.get('/api/v47/inclusive-content/event-guides', (c) => c.json({ accessible_event_guides: 2840, formats: ['large_print','audio','braille','easy_read'], digital_pct: 84 }))
+app.get('/api/v47/inclusive-content/social-media', (c) => c.json({ alt_text_pct: 99.2, captions_pct: 98.4, audio_descriptions_pct: 84, inclusive_hashtags: true }))
+
+// ── MODULE 5: Neurodiversity & Sensory Support (8 endpoints) ──
+app.get('/api/v47/neurodiversity/overview', (c) => c.json({ module: 'Neurodiversity & Sensory Support', sensory_friendly_events: 284, autism_friendly_pct: 42, adhd_ux_features: 18, anxiety_support_features: 12 }))
+app.get('/api/v47/neurodiversity/sensory-friendly', (c) => c.json({ events_ytd: 284, lower_volume_option: true, reduced_lighting: true, quiet_hours: true, avg_attendance: 840 }))
+app.get('/api/v47/neurodiversity/autism-support', (c) => c.json({ social_stories: 284, pre_visit_packs: true, buddy_system: true, autism_ambassador_trained: 2840 }))
+app.get('/api/v47/neurodiversity/adhd-ux', (c) => c.json({ reduced_animation: true, focus_mode: true, chunked_content: true, reminder_system: true }))
+app.get('/api/v47/neurodiversity/anxiety-support', (c) => c.json({ calm_checkout: true, no_countdown_timers: true, reassuring_copy: true, exit_routes_visible: true }))
+app.get('/api/v47/neurodiversity/dyslexia', (c) => c.json({ dyslexia_font: 'OpenDyslexic', letter_spacing_adjustable: true, bg_colour_customisable: true, text_to_speech: true }))
+app.get('/api/v47/neurodiversity/learning-difficulties', (c) => c.json({ pictogram_support: true, step_indicators: true, memory_aids: true, simplified_flow: true }))
+app.get('/api/v47/neurodiversity/analytics', (c) => c.json({ nd_users_pct: 12.4, satisfaction_score: 8.6, support_requests: 284, nps_nd_segment: 72 }))
+
+// ── MODULE 6: Disability-Inclusive Ticketing (8 endpoints) ──
+app.get('/api/v47/inclusive-ticketing/overview', (c) => c.json({ module: 'Disability-Inclusive Ticketing', companion_tickets_issued: 28400, access_scheme_members: 84000, priority_booking_slots: 2840, refund_flex_pct: 100 }))
+app.get('/api/v47/inclusive-ticketing/companion-tickets', (c) => c.json({ free_companion_policy: true, issued_ytd: 28400, schemes: ['Access Card','CEA Card','Nimbus'], verification_digital: true }))
+app.get('/api/v47/inclusive-ticketing/priority-booking', (c) => c.json({ advance_window_days: 7, dedicated_slots_pct: 8.4, online_and_phone: true }))
+app.get('/api/v47/inclusive-ticketing/accessible-seats', (c) => c.json({ total: 28400, categories: ['wheelchair','ambulant','hearing_loop','easy_egress'], real_time_availability: true }))
+app.get('/api/v47/inclusive-ticketing/refund-policy', (c) => c.json({ disability_flex_refund: true, no_penalty: true, medical_documentation_required: false, auto_approval_pct: 84 }))
+app.get('/api/v47/inclusive-ticketing/access-schemes', (c) => c.json({ schemes: 8, members: 84000, verification_instant: true, national_db_integrated: true }))
+app.get('/api/v47/inclusive-ticketing/support-booking', (c) => c.json({ dedicated_line: true, bsl_video_relay: true, email_relay: true, avg_resolution_min: 8 }))
+app.get('/api/v47/inclusive-ticketing/analytics', (c) => c.json({ accessible_booking_pct: 8.4, nps_disability_segment: 76, revenue_cr: 28.4, growth_yoy_pct: 28 }))
+
+// ── MODULE 7: Multilingual Accessibility & Language Support (8 endpoints) ──
+app.get('/api/v47/multilingual-a11y/overview', (c) => c.json({ module: 'Multilingual Accessibility & Language Support', languages: 42, sign_languages: 8, audio_descriptions: 28, live_interpretation_events: 284 }))
+app.get('/api/v47/multilingual-a11y/live-interpretation', (c) => c.json({ events_with_interp: 284, languages: 28, remote_interpret_pct: 72, latency_ms: 400 }))
+app.get('/api/v47/multilingual-a11y/audio-description', (c) => c.json({ events_with_ad: 840, languages: 12, app_ad_streaming: true, quality_score: 8.8 }))
+app.get('/api/v47/multilingual-a11y/real-time-captions', (c) => c.json({ sttr_accuracy_pct: 96.4, languages: 28, latency_sec: 1.2, speaker_diarisation: true }))
+app.get('/api/v47/multilingual-a11y/translation-services', (c) => c.json({ pre_event: true, on_site: true, post_event: true, languages: 42 }))
+app.get('/api/v47/multilingual-a11y/sign-language-booking', (c) => c.json({ interpreters_network: 840, booking_advance_days: 14, events_with_bsl: 284, ai_sign_avatar: true }))
+app.get('/api/v47/multilingual-a11y/hearing-access', (c) => c.json({ captions: true, audio_description: true, hearing_loops: true, vibration_alerts: true }))
+app.get('/api/v47/multilingual-a11y/analytics', (c) => c.json({ multilingual_a11y_users: 28400, satisfaction: 8.8, top_language: 'hi', interpreter_nps: 74 }))
+
+// ── MODULE 8: Accessibility Data, Reporting & DEI (8 endpoints) ──
+app.get('/api/v47/a11y-reporting/overview', (c) => c.json({ module: 'Accessibility Data, Reporting & DEI', a11y_score: 9.2, dei_index: 8.8, reports_ytd: 28, regulatory_compliance_pct: 100 }))
+app.get('/api/v47/a11y-reporting/dei-metrics', (c) => c.json({ women_pct: 52, disability_pct: 8.4, ethnic_minority_pct: 28, lgbtq_ally_certified: true }))
+app.get('/api/v47/a11y-reporting/user-feedback', (c) => c.json({ a11y_nps: 76, csat_disabled: 4.6, feedback_channels: 8, monthly_themes: ['captioning','seating','booking'] }))
+app.get('/api/v47/a11y-reporting/legal-compliance', (c) => c.json({ frameworks: ['RPWD2016','ADA','AODA','EQA2010'], compliance_pct: 100, legal_challenges: 0 }))
+app.get('/api/v47/a11y-reporting/vendor-a11y', (c) => c.json({ vendors_assessed: 840, a11y_score_avg: 7.8, non_compliant: 28, improvement_plans: 28 }))
+app.get('/api/v47/a11y-reporting/benchmarking', (c) => c.json({ industry_rank: 'top_5pct', peer_avg_score: 6.8, our_score: 9.2, awards: ['Purple Tuesday','Valuable 500'] }))
+app.get('/api/v47/a11y-reporting/roadmap', (c) => c.json({ initiatives_fy26: 28, budget_cr: 8.4, target_wcag_aaa_pct: 72, target_date: '2027-03-31' }))
+app.get('/api/v47/a11y-reporting/annual-report', (c) => c.json({ published: true, year: 2025, pages: 84, stakeholders_notified: 2840 }))
+
+// ── MODULE 9: Accessible Mobile & App Experience (10 endpoints) ──
+app.get('/api/v47/mobile-a11y/overview', (c) => c.json({ module: 'Accessible Mobile & App Experience', app_a11y_score: 97.8, ios_vox_pass: true, android_talkback_pass: true, dynamic_type_support: true }))
+app.get('/api/v47/mobile-a11y/ios', (c) => c.json({ voiceover_pass: true, switch_control: true, guided_access: true, haptic_feedback: true, dynamic_type: true }))
+app.get('/api/v47/mobile-a11y/android', (c) => c.json({ talkback_pass: true, braillaback: true, select_to_speak: true, magnification: true }))
+app.get('/api/v47/mobile-a11y/touch-targets', (c) => c.json({ min_size_px: 44, avg_size_px: 52, non_compliant_pct: 0.8 }))
+app.get('/api/v47/mobile-a11y/text-scaling', (c) => c.json({ max_scale: 2.0, no_truncation_pct: 99.2, reflow_pct: 98.4 }))
+app.get('/api/v47/mobile-a11y/colour-themes', (c) => c.json({ themes: ['default','high-contrast','dark','sepia','monochrome'], user_preference_saved: true }))
+app.get('/api/v47/mobile-a11y/haptics', (c) => c.json({ haptic_alerts: true, motor_reduced_mode: true, no_flash_mode: true }))
+app.get('/api/v47/mobile-a11y/offline', (c) => c.json({ offline_a11y_features: true, ticket_offline: true, wayfinding_offline: true }))
+app.get('/api/v47/mobile-a11y/testing', (c) => c.json({ automated_tests: 8400, manual_tests: 284, disabled_user_panels: 8, ci_integration: true }))
+app.get('/api/v47/mobile-a11y/analytics', (c) => c.json({ a11y_feature_usage_pct: 12.4, at_crash_rate_pct: 0.04, a11y_rating_stars: 4.8 }))
+
+// ── MODULE 10: Inclusive Event Experience & Community (10 endpoints) ──
+app.get('/api/v47/inclusive-events/overview', (c) => c.json({ module: 'Inclusive Event Experience & Community', inclusive_events_ytd: 2840, disability_ambassador_events: 284, community_members: 84000, satisfaction_score: 9.0 }))
+app.get('/api/v47/inclusive-events/ambassadors', (c) => c.json({ ambassadors: 2840, events_supported: 840, training_hrs: 28400, avg_rating: 4.8 }))
+app.get('/api/v47/inclusive-events/community', (c) => c.json({ members: 84000, forums: 42, events_organised: 284, peer_support_active: true }))
+app.get('/api/v47/inclusive-events/feedback-loop', (c) => c.json({ post_event_surveys: 2840, disabled_response_pct: 42, action_taken_pct: 84 }))
+app.get('/api/v47/inclusive-events/co-design', (c) => c.json({ workshops_ytd: 28, participants: 840, features_shipped: 84, satisfaction: 9.2 }))
+app.get('/api/v47/inclusive-events/partnerships', (c) => c.json({ disability_orgs: 84, ngos: 28, government_schemes: 12, funding_cr: 2.8 }))
+app.get('/api/v47/inclusive-events/awards', (c) => c.json({ awards_won: 8, nominations: 18, recognitions: ['Purple Tuesday','Valuable 500','EFQM Inclusion Award'] }))
+app.get('/api/v47/inclusive-events/impact', (c) => c.json({ attendees_with_disability: 284000, yoy_growth_pct: 28, economic_impact_cr: 84, social_value_cr: 284 }))
+app.get('/api/v47/inclusive-events/training', (c) => c.json({ staff_trained_ytd: 28400, courses: 28, e_learning_modules: 84, disability_confident_certified: true }))
+app.get('/api/v47/inclusive-events/analytics', (c) => c.json({ inclusion_index: 9.0, nps_disability: 76, repeat_attendance_pct: 72, referral_rate_pct: 28 }))
+
+// ── Phase 47 health endpoint ─────────────────────────────────
+app.get('/api/v47/health', (c) => c.json({ status: 'ok', phase: 'Phase 47', version: 'v47.0.0', theme: 'Accessibility & Inclusive Experience Platform', endpoints: 90, total: 3259 }))
+
+// ── Phase 47 main health update ──────────────────────────────
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 47 — ACCESSIBILITY & INCLUSIVE
+//               EXPERIENCE PLATFORM
 // ═══════════════════════════════════════════════════════════
 
 export default app

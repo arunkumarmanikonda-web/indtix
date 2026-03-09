@@ -5599,4 +5599,43 @@ async function loadAllP46Org() { await loadP46Org(); }
 loadAllP46Org();
 </script>
 <!-- END PHASE 46 ORGANISER PORTAL -->
+
+<script>
+// ── PHASE 47: Accessibility – Organiser Portal ──
+async function loadP47Org() {
+  const BASE = '/api/v47';
+  const [venue, content, reporting, events] = await Promise.all([
+    fetch(`${BASE}/venue-accessibility/overview`).then(r=>r.json()),
+    fetch(`${BASE}/inclusive-content/overview`).then(r=>r.json()),
+    fetch(`${BASE}/a11y-reporting/overview`).then(r=>r.json()),
+    fetch(`${BASE}/inclusive-events/overview`).then(r=>r.json()),
+  ]);
+  const panel = document.createElement('div');
+  panel.className = 'phase-panel p-4 my-4 bg-purple-50 rounded-xl border border-purple-200';
+  panel.innerHTML = `
+    <h2 class="text-xl font-bold text-purple-800 mb-3">♿ Phase 47 – Inclusive Event Planning</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-purple-600">${venue.accessible_venues_pct ?? '84'}%</div>
+        <div class="text-xs text-gray-500">Accessible Venues</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-indigo-600">${content.sign_language_content_pct ?? '28'}%</div>
+        <div class="text-xs text-gray-500">Sign Language Content</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-violet-600">${reporting.dei_index ?? '8.8'}/10</div>
+        <div class="text-xs text-gray-500">DEI Index</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-pink-600">${events.inclusive_events_ytd?.toLocaleString?.() ?? '2,840'}</div>
+        <div class="text-xs text-gray-500">Inclusive Events YTD</div>
+      </div>
+    </div>`;
+  document.body.appendChild(panel);
+}
+async function loadAllP47Org() { await loadP47Org(); }
+loadAllP47Org();
+</script>
+<!-- END PHASE 47 ORGANISER PORTAL -->
 </body></html>

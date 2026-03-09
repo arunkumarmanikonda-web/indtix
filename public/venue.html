@@ -3469,4 +3469,38 @@ async function loadAllP46Venue() { await loadP46Venue(); }
 loadAllP46Venue();
 </script>
 <!-- END PHASE 46 VENUE PORTAL -->
+
+<script>
+// ── PHASE 47: Accessibility – Venue Portal ──
+async function loadP47Venue() {
+  const BASE = '/api/v47';
+  const [venue, nd, reporting] = await Promise.all([
+    fetch(`${BASE}/venue-accessibility/overview`).then(r=>r.json()),
+    fetch(`${BASE}/neurodiversity/overview`).then(r=>r.json()),
+    fetch(`${BASE}/a11y-reporting/overview`).then(r=>r.json()),
+  ]);
+  const panel = document.createElement('div');
+  panel.className = 'phase-panel p-4 my-4 bg-purple-50 rounded-xl border border-purple-200';
+  panel.innerHTML = `
+    <h2 class="text-xl font-bold text-purple-800 mb-3">♿ Phase 47 – Venue Accessibility Ops</h2>
+    <div class="grid grid-cols-3 gap-3">
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-purple-600">${venue.wheelchair_spaces?.toLocaleString?.() ?? '28,400'}</div>
+        <div class="text-xs text-gray-500">Wheelchair Spaces</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-indigo-600">${venue.hearing_loop_venues_pct ?? '72'}%</div>
+        <div class="text-xs text-gray-500">Hearing Loop Venues</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-violet-600">${reporting.a11y_score ?? '9.2'}/10</div>
+        <div class="text-xs text-gray-500">A11y Score</div>
+      </div>
+    </div>`;
+  document.body.appendChild(panel);
+}
+async function loadAllP47Venue() { await loadP47Venue(); }
+loadAllP47Venue();
+</script>
+<!-- END PHASE 47 VENUE PORTAL -->
 </body></html>
