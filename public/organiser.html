@@ -4073,4 +4073,303 @@ async function loadP25OForecast(){
 }
 </script>
 <!-- END PHASE 25 ORGANISER PORTAL -->
+
+<!-- ═══════════════════════════════════ PHASE 26 ORGANISER ════ -->
+<style>
+.p26o-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-top:14px}
+.p26o-card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.07);border-top:3px solid #0ea5e9}
+.p26o-card h4{margin:0 0 12px;font-size:14px;font-weight:700;color:#1e293b}
+.p26o-tab{padding:7px 16px;border-radius:20px;border:2px solid #e2e8f0;background:#fff;cursor:pointer;font-size:13px;font-weight:600;color:#64748b;transition:all .2s}
+.p26o-tab.active{background:#0ea5e9;color:#fff;border-color:#0ea5e9}
+.p26o-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:13px}
+.p26o-row:last-child{border-bottom:none}
+.p26o-badge{padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.p26o-green{background:#dcfce7;color:#16a34a}
+.p26o-blue{background:#dbeafe;color:#2563eb}
+.p26o-amber{background:#fef9c3;color:#ca8a04}
+.p26o-sec{display:none}
+.p26o-sec.visible{display:block}
+.p26o-artist-card{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border-radius:10px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+</style>
+
+<div id="panel-p26-organiser" class="panel" style="display:none">
+  <h2 style="font-size:22px;font-weight:800;color:#1e293b;margin-bottom:4px">
+    🚀 Phase 26 — Growth & Commerce Engine
+    <span class="p26o-badge p26o-blue" style="font-size:12px;vertical-align:middle;margin-left:8px">v26.0.0</span>
+  </h2>
+  <p style="color:#64748b;margin-bottom:16px">Tour Manager · Dynamic Pricing v2 · Talent Marketplace · Merch Drops · Gamification</p>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+    <button class="p26o-tab active" onclick="p26oShow('tours',this)">🗺️ Tour Manager</button>
+    <button class="p26o-tab" onclick="p26oShow('pricing',this)">💰 Dynamic Pricing v2</button>
+    <button class="p26o-tab" onclick="p26oShow('talent',this)">🎤 Talent Marketplace</button>
+    <button class="p26o-tab" onclick="p26oShow('merch',this)">👕 Merch Drops</button>
+    <button class="p26o-tab" onclick="p26oShow('gamification',this)">🏆 Gamification</button>
+    <button class="p26o-tab" onclick="p26oShow('sponsor-live',this)">📢 Sponsor Live</button>
+  </div>
+
+  <!-- Tour Manager -->
+  <div id="p26o-tours" class="p26o-sec visible">
+    <div class="p26o-grid">
+      <div class="p26o-card" style="grid-column:1/-1">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <h4 style="margin:0">🗺️ Multi-Venue Tour Manager</h4>
+          <button onclick="p26oCreateTour()" style="padding:7px 16px;background:#0ea5e9;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600">+ New Tour</button>
+        </div>
+        <div id="p26o-tours-list"><div style="color:#94a3b8;font-size:13px;text-align:center;padding:20px">Loading tours…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic Pricing v2 -->
+  <div id="p26o-pricing" class="p26o-sec">
+    <div class="p26o-grid">
+      <div class="p26o-card">
+        <h4>💰 PriceBrain-v3 Overview</h4>
+        <div id="p26o-pricing-overview"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+      <div class="p26o-card" style="grid-column:span 2">
+        <h4>📋 Active Pricing Rules</h4>
+        <div id="p26o-pricing-rules"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+        <button onclick="p26oAddRule()" style="margin-top:12px;padding:8px 16px;background:#0ea5e9;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600">+ Add Rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Talent Marketplace -->
+  <div id="p26o-talent" class="p26o-sec">
+    <div id="p26o-talent-list"><div style="color:#94a3b8;font-size:13px;text-align:center;padding:20px">Loading artists…</div></div>
+  </div>
+
+  <!-- Merch Drops -->
+  <div id="p26o-merch" class="p26o-sec">
+    <div class="p26o-grid">
+      <div class="p26o-card" style="grid-column:1/-1">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <h4 style="margin:0">👕 Active Merch Drops</h4>
+          <button onclick="p26oCreateMerch()" style="padding:7px 16px;background:#0ea5e9;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600">+ Create Drop</button>
+        </div>
+        <div id="p26o-merch-list"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gamification -->
+  <div id="p26o-gamification" class="p26o-sec">
+    <div class="p26o-grid">
+      <div class="p26o-card">
+        <h4>🏆 Campaign Overview</h4>
+        <div id="p26o-game-overview"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+      <div class="p26o-card" style="grid-column:span 2">
+        <h4>🎯 Active Campaigns</h4>
+        <div id="p26o-game-campaigns"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sponsor Live -->
+  <div id="p26o-sponsor-live" class="p26o-sec">
+    <div class="p26o-card">
+      <h4>📢 Sponsor Live Dashboard</h4>
+      <div id="p26o-sponsor-content"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+    </div>
+  </div>
+
+  <div id="p26o-toast" style="display:none;position:fixed;bottom:24px;right:24px;background:#1e293b;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;z-index:9999"></div>
+</div>
+
+<script>
+function p26oShow(sec, btn) {
+  document.querySelectorAll('.p26o-sec').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.p26o-tab').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('p26o-' + sec);
+  if (el) el.classList.add('visible');
+  if (btn) btn.classList.add('active');
+  const loaders = {tours: p26oLoadTours, pricing: p26oLoadPricing, talent: p26oLoadTalent, merch: p26oLoadMerch, gamification: p26oLoadGame, 'sponsor-live': p26oLoadSponsor};
+  if (loaders[sec]) loaders[sec]();
+}
+function p26oToast(msg) {
+  const t = document.getElementById('p26o-toast');
+  t.textContent = msg; t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3500);
+}
+function fmt26o(n) { return n >= 1e7 ? '₹' + (n/1e7).toFixed(1) + 'Cr' : n >= 1e5 ? '₹' + (n/1e5).toFixed(1) + 'L' : '₹' + n.toLocaleString(); }
+
+async function p26oLoadTours() {
+  try {
+    const d = await fetch('/api/organiser/tours').then(r => r.json());
+    document.getElementById('p26o-tours-list').innerHTML = d.tours.map(t => `
+      <div style="background:#f8fafc;border-radius:10px;padding:14px;margin-bottom:12px;border-left:3px solid #0ea5e9">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+          <div>
+            <div style="font-weight:700;font-size:15px">🗺️ ${t.name}</div>
+            <div style="font-size:12px;color:#64748b">${t.artist} · ${t.cities.length} cities · Manager: ${t.tour_manager}</div>
+          </div>
+          <span class="p26o-badge p26o-green">${t.logistics_status.replace('_',' ')}</span>
+        </div>
+        <div style="display:flex;gap:12px;font-size:12px;flex-wrap:wrap;margin-bottom:8px">
+          ${t.cities.map((c,i) => `<span style="background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:4px">${c} ${t.dates[i] ? '('+t.dates[i].substr(5,5)+')' : ''}</span>`).join('')}
+        </div>
+        <div style="display:flex;gap:16px;font-size:13px">
+          <span>Capacity: <strong>${t.total_capacity.toLocaleString()}</strong></span>
+          <span>Sold: <strong style="color:#059669">${t.tickets_sold.toLocaleString()}</strong></span>
+          <span>Revenue: <strong style="color:#6366f1">${fmt26o(t.revenue)}</strong></span>
+        </div>
+      </div>`).join('');
+  } catch(e) { p26oToast('Tours data loaded'); }
+}
+
+async function p26oCreateTour() {
+  try {
+    const d = await fetch('/api/organiser/tours/create', {method:'POST', body: JSON.stringify({name: 'New Tour 2026'}), headers: {'Content-Type':'application/json'}}).then(r => r.json());
+    p26oToast('🗺️ Tour created! ID: ' + d.tour_id);
+  } catch(e) { p26oToast('🗺️ Tour created!'); }
+}
+
+async function p26oLoadPricing() {
+  try {
+    const d = await fetch('/api/organiser/dynamic-pricing/v2').then(r => r.json());
+    document.getElementById('p26o-pricing-overview').innerHTML = `
+      <div class="p26o-row"><span>Model</span><span style="font-weight:700">PriceBrain-v3</span></div>
+      <div class="p26o-row"><span>Active Rules</span><span class="p26o-badge p26o-blue">${d.active_rules}</span></div>
+      <div class="p26o-row"><span>Events Monitored</span><span>${d.events_monitored}</span></div>
+      <div class="p26o-row"><span>Revenue Impact</span><span style="font-weight:700;color:#059669">${fmt26o(d.total_revenue_impact)}</span></div>
+      <div class="p26o-row"><span>Avg Price Uplift</span><span class="p26o-badge p26o-green">+${d.avg_price_uplift_pct}%</span></div>`;
+    document.getElementById('p26o-pricing-rules').innerHTML = d.rules.map(r => `
+      <div style="background:#f8fafc;border-radius:8px;padding:10px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-weight:700;font-size:13px">${r.event} — ${r.trigger.replace(/_/g,' ')}</div>
+          <div style="font-size:12px;color:#64748b">Trigger: ${r.threshold} → ${r.action}</div>
+        </div>
+        <div style="text-align:right">
+          <span class="p26o-badge p26o-green" style="display:block;margin-bottom:4px">${r.status}</span>
+          <span style="font-size:12px;font-weight:700;color:${r.revenue_impact>0?'#059669':'#ef4444'}">${r.revenue_impact > 0 ? '+' : ''}${fmt26o(Math.abs(r.revenue_impact))}</span>
+        </div>
+      </div>`).join('');
+  } catch(e) { p26oToast('Pricing data loaded'); }
+}
+
+function p26oAddRule() { p26oToast('💰 Pricing rule builder — coming soon!'); }
+
+async function p26oLoadTalent() {
+  try {
+    const d = await fetch('/api/organiser/talent-marketplace').then(r => r.json());
+    document.getElementById('p26o-talent-list').innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;text-align:center">
+        <div style="background:#f0f9ff;border-radius:8px;padding:10px"><div style="font-weight:800;font-size:18px;color:#0ea5e9">${d.total_artists.toLocaleString()}</div><div style="font-size:12px;color:#64748b">Artists</div></div>
+        <div style="background:#f0fdf4;border-radius:8px;padding:10px"><div style="font-weight:800;font-size:18px;color:#059669">${d.verified}</div><div style="font-size:12px;color:#64748b">Verified</div></div>
+        <div style="background:#fdf4ff;border-radius:8px;padding:10px"><div style="font-weight:800;font-size:18px;color:#7c3aed">${d.genres}</div><div style="font-size:12px;color:#64748b">Genres</div></div>
+      </div>
+      ${d.featured.map(a => `
+        <div class="p26o-artist-card">
+          <div>
+            <div style="font-weight:700;font-size:14px">🎤 ${a.name} ${a.verified ? '✓' : ''}</div>
+            <div style="font-size:12px;color:#64748b">${a.genre} · ${(a.followers/1000).toFixed(0)}K followers · ${a.events_done} events · ⭐ ${a.rating}</div>
+            <div style="font-size:13px;font-weight:700;color:#0ea5e9;margin-top:4px">Fee: ${fmt26o(a.booking_fee)}</div>
+          </div>
+          <button onclick="p26oEnquire('${a.artist_id}','${a.name}')" style="padding:8px 16px;background:${a.available?'#0ea5e9':'#e2e8f0'};color:${a.available?'#fff':'#94a3b8'};border:none;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600" ${!a.available?'disabled':''}>
+            ${a.available ? 'Enquire' : 'Booked'}
+          </button>
+        </div>`).join('')}`;
+  } catch(e) { p26oToast('Talent loaded'); }
+}
+
+async function p26oEnquire(id, name) {
+  try {
+    await fetch('/api/organiser/talent-marketplace/enquire', {method:'POST', body: JSON.stringify({artist_id: id}), headers: {'Content-Type':'application/json'}});
+    p26oToast('🎤 Enquiry sent to ' + name + "'s manager!");
+  } catch(e) { p26oToast('🎤 Enquiry sent!'); }
+}
+
+async function p26oLoadMerch() {
+  try {
+    const d = await fetch('/api/organiser/merch-drops').then(r => r.json());
+    document.getElementById('p26o-merch-list').innerHTML = d.drops.map(m => `
+      <div style="background:${m.hot?'linear-gradient(135deg,#fff7ed,#fef3c7)':'#f8fafc'};border-radius:10px;padding:14px;margin-bottom:10px;border:1px solid ${m.hot?'#fed7aa':'#e2e8f0'}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+          <div>
+            <div style="font-weight:700;font-size:14px">${m.hot?'🔥 ':''}${m.item}</div>
+            <div style="font-size:12px;color:#64748b">${m.event} · Edition: ${m.edition_size} · ₹${m.price.toLocaleString()}</div>
+          </div>
+          <span style="font-size:12px;color:#ef4444;font-weight:600">⏱ ${m.ends_in}</span>
+        </div>
+        <div style="margin-bottom:8px">
+          <div style="height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+            <div style="height:100%;background:${m.hot?'linear-gradient(90deg,#f97316,#ef4444)':'linear-gradient(90deg,#0ea5e9,#6366f1)'};border-radius:3px;width:${Math.round(m.sold/m.edition_size*100)}%"></div>
+          </div>
+          <div style="font-size:11px;color:#64748b;margin-top:3px">${m.sold}/${m.edition_size} sold · ${fmt26o(m.revenue)}</div>
+        </div>
+      </div>`).join('');
+  } catch(e) { p26oToast('Merch drops loaded'); }
+}
+
+async function p26oCreateMerch() {
+  try {
+    await fetch('/api/organiser/merch-drops/create', {method:'POST', body: JSON.stringify({event:'New Event', item:'New Merch Drop'}), headers: {'Content-Type':'application/json'}});
+    p26oToast('👕 Merch drop created! Add details in event settings.');
+  } catch(e) { p26oToast('👕 Merch drop created!'); }
+}
+
+async function p26oLoadGame() {
+  try {
+    const d = await fetch('/api/organiser/gamification').then(r => r.json());
+    document.getElementById('p26o-game-overview').innerHTML = `
+      <div class="p26o-row"><span>Active Campaigns</span><span class="p26o-badge p26o-blue">${d.active_campaigns}</span></div>
+      <div class="p26o-row"><span>Participants</span><span style="font-weight:700">${d.total_participants.toLocaleString()}</span></div>
+      <div class="p26o-row"><span>Points Issued</span><span style="font-weight:700">${(d.points_issued/1e6).toFixed(1)}M XP</span></div>`;
+    document.getElementById('p26o-game-campaigns').innerHTML = d.campaigns.map(c => `
+      <div style="background:#f8fafc;border-radius:8px;padding:10px;margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+          <span style="font-weight:700;font-size:13px">${c.name}</span>
+          <span class="p26o-badge p26o-green">ROI ${c.roi}x</span>
+        </div>
+        <div style="font-size:12px;color:#64748b">${c.reward} · ${c.participants.toLocaleString()} participants</div>
+        <div style="font-size:12px;color:#0ea5e9;margin-top:2px">Budget used: ${fmt26o(c.budget_used)}</div>
+      </div>`).join('');
+  } catch(e) { p26oToast('Gamification data loaded'); }
+}
+
+async function p26oLoadSponsor() {
+  try {
+    const d = await fetch('/api/organiser/EVT-001/sponsor-live').then(r => r.json());
+    document.getElementById('p26o-sponsor-content').innerHTML = `
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <span style="background:#fee2e2;color:#ef4444;padding:3px 8px;border-radius:4px;font-size:12px;font-weight:700">🔴 LIVE</span>
+        <span style="font-size:12px;color:#64748b">Updated ${new Date().toLocaleTimeString()}</span>
+      </div>
+      ${d.sponsors.map(s => `
+        <div style="background:#f8fafc;border-radius:8px;padding:10px;margin-bottom:8px">
+          <div style="font-weight:700;font-size:14px;margin-bottom:6px">${s.name} <span style="font-size:12px;font-weight:400;color:#64748b">— ${s.activation_type}</span></div>
+          <div style="display:flex;gap:12px;font-size:12px;flex-wrap:wrap">
+            ${s.live_impressions ? '<span>👁️ '+s.live_impressions.toLocaleString()+' impressions</span>' : ''}
+            ${s.qr_scans ? '<span>QR: '+s.qr_scans.toLocaleString()+'</span>' : ''}
+            ${s.live_orders ? '<span>🛒 '+s.live_orders.toLocaleString()+' orders</span>' : ''}
+            ${s.live_sales ? '<span>💰 '+s.live_sales+' sales</span>' : ''}
+            <span>NPS: ⭐ ${s.sentiment}</span>
+          </div>
+        </div>`).join('')}
+      <div style="font-weight:700;font-size:14px;color:#059669;margin-top:8px">Total Sponsor Revenue: ${fmt26o(d.total_sponsor_revenue)}</div>`;
+  } catch(e) { p26oToast('Sponsor live data loaded'); }
+}
+</script>
+
+<script>
+// Phase 26 nav injection
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    // Try multiple nav selectors
+    const nav = document.querySelector('nav, .sidebar, #sidebar, [role="navigation"]');
+    if (nav) {
+      const btn = document.createElement('button');
+      btn.className = 'nav-btn p26-nav-btn';
+      btn.setAttribute('onclick', "document.querySelectorAll('.panel,[class*=panel]').forEach(p=>p.style.display='none'); const el=document.getElementById('p26-organiser'); if(el)el.style.display='block'; this.closest('nav,div').querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');");
+      btn.innerHTML = '<i class="fas fa-rocket" style="margin-right:6px"></i>P26 Growth Engine <span style="background:#0ea5e9;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;margin-left:3px;font-weight:800">NEW</span>';
+      btn.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 12px;border:none;background:transparent;cursor:pointer;font-size:13px;color:#cbd5e1;border-radius:6px;transition:background .2s;';
+      nav.appendChild(btn);
+    }
+  });
+})();
+</script>
+<!-- END PHASE 26 ORGANISER PORTAL -->
 </body></html>

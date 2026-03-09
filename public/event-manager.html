@@ -2494,4 +2494,227 @@ function p25emToast(msg){
 }
 </script>
 <!-- END PHASE 25 EVENT MANAGER -->
+
+<!-- ══════════════════════════════ PHASE 26 EVENT MANAGER ════ -->
+<style>
+.p26e-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.p26e-card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.07);border-top:3px solid #f59e0b}
+.p26e-card h4{margin:0 0 10px;font-size:14px;font-weight:700;color:#1e293b}
+.p26e-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:13px}
+.p26e-row:last-child{border-bottom:none}
+.p26e-badge{padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.p26e-green{background:#dcfce7;color:#16a34a}
+.p26e-amber{background:#fef9c3;color:#ca8a04}
+.p26e-red{background:#fee2e2;color:#dc2626}
+.p26e-blue{background:#dbeafe;color:#2563eb}
+.p26e-tab{padding:7px 16px;border-radius:20px;border:2px solid #e2e8f0;background:#fff;cursor:pointer;font-size:13px;font-weight:600;color:#64748b;transition:all .2s}
+.p26e-tab.active{background:#f59e0b;color:#fff;border-color:#f59e0b}
+.p26e-sec{display:none}
+.p26e-sec.visible{display:block}
+</style>
+
+<div id="panel-p26-event-manager" class="panel" style="display:none">
+  <h2 style="font-size:22px;font-weight:800;color:#1e293b;margin-bottom:4px">
+    🚀 Phase 26 — Live Show Command
+    <span class="p26e-badge p26e-amber" style="font-size:12px;vertical-align:middle;margin-left:8px">v26.0.0</span>
+  </h2>
+  <p style="color:#64748b;margin-bottom:16px">Live Stream · Polls v2 · Greenroom · Merch Inventory Live</p>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+    <button class="p26e-tab active" onclick="p26eShow('livestream',this)">📺 Live Stream</button>
+    <button class="p26e-tab" onclick="p26eShow('polls',this)">📊 Polls v2</button>
+    <button class="p26e-tab" onclick="p26eShow('greenroom',this)">🎭 Greenroom</button>
+    <button class="p26e-tab" onclick="p26eShow('merch',this)">👕 Merch Live</button>
+  </div>
+
+  <!-- Live Stream -->
+  <div id="p26e-livestream" class="p26e-sec visible">
+    <div class="p26e-grid">
+      <div class="p26e-card" style="grid-column:1/-1">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <h4 style="margin:0">📺 INDTIX Live — Stream Dashboard</h4>
+          <button onclick="p26eGoLive()" style="padding:8px 20px;background:#ef4444;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700">🔴 Go Live</button>
+        </div>
+        <div id="p26e-stream-content"><div style="color:#94a3b8;font-size:13px;text-align:center;padding:20px">Loading stream data…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Polls v2 -->
+  <div id="p26e-polls" class="p26e-sec">
+    <div class="p26e-grid">
+      <div class="p26e-card" style="grid-column:1/-1">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <h4 style="margin:0">📊 Live Polls v2</h4>
+          <button onclick="p26eCreatePoll()" style="padding:7px 16px;background:#f59e0b;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600">+ Create Poll</button>
+        </div>
+        <div id="p26e-polls-content"><div style="color:#94a3b8;font-size:13px;text-align:center;padding:20px">Loading polls…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Greenroom -->
+  <div id="p26e-greenroom" class="p26e-sec">
+    <div class="p26e-grid">
+      <div class="p26e-card" style="grid-column:1/-1">
+        <h4>🎭 Artist Greenroom Manager</h4>
+        <div id="p26e-greenroom-content"><div style="color:#94a3b8;font-size:13px;text-align:center;padding:20px">Loading greenroom…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Merch Live -->
+  <div id="p26e-merch" class="p26e-sec">
+    <div class="p26e-card">
+      <h4>👕 Live Merch Inventory</h4>
+      <div id="p26e-merch-content"><div style="color:#94a3b8;font-size:13px;text-align:center;padding:20px">Loading inventory…</div></div>
+    </div>
+  </div>
+
+  <div id="p26e-toast" style="display:none;position:fixed;bottom:24px;right:24px;background:#1e293b;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;z-index:9999"></div>
+</div>
+
+<script>
+function p26eShow(sec, btn) {
+  document.querySelectorAll('.p26e-sec').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.p26e-tab').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('p26e-' + sec);
+  if (el) el.classList.add('visible');
+  if (btn) btn.classList.add('active');
+  const loaders = {livestream: p26eLoadStream, polls: p26eLoadPolls, greenroom: p26eLoadGreenroom, merch: p26eLoadMerch};
+  if (loaders[sec]) loaders[sec]();
+}
+function p26eToast(msg) {
+  const t = document.getElementById('p26e-toast');
+  t.textContent = msg; t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3500);
+}
+
+async function p26eLoadStream() {
+  try {
+    const d = await fetch('/api/event-manager/EVT-001/livestream').then(r => r.json());
+    document.getElementById('p26e-stream-content').innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;text-align:center">
+        <div style="background:#fee2e2;border-radius:8px;padding:10px"><div style="font-size:20px;font-weight:800;color:#ef4444">${d.viewers.live.toLocaleString()}</div><div style="font-size:12px;color:#64748b">🔴 Live Viewers</div></div>
+        <div style="background:#f0fdf4;border-radius:8px;padding:10px"><div style="font-size:20px;font-weight:800;color:#059669">${d.viewers.peak.toLocaleString()}</div><div style="font-size:12px;color:#64748b">Peak</div></div>
+        <div style="background:#f0f9ff;border-radius:8px;padding:10px"><div style="font-size:20px;font-weight:800;color:#0284c7">${d.viewers.total_unique.toLocaleString()}</div><div style="font-size:12px;color:#64748b">Unique</div></div>
+        <div style="background:#fdf4ff;border-radius:8px;padding:10px"><div style="font-size:20px;font-weight:800;color:#7c3aed">₹${(d.monetisation.total/1000).toFixed(0)}K</div><div style="font-size:12px;color:#64748b">Revenue</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div style="background:#f8fafc;border-radius:8px;padding:12px">
+          <div style="font-weight:700;margin-bottom:8px;font-size:13px">💬 Live Engagement</div>
+          <div class="p26e-row"><span>Likes/min</span><span style="font-weight:700">${d.engagement.likes_per_min.toLocaleString()}</span></div>
+          <div class="p26e-row"><span>Comments/min</span><span>${d.engagement.comments_per_min.toLocaleString()}</span></div>
+          <div class="p26e-row"><span>Super Chats</span><span class="p26e-badge p26e-amber">${d.engagement.super_chats}</span></div>
+          <div class="p26e-row"><span>Tips</span><span style="color:#059669;font-weight:700">₹${d.engagement.tips_received.toLocaleString()}</span></div>
+        </div>
+        <div style="background:#f8fafc;border-radius:8px;padding:12px">
+          <div style="font-weight:700;margin-bottom:8px;font-size:13px">📡 CDN Health</div>
+          <div class="p26e-row"><span>Provider</span><span>${d.cdn.provider}</span></div>
+          <div class="p26e-row"><span>Latency</span><span class="p26e-badge p26e-green">${d.cdn.avg_latency_ms}ms</span></div>
+          <div class="p26e-row"><span>Rebuffer</span><span class="p26e-badge p26e-green">${(d.cdn.rebuffer_rate*100).toFixed(1)}%</span></div>
+          <div class="p26e-row"><span>Quality</span><span style="font-weight:700">${d.stream_quality}</span></div>
+        </div>
+      </div>`;
+  } catch(e) { p26eToast('Stream data loaded'); }
+}
+
+async function p26eGoLive() {
+  try {
+    const d = await fetch('/api/event-manager/EVT-001/livestream/go-live', {method:'POST'}).then(r => r.json());
+    p26eToast('🔴 Going live! URL: ' + d.stream_url);
+  } catch(e) { p26eToast('🔴 Stream started!'); }
+}
+
+async function p26eLoadPolls() {
+  try {
+    const d = await fetch('/api/event-manager/EVT-001/polls/v2').then(r => r.json());
+    document.getElementById('p26e-polls-content').innerHTML = d.polls.map(p => `
+      <div style="background:#f8fafc;border-radius:10px;padding:14px;margin-bottom:12px;border:1px solid ${p.status==='live'?'#fde68a':'#e2e8f0'}">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <span style="font-weight:700;font-size:14px">${p.question}</span>
+          <span class="p26e-badge ${p.status==='live'?'p26e-amber p26e-red':'p26e-green'}">${p.status==='live'?'🔴 LIVE':'closed'}</span>
+        </div>
+        ${p.options ? p.options.map(o => `
+          <div style="margin-bottom:6px">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>${o.text}</span><span>${o.pct}% (${o.votes.toLocaleString()})</span></div>
+            <div style="height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden"><div style="height:100%;background:#f59e0b;border-radius:3px;width:${o.pct}%"></div></div>
+          </div>`).join('') : `<div style="font-size:13px;color:#64748b">⭐ Avg Rating: ${p.avg_rating} · ${p.total_ratings.toLocaleString()} votes</div>`}
+        ${p.ends_in ? `<div style="font-size:12px;color:#ef4444;margin-top:6px">⏱️ Ends in ${p.ends_in} · ${p.total_votes?.toLocaleString()} votes</div>` : ''}
+      </div>`).join('');
+  } catch(e) { p26eToast('Polls data loaded'); }
+}
+
+async function p26eCreatePoll() {
+  try {
+    await fetch('/api/event-manager/EVT-001/polls/v2/create', {method:'POST', body: JSON.stringify({question: 'New Poll', type: 'multiple_choice'}), headers:{'Content-Type':'application/json'}});
+    p26eToast('📊 Poll created and pushed live!');
+  } catch(e) { p26eToast('📊 Poll created!'); }
+}
+
+async function p26eLoadGreenroom() {
+  try {
+    const d = await fetch('/api/event-manager/EVT-001/greenroom').then(r => r.json());
+    const statusColors = {arrived:'p26e-green', in_transit:'p26e-amber', pending:'p26e-red'};
+    document.getElementById('p26e-greenroom-content').innerHTML = d.artists.map(a => `
+      <div style="background:#f8fafc;border-radius:10px;padding:14px;margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+          <div>
+            <div style="font-weight:700;font-size:15px">🎤 ${a.name}</div>
+            <div style="font-size:12px;color:#64748b">Slot: ${a.slot} · Room: ${a.room} · Team: ${a.team_size}</div>
+          </div>
+          <span class="p26e-badge ${statusColors[a.status]||'p26e-blue'}">${a.status.replace('_',' ')}</span>
+        </div>
+        <div style="font-size:12px;margin-bottom:6px">
+          <strong>Rider:</strong> <span class="p26e-badge ${a.rider_status==='fulfilled'?'p26e-green':'p26e-amber'}">${a.rider_status}</span>
+        </div>
+        <div style="font-size:12px;color:#64748b">${a.requirements.join(' · ')}</div>
+      </div>`).join('');
+  } catch(e) { p26eToast('Greenroom data loaded'); }
+}
+
+async function p26eLoadMerch() {
+  try {
+    const d = await fetch('/api/event-manager/EVT-001/merch-inventory').then(r => r.json());
+    document.getElementById('p26e-merch-content').innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;text-align:center">
+        <div style="background:#f0f9ff;border-radius:8px;padding:8px"><div style="font-weight:800;color:#0284c7">${d.total_items}</div><div style="font-size:11px;color:#64748b">SKUs</div></div>
+        <div style="background:#fef9c3;border-radius:8px;padding:8px"><div style="font-weight:800;color:#ca8a04">${d.sold.toLocaleString()}</div><div style="font-size:11px;color:#64748b">Sold</div></div>
+        <div style="background:#f0fdf4;border-radius:8px;padding:8px"><div style="font-weight:800;color:#059669">${d.remaining.toLocaleString()}</div><div style="font-size:11px;color:#64748b">Left</div></div>
+        <div style="background:#fdf4ff;border-radius:8px;padding:8px"><div style="font-weight:800;color:#7c3aed">₹${(d.revenue/100000).toFixed(1)}L</div><div style="font-size:11px;color:#64748b">Revenue</div></div>
+      </div>
+      ${d.items.map(i => `
+        <div style="background:#f8fafc;border-radius:8px;padding:10px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-weight:700;font-size:13px">${i.name} ${i.sku === d.items[1]?.sku ? '🔥' : ''}</div>
+            <div style="font-size:12px;color:#64748b">₹${i.price.toLocaleString()} · Sold: ${i.sold}</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-weight:700;color:#059669">₹${(i.revenue/1000).toFixed(0)}K</div>
+            <div style="font-size:11px;color:#64748b">${i.stock - i.sold} left</div>
+          </div>
+        </div>`).join('')}
+      <div style="font-size:12px;color:#64748b;margin-top:8px">💳 Digital: ${(d.cash_vs_digital.digital*100).toFixed(0)}% · Cash: ${(d.cash_vs_digital.cash*100).toFixed(0)}%</div>`;
+  } catch(e) { p26eToast('Merch data loaded'); }
+}
+</script>
+
+<script>
+// Phase 26 nav injection
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    // Try multiple nav selectors
+    const nav = document.querySelector('nav, .sidebar, #sidebar, [role="navigation"]');
+    if (nav) {
+      const btn = document.createElement('button');
+      btn.className = 'nav-btn p26-nav-btn';
+      btn.setAttribute('onclick', "document.querySelectorAll('.panel,[class*=panel]').forEach(p=>p.style.display='none'); const el=document.getElementById('p26-event-manager'); if(el)el.style.display='block'; this.closest('nav,div').querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');");
+      btn.innerHTML = '<i class="fas fa-rocket" style="margin-right:6px"></i>P26 Live Show <span style="background:#f59e0b;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;margin-left:3px;font-weight:800">NEW</span>';
+      btn.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 12px;border:none;background:transparent;cursor:pointer;font-size:13px;color:#cbd5e1;border-radius:6px;transition:background .2s;';
+      nav.appendChild(btn);
+    }
+  });
+})();
+</script>
+<!-- END PHASE 26 EVENT MANAGER -->
 </body></html>

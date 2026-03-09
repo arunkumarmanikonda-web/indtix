@@ -5164,5 +5164,356 @@ document.addEventListener('DOMContentLoaded', async function(){
 });
 </script>
 <!-- END PHASE 25 FAN PORTAL -->
+
+<!-- ════════════════════════════════════ PHASE 26 FAN ══════════ -->
+<style>
+.p26f-hero{background:linear-gradient(135deg,#6366f1,#8b5cf6,#ec4899);border-radius:16px;padding:24px;color:#fff;margin-bottom:20px}
+.p26f-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.p26f-card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.p26f-card h4{margin:0 0 12px;font-size:14px;font-weight:700;color:#1e293b}
+.p26f-tab-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.p26f-tab{padding:7px 16px;border-radius:20px;border:2px solid #e2e8f0;background:#fff;cursor:pointer;font-size:13px;font-weight:600;color:#64748b;transition:all .2s}
+.p26f-tab.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-color:transparent}
+.p26f-sec{display:none}
+.p26f-sec.visible{display:block}
+.p26f-club-card{background:linear-gradient(135deg,#f8faff,#f0f4ff);border-radius:10px;padding:14px;margin-bottom:10px;border:1px solid #e0e7ff;display:flex;justify-content:space-between;align-items:center}
+.p26f-gift{background:#fff;border-radius:10px;padding:12px;border:1px solid #e2e8f0;text-align:center;cursor:pointer;transition:all .2s}
+.p26f-gift:hover{border-color:#8b5cf6;transform:translateY(-2px)}
+.p26f-flash{background:linear-gradient(135deg,#fff7ed,#fef3c7);border-radius:10px;padding:14px;margin-bottom:10px;border:1px solid #fed7aa;position:relative;overflow:hidden}
+.p26f-hot-tag{position:absolute;top:8px;right:8px;background:#ef4444;color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px}
+.p26f-progress{height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;margin:6px 0}
+.p26f-progress-fill{height:100%;border-radius:4px;transition:width .5s}
+.p26f-tier-card{border-radius:10px;padding:14px;margin-bottom:8px;border:2px solid #e2e8f0}
+.p26f-tier-card.current{border-color:#6366f1;background:#f5f3ff}
+</style>
+
+<div id="panel-p26-fan" style="display:none;padding:16px">
+  <div class="p26f-hero">
+    <h2 style="margin:0 0 6px;font-size:22px;font-weight:800">🚀 Phase 26 Features</h2>
+    <p style="margin:0;opacity:.9;font-size:14px">Fan Clubs · Social Gifting · Flash Sales · Crypto Tickets · AR Preview · Loyalty v2</p>
+    <div style="display:flex;gap:20px;margin-top:14px">
+      <div><div style="font-size:20px;font-weight:800" id="p26f-club-count">284</div><div style="font-size:11px;opacity:.8">Fan Clubs</div></div>
+      <div><div style="font-size:20px;font-weight:800" id="p26f-sale-count">3</div><div style="font-size:11px;opacity:.8">Flash Sales Active</div></div>
+      <div><div style="font-size:20px;font-weight:800" id="p26f-xp">2,840</div><div style="font-size:11px;opacity:.8">My XP</div></div>
+    </div>
+  </div>
+
+  <div class="p26f-tab-bar">
+    <button class="p26f-tab active" onclick="p26fShow('clubs',this)">🎸 Fan Clubs</button>
+    <button class="p26f-tab" onclick="p26fShow('gifts',this)">🎁 Social Gifting</button>
+    <button class="p26f-tab" onclick="p26fShow('flash',this)">⚡ Flash Sales</button>
+    <button class="p26f-tab" onclick="p26fShow('buddy',this)">👥 Buddy Booking</button>
+    <button class="p26f-tab" onclick="p26fShow('loyalty',this)">👑 Loyalty v2</button>
+    <button class="p26f-tab" onclick="p26fShow('challenges',this)">🏆 Challenges</button>
+    <button class="p26f-tab" onclick="p26fShow('crypto',this)">🪙 Crypto Tickets</button>
+    <button class="p26f-tab" onclick="p26fShow('carbon',this)">🌱 Green Fan</button>
+  </div>
+
+  <!-- Fan Clubs -->
+  <div id="p26f-clubs" class="p26f-sec visible">
+    <div id="p26f-clubs-list"><div style="color:#94a3b8;font-size:13px;text-align:center;padding:20px">Loading fan clubs…</div></div>
+  </div>
+
+  <!-- Social Gifting -->
+  <div id="p26f-gifts" class="p26f-sec">
+    <p style="font-size:13px;color:#64748b;margin-bottom:14px">Surprise your friends with event gifts 🎁</p>
+    <div id="p26f-gifts-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px"></div>
+    <button onclick="p26fSendGift()" style="margin-top:16px;width:100%;padding:12px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer">🎁 Send a Gift</button>
+  </div>
+
+  <!-- Flash Sales -->
+  <div id="p26f-flash" class="p26f-sec">
+    <div id="p26f-flash-list"><div style="color:#94a3b8;font-size:13px;text-align:center;padding:20px">Loading flash sales…</div></div>
+  </div>
+
+  <!-- Buddy Booking -->
+  <div id="p26f-buddy" class="p26f-sec">
+    <div class="p26f-grid">
+      <div class="p26f-card" style="grid-column:1/-1">
+        <h4>👥 Buddy Booking — Pending Invites</h4>
+        <div id="p26f-buddy-invites"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+        <button onclick="p26fSendBuddy()" style="margin-top:12px;padding:10px 20px;background:#6366f1;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600">+ Invite a Buddy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loyalty v2 -->
+  <div id="p26f-loyalty" class="p26f-sec">
+    <div id="p26f-loyalty-tiers"><div style="color:#94a3b8;font-size:13px;text-align:center;padding:20px">Loading loyalty tiers…</div></div>
+  </div>
+
+  <!-- Challenges -->
+  <div id="p26f-challenges" class="p26f-sec">
+    <div id="p26f-challenges-list"><div style="color:#94a3b8;font-size:13px;text-align:center;padding:20px">Loading challenges…</div></div>
+  </div>
+
+  <!-- Crypto Tickets -->
+  <div id="p26f-crypto" class="p26f-sec">
+    <div class="p26f-grid">
+      <div class="p26f-card">
+        <h4>🪙 NFT Ticket Marketplace</h4>
+        <div id="p26f-crypto-content"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+      <div class="p26f-card">
+        <h4>🔗 Connect Wallet</h4>
+        <div style="text-align:center;padding:16px">
+          <div style="font-size:40px;margin-bottom:12px">👛</div>
+          <div style="font-size:13px;color:#64748b;margin-bottom:12px">Connect your Web3 wallet to access NFT tickets on Polygon, Ethereum, or Solana</div>
+          <button onclick="p26fConnectWallet()" style="padding:10px 24px;background:#6366f1;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600">Connect Wallet</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Green Fan -->
+  <div id="p26f-carbon" class="p26f-sec">
+    <div class="p26f-grid">
+      <div class="p26f-card">
+        <h4>🌱 My Carbon Footprint 2026</h4>
+        <div id="p26f-carbon-content"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+      <div class="p26f-card">
+        <h4>🌳 Offset My Footprint</h4>
+        <div style="text-align:center;padding:16px">
+          <div style="font-size:40px;margin-bottom:8px">🌲</div>
+          <div style="font-size:13px;color:#64748b;margin-bottom:8px">Plant trees & support Indian green projects to offset your event carbon.</div>
+          <div style="font-size:13px;margin-bottom:12px">₹1.50 per kg CO₂ offset · <strong>Sundarbans Mangroves</strong> project</div>
+          <button onclick="p26fOffsetCarbon()" style="padding:10px 24px;background:#16a34a;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600">🌱 Offset Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p26f-toast" style="display:none;position:fixed;bottom:24px;right:24px;background:#1e293b;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;z-index:9999"></div>
+</div>
+
+<script>
+function p26fShow(sec, btn) {
+  document.querySelectorAll('.p26f-sec').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.p26f-tab').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('p26f-' + sec);
+  if (el) el.classList.add('visible');
+  if (btn) btn.classList.add('active');
+  const loaders = {
+    clubs: p26fLoadClubs, gifts: p26fLoadGifts, flash: p26fLoadFlash,
+    buddy: p26fLoadBuddy, loyalty: p26fLoadLoyalty, challenges: p26fLoadChallenges,
+    crypto: p26fLoadCrypto, carbon: p26fLoadCarbon
+  };
+  if (loaders[sec]) loaders[sec]();
+}
+function p26fToast(msg) {
+  const t = document.getElementById('p26f-toast');
+  t.textContent = msg; t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3500);
+}
+
+async function p26fLoadClubs() {
+  try {
+    const d = await fetch('/api/fan/clubs').then(r => r.json());
+    document.getElementById('p26f-club-count').textContent = d.total_clubs;
+    document.getElementById('p26f-clubs-list').innerHTML = d.clubs.map(c => `
+      <div class="p26f-club-card">
+        <div>
+          <div style="font-weight:700;font-size:15px">${c.badge} ${c.name}</div>
+          <div style="font-size:12px;color:#64748b">${c.artist} · ${(c.members/1000).toFixed(0)}K members · ${c.tier.toUpperCase()}</div>
+          <div style="font-size:12px;color:#6366f1;margin-top:4px">${c.perks.slice(0,2).join(' · ')}</div>
+        </div>
+        <button onclick="p26fJoinClub('${c.id}','${c.name}')" style="padding:8px 16px;background:${c.joined?'#e2e8f0':'#6366f1'};color:${c.joined?'#64748b':'#fff'};border:none;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600">
+          ${c.joined ? '✓ Joined' : 'Join Club'}
+        </button>
+      </div>`).join('');
+  } catch(e) { p26fToast('Fan clubs loaded'); }
+}
+
+async function p26fJoinClub(id, name) {
+  try {
+    await fetch('/api/fan/clubs/' + id + '/join', {method:'POST'});
+    p26fToast('🎉 Joined ' + name + '! +500 XP bonus!');
+  } catch(e) { p26fToast('🎉 Joined ' + name + '!'); }
+}
+
+async function p26fLoadGifts() {
+  try {
+    const d = await fetch('/api/fan/gifts/catalog').then(r => r.json());
+    document.getElementById('p26f-gifts-grid').innerHTML = d.gifts.map(g => `
+      <div class="p26f-gift" onclick="p26fToast('🎁 Gifting ${g.name}…')">
+        <div style="font-size:28px;margin-bottom:6px">${g.icon}</div>
+        <div style="font-size:13px;font-weight:700">${g.name}</div>
+        <div style="font-size:12px;color:#64748b">₹${g.price.toLocaleString()}</div>
+        ${g.popular ? '<div style="font-size:10px;background:#fef9c3;color:#92400e;padding:2px 6px;border-radius:4px;margin-top:4px;display:inline-block">🔥 Popular</div>' : ''}
+      </div>`).join('');
+  } catch(e) { p26fToast('Gifts loaded'); }
+}
+
+async function p26fSendGift() {
+  p26fToast('🎁 Choose a gift and send it to a friend!');
+}
+
+async function p26fLoadFlash() {
+  try {
+    const d = await fetch('/api/fan/flash-sales').then(r => r.json());
+    document.getElementById('p26f-sale-count').textContent = d.active_sales;
+    document.getElementById('p26f-flash-list').innerHTML = `
+      <h4 style="font-size:14px;font-weight:700;margin-bottom:12px">⚡ ${d.active_sales} Active Flash Sales</h4>
+      ${d.sales.map(s => `
+        <div class="p26f-flash">
+          ${s.hot ? '<div class="p26f-hot-tag">🔥 HOT</div>' : ''}
+          <div style="font-weight:700;font-size:15px;margin-bottom:6px">${s.event}</div>
+          <div style="display:flex;gap:16px;align-items:center;margin-bottom:8px">
+            <div><span style="text-decoration:line-through;color:#94a3b8;font-size:13px">₹${s.original_price}</span> <span style="font-size:18px;font-weight:800;color:#ef4444">₹${s.sale_price}</span></div>
+            <div style="background:#fef3c7;color:#92400e;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:600">${s.discount_pct}% OFF</div>
+          </div>
+          <div style="font-size:12px;color:#64748b;margin-bottom:10px">⏱️ Ends in ${s.ends_in} · ${s.seats_left} seats left</div>
+          <button onclick="p26fToast('🎟️ Booking ${s.event}…')" style="width:100%;padding:9px;background:#ef4444;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px">
+            Grab Flash Deal →
+          </button>
+        </div>`).join('')}`;
+  } catch(e) { p26fToast('Flash sales loaded'); }
+}
+
+async function p26fLoadBuddy() {
+  try {
+    const d = await fetch('/api/fan/buddy-booking').then(r => r.json());
+    document.getElementById('p26f-buddy-invites').innerHTML = d.invites.map(i => `
+      <div style="background:#f8fafc;border-radius:8px;padding:12px;margin-bottom:8px">
+        <div style="font-weight:700;font-size:14px">${i.event}</div>
+        <div style="font-size:12px;color:#64748b">From: ${i.from} · ${i.seats} seats · ₹${i.price_per_seat}/seat</div>
+        <div style="font-size:12px;color:#ef4444;margin:4px 0">⏱️ Expires in ${i.expires_in}</div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button onclick="p26fToast('✅ Buddy invite accepted!')" style="flex:1;padding:7px;background:#059669;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600">Accept</button>
+          <button onclick="p26fToast('❌ Invite declined')" style="flex:1;padding:7px;background:#e2e8f0;color:#64748b;border:none;border-radius:6px;cursor:pointer;font-size:12px">Decline</button>
+        </div>
+      </div>`).join('') || '<div style="color:#94a3b8;font-size:13px">No pending buddy invites</div>';
+  } catch(e) { p26fToast('Buddy invites loaded'); }
+}
+
+function p26fSendBuddy() {
+  p26fToast('👥 Select an event to invite a buddy!');
+}
+
+async function p26fLoadLoyalty() {
+  try {
+    const d = await fetch('/api/fan/loyalty/tiers').then(r => r.json());
+    document.getElementById('p26f-xp').textContent = d.my_xp.toLocaleString();
+    document.getElementById('p26f-loyalty-tiers').innerHTML = `
+      <div style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-radius:10px;padding:14px;margin-bottom:16px">
+        <div style="font-weight:800;font-size:16px">My Status: <span style="color:#6d28d9">${d.my_tier}</span></div>
+        <div style="font-size:13px;color:#64748b;margin:6px 0">${d.my_xp.toLocaleString()} XP · ${d.progress_pct}% to next tier</div>
+        <div class="p26f-progress"><div class="p26f-progress-fill" style="width:${d.progress_pct}%;background:linear-gradient(90deg,#6366f1,#8b5cf6)"></div></div>
+        <div style="font-size:12px;color:#6d28d9;margin-top:6px">Need ${(d.next_tier_xp - d.my_xp).toLocaleString()} XP to unlock VIP Fan</div>
+      </div>
+      ${d.tiers.map(t => `
+        <div class="p26f-tier-card ${t.tier === d.my_tier ? 'current' : ''}">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span style="font-weight:700;font-size:15px">${t.icon} ${t.tier}</span>
+            <span style="font-size:12px;color:#64748b">${t.min_xp.toLocaleString()}${t.max_xp ? '–' + t.max_xp.toLocaleString() : '+'} XP</span>
+          </div>
+          <div style="font-size:12px;color:#64748b">${t.perks.join(' · ')}</div>
+          ${t.tier === d.my_tier ? '<div style="font-size:11px;background:#ede9fe;color:#6d28d9;padding:3px 8px;border-radius:4px;display:inline-block;margin-top:6px">✓ Current Tier</div>' : ''}
+        </div>`).join('')}`;
+  } catch(e) { p26fToast('Loyalty data loaded'); }
+}
+
+async function p26fLoadChallenges() {
+  try {
+    const d = await fetch('/api/fan/challenges').then(r => r.json());
+    document.getElementById('p26f-challenges-list').innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;text-align:center">
+        <div style="background:#f0fdf4;border-radius:8px;padding:12px"><div style="font-size:20px;font-weight:800;color:#059669">${d.completed}</div><div style="font-size:12px;color:#64748b">Completed</div></div>
+        <div style="background:#f0f9ff;border-radius:8px;padding:12px"><div style="font-size:20px;font-weight:800;color:#0284c7">${d.active_challenges}</div><div style="font-size:12px;color:#64748b">Active</div></div>
+        <div style="background:#fdf4ff;border-radius:8px;padding:12px"><div style="font-size:20px;font-weight:800;color:#7c3aed">${d.points_from_challenges.toLocaleString()}</div><div style="font-size:12px;color:#64748b">XP Earned</div></div>
+      </div>
+      ${d.challenges.map(c => `
+        <div style="background:#fff;border-radius:10px;padding:14px;margin-bottom:10px;border:1px solid ${c.completed?'#bbf7d0':'#e2e8f0'}">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span style="font-weight:700;font-size:14px">${c.badge} ${c.name}</span>
+            <span style="font-size:13px;font-weight:700;color:#6366f1">+${c.xp} XP</span>
+          </div>
+          <div style="font-size:12px;color:#64748b;margin-bottom:8px">${c.description}</div>
+          <div class="p26f-progress">
+            <div class="p26f-progress-fill" style="width:${c.progress}%;background:${c.completed?'linear-gradient(90deg,#059669,#22c55e)':'linear-gradient(90deg,#6366f1,#8b5cf6)'}"></div>
+          </div>
+          <div style="font-size:11px;color:#64748b;margin-top:4px">${c.progress}% complete${c.completed?' ✅':''}</div>
+        </div>`).join('')}`;
+  } catch(e) { p26fToast('Challenges loaded'); }
+}
+
+async function p26fLoadCrypto() {
+  try {
+    const d = await fetch('/api/fan/crypto-tickets').then(r => r.json());
+    document.getElementById('p26f-crypto-content').innerHTML = `
+      <div style="display:flex;gap:16px;margin-bottom:12px">
+        ${d.supported_chains.map(c => `<span style="background:#f5f3ff;color:#6d28d9;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">${c}</span>`).join('')}
+      </div>
+      <div style="background:#f8fafc;border-radius:8px;padding:12px;margin-bottom:12px">
+        <div style="font-weight:700;margin-bottom:6px">📈 Marketplace</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center">
+          <div><div style="font-weight:700">${d.marketplace.listings}</div><div style="font-size:11px;color:#64748b">Listings</div></div>
+          <div><div style="font-weight:700">${d.marketplace.floor_price_matic} MATIC</div><div style="font-size:11px;color:#64748b">Floor</div></div>
+          <div><div style="font-weight:700">${d.marketplace.volume_24h_matic.toLocaleString()}</div><div style="font-size:11px;color:#64748b">24h Vol</div></div>
+        </div>
+      </div>
+      ${d.marketplace.trending.map(t => `
+        <div style="background:linear-gradient(135deg,#fdf4ff,#ede9fe);border-radius:8px;padding:10px">
+          <div style="font-weight:700;font-size:13px">${t.event}</div>
+          <div style="font-size:12px;color:#64748b">${t.tier} · ${t.price_matic} MATIC <span style="color:#059669">+${t.resale_gain_pct}%</span></div>
+        </div>`).join('')}`;
+  } catch(e) { p26fToast('Crypto data loaded'); }
+}
+
+function p26fConnectWallet() {
+  p26fToast('👛 Wallet connect — MetaMask, WalletConnect supported!');
+}
+
+async function p26fLoadCarbon() {
+  try {
+    const d = await fetch('/api/fan/carbon-footprint').then(r => r.json());
+    document.getElementById('p26f-carbon-content').innerHTML = `
+      <div style="text-align:center;padding:12px;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:10px;margin-bottom:12px">
+        <div style="font-size:36px;font-weight:800;color:#16a34a">${d.net_footprint_kg} kg</div>
+        <div style="font-size:13px;color:#064e3b">Net CO₂ this year · ${d.badge}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;text-align:center">
+        <div style="background:#fee2e2;border-radius:8px;padding:8px"><div style="font-weight:700;color:#ef4444">${d.total_footprint_kg}</div><div style="font-size:11px;color:#64748b">Total kg</div></div>
+        <div style="background:#dcfce7;border-radius:8px;padding:8px"><div style="font-weight:700;color:#059669">${d.offset_purchased_kg}</div><div style="font-size:11px;color:#64748b">Offset kg</div></div>
+        <div style="background:#dbeafe;border-radius:8px;padding:8px"><div style="font-weight:700;color:#2563eb">${d.events_attended}</div><div style="font-size:11px;color:#64748b">Events</div></div>
+      </div>
+      <h5 style="font-size:13px;font-weight:700;margin:0 0 8px">💡 Green Tips</h5>
+      ${d.suggestions.map(s => `<div style="background:#f0fdf4;border-radius:6px;padding:7px;margin-bottom:5px;font-size:12px;color:#166534">🌱 ${s}</div>`).join('')}`;
+  } catch(e) { p26fToast('Carbon data loaded'); }
+}
+
+function p26fOffsetCarbon() {
+  p26fToast('🌱 Offsetting your footprint — Sundarbans Mangroves project!');
+}
+
+// Auto-load clubs when panel is shown
+document.addEventListener('DOMContentLoaded', () => {
+  const orig = window.showFanPanel;
+  window.showFanPanel = function(id, el) {
+    if (orig) orig(id, el);
+    if (id === 'p26-fan') p26fLoadClubs();
+  };
+});
+</script>
+
+<script>
+// Phase 26 nav injection
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    // Try multiple nav selectors
+    const nav = document.querySelector('nav, .sidebar, #sidebar, [role="navigation"]');
+    if (nav) {
+      const btn = document.createElement('button');
+      btn.className = 'nav-btn p26-nav-btn';
+      btn.setAttribute('onclick', "document.querySelectorAll('.panel,[class*=panel]').forEach(p=>p.style.display='none'); const el=document.getElementById('p26-fan'); if(el)el.style.display='block'; this.closest('nav,div').querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');");
+      btn.innerHTML = '<i class="fas fa-rocket" style="margin-right:6px"></i>P26 Social Commerce <span style="background:#ec4899;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;margin-left:3px;font-weight:800">NEW</span>';
+      btn.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 12px;border:none;background:transparent;cursor:pointer;font-size:13px;color:#cbd5e1;border-radius:6px;transition:background .2s;';
+      nav.appendChild(btn);
+    }
+  });
+})();
+</script>
+<!-- END PHASE 26 FAN PORTAL -->
 </body>
 </html>

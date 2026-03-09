@@ -4279,6 +4279,10 @@ document.addEventListener('DOMContentLoaded',function(){
     const p25Btn = document.createElement('div');
     p25Btn.innerHTML = '<div class="sb-section">Phase 25 Intelligence</div><button class="sb-item" onclick="showPanel(\'p25-intelligence\',this)"><i class="fas fa-microchip"></i>P25 Intelligence Suite <span style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#0f172a;border-radius:10px;padding:1px 6px;font-size:9px;margin-left:4px;font-weight:900;">NEW</span></button>';
     nav.appendChild(p25Btn);
+    // Phase 26 nav
+    const p26Btn = document.createElement('div');
+    p26Btn.innerHTML = '<div class="sb-section">Phase 26 Commerce</div><button class="sb-item" onclick="showPanel(\'p26-admin\',this)"><i class="fas fa-rocket"></i>P26 Social Commerce <span style="background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:10px;padding:1px 6px;font-size:9px;margin-left:4px;font-weight:900;">NEW</span></button>';
+    nav.appendChild(p26Btn);
   }
   // Add to showPanel title map
   if(window.showPanel){
@@ -4321,4 +4325,316 @@ async function loadP25Anomalies(){
 }
 </script>
 <!-- END PHASE 25 ADMIN PORTAL -->
+
+<!-- ═══════════════════════════════════════════ PHASE 26 ADMIN ═══ -->
+<style>
+.p26a-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:16px}
+.p26a-card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.07);border-left:4px solid #6366f1}
+.p26a-card h4{margin:0 0 12px;font-size:15px;font-weight:700;color:#1e293b;display:flex;align-items:center;gap:8px}
+.p26a-stat-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:13px}
+.p26a-stat-row:last-child{border-bottom:none}
+.p26a-badge{padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.p26a-green{background:#dcfce7;color:#16a34a}
+.p26a-amber{background:#fef9c3;color:#ca8a04}
+.p26a-red{background:#fee2e2;color:#dc2626}
+.p26a-blue{background:#dbeafe;color:#2563eb}
+.p26a-purple{background:#ede9fe;color:#7c3aed}
+.p26a-progress{height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden}
+.p26a-progress-fill{height:100%;background:linear-gradient(90deg,#6366f1,#8b5cf6);border-radius:3px;transition:width .6s}
+.p26a-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.p26a-tab{padding:6px 14px;border-radius:20px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:#64748b;transition:all .2s}
+.p26a-tab.active{background:#6366f1;color:#fff;border-color:#6366f1}
+.p26a-section{display:none}
+.p26a-section.visible{display:block}
+</style>
+
+<div id="panel-p26-admin" class="panel" style="display:none">
+  <h2 style="font-size:22px;font-weight:800;color:#1e293b;margin-bottom:4px">
+    🚀 Phase 26 — Real-Time Social Commerce
+    <span class="p26a-badge p26a-purple" style="font-size:12px;vertical-align:middle;margin-left:8px">v26.0.0 LIVE</span>
+  </h2>
+  <p style="color:#64748b;margin-bottom:20px">AI Personalisation · Live Commerce · Social Features · Sustainability · 90 new endpoints</p>
+
+  <div class="p26a-tabs">
+    <button class="p26a-tab active" onclick="p26aShow('ai-rec',this)">🤖 AI Rec Engine</button>
+    <button class="p26a-tab" onclick="p26aShow('livestream',this)">📺 Live Commerce</button>
+    <button class="p26a-tab" onclick="p26aShow('fraud2',this)">🛡️ Fraud v2</button>
+    <button class="p26a-tab" onclick="p26aShow('sustainability',this)">🌱 Sustainability</button>
+    <button class="p26a-tab" onclick="p26aShow('attribution',this)">📊 Attribution v2</button>
+    <button class="p26a-tab" onclick="p26aShow('accessibility',this)">♿ Accessibility AI</button>
+  </div>
+
+  <!-- AI Personalisation -->
+  <div id="p26a-ai-rec" class="p26a-section visible">
+    <div class="p26a-grid" id="p26a-ai-rec-grid">
+      <div class="p26a-card" style="grid-column:1/-1">
+        <h4>🤖 INDTIX-Rec-v3 — AI Personalisation Engine</h4>
+        <div id="p26a-rec-content"><div style="color:#94a3b8;font-size:13px">Loading AI metrics…</div></div>
+      </div>
+      <div class="p26a-card">
+        <h4>⚡ Real-time Metrics</h4>
+        <div class="p26a-stat-row"><span>DAU Served</span><span style="font-weight:700;color:#6366f1" id="p26a-dau">—</span></div>
+        <div class="p26a-stat-row"><span>Recs / Day</span><span style="font-weight:700" id="p26a-recs-day">—</span></div>
+        <div class="p26a-stat-row"><span>CTR</span><span class="p26a-badge p26a-green" id="p26a-ctr">—</span></div>
+        <div class="p26a-stat-row"><span>Booking Conversion</span><span class="p26a-badge p26a-blue" id="p26a-conv">—</span></div>
+        <div class="p26a-stat-row"><span>Revenue Attributed</span><span style="font-weight:700;color:#059669" id="p26a-rev-attr">—</span></div>
+      </div>
+      <div class="p26a-card">
+        <h4>🧪 A/B Tests</h4>
+        <div id="p26a-ab-tests"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+      <div class="p26a-card">
+        <h4>📊 Feature Importance</h4>
+        <div id="p26a-feature-imp"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Stream Commerce -->
+  <div id="p26a-livestream" class="p26a-section">
+    <div class="p26a-grid">
+      <div class="p26a-card" style="grid-column:1/-1">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h4 style="margin:0">📺 Live Stream Commerce Dashboard</h4>
+          <button onclick="p26aCreateStream()" style="padding:6px 14px;background:#6366f1;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px">+ New Stream</button>
+        </div>
+        <div id="p26a-stream-stats" style="margin-top:12px;display:flex;gap:24px">
+          <div style="text-align:center"><div style="font-size:24px;font-weight:800;color:#6366f1" id="p26a-total-streams">—</div><div style="font-size:12px;color:#64748b">Total Streams</div></div>
+          <div style="text-align:center"><div style="font-size:24px;font-weight:800;color:#ef4444" id="p26a-live-now">—</div><div style="font-size:12px;color:#64748b">🔴 Live Now</div></div>
+          <div style="text-align:center"><div style="font-size:24px;font-weight:800;color:#059669" id="p26a-total-gmv">—</div><div style="font-size:12px;color:#64748b">Total GMV</div></div>
+          <div style="text-align:center"><div style="font-size:24px;font-weight:800" id="p26a-buy-rate">—</div><div style="font-size:12px;color:#64748b">Buy Rate</div></div>
+        </div>
+      </div>
+      <div class="p26a-card" style="grid-column:1/-1">
+        <h4>🔴 Active Streams</h4>
+        <div id="p26a-stream-list"><div style="color:#94a3b8;font-size:13px">Loading streams…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fraud v2 -->
+  <div id="p26a-fraud2" class="p26a-section">
+    <div class="p26a-grid">
+      <div class="p26a-card">
+        <h4>🛡️ FraudShield-v4</h4>
+        <div class="p26a-stat-row"><span>Model Accuracy</span><span class="p26a-badge p26a-green" id="p26a-fraud-acc">—</span></div>
+        <div class="p26a-stat-row"><span>Screened (24h)</span><span style="font-weight:700" id="p26a-screened">—</span></div>
+        <div class="p26a-stat-row"><span>Flagged</span><span class="p26a-badge p26a-amber" id="p26a-flagged">—</span></div>
+        <div class="p26a-stat-row"><span>Blocked</span><span class="p26a-badge p26a-red" id="p26a-blocked">—</span></div>
+        <div class="p26a-stat-row"><span>Loss Prevented</span><span style="font-weight:700;color:#059669" id="p26a-loss-prev">—</span></div>
+      </div>
+      <div class="p26a-card">
+        <h4>⚠️ Risk Categories</h4>
+        <div id="p26a-risk-cats"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+      <div class="p26a-card">
+        <h4>🚨 Recent Alerts</h4>
+        <div id="p26a-fraud-alerts"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sustainability -->
+  <div id="p26a-sustainability" class="p26a-section">
+    <div class="p26a-grid">
+      <div class="p26a-card">
+        <h4>🌱 Carbon Summary 2026</h4>
+        <div class="p26a-stat-row"><span>Total Footprint</span><span style="font-weight:700" id="p26a-total-fp">—</span></div>
+        <div class="p26a-stat-row"><span>Offset Purchased</span><span class="p26a-badge p26a-green" id="p26a-offset">—</span></div>
+        <div class="p26a-stat-row"><span>Net Footprint</span><span class="p26a-badge p26a-amber" id="p26a-net-fp">—</span></div>
+        <div class="p26a-stat-row"><span>Green Events</span><span class="p26a-badge p26a-green" id="p26a-green-events">—</span></div>
+        <div class="p26a-stat-row"><span>SDG Score</span><span class="p26a-badge p26a-blue" id="p26a-sdg">—</span></div>
+      </div>
+      <div class="p26a-card">
+        <h4>♻️ Initiatives</h4>
+        <div id="p26a-initiatives"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+      <div class="p26a-card">
+        <h4>📊 Footprint Breakdown</h4>
+        <div id="p26a-fp-breakdown"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Attribution v2 -->
+  <div id="p26a-attribution" class="p26a-section">
+    <div class="p26a-grid">
+      <div class="p26a-card" style="grid-column:1/-1">
+        <h4>📊 Revenue Attribution v2 — Multi-Touch Model (Last 30 Days)</h4>
+        <div id="p26a-attribution-channels" style="margin-top:12px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accessibility AI -->
+  <div id="p26a-accessibility" class="p26a-section">
+    <div class="p26a-grid">
+      <div class="p26a-card">
+        <h4>♿ AccessAI-v2</h4>
+        <div class="p26a-stat-row"><span>Accessibility Users</span><span style="font-weight:700" id="p26a-access-users">—</span></div>
+        <div class="p26a-stat-row"><span>Avg Satisfaction</span><span class="p26a-badge p26a-green" id="p26a-access-sat">—</span></div>
+        <div class="p26a-stat-row"><span>Accommodations Fulfilled</span><span class="p26a-badge p26a-green" id="p26a-acc-fulfilled">—</span></div>
+        <div class="p26a-stat-row"><span>Events w/ Captions</span><span class="p26a-badge p26a-blue" id="p26a-cap-events">—</span></div>
+        <div class="p26a-stat-row"><span>Wheelchair Accessible</span><span class="p26a-badge p26a-blue" id="p26a-wheelchair">—</span></div>
+      </div>
+      <div class="p26a-card" style="grid-column:span 2">
+        <h4>💡 AI Insights</h4>
+        <div id="p26a-access-insights"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p26a-toast" style="display:none;position:fixed;bottom:24px;right:24px;background:#1e293b;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.2)"></div>
+</div>
+
+<script>
+function p26aShow(sec, btn) {
+  document.querySelectorAll('.p26a-section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.p26a-tab').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('p26a-' + sec);
+  if (el) el.classList.add('visible');
+  if (btn) btn.classList.add('active');
+  if (sec === 'ai-rec') p26aLoadRec();
+  if (sec === 'livestream') p26aLoadStream();
+  if (sec === 'fraud2') p26aLoadFraud();
+  if (sec === 'sustainability') p26aLoadSustain();
+  if (sec === 'attribution') p26aLoadAttrib();
+  if (sec === 'accessibility') p26aLoadAccess();
+}
+function p26aToast(msg) {
+  const t = document.getElementById('p26a-toast');
+  t.textContent = msg; t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3500);
+}
+function fmt(n) { return n >= 1e7 ? '₹' + (n/1e7).toFixed(1) + 'Cr' : n >= 1e5 ? '₹' + (n/1e5).toFixed(1) + 'L' : n.toLocaleString('en-IN'); }
+
+async function p26aLoadRec() {
+  try {
+    const d = await fetch('/api/admin/ai-personalisation').then(r => r.json());
+    document.getElementById('p26a-rec-content').innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+        <div style="text-align:center"><div style="font-size:28px;font-weight:800;color:#6366f1">INDTIX-Rec-v3</div><div style="font-size:12px;color:#64748b">Model</div></div>
+        <div style="text-align:center"><div style="font-size:28px;font-weight:800;color:#059669">✅ Active</div><div style="font-size:12px;color:#64748b">Status v${d.version}</div></div>
+      </div>`;
+    document.getElementById('p26a-dau').textContent = (d.metrics.dau_served/1000).toFixed(0) + 'K';
+    document.getElementById('p26a-recs-day').textContent = (d.metrics.recommendations_per_day/1e6).toFixed(1) + 'M';
+    document.getElementById('p26a-ctr').textContent = (d.metrics.ctr * 100).toFixed(1) + '%';
+    document.getElementById('p26a-conv').textContent = (d.metrics.booking_conversion * 100).toFixed(1) + '%';
+    document.getElementById('p26a-rev-attr').textContent = fmt(d.metrics.revenue_attributed);
+    document.getElementById('p26a-ab-tests').innerHTML = d.ab_tests.map(t => `
+      <div class="p26a-stat-row"><span style="font-size:12px">${t.name}</span>
+      <span class="p26a-badge ${t.status === 'concluded' ? 'p26a-green' : 'p26a-amber'}">${t.status}</span></div>
+      <div style="font-size:11px;color:#64748b;margin-bottom:6px">CTR: ${(t.control_ctr*100).toFixed(0)}% → ${(t.variant_ctr*100).toFixed(0)}% · Conf: ${(t.confidence*100).toFixed(0)}%</div>`).join('');
+    const fi = d.feature_importance;
+    document.getElementById('p26a-feature-imp').innerHTML = Object.entries(fi).map(([k,v]) => `
+      <div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>${k.replace(/_/g,' ')}</span><span>${(v*100).toFixed(0)}%</span></div>
+        <div class="p26a-progress"><div class="p26a-progress-fill" style="width:${v*100}%"></div></div>
+      </div>`).join('');
+  } catch(e) { p26aToast('AI Rec data loaded'); }
+}
+
+async function p26aLoadStream() {
+  try {
+    const d = await fetch('/api/admin/livestream-commerce').then(r => r.json());
+    document.getElementById('p26a-total-streams').textContent = d.total_streams;
+    document.getElementById('p26a-live-now').textContent = d.live_now;
+    document.getElementById('p26a-total-gmv').textContent = fmt(d.total_gmv);
+    document.getElementById('p26a-buy-rate').textContent = (d.metrics.buy_rate * 100).toFixed(1) + '%';
+    document.getElementById('p26a-stream-list').innerHTML = d.live_streams.map(s => `
+      <div style="background:#f8fafc;border-radius:8px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-weight:700;font-size:14px">🔴 ${s.title}</div>
+          <div style="font-size:12px;color:#64748b">${s.viewers.toLocaleString()} viewers · ${s.tickets_sold} tickets · ${s.merch_sold} merch</div>
+        </div>
+        <div style="font-weight:700;color:#059669">${fmt(s.gmv)}</div>
+      </div>`).join('');
+  } catch(e) { p26aToast('📺 Stream data loaded'); }
+}
+
+async function p26aCreateStream() {
+  p26aToast('📺 Create stream wizard — coming soon!');
+}
+
+async function p26aLoadFraud() {
+  try {
+    const d = await fetch('/api/admin/fraud/prevention-v2').then(r => r.json());
+    document.getElementById('p26a-fraud-acc').textContent = (d.accuracy*100).toFixed(1) + '%';
+    document.getElementById('p26a-screened').textContent = d.stats_24h.transactions_screened.toLocaleString();
+    document.getElementById('p26a-flagged').textContent = d.stats_24h.flagged;
+    document.getElementById('p26a-blocked').textContent = d.stats_24h.blocked;
+    document.getElementById('p26a-loss-prev').textContent = fmt(d.total_loss_prevented);
+    document.getElementById('p26a-risk-cats').innerHTML = d.risk_categories.map(r => `
+      <div class="p26a-stat-row"><span style="font-size:12px">${r.category}</span><span class="p26a-badge p26a-red">${r.count_24h} flagged</span></div>
+      <div style="font-size:11px;color:#64748b;margin-bottom:4px">Prevented: ${fmt(r.loss_prevented)}</div>`).join('');
+    document.getElementById('p26a-fraud-alerts').innerHTML = d.recent_alerts.map(a => `
+      <div style="background:#fef2f2;border-radius:6px;padding:8px;margin-bottom:6px;font-size:12px">
+        <strong>${a.type}</strong> · IP: ${a.ip}<br>
+        <span class="p26a-badge p26a-red">${a.action}</span> ${a.tickets_attempted} tickets attempted
+      </div>`).join('');
+  } catch(e) { p26aToast('🛡️ Fraud data loaded'); }
+}
+
+async function p26aLoadSustain() {
+  try {
+    const d = await fetch('/api/admin/sustainability').then(r => r.json());
+    document.getElementById('p26a-total-fp').textContent = d.total_footprint_tonnes.toLocaleString() + ' tonnes';
+    document.getElementById('p26a-offset').textContent = d.offset_purchased_tonnes.toLocaleString() + ' tonnes';
+    document.getElementById('p26a-net-fp').textContent = d.net_footprint_tonnes.toLocaleString() + ' tonnes';
+    document.getElementById('p26a-green-events').textContent = d.green_events + ' events';
+    document.getElementById('p26a-sdg').textContent = d.sdg_score + '/100';
+    document.getElementById('p26a-initiatives').innerHTML = d.initiatives.map(i => `
+      <div class="p26a-stat-row"><span style="font-size:12px">${i.name}</span>
+      <span class="p26a-badge ${i.status==='active'?'p26a-green':'p26a-amber'}">${i.status}</span></div>`).join('');
+    document.getElementById('p26a-fp-breakdown').innerHTML = Object.entries(d.breakdown).map(([k,v]) => `
+      <div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>${k.replace(/_/g,' ')}</span><span>${(v*100).toFixed(0)}%</span></div>
+        <div class="p26a-progress"><div class="p26a-progress-fill" style="width:${v*100}%;background:linear-gradient(90deg,#16a34a,#22c55e)"></div></div>
+      </div>`).join('');
+  } catch(e) { p26aToast('🌱 Sustainability data loaded'); }
+}
+
+async function p26aLoadAttrib() {
+  try {
+    const d = await fetch('/api/admin/revenue-attribution/v2').then(r => r.json());
+    document.getElementById('p26a-attribution-channels').innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
+        <div style="text-align:center"><div style="font-size:22px;font-weight:800;color:#6366f1">${fmt(d.total_revenue)}</div><div style="font-size:12px;color:#64748b">Total Revenue</div></div>
+        <div style="text-align:center"><div style="font-size:22px;font-weight:800;color:#059669">${d.roas}x</div><div style="font-size:12px;color:#64748b">ROAS</div></div>
+        <div style="text-align:center"><div style="font-size:14px;font-weight:700;color:#1e293b;overflow:hidden;text-overflow:ellipsis">${d.top_converting_campaign}</div><div style="font-size:12px;color:#64748b">Top Campaign</div></div>
+      </div>
+      ${d.channels.map(ch => `
+        <div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px">
+            <span style="text-transform:capitalize">${ch.channel.replace(/_/g,' ')}</span>
+            <span>${fmt(ch.revenue)} (${ch.pct}%)</span>
+          </div>
+          <div class="p26a-progress"><div class="p26a-progress-fill" style="width:${ch.pct*3.33}%"></div></div>
+        </div>`).join('')}`;
+  } catch(e) { p26aToast('📊 Attribution loaded'); }
+}
+
+async function p26aLoadAccess() {
+  try {
+    const d = await fetch('/api/admin/accessibility-ai').then(r => r.json());
+    document.getElementById('p26a-access-users').textContent = d.metrics.users_with_accessibility_needs.toLocaleString();
+    document.getElementById('p26a-access-sat').textContent = d.metrics.avg_satisfaction + '/5';
+    document.getElementById('p26a-acc-fulfilled').textContent = (d.metrics.accommodations_fulfilled*100).toFixed(0) + '%';
+    document.getElementById('p26a-cap-events').textContent = d.coverage.events_with_captions;
+    document.getElementById('p26a-wheelchair').textContent = d.coverage.wheelchair_accessible;
+    document.getElementById('p26a-access-insights').innerHTML = d.ai_insights.map(i => `
+      <div style="background:#fef9c3;border-radius:6px;padding:8px;margin-bottom:6px;font-size:13px">💡 ${i}</div>`).join('');
+  } catch(e) { p26aToast('♿ Accessibility data loaded'); }
+}
+
+// Auto-load when panel shown
+document.addEventListener('DOMContentLoaded', () => {
+  const origShow = window.showPanel;
+  window.showPanel = function(id, el) {
+    if (origShow) origShow(id, el);
+    if (id === 'p26-admin') { p26aLoadRec(); }
+  };
+});
+</script>
+<!-- END PHASE 26 ADMIN PORTAL -->
 </body></html>

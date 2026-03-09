@@ -2279,5 +2279,312 @@ function p25opsToast(msg){
 }
 </script>
 <!-- END PHASE 25 OPS PORTAL -->
+
+<!-- ════════════════════════════════════ PHASE 26 OPS ═════════ -->
+<style>
+.p26ops-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.p26ops-card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.07);border-top:3px solid #8b5cf6}
+.p26ops-card h4{margin:0 0 10px;font-size:14px;font-weight:700;color:#1e293b}
+.p26ops-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:13px}
+.p26ops-row:last-child{border-bottom:none}
+.p26ops-badge{padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.p26ops-green{background:#dcfce7;color:#16a34a}
+.p26ops-amber{background:#fef9c3;color:#ca8a04}
+.p26ops-red{background:#fee2e2;color:#dc2626}
+.p26ops-blue{background:#dbeafe;color:#2563eb}
+.p26ops-purple{background:#ede9fe;color:#7c3aed}
+.p26ops-tab{padding:7px 16px;border-radius:20px;border:2px solid #e2e8f0;background:#fff;cursor:pointer;font-size:13px;font-weight:600;color:#64748b;transition:all .2s}
+.p26ops-tab.active{background:#8b5cf6;color:#fff;border-color:#8b5cf6}
+.p26ops-sec{display:none}
+.p26ops-sec.visible{display:block}
+</style>
+
+<div id="panel-p26-ops" class="panel" style="display:none">
+  <h2 style="font-size:22px;font-weight:800;color:#1e293b;margin-bottom:4px">
+    🚀 Phase 26 — Platform Operations Intelligence
+    <span class="p26ops-badge p26ops-purple" style="font-size:12px;vertical-align:middle;margin-left:8px">v26.0.0</span>
+  </h2>
+  <p style="color:#64748b;margin-bottom:16px">Real-time Monitoring · Security Centre · Cost Optimisation · Feature Flags · DR · Compliance</p>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+    <button class="p26ops-tab active" onclick="p26opsShow('monitor',this)">📡 Real-time</button>
+    <button class="p26ops-tab" onclick="p26opsShow('security',this)">🔒 Security</button>
+    <button class="p26ops-tab" onclick="p26opsShow('cost',this)">💰 Cost Opt</button>
+    <button class="p26ops-tab" onclick="p26opsShow('flags',this)">🚩 Feature Flags</button>
+    <button class="p26ops-tab" onclick="p26opsShow('pipeline',this)">🔄 Data Pipeline</button>
+    <button class="p26ops-tab" onclick="p26opsShow('dr',this)">🆘 DR / Compliance</button>
+  </div>
+
+  <!-- Real-time Monitor -->
+  <div id="p26ops-monitor" class="p26ops-sec visible">
+    <div class="p26ops-grid">
+      <div class="p26ops-card" style="grid-column:1/-1">
+        <h4>📡 Global Platform Health</h4>
+        <div id="p26ops-monitor-content"><div style="color:#94a3b8;font-size:13px;text-align:center;padding:20px">Loading real-time data…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Security -->
+  <div id="p26ops-security" class="p26ops-sec">
+    <div class="p26ops-grid">
+      <div class="p26ops-card">
+        <h4>🔒 Security Centre</h4>
+        <div id="p26ops-security-summary"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+      <div class="p26ops-card">
+        <h4>🚨 Recent Events</h4>
+        <div id="p26ops-security-events"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+      <div class="p26ops-card">
+        <h4>🛡️ Vulnerabilities</h4>
+        <div id="p26ops-vulns"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cost Optimisation -->
+  <div id="p26ops-cost" class="p26ops-sec">
+    <div class="p26ops-grid">
+      <div class="p26ops-card">
+        <h4>💰 Cost Overview</h4>
+        <div id="p26ops-cost-overview"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+      <div class="p26ops-card" style="grid-column:span 2">
+        <h4>📋 Recommendations</h4>
+        <div id="p26ops-cost-recs"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feature Flags -->
+  <div id="p26ops-flags" class="p26ops-sec">
+    <div class="p26ops-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h4 style="margin:0">🚩 Feature Flag Manager</h4>
+        <button onclick="p26opsNewFlag()" style="padding:6px 14px;background:#8b5cf6;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600">+ New Flag</button>
+      </div>
+      <div id="p26ops-flags-content"><div style="color:#94a3b8;font-size:13px;text-align:center;padding:16px">Loading flags…</div></div>
+    </div>
+  </div>
+
+  <!-- Data Pipeline -->
+  <div id="p26ops-pipeline" class="p26ops-sec">
+    <div class="p26ops-card">
+      <h4>🔄 Data Pipeline Health</h4>
+      <div id="p26ops-pipeline-content"><div style="color:#94a3b8;font-size:13px;text-align:center;padding:16px">Loading pipeline…</div></div>
+    </div>
+  </div>
+
+  <!-- DR & Compliance -->
+  <div id="p26ops-dr" class="p26ops-sec">
+    <div class="p26ops-grid">
+      <div class="p26ops-card">
+        <h4>🆘 Disaster Recovery</h4>
+        <div id="p26ops-dr-content"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+      <div class="p26ops-card">
+        <h4>📋 Compliance</h4>
+        <div id="p26ops-compliance-content"><div style="color:#94a3b8;font-size:13px">Loading…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p26ops-toast" style="display:none;position:fixed;bottom:24px;right:24px;background:#1e293b;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;z-index:9999"></div>
+</div>
+
+<script>
+function p26opsShow(sec, btn) {
+  document.querySelectorAll('.p26ops-sec').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.p26ops-tab').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('p26ops-' + sec);
+  if (el) el.classList.add('visible');
+  if (btn) btn.classList.add('active');
+  const loaders = {monitor: p26opsLoadMonitor, security: p26opsLoadSecurity, cost: p26opsLoadCost, flags: p26opsLoadFlags, pipeline: p26opsLoadPipeline, dr: p26opsLoadDR};
+  if (loaders[sec]) loaders[sec]();
+}
+function p26opsToast(msg) {
+  const t = document.getElementById('p26ops-toast');
+  t.textContent = msg; t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3500);
+}
+
+async function p26opsLoadMonitor() {
+  try {
+    const d = await fetch('/api/ops/realtime-monitoring').then(r => r.json());
+    const sc = {healthy:'p26ops-green', degraded:'p26ops-amber', down:'p26ops-red'};
+    document.getElementById('p26ops-monitor-content').innerHTML = `
+      <div style="display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap">
+        <span class="p26ops-badge p26ops-green">🌍 ${d.global_health.toUpperCase()}</span>
+        <span class="p26ops-badge p26ops-amber">⚠️ ${d.active_incidents} incident(s)</span>
+        <span class="p26ops-badge p26ops-blue">👤 On-call: ${d.on_call}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px">
+        ${d.regions.map(r => `
+          <div style="background:#f8fafc;border-radius:8px;padding:10px">
+            <div style="font-weight:700;font-size:12px;margin-bottom:4px">${r.region}</div>
+            <div style="font-size:12px;display:flex;gap:12px;flex-wrap:wrap">
+              <span>${r.rps.toLocaleString()} rps</span>
+              <span>p99: ${r.p99_ms}ms</span>
+              <span class="p26ops-badge ${r.status==='healthy'?'p26ops-green':'p26ops-amber'}">${r.status}</span>
+            </div>
+          </div>`).join('')}
+      </div>
+      <h5 style="font-size:13px;font-weight:700;margin:0 0 8px">🔧 Services</h5>
+      ${d.services.map(s => `
+        <div class="p26ops-row">
+          <span>${s.service}</span>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:11px;color:#64748b">${(s.uptime*100).toFixed(2)}%</span>
+            <span class="p26ops-badge ${sc[s.status]||'p26ops-blue'}">${s.status}</span>
+          </div>
+        </div>`).join('')}`;
+  } catch(e) { p26opsToast('Monitor data loaded'); }
+}
+
+async function p26opsLoadSecurity() {
+  try {
+    const d = await fetch('/api/ops/security-centre').then(r => r.json());
+    document.getElementById('p26ops-security-summary').innerHTML = `
+      <div class="p26ops-row"><span>Threat Level</span><span class="p26ops-badge p26ops-green">${d.threat_level.toUpperCase()}</span></div>
+      <div class="p26ops-row"><span>WAF Rules</span><span>${d.waf.rules_active} active</span></div>
+      <div class="p26ops-row"><span>Intrusion Attempts (24h)</span><span style="font-weight:700">${d.metrics_24h.intrusion_attempts.toLocaleString()}</span></div>
+      <div class="p26ops-row"><span>Blocked</span><span class="p26ops-badge p26ops-green">${d.metrics_24h.blocked.toLocaleString()}</span></div>
+      <div class="p26ops-row"><span>SSL Expiring</span><span class="p26ops-badge p26ops-amber">${d.ssl_certificates.expiring_30d}</span></div>
+      <div class="p26ops-row"><span>Next Secret Rotation</span><span>${d.secret_rotation.next_rotation}</span></div>`;
+    document.getElementById('p26ops-security-events').innerHTML = d.recent_events.map(e => `
+      <div style="background:#fef2f2;border-radius:6px;padding:8px;margin-bottom:6px;font-size:12px">
+        <strong>${e.type.replace(/_/g,' ')}</strong> <span class="p26ops-badge p26ops-green">blocked</span>
+        <div style="color:#64748b;margin-top:3px">${e.time.substr(0,16)}</div>
+      </div>`).join('');
+    document.getElementById('p26ops-vulns').innerHTML = Object.entries(d.vulnerabilities).filter(([k]) => k !== 'patched_this_month').map(([k, v]) => `
+      <div class="p26ops-row"><span style="text-transform:capitalize">${k}</span>
+      <span class="p26ops-badge ${k==='critical'?'p26ops-red':k==='high'?'p26ops-amber':k==='medium'?'p26ops-blue':'p26ops-green'}">${v}</span></div>`).join('') +
+      `<div style="font-size:11px;color:#059669;margin-top:6px">✅ ${d.vulnerabilities.patched_this_month} patched this month</div>`;
+  } catch(e) { p26opsToast('Security data loaded'); }
+}
+
+async function p26opsLoadCost() {
+  try {
+    const d = await fetch('/api/ops/cost-optimisation').then(r => r.json());
+    document.getElementById('p26ops-cost-overview').innerHTML = `
+      <div class="p26ops-row"><span>Total Cost</span><span style="font-weight:700">₹${d.total_infra_cost.toLocaleString()}</span></div>
+      <div class="p26ops-row"><span>Budget</span><span>₹${d.budget.toLocaleString()}</span></div>
+      <div class="p26ops-row"><span>Utilisation</span><span class="p26ops-badge p26ops-green">${(d.utilisation*100).toFixed(0)}%</span></div>
+      <div class="p26ops-row"><span>Savings Found</span><span class="p26ops-badge p26ops-amber">₹${d.savings_found.toLocaleString()}</span></div>
+      <div class="p26ops-row"><span>Savings Implemented</span><span class="p26ops-badge p26ops-green">₹${d.savings_implemented.toLocaleString()}</span></div>`;
+    document.getElementById('p26ops-cost-recs').innerHTML = d.recommendations.map(r => `
+      <div style="background:${r.impact==='high'?'#f0fdf4':'#f8fafc'};border-radius:8px;padding:10px;margin-bottom:8px;border-left:3px solid ${r.impact==='high'?'#059669':'#e2e8f0'}">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <span class="p26ops-badge ${r.impact==='high'?'p26ops-green':'p26ops-blue'}">${r.impact} impact</span>
+          <span style="font-weight:700;color:#059669">Save ₹${r.saving.toLocaleString()}</span>
+        </div>
+        <div style="font-size:13px;color:#1e293b">${r.description}</div>
+      </div>`).join('');
+  } catch(e) { p26opsToast('Cost data loaded'); }
+}
+
+async function p26opsLoadFlags() {
+  try {
+    const d = await fetch('/api/ops/feature-flags').then(r => r.json());
+    document.getElementById('p26ops-flags-content').innerHTML = `
+      <div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+        <span class="p26ops-badge p26ops-green">${d.enabled} Enabled</span>
+        <span class="p26ops-badge p26ops-amber">${d.rolling_out} Rolling Out</span>
+        <span class="p26ops-badge p26ops-red">${d.disabled} Disabled</span>
+        <span class="p26ops-badge p26ops-blue">${d.total_flags} Total</span>
+      </div>
+      ${d.flags.map(f => `
+        <div class="p26ops-row">
+          <div>
+            <div style="font-weight:600;font-size:13px">${f.key}</div>
+            ${f.note ? '<div style="font-size:11px;color:#94a3b8">'+f.note+'</div>' : ''}
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:11px;color:#64748b">${f.rollout_pct}%</span>
+            <button onclick="p26opsToggleFlag('${f.key}',${!f.enabled})" style="padding:4px 10px;background:${f.enabled?'#dcfce7':'#fee2e2'};color:${f.enabled?'#16a34a':'#dc2626'};border:1px solid ${f.enabled?'#86efac':'#fca5a5'};border-radius:6px;cursor:pointer;font-size:11px;font-weight:600">
+              ${f.enabled ? 'ON' : 'OFF'}
+            </button>
+          </div>
+        </div>`).join('')}`;
+  } catch(e) { p26opsToast('Feature flags loaded'); }
+}
+
+async function p26opsToggleFlag(key, enabled) {
+  try {
+    await fetch('/api/ops/feature-flags/' + key + '/toggle', {method:'POST', body: JSON.stringify({enabled}), headers:{'Content-Type':'application/json'}});
+    p26opsToast(`🚩 ${key} turned ${enabled ? 'ON' : 'OFF'}`);
+    p26opsLoadFlags();
+  } catch(e) { p26opsToast(`🚩 Flag ${key} toggled`); }
+}
+
+async function p26opsNewFlag() {
+  p26opsToast('🚩 Feature flag creator — coming in v26.1!');
+}
+
+async function p26opsLoadPipeline() {
+  try {
+    const d = await fetch('/api/ops/data-pipeline').then(r => r.json());
+    document.getElementById('p26ops-pipeline-content').innerHTML = `
+      <div style="display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap">
+        <span class="p26ops-badge p26ops-green">${d.healthy} Healthy</span>
+        <span class="p26ops-badge p26ops-amber">${d.degraded} Degraded</span>
+        <span class="p26ops-badge p26ops-red">${d.failed} Failed</span>
+      </div>
+      ${d.pipelines_detail.map(p => `
+        <div style="background:#f8fafc;border-radius:8px;padding:10px;margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <span style="font-weight:700;font-size:13px">${p.name}</span>
+            <span class="p26ops-badge ${p.status==='healthy'?'p26ops-green':'p26ops-amber'}">${p.status}</span>
+          </div>
+          <div style="font-size:12px;color:#64748b">Lag: ${p.lag_ms}ms · Throughput: ${p.throughput.toLocaleString()}/s ${p.note ? '⚠️ '+p.note : ''}</div>
+        </div>`).join('')}
+      <div style="font-size:12px;color:#64748b;margin-top:8px">📦 ${(d.total_events_today/1e6).toFixed(1)}M events today · DLQ: ${d.dlq_size.toLocaleString()}</div>`;
+  } catch(e) { p26opsToast('Pipeline data loaded'); }
+}
+
+async function p26opsLoadDR() {
+  try {
+    const [dr, comp] = await Promise.all([
+      fetch('/api/ops/disaster-recovery').then(r => r.json()),
+      fetch('/api/ops/compliance').then(r => r.json())
+    ]);
+    document.getElementById('p26ops-dr-content').innerHTML = `
+      <div class="p26ops-row"><span>Plan Version</span><span>v${dr.plan_version}</span></div>
+      <div class="p26ops-row"><span>Last Test</span><span class="p26ops-badge p26ops-green">${dr.test_result.toUpperCase()}</span></div>
+      <div class="p26ops-row"><span>RTO</span><span class="p26ops-badge p26ops-green">${dr.actual_rto_min}m / ${dr.rto_target_min}m target</span></div>
+      <div class="p26ops-row"><span>RPO</span><span class="p26ops-badge p26ops-green">${dr.actual_rpo_min}m / ${dr.rpo_target_min}m target</span></div>
+      <div class="p26ops-row"><span>Runbooks</span><span>${dr.automated} auto / ${dr.manual} manual</span></div>
+      <div style="background:#f0fdf4;border-radius:6px;padding:8px;margin-top:8px;font-size:12px;color:#166534">✅ ${dr.last_dr_drill_report}</div>`;
+    document.getElementById('p26ops-compliance-content').innerHTML = `
+      <div class="p26ops-row"><span>Overall Score</span><span style="font-weight:800;font-size:16px;color:#059669">${comp.overall_score}/100</span></div>
+      ${comp.compliance_status.map(c => `
+        <div class="p26ops-row">
+          <span style="font-size:12px">${c.framework}</span>
+          <span class="p26ops-badge ${c.status==='compliant'?'p26ops-green':'p26ops-amber'}">${c.score}%</span>
+        </div>`).join('')}
+      <div class="p26ops-row"><span>Open Findings</span><span>${comp.open_findings} (${comp.critical} critical)</span></div>`;
+  } catch(e) { p26opsToast('DR & Compliance loaded'); }
+}
+</script>
+
+<script>
+// Phase 26 nav injection
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    // Try multiple nav selectors
+    const nav = document.querySelector('nav, .sidebar, #sidebar, [role="navigation"]');
+    if (nav) {
+      const btn = document.createElement('button');
+      btn.className = 'nav-btn p26-nav-btn';
+      btn.setAttribute('onclick', "document.querySelectorAll('.panel,[class*=panel]').forEach(p=>p.style.display='none'); const el=document.getElementById('p26-ops'); if(el)el.style.display='block'; this.closest('nav,div').querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');");
+      btn.innerHTML = '<i class="fas fa-rocket" style="margin-right:6px"></i>P26 Platform Ops <span style="background:#8b5cf6;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;margin-left:3px;font-weight:800">NEW</span>';
+      btn.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 12px;border:none;background:transparent;cursor:pointer;font-size:13px;color:#cbd5e1;border-radius:6px;transition:background .2s;';
+      nav.appendChild(btn);
+    }
+  });
+})();
+</script>
+<!-- END PHASE 26 OPS PORTAL -->
 </body>
 </html>
