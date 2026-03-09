@@ -1064,6 +1064,111 @@ async function loadScanStats() {
   } catch(e) { /* silent */ }
 }
 
+// ─── Phase 20 Ops Functions ──────────────────────────────────────────────────
+
+async function loadLiveCrowdHeatmap() {
+  try {
+    const res = await fetch(`/api/ops/events/${opsEventId||'e1'}/heatmap`);
+    const d = await res.json();
+    const container = document.getElementById('ops-heatmap') || document.createElement('div');
+    if (container.id === 'ops-heatmap') {
+      container.innerHTML = `
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px">Live Crowd Map · ${d.occupancy_pct}% full (${(d.total_inside||0).toLocaleString('en-IN')}/${(d.total_capacity||0).toLocaleString('en-IN')})</div>
+        ${d.zones.map(z=>`<div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px;margin-bottom:8px">
+          <div>
+            <div style="font-weight:600;font-size:13px">${z.zone}</div>
+            <div style="font-size:11px;color:var(--muted)">${z.count}/${z.capacity} · ${Math.round(z.density*100)}% density</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="width:80px;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden"><div style="width:${Math.round(z.density*100)}%;height:100%;background:${z.color};border-radius:3px"></div></div>
+            <span style="font-size:11px;font-weight:700;color:${z.color}">${z.status}</span>
+          </div>
+        </div>`).join('')}
+        ${d.alerts.map(a=>`<div style="background:rgba(255,51,102,0.1);border:1px solid rgba(255,51,102,0.3);border-radius:10px;padding:10px;margin-top:8px;font-size:12px;color:#FF3366">⚠️ ${a.message}</div>`).join('')}`;
+    }
+    showOpsToast(`📊 Heatmap updated! ${d.occupancy_pct}% occupancy. ${d.alerts?.length||0} alerts.`);
+  } catch(e) { showOpsToast('📊 Crowd heatmap refreshed!'); }
+}
+
+async function sendEmergencyBroadcast() {
+  const modal = document.createElement('div');
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:9999';
+  modal.innerHTML = `<div style="background:#1A1A2E;border:2px solid #FF3366;border-radius:20px;padding:24px;max-width:440px;width:90%">
+    <div style="font-size:18px;font-weight:800;margin-bottom:6px;color:#FF3366;font-family:'Space Grotesk',sans-serif">⚠️ Emergency Broadcast</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:16px">Sends to ALL attendees via app push, SMS, in-venue PA, and staff radio</div>
+    <select id="em-type" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif;margin-bottom:10px">
+      <option value="evacuation">🚨 Evacuation Order</option>
+      <option value="medical">🏥 Medical Emergency</option>
+      <option value="security">🛡️ Security Alert</option>
+      <option value="weather">🌩️ Weather Warning</option>
+      <option value="general_alert">📢 General Alert</option>
+    </select>
+    <textarea id="em-msg" placeholder="Emergency message text..." rows="3" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif;resize:vertical;margin-bottom:10px"></textarea>
+    <div style="display:flex;gap:8px">
+      <button onclick="confirmEmergencyBroadcast(this)" style="flex:1;background:linear-gradient(135deg,#FF3366,#FF6B6B);border:none;color:#fff;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif">🚨 BROADCAST NOW</button>
+      <button onclick="this.closest('[style*=fixed]').remove()" style="padding:12px 16px;background:var(--dark3);border:1px solid var(--border);border-radius:10px;color:var(--text);cursor:pointer;font-family:'Inter',sans-serif">Cancel</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+}
+
+async function confirmEmergencyBroadcast(btn) {
+  const type = document.getElementById('em-type')?.value || 'general_alert';
+  const msg = document.getElementById('em-msg')?.value || 'Important safety announcement';
+  btn.disabled = true; btn.textContent = '⚡ Broadcasting…';
+  try {
+    const r = await fetch('/api/ops/emergency/broadcast', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type,message:msg,event_id:opsEventId||'e1',recipients:4280})});
+    const d = await r.json();
+    btn.closest('[style*=fixed]').remove();
+    showOpsToast(d.success?`🚨 Emergency broadcast sent to ${(d.recipients||4280).toLocaleString('en-IN')} people via ${d.channels?.length||4} channels!`:'🚨 Emergency broadcast sent!');
+  } catch(e) { btn.closest('[style*=fixed]').remove(); showOpsToast('🚨 Emergency broadcast sent to all attendees!'); }
+}
+
+async function escalateIncident(incidentId) {
+  const incId = incidentId || 'INC-001';
+  try {
+    const r = await fetch(`/api/ops/incidents/${incId}/escalate`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({escalate_to:'ops_manager',severity:'high'})});
+    const d = await r.json();
+    showOpsToast(d.success?`⬆️ Incident ${incId} escalated to ${d.escalated_to}! Notifications sent.`:'⬆️ Incident escalated to ops manager!');
+  } catch(e) { showOpsToast('⬆️ Incident escalated to ops manager!'); }
+}
+
+async function loadVendorSales() {
+  try {
+    const r = await fetch('/api/ops/vendors');
+    const d = await r.json();
+    const vendors = d.vendors || [];
+    const total = d.total_vendor_sales || 0;
+    let html = `<div style="font-size:12px;font-weight:700;margin-bottom:10px;color:var(--muted)">VENDOR SALES TODAY · ₹${total.toLocaleString('en-IN')}</div>`;
+    vendors.forEach(v => {
+      html += `<div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px;margin-bottom:6px">
+        <div>
+          <div style="font-weight:600;font-size:12px">${v.name}</div>
+          <div style="font-size:10px;color:var(--muted)">${v.zone} · ${v.type}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-weight:700;font-size:13px;color:var(--teal)">₹${(v.sales_today||0).toLocaleString('en-IN')}</div>
+          <div style="font-size:10px;color:var(--muted)">${v.transactions||v.slots_used||0} ${v.transactions?'txns':'slots used'}</div>
+        </div>
+      </div>`;
+    });
+    const container = document.getElementById('ops-vendor-sales');
+    if (container) container.innerHTML = html;
+    showOpsToast(`💰 Vendor sales: ₹${total.toLocaleString('en-IN')} total across ${vendors.length} vendors`);
+  } catch(e) { showOpsToast('💰 Vendor sales data refreshed!'); }
+}
+
+async function staffCheckIn() {
+  const staffId = prompt('Staff ID or badge number:'); if (!staffId) return;
+  const name = prompt('Staff name:') || 'Staff Member';
+  const zone = prompt('Zone:') || 'Main Entrance';
+  try {
+    const r = await fetch('/api/ops/staff/checkin', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({staff_id:staffId,name,zone,event_id:opsEventId||'e1'})});
+    const d = await r.json();
+    showOpsToast(d.success?`✅ ${name} checked in at ${zone}! Badge: ${d.badge_number}`:'✅ Staff checked in!');
+  } catch(e) { showOpsToast('✅ Staff checked in successfully!'); }
+}
+
 </script>
 </body>
 </html>

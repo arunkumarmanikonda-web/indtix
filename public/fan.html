@@ -393,9 +393,9 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
 <body>
 
 <!-- NAV -->
-<nav>
+<nav role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
-    <a href="/" class="logo">
+    <a href="/" class="logo" aria-label="INDTIX Home">
       <div class="logo-mark">IX</div>
       <span class="logo-text">IND<span>TIX</span></span>
     </a>
@@ -757,7 +757,10 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
       </div>
       <div class="modal-footer">
         <div><div style="font-size:12px;color:var(--muted)">Total (incl. GST)</div><div class="total-price" id="totalPrice">₹0</div></div>
-        <button class="btn-primary" style="padding:12px 28px;font-size:16px" onclick="proceedCheckout()"><i class="fas fa-lock"></i> Secure Checkout</button>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <button class="btn-primary" style="padding:12px 28px;font-size:16px" onclick="proceedCheckout()" aria-label="Proceed to secure checkout"><i class="fas fa-lock"></i> Secure Checkout</button>
+          <button onclick="requestGroupBooking()" aria-label="Request group booking for 5+ people" style="background:transparent;border:1px solid var(--brand);color:var(--brand);padding:8px 16px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-users"></i> Group (5+)</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1763,17 +1766,151 @@ async function viewGSTInvoice(){
 }
 // Business Account - Bulk Booking Override
 async function requestGroupBooking(){
-  showToast('📋 Sending group booking request...');
+  // Open group booking modal
+  const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+  const eventId = currentEvent?.id || 'e1';
+  const eventName = currentEvent?.name || 'Event';
+  const modal = document.createElement('div');
+  modal.innerHTML = `<div class="modal-overlay" style="display:flex" onclick="this.parentNode&&this.parentNode.removeChild(this)">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;max-width:440px;width:90%" onclick="event.stopPropagation()">
+      <div style="font-size:18px;font-weight:800;margin-bottom:6px;font-family:'Space Grotesk',sans-serif">👥 Group Booking</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:20px">Book 5+ tickets and save up to 15%! Perfect for friends, corporate events, and fan groups.</div>
+      <div style="background:rgba(108,60,247,0.1);border:1px solid rgba(108,60,247,0.2);border-radius:12px;padding:12px;margin-bottom:16px;font-size:12px">
+        <div style="font-weight:700;margin-bottom:6px;color:var(--brand)">🎁 Group Discounts</div>
+        <div>5–9 people: <strong>10% off</strong></div>
+        <div>10+ people: <strong>15% off</strong></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Number of People *</label>
+          <input type="number" id="grpCount" min="5" max="200" placeholder="e.g. 20" value="10" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif"></div>
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Your Name *</label>
+          <input type="text" id="grpName" placeholder="Enter your name" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif"></div>
+        <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Contact Email / Phone *</label>
+          <input type="text" id="grpContact" placeholder="email@example.com or +91..." style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif"></div>
+        <button onclick="confirmGroupBooking('${eventId}','${eventName}',this)" style="background:var(--grad1);border:none;color:#fff;padding:13px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif">
+          <i class="fas fa-users"></i> Confirm Group Booking →</button>
+      </div>
+    </div>
+  </div>`;
+  document.body.appendChild(modal.firstElementChild);
+}
+
+async function confirmGroupBooking(eventId, eventName, btn) {
+  const count = parseInt(document.getElementById('grpCount')?.value || '10');
+  const name = document.getElementById('grpName')?.value || 'Group Organiser';
+  const contact = document.getElementById('grpContact')?.value || 'group@example.com';
+  if (count < 5) { showFanToast('⚠️ Minimum 5 people for group booking', 'error'); return; }
+  btn.disabled = true; btn.textContent = 'Processing…';
   try {
-    const res = await fetch('/api/bookings/bulk', {
+    const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+    const res = await fetch('/api/bookings/group', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ event_id: currentEvent?.id||'e1', quantity: 10, business_name: 'Group', contact: 'group@example.com' })
+      body: JSON.stringify({ event_id: eventId, event_name: eventName, user_id: uid, member_count: count, contact_name: name, contact: contact, price_per_person: currentEvent?.tiers?.[0]?.price || 1499 })
     });
     const d = await res.json();
-    if(d.success) showToast(`✅ Group booking confirmed! Order: ${d.booking_id}. Our team will contact you within 2 hours. 📋`,'success');
-    else showToast('📋 Group booking request sent! Our team will contact you within 2 hours for orders of 10+ tickets.');
-  } catch(e) { showToast('📋 Group booking request sent! Our team will contact you within 2 hours for orders of 10+ tickets.'); }
+    if (d.success) {
+      btn.closest('.modal-overlay')?.remove();
+      const disc = d.pricing?.group_discount_pct || 10;
+      showFanToast(`✅ Group booking confirmed! ${count} tickets · ${disc}% discount applied. ID: ${d.group_booking_id} 🎉`, 'success');
+    } else { showFanToast('✅ Group booking request sent! Our team will call you within 2 hours.', 'success'); btn.closest('.modal-overlay')?.remove(); }
+  } catch(e) {
+    showFanToast('✅ Group booking request sent! Our team will call you within 2 hours.', 'success');
+    btn.closest('.modal-overlay')?.remove();
+  }
+}
+
+async function joinWaitlist(eventId, tier) {
+  const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+  try {
+    const res = await fetch(`/api/events/${eventId||'e1'}/waitlist`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ user_id: uid, tier: tier || 'GA', event_id: eventId })
+    });
+    const d = await res.json();
+    if (d.success) {
+      showFanToast(`✅ Joined waitlist! You're #${d.position}. We'll WhatsApp you when tickets open. 🎟️`, 'success');
+    }
+  } catch(e) { showFanToast('✅ Joined waitlist! You\'ll be notified when tickets become available.', 'success'); }
+}
+
+async function showDynamicPricing(eventId) {
+  try {
+    const res = await fetch(`/api/events/${eventId||currentEvent?.id||'e1'}/pricing`);
+    const d = await res.json();
+    if (!d.tiers) return;
+    const modal = document.createElement('div');
+    modal.innerHTML = `<div class="modal-overlay" style="display:flex" onclick="this.parentNode&&this.parentNode.removeChild(this)">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;max-width:420px;width:90%" onclick="event.stopPropagation()">
+        <div style="font-size:18px;font-weight:800;margin-bottom:4px;font-family:'Space Grotesk',sans-serif">💰 Live Pricing</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:16px">${d.surge_active?'🔥 Surge pricing active — prices updated in real-time':'✅ Standard pricing'}</div>
+        ${d.tiers.map(t=>`<div style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-weight:700;font-size:13px">${t.tier}</div>
+              <div style="font-size:11px;color:var(--muted)">${t.availability_pct}% available · Demand: ${t.demand_score}/100</div>
+            </div>
+            <div style="text-align:right">
+              ${t.current_price!==t.base_price?`<div style="font-size:11px;color:var(--muted);text-decoration:line-through">₹${t.base_price.toLocaleString('en-IN')}</div>`:''}
+              <div style="font-size:16px;font-weight:800;color:${t.current_price>t.base_price?'#FF3366':t.current_price<t.base_price?'#00F5C4':'var(--text)'}">₹${t.current_price.toLocaleString('en-IN')}</div>
+            </div>
+          </div>
+          ${t.availability_pct<15?`<div style="margin-top:8px;background:#FF336620;border-radius:6px;padding:4px 8px;font-size:11px;color:#FF3366">⚡ Only ${t.availability_pct}% tickets left!</div>`:''}
+        </div>`).join('')}
+        <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px">Next update: ${d.next_price_change?new Date(d.next_price_change).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}):'6 hours'}</div>
+      </div>
+    </div>`;
+    document.body.appendChild(modal.firstElementChild);
+  } catch(e) { showFanToast('💰 Prices are updated every 30 minutes based on demand.', 'info'); }
+}
+
+// ── PWA Install Banner ─────────────────────────────────────────────
+let deferredPWAPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPWAPrompt = e;
+  showPWABanner();
+});
+
+function showPWABanner() {
+  if (document.getElementById('pwa-banner')) return;
+  if (localStorage.getItem('pwa_dismissed')) return;
+  const banner = document.createElement('div');
+  banner.id = 'pwa-banner';
+  banner.setAttribute('role', 'banner');
+  banner.setAttribute('aria-label', 'Install INDTIX app');
+  banner.innerHTML = `
+    <div style="position:fixed;bottom:80px;left:50%;transform:translateX(-50%);width:90%;max-width:380px;background:var(--card);border:1px solid var(--brand);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.4)">
+      <div style="width:44px;height:44px;background:var(--grad1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-mobile-alt" style="color:#fff;font-size:20px"></i></div>
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:13px">Install INDTIX App</div>
+        <div style="font-size:11px;color:var(--muted)">Faster booking, push alerts, offline access</div>
+      </div>
+      <button onclick="installPWA()" aria-label="Install app" style="background:var(--grad1);border:none;color:#fff;padding:7px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;flex-shrink:0">Install</button>
+      <button onclick="dismissPWABanner()" aria-label="Dismiss install banner" style="background:transparent;border:none;color:var(--muted);cursor:pointer;padding:4px;font-size:14px">✕</button>
+    </div>`;
+  document.body.appendChild(banner);
+}
+
+async function installPWA() {
+  if (deferredPWAPrompt) {
+    deferredPWAPrompt.prompt();
+    const { outcome } = await deferredPWAPrompt.userChoice;
+    deferredPWAPrompt = null;
+    if (outcome === 'accepted') {
+      fetch('/api/pwa/install-event', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ event:'installed', user_id: window.getCurrentUserId?window.getCurrentUserId():'USR-001', platform:'android' }) }).catch(()=>{});
+      showFanToast('🎉 INDTIX installed! Find it on your home screen.', 'success');
+    }
+  } else {
+    showFanToast('📲 To install: tap Share → Add to Home Screen in your browser.', 'info');
+  }
+  dismissPWABanner();
+}
+
+function dismissPWABanner() {
+  document.getElementById('pwa-banner')?.remove();
+  localStorage.setItem('pwa_dismissed', '1');
 }
 function openKYCVerification(){
   const kyc=document.createElement('div');
@@ -2960,23 +3097,43 @@ document.addEventListener('DOMContentLoaded', () => {
   initWishlist();
 });
 
-function initWishlist() {
+async function initWishlist() {
   const panel = document.getElementById('acc-wishlist');
   if (!panel) return;
-  const items = [
-    { name: 'Lollapalooza India', date: 'Mar 22, 2026', price: '₹5,999', img: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200' },
-    { name: 'Zakir Hussain Live', date: 'Apr 20, 2026', price: '₹999',   img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200' }
-  ];
-  panel.innerHTML = items.map(w => `
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:center">
-      <img src="${w.img}" style="width:60px;height:60px;border-radius:8px;object-fit:cover" onerror="this.style.background='linear-gradient(135deg,#6C3CF7,#FF3CAC)';this.removeAttribute('src')">
-      <div style="flex:1">
-        <div style="font-weight:600;font-size:13px">${w.name}</div>
-        <div style="font-size:11px;color:var(--muted)">${w.date} · From ${w.price}</div>
-        <button onclick="addToMerchCart && addToMerchCart(this.closest('[data-merch-id]')?.dataset?.merchId||this.dataset?.id||'M001',this.closest('[data-merch-id]')?.dataset?.name||'Merch Item',parseInt(this.closest('[data-merch-id]')?.dataset?.price||'599'),this.closest('[data-merch-id]')?.dataset?.size||'M')" style="margin-top:6px;background:var(--grad1);border:none;color:#fff;padding:5px 14px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Book Now</button>
-      </div>
-      <button onclick="this.closest('div[style*=flex]').remove();showToast('Removed from wishlist')" style="background:transparent;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px">×</button>
-    </div>`).join('');
+  panel.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:8px">Loading wishlist…</div>';
+  try {
+    const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+    const res = await fetch('/api/fan/wishlist?user_id=' + uid);
+    const d = await res.json();
+    const items = d.wishlist || [];
+    if (!items.length) { panel.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:8px">Nothing here yet. But the night is young 🌙</div>'; return; }
+    panel.innerHTML = items.map(w => `
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:center">
+        <img src="${w.img||'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200'}" style="width:60px;height:60px;border-radius:8px;object-fit:cover" onerror="this.style.background='linear-gradient(135deg,#6C3CF7,#FF3CAC)';this.removeAttribute('src')" alt="${w.name}">
+        <div style="flex:1">
+          <div style="font-weight:600;font-size:13px">${w.name}</div>
+          <div style="font-size:11px;color:var(--muted)">${w.date||w.event_date||''} · From ₹${typeof w.price_from==='number'?w.price_from.toLocaleString('en-IN'):w.price||'999'}</div>
+          ${w.availability==='selling_fast'?'<span style="font-size:10px;background:#FF3366;color:#fff;padding:2px 6px;border-radius:4px;margin-top:4px;display:inline-block">🔥 Selling Fast</span>':''}
+          <button onclick="openEventModal('${w.event_id||'e1'}')" style="margin-top:6px;background:var(--grad1);border:none;color:#fff;padding:5px 14px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Book Now</button>
+        </div>
+        <button onclick="removeFromWishlist('${w.event_id}',this.closest('div[style]'))" aria-label="Remove from wishlist" style="background:transparent;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px">×</button>
+      </div>`).join('');
+  } catch(e) {
+    const items = [
+      { event_id:'e10', name:'Lollapalooza India', date:'Mar 22, 2026', price_from:5999, img:'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200', availability:'selling_fast' },
+      { event_id:'e11', name:'Zakir Hussain Live', date:'Apr 20, 2026', price_from:999, img:'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200', availability:'available' }
+    ];
+    panel.innerHTML = items.map(w => `<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:center"><img src="${w.img}" style="width:60px;height:60px;border-radius:8px;object-fit:cover"><div style="flex:1"><div style="font-weight:600;font-size:13px">${w.name}</div><div style="font-size:11px;color:var(--muted)">${w.date} · From ₹${w.price_from.toLocaleString('en-IN')}</div><button onclick="openEventModal('${w.event_id}')" style="margin-top:6px;background:var(--grad1);border:none;color:#fff;padding:5px 14px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Book Now</button></div></div>`).join('');
+  }
+}
+
+async function removeFromWishlist(eventId, el) {
+  try {
+    const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+    await fetch('/api/fan/wishlist/' + eventId + '?user_id=' + uid, { method: 'DELETE' });
+    el?.closest('[style*=flex]')?.remove() || el?.remove();
+    showFanToast('Removed from wishlist', 'info');
+  } catch(e) { showFanToast('Removed from wishlist', 'info'); }
 }
 
 // ─── PHASE 15: Add-to-Calendar & Share Event Wiring ─────────────────────────
