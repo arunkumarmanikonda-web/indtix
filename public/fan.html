@@ -6200,5 +6200,91 @@ async function p29MyReplays(){
 }
 </script>
 <!-- END PHASE 29 FAN PORTAL -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     PHASE 30 — Fan Portal Panels
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Neuro-Fan Experience Engine -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>🧠 Neuro-Fan Experience</span>
+    <span class="badge bg-info">Phase 30 — AI-Personalised</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-4"><div class="card bg-dark text-white text-center p-3"><h5 id="p30-fan-emotion">Excited 😃</h5><small>Your Current Emotional State</small></div></div>
+      <div class="col-md-4"><div class="card bg-success text-white text-center p-3"><h5 id="p30-fan-ltv">₹28,400</h5><small>Your Predicted LTV</small></div></div>
+      <div class="col-md-4"><div class="card bg-info text-white text-center p-3"><h5 id="p30-fan-engage">94</h5><small>Engagement Score</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-6">
+        <label class="form-label">Event ID for Neuro Recommendations</label>
+        <input id="p30-fan-neuro-event" class="form-control form-control-sm" value="EVT-001" />
+      </div>
+      <div class="col-md-6 d-flex align-items-end gap-2">
+        <button class="btn btn-dark btn-sm flex-fill" onclick="loadP30FanProfile()">🧠 My Profile</button>
+        <button class="btn btn-outline-info btn-sm flex-fill" onclick="loadP30FanRecs()">💡 Recommendations</button>
+      </div>
+    </div>
+    <div class="row g-2 mt-1">
+      <div class="col-md-6"><button class="btn btn-outline-dark btn-sm w-100" onclick="loadP30FanMoodPlaylist()">🎵 Mood Playlist</button></div>
+      <div class="col-md-6"><button class="btn btn-outline-success btn-sm w-100" onclick="loadP30FanSocialEnergy()">👫 Social Energy</button></div>
+    </div>
+    <div id="p30-fan-neuro-output" class="mt-2"></div>
+  </div>
+</div>
+
+<!-- Decentralised Identity & NFT Tickets -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>⛓️ My INDIE Wallet & NFT Tickets</span>
+    <span class="badge bg-warning text-dark">Polygon Blockchain</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-4"><div class="card bg-dark text-white p-3"><small>DID</small><p class="mb-0 text-truncate" id="p30-fan-did" style="font-size:0.75rem">did:indtixtix:fan:loading...</p></div></div>
+      <div class="col-md-4"><div class="card bg-info text-white text-center p-3"><h5 id="p30-fan-nft-count">8</h5><small>NFT Tickets Owned</small></div></div>
+      <div class="col-md-4"><div class="card bg-success text-white text-center p-3"><h5 id="p30-fan-rep">94</h5><small>Reputation Score</small></div></div>
+    </div>
+    <div class="mt-2">
+      <strong>SBT Badges:</strong>
+      <span class="badge bg-warning text-dark me-1">Early Adopter</span>
+      <span class="badge bg-dark me-1">100+ Events</span>
+      <span class="badge bg-info">VIP Loyalist</span>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-4"><button class="btn btn-dark btn-sm w-100" onclick="loadP30FanWallet()">👛 My Wallet</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-info btn-sm w-100" onclick="loadP30FanNFTTickets()">🎟️ NFT Tickets</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-success btn-sm w-100" onclick="loadP30FanCredentials()">📋 Credentials</button></div>
+    </div>
+    <div id="p30-fan-did-output" class="mt-2"></div>
+  </div>
+</div>
+
+<!-- Secondary Market -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>🛒 Verified Ticket Marketplace</span>
+    <span class="badge bg-success">Anti-Scalping AI Active</span>
+  </div>
+  <div class="card-body">
+    <button class="btn btn-dark btn-sm" onclick="loadP30SecondaryMarket()">🛒 Browse Listings</button>
+    <div id="p30-fan-market-output" class="mt-2"></div>
+  </div>
+</div>
+
+<script>
+// Phase 30 Fan JS
+async function loadP30FanProfile(){const r=await fetch('/api/fan/neuro/experience-profile');const d=await r.json();document.getElementById('p30-fan-emotion').textContent=(d.emotional_state?.current||'excited')+' 😃';document.getElementById('p30-fan-ltv').textContent=d.predicted_ltv||'₹28,400';document.getElementById('p30-fan-engage').textContent=d.engagement_score||94;document.getElementById('p30-fan-neuro-output').innerHTML='<div class="alert alert-dark">🧠 Churn Risk: '+d.churn_risk+' | Segment Power Fan | DID: '+d.fan_id+'</div>';}
+async function loadP30FanRecs(){const eid=document.getElementById('p30-fan-neuro-event').value||'EVT-001';const r=await fetch('/api/fan/neuro/recommendations/'+eid);const d=await r.json();document.getElementById('p30-fan-neuro-output').innerHTML='<div class="alert alert-info">💡 '+d.recommendations?.map(rec=>'<strong>'+rec.type+'</strong>: '+rec.offer+' ('+Math.round(rec.confidence*100)+'% match)').join('<br>')+'</div>';}
+async function loadP30FanMoodPlaylist(){const r=await fetch('/api/fan/neuro/mood-playlist/EVT-001');const d=await r.json();document.getElementById('p30-fan-neuro-output').innerHTML='<div class="alert alert-secondary">🎵 Pre-event: '+d.pre_event_playlist?.join(', ')+'<br>During: '+d.during_event_suggestions?.join(', ')+'</div>';}
+async function loadP30FanSocialEnergy(){const eid=document.getElementById('p30-fan-neuro-event').value||'EVT-001';const r=await fetch('/api/fan/neuro/social-energy/'+eid);const d=await r.json();document.getElementById('p30-fan-neuro-output').innerHTML='<div class="alert alert-success">👫 Social Energy: '+d.social_energy_score+' | Friends Attending: '+d.friends_attending+' | Buzz: '+d.buzz_score+' | Hashtags: '+d.trending_hashtags?.join(' ')+'</div>';}
+async function loadP30FanWallet(){const r=await fetch('/api/fan/decentralised-id/wallet');const d=await r.json();document.getElementById('p30-fan-did').textContent=d.did||'did:indtixtix:fan:...';document.getElementById('p30-fan-nft-count').textContent=d.nft_tickets||8;document.getElementById('p30-fan-rep').textContent=d.reputation_score||94;document.getElementById('p30-fan-did-output').innerHTML='<div class="alert alert-dark">👛 Trust Level: '+d.trust_level+' | Verified Credentials: '+d.verified_credentials?.join(', ')+'</div>';}
+async function loadP30FanNFTTickets(){const r=await fetch('/api/fan/decentralised-id/tickets');const d=await r.json();document.getElementById('p30-fan-did-output').innerHTML='<div class="alert alert-info">🎟️ '+d.tickets?.map(t=>t.event+' | '+t.seat+' | '+t.standard+' | Paid: '+t.price_paid).join('<br>')+'</div>';}
+async function loadP30FanCredentials(){const r=await fetch('/api/fan/decentralised-id/credentials');const d=await r.json();document.getElementById('p30-fan-did-output').innerHTML='<div class="alert alert-success">📋 ZK Proofs: '+d.zero_knowledge_proofs_available+' | Credentials: '+d.verifiable_credentials?.map(c=>c.type+' ('+c.status+')').join(', ')+'</div>';}
+async function loadP30SecondaryMarket(){const r=await fetch('/api/fan/decentralised-id/secondary-market');const d=await r.json();document.getElementById('p30-fan-market-output').innerHTML='<div class="alert alert-warning">🛒 Listings: '+d.total_listings?.toLocaleString()+' | Platform Fee: '+d.platform_fee+' | Max Markup: '+d.max_markup_policy+'<br>'+d.listings?.map(l=>'🎟️ '+l.event+' | '+l.seat+' | ₹'+l.asking_price+' (Face: '+l.face_value+') | Seller Rep: '+l.seller_reputation).join('<br>')+'</div>';}
+</script>
+<!-- END PHASE 30 FAN PORTAL -->
 </body>
 </html>

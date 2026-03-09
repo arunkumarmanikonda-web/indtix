@@ -4811,4 +4811,108 @@ async function p29OrgRevenueShare(){
 }
 </script>
 <!-- END PHASE 29 ORGANISER PORTAL -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     PHASE 30 — Organiser Portal Panels
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Autonomous Pricing & Yield AI -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>💹 Autonomous Pricing & Yield AI</span>
+    <span class="badge bg-success">Phase 30</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5>₹18.4 Cr</h5><small>Revenue Today</small></div></div>
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5>+34.2%</h5><small>Yield vs Static</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5>38/42</h5><small>Events with Dynamic Pricing</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5>96.8%</h5><small>Demand Forecast Accuracy</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-4">
+        <label class="form-label small">Event ID for Pricing</label>
+        <input id="p30-org-event-id" class="form-control form-control-sm" value="EVT-001" />
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button class="btn btn-dark btn-sm w-100" onclick="loadP30OrgYieldDash()">💹 Yield Dashboard</button>
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button class="btn btn-outline-info btn-sm w-100" onclick="loadP30OrgEventPricing()">📊 Event Pricing</button>
+      </div>
+    </div>
+    <div class="row g-2 mt-1">
+      <div class="col-md-6"><button class="btn btn-outline-warning btn-sm w-100" onclick="loadP30OrgCompetitorIntel()">🔍 Competitor Intelligence</button></div>
+      <div class="col-md-6"><button class="btn btn-outline-dark btn-sm w-100" onclick="loadP30OrgAuctionEngine()">🔨 Auction Engine</button></div>
+    </div>
+    <div id="p30-org-yield-output" class="mt-2"></div>
+  </div>
+</div>
+
+<!-- AI Content Generation Studio -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>🎨 AI Content Generation Studio</span>
+    <span class="badge bg-info">GPT-4+DALL-E 3</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5>2,840</h5><small>Content Pieces Today</small></div></div>
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5>94%</h5><small>Approval Rate</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5>₹4.2 Cr</h5><small>Revenue from AI Campaigns</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5>₹84L</h5><small>Cost Saved/Month</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-4">
+        <label class="form-label small">Content Type</label>
+        <select id="p30-org-content-type" class="form-select form-select-sm">
+          <option value="social_post">Social Post</option>
+          <option value="email_subject">Email Subject</option>
+          <option value="push_notification">Push Notification</option>
+          <option value="banner_ad_copy">Banner Ad Copy</option>
+          <option value="video_script">Video Script</option>
+        </select>
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button class="btn btn-dark btn-sm w-100" onclick="loadP30OrgGenContent()">✨ Generate Content</button>
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button class="btn btn-outline-info btn-sm w-100" onclick="loadP30OrgContentPerf()">📈 Performance Analytics</button>
+      </div>
+    </div>
+    <div class="row g-2 mt-1">
+      <div class="col-md-6"><button class="btn btn-outline-secondary btn-sm w-100" onclick="loadP30OrgCampaignLib()">📚 Campaign Library</button></div>
+      <div class="col-md-6"><button class="btn btn-outline-success btn-sm w-100" onclick="loadP30OrgLocalise()">🌍 Localise Content</button></div>
+    </div>
+    <div id="p30-org-content-output" class="mt-2"></div>
+  </div>
+</div>
+
+<!-- Ecosystem Co-Creation Hub -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>🤝 Ecosystem Co-Creation Hub</span>
+    <span class="badge bg-warning text-dark">₹28.4 Cr Co-Created Revenue</span>
+  </div>
+  <div class="card-body">
+    <button class="btn btn-dark btn-sm me-2" onclick="loadP30OrgCoCreate()">🤝 View Projects</button>
+    <button class="btn btn-outline-info btn-sm me-2" onclick="loadP30OrgRevenueShare()">💰 Revenue Share</button>
+    <div id="p30-org-ecosystem-output" class="mt-2"></div>
+  </div>
+</div>
+
+<script>
+// Phase 30 Organiser JS
+async function loadP30OrgYieldDash(){const r=await fetch('/api/organiser/yield-ai/dashboard');const d=await r.json();document.getElementById('p30-org-yield-output').innerHTML='<div class="alert alert-success">💹 Active Events: '+d.active_events+' | Dynamic Pricing Events: '+d.dynamic_pricing_active+' | Avg Price Index: '+d.avg_price_index+'</div>';}
+async function loadP30OrgEventPricing(){const eid=document.getElementById('p30-org-event-id').value||'EVT-001';const r=await fetch('/api/organiser/yield-ai/event-pricing/'+eid);const d=await r.json();document.getElementById('p30-org-yield-output').innerHTML='<div class="alert alert-info">📊 '+d.current_price_tiers?.map(t=>t.tier+': Current '+t.current+' | Demand Index '+t.demand_index+' | Left: '+t.inventory_left?.toLocaleString()).join('<br>')+'<br>Next Update: '+d.next_price_update+'</div>';}
+async function loadP30OrgCompetitorIntel(){const r=await fetch('/api/organiser/yield-ai/competitor-intel');const d=await r.json();document.getElementById('p30-org-yield-output').innerHTML='<div class="alert alert-warning">🔍 Market Share: '+d.market_share_estimate+' | Price Premium: '+d.price_gap+' | Trend: '+d.trend+'</div>';}
+async function loadP30OrgAuctionEngine(){const eid=document.getElementById('p30-org-event-id').value||'EVT-001';const r=await fetch('/api/organiser/yield-ai/auction-engine/'+eid);const d=await r.json();document.getElementById('p30-org-yield-output').innerHTML='<div class="alert alert-dark">🔨 Auction Revenue: '+d.total_auction_revenue+' | Items: '+d.items?.map(i=>i.type+' → Current Bid: '+i.current_bid+' ('+i.bidders+' bidders)').join(', ')+'</div>';}
+async function loadP30OrgGenContent(){const type=document.getElementById('p30-org-content-type').value;const r=await fetch('/api/organiser/ai-content/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:type})});const d=await r.json();document.getElementById('p30-org-content-output').innerHTML='<div class="alert alert-dark">✨ <strong>'+d.type+'</strong> | Confidence: '+(d.confidence*100).toFixed(0)+'%<br><em>'+d.content+'</em></div>';}
+async function loadP30OrgContentPerf(){const r=await fetch('/api/organiser/ai-content/performance-analytics');const d=await r.json();document.getElementById('p30-org-content-output').innerHTML='<div class="alert alert-success">📈 AI CTR: '+d.ai_content_performance?.avg_ctr+' | Conversion: '+d.ai_content_performance?.avg_conversion+' | AI Advantage: '+d.ai_advantage+'</div>';}
+async function loadP30OrgCampaignLib(){const r=await fetch('/api/organiser/ai-content/campaign-library');const d=await r.json();document.getElementById('p30-org-content-output').innerHTML='<div class="alert alert-info">📚 Campaigns: '+d.campaigns?.map(c=>c.name+' — Impressions: '+d.campaigns[0].performance?.impressions?.toLocaleString()).join(', ')+'</div>';}
+async function loadP30OrgLocalise(){const r=await fetch('/api/organiser/ai-content/localise',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({languages:['Hindi','Marathi','Tamil','Telugu','Kannada']})});const d=await r.json();document.getElementById('p30-org-content-output').innerHTML='<div class="alert alert-secondary">🌍 Languages: '+d.target_languages?.join(', ')+' | Cultural Check: '+d.cultural_sensitivity_checked+' | Cost: '+d.cost+'</div>';}
+async function loadP30OrgCoCreate(){const r=await fetch('/api/organiser/ecosystem/co-creation-hub');const d=await r.json();document.getElementById('p30-org-ecosystem-output').innerHTML='<div class="alert alert-dark">🤝 Projects: '+d.active_projects?.map(p=>p.title+' ('+p.stage+')').join(', ')+'<br>Revenue from Co-Created Products: '+d.revenue_from_co_created+'</div>';}
+async function loadP30OrgRevenueShare(){const r=await fetch('/api/organiser/super-app/revenue-share');const d=await r.json();document.getElementById('p30-org-ecosystem-output').innerHTML='<div class="alert alert-success">💰 Total Partner Revenue: '+d.total_partner_revenue+' | Commission: '+d.total_commission+'</div>';}
+</script>
+<!-- END PHASE 30 ORGANISER PORTAL -->
 </body></html>

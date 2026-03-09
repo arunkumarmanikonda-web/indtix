@@ -3027,5 +3027,91 @@ async function p29OpsLoadCalendar(){
 }
 </script>
 <!-- END PHASE 29 OPS PORTAL -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     PHASE 30 — Ops Portal Panels
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Platform Health & Self-Healing Ops -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>🔧 Platform Health & Self-Healing Ops</span>
+    <span class="badge bg-success">Phase 30 — 99.97% Uptime</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5 id="p30-ops-uptime">99.97%</h5><small>30d Uptime</small></div></div>
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5 id="p30-ops-mttr">4.2 min</h5><small>MTTR</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5 id="p30-ops-selfheal">18</h5><small>Self-Healing Events Today</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5 id="p30-ops-services">284</h5><small>Services Monitored</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-3"><button class="btn btn-dark btn-sm w-100 mb-1" onclick="loadP30OpsSelfHealDash()">💻 Dashboard</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-info btn-sm w-100 mb-1" onclick="loadP30OpsServiceMap()">🗺️ Service Map</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-warning btn-sm w-100 mb-1" onclick="loadP30OpsIncidents()">⚠️ Incidents (30d)</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-secondary btn-sm w-100 mb-1" onclick="loadP30OpsChaos()">🌪️ Chaos Engineering</button></div>
+    </div>
+    <div class="row g-2">
+      <div class="col-md-6"><button class="btn btn-outline-dark btn-sm w-100" onclick="loadP30OpsObservability()">📡 Observability Stack</button></div>
+      <div class="col-md-6"><button class="btn btn-outline-success btn-sm w-100" onclick="loadP30OpsScaleService()">⚡ Scale Service</button></div>
+    </div>
+    <div id="p30-ops-selfheal-output" class="mt-2"></div>
+  </div>
+</div>
+
+<!-- Digital Twin Fleet (Ops View) -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>🏟️ Digital Twin Fleet — Ops Overview</span>
+    <span class="badge bg-info">42 Venues</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5>42</h5><small>Total Digital Twins</small></div></div>
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5>38</h5><small>Active Twins</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5>18,420</h5><small>Sensors Fleet-Wide</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5>1,284</h5><small>AI Insights Today</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-4"><button class="btn btn-dark btn-sm w-100" onclick="loadP30OpsTwinFleet()">🏟️ Fleet Status</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-warning btn-sm w-100" onclick="loadP30OpsTwinAnomalies()">⚠️ Fleet Anomalies</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-info btn-sm w-100" onclick="loadP30OpsMultiVenueCrowd()">👥 Multi-Venue Crowd</button></div>
+    </div>
+    <div id="p30-ops-twin-output" class="mt-2"></div>
+  </div>
+</div>
+
+<!-- Quantum Security & Compliance (Ops View) -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>🔐 Quantum Security & Compliance — Ops</span>
+    <span class="badge bg-warning text-dark">PQC Active</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-2">
+      <div class="col-md-4"><button class="btn btn-dark btn-sm w-100" onclick="loadP30OpsQSecCompliance()">✅ Compliance Report</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-danger btn-sm w-100" onclick="loadP30OpsIncidentResponse()">🚨 Incident Response</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-info btn-sm w-100" onclick="loadP30OpsCrowdAIInsights()">🧠 AI Crowd Insights</button></div>
+    </div>
+    <div id="p30-ops-security-output" class="mt-2"></div>
+  </div>
+</div>
+
+<script>
+// Phase 30 Ops JS
+async function loadP30OpsSelfHealDash(){const r=await fetch('/api/ops/self-healing/dashboard');const d=await r.json();document.getElementById('p30-ops-uptime').textContent=d.uptime_30d||'99.97%';document.getElementById('p30-ops-mttr').textContent=d.mttr_min+' min'||'4.2 min';document.getElementById('p30-ops-selfheal').textContent=d.self_healing_events_today||18;document.getElementById('p30-ops-services').textContent=d.services_monitored||284;document.getElementById('p30-ops-selfheal-output').innerHTML='<div class="alert alert-dark">🔧 Health: '+d.overall_health+' | Prevented Incidents: '+d.prevented_incidents+' | SLA Breaches (30d): '+d.sla_breaches_30d+'</div>';}
+async function loadP30OpsServiceMap(){const r=await fetch('/api/ops/self-healing/service-map');const d=await r.json();document.getElementById('p30-ops-selfheal-output').innerHTML='<div class="alert alert-info">🗺️ '+d.services?.map(s=>'<span class="badge bg-'+(s.status==='healthy'?'success':'warning')+'">'+s.name+' '+s.latency_p99_ms+'ms '+s.error_rate+'</span>').join(' ')+'</div>';}
+async function loadP30OpsIncidents(){const r=await fetch('/api/ops/self-healing/incidents');const d=await r.json();document.getElementById('p30-ops-selfheal-output').innerHTML='<div class="alert alert-warning">⚠️ 30d Incidents: '+d.total_30d+' | Auto-Resolved: '+d.auto_resolved+' | Human: '+d.human_resolved+'<br>'+d.incidents_30d?.map(i=>i.id+': '+i.service+' ('+i.severity+') — '+i.resolution_time_min+'min').join('<br>')+'</div>';}
+async function loadP30OpsChaos(){const r=await fetch('/api/ops/self-healing/chaos-engineering');const d=await r.json();document.getElementById('p30-ops-selfheal-output').innerHTML='<div class="alert alert-dark">🌪️ Last Test: '+d.last_chaos_test+' | Result: '+d.result+'<br>Scenarios: '+d.scenarios_tested?.join(', ')+'<br>Findings: '+d.findings+' | Remediated: '+d.remediated+'</div>';}
+async function loadP30OpsObservability(){const r=await fetch('/api/admin/self-healing/observability');const d=await r.json();document.getElementById('p30-ops-selfheal-output').innerHTML='<div class="alert alert-secondary">📡 Metrics: '+d.stack?.metrics+' | Logs: '+d.stack?.logs+' | Traces: '+d.stack?.traces+' | Alerts: '+d.stack?.alerts+'<br>Dashboards: '+d.dashboards+' | Alerts: '+d.alerts_configured+' | AI Anomaly FPR: '+d.ai_anomaly_detection?.false_positive_rate+'</div>';}
+async function loadP30OpsScaleService(){const r=await fetch('/api/ops/self-healing/scale-service',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({service:'Ticketing Core',from:4,to:8,reason:'Pre-event surge'})});const d=await r.json();document.getElementById('p30-ops-selfheal-output').innerHTML='<div class="alert alert-success">⚡ Scaled '+d.service+': '+d.from_instances+' → '+d.to_instances+' instances in '+d.scaling_time_sec+'s | Cost Delta: '+d.cost_delta+'</div>';}
+async function loadP30OpsTwinFleet(){const r=await fetch('/api/ops/digital-twin/fleet');const d=await r.json();document.getElementById('p30-ops-twin-output').innerHTML='<div class="alert alert-dark">🏟️ Twins: '+d.total_twins+' total | Active: '+d.active_twins+' | Sensors: '+d.total_sensors_across_fleet?.toLocaleString()+' | Data: '+d.data_points_per_second?.toLocaleString()+'/sec</div>';}
+async function loadP30OpsTwinAnomalies(){const r=await fetch('/api/ops/digital-twin/anomalies');const d=await r.json();document.getElementById('p30-ops-twin-output').innerHTML='<div class="alert alert-warning">⚠️ Today: '+d.total_today+' | Auto-Resolved: '+d.auto_resolved+' | Action Required: '+d.human_action_required+'<br>'+d.anomalies?.map(a=>a.twin_id+': '+a.type+' — '+a.location).join('<br>')+'</div>';}
+async function loadP30OpsMultiVenueCrowd(){const r=await fetch('/api/ops/crowd-intelligence/multi-venue');const d=await r.json();document.getElementById('p30-ops-twin-output').innerHTML='<div class="alert alert-info">👥 Venues Monitored: '+d.venues_monitored+' | Total Live: '+d.total_attendees_live?.toLocaleString()+' | Critical Alerts: '+d.critical_alerts+' | Highest Density: '+d.highest_density_venue+'</div>';}
+async function loadP30OpsQSecCompliance(){const r=await fetch('/api/ops/quantum/security/compliance');const d=await r.json();document.getElementById('p30-ops-security-output').innerHTML='<div class="alert alert-success">✅ PQC Score: '+d.pqc_compliance_score+' | Standards: '+d.standards_met?.join(', ')+'<br>Vulns: Critical '+d.vulnerabilities?.critical+' | High '+d.vulnerabilities?.high+' | Medium '+d.vulnerabilities?.medium+'</div>';}
+async function loadP30OpsIncidentResponse(){const r=await fetch('/api/ops/quantum/security/incident-response',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({severity:'medium'})});const d=await r.json();document.getElementById('p30-ops-security-output').innerHTML='<div class="alert alert-danger">🚨 Incident: '+d.incident_id+' | Playbook: '+d.playbook_triggered+' | ETA: '+d.containment_estimated_min+'min | Status: '+d.status+'</div>';}
+async function loadP30OpsCrowdAIInsights(){const r=await fetch('/api/ops/crowd-intelligence/ai-insights');const d=await r.json();document.getElementById('p30-ops-security-output').innerHTML='<div class="alert alert-info">🧠 Insights: '+d.insights_generated_today?.toLocaleString()+' | Actionable: '+d.actionable+' | Action Rate: '+d.action_rate+'<br>'+d.top_insights?.map(i=>i.insight).join('<br>')+'</div>';}
+</script>
+<!-- END PHASE 30 OPS PORTAL -->
 </body>
 </html>

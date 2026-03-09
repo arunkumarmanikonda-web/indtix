@@ -5310,4 +5310,210 @@ async function p29LoadInsurance(){
 }
 </script>
 <!-- END PHASE 29 ADMIN PORTAL -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     PHASE 30 — AI AUTONOMY, QUANTUM-READY & PLATFORM SINGULARITY
+     Admin Portal Panels
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Autonomous Orchestration Dashboard -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>🤖 Autonomous Event Orchestration AI — Admin</span>
+    <span class="badge bg-success">Phase 30</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5 id="p30-auto-decisions">18,420</h5><small>Autonomous Decisions Today</small></div></div>
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5 id="p30-auto-accuracy">97.4%</h5><small>Decision Accuracy</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5 id="p30-auto-overrides">42</h5><small>Human Overrides (0.23%)</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5 id="p30-auto-savings">₹8.4L</h5><small>Cost Savings Today</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-4"><div class="card bg-light p-2"><strong>Active AI Agents</strong><ul class="mb-0 mt-1 small" id="p30-auto-agents"><li>🔴 SchedulerBot — 4,284 decisions, 98.1% acc</li><li>🟢 PricingBot — 8,420 decisions, 97.8% acc</li><li>🟢 StaffBot — 2,840 decisions, 96.4% acc</li><li>🟡 LogisticsBot — 1,840 decisions, 97.1% acc</li><li>🟢 ContentBot — 1,036 decisions, 95.8% acc</li></ul></div></div>
+      <div class="col-md-4"><div class="card bg-light p-2"><strong>Recent Decisions</strong><ul class="mb-0 mt-1 small"><li>PricingBot: Surge +32% → Revenue +₹42L ✅</li><li>StaffBot: Extra security → Incident prevented ✅</li><li>LogisticsBot: Reroute Gate B → Queue -18 min ✅</li></ul></div></div>
+      <div class="col-md-4">
+        <button class="btn btn-dark btn-sm w-100 mb-2" onclick="loadP30AutoDashboard()">🔄 Refresh Orchestration</button>
+        <button class="btn btn-outline-danger btn-sm w-100 mb-2" onclick="loadP30SimResults()">🧪 View Simulations</button>
+        <button class="btn btn-outline-secondary btn-sm w-100" onclick="loadP30AgentPerf()">📊 Agent Performance</button>
+      </div>
+    </div>
+    <div id="p30-auto-output" class="mt-2"></div>
+  </div>
+</div>
+
+<!-- Quantum-Safe Security -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>🔐 Quantum-Safe Security & Encryption</span>
+    <span class="badge bg-warning text-dark">NIST PQC Round 4</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5 id="p30-qsec-coverage">99.8%</h5><small>PQC Encryption Coverage</small></div></div>
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5 id="p30-qsec-keys">28,400</h5><small>Keys Rotated Today</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5 id="p30-qsec-migration">84%</h5><small>PQC Migration Progress</small></div></div>
+      <div class="col-md-3"><div class="card bg-light text-dark text-center p-3"><h5 id="p30-qsec-threat">Low</h5><small>Quantum Threat Level</small></div></div>
+    </div>
+    <div class="mt-3">
+      <strong>Algorithms Deployed:</strong>
+      <span class="badge bg-dark me-1">CRYSTALS-Kyber-1024</span>
+      <span class="badge bg-secondary me-1">CRYSTALS-Dilithium-3</span>
+      <span class="badge bg-secondary me-1">SPHINCS+</span>
+      <span class="badge bg-secondary">FALCON-512</span>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-6">
+        <button class="btn btn-dark btn-sm w-100 mb-2" onclick="loadP30QSecDashboard()">🔐 View Security Dashboard</button>
+        <button class="btn btn-outline-warning btn-sm w-100" onclick="loadP30QSecThreat()">⚠️ Threat Intelligence</button>
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-outline-info btn-sm w-100 mb-2" onclick="loadP30ZeroTrust()">🛡️ Zero Trust Status</button>
+        <button class="btn btn-outline-secondary btn-sm w-100" onclick="loadP30QSecCompliance()">✅ Compliance Report</button>
+      </div>
+    </div>
+    <div id="p30-qsec-output" class="mt-2"></div>
+  </div>
+</div>
+
+<!-- Neuro-Fan Experience Engine -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>🧠 Neuro-Fan Experience Engine — Admin</span>
+    <span class="badge bg-info">2.84M Profiles</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5>2,840,000</h5><small>Active Fan Profiles</small></div></div>
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5>8</h5><small>ML Models Deployed</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5>18.4%</h5><small>Avg Recommendation CTR</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5>₹42 Cr</h5><small>Revenue Attributable/Month</small></div></div>
+    </div>
+    <div class="mt-3">
+      <strong>Segments:</strong>
+      <span class="badge bg-danger me-1">Power Fans: 2.84L (₹8,400 avg)</span>
+      <span class="badge bg-primary me-1">Casual: 18.4L (₹2,100 avg)</span>
+      <span class="badge bg-warning text-dark me-1">VIP Elite: 42K (₹28,400 avg)</span>
+      <span class="badge bg-secondary">New: 4.2L (₹1,200 avg)</span>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-4"><button class="btn btn-dark btn-sm w-100 mb-1" onclick="loadP30NeuroDashboard()">📊 Engine Dashboard</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-info btn-sm w-100 mb-1" onclick="loadP30NeuroAB()">🧪 A/B Test Results</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-success btn-sm w-100 mb-1" onclick="loadP30NeuroSegments()">👥 Segment Insights</button></div>
+    </div>
+    <div id="p30-neuro-output" class="mt-2"></div>
+  </div>
+</div>
+
+<!-- Autonomous Pricing & Yield AI -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>💹 Autonomous Pricing & Yield AI — Admin</span>
+    <span class="badge bg-success">+34.2% vs Static</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5>+34.2%</h5><small>Yield vs Static Pricing</small></div></div>
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5>96.8%</h5><small>Demand Forecast Accuracy</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5>28,400</h5><small>Price Changes Today</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5>₹284 Cr</h5><small>Extra Annual Revenue</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-6"><button class="btn btn-dark btn-sm w-100 mb-1" onclick="loadP30YieldModels()">📈 Model Performance</button></div>
+      <div class="col-md-6"><button class="btn btn-outline-danger btn-sm w-100 mb-1" onclick="loadP30RevenueLeakage()">🔍 Revenue Leakage Analysis</button></div>
+    </div>
+    <div id="p30-yield-output" class="mt-2"></div>
+  </div>
+</div>
+
+<!-- Decentralised Identity Registry -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>⛓️ Decentralised Identity & Self-Sovereign Ticketing — Admin</span>
+    <span class="badge bg-info">Polygon Blockchain</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5>2,840,000</h5><small>Total DIDs</small></div></div>
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5>94.4%</h5><small>DID Verification Rate</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5>42.84L</h5><small>Tickets On-Chain</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5>₹28.4 Cr</h5><small>NFT Volume (30d)</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-4"><button class="btn btn-dark btn-sm w-100 mb-1" onclick="loadP30DIDRegistry()">🔗 DID Registry</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-info btn-sm w-100 mb-1" onclick="loadP30SBTPrograms()">🏅 SBT Programs</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-success btn-sm w-100 mb-1" onclick="alert('SBT issued!')">🎖️ Issue SBT</button></div>
+    </div>
+    <div id="p30-did-output" class="mt-2"></div>
+  </div>
+</div>
+
+<!-- Self-Healing Ops -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>🔧 Platform Health & Self-Healing Ops — Admin</span>
+    <span class="badge bg-success">99.97% Uptime</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5>99.97%</h5><small>30d Uptime</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5>4.2 min</h5><small>MTTR</small></div></div>
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5>18</h5><small>Self-Healing Events Today</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5>₹84L</h5><small>Monthly AI Cost Savings</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-6"><button class="btn btn-dark btn-sm w-100 mb-1" onclick="loadP30SelfHealDash()">💻 Service Map</button></div>
+      <div class="col-md-6"><button class="btn btn-outline-info btn-sm w-100 mb-1" onclick="loadP30CostOpt()">💰 Cost Optimisation</button></div>
+    </div>
+    <div id="p30-selfheal-output" class="mt-2"></div>
+  </div>
+</div>
+
+<!-- Ecosystem Flywheel -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>🌀 Ecosystem Flywheel & Network Effects</span>
+    <span class="badge bg-success">Velocity Score: 88</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5>₹284 Cr</h5><small>Platform GMV/Month</small></div></div>
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5>142%</h5><small>YoY Growth</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5>1.42</h5><small>Viral Coefficient</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5>284</h5><small>Strategic Partners</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-3"><button class="btn btn-dark btn-sm w-100 mb-1" onclick="loadP30FlywheelDash()">🌀 Flywheel Dashboard</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-success btn-sm w-100 mb-1" onclick="loadP30SupplyHealth()">📦 Supply Health</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-info btn-sm w-100 mb-1" onclick="loadP30GrowthModel()">📈 Growth Model</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-warning btn-sm w-100 mb-1" onclick="loadP30CompMoat()">🏰 Competitive Moat</button></div>
+    </div>
+    <div id="p30-flywheel-output" class="mt-2"></div>
+  </div>
+</div>
+
+<script>
+// Phase 30 Admin JS
+async function loadP30AutoDashboard(){const r=await fetch('/api/admin/autonomous/orchestration/dashboard');const d=await r.json();document.getElementById('p30-auto-decisions').textContent=d.autonomous_decisions_today?.toLocaleString()||'18,420';document.getElementById('p30-auto-accuracy').textContent=d.decision_accuracy||'97.4%';document.getElementById('p30-auto-overrides').textContent=d.human_overrides||42;document.getElementById('p30-auto-savings').textContent=d.cost_savings_today||'₹8.4L';document.getElementById('p30-auto-output').innerHTML='<div class="alert alert-dark mt-2">🤖 Agents: '+d.ai_agents?.join(', ')+'<br>Avg Decision Latency: '+d.avg_decision_latency_ms+'ms | Hours Saved: '+d.decisions_saved_human_hours+'</div>';}
+async function loadP30SimResults(){const r=await fetch('/api/admin/autonomous/simulation/results');const d=await r.json();document.getElementById('p30-auto-output').innerHTML='<div class="alert alert-info">🧪 Best: '+d.best_scenario?.revenue+' margin '+d.best_scenario?.profit_margin+' | Strategy: '+d.recommended_strategy+'</div>';}
+async function loadP30AgentPerf(){const r=await fetch('/api/admin/autonomous/agent-performance');const d=await r.json();document.getElementById('p30-auto-output').innerHTML='<div class="alert alert-secondary">📊 Fleet: '+d.fleet_health+' | Agents: '+d.agents?.map(a=>a.name+' '+a.accuracy).join(', ')+'</div>';}
+async function loadP30QSecDashboard(){const r=await fetch('/api/admin/quantum/security/dashboard');const d=await r.json();document.getElementById('p30-qsec-coverage').textContent=d.encryption_coverage||'99.8%';document.getElementById('p30-qsec-keys').textContent=d.keys_rotated_today?.toLocaleString()||'28,400';document.getElementById('p30-qsec-migration').textContent=d.migration_progress||'84%';document.getElementById('p30-qsec-threat').textContent=d.quantum_threat_level||'Low';document.getElementById('p30-qsec-output').innerHTML='<div class="alert alert-dark">🔐 HSM Devices: '+d.hsm_devices+' | Legacy Endpoints Remaining: '+d.legacy_endpoints_remaining+' | PQC Ready: '+d.pqc_ready_endpoints+'</div>';}
+async function loadP30QSecThreat(){const r=await fetch('/api/admin/quantum/security/threat-intel');const d=await r.json();document.getElementById('p30-qsec-output').innerHTML='<div class="alert alert-warning">⚠️ Threat: '+d.current_threat+' | HNDL Risk: '+d.harvest_now_decrypt_later_risk+' | Recs: '+d.recommendations?.slice(0,2).join('; ')+'</div>';}
+async function loadP30ZeroTrust(){const r=await fetch('/api/admin/quantum/security/zero-trust-status');const d=await r.json();document.getElementById('p30-qsec-output').innerHTML='<div class="alert alert-info">🛡️ ZT Score: '+d.zero_trust_score+' | MFA Coverage: '+d.mfa_coverage+' | Anomalies: '+d.anomalies_flagged+' | Access Denied Today: '+d.access_denied_today?.toLocaleString()+'</div>';}
+async function loadP30QSecCompliance(){const r=await fetch('/api/ops/quantum/security/compliance');const d=await r.json();document.getElementById('p30-qsec-output').innerHTML='<div class="alert alert-success">✅ PQC Score: '+d.pqc_compliance_score+' | Standards: '+d.standards_met?.join(', ')+'</div>';}
+async function loadP30NeuroDashboard(){const r=await fetch('/api/admin/neuro/engine-dashboard');const d=await r.json();document.getElementById('p30-neuro-output').innerHTML='<div class="alert alert-dark">🧠 Profiles: '+d.active_profiles?.toLocaleString()+' | Rec CTR: '+d.avg_recommendation_ctr+' | Revenue: '+d.revenue_attributable+' | A/B Tests: '+d.ab_tests_running+'</div>';}
+async function loadP30NeuroAB(){const r=await fetch('/api/admin/neuro/ab-test-results');const d=await r.json();document.getElementById('p30-neuro-output').innerHTML='<div class="alert alert-info">🧪 Tests: '+d.tests?.map(t=>t.name+' → Winner '+t.winner+' (+'+t.lift+')').join('; ')+'</div>';}
+async function loadP30NeuroSegments(){const r=await fetch('/api/admin/neuro/segment-insights');const d=await r.json();document.getElementById('p30-neuro-output').innerHTML='<div class="alert alert-secondary">👥 '+d.segments?.map(s=>s.name+': '+s.size?.toLocaleString()+' fans').join(', ')+'</div>';}
+async function loadP30YieldModels(){const r=await fetch('/api/admin/yield-ai/model-performance');const d=await r.json();document.getElementById('p30-yield-output').innerHTML='<div class="alert alert-success">📈 Revenue Lift: '+d.overall_revenue_lift+' | Annual Extra: '+d.annual_extra_revenue+' | Models: '+d.models?.map(m=>m.name+' '+m.accuracy).join(', ')+'</div>';}
+async function loadP30RevenueLeakage(){const r=await fetch('/api/admin/yield-ai/revenue-leakage');const d=await r.json();document.getElementById('p30-yield-output').innerHTML='<div class="alert alert-warning">🔍 Total Leakage: '+d.total_leakage_monthly+'/month | Recovery (3m): '+d.recovery_potential_3m+'</div>';}
+async function loadP30DIDRegistry(){const r=await fetch('/api/admin/decentralised-id/did-registry');const d=await r.json();document.getElementById('p30-did-output').innerHTML='<div class="alert alert-info">⛓️ Total DIDs: '+d.total_dids?.toLocaleString()+' | Verification: '+d.verification_rate+' | On-Chain Tickets: '+d.tickets_on_chain?.toLocaleString()+'</div>';}
+async function loadP30SBTPrograms(){const r=await fetch('/api/admin/decentralised-id/sbt-programs');const d=await r.json();document.getElementById('p30-did-output').innerHTML='<div class="alert alert-dark">🏅 SBT Programs: '+d.sbt_programs?.map(p=>p.name+' ('+p.issued?.toLocaleString()+' issued)').join(', ')+'</div>';}
+async function loadP30SelfHealDash(){const r=await fetch('/api/ops/self-healing/service-map');const d=await r.json();document.getElementById('p30-selfheal-output').innerHTML='<div class="alert alert-dark">💻 Services: '+d.services?.map(s=>'<span class="badge bg-'+(s.status==='healthy'?'success':'warning')+'">'+s.name+'</span>').join(' ')+'</div>';}
+async function loadP30CostOpt(){const r=await fetch('/api/admin/self-healing/cost-optimisation');const d=await r.json();document.getElementById('p30-selfheal-output').innerHTML='<div class="alert alert-success">💰 Daily Spend: '+d.daily_cloud_spend+' | AI Savings: '+d.ai_optimised_savings+' | Waste Elimination: '+d.waste_elimination_progress+'</div>';}
+async function loadP30FlywheelDash(){const r=await fetch('/api/admin/ecosystem/flywheel-dashboard');const d=await r.json();document.getElementById('p30-flywheel-output').innerHTML='<div class="alert alert-dark">🌀 GMV: '+d.platform_gmv_monthly+' | Network Effect Index: '+d.network_effect_index+' | Viral K: '+d.viral_coefficient+'</div>';}
+async function loadP30SupplyHealth(){const r=await fetch('/api/admin/ecosystem/supply-health');const d=await r.json();document.getElementById('p30-flywheel-output').innerHTML='<div class="alert alert-info">📦 Artists: '+d.artists?.total+' | Venues: '+d.venues?.total+' | Promoters: '+d.promoters?.total+'</div>';}
+async function loadP30GrowthModel(){const r=await fetch('/api/admin/ecosystem/growth-model');const d=await r.json();document.getElementById('p30-flywheel-output').innerHTML='<div class="alert alert-success">📈 Q4 Target GMV: '+d.q4_2026_target?.gmv_monthly+' | MAU: '+d.q4_2026_target?.fans_mau?.toLocaleString()+'</div>';}
+async function loadP30CompMoat(){const r=await fetch('/api/admin/ecosystem/competitive-moat');const d=await r.json();document.getElementById('p30-flywheel-output').innerHTML='<div class="alert alert-warning">🏰 Moat Score: '+d.overall_moat_score+' | Category: '+d.category+' | '+d.comparable+'</div>';}
+</script>
+<!-- END PHASE 30 ADMIN PORTAL -->
 </body></html>

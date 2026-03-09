@@ -3133,4 +3133,75 @@ async function p29ArtLoadForecast(){
 }
 </script>
 <!-- END PHASE 29 EVENT MANAGER -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     PHASE 30 — Event Manager Portal Panels
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Autonomous Event Orchestration -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>🤖 Autonomous Event Orchestration</span>
+    <span class="badge bg-success">Phase 30 — AI-Driven</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5>18,420</h5><small>Autonomous Decisions</small></div></div>
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5>97.4%</h5><small>Decision Accuracy</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5>₹8.4L</h5><small>Cost Savings Today</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5>18</h5><small>Active Playbooks</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-4">
+        <label class="form-label small">Event ID</label>
+        <input id="p30-em-event-id" class="form-control form-control-sm" value="EVT-001" />
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button class="btn btn-dark btn-sm w-100" onclick="loadP30EMAIPlan()">📋 AI Event Plan</button>
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button class="btn btn-outline-info btn-sm w-100" onclick="loadP30EMStaffOpt()">👥 Staff Optimizer</button>
+      </div>
+    </div>
+    <div class="row g-2 mt-1">
+      <div class="col-md-6"><button class="btn btn-outline-warning btn-sm w-100" onclick="loadP30EMPlaybooks()">📚 Contingency Playbooks</button></div>
+      <div class="col-md-6"><button class="btn btn-outline-dark btn-sm w-100" onclick="loadP30EMAIOrchDec()">📊 Recent Decisions</button></div>
+    </div>
+    <div id="p30-em-orch-output" class="mt-2"></div>
+  </div>
+</div>
+
+<!-- AI Content Studio — Event Manager -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>🎨 AI Content Studio — Event Assets</span>
+    <span class="badge bg-info">GPT-4 + DALL-E 3</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-2 mt-1">
+      <div class="col-md-4">
+        <label class="form-label small">Event ID for Assets</label>
+        <input id="p30-em-content-event" class="form-control form-control-sm" value="EVT-001" />
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button class="btn btn-dark btn-sm w-100" onclick="loadP30EMEventAssets()">📁 Event Assets</button>
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button class="btn btn-outline-success btn-sm w-100" onclick="loadP30EMVoiceOver()">🎤 Voice-Over Studio</button>
+      </div>
+    </div>
+    <div id="p30-em-content-output" class="mt-2"></div>
+  </div>
+</div>
+
+<script>
+// Phase 30 Event Manager JS
+async function loadP30EMAIPlan(){const eid=document.getElementById('p30-em-event-id').value||'EVT-001';const r=await fetch('/api/event-manager/autonomous/event-plan/'+eid);const d=await r.json();document.getElementById('p30-em-orch-output').innerHTML='<div class="alert alert-dark">📋 Plan Sections: '+d.plan_sections?.join(', ')+'<br>Optimization Score: '+d.optimization_score+' | Revenue Est: '+d.estimated_revenue+' | Risk: '+d.risk_score+'</div>';}
+async function loadP30EMStaffOpt(){const eid=document.getElementById('p30-em-event-id').value||'EVT-001';const r=await fetch('/api/event-manager/autonomous/staff-optimizer/'+eid);const d=await r.json();document.getElementById('p30-em-orch-output').innerHTML='<div class="alert alert-info">👥 Recommended: '+d.recommended_staff+' | Assigned: '+d.current_assigned+' | Gap: '+d.gap+'<br>Roles: '+d.roles?.join(', ')+'</div>';}
+async function loadP30EMPlaybooks(){const r=await fetch('/api/event-manager/autonomous/contingency-playbooks');const d=await r.json();document.getElementById('p30-em-orch-output').innerHTML='<div class="alert alert-warning">📚 Playbooks: '+d.total+' total | '+d.playbooks?.map(pb=>pb.trigger+' ('+pb.success_rate+')').join(', ')+'</div>';}
+async function loadP30EMAIOrchDec(){const r=await fetch('/api/admin/autonomous/orchestration/decisions');const d=await r.json();document.getElementById('p30-em-orch-output').innerHTML='<div class="alert alert-secondary">📊 Today: '+d.total_today?.toLocaleString()+' | Auto-Approved: '+d.auto_approved?.toLocaleString()+' | Pending Review: '+d.pending_review+'<br>'+d.recent_decisions?.map(dec=>dec.agent+': '+dec.action+' → '+dec.outcome).join('<br>')+'</div>';}
+async function loadP30EMEventAssets(){const eid=document.getElementById('p30-em-content-event').value||'EVT-001';const r=await fetch('/api/event-manager/ai-content/event-assets/'+eid);const d=await r.json();document.getElementById('p30-em-content-output').innerHTML='<div class="alert alert-dark">📁 Total Assets: '+d.total_assets+' | AI-Generated: '+d.ai_generated+' | Human-Edited: '+d.human_edited+'<br>'+d.assets?.map(a=>'<span class="badge bg-'+(a.status==='approved'?'success':a.status==='in_review'?'warning':'secondary')+'">'+a.type+'</span>').join(' ')+'</div>';}
+async function loadP30EMVoiceOver(){const r=await fetch('/api/event-manager/ai-content/voice-over');const d=await r.json();document.getElementById('p30-em-content-output').innerHTML='<div class="alert alert-info">🎤 Languages: '+d.supported_languages+' | Voices: '+d.available_voices?.join(', ')+'<br>TTS Model: '+d.tts_model+' | Quality: '+d.quality+'</div>';}
+</script>
+<!-- END PHASE 30 EVENT MANAGER -->
 </body></html>

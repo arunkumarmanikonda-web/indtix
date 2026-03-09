@@ -2823,4 +2823,85 @@ async function p29VenLoadVendors(){
 }
 </script>
 <!-- END PHASE 29 VENUE PORTAL -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     PHASE 30 — Venue Portal Panels
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Digital Twin Platform -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>🏟️ Digital Twin Platform</span>
+    <span class="badge bg-info">Phase 30 — 1cm Resolution</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5 id="p30-venue-occ">42,800</h5><small>Real-Time Occupancy</small></div></div>
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5 id="p30-venue-sensors">1,284</h5><small>Sensors Mapped</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5 id="p30-venue-zones">42</h5><small>Zones</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5 id="p30-venue-twin-health">Excellent</h5><small>Twin Health</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-4">
+        <label class="form-label small">Venue ID</label>
+        <input id="p30-venue-id" class="form-control form-control-sm" value="VEN-001" />
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button class="btn btn-dark btn-sm w-100" onclick="loadP30VenueTwin()">🏟️ Load Twin</button>
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button class="btn btn-outline-info btn-sm w-100" onclick="loadP30VenueHeatmap()">🔥 Crowd Heatmap</button>
+      </div>
+    </div>
+    <div class="row g-2 mt-1">
+      <div class="col-md-4"><button class="btn btn-outline-warning btn-sm w-100" onclick="loadP30VenueSimulation()">🧪 Run Simulation</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-dark btn-sm w-100" onclick="loadP30VenueEmergency()">🚨 Emergency Routes</button></div>
+      <div class="col-md-4"><button class="btn btn-outline-success btn-sm w-100" onclick="loadP30TwinROI()">💰 Twin ROI</button></div>
+    </div>
+    <div id="p30-venue-twin-output" class="mt-2"></div>
+  </div>
+</div>
+
+<!-- Real-Time Crowd Intelligence -->
+<div class="card mt-4 border-dark">
+  <div class="card-header bg-dark text-white d-flex justify-content-between">
+    <span>👥 Real-Time Crowd Intelligence</span>
+    <span class="badge bg-success">Live Analytics</span>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-3"><div class="card bg-dark text-white text-center p-3"><h5 id="p30-crowd-cap">53.5%</h5><small>Venue Utilisation</small></div></div>
+      <div class="col-md-3"><div class="card bg-success text-white text-center p-3"><h5 id="p30-crowd-entry">842</h5><small>Entry Rate/Min</small></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center p-3"><h5 id="p30-crowd-health">88</h5><small>Crowd Health Index</small></div></div>
+      <div class="col-md-3"><div class="card bg-warning text-dark text-center p-3"><h5 id="p30-crowd-nps">72</h5><small>Real-Time NPS</small></div></div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-3"><button class="btn btn-dark btn-sm w-100 mb-1" onclick="loadP30CrowdMain()">📊 Crowd Status</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-info btn-sm w-100 mb-1" onclick="loadP30CrowdZones()">🗺️ Zone Density</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-success btn-sm w-100 mb-1" onclick="loadP30CrowdSentiment()">😊 Sentiment</button></div>
+      <div class="col-md-3"><button class="btn btn-outline-warning btn-sm w-100 mb-1" onclick="loadP30CrowdPredictions()">🔮 Flow Predictions</button></div>
+    </div>
+    <div class="row g-2">
+      <div class="col-md-6"><button class="btn btn-outline-dark btn-sm w-100" onclick="loadP30CrowdStaffDeploy()">👮 Staff Deployment</button></div>
+      <div class="col-md-6"><button class="btn btn-outline-danger btn-sm w-100" onclick="loadP30EmergencyActivate()">🚨 Emergency Activate</button></div>
+    </div>
+    <div id="p30-venue-crowd-output" class="mt-2"></div>
+  </div>
+</div>
+
+<script>
+// Phase 30 Venue JS
+async function loadP30VenueTwin(){const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/digital-twin/'+vid);const d=await r.json();document.getElementById('p30-venue-occ').textContent=(d.real_time_occupancy?.total||42800).toLocaleString();document.getElementById('p30-venue-sensors').textContent=d.sensors_mapped||1284;document.getElementById('p30-venue-zones').textContent=d.zones||42;document.getElementById('p30-venue-twin-health').textContent=d.twin_health||'excellent';document.getElementById('p30-venue-twin-output').innerHTML='<div class="alert alert-dark">🏟️ Twin ID: '+d.twin_id+' | Resolution: '+d.model_resolution+' | Last Synced: '+d.last_synced?.slice(0,19)+'</div>';}
+async function loadP30VenueHeatmap(){const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/digital-twin/'+vid+'/crowd-heatmap');const d=await r.json();document.getElementById('p30-venue-twin-output').innerHTML='<div class="alert alert-warning">🔥 Peak Zone: '+d.peak_density_zone+' ('+d.peak_density_ppm2+' p/m²) | Comfort Index: '+d.comfort_index+' | Safety: '+d.safety_rating+'<br>Actions: '+d.recommended_actions?.join(', ')+'</div>';}
+async function loadP30VenueSimulation(){const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/digital-twin/'+vid+'/simulation');const d=await r.json();document.getElementById('p30-venue-twin-output').innerHTML='<div class="alert alert-info">🧪 Active Simulations: '+d.active_simulations+'<br>'+d.scenarios?.map(s=>s.type+': '+s.status+(s.result?' — '+s.result:'')).join('<br>')+'</div>';}
+async function loadP30VenueEmergency(){const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/digital-twin/'+vid+'/emergency');const d=await r.json();document.getElementById('p30-venue-twin-output').innerHTML='<div class="alert alert-danger">🚨 Emergency Status: '+d.emergency_status+' | Full Evacuation Est: '+d.estimated_full_evacuation_min+' min<br>Routes: '+d.evacuation_routes?.map(rt=>rt.name+' ('+rt.capacity_per_min+'/min) '+rt.status).join(', ')+'</div>';}
+async function loadP30TwinROI(){const r=await fetch('/api/ops/digital-twin/roi-metrics');const d=await r.json();document.getElementById('p30-venue-twin-output').innerHTML='<div class="alert alert-success">💰 ROI Multiple: '+d.roi_multiple+'x | Liability Saved: '+d.estimated_liability_saved+' | Efficiency Gain: '+d.operational_efficiency_gain+'</div>';}
+async function loadP30CrowdMain(){const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/crowd-intelligence/'+vid);const d=await r.json();document.getElementById('p30-crowd-cap').textContent=d.utilisation||'53.5%';document.getElementById('p30-crowd-entry').textContent=d.entry_rate_per_min||842;document.getElementById('p30-crowd-health').textContent=d.crowd_health_index||88;document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-dark">👥 Current: '+d.current_capacity?.toLocaleString()+'/'+d.max_capacity?.toLocaleString()+' | Peak Predicted: '+d.predicted_peak_time?.slice(11,16)+'</div>';}
+async function loadP30CrowdZones(){const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/zones');const d=await r.json();document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-info">🗺️ Hotspots: '+d.total_hotspots+'<br>'+d.zones?.map(z=>'<span class="badge bg-'+(z.hotspot?'danger':'success')+'">'+z.zone+': '+z.current?.toLocaleString()+'</span>').join(' ')+'</div>';}
+async function loadP30CrowdSentiment(){const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/sentiment');const d=await r.json();document.getElementById('p30-crowd-nps').textContent=d.real_time_nps||72;document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-success">😊 Score: '+d.sentiment_score+' | NPS: '+d.real_time_nps+'<br>👍 Positives: '+d.top_positive?.join(', ')+'<br>👎 Negatives: '+d.top_negative?.join(', ')+'</div>';}
+async function loadP30CrowdPredictions(){const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/flow-predictions');const d=await r.json();document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-warning">🔮 Model Accuracy: '+d.accuracy+'<br>'+d.predictions?.map(p=>p.time+': '+p.expected_arrivals?.toLocaleString()+' arrivals — '+p.gate_recommendation).join('<br>')+'</div>';}
+async function loadP30CrowdStaffDeploy(){const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/staff-deployment');const d=await r.json();document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-secondary">👮 Total Staff: '+d.total_staff+' | On Duty: '+d.on_duty+'<br>'+d.deployment?.map(dep=>dep.role+': '+dep.assigned).join(' | ')+'</div>';}
+async function loadP30EmergencyActivate(){if(!confirm('Activate Emergency Protocol?'))return;const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/emergency-activate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'medical',level:1})});const d=await r.json();document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-danger">🚨 Emergency ID: '+d.emergency_id+' | Protocol: '+d.protocol_activated+' | Staff Notified: '+d.staff_notified+'</div>';}
+</script>
+<!-- END PHASE 30 VENUE PORTAL -->
 </body></html>

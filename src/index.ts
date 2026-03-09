@@ -13126,7 +13126,8 @@ app.get('/api/v21/features', (c) => c.json({
 }))
 
 // ── Update Version to 21.0.0 ──
-app.get('/api/health', (c) => c.json({
+// [SUPERSEDED by Phase 30 health route below]
+app.get('/api/v29/health', (c) => c.json({
   status: 'ok', version: 'v29.0.0', phase: 'Phase 29',
   new_endpoints: 90, total_endpoints: 1639,
   uptime: '99.98%', latency_ms: 12,
@@ -18427,6 +18428,738 @@ app.get('/api/organiser/super-app/revenue-share', (c) => c.json({
 
 // ═══════════════════════════════════════════════════════════
 // END PHASE 29 — NEXT-GEN REVENUE, SUSTAINABILITY & GLOBAL SCALE
+// ═══════════════════════════════════════════════════════════
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// PHASE 30 — AI AUTONOMY, QUANTUM-READY & PLATFORM SINGULARITY
+// 90 new endpoints → cumulative total: 1,729
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+// ── MODULE 1: Autonomous Event Orchestration AI (10 endpoints) ──
+app.get('/api/admin/autonomous/orchestration/dashboard', (c) => c.json({
+  module:'Autonomous Event Orchestration AI', version:'v1.0.0',
+  active_events:284, autonomous_decisions_today:18420,
+  decision_accuracy:'97.4%', human_overrides:42, override_rate:'0.23%',
+  ai_agents:['SchedulerBot','PricingBot','StaffBot','LogisticsBot','ContentBot'],
+  avg_decision_latency_ms:84, decisions_saved_human_hours:1284,
+  cost_savings_today:'₹8.4L', status:'operational'
+}))
+
+app.get('/api/admin/autonomous/orchestration/decisions', (c) => c.json({
+  recent_decisions:[
+    { id:'DEC-001', agent:'PricingBot', action:'dynamic_price_surge', event:'Arijit Singh Mumbai', confidence:0.97, outcome:'Revenue +₹42L', time:'2026-03-09T14:23:00Z' },
+    { id:'DEC-002', agent:'StaffBot', action:'deploy_additional_security', event:'IPL Pre-party Delhi', confidence:0.94, outcome:'Incident prevented', time:'2026-03-09T14:20:00Z' },
+    { id:'DEC-003', agent:'LogisticsBot', action:'reroute_gate_b_traffic', event:'Sunburn Goa', confidence:0.91, outcome:'Queue time -18 min', time:'2026-03-09T14:17:00Z' }
+  ],
+  total_today:18420, pending_review:8, auto_approved:18404, escalated:8
+}))
+
+app.post('/api/admin/autonomous/orchestration/override', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, decision_id:body.decision_id||'DEC-001', override_by:'admin@indtix.in', reason:body.reason||'Manual review', timestamp:new Date().toISOString(), agent_notified:true })
+})
+
+app.get('/api/event-manager/autonomous/event-plan/:event_id', (c) => c.json({
+  event_id:c.req.param('event_id'), ai_generated_plan:true,
+  plan_sections:['Timeline','Staffing','Logistics','Marketing','Pricing','Contingency'],
+  optimization_score:94.8, estimated_revenue:'₹2.84 Cr', cost_reduction:'18.4%',
+  risk_score:'Low', confidence:0.96, last_updated:new Date().toISOString()
+}))
+
+app.post('/api/event-manager/autonomous/event-plan/generate', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, plan_id:'PLAN-'+Date.now(), event:body.event_name||'New Event', plan_ready:true, sections_generated:6, ai_model:'GPT-4-Turbo+INDIE', generation_time_ms:2840, review_required:true })
+})
+
+app.get('/api/event-manager/autonomous/staff-optimizer/:event_id', (c) => c.json({
+  event_id:c.req.param('event_id'), recommended_staff:284,
+  current_assigned:260, gap:24, roles:['Security:84','F&B:42','Ticketing:28','Medical:18','Ushers:112'],
+  cost_optimal_staffing:272, ai_confidence:0.93, optimal_shift_plan_url:'/plans/staff-'+c.req.param('event_id')
+}))
+
+app.get('/api/admin/autonomous/agent-performance', (c) => c.json({
+  agents:[
+    { name:'SchedulerBot', decisions_today:4284, accuracy:'98.1%', uptime:'99.99%', avg_latency_ms:42 },
+    { name:'PricingBot', decisions_today:8420, accuracy:'97.8%', uptime:'99.97%', avg_latency_ms:68 },
+    { name:'StaffBot', decisions_today:2840, accuracy:'96.4%', uptime:'99.94%', avg_latency_ms:124 },
+    { name:'LogisticsBot', decisions_today:1840, accuracy:'97.1%', uptime:'99.96%', avg_latency_ms:84 },
+    { name:'ContentBot', decisions_today:1036, accuracy:'95.8%', uptime:'99.91%', avg_latency_ms:284 }
+  ],
+  fleet_health:'excellent', total_agents:5, active:5
+}))
+
+app.post('/api/admin/autonomous/agent-config', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, agent:body.agent||'PricingBot', config_updated:true, autonomy_level:body.autonomy_level||'high', human_in_loop:body.human_in_loop||false, updated_at:new Date().toISOString() })
+})
+
+app.get('/api/admin/autonomous/simulation/results', (c) => c.json({
+  last_simulation:'2026-03-09T00:00:00Z', scenarios_tested:284,
+  best_scenario:{ id:'SIM-042', revenue:'₹8.4 Cr', profit_margin:'34.2%', risk:'Low' },
+  worst_scenario:{ id:'SIM-284', revenue:'₹2.1 Cr', profit_margin:'8.4%', risk:'High' },
+  recommended_strategy:'Dynamic Pricing + Staff Optimisation + Early-bird Flash Sale', confidence:0.97
+}))
+
+app.post('/api/admin/autonomous/simulation/run', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, simulation_id:'SIM-'+Date.now(), event:body.event||'Q2-Mega-Concert', scenarios:body.scenarios||100, estimated_time_sec:42, queued:true, notify_email:'admin@indtix.in' })
+})
+
+app.get('/api/event-manager/autonomous/contingency-playbooks', (c) => c.json({
+  playbooks:[
+    { id:'PB-001', trigger:'weather_warning', actions:['Notify fans','Activate refund window','Contact venue'], last_used:'2026-01-15', success_rate:'96%' },
+    { id:'PB-002', trigger:'crowd_surge', actions:['Close gate B','Deploy extra security','Pause entry'], last_used:'2026-02-20', success_rate:'98%' },
+    { id:'PB-003', trigger:'artist_cancellation', actions:['Trigger refund','Send apology','Offer replacement'], last_used:'2025-11-10', success_rate:'94%' }
+  ],
+  total:18, active:18, ai_generated:12
+}))
+
+// ── MODULE 2: Quantum-Safe Security & Encryption (8 endpoints) ──
+app.get('/api/admin/quantum/security/dashboard', (c) => c.json({
+  module:'Quantum-Safe Security & Encryption', standard:'NIST PQC Round 4',
+  algorithms:['CRYSTALS-Kyber-1024','CRYSTALS-Dilithium-3','SPHINCS+','FALCON-512'],
+  keys_rotated_today:28400, encryption_coverage:'99.8%', quantum_threat_level:'Low',
+  migration_progress:'84%', legacy_endpoints_remaining:42, pqc_ready_endpoints:1687,
+  hsm_devices:4, hsm_status:'All Active', last_audit:'2026-02-28'
+}))
+
+app.get('/api/admin/quantum/security/key-registry', (c) => c.json({
+  total_keys:284000, active_keys:280000, expired_keys:4000, revoked_keys:28,
+  algorithm_distribution:{ 'CRYSTALS-Kyber':180000, 'CRYSTALS-Dilithium':80000, 'SPHINCS+':24000 },
+  next_rotation:'2026-03-10T02:00:00Z', auto_rotation:true, rotation_interval_days:7
+}))
+
+app.post('/api/admin/quantum/security/key-rotate', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, rotation_id:'ROT-'+Date.now(), scope:body.scope||'all', keys_rotated:28400, duration_ms:4284, next_rotation:'2026-03-16T02:00:00Z', backup_created:true })
+})
+
+app.get('/api/admin/quantum/security/threat-intel', (c) => c.json({
+  current_threat:'Low', quantum_computing_eta:'8-12 years', harvest_now_decrypt_later_risk:'Medium',
+  recommendations:['Migrate all RSA-2048 keys to CRYSTALS-Kyber','Enable PFS on all TLS connections','Implement zero-trust micro-segmentation'],
+  recent_threats:[
+    { date:'2026-03-08', type:'Classical brute-force', blocked:true, source_ip:'185.220.101.x' },
+    { date:'2026-03-07', type:'API key harvest attempt', blocked:true, source_ip:'45.142.212.x' }
+  ],
+  partner_intel:'CERT-In, DSCI, Cloudflare Threat Intel'
+}))
+
+app.get('/api/ops/quantum/security/compliance', (c) => c.json({
+  pqc_compliance_score:94, standards_met:['NIST SP 800-208','ISO/IEC 18033','FIPS 140-3 L3'],
+  last_pentest:'2026-02-15', vulnerabilities:{ critical:0, high:0, medium:3, low:18 },
+  certifications:['ISO 27001:2022','SOC 2 Type II','PCI-DSS L1','RBI Guidelines'],
+  next_audit:'2026-06-01', audit_firm:'Deloitte Cyber'
+}))
+
+app.post('/api/admin/quantum/security/encrypt', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, algorithm:'CRYSTALS-Kyber-1024', data_type:body.data_type||'ticket_batch', encrypted:true, key_id:'KEY-'+Math.random().toString(36).slice(2,10), expiry:'2027-03-09', quantum_safe:true })
+})
+
+app.get('/api/admin/quantum/security/zero-trust-status', (c) => c.json({
+  zero_trust_score:88, maturity:'Advanced',
+  pillars:{ identity:'Implemented', devices:'Implemented', network:'In-Progress', apps:'Implemented', data:'Implemented' },
+  microsegments:284, policies_active:1840, access_denied_today:42000, anomalies_flagged:18, mfa_coverage:'99.4%'
+}))
+
+app.post('/api/ops/quantum/security/incident-response', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, incident_id:'INC-'+Date.now(), severity:body.severity||'medium', playbook_triggered:'Quantum-Threat-Response-v2', containment_estimated_min:8, notified:['CISO','DevSecOps','Legal'], status:'investigating' })
+})
+
+// ── MODULE 3: Digital Twin Platform (8 endpoints) ──
+app.get('/api/venue/digital-twin/:venue_id', (c) => c.json({
+  venue_id:c.req.param('venue_id'), twin_id:'DT-'+c.req.param('venue_id'),
+  model_resolution:'1cm', last_synced:new Date().toISOString(), sync_latency_ms:284,
+  sensors_mapped:1284, zones:42, entry_gates:18, emergency_exits:28,
+  real_time_occupancy:{ total:42800, zone_breakdown:{ 'Main Floor':28000, 'VIP':4200, 'Balcony':8400, 'Backstage':200, 'F&B Zone':2000 } },
+  twin_health:'excellent', model_url:'/twins/'+c.req.param('venue_id')+'.glb'
+}))
+
+app.get('/api/venue/digital-twin/:venue_id/simulation', (c) => c.json({
+  venue_id:c.req.param('venue_id'), active_simulations:4,
+  scenarios:[
+    { id:'SIM-001', type:'evacuation', status:'running', eta_sec:420, bottlenecks:['Gate B','Corridor 3'] },
+    { id:'SIM-002', type:'crowd_flow', status:'completed', result:'Optimal flow at 85% capacity', recommendation:'Open Gate D 30 min early' },
+    { id:'SIM-003', type:'acoustic_mapping', status:'completed', result:'SPL 84 dB avg, hotspot near pillar 7' }
+  ]
+}))
+
+app.post('/api/venue/digital-twin/:venue_id/simulate', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, simulation_id:'SIM-'+Date.now(), venue_id:c.req.param('venue_id'), type:body.type||'crowd_flow', estimated_completion_sec:120, real_time_feed:true })
+})
+
+app.get('/api/ops/digital-twin/fleet', (c) => c.json({
+  total_twins:42, active_twins:38, pending_sync:4,
+  venues:['MMRDA Mumbai','DY Patil Stadium','Palace Grounds Bangalore','JLN Delhi','Jawaharlal Nehru Chennai'],
+  total_sensors_across_fleet:18420, data_points_per_second:284000, storage_tb:8.4,
+  ai_insights_today:1284, anomalies_detected:18
+}))
+
+app.get('/api/ops/digital-twin/anomalies', (c) => c.json({
+  anomalies:[
+    { twin_id:'DT-VEN-002', type:'crowd_density_spike', severity:'warning', location:'Section C Row 12', detected_at:'2026-03-09T14:18:00Z', auto_resolved:false },
+    { twin_id:'DT-VEN-005', type:'sensor_offline', severity:'info', location:'Gate 7 Camera 3', detected_at:'2026-03-09T13:42:00Z', auto_resolved:true }
+  ],
+  total_today:18, auto_resolved:16, human_action_required:2
+}))
+
+app.get('/api/venue/digital-twin/:venue_id/crowd-heatmap', (c) => c.json({
+  venue_id:c.req.param('venue_id'), generated_at:new Date().toISOString(),
+  heatmap_url:'/heatmaps/'+c.req.param('venue_id')+'-'+Date.now()+'.png',
+  peak_density_zone:'Main Floor Section A', peak_density_ppm2:4.2,
+  recommended_actions:['Open additional entry corridor','Deploy 4 crowd marshals to Section A','Activate fan cooling in Zone 3'],
+  comfort_index:78, safety_rating:'Green'
+}))
+
+app.post('/api/venue/digital-twin/:venue_id/alert', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, alert_id:'ALT-'+Date.now(), venue_id:c.req.param('venue_id'), type:body.type||'crowd_density', severity:body.severity||'warning', notified_staff:28, auto_action_taken:body.auto_action||true })
+})
+
+app.get('/api/ops/digital-twin/roi-metrics', (c) => c.json({
+  incidents_prevented_this_year:284, estimated_liability_saved:'₹18.4 Cr',
+  operational_efficiency_gain:'34%', energy_savings:'₹1.84 Cr',
+  staff_optimisation_savings:'₹2.84 Cr', insurance_premium_reduction:'18%',
+  twin_investment:'₹4.2 Cr', roi_multiple:5.8, payback_months:14
+}))
+
+// ── MODULE 4: Neuro-Fan Experience Engine (10 endpoints) ──
+app.get('/api/fan/neuro/experience-profile', (c) => c.json({
+  module:'Neuro-Fan Experience Engine',
+  fan_id:'FAN-'+Math.floor(Math.random()*100000),
+  emotional_state:{ current:'excited', confidence:0.88, triggers:['favourite_artist_announced','friends_attending'] },
+  preference_vectors:{ music_genre:[0.92,0.78,0.34], price_sensitivity:0.42, social_preference:0.84, comfort_priority:0.68 },
+  predicted_ltv:'₹28,400', churn_risk:'Low', engagement_score:94, last_updated:new Date().toISOString()
+}))
+
+app.get('/api/fan/neuro/recommendations/:event_id', (c) => c.json({
+  event_id:c.req.param('event_id'), recommendations:[
+    { type:'seat_upgrade', offer:'VIP Row 3 – ₹2,400 extra', confidence:0.91, reason:'Your friends are in VIP' },
+    { type:'add_on', offer:'Backstage Pass ₹4,800', confidence:0.84, reason:'You\'ve bought backstage before' },
+    { type:'merch', offer:'Limited Edition Tee ₹1,200', confidence:0.78, reason:'Artist fan since 2019' },
+    { type:'f&b_bundle', offer:'Craft Beer + Nachos ₹420', confidence:0.88, reason:'Ordered F&B at last 3 events' }
+  ],
+  personalisation_model:'NeuroRec-v3.2', inference_time_ms:42
+}))
+
+app.post('/api/fan/neuro/emotion-feedback', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, feedback_id:'NF-'+Date.now(), emotion:body.emotion||'excited', intensity:body.intensity||0.9, context:body.context||'during_performance', model_updated:true, reward_points:50 })
+})
+
+app.get('/api/admin/neuro/engine-dashboard', (c) => c.json({
+  active_profiles:2840000, models_deployed:8,
+  model_versions:{ 'NeuroRec':'v3.2', 'EmotionDetect':'v2.1', 'ChurnPred':'v4.0', 'LTVModel':'v2.8' },
+  avg_recommendation_ctr:'18.4%', revenue_attributable:'₹42 Cr/month',
+  ab_tests_running:18, winning_variants:12,
+  data_points_processed_today:284000000, gpu_clusters:4, inference_latency_p99_ms:84
+}))
+
+app.get('/api/admin/neuro/segment-insights', (c) => c.json({
+  segments:[
+    { name:'Power Fans', size:284000, avg_spend:'₹8,400', churn_risk:'Low', preferred_genre:['Bollywood','EDM'] },
+    { name:'Casual Attendees', size:1840000, avg_spend:'₹2,100', churn_risk:'Medium', preferred_genre:['Bollywood'] },
+    { name:'VIP Enthusiasts', size:42000, avg_spend:'₹28,400', churn_risk:'Very Low', preferred_genre:['International','Jazz','Classical'] },
+    { name:'New Fans', size:420000, avg_spend:'₹1,200', churn_risk:'High', preferred_genre:['Indie','Hip-Hop'] }
+  ],
+  total_fans:2840000, segmentation_model:'K-Means+BERT v2'
+}))
+
+app.post('/api/admin/neuro/model-retrain', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, job_id:'RETRAIN-'+Date.now(), model:body.model||'NeuroRec', training_data_size:'284M records', estimated_duration_hr:4, gpu_allocated:'4x A100', notify_on_complete:true, status:'queued' })
+})
+
+app.get('/api/fan/neuro/mood-playlist/:event_id', (c) => c.json({
+  event_id:c.req.param('event_id'), generated_for:'current_mood',
+  pre_event_playlist:['Kesariya','Raataan Lambiyan','Tere Vaaste','Ve Maahi'],
+  during_event_suggestions:['Chaleya','Apna Bana Le','Sajni'],
+  post_event_wind_down:['Dil Diyan Gallan','Tum Hi Ho','Tera Yaar Hoon'],
+  spotify_url:'https://open.spotify.com/playlist/sample', jiosaavn_url:'https://jiosaavn.com/playlist/sample'
+}))
+
+app.get('/api/fan/neuro/social-energy/:event_id', (c) => c.json({
+  event_id:c.req.param('event_id'), social_energy_score:88,
+  friends_attending:18, mutual_connections_attending:42,
+  trending_hashtags:['#ArijitLiveMumbai','#MMRDA2026','#INDTIXLive'],
+  buzz_score:94, virality_index:8.4, predicted_social_posts:28400
+}))
+
+app.post('/api/admin/neuro/personalisation-campaign', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, campaign_id:'CAMP-'+Date.now(), name:body.name||'Power Fan Re-engagement', segment:body.segment||'Casual Attendees', channels:['Push','Email','WhatsApp'], predicted_ctr:'22.4%', predicted_revenue:'₹2.84 Cr', launch_time:body.launch_time||'2026-03-10T10:00:00Z' })
+})
+
+app.get('/api/admin/neuro/ab-test-results', (c) => c.json({
+  tests:[
+    { id:'AB-001', name:'Dynamic vs Static Hero Banner', variant_a_ctr:'8.4%', variant_b_ctr:'12.8%', winner:'B', lift:'+52%', significance:0.99 },
+    { id:'AB-002', name:'Neuro Price Anchor vs Flat Price', variant_a_conversion:'4.2%', variant_b_conversion:'6.8%', winner:'B', lift:'+62%', significance:0.97 },
+    { id:'AB-003', name:'Emotion-based Push vs Time-based Push', variant_a_open:'18%', variant_b_open:'28%', winner:'B', lift:'+56%', significance:0.98 }
+  ],
+  running:18, completed:42, revenue_impact:'₹18.4 Cr'
+}))
+
+// ── MODULE 5: Autonomous Pricing & Yield AI (8 endpoints) ──
+app.get('/api/organiser/yield-ai/dashboard', (c) => c.json({
+  module:'Autonomous Pricing & Yield AI', active_events:42,
+  total_revenue_today:'₹18.4 Cr', yield_vs_static_pricing:'+34.2%',
+  dynamic_pricing_active:38, manual_override_active:4,
+  avg_price_index:1.28, price_elasticity_model:'XGBoost-v3.4',
+  demand_forecast_accuracy:'96.8%', total_price_changes_today:28400
+}))
+
+app.get('/api/organiser/yield-ai/event-pricing/:event_id', (c) => c.json({
+  event_id:c.req.param('event_id'), current_price_tiers:[
+    { tier:'General', base:'₹1200', current:'₹1,584', demand_index:1.32, inventory_left:4200 },
+    { tier:'Gold', base:'₹2400', current:'₹3,120', demand_index:1.30, inventory_left:840 },
+    { tier:'Platinum', base:'₹4800', current:'₹5,760', demand_index:1.20, inventory_left:180 }
+  ],
+  next_price_update:'2026-03-09T15:00:00Z', predicted_sellout:'2026-03-10T18:00:00Z',
+  yield_score:88, recommended_action:'Maintain current surge'
+}))
+
+app.post('/api/organiser/yield-ai/price-override', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, override_id:'OVR-'+Date.now(), event_id:body.event_id||'EVT-001', tier:body.tier||'General', new_price:body.new_price||1500, reason:body.reason||'Manual adjustment', auto_resume_at:body.auto_resume_at||'2026-03-10T00:00:00Z', approved:true })
+})
+
+app.get('/api/admin/yield-ai/model-performance', (c) => c.json({
+  models:[
+    { name:'DemandForecast-XGBoost', accuracy:'96.8%', mape:3.2, training_data:'84M transactions', last_retrained:'2026-03-01' },
+    { name:'PriceElasticity-LSTM', accuracy:'94.2%', mape:5.8, training_data:'42M sessions', last_retrained:'2026-02-15' },
+    { name:'SelloutPredict-Ensemble', accuracy:'97.4%', mape:2.6, training_data:'120M tickets', last_retrained:'2026-03-05' }
+  ],
+  overall_revenue_lift:'34.2%', annual_extra_revenue:'₹284 Cr'
+}))
+
+app.get('/api/organiser/yield-ai/competitor-intel', (c) => c.json({
+  competitors:['BookMyShow','Paytm Insider','Kyazoonga','TicketNew'],
+  avg_competitor_price_index:1.0, our_price_index:1.28,
+  price_gap:'28% premium', justification_score:'High (superior UX, verified seats, instant refund)',
+  market_share_estimate:'38%', trend:'Growing', last_scraped:'2026-03-09T12:00:00Z'
+}))
+
+app.post('/api/organiser/yield-ai/simulate-strategy', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, simulation_id:'YSIM-'+Date.now(), strategy:body.strategy||'early_bird_aggressive', projected_revenue:'₹3.84 Cr', revenue_vs_baseline:'+42%', sellout_probability:0.94, risk_score:'Low', recommendation:'Implement' })
+})
+
+app.get('/api/admin/yield-ai/revenue-leakage', (c) => c.json({
+  leakage_sources:[
+    { source:'Underpriced high-demand tiers', estimated_loss:'₹4.2 Cr/month', fix:'Enable auto-surge above 85% capacity' },
+    { source:'Late price changes missing demand window', estimated_loss:'₹1.84 Cr/month', fix:'Reduce price update interval to 15 min' },
+    { source:'No dynamic group pricing', estimated_loss:'₹84L/month', fix:'Implement group demand scoring' }
+  ],
+  total_leakage_monthly:'₹6.92 Cr', recovery_potential_3m:'₹18.4 Cr', models_to_deploy:3
+}))
+
+app.get('/api/organiser/yield-ai/auction-engine/:event_id', (c) => c.json({
+  event_id:c.req.param('event_id'), auction_active:true,
+  items:[
+    { id:'AUC-001', type:'Front Row Pair', starting_bid:'₹8,400', current_bid:'₹28,400', bidders:42, ends_at:'2026-03-10T20:00:00Z' },
+    { id:'AUC-002', type:'Backstage Access', starting_bid:'₹12,000', current_bid:'₹48,000', bidders:18, ends_at:'2026-03-10T20:00:00Z' }
+  ],
+  total_auction_revenue:'₹1.84 Cr', auction_platform:'INDTIX AuctionAI v2'
+}))
+
+// ── MODULE 6: Decentralised Identity & Self-Sovereign Ticketing (8 endpoints) ──
+app.get('/api/fan/decentralised-id/wallet', (c) => c.json({
+  module:'Decentralised Identity & Self-Sovereign Ticketing',
+  did:'did:indtixtix:fan:'+Math.random().toString(36).slice(2,18),
+  blockchain:'Polygon', wallet_type:'INDIE Wallet v2',
+  verified_credentials:['KYC-Aadhaar','Age-18+','Email-Verified','Phone-Verified'],
+  tickets_owned:18, nft_tickets:8, transferable:6, non_transferable:2,
+  reputation_score:94, trust_level:'Platinum', sbt_badges:['Early Adopter','100+ Events','VIP Loyalist']
+}))
+
+app.get('/api/fan/decentralised-id/tickets', (c) => c.json({
+  tickets:[
+    { token_id:'TICK-NFT-001', event:'Arijit Singh Live Mumbai', seat:'VIP A-12', standard:'ERC-1155', blockchain:'Polygon', resale_allowed:false, price_paid:'₹4,800', mint_tx:'0xabcd...', qr_hash:'QRH-284001' },
+    { token_id:'TICK-NFT-002', event:'Sunburn Goa 2026', seat:'GA', standard:'ERC-721', blockchain:'Polygon', resale_allowed:true, price_paid:'₹3,200', mint_tx:'0xefgh...', current_listing_price:'₹4,200', qr_hash:'QRH-284002' }
+  ],
+  total:18, nft:8, traditional:10
+}))
+
+app.post('/api/fan/decentralised-id/transfer-ticket', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, transfer_id:'TXF-'+Date.now(), token_id:body.token_id||'TICK-NFT-002', to_did:body.to_did||'did:indtixtix:fan:xyz', tx_hash:'0x'+Math.random().toString(16).slice(2,42), gas_fee_matic:0.0042, transfer_fee_inr:'₹42', estimated_confirmation_sec:8 })
+})
+
+app.get('/api/admin/decentralised-id/did-registry', (c) => c.json({
+  total_dids:2840000, verified_dids:2680000, verification_rate:'94.4%',
+  blockchain_stats:{ network:'Polygon', chain_id:137, avg_block_time_sec:2.1, tps:2800 },
+  tickets_on_chain:4284000, nft_volume_30d:'₹28.4 Cr', smart_contracts_deployed:18
+}))
+
+app.get('/api/admin/decentralised-id/sbt-programs', (c) => c.json({
+  sbt_programs:[
+    { id:'SBT-001', name:'Loyalty Pioneer', criteria:'100+ bookings', issued:28400, benefit:'10% lifetime discount' },
+    { id:'SBT-002', name:'VIP Elite', criteria:'₹1L+ annual spend', issued:4200, benefit:'Priority access + concierge' },
+    { id:'SBT-003', name:'Community Champion', criteria:'10+ referrals', issued:8400, benefit:'Co-create events' }
+  ],
+  total_sbts_issued:284000, sbt_redemption_rate:'72%'
+}))
+
+app.post('/api/admin/decentralised-id/issue-sbt', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, sbt_id:'SBT-'+Date.now(), program:body.program||'Loyalty Pioneer', recipient_did:body.did||'did:indtixtix:fan:abc', tx_hash:'0x'+Math.random().toString(16).slice(2,42), issued_at:new Date().toISOString() })
+})
+
+app.get('/api/fan/decentralised-id/credentials', (c) => c.json({
+  verifiable_credentials:[
+    { type:'KYCCredential', issuer:'Aadhaar Authority', issued:'2024-01-15', expires:'2029-01-15', status:'Valid' },
+    { type:'AgeCredential', issuer:'INDTIX Trust', issued:'2024-01-15', expires:'2034-01-15', status:'Valid' },
+    { type:'FanLoyaltyCredential', issuer:'INDTIX Platform', issued:'2025-06-01', expires:'2027-06-01', status:'Valid' }
+  ],
+  selective_disclosure:true, privacy_score:94, zero_knowledge_proofs_available:true
+}))
+
+app.get('/api/fan/decentralised-id/secondary-market', (c) => c.json({
+  listings:[
+    { token_id:'TICK-NFT-100', event:'Diljit Dosanjh Delhi', seat:'Platinum Row 1', asking_price:'₹18,400', face_value:'₹9,600', markup:'91.7%', seller_reputation:98, verified:true },
+    { token_id:'TICK-NFT-101', event:'AP Dhillon Bangalore', seat:'Gold A-8', asking_price:'₹6,400', face_value:'₹4,800', markup:'33.3%', seller_reputation:94, verified:true }
+  ],
+  platform_fee:'2.5%', max_markup_policy:'100%', anti_scalping_ai:true, total_listings:4284
+}))
+
+// ── MODULE 7: Real-Time Crowd Intelligence (10 endpoints) ──
+app.get('/api/venue/crowd-intelligence/:venue_id', (c) => c.json({
+  module:'Real-Time Crowd Intelligence', venue_id:c.req.param('venue_id'),
+  current_capacity:42800, max_capacity:80000, utilisation:'53.5%',
+  entry_rate_per_min:842, exit_rate_per_min:18, net_flow:824,
+  predicted_peak_time:'2026-03-09T19:30:00Z', predicted_peak_occupancy:76800,
+  crowd_health_index:88, last_updated:new Date().toISOString()
+}))
+
+app.get('/api/venue/crowd-intelligence/:venue_id/zones', (c) => c.json({
+  venue_id:c.req.param('venue_id'),
+  zones:[
+    { zone:'Main Floor', capacity:40000, current:28400, density:'medium', avg_dwell_min:142, hotspot:false },
+    { zone:'VIP Section', capacity:5000, current:4200, density:'high', avg_dwell_min:284, hotspot:false },
+    { zone:'F&B Area', capacity:8000, current:6800, density:'high', avg_dwell_min:18, hotspot:true, recommendation:'Open additional counters' },
+    { zone:'Entry Lobby', capacity:4000, current:3600, density:'high', hotspot:true, recommendation:'Activate overflow corridor' }
+  ],
+  total_hotspots:2, auto_actions_taken:2
+}))
+
+app.get('/api/venue/crowd-intelligence/:venue_id/sentiment', (c) => c.json({
+  venue_id:c.req.param('venue_id'), sentiment_score:88,
+  sources:['Social Media','On-site kiosks','App feedback','Staff reports'],
+  breakdown:{ very_positive:42, positive:38, neutral:14, negative:4, very_negative:2 },
+  top_positive:['Sound quality','Artist performance','Entry speed'],
+  top_negative:['F&B queue length','Parking'],
+  trending_mention:'#BestConcertEver2026', real_time_nps:72
+}))
+
+app.get('/api/venue/crowd-intelligence/:venue_id/flow-predictions', (c) => c.json({
+  venue_id:c.req.param('venue_id'),
+  predictions:[
+    { time:'19:00', expected_arrivals:8400, gate_recommendation:'Open all 18 gates' },
+    { time:'19:30', expected_arrivals:4200, gate_recommendation:'Keep 18 gates open' },
+    { time:'23:00', expected_exits:12000, gate_recommendation:'Activate dedicated exit lanes' },
+    { time:'23:30', expected_exits:28000, gate_recommendation:'Deploy all exit marshals' }
+  ],
+  model:'TimeSeriesTransformer-v2', accuracy:'97.2%'
+}))
+
+app.post('/api/venue/crowd-intelligence/:venue_id/alert', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, alert_id:'CRW-'+Date.now(), venue_id:c.req.param('venue_id'), zone:body.zone||'F&B Area', type:body.type||'density_high', severity:'warning', auto_dispatched_staff:4, notification_sent_to:['Venue Manager','Security Head','Ops Centre'], ack_required:true })
+})
+
+app.get('/api/ops/crowd-intelligence/multi-venue', (c) => c.json({
+  venues_monitored:42, total_attendees_live:284000,
+  alerts_active:8, critical_alerts:0, warning_alerts:8,
+  highest_density_venue:'DY Patil Stadium (94% capacity)',
+  network_status:'All venues online', data_lag_avg_ms:284
+}))
+
+app.get('/api/venue/crowd-intelligence/:venue_id/emergency', (c) => c.json({
+  venue_id:c.req.param('venue_id'), emergency_status:'Normal',
+  evacuation_routes:[
+    { id:'R1', name:'North Exit Emergency', capacity_per_min:2400, status:'Clear' },
+    { id:'R2', name:'South Exit Emergency', capacity_per_min:2800, status:'Clear' },
+    { id:'R3', name:'West Emergency Assembly', capacity_per_min:1800, status:'Clear' }
+  ],
+  total_evacuation_capacity_per_min:7000, estimated_full_evacuation_min:14,
+  medical_stations:8, medical_staff:42, defibrillators:18, fire_extinguishers:84
+}))
+
+app.post('/api/venue/crowd-intelligence/:venue_id/emergency-activate', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, emergency_id:'EMR-'+Date.now(), venue_id:c.req.param('venue_id'), type:body.type||'medical', level:body.level||1, protocol_activated:'Emergency-Response-Alpha', staff_notified:284, public_announcement:true, services_notified:['Police Control Room','Ambulance','Fire Brigade'], timestamp:new Date().toISOString() })
+})
+
+app.get('/api/ops/crowd-intelligence/ai-insights', (c) => c.json({
+  insights_generated_today:2840, actionable:284, acted_upon:248, action_rate:'87.3%',
+  top_insights:[
+    { insight:'F&B demand spike predicted at 20:30 for 3 venues', action:'Pre-stage additional inventory', potential_revenue:'₹18L' },
+    { insight:'Parking exit bottleneck predicted post 23:00 at MMRDA', action:'Coordinate with traffic police', incidents_prevented:1 },
+    { insight:'Social media hype peaking – demand surge for walkup tickets', action:'Release 500 last-minute tickets at ₹1.8K', revenue:'₹9L' }
+  ]
+}))
+
+app.get('/api/venue/crowd-intelligence/:venue_id/staff-deployment', (c) => c.json({
+  venue_id:c.req.param('venue_id'), total_staff:842, on_duty:800, on_break:42,
+  deployment:[
+    { role:'Security', assigned:284, zones_covered:18, status:'Optimal' },
+    { role:'Ushers', assigned:142, zones_covered:42, status:'Optimal' },
+    { role:'F&B Staff', assigned:220, stations:18, status:'One station short – alert sent' },
+    { role:'Medical', assigned:42, coverage:'Full venue', status:'Optimal' },
+    { role:'Ticketing', assigned:112, gates:18, status:'Optimal' }
+  ]
+}))
+
+// ── MODULE 8: AI Content Generation Studio (10 endpoints) ──
+app.get('/api/organiser/ai-content/dashboard', (c) => c.json({
+  module:'AI Content Generation Studio', content_generated_today:2840,
+  content_types:['Social Post','Email Campaign','Push Notification','Banner Ad','Video Script','Blog Post','PR Release'],
+  avg_generation_time_sec:8.4, human_edit_rate:'18%', approval_rate:'94%',
+  revenue_from_ai_campaigns:'₹4.2 Cr/month', models:['GPT-4-Turbo','Gemini-Pro','Stable Diffusion XL','DALL-E 3','ElevenLabs']
+}))
+
+app.post('/api/organiser/ai-content/generate', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  const contentMap:Record<string,string> = {
+    social_post:'🎶 The moment you\'ve been waiting for! @ArijitSingh LIVE at MMRDA Grounds, Mumbai. Book NOW on INDTIX – limited VIP seats left! 🎟️ #ArijitLive #MMRDA2026',
+    email_subject:'Your ticket to an unforgettable night – Arijit Singh LIVE',
+    push_notification:'🔥 Flash Sale: 200 VIP tickets just released for Arijit Singh Live. Grab yours in 10 mins!',
+    banner_ad_copy:'ARIJIT SINGH LIVE • MMRDA • MARCH 28 • FROM ₹1,200',
+    video_script:'[Opening shot: Mumbai skyline at dusk] V/O: \"This March, the city of dreams gets a soundtrack...\"'
+  }
+  return c.json({ success:true, content_id:'CNT-'+Date.now(), type:body.type||'social_post', content:contentMap[body.type||'social_post']||contentMap.social_post, model_used:'GPT-4-Turbo', generation_time_ms:2840, confidence:0.94, alternatives_count:3 })
+})
+
+app.post('/api/organiser/ai-content/generate-image', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, image_id:'IMG-'+Date.now(), prompt:body.prompt||'Arijit Singh concert poster, Mumbai skyline, dramatic lighting', model:'DALL-E 3 + SD-XL', resolution:'1920x1080', url:'/generated/img-'+Date.now()+'.jpg', variations:4, brand_compliant:true, generation_time_sec:12 })
+})
+
+app.get('/api/organiser/ai-content/campaign-library', (c) => c.json({
+  campaigns:[
+    { id:'CMP-001', name:'Pre-sale Hype Builder', assets:18, performance:{ impressions:2840000, ctr:'4.2%', conversions:28400, revenue:'₹1.84 Cr' } },
+    { id:'CMP-002', name:'Last 100 Tickets Urgency', assets:8, performance:{ impressions:840000, ctr:'8.4%', conversions:8400, revenue:'₹84L' } },
+    { id:'CMP-003', name:'Post-Event Highlights', assets:42, performance:{ impressions:4200000, ctr:'12%', views:2840000, nps_lift:'+8' } }
+  ],
+  total_campaigns:284, active:18
+}))
+
+app.get('/api/event-manager/ai-content/event-assets/:event_id', (c) => c.json({
+  event_id:c.req.param('event_id'),
+  assets:[
+    { type:'hero_banner', status:'approved', url:'/assets/hero-'+c.req.param('event_id')+'.jpg', ai_generated:true },
+    { type:'social_post_series', count:18, status:'approved', ai_generated:true },
+    { type:'email_sequence', count:6, status:'in_review', ai_generated:true },
+    { type:'video_teaser_script', status:'pending_approval', ai_generated:true },
+    { type:'press_release', status:'approved', ai_generated:true, edited_by_human:true }
+  ],
+  total_assets:48, ai_generated:48, human_edited:8
+}))
+
+app.post('/api/event-manager/ai-content/approve', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, asset_id:body.asset_id||'ASSET-001', status:'approved', approved_by:'manager@event.com', publish_channels:body.channels||['Instagram','Facebook','Email'], scheduled_at:body.scheduled_at||'2026-03-10T09:00:00Z' })
+})
+
+app.post('/api/organiser/ai-content/localise', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, localisation_id:'LOC-'+Date.now(), original_language:'English', target_languages:body.languages||['Hindi','Marathi','Tamil','Telugu','Kannada'], content_adapted:true, cultural_sensitivity_checked:true, estimated_time_min:2, cost:'₹0 (AI)' })
+})
+
+app.get('/api/organiser/ai-content/performance-analytics', (c) => c.json({
+  period:'last_30_days', total_content_pieces:2840, ai_vs_human:{ ai:'94%', human:'6%' },
+  ai_content_performance:{ avg_ctr:'6.8%', avg_conversion:'2.4%', avg_roi:'1284%' },
+  human_content_performance:{ avg_ctr:'4.2%', avg_conversion:'1.8%', avg_roi:'840%' },
+  ai_advantage:'+62% CTR, +33% conversion', cost_saved:'₹84L/month'
+}))
+
+app.post('/api/organiser/ai-content/ab-test', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, test_id:'ABCT-'+Date.now(), variants:body.variants||2, allocation:'50/50', metric:body.metric||'click_through_rate', expected_significance_days:7, channels:['Email','Push'], status:'running' })
+})
+
+app.get('/api/event-manager/ai-content/voice-over', (c) => c.json({
+  available_voices:['Priya (Hindi F)','Arjun (Hindi M)','Kavitha (Tamil F)','Rohan (English M)','Ananya (Bengali F)'],
+  supported_languages:18, samples_generated_today:284,
+  avg_synthesis_time_sec:4.2, tts_model:'ElevenLabs+Google WaveNet', quality:'studio_grade'
+}))
+
+// ── MODULE 9: Platform Health & Self-Healing Ops (8 endpoints) ──
+app.get('/api/ops/self-healing/dashboard', (c) => c.json({
+  module:'Platform Health & Self-Healing Ops',
+  overall_health:'excellent', uptime_30d:'99.97%', mttr_min:4.2, mtbf_days:84,
+  self_healing_events_today:18, prevented_incidents:12, escalated_to_humans:6,
+  auto_scaling_events:28, cost_optimised_today:'₹18L', sla_breaches_30d:0,
+  services_monitored:284, healthy:280, degraded:4, down:0
+}))
+
+app.get('/api/ops/self-healing/service-map', (c) => c.json({
+  services:[
+    { name:'Ticketing Core', status:'healthy', latency_p99_ms:42, error_rate:'0.01%', instances:8, auto_scaled:false },
+    { name:'Payment Gateway', status:'healthy', latency_p99_ms:284, error_rate:'0.03%', instances:4, auto_scaled:false },
+    { name:'AI Recommendation', status:'degraded', latency_p99_ms:1284, error_rate:'0.18%', instances:8, auto_scaled:true, scale_reason:'High demand spike' },
+    { name:'Notification Service', status:'healthy', latency_p99_ms:84, error_rate:'0.02%', instances:4, auto_scaled:false }
+  ],
+  dependencies:{ 'Cloudflare':true, 'Polygon RPC':true, 'Razorpay':true, 'Twilio':true, 'Firebase':true }
+}))
+
+app.get('/api/ops/self-healing/incidents', (c) => c.json({
+  incidents_30d:[
+    { id:'INC-2026-001', date:'2026-03-01', service:'Image CDN', severity:'low', auto_resolved:true, resolution_time_min:2.8, root_cause:'Cache miss spike', prevention_action:'Pre-warmed cache rules added' },
+    { id:'INC-2026-002', date:'2026-02-18', service:'Search Service', severity:'medium', auto_resolved:true, resolution_time_min:6.4, root_cause:'Index rebuild timeout', prevention_action:'Async rebuild with fallback' }
+  ],
+  total_30d:18, auto_resolved:16, human_resolved:2, open:0
+}))
+
+app.post('/api/ops/self-healing/trigger-runbook', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, runbook_id:'RB-'+Date.now(), runbook:body.runbook||'restart-degraded-service', target_service:body.service||'AI Recommendation', steps_executed:6, duration_sec:42, outcome:'Service restored to healthy', next_check_min:5 })
+})
+
+app.get('/api/admin/self-healing/cost-optimisation', (c) => c.json({
+  daily_cloud_spend:'₹4.2L', monthly_projection:'₹1.26 Cr', ai_optimised_savings:'₹84L/month',
+  optimisations:[
+    { action:'Right-sized 18 EC2 instances', saving:'₹28L/month' },
+    { action:'Reserved capacity for predictable workloads', saving:'₹42L/month' },
+    { action:'Spot instances for batch AI jobs', saving:'₹14L/month' }
+  ],
+  waste_detected:'₹18L/month', waste_elimination_progress:'72%'
+}))
+
+app.get('/api/ops/self-healing/chaos-engineering', (c) => c.json({
+  last_chaos_test:'2026-02-28', result:'All critical paths survived',
+  scenarios_tested:['Region failover','DB primary failure','Payment gateway timeout','CDN outage simulation'],
+  findings:4, remediated:4, open:0, next_scheduled:'2026-04-01',
+  chaos_framework:'Litmus Chaos + custom INDIE chaos toolkit', maturity:'Advanced'
+}))
+
+app.post('/api/ops/self-healing/scale-service', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, scale_id:'SCL-'+Date.now(), service:body.service||'Ticketing Core', from_instances:body.from||4, to_instances:body.to||8, reason:body.reason||'Pre-event surge', scaling_time_sec:28, cost_delta:'₹8.4L/day', auto_scale_back_at:body.scale_back||'2026-03-10T02:00:00Z' })
+})
+
+app.get('/api/admin/self-healing/observability', (c) => c.json({
+  stack:{ metrics:'Prometheus+Grafana', logs:'ELK Stack', traces:'Jaeger+OpenTelemetry', alerts:'PagerDuty' },
+  dashboards:42, alerts_configured:284, slos:{ defined:18, met:18 },
+  data_retention_days:{ hot:7, warm:30, cold:365 },
+  ai_anomaly_detection:{ model:'Isolation Forest v2', anomalies_detected_today:18, false_positive_rate:'2.1%' }
+}))
+
+// ── MODULE 10: Ecosystem Flywheel & Network Effects (10 endpoints) ──
+app.get('/api/admin/ecosystem/flywheel-dashboard', (c) => c.json({
+  module:'Ecosystem Flywheel & Network Effects',
+  flywheel_velocity_score:88, yoy_growth:'142%',
+  supply_side:{ artists:2840, venues:284, promoters:420, categories:42 },
+  demand_side:{ registered_fans:12840000, monthly_active:4284000, transacting_30d:840000 },
+  platform_gmv_monthly:'₹284 Cr', take_rate:'8.4%', net_revenue:'₹23.8 Cr/month',
+  network_effect_index:8.4, viral_coefficient:1.42
+}))
+
+app.get('/api/admin/ecosystem/supply-health', (c) => c.json({
+  artists:{ total:2840, verified:2680, exclusive:284, onboarded_30d:42, churn_rate:'1.2%', avg_events_per_artist_pa:8 },
+  venues:{ total:284, verified:280, premium:84, smart_iot_enabled:42, avg_utilisation:'68%', satisfaction_nps:78 },
+  promoters:{ total:420, active:384, enterprise:42, revenue_share:'₹18.4 Cr/month' },
+  health_score:88, supply_demand_ratio:1.42, supply_growth_yoy:'84%'
+}))
+
+app.get('/api/admin/ecosystem/demand-health', (c) => c.json({
+  total_fans:12840000, mau:4284000, dau:428000,
+  retention:{ day1:'68%', day7:'42%', day30:'28%', day90:'18%' },
+  acquisition_channels:{ organic:'38%', referral:'28%', paid:'22%', social:'12%' },
+  cac_blended:'₹84', ltv_avg:'₹8,400', ltv_cac_ratio:100,
+  gmv_per_active_user:'₹420/month', nps:72, health_score:84
+}))
+
+app.get('/api/admin/ecosystem/partnership-index', (c) => c.json({
+  strategic_partners:{ total:284, categories:['Payment','Logistics','Hospitality','Media','Telecom','Insurance'] },
+  top_partners:[
+    { name:'Razorpay', type:'Payment', monthly_volume:'₹142 Cr', status:'Tier-1' },
+    { name:'Ola', type:'Mobility', rides_booked:'28,400/event', status:'Tier-1' },
+    { name:'Zomato', type:'F&B', orders:'18,400/event', status:'Tier-1' },
+    { name:'Airtel', type:'Telecom', data_pack_bundles:84000, status:'Tier-1' }
+  ],
+  partner_revenue_contribution:'₹42 Cr/month', new_partners_30d:8
+}))
+
+app.post('/api/admin/ecosystem/partner-onboard', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, partner_id:'PTR-'+Date.now(), name:body.name||'New Partner', type:body.type||'technology', tier:body.tier||'Tier-2', integration_type:body.integration||'API', sandbox_access:true, go_live_date:'2026-04-01', assigned_partner_success_manager:'Priya Sharma' })
+})
+
+app.get('/api/admin/ecosystem/data-marketplace', (c) => c.json({
+  data_products:[
+    { id:'DP-001', name:'Fan Behaviour Insights', buyers:42, monthly_revenue:'₹4.2 Cr', format:'API+Dashboard' },
+    { id:'DP-002', name:'Event Demand Signals', buyers:28, monthly_revenue:'₹2.8 Cr', format:'Real-time Webhook' },
+    { id:'DP-003', name:'Venue Footfall Analytics', buyers:18, monthly_revenue:'₹1.8 Cr', format:'Batch Export' }
+  ],
+  total_data_revenue:'₹8.8 Cr/month', data_buyers:88, privacy_certified:true, gdpr_compliant:true, dpdp_compliant:true
+}))
+
+app.get('/api/organiser/ecosystem/co-creation-hub', (c) => c.json({
+  active_projects:[
+    { id:'CC-001', title:'Stadium-as-a-Platform Pilot', partners:['DY Patil','Dolby','Jio'], stage:'Beta', target_launch:'2026-06-01' },
+    { id:'CC-002', title:'AR Fan Engagement Suite', partners:['Meta','Snapchat','INDIE AR Labs'], stage:'Concept', target_launch:'2026-09-01' }
+  ],
+  co_created_products:18, revenue_from_co_created:'₹28.4 Cr', innovation_index:92
+}))
+
+app.get('/api/admin/ecosystem/growth-model', (c) => c.json({
+  current_state:{ gmv_monthly:'₹284 Cr', fans_mau:4284000, take_rate:'8.4%' },
+  q4_2026_target:{ gmv_monthly:'₹840 Cr', fans_mau:12000000, take_rate:'9.2%' },
+  key_growth_levers:[
+    { lever:'Geographic expansion (42→84 cities)', gmv_contribution:'₹142 Cr' },
+    { lever:'International artist flywheel', gmv_contribution:'₹84 Cr' },
+    { lever:'Super App MAU growth', gmv_contribution:'₹184 Cr' },
+    { lever:'B2B white-label expansion', gmv_contribution:'₹84 Cr' },
+    { lever:'Data marketplace scaling', gmv_contribution:'₹42 Cr' }
+  ],
+  moat_strength:{ brand:'Strong', data:'Very Strong', network_effects:'Very Strong', technology:'Strong', switching_cost:'Medium' }
+}))
+
+app.post('/api/admin/ecosystem/flywheel-simulation', async (c) => {
+  const body = await c.req.json().catch(() => ({}))
+  return c.json({ success:true, simulation_id:'FW-'+Date.now(), lever:body.lever||'creator_content', investment:'₹28.4 Cr', projected_new_fans:2840000, supply_side_growth:'18%', revenue_impact_annual:'₹284 Cr', roi_multiple:10, payback_months:8 })
+})
+
+app.get('/api/admin/ecosystem/competitive-moat', (c) => c.json({
+  moat_dimensions:[
+    { dimension:'Data Network Effect', score:92, evidence:'12.84L fan profiles, 84M behavioural events/day' },
+    { dimension:'Supply Lock-in', score:84, evidence:'284 venues on 3-year contracts, 2,840 artist partnerships' },
+    { dimension:'Platform Ecosystem', score:88, evidence:'284 partners, 42 mini-apps, SDK in 18 partner apps' },
+    { dimension:'Brand Trust', score:90, evidence:'NPS 72, 18 consecutive months of top app store ranking' },
+    { dimension:'Regulatory Head-start', score:78, evidence:'First DPDP-certified ticketing platform in India' }
+  ],
+  overall_moat_score:86, category:'Deep Moat', comparable:'Shopify-level platform moat in event vertical'
+}))
+
+// ── PHASE 30 — Updated Main Health Endpoint ──
+app.get('/api/health', (c) => c.json({
+  status: 'ok',
+  platform: 'INDTIX',
+  version: 'v30.0.0',
+  phase: 'Phase 30',
+  theme: 'AI Autonomy, Quantum-Ready & Platform Singularity',
+  new_endpoints: 90,
+  total_endpoints: 1729,
+  features: [
+    'Autonomous Event Orchestration AI',
+    'Quantum-Safe Security & Encryption',
+    'Digital Twin Platform',
+    'Neuro-Fan Experience Engine',
+    'Autonomous Pricing & Yield AI',
+    'Decentralised Identity & Self-Sovereign Ticketing',
+    'Real-Time Crowd Intelligence',
+    'AI Content Generation Studio',
+    'Platform Health & Self-Healing Ops',
+    'Ecosystem Flywheel & Network Effects'
+  ],
+  timestamp: new Date().toISOString()
+}))
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 30 — AI AUTONOMY, QUANTUM-READY & PLATFORM SINGULARITY
 // ═══════════════════════════════════════════════════════════
 
 export default app
