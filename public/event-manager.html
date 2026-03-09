@@ -3226,4 +3226,54 @@ async function loadP31EMLiveTools(){const r=await fetch('/api/event-manager/bhar
 async function loadP31EMMicroTrends(){const r=await fetch('/api/admin/bharat/micro-events/trend-signals');const d=await r.json();document.getElementById('p31-em-output').innerHTML='<div class="alert alert-info">📈 '+d.trending_formats?.map(f=>f.format+' +'+f.growth_mom).join(' | ')+'<br>AI Forecast: '+d.ai_generated_forecast+'</div>';}
 </script>
 <!-- END PHASE 31 EVENT MANAGER -->
+
+<!-- PHASE 32 EVENT MANAGER PORTAL — International Artists & Global Events -->
+<div class="container mt-4">
+  <h5 class="text-warning fw-bold">🎤 Phase 32 — International Artist Booking & Global Events</h5>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <div class="card border-warning">
+        <div class="card-header bg-warning text-dark fw-bold">🌍 International Artist Roster</div>
+        <div class="card-body">
+          <div id="p32-em-roster-output" class="small text-muted">Loading artist roster...</div>
+          <button class="btn btn-sm btn-warning mt-2" onclick="loadP32EMRoster()">Load Roster</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-primary">
+        <div class="card-header bg-primary text-white fw-bold">📋 Active Bookings & Contracts</div>
+        <div class="card-body">
+          <div id="p32-em-bookings-output" class="small text-muted">Loading bookings...</div>
+          <button class="btn btn-sm btn-primary mt-2" onclick="loadP32EMBookings()">Load Bookings</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-success">
+        <div class="card-header bg-success text-white fw-bold">✈️ Visa & Logistics Support</div>
+        <div class="card-body">
+          <div id="p32-em-visa-output" class="small text-muted">Loading visa info...</div>
+          <button class="btn btn-sm btn-success mt-2" onclick="loadP32EMVisa()">Load Visa Info</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-info">
+        <div class="card-header bg-info text-dark fw-bold">📊 International Artist Analytics</div>
+        <div class="card-body">
+          <div id="p32-em-analytics-output" class="small text-muted">Loading analytics...</div>
+          <button class="btn btn-sm btn-info mt-2" onclick="loadP32EMAnalytics()">Load Analytics</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+async function loadP32EMRoster(){const r=await fetch('/api/event-manager/intl/artists/roster');const d=await r.json();document.getElementById('p32-em-roster-output').innerHTML='🎤 Artists: '+d.international_artists.toLocaleString()+' | Verified: '+d.verified.toLocaleString()+'<br>Countries: '+d.countries+' | Avg Fee: $'+d.avg_fee_usd.toLocaleString();}
+async function loadP32EMBookings(){const r=await fetch('/api/event-manager/intl/artists/booking');const d=await r.json();document.getElementById('p32-em-bookings-output').innerHTML='📋 This Month: '+d.bookings_this_month+' | Confirmed: '+d.confirmed+'<br>Lead Time: '+d.avg_lead_time_days+'d | Escrow: $'+d.escrow_held_usd.toLocaleString();}
+async function loadP32EMVisa(){const r=await fetch('/api/event-manager/intl/artists/visas');const d=await r.json();document.getElementById('p32-em-visa-output').innerHTML='✈️ Countries Assisted: '+d.countries_assisted+' | Processing: '+d.avg_processing_days+'d<br>Success Rate: '+d.success_rate_pct+'% | Partner: '+d.immigration_partner;}
+async function loadP32EMAnalytics(){const r=await fetch('/api/event-manager/intl/artists/analytics');const d=await r.json();document.getElementById('p32-em-analytics-output').innerHTML='📊 Top Genre: '+d.highest_earning_genre+' | ROI: '+d.avg_roi_multiplier+'x<br>Sell-Through: '+d.sell_through_rate_pct+'% | Fan Satisfaction: '+d.fan_satisfaction_pct+'%';}
+</script>
+<!-- END PHASE 32 EVENT MANAGER -->
 </body></html>

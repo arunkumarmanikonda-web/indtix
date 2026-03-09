@@ -2932,4 +2932,54 @@ async function loadP31VenueInventory(){const r=await fetch('/api/ops/bharat/dist
 async function loadP31VenueLastMile(){const r=await fetch('/api/ops/bharat/distribution/last-mile-analytics');const d=await r.json();document.getElementById('p31-venue-dist-output').innerHTML='<div class="alert alert-dark">🚚 Digital WhatsApp: '+d.delivery_channels?.digital_whatsapp+' | Agent Printout: '+d.delivery_channels?.agent_printout+'<br>Failed Rate: '+d.failed_deliveries_rate+' | Satisfaction: '+d.customer_satisfaction+'</div>';}
 </script>
 <!-- END PHASE 31 VENUE PORTAL -->
+
+<!-- PHASE 32 VENUE PORTAL — International Expansion -->
+<div class="container mt-4">
+  <h5 class="text-warning fw-bold">🏟️ Phase 32 — Global Venue Partnership Network</h5>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <div class="card border-warning">
+        <div class="card-header bg-warning text-dark fw-bold">🌐 Global Venue Network</div>
+        <div class="card-body">
+          <div id="p32-venue-network-output" class="small text-muted">Loading global venues...</div>
+          <button class="btn btn-sm btn-warning mt-2" onclick="loadP32VenueNetwork()">Load Network</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-primary">
+        <div class="card-header bg-primary text-white fw-bold">📊 International Venue Analytics</div>
+        <div class="card-body">
+          <div id="p32-venue-analytics-output" class="small text-muted">Loading analytics...</div>
+          <button class="btn btn-sm btn-primary mt-2" onclick="loadP32VenueAnalytics()">Load Analytics</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-success">
+        <div class="card-header bg-success text-white fw-bold">🤝 Venue Contracts & Standards</div>
+        <div class="card-body">
+          <div id="p32-venue-contracts-output" class="small text-muted">Loading contracts...</div>
+          <button class="btn btn-sm btn-success mt-2" onclick="loadP32VenueContracts()">Load Contracts</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-info">
+        <div class="card-header bg-info text-dark fw-bold">📈 Venue Revenue (Intl)</div>
+        <div class="card-body">
+          <div id="p32-venue-revenue-output" class="small text-muted">Loading revenue...</div>
+          <button class="btn btn-sm btn-info mt-2" onclick="loadP32VenueRevenue()">Load Revenue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+async function loadP32VenueNetwork(){const r=await fetch('/api/venue/intl/network/dashboard');const d=await r.json();document.getElementById('p32-venue-network-output').innerHTML='🏟️ Venues: '+d.partner_venues+' | Countries: '+d.countries+'<br>Capacity: '+d.total_capacity.toLocaleString()+' | Utilisation: '+d.avg_utilisation_pct+'%';}
+async function loadP32VenueAnalytics(){const r=await fetch('/api/admin/intl/venues/analytics');const d=await r.json();document.getElementById('p32-venue-analytics-output').innerHTML='💰 Revenue/Venue: $'+d.revenue_per_venue_usd.toLocaleString()+'<br>Events/Venue: '+d.avg_events_per_venue+' | Satisfaction: '+d.satisfaction_score+' | Renewal: '+d.renewal_rate_pct+'%';}
+async function loadP32VenueContracts(){const r=await fetch('/api/venue/intl/network/contracts');const d=await r.json();document.getElementById('p32-venue-contracts-output').innerHTML='📋 Active: '+d.active_contracts+' | Revenue Share: '+d.revenue_share_pct+'%<br>Term: '+d.avg_term_years+'yr | Min Guarantee: $'+d.guaranteed_minimum_usd.toLocaleString();}
+async function loadP32VenueRevenue(){const r=await fetch('/api/venue/intl/network/revenue');const d=await r.json();document.getElementById('p32-venue-revenue-output').innerHTML='💵 Commissions: $'+d.total_venue_commissions_usd_m+'M/mo | Avg: '+d.avg_pct+'%<br>Trend: '+d.monthly_trend+' | Q2 Forecast: $'+d.forecast_q2_usd_m+'M';}
+</script>
+<!-- END PHASE 32 VENUE PORTAL -->
 </body></html>

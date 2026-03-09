@@ -3151,5 +3151,55 @@ async function loadP31OpsGSTEntTax(){const r=await fetch('/api/ops/bharat/gst/en
 async function loadP31OpsGSTAudit(){const r=await fetch('/api/admin/bharat/gst/audit-readiness');const d=await r.json();document.getElementById('p31-ops-output').innerHTML='<div class="alert alert-success">✅ Audit Score: '+d.audit_score+' | Ready: '+d.ready_for_external+' | Risk Areas: '+d.risk_areas?.join(', ')+'</div>';}
 </script>
 <!-- END PHASE 31 OPS PORTAL -->
+
+<!-- PHASE 32 OPS PORTAL — International Operations -->
+<div class="container mt-4">
+  <h5 class="text-warning fw-bold">🌏 Phase 32 — International Operations & Compliance</h5>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <div class="card border-warning">
+        <div class="card-header bg-warning text-dark fw-bold">🌏 SEA Ops Center</div>
+        <div class="card-body">
+          <div id="p32-ops-sea-output" class="small text-muted">Loading SEA ops...</div>
+          <button class="btn btn-sm btn-warning mt-2" onclick="loadP32OpsSEA()">Load SEA Ops</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-danger">
+        <div class="card-header bg-danger text-white fw-bold">⚖️ Global Compliance Audits</div>
+        <div class="card-body">
+          <div id="p32-ops-compliance-output" class="small text-muted">Loading audits...</div>
+          <button class="btn btn-sm btn-danger mt-2" onclick="loadP32OpsCompliance()">Load Audits</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-success">
+        <div class="card-header bg-success text-white fw-bold">💱 Forex Reconciliation</div>
+        <div class="card-body">
+          <div id="p32-ops-forex-output" class="small text-muted">Loading forex recon...</div>
+          <button class="btn btn-sm btn-success mt-2" onclick="loadP32OpsForex()">Load Forex Recon</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-info">
+        <div class="card-header bg-info text-dark fw-bold">📣 Marketing Attribution</div>
+        <div class="card-body">
+          <div id="p32-ops-mktg-output" class="small text-muted">Loading attribution...</div>
+          <button class="btn btn-sm btn-info mt-2" onclick="loadP32OpsMktg()">Load Attribution</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+async function loadP32OpsSEA(){const r=await fetch('/api/ops/intl/sea/operations');const d=await r.json();document.getElementById('p32-ops-sea-output').innerHTML='🏢 Centers: '+d.ops_centers.join(', ')+'<br>Staff: '+d.staff+' | Response: '+d.avg_response_time_min+'min | SLA: '+d.sla_pct+'%';}
+async function loadP32OpsCompliance(){const r=await fetch('/api/ops/intl/compliance/audits');const d=await r.json();document.getElementById('p32-ops-compliance-output').innerHTML='✅ Audits YTD: '+d.audits_ytd+' | Passed: '+d.passed+' | Failed: '+d.failed+'<br>Auditors: '+d.auditors.join(', ');}
+async function loadP32OpsForex(){const r=await fetch('/api/ops/intl/forex/reconciliation');const d=await r.json();document.getElementById('p32-ops-forex-output').innerHTML='💱 Pending: '+d.pending_items+' | Auto-Matched: '+d.auto_matched_pct+'%<br>Exceptions: '+d.exceptions+' | Nostro: $'+d.nostro_balance_usd_m+'M';}
+async function loadP32OpsMktg(){const r=await fetch('/api/ops/intl/marketing/attribution');const d=await r.json();document.getElementById('p32-ops-mktg-output').innerHTML='📊 Model: '+d.model+'<br>Channels: '+d.channels_tracked+' | Touchpoints: '+d.avg_touchpoints+' | Cookieless: '+d.cookieless_ready;}
+</script>
+<!-- END PHASE 32 OPS PORTAL -->
 </body>
 </html>

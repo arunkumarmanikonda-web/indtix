@@ -4953,4 +4953,54 @@ async function loadP31OrgGovtCalendar(){const r=await fetch('/api/organiser/bhar
 async function loadP31OrgCityProfile(){const r=await fetch('/api/admin/bharat/city-launch/city-profile/Surat');const d=await r.json();document.getElementById('p31-org-output').innerHTML='<div class="alert alert-secondary">🏙️ '+d.city+' ('+d.tier+') | Pop: '+d.population?.toLocaleString()+' | Active Fans: '+d.active_fans?.toLocaleString()+' | Launch Readiness: '+d.launch_readiness_score+'</div>';}
 </script>
 <!-- END PHASE 31 ORGANISER PORTAL -->
+
+<!-- PHASE 32 ORGANISER PORTAL — International Expansion -->
+<div class="container mt-4">
+  <h5 class="text-warning fw-bold">🌏 Phase 32 — International Event Management</h5>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <div class="card border-warning">
+        <div class="card-header bg-warning text-dark fw-bold">🌏 SEA Market Strategy</div>
+        <div class="card-body">
+          <div id="p32-org-sea-output" class="small text-muted">Loading SEA strategy...</div>
+          <button class="btn btn-sm btn-warning mt-2" onclick="loadP32OrgSEA()">Load SEA Strategy</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-danger">
+        <div class="card-header bg-danger text-white fw-bold">🌙 MENA Promoters Network</div>
+        <div class="card-body">
+          <div id="p32-org-mena-output" class="small text-muted">Loading MENA promoters...</div>
+          <button class="btn btn-sm btn-danger mt-2" onclick="loadP32OrgMENA()">Load Promoters</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-success">
+        <div class="card-header bg-success text-white fw-bold">🎤 International Artist Booking</div>
+        <div class="card-body">
+          <div id="p32-org-artist-output" class="small text-muted">Loading artist roster...</div>
+          <button class="btn btn-sm btn-success mt-2" onclick="loadP32OrgArtist()">Browse Artists</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-info">
+        <div class="card-header bg-info text-dark fw-bold">💵 Cross-Border Payments</div>
+        <div class="card-body">
+          <div id="p32-org-pay-output" class="small text-muted">Loading payment info...</div>
+          <button class="btn btn-sm btn-info mt-2" onclick="loadP32OrgPay()">Load Payments</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+async function loadP32OrgSEA(){const r=await fetch('/api/admin/intl/sea/growth-strategy');const d=await r.json();document.getElementById('p32-org-sea-output').innerHTML='🎯 Target: $'+d.h1_target_usd_m+'M | Cities: '+d.key_cities.slice(0,3).join(', ')+'<br>Budget: $'+d.influencer_budget_usd.toLocaleString()+' | Pipeline B2B: '+d.b2b_pipeline;}
+async function loadP32OrgMENA(){const r=await fetch('/api/organiser/intl/mena/promoters');const d=await r.json();document.getElementById('p32-org-mena-output').innerHTML='👥 Promoters: '+d.promoters+' | Verified: '+d.verified+'<br>Top: '+d.top_promoter+' | Capacity: '+d.total_capacity_managed.toLocaleString();}
+async function loadP32OrgArtist(){const r=await fetch('/api/event-manager/intl/artists/roster');const d=await r.json();document.getElementById('p32-org-artist-output').innerHTML='🎤 Artists: '+d.international_artists.toLocaleString()+' | Countries: '+d.countries+'<br>Avg Fee: $'+d.avg_fee_usd.toLocaleString()+' | Genres: '+d.genres.slice(0,3).join(', ');}
+async function loadP32OrgPay(){const r=await fetch('/api/admin/intl/payments/gateway');const d=await r.json();document.getElementById('p32-org-pay-output').innerHTML='💳 Primary: '+d.primary+' | Backup: '+d.secondary+'<br>Uptime: '+d.uptime_pct+'% | Fallback: '+d.fallback;}
+</script>
+<!-- END PHASE 32 ORGANISER PORTAL -->
 </body></html>

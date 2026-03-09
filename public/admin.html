@@ -5579,4 +5579,88 @@ async function loadP31GovtDash(){const r=await fetch('/api/admin/bharat/govt-eve
 async function loadP31GSTFilings(){const r=await fetch('/api/admin/bharat/gst/state-filings');const d=await r.json();document.getElementById('p31-admin-misc-output').innerHTML='<div class="alert alert-info">📑 States: '+d.total_states+' | Filed: '+d.filed+' | Pending: '+d.pending+' | Total Liability: '+d.total_gst_liability_mtd+'</div>';}
 </script>
 <!-- END PHASE 31 ADMIN PORTAL -->
+
+<!-- ========================================================
+     PHASE 32 — INTERNATIONAL EXPANSION (SEA / MENA / UK)
+     Admin Portal Panels
+     ======================================================== -->
+<div class="container-fluid mt-4">
+  <div class="row mb-3">
+    <div class="col-12">
+      <h4 class="text-warning">🌏 Phase 32 — International Expansion (SEA / MENA / UK)</h4>
+      <p class="text-muted">Global markets: SEA, MENA, UK/Europe | Multi-currency | Cross-border payments | 1,909 total endpoints</p>
+    </div>
+  </div>
+  <div class="row g-3">
+    <!-- SEA Dashboard -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card border-warning shadow-sm h-100">
+        <div class="card-header bg-warning text-dark fw-bold">🇸🇬 SEA Markets Dashboard</div>
+        <div class="card-body">
+          <div id="p32-sea-output" class="small text-muted">Loading SEA data...</div>
+          <button class="btn btn-sm btn-warning mt-2" onclick="loadP32SEA()">Load SEA Markets</button>
+        </div>
+      </div>
+    </div>
+    <!-- MENA Hub -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card border-danger shadow-sm h-100">
+        <div class="card-header bg-danger text-white fw-bold">🌙 MENA Region Hub</div>
+        <div class="card-body">
+          <div id="p32-mena-output" class="small text-muted">Loading MENA data...</div>
+          <button class="btn btn-sm btn-danger mt-2" onclick="loadP32MENA()">Load MENA Hub</button>
+        </div>
+      </div>
+    </div>
+    <!-- UK & Europe -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card border-primary shadow-sm h-100">
+        <div class="card-header bg-primary text-white fw-bold">🇬🇧 UK & Europe Expansion</div>
+        <div class="card-body">
+          <div id="p32-uk-output" class="small text-muted">Loading UK data...</div>
+          <button class="btn btn-sm btn-primary mt-2" onclick="loadP32UK()">Load UK Markets</button>
+        </div>
+      </div>
+    </div>
+    <!-- Forex Engine -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card border-success shadow-sm h-100">
+        <div class="card-header bg-success text-white fw-bold">💱 Multi-Currency & Forex</div>
+        <div class="card-body">
+          <div id="p32-forex-output" class="small text-muted">Loading forex data...</div>
+          <button class="btn btn-sm btn-success mt-2" onclick="loadP32Forex()">Load Forex Dashboard</button>
+        </div>
+      </div>
+    </div>
+    <!-- Global Compliance -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card border-secondary shadow-sm h-100">
+        <div class="card-header bg-secondary text-white fw-bold">⚖️ Global Compliance</div>
+        <div class="card-body">
+          <div id="p32-compliance-output" class="small text-muted">Loading compliance...</div>
+          <button class="btn btn-sm btn-secondary mt-2" onclick="loadP32Compliance()">Load Compliance</button>
+        </div>
+      </div>
+    </div>
+    <!-- International Marketing -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card border-info shadow-sm h-100">
+        <div class="card-header bg-info text-dark fw-bold">📣 Intl Marketing Stack</div>
+        <div class="card-body">
+          <div id="p32-mktg-output" class="small text-muted">Loading marketing...</div>
+          <button class="btn btn-sm btn-info mt-2" onclick="loadP32Marketing()">Load Marketing</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+async function loadP32SEA(){const r=await fetch('/api/admin/intl/sea/dashboard');const d=await r.json();document.getElementById('p32-sea-output').innerHTML='<b>Markets:</b> '+d.markets.join(', ')+'<br><b>GMV:</b> SGD '+d.total_gmv_sgd_m+'M | <b>Events:</b> '+d.active_events+'<br><b>Fans:</b> '+d.fans_registered.toLocaleString()+' | <b>YoY:</b> '+d.yoy_growth_pct+'%';}
+async function loadP32MENA(){const r=await fetch('/api/admin/intl/mena/dashboard');const d=await r.json();document.getElementById('p32-mena-output').innerHTML='<b>Markets:</b> '+d.markets.slice(0,3).join(', ')+'<br><b>GMV:</b> AED '+d.total_gmv_aed_m+'M | <b>Events:</b> '+d.active_events+'<br><b>Fans:</b> '+d.fans_registered.toLocaleString()+' | <b>Arabic RTL:</b> '+d.arabic_rtl;}
+async function loadP32UK(){const r=await fetch('/api/admin/intl/uk/dashboard');const d=await r.json();document.getElementById('p32-uk-output').innerHTML='<b>Markets:</b> '+d.markets.slice(0,3).join(', ')+'<br><b>GMV:</b> £'+d.total_gmv_gbp_m+'M | <b>Events:</b> '+d.active_events+'<br><b>Fans:</b> '+d.fans_registered.toLocaleString()+' | <b>GDPR:</b> '+d.gdpr_compliant;}
+async function loadP32Forex(){const r=await fetch('/api/admin/intl/forex/dashboard');const d=await r.json();document.getElementById('p32-forex-output').innerHTML='<b>Currencies:</b> '+d.currencies_supported+' | <b>Pairs:</b> '+d.active_pairs+'<br><b>Daily FX:</b> $'+d.daily_fx_volume_usd_m+'M | <b>Hedge:</b> '+d.hedge_ratio_pct+'%<br><b>Provider:</b> '+d.provider;}
+async function loadP32Compliance(){const r=await fetch('/api/admin/intl/compliance/dashboard');const d=await r.json();document.getElementById('p32-compliance-output').innerHTML='<b>Countries:</b> '+d.countries_compliant+' | <b>Licences:</b> '+d.licences_active+'<br><b>Pending:</b> '+d.pending+' | <b>Score:</b> '+d.overall_score+'%';}
+async function loadP32Marketing(){const r=await fetch('/api/admin/intl/marketing/dashboard');const d=await r.json();document.getElementById('p32-mktg-output').innerHTML='<b>Campaigns:</b> '+d.global_campaigns+' | <b>Spend:</b> $'+d.total_spend_usd_m+'M<br><b>CAC:</b> $'+d.blended_cac_usd+' | <b>LTV:CAC:</b> '+d.ltv_cac_ratio+'x | <b>ROAS:</b> '+d.roas+'x';}
+</script>
+<!-- END PHASE 32 ADMIN PORTAL -->
 </body></html>

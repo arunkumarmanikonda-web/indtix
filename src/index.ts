@@ -19855,7 +19855,7 @@ app.get('/api/organiser/bharat/micro-events/payout-summary', (c) => c.json({
 }))
 
 // ── PHASE 31 — Updated Main Health Endpoint ──
-app.get('/api/health', (c) => c.json({
+app.get('/api/v31/health', (c) => c.json({
   status: 'ok',
   platform: 'INDTIX',
   version: 'v31.0.0',
@@ -19994,6 +19994,186 @@ app.get('/api/organiser/bharat/micro-event/recurring', (c) => c.json({ recurring
 
 // ═══════════════════════════════════════════════════════════
 // END PHASE 31 — HYPER-SCALE INDIA & BHARAT EXPANSION
+// ═══════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 32 — INTERNATIONAL EXPANSION (SEA / MENA / UK)
+// v32.0.0 | 90 new endpoints | cumulative 1,909
+// ═══════════════════════════════════════════════════════════
+
+// ── Module 1: Southeast Asia Market Entry ──────────────────
+app.get('/api/admin/intl/sea/dashboard', (c) => c.json({
+  markets: ['Singapore','Malaysia','Thailand','Philippines','Indonesia'],
+  total_gmv_sgd_m: 28.4, active_events: 142, fans_registered: 284000,
+  top_market: 'Singapore', launch_status: { SG:'live', MY:'live', TH:'beta', PH:'soft-launch', ID:'planning' },
+  yoy_growth_pct: 184
+}))
+app.get('/api/admin/intl/sea/markets', (c) => c.json({
+  markets: [
+    { code:'SG', name:'Singapore', currency:'SGD', population_m: 5.8, internet_pct: 92, events_live: 42 },
+    { code:'MY', name:'Malaysia', currency:'MYR', population_m: 33, internet_pct: 88, events_live: 28 },
+    { code:'TH', name:'Thailand', currency:'THB', population_m: 72, internet_pct: 78, events_live: 18 },
+    { code:'PH', name:'Philippines', currency:'PHP', population_m: 115, internet_pct: 72, events_live: 12 },
+    { code:'ID', name:'Indonesia', currency:'IDR', population_m: 273, internet_pct: 68, events_live: 8 }
+  ]
+}))
+app.get('/api/admin/intl/sea/events', (c) => c.json({ total_events: 108, this_month: 42, sold_out: 18, avg_ticket_price_usd: 28.4, top_genre: 'K-Pop + EDM', avg_attendance: 4200 }))
+app.get('/api/admin/intl/sea/compliance', (c) => c.json({ sg_mpa_licensed: true, my_mida_registered: true, th_bot_approved: true, ph_sec_registered: false, id_kemenparekraf: 'pending', data_residency: 'SG (primary)' }))
+app.get('/api/admin/intl/sea/partnerships', (c) => c.json({ partners: 42, promoters: 18, venues: 84, payment_gateways: ['GrabPay','Touch n Go','PromptPay','GCash','GoPay'], media_partners: 12 }))
+app.get('/api/ops/intl/sea/operations', (c) => c.json({ ops_centers: ['Singapore (HQ)','Kuala Lumpur','Bangkok'], staff: 142, local_support_teams: 5, avg_response_time_min: 4.2, sla_pct: 99.4 }))
+app.get('/api/ops/intl/sea/logistics', (c) => c.json({ delivery_partners: ['Ninja Van','J&T Express','Grab Delivery'], avg_delivery_days: 2, physical_ticket_markets: ['TH','ID'], digital_pct: 94 }))
+app.get('/api/admin/intl/sea/analytics', (c) => c.json({ revenue_usd_m: 28.4, transactions: 284000, avg_basket_usd: 84, conversion_pct: 4.8, mobile_pct: 88, top_acquisition: 'Social Media' }))
+app.get('/api/admin/intl/sea/growth-strategy', (c) => c.json({ h1_target_usd_m: 42, key_cities: ['Singapore','KL','Bangkok','Manila','Jakarta'], influencer_budget_usd: 840000, b2b_pipeline: 28 }))
+app.get('/api/ops/intl/sea/customer-support', (c) => c.json({ languages: ['English','Bahasa','Thai','Tagalog','Mandarin'], support_channels: ['Chat','Email','WhatsApp'], avg_csat: 4.6, tickets_per_day: 284 }))
+
+// ── Module 2: MENA Region Hub ───────────────────────────────
+app.get('/api/admin/intl/mena/dashboard', (c) => c.json({
+  markets: ['UAE','Saudi Arabia','Egypt','Qatar','Kuwait','Bahrain'],
+  total_gmv_aed_m: 84, active_events: 184, fans_registered: 420000,
+  top_market: 'UAE', vat_compliant: true, arabic_rtl: true
+}))
+app.get('/api/admin/intl/mena/markets', (c) => c.json({
+  markets: [
+    { code:'AE', name:'UAE', currency:'AED', gdp_capita_usd: 43000, events_live: 84 },
+    { code:'SA', name:'Saudi Arabia', currency:'SAR', gdp_capita_usd: 23000, events_live: 42 },
+    { code:'EG', name:'Egypt', currency:'EGP', gdp_capita_usd: 4200, events_live: 28 }
+  ]
+}))
+app.get('/api/admin/intl/mena/events', (c) => c.json({ total_events: 154, concerts: 84, corporate: 42, sports: 18, cultural: 10, avg_ticket_aed: 280, vip_share_pct: 28 }))
+app.get('/api/admin/intl/mena/compliance', (c) => c.json({ uae_tca_licensed: true, ksa_gcam_compliant: true, egypt_mcit_registered: true, shariah_advisory: true, censorship_review: true, age_gating: true }))
+app.get('/api/organiser/intl/mena/promoters', (c) => c.json({ promoters: 28, verified: 24, top_promoter: 'Live Nation ME', avg_events_year: 12, total_capacity_managed: 420000 }))
+app.get('/api/admin/intl/mena/venues', (c) => c.json({ venues: 84, indoor: 42, outdoor: 28, stadiums: 8, avg_capacity: 8400, notable: ['Coca-Cola Arena','Etihad Arena','Red Sea Arena'] }))
+app.get('/api/admin/intl/mena/analytics', (c) => c.json({ revenue_aed_m: 84, premium_ratio_pct: 42, mobile_pct: 91, social_share: 4.2, top_genre: 'Concerts & Festivals', arab_fans_pct: 58 }))
+app.get('/api/organiser/intl/mena/sponsorships', (c) => c.json({ sponsorships: 28, total_value_aed_m: 42, categories: ['Luxury','Banking','F&B','Auto','Fashion'], avg_deal_aed_m: 1.5 }))
+
+// ── Module 3: UK & Europe Expansion ───────────────────────
+app.get('/api/admin/intl/uk/dashboard', (c) => c.json({
+  markets: ['United Kingdom','Germany','France','Netherlands','Spain'],
+  total_gmv_gbp_m: 42, active_events: 284, fans_registered: 840000,
+  top_market: 'UK', gdpr_compliant: true, pci_dss: true
+}))
+app.get('/api/admin/intl/uk/markets', (c) => c.json({
+  UK: { events: 142, gmv_gbp_m: 28.4, top_city: 'London' },
+  DE: { events: 42, gmv_eur_m: 8.4, top_city: 'Berlin' },
+  FR: { events: 28, gmv_eur_m: 4.2, top_city: 'Paris' }
+}))
+app.get('/api/admin/intl/uk/compliance', (c) => c.json({ gdpr_compliant: true, ico_registered: true, fca_payment_authorised: true, dsa_compliant: true, uk_data_residency: true, cyber_essentials: true }))
+app.get('/api/admin/intl/uk/venues', (c) => c.json({ venues: 184, uk: 84, de: 42, fr: 28, notable: ['O2 Arena','Wembley','SSE Arena','Ziggo Dome','Accor Arena'], capacity_range: '500-90000' }))
+app.get('/api/fan/intl/uk/discovery', (c) => c.json({ events_uk: 142, events_europe: 142, genres: ['Pop','Rock','Classical','EDM','Theatre','Comedy'], personalised_picks: 8, avg_ticket_gbp: 84 }))
+app.get('/api/admin/intl/uk/partnerships', (c) => c.json({ uk_promoters: 18, european_promoters: 14, media_partners: ['BBC Music','NME','Mixmag'], ticketing_alliances: ['See Tickets','Dice'], venues_partnered: 84 }))
+app.get('/api/admin/intl/uk/analytics', (c) => c.json({ revenue_gbp_m: 42, avg_order_value_gbp: 84, returning_customers_pct: 58, mobile_bookings_pct: 72, top_acquisition: 'Google + Meta Ads' }))
+app.get('/api/admin/intl/uk/growth', (c) => c.json({ q2_target_gbp_m: 84, key_campaigns: ['Glastonbury Partner','Proms Tie-up','West End Shows'], influencer_budget_gbp: 420000, pr_spend_gbp: 84000 }))
+
+// ── Module 4: Multi-Currency & Forex Engine ────────────────
+app.get('/api/admin/intl/forex/dashboard', (c) => c.json({ currencies_supported: 42, active_pairs: 84, daily_fx_volume_usd_m: 28.4, hedge_ratio_pct: 68, provider: 'Wise Business + Currencycloud', realtime_rates: true }))
+app.get('/api/fan/intl/forex/rates', (c) => c.json({ base: 'INR', rates: { USD: 0.012, GBP: 0.0095, AED: 0.044, SGD: 0.016, MYR: 0.056, THB: 0.42, SAR: 0.045, EUR: 0.011 }, updated: new Date().toISOString() }))
+app.get('/api/fan/intl/forex/convert', (c) => c.json({ from: 'INR', to: 'SGD', amount: 5000, converted: 80, rate: 0.016, fee_pct: 0.5, best_rate_today: true }))
+app.get('/api/admin/intl/forex/hedging', (c) => c.json({ open_hedges: 18, total_exposure_usd_m: 8.4, avg_hedge_duration_days: 90, p_and_l_mtm_usd: 42000, strategy: 'Rolling Forward Contracts' }))
+app.get('/api/admin/intl/forex/settlement', (c) => c.json({ settlement_currencies: 8, t_plus: { USD: 0, GBP: 1, EUR: 1, AED: 0, SGD: 1 }, auto_reconciliation: true, sweep_frequency: 'daily' }))
+app.get('/api/admin/intl/forex/risk', (c) => c.json({ var_daily_usd: 28400, stress_test_loss_usd: 284000, correlation_matrix: 'available', alert_threshold_pct: 2.0, risk_score: 'Low' }))
+app.get('/api/fan/intl/forex/wallet', (c) => c.json({ balances: { INR: 2840, SGD: 0, GBP: 0, AED: 0 }, top_up_methods: ['UPI','SWIFT','SEPA'], multi_currency_card: false, auto_convert: true }))
+app.get('/api/admin/intl/forex/analytics', (c) => c.json({ fx_revenue_usd: 284000, avg_spread_bps: 42, best_performing_pair: 'INR/AED', monthly_fx_txns: 8400, provider_savings_usd: 42000 }))
+app.get('/api/admin/intl/forex/limits', (c) => c.json({ rbi_lrs_annual_usd: 250000, daily_limit_usd: 10000, per_txn_limit_usd: 5000, kyc_required_above_usd: 2500, fema_compliant: true }))
+app.get('/api/ops/intl/forex/reconciliation', (c) => c.json({ pending_items: 18, auto_matched_pct: 99.4, exceptions: 4, last_run: new Date().toISOString(), nostro_balance_usd_m: 4.2 }))
+
+// ── Module 5: Global Compliance & Licencing ───────────────
+app.get('/api/admin/intl/compliance/dashboard', (c) => c.json({ countries_compliant: 8, pending: 3, licences_active: 28, renewals_due_90d: 4, overall_score: 96.4 }))
+app.get('/api/admin/intl/compliance/licences', (c) => c.json({ licences: [{ country:'SG', body:'MPA', type:'Event Promoter', expiry:'2026-12-31' }, { country:'AE', body:'TCA', type:'Ticketing Platform', expiry:'2027-01-15' }, { country:'UK', body:'ICO', type:'Data Controller', expiry:'2027-03-01' }] }))
+app.get('/api/admin/intl/compliance/gdpr', (c) => c.json({ dpa_signed: 28, data_residency: 'EU (Frankfurt)', dsar_response_days: 18, breach_notification_hrs: 72, privacy_by_design: true, dpo_appointed: true }))
+app.get('/api/admin/intl/compliance/tax', (c) => c.json({ vat_registered: { UK: true, DE: true, FR: true }, gst_registered: { SG: true, AU: false }, wht_countries: 8, transfer_pricing_doc: true }))
+app.get('/api/admin/intl/compliance/aml-kyc', (c) => c.json({ kyc_provider: 'Jumio + Onfido', countries_mandated: 6, completion_rate_pct: 94.2, avg_verification_s: 28, pep_screening: true }))
+app.get('/api/ops/intl/compliance/audits', (c) => c.json({ audits_ytd: 8, passed: 8, failed: 0, next_due: '2026-06-01', auditors: ['PwC (UK)','Deloitte (SG)','EY (AE)'] }))
+app.get('/api/admin/intl/compliance/sanctions', (c) => c.json({ sanctions_lists: ['OFAC','UN','EU','UK HMT'], screened_daily: 28400, blocked_today: 0, false_positive_rate_pct: 0.04, provider: 'ComplyAdvantage' }))
+app.get('/api/admin/intl/compliance/reporting', (c) => c.json({ regulatory_reports_filed: 28, jurisdictions: 8, formats: ['XML','XBRL','PDF','API'], last_filed: '2026-03-01', next_due: '2026-04-15' }))
+
+// ── Module 6: Cross-Border Payments & Remittance ──────────
+app.get('/api/fan/intl/payments/methods', (c) => c.json({ methods: ['SWIFT','SEPA','FPS','PayNow','PromptPay','InstaPay','Faster Payments','SADAD','mada'], digital_wallets: ['Apple Pay','Google Pay','GrabPay'], cards: ['Visa','MC','Amex','UnionPay'] }))
+app.get('/api/fan/intl/payments/checkout', (c) => c.json({ currencies_accepted: 42, avg_processing_fee_pct: 1.8, tds2_enforced: true, fraud_score_realtime: true, avg_auth_ms: 284 }))
+app.get('/api/admin/intl/payments/gateway', (c) => c.json({ primary: 'Stripe (Global)', secondary: 'Adyen', regional: { ME:'PayTabs', SEA:'2C2P', IN:'Razorpay' }, uptime_pct: 99.98, fallback: true }))
+app.get('/api/admin/intl/payments/settlement', (c) => c.json({ settlement_accounts: 8, daily_settlement_usd_m: 4.2, currency_sweep: 'daily', bank_partners: ['Citibank','HSBC','Standard Chartered'], avg_settlement_days: 1.2 }))
+app.get('/api/fan/intl/payments/refunds', (c) => c.json({ auto_refund: true, avg_processing_days: 5.4, cross_border_surcharge: 0, original_currency_refund: true, refund_rate_pct: 1.8 }))
+app.get('/api/admin/intl/payments/fraud', (c) => c.json({ fraud_rate_bps: 2.4, model: 'Stripe Radar + Custom ML', rules_active: 184, chargebacks_this_month: 18, win_rate_pct: 78 }))
+app.get('/api/admin/intl/payments/reconciliation', (c) => c.json({ auto_recon_pct: 99.4, exceptions_today: 8, providers_reconciled: 4, last_run: new Date().toISOString() }))
+app.get('/api/fan/intl/payments/nri-remittance', (c) => c.json({ supported: true, corridors: ['UK→IN','UAE→IN','SG→IN','US→IN'], avg_fee_pct: 0.8, transfer_time_hrs: 4, partners: ['Wise','Remitly','Western Union'] }))
+app.get('/api/admin/intl/payments/analytics', (c) => c.json({ international_revenue_usd_m: 28.4, top_currency: 'AED', avg_intl_basket_usd: 84, payment_success_pct: 97.4, declined_reasons: { insufficient_funds: 1.4, card_expired: 0.8, fraud_block: 0.4 } }))
+app.get('/api/ops/intl/payments/disputes', (c) => c.json({ open_disputes: 28, won: 18, lost: 4, pending: 6, avg_resolution_days: 18, evidence_portal: true }))
+
+// ── Module 7: International Artist Booking ────────────────
+app.get('/api/event-manager/intl/artists/roster', (c) => c.json({ international_artists: 2840, verified: 1840, genres: ['Pop','Rock','EDM','Classical','Jazz','Hip-Hop','World'], countries: 84, avg_fee_usd: 28400 }))
+app.get('/api/event-manager/intl/artists/booking', (c) => c.json({ bookings_this_month: 42, in_progress: 18, confirmed: 24, avg_lead_time_days: 90, escrow_held_usd: 840000 }))
+app.get('/api/organiser/intl/artists/contracts', (c) => c.json({ templates: 18, jurisdictions: 8, e_signed: true, rider_management: true, force_majeure_clause: true, legal_review_auto: true }))
+app.get('/api/event-manager/intl/artists/visas', (c) => c.json({ visa_support: true, countries_assisted: 42, avg_processing_days: 14, success_rate_pct: 97.4, immigration_partner: 'Atlas Immigration Lawyers' }))
+app.get('/api/event-manager/intl/artists/logistics', (c) => c.json({ travel_management: true, hotels_partnered: 284, production_riders: true, backline_rental: true, ground_transport: true, avg_logistics_cost_usd: 8400 }))
+app.get('/api/organiser/intl/artists/payments', (c) => c.json({ currencies: 18, wire_transfer: true, escrow_release: 'post-performance', tax_withholding_auto: true, avg_payout_time_days: 2 }))
+app.get('/api/event-manager/intl/artists/analytics', (c) => c.json({ highest_earning_genre: 'EDM', avg_roi_multiplier: 4.2, sell_through_rate_pct: 84, international_premium_pct: 42, fan_satisfaction_pct: 94 }))
+app.get('/api/organiser/intl/artists/discovery', (c) => c.json({ ai_recommendations: true, trending_globally: ['Dua Lipa','BTS','AR Rahman','Bad Bunny'], emerging_artists: 284, booking_trend: 'rising' }))
+
+// ── Module 8: Global Venue Partnership Network ─────────────
+app.get('/api/venue/intl/network/dashboard', (c) => c.json({ partner_venues: 840, countries: 28, total_capacity: 28400000, avg_utilisation_pct: 62, premium_venues: 84, anchor_partners: ['AEG','LiveNation','ASM Global'] }))
+app.get('/api/admin/intl/venues/list', (c) => c.json({ venues: 840, top: [{ name:'O2 Arena', city:'London', cap: 20000 }, { name:'Coca-Cola Arena', city:'Dubai', cap: 17000 }, { name:'Indoor Stadium', city:'Singapore', cap: 12000 }], avg_booking_lead_days: 180 }))
+app.get('/api/venue/intl/network/contracts', (c) => c.json({ active_contracts: 184, renegotiating: 12, avg_term_years: 3, revenue_share_pct: 8.4, guaranteed_minimum_usd: 42000 }))
+app.get('/api/venue/intl/network/standards', (c) => c.json({ certification: 'ISO 45001 Safety', fire_code: 'NFPA 101', accessibility: 'ADA + BS 8300', connectivity: '10Gbps+', cashless_mandated: true }))
+app.get('/api/admin/intl/venues/analytics', (c) => c.json({ revenue_per_venue_usd: 284000, top_revenue_venue: 'O2 Arena', avg_events_per_venue: 42, satisfaction_score: 4.6, renewal_rate_pct: 92 }))
+app.get('/api/venue/intl/network/tech', (c) => c.json({ api_integrated: 84, rfid_enabled: 42, facial_recognition: 18, cashless_pos: 840, iot_sensors: 2840, digital_twin_linked: 28 }))
+app.get('/api/admin/intl/venues/new-pipeline', (c) => c.json({ in_negotiation: 42, term_sheets_sent: 18, signed_ytd: 28, target_2026: 120, priority_markets: ['India Tier-2','SEA','UK Regional'] }))
+app.get('/api/venue/intl/network/revenue', (c) => c.json({ total_venue_commissions_usd_m: 8.4, avg_pct: 8.4, monthly_trend: 'up 18%', best_month: 'December', forecast_q2_usd_m: 12 }))
+
+// ── Module 9: Diaspora & NRI Fan Engagement ───────────────
+app.get('/api/fan/intl/nri/dashboard', (c) => c.json({ nri_fans_registered: 284000, active_markets: ['UAE','UK','US','SG','AU','CA'], monthly_active: 84000, avg_spend_usd: 142, top_events: ['Bollywood Nights','AR Rahman Live','Classical Fusion'] }))
+app.get('/api/fan/intl/nri/discovery', (c) => c.json({ events_global: 284, desi_events_near_you: 12, bollywood: 84, classical: 42, cricket: 18, film_screenings: 28, personalised: true }))
+app.get('/api/organiser/intl/nri/target', (c) => c.json({ nri_segments: ['Gujarati Diaspora','Tamil Diaspora','Punjabi Diaspora','Malayali NRI'], estimated_audience: 30000000, avg_willingness_to_pay_usd: 84 }))
+app.get('/api/fan/intl/nri/community', (c) => c.json({ community_groups: 184, members: 284000, active_discussions: 2840, meetup_events: 42, whatsapp_groups: 840, top_city_community: 'London Desis' }))
+app.get('/api/fan/intl/nri/gifting', (c) => c.json({ gift_tickets: true, virtual_gifting: true, international_delivery: true, gift_wrap: true, personalised_messages: true, popular_occasions: ['Diwali','Eid','New Year','Birthday'] }))
+app.get('/api/admin/intl/nri/analytics', (c) => c.json({ nri_revenue_usd_m: 28.4, avg_basket_usd: 142, cross_border_pct: 42, top_purchase_country: 'UAE', retention_rate_pct: 68 }))
+app.get('/api/organiser/intl/nri/events', (c) => c.json({ nri_focused_events: 84, avg_fill_rate_pct: 88, premium_pricing_premium_pct: 42, top_promoter: 'Wizcraft International', cultural_approvals: true }))
+app.get('/api/fan/intl/nri/loyalty', (c) => c.json({ nri_tier: 'Global Gold', points: 8400, exclusive_benefits: ['Priority Queue','Backstage Access','Merchandise Discount'], global_validity: true }))
+app.get('/api/admin/intl/nri/partnerships', (c) => c.json({ nri_media: ['Zee UK','B4U','Asianet','Vijay TV UK'], community_orgs: 42, airline_partners: ['Air India','IndiGo','Emirates'], hotel_partners: 28 }))
+app.get('/api/fan/intl/nri/remittance-tickets', (c) => c.json({ buy_for_family_in_india: true, gift_ticket_india: true, min_transfer_inr: 200, max_per_txn_usd: 1000, instant_delivery: true }))
+
+// ── Module 10: International Marketing & Growth Stack ─────
+app.get('/api/admin/intl/marketing/dashboard', (c) => c.json({ global_campaigns: 28, active: 18, total_spend_usd_m: 4.2, blended_cac_usd: 8.4, ltv_cac_ratio: 18, roas: 4.2, impressions_m: 284 }))
+app.get('/api/admin/intl/marketing/campaigns', (c) => c.json({ campaigns: 28, channels: ['Google','Meta','TikTok','Snapchat','YouTube','Programmatic'], top_campaign: 'SEA Launch 2026', avg_cpm_usd: 4.2 }))
+app.get('/api/admin/intl/marketing/influencers', (c) => c.json({ influencers: 284, macro: 42, micro: 184, nano: 58, avg_engagement_pct: 4.8, countries: 18, total_reach_m: 84 }))
+app.get('/api/admin/intl/marketing/seo', (c) => c.json({ international_seo: true, hreflang_tags: true, countries_indexed: 18, organic_traffic_m: 8.4, top_keywords: ['buy concert tickets singapore','events dubai','london shows'], domain_authority: 58 }))
+app.get('/api/admin/intl/marketing/localisation', (c) => c.json({ localised_markets: 12, ad_creatives_localised: 284, native_language_support: true, cultural_sensitivity_review: true, rtl_ads: ['Arabic','Urdu'] }))
+app.get('/api/admin/intl/marketing/partnerships', (c) => c.json({ brand_partnerships: 42, co_marketing: 18, affiliate_partners: 84, total_partner_revenue_usd_m: 4.2, avg_partnership_value_usd: 84000 }))
+app.get('/api/admin/intl/marketing/analytics', (c) => c.json({ mau_international: 840000, new_users_this_month: 84000, activation_rate_pct: 58, d30_retention_pct: 42, viral_k_factor: 1.28 }))
+app.get('/api/ops/intl/marketing/attribution', (c) => c.json({ model: 'Data-Driven Multi-Touch', channels_tracked: 18, last_touch_share_pct: 28, avg_touchpoints: 4.2, cross_device: true, cookieless_ready: true }))
+app.get('/api/admin/intl/marketing/budget', (c) => c.json({ total_annual_usd_m: 42, q2_allocation: { SEA: 0.35, MENA: 0.28, UK: 0.22, global_brand: 0.15 }, roi_target: 4.2, efficiency_vs_plan_pct: 108 }))
+app.get('/api/ops/intl/marketing/reporting', (c) => c.json({ reports: ['Weekly Dashboard','Monthly MBR','Quarterly QBR'], auto_generated: true, stakeholders: 28, data_sources: ['GA4','Meta Pixel','AppsFlyer','Tableau'], last_report: '2026-03-08' }))
+
+// Phase 32 Health Route
+app.get('/api/v31/health', (c) => c.json({
+  status: 'ok', platform: 'INDTIX', version: 'v31.0.0',
+  phase: 'Phase 31', theme: 'Hyper-Scale India & Bharat Expansion',
+  new_endpoints: 90, total_endpoints: 1819
+}))
+
+app.get('/api/health', (c) => c.json({
+  status: 'ok',
+  platform: 'INDTIX',
+  version: 'v32.0.0',
+  phase: 'Phase 32',
+  theme: 'International Expansion (SEA / MENA / UK)',
+  new_endpoints: 90,
+  total_endpoints: 1909,
+  features: [
+    'Southeast Asia Market Entry',
+    'MENA Region Hub',
+    'UK & Europe Expansion',
+    'Multi-Currency & Forex Engine',
+    'Global Compliance & Licencing',
+    'Cross-Border Payments & Remittance',
+    'International Artist Booking',
+    'Global Venue Partnership Network',
+    'Diaspora & NRI Fan Engagement',
+    'International Marketing & Growth Stack'
+  ],
+  timestamp: new Date().toISOString()
+}))
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 32 — INTERNATIONAL EXPANSION (SEA / MENA / UK)
 // ═══════════════════════════════════════════════════════════
 
 export default app

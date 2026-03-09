@@ -6339,5 +6339,55 @@ async function loadP31FanPayMethods(){const r=await fetch('/api/fan/bharat/payme
 async function loadP31FanLangPref(){const r=await fetch('/api/fan/bharat/language/preferences');const d=await r.json();document.getElementById('p31-fan-micro-output').innerHTML='<div class="alert alert-secondary">🌐 Language: '+d.ui_language+' | Script: '+d.detected_language+' | Voice Search: '+d.voice_search_language+'</div>';}
 </script>
 <!-- END PHASE 31 FAN PORTAL -->
+
+<!-- PHASE 32 FAN PORTAL — International Expansion -->
+<div class="container mt-4">
+  <h5 class="text-warning fw-bold">🌏 Phase 32 — Global Ticketing for International Fans</h5>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <div class="card border-warning">
+        <div class="card-header bg-warning text-dark fw-bold">🌏 Events Near You (Global)</div>
+        <div class="card-body">
+          <div id="p32-fan-intl-output" class="small text-muted">Loading global events...</div>
+          <button class="btn btn-sm btn-warning mt-2" onclick="loadP32FanIntl()">Discover Events</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-primary">
+        <div class="card-header bg-primary text-white fw-bold">💱 Live Currency Rates</div>
+        <div class="card-body">
+          <div id="p32-fan-forex-output" class="small text-muted">Loading rates...</div>
+          <button class="btn btn-sm btn-primary mt-2" onclick="loadP32FanForex()">Load Rates</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-success">
+        <div class="card-header bg-success text-white fw-bold">🎁 NRI Gifting & Events</div>
+        <div class="card-body">
+          <div id="p32-fan-nri-output" class="small text-muted">Loading NRI options...</div>
+          <button class="btn btn-sm btn-success mt-2" onclick="loadP32FanNRI()">Browse NRI Events</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-info">
+        <div class="card-header bg-info text-dark fw-bold">💳 Global Payment Methods</div>
+        <div class="card-body">
+          <div id="p32-fan-pay-output" class="small text-muted">Loading payment options...</div>
+          <button class="btn btn-sm btn-info mt-2" onclick="loadP32FanPay()">Show Methods</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+async function loadP32FanIntl(){const r=await fetch('/api/fan/intl/nri/discovery');const d=await r.json();document.getElementById('p32-fan-intl-output').innerHTML='🎵 Events Global: '+d.events_global+' | Bollywood: '+d.bollywood+' | Classical: '+d.classical+'<br>🏏 Cricket: '+d.cricket+' | Film: '+d.film_screenings;}
+async function loadP32FanForex(){const r=await fetch('/api/fan/intl/forex/rates');const d=await r.json();document.getElementById('p32-fan-forex-output').innerHTML='<b>1 INR =</b><br>USD: '+d.rates.USD+' | GBP: '+d.rates.GBP+' | AED: '+d.rates.AED+'<br>SGD: '+d.rates.SGD+' | EUR: '+d.rates.EUR;}
+async function loadP32FanNRI(){const r=await fetch('/api/fan/intl/nri/dashboard');const d=await r.json();document.getElementById('p32-fan-nri-output').innerHTML='👨‍👩‍👧 NRI Fans: '+d.nri_fans_registered.toLocaleString()+' | Avg Spend: $'+d.avg_spend_usd+'<br>Markets: '+d.active_markets.join(', ');}
+async function loadP32FanPay(){const r=await fetch('/api/fan/intl/payments/methods');const d=await r.json();document.getElementById('p32-fan-pay-output').innerHTML='💳 Cards: '+d.cards.join(', ')+'<br>Wallets: '+d.digital_wallets.join(', ')+'<br>Bank: SWIFT, SEPA, FPS, PayNow';}
+</script>
+<!-- END PHASE 32 FAN PORTAL -->
 </body>
 </html>
