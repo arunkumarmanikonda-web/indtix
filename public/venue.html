@@ -3564,4 +3564,30 @@ async function loadAllP49Venue() { await loadP49Venue(); }
 loadAllP49Venue();
 </script>
 <!-- END PHASE 49 VENUE PORTAL -->
+
+<!-- PHASE 50 VENUE PORTAL — Platform Maturity & Self-Healing Infrastructure -->
+<script>
+async function loadP50Venue() {
+  const base = '/api/v50';
+  let html = '<div class="phase-section"><h2 style="color:#e94560;border-bottom:3px solid #e94560;padding-bottom:8px;">🏆 Phase 50 — Venue Platform Excellence</h2><div class="metrics-grid">';
+  const sections = [
+    ['🔭 Platform Health', `${base}/observability/overview`, ['services_monitored','uptime_pct','avg_latency_p99_ms']],
+    ['🌍 Global Coverage', `${base}/multiregion/overview`, ['active_regions','geo_distributed_users_pct','rto_minutes']],
+    ['🏆 Maturity Score', `${base}/maturity/overview`, ['overall_maturity_score','total_endpoints','modules_completed']],
+  ];
+  for (const [title, url, keys] of sections) {
+    try {
+      const data = await fetch(url).then(r=>r.json());
+      const m = data.metrics || {};
+      html += `<div class="metric-card" style="border-left:4px solid #e94560;"><h3>${title}</h3>${keys.map(k=>`<p><strong>${k.replace(/_/g,' ')}:</strong> ${m[k] !== undefined ? (typeof m[k]==='number'?m[k].toLocaleString():m[k]) : '—'}</p>`).join('')}</div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const container = document.getElementById('phase50-venue') || (() => { const d = document.createElement('div'); d.id = 'phase50-venue'; document.querySelector('.venue-content, main, #app, body').appendChild(d); return d; })();
+  container.innerHTML = html;
+}
+async function loadAllP50Venue() { await loadP50Venue(); }
+loadAllP50Venue();
+</script>
+<!-- END PHASE 50 VENUE PORTAL -->
 </body></html>

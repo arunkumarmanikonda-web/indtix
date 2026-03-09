@@ -3910,5 +3910,34 @@ async function loadAllP49Ops() { await loadP49Ops(); }
 loadAllP49Ops();
 </script>
 <!-- END PHASE 49 OPS PORTAL -->
+
+<!-- PHASE 50 OPS PORTAL — Platform Maturity & Self-Healing Infrastructure -->
+<script>
+async function loadP50Ops() {
+  const base = '/api/v50';
+  let html = '<div class="phase-section"><h2 style="color:#e94560;border-bottom:3px solid #e94560;padding-bottom:8px;">🏆 Phase 50 — Ops: Elite Infrastructure Command Centre</h2><div class="metrics-grid">';
+  const sections = [
+    ['🔭 Observability', `${base}/observability/overview`, ['services_monitored','traces_per_second','avg_latency_p99_ms','error_rate_pct','uptime_pct','mttr_minutes']],
+    ['💥 Chaos Engineering', `${base}/chaos/overview`, ['experiments_run_ytd','services_tested','failure_modes_discovered','auto_rollback_success_pct','mean_time_to_recover_min','resilience_score']],
+    ['🛡️ SRE & SLOs', `${base}/sre/overview`, ['slos_defined','slos_meeting_target_pct','error_budget_remaining_pct','incidents_this_month','mean_time_to_resolve_min','toil_pct']],
+    ['🤖 AI Ops', `${base}/aiops/overview`, ['automated_runbooks','incidents_auto_resolved_pct','anomalies_predicted','mean_time_to_heal_sec','ai_cost_optimisation_cr','ops_headcount_saved']],
+    ['🌍 Multi-Region', `${base}/multiregion/overview`, ['active_regions','rpo_minutes','rto_minutes','replication_lag_ms','data_durability_nines','last_dr_test_days_ago']],
+    ['⚖️ Governance', `${base}/governance/overview`, ['policies_enforced','policy_violations_blocked','compliance_frameworks','auto_remediation_pct','zero_trust_score','audit_log_retention_days']],
+  ];
+  for (const [title, url, keys] of sections) {
+    try {
+      const data = await fetch(url).then(r=>r.json());
+      const m = data.metrics || {};
+      html += `<div class="metric-card" style="border-left:4px solid #e94560;"><h3>${title}</h3><div class="metric-values">${keys.map(k=>`<div class="metric-item"><span class="metric-label">${k.replace(/_/g,' ')}</span><span class="metric-value">${m[k] !== undefined ? (typeof m[k]==='number'?m[k].toLocaleString():m[k]) : '—'}</span></div>`).join('')}</div></div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const container = document.getElementById('phase50-ops') || (() => { const d = document.createElement('div'); d.id = 'phase50-ops'; document.querySelector('.ops-content, main, #app, body').appendChild(d); return d; })();
+  container.innerHTML = html;
+}
+async function loadAllP50Ops() { await loadP50Ops(); }
+loadAllP50Ops();
+</script>
+<!-- END PHASE 50 OPS PORTAL -->
 </body>
 </html>

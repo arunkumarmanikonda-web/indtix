@@ -3932,4 +3932,31 @@ async function loadAllP49EM() { await loadP49EM(); }
 loadAllP49EM();
 </script>
 <!-- END PHASE 49 EVENT MANAGER -->
+
+<!-- PHASE 50 EVENT MANAGER PORTAL — Platform Maturity & Self-Healing Infrastructure -->
+<script>
+async function loadP50EM() {
+  const base = '/api/v50';
+  let html = '<div class="phase-section"><h2 style="color:#e94560;border-bottom:3px solid #e94560;padding-bottom:8px;">🏆 Phase 50 — Event Manager: Enterprise-Grade Platform</h2><div class="metrics-grid">';
+  const sections = [
+    ['🔭 Observability', `${base}/observability/overview`, ['services_monitored','uptime_pct','mttr_minutes']],
+    ['⚖️ Governance', `${base}/governance/overview`, ['policies_enforced','compliance_frameworks','auto_remediation_pct']],
+    ['⚡ Dev Experience', `${base}/devex/overview`, ['deployment_frequency_per_day','change_failure_rate_pct','lead_time_for_changes_hrs']],
+    ['🏆 Maturity', `${base}/maturity/overview`, ['overall_maturity_score','developer_adoption_pct','csat_platform']],
+  ];
+  for (const [title, url, keys] of sections) {
+    try {
+      const data = await fetch(url).then(r=>r.json());
+      const m = data.metrics || {};
+      html += `<div class="metric-card" style="border-left:4px solid #e94560;"><h3>${title}</h3>${keys.map(k=>`<p><strong>${k.replace(/_/g,' ')}:</strong> ${m[k] !== undefined ? (typeof m[k]==='number'?m[k].toLocaleString():m[k]) : '—'}</p>`).join('')}</div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const container = document.getElementById('phase50-em') || (() => { const d = document.createElement('div'); d.id = 'phase50-em'; document.querySelector('.em-content, main, #app, body').appendChild(d); return d; })();
+  container.innerHTML = html;
+}
+async function loadAllP50EM() { await loadP50EM(); }
+loadAllP50EM();
+</script>
+<!-- END PHASE 50 EVENT MANAGER -->
 </body></html>
