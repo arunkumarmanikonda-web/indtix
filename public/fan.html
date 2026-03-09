@@ -6892,5 +6892,25 @@ async function loadAllP42Fan() { await loadP42Fan(); }
 loadAllP42Fan();
 </script>
 <!-- END PHASE 42 FAN PORTAL -->
+
+<!-- PHASE 43 FAN PORTAL -->
+<div class="phase-section" id="phase43-fan">
+  <h2 class="phase-title">Phase 43 — Support, Loyalty & Notifications</h2>
+  <div class="module-card"><h3>🏆 Your Loyalty Rewards</h3><div id="p43-fan-loy" class="stats-grid"></div></div>
+  <div class="module-card"><h3>📩 Notification Preferences</h3><div id="p43-fan-notif" class="info-alert"></div></div>
+</div>
+<script>
+async function loadP43Fan() {
+  const [loy, notif] = await Promise.all([
+    fetch('/api/v43/loyalty/overview').then(r=>r.json()),
+    fetch('/api/v43/notifications/overview').then(r=>r.json())
+  ]);
+  document.getElementById('p43-fan-loy').innerHTML=`<span>Members: ${(loy.total_members/1000000).toFixed(1)}M</span><span>Points Circulating: ${(loy.points_in_circulation/1000000000).toFixed(2)}B</span><span>Redemption Rate: ${loy.redemption_rate_pct}%</span><span>NPS: ${loy.nps}</span>`;
+  document.getElementById('p43-fan-notif').innerHTML=`Notifications Today: ${(notif.notifications_sent_today/1000000).toFixed(2)}M | Open Rate: ${notif.open_rate_pct}% | CTR: ${notif.ctr_pct}%`;
+}
+async function loadAllP43Fan() { await loadP43Fan(); }
+loadAllP43Fan();
+</script>
+<!-- END PHASE 43 FAN PORTAL -->
 </body>
 </html>

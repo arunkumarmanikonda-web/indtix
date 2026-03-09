@@ -3714,4 +3714,24 @@ async function loadAllP42EM() { await loadP42EM(); }
 loadAllP42EM();
 </script>
 <!-- END PHASE 42 EVENT MANAGER -->
+
+<!-- PHASE 43 EVENT MANAGER PORTAL -->
+<div class="phase-section" id="phase43-em">
+  <h2 class="phase-title">Phase 43 — Attendee Engagement & Notifications</h2>
+  <div class="module-card"><h3>📩 Notification Ops</h3><div id="p43-em-notif" class="stats-grid"></div></div>
+  <div class="module-card"><h3>🔄 Retention Alerts</h3><div id="p43-em-ret" class="warning-alert"></div></div>
+</div>
+<script>
+async function loadP43EM() {
+  const [notif, ret] = await Promise.all([
+    fetch('/api/v43/notifications/analytics').then(r=>r.json()),
+    fetch('/api/v43/retention/overview').then(r=>r.json())
+  ]);
+  document.getElementById('p43-em-notif').innerHTML=`<span>Sent Q1: ${(notif.total_sent/1000000).toFixed(0)}M</span><span>Opened: ${(notif.opened/1000000).toFixed(0)}M</span><span>Converted: ${notif.converted.toLocaleString()}</span><span>Revenue: ₹${notif.revenue_attributed_cr}Cr</span>`;
+  document.getElementById('p43-em-ret').innerHTML=`At-Risk Users: ${ret.at_risk_users.toLocaleString()} | Churn Rate: ${ret.monthly_churn_rate_pct}% | Churn Prevented: ${ret.churn_prevented_month.toLocaleString()} | Revenue Saved: ₹${ret.revenue_saved_cr}Cr`;
+}
+async function loadAllP43EM() { await loadP43EM(); }
+loadAllP43EM();
+</script>
+<!-- END PHASE 43 EVENT MANAGER -->
 </body></html>

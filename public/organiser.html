@@ -5460,4 +5460,26 @@ async function loadAllP42Org() { await loadP42Org(); }
 loadAllP42Org();
 </script>
 <!-- END PHASE 42 ORGANISER PORTAL -->
+
+<!-- PHASE 43 ORGANISER PORTAL -->
+<div class="phase-section" id="phase43-organiser">
+  <h2 class="phase-title">Phase 43 — Marketing Automation & VOC</h2>
+  <div class="module-card"><h3>📧 Campaign Performance</h3><div id="p43-org-mkt" class="stats-grid"></div></div>
+  <div class="module-card"><h3>🗣️ Voice of Customer</h3><div id="p43-org-voc" class="stats-grid"></div><div id="p43-org-nps" class="success-alert"></div></div>
+</div>
+<script>
+async function loadP43Org() {
+  const [mkt, voc, nps] = await Promise.all([
+    fetch('/api/v43/marketing/overview').then(r=>r.json()),
+    fetch('/api/v43/voc/overview').then(r=>r.json()),
+    fetch('/api/v43/voc/nps/trends').then(r=>r.json())
+  ]);
+  document.getElementById('p43-org-mkt').innerHTML=`<span>Active Campaigns: ${mkt.active_campaigns}</span><span>Email Subs: ${(mkt.email_subscribers/1000000).toFixed(1)}M</span><span>Push Subs: ${(mkt.push_subscribers/1000000).toFixed(1)}M</span><span>Revenue: ₹${mkt.revenue_attributed_cr}Cr</span>`;
+  document.getElementById('p43-org-voc').innerHTML=`<span>Surveys/Month: ${voc.surveys_sent_month.toLocaleString()}</span><span>Response Rate: ${voc.response_rate_pct}%</span><span>Avg NPS: ${voc.avg_nps}</span><span>CSAT: ${voc.avg_csat}/5</span>`;
+  document.getElementById('p43-org-nps').innerHTML=`NPS: ${nps.current_nps} | Promoters: ${nps.promoters_pct}% | Detractors: ${nps.detractors_pct}% | Trend: ${nps.trend}`;
+}
+async function loadAllP43Org() { await loadP43Org(); }
+loadAllP43Org();
+</script>
+<!-- END PHASE 43 ORGANISER PORTAL -->
 </body></html>

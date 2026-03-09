@@ -3691,5 +3691,27 @@ async function loadAllP42Ops() { await loadP42Ops(); }
 loadAllP42Ops();
 </script>
 <!-- END PHASE 42 OPS PORTAL -->
+
+<!-- PHASE 43 OPS PORTAL -->
+<div class="phase-section" id="phase43-ops">
+  <h2 class="phase-title">Phase 43 — Support Ops & Chatbot Intelligence</h2>
+  <div class="module-card"><h3>🤖 Chatbot & IVR Ops</h3><div id="p43-ops-bot" class="stats-grid"></div></div>
+  <div class="module-card"><h3>📞 Agent Performance</h3><div id="p43-ops-agents" class="stats-grid"></div><div id="p43-ops-info" class="info-alert"></div></div>
+</div>
+<script>
+async function loadP43Ops() {
+  const [bot, ivr, agents] = await Promise.all([
+    fetch('/api/v43/chatbot/analytics').then(r=>r.json()),
+    fetch('/api/v43/ivr/analytics').then(r=>r.json()),
+    fetch('/api/v43/support/agents').then(r=>r.json())
+  ]);
+  document.getElementById('p43-ops-bot').innerHTML=`<span>Chat Sessions Q1: ${(bot.conversations/1000000).toFixed(1)}M</span><span>Bot Resolved: ${(bot.resolved_by_bot/1000000).toFixed(1)}M</span><span>IVR Resolved: ${(ivr.ivr_resolved/1000000).toFixed(1)}M</span><span>Cost Saved: ₹${bot.cost_saved_vs_human_cr}Cr</span>`;
+  document.getElementById('p43-ops-agents').innerHTML=`<span>Total Agents: ${agents.total_agents}</span><span>Online: ${agents.online}</span><span>Resolved Today: ${agents.tickets_resolved_today.toLocaleString()}</span><span>CSAT: ${agents.avg_csat}/5</span>`;
+  document.getElementById('p43-ops-info').innerHTML=`Top Agent: ${agents.top_agent.name} — ${agents.top_agent.resolved} tickets, CSAT ${agents.top_agent.csat} | IVR Deflection: ${ivr.ivr_resolved/ivr.total_calls*100|0}%`;
+}
+async function loadAllP43Ops() { await loadP43Ops(); }
+loadAllP43Ops();
+</script>
+<!-- END PHASE 43 OPS PORTAL -->
 </body>
 </html>

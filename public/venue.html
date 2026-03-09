@@ -3348,4 +3348,23 @@ async function loadAllP42Venue() { await loadP42Venue(); }
 loadAllP42Venue();
 </script>
 <!-- END PHASE 42 VENUE PORTAL -->
+
+<!-- PHASE 43 VENUE PORTAL -->
+<div class="phase-section" id="phase43-venue">
+  <h2 class="phase-title">Phase 43 — Support & Feedback at Venue</h2>
+  <div class="module-card"><h3>🎧 On-Site Support</h3><div id="p43-venue-sup" class="stats-grid"></div><div id="p43-venue-sla" class="info-alert"></div></div>
+</div>
+<script>
+async function loadP43Venue() {
+  const [sup, sla] = await Promise.all([
+    fetch('/api/v43/support/overview').then(r=>r.json()),
+    fetch('/api/v43/support/sla').then(r=>r.json())
+  ]);
+  document.getElementById('p43-venue-sup').innerHTML=`<span>Open Tickets: ${sup.open_tickets.toLocaleString()}</span><span>Resolved Today: ${sup.resolved_today.toLocaleString()}</span><span>Agents Online: ${sup.agents_online}</span><span>AI Handled: ${sup.ai_handled_pct}%</span>`;
+  document.getElementById('p43-venue-sla').innerHTML=`SLA Compliance: ${sla.sla_compliance_pct}% | Breaches Today: ${sla.breaches_today} | FCR: ${sup.first_contact_resolution_pct}%`;
+}
+async function loadAllP43Venue() { await loadP43Venue(); }
+loadAllP43Venue();
+</script>
+<!-- END PHASE 43 VENUE PORTAL -->
 </body></html>

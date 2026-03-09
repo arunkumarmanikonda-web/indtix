@@ -6613,4 +6613,37 @@ async function loadP42Admin() {
 loadP42Admin();
 </script>
 <!-- END PHASE 42 ADMIN PORTAL -->
+
+<!-- PHASE 43 ADMIN PORTAL -->
+<div class="phase-section" id="phase43-admin">
+  <h2 class="phase-title">Phase 43 — Customer Support, CRM & Engagement Automation</h2>
+  <div class="module-card"><h3>🎧 Omni-Channel Support</h3><div id="p43-support" class="stats-grid"></div></div>
+  <div class="module-card"><h3>👥 CRM & Customer 360</h3><div id="p43-crm" class="stats-grid"></div></div>
+  <div class="module-card"><h3>📧 Marketing Automation</h3><div id="p43-mkt" class="stats-grid"></div></div>
+  <div class="module-card"><h3>🤖 Chatbot & IVR</h3><div id="p43-bot" class="stats-grid"></div></div>
+  <div class="module-card"><h3>🏆 Loyalty & Rewards</h3><div id="p43-loyalty" class="stats-grid"></div></div>
+  <div class="module-card"><h3>📊 Retention & CRM Analytics</h3><div id="p43-retention" class="stats-grid"></div><div id="p43-summary" class="success-alert"></div></div>
+</div>
+<script>
+async function loadP43Admin() {
+  const [sup, crm, mkt, bot, loy, ret, crmA] = await Promise.all([
+    fetch('/api/v43/support/analytics').then(r=>r.json()),
+    fetch('/api/v43/crm/analytics').then(r=>r.json()),
+    fetch('/api/v43/marketing/analytics').then(r=>r.json()),
+    fetch('/api/v43/chatbot/analytics').then(r=>r.json()),
+    fetch('/api/v43/loyalty/analytics').then(r=>r.json()),
+    fetch('/api/v43/retention/analytics').then(r=>r.json()),
+    fetch('/api/v43/crm-analytics/benchmarks').then(r=>r.json())
+  ]);
+  document.getElementById('p43-support').innerHTML=`<span>Tickets Q1: ${sup.total_tickets.toLocaleString()}</span><span>Resolution: ${sup.resolution_rate_pct}%</span><span>CSAT: ${sup.csat_avg}/5</span><span>AI Savings: ₹${sup.ai_savings_cr}Cr</span>`;
+  document.getElementById('p43-crm').innerHTML=`<span>New Customers: ${crm.new_customers.toLocaleString()}</span><span>NRR: ${crm.nrr_pct}%</span><span>LTV: ₹${crm.avg_ltv_inr.toLocaleString()}</span><span>LTV/CAC: ${crm.ltv_to_cac}x</span>`;
+  document.getElementById('p43-mkt').innerHTML=`<span>Sends Q1: ${(mkt.total_sends/1000000).toFixed(0)}M</span><span>Conv: ${mkt.total_conversions.toLocaleString()}</span><span>Revenue: ₹${mkt.revenue_attributed_cr}Cr</span><span>Best: ${mkt.best_channel}</span>`;
+  document.getElementById('p43-bot').innerHTML=`<span>Conversations: ${(bot.conversations/1000000).toFixed(1)}M</span><span>Bot Resolved: ${(bot.resolved_by_bot/1000000).toFixed(1)}M</span><span>Cost Saved: ₹${bot.cost_saved_vs_human_cr}Cr</span>`;
+  document.getElementById('p43-loyalty').innerHTML=`<span>Points Issued: ${(loy.points_issued/1000000).toFixed(0)}M</span><span>Revenue Impact: ₹${loy.net_impact_cr}Cr</span><span>Retention Lift: +${loy.member_retention_lift_pct}%</span>`;
+  document.getElementById('p43-retention').innerHTML=`<span>Churn Prevented: ${ret.churn_prevented.toLocaleString()}</span><span>Revenue Saved: ₹${ret.revenue_saved_cr}Cr</span><span>ROI: ${ret.intervention_roi_x}x</span>`;
+  document.getElementById('p43-summary').innerHTML=`NPS: ${crmA.industix_nps} (Industry: ${crmA.industry_nps}) | LTV Premium: +${crmA.ltv_premium_pct}% | Churn Advantage: -${crmA.churn_advantage_pct}%`;
+}
+loadP43Admin();
+</script>
+<!-- END PHASE 43 ADMIN PORTAL -->
 </body></html>
