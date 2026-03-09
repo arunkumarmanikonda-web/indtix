@@ -6482,5 +6482,51 @@ async function loadP35FanESG() {
 }
 </script>
 <!-- END PHASE 35 FAN PORTAL -->
+
+<!-- PHASE 36 FAN PORTAL: Web3 & NFT -->
+<div class="phase-section" id="p36-fan-section">
+  <h3>⛓️ Phase 36 — My NFT Tickets & Web3 Wallet</h3>
+  <div class="btn-row">
+    <button onclick="loadP36FanTickets()">My NFT Tickets</button>
+    <button onclick="loadP36FanWallet()">Wallet Balance</button>
+    <button onclick="loadP36FanCollectibles()">Collectibles</button>
+    <button onclick="loadP36FanDAO()">DAO Rewards</button>
+    <button onclick="loadP36FanDeFi()">DeFi Stakes</button>
+  </div>
+  <div id="p36-fan-output" class="output-box"></div>
+</div>
+<script>
+async function loadP36FanTickets() {
+  const r = await fetch('/api/fan/web3/nft/my-tickets');
+  const d = await r.json();
+  const items = d.nfts.map(t => `${t.event} (${t.seat}) — ${t.chain}`).join('<br>');
+  document.getElementById('p36-fan-output').innerHTML = `<div class="info-alert">🎫 NFT Tickets: ${d.total}<br>${items}</div>`;
+}
+async function loadP36FanWallet() {
+  const r = await fetch('/api/fan/web3/wallet/balance');
+  const d = await r.json();
+  document.getElementById('p36-fan-output').innerHTML =
+    `<div class="success-alert">💜 Wallet: ETH ${d.eth} | MATIC ${d.matic} | USDC $${d.usdc} | NFTs: ${d.nfts_count} | Total: $${d.total_usd_value}</div>`;
+}
+async function loadP36FanCollectibles() {
+  const r = await fetch('/api/fan/web3/collectibles/my-collection');
+  const d = await r.json();
+  document.getElementById('p36-fan-output').innerHTML =
+    `<div class="info-alert">✨ Collection: ${d.items} items | Value: $${d.estimated_value_usdc} | Rarest: ${d.rarest_item}</div>`;
+}
+async function loadP36FanDAO() {
+  const r = await fetch('/api/fan/web3/dao/rewards');
+  const d = await r.json();
+  document.getElementById('p36-fan-output').innerHTML =
+    `<div class="info-alert">🏛️ Staked INDT: ${d.staked_indt.toLocaleString()} | APY: ${d.staking_apy_pct}% | Rewards Earned: ${d.rewards_earned_indt.toLocaleString()} INDT | Next: ${d.next_distribution}</div>`;
+}
+async function loadP36FanDeFi() {
+  const r = await fetch('/api/fan/web3/defi/my-stakes');
+  const d = await r.json();
+  document.getElementById('p36-fan-output').innerHTML =
+    `<div class="success-alert">🌱 Staked INDT: ${d.staked_indt.toLocaleString()} | USDC: $${d.staked_usdc} | Claimable: $${d.rewards_claimable_usdc} | APY: ${d.apy_pct}% | Unlock: ${d.lock_expiry}</div>`;
+}
+</script>
+<!-- END PHASE 36 FAN PORTAL -->
 </body>
 </html>

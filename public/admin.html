@@ -5815,4 +5815,57 @@ async function loadP35Capital() {
 }
 </script>
 <!-- END PHASE 35 ADMIN PORTAL -->
+
+<!-- PHASE 36 ADMIN PORTAL: Web3, NFT & Blockchain -->
+<div class="phase-section" id="p36-admin-section">
+  <h3>⛓️ Phase 36 — Web3, NFT Ticketing & Blockchain</h3>
+  <div class="btn-row">
+    <button onclick="loadP36NFT()">NFT Dashboard</button>
+    <button onclick="loadP36Contracts()">Smart Contracts</button>
+    <button onclick="loadP36DAO()">DAO Governance</button>
+    <button onclick="loadP36Market()">Secondary Market</button>
+    <button onclick="loadP36Royalties()">Royalties</button>
+    <button onclick="loadP36ChainAnalytics()">Chain Analytics</button>
+  </div>
+  <div id="p36-admin-output" class="output-box"></div>
+</div>
+<script>
+async function loadP36NFT() {
+  const r = await fetch('/api/admin/web3/nft/dashboard');
+  const d = await r.json();
+  document.getElementById('p36-admin-output').innerHTML =
+    `<div class="info-alert">🎫 NFTs Minted: ${d.nfts_minted_total.toLocaleString()} | Active: ${d.nfts_active.toLocaleString()} | Chains: ${d.chains.join(', ')}<br>Floor: $${d.floor_price_usdc} | GMV: $${(d.total_gmv_usdc/1e6).toFixed(2)}M | Contracts: ${d.smart_contracts_deployed}</div>`;
+}
+async function loadP36Contracts() {
+  const r = await fetch('/api/admin/web3/contracts/dashboard');
+  const d = await r.json();
+  document.getElementById('p36-admin-output').innerHTML =
+    `<div class="success-alert">📜 Contracts: ${d.contracts_deployed} deployed (${d.active} active) | TVL: $${(d.total_value_locked_usdc/1e6).toFixed(2)}M | Audited: ${d.audited} | Auditor: ${d.auditor}</div>`;
+}
+async function loadP36DAO() {
+  const r = await fetch('/api/admin/web3/dao/dashboard');
+  const d = await r.json();
+  document.getElementById('p36-admin-output').innerHTML =
+    `<div class="info-alert">🗳️ DAO Members: ${d.dao_members.toLocaleString()} | Token: ${d.governance_token} | Circulating: ${(d.circulating/1e6).toFixed(0)}M | Active Proposals: ${d.proposals_active} | Turnout: ${d.voter_turnout_avg_pct}%</div>`;
+}
+async function loadP36Market() {
+  const r = await fetch('/api/admin/web3/market/dashboard');
+  const d = await r.json();
+  document.getElementById('p36-admin-output').innerHTML =
+    `<div class="info-alert">💹 Listings: ${d.listings_active.toLocaleString()} | 24h Vol: $${d.volume_24h_usdc.toLocaleString()} | Sales: ${d.sales_24h} | Premium: +${d.avg_resale_premium_pct}% | Royalties: $${d.royalties_collected_usdc.toLocaleString()}</div>`;
+}
+async function loadP36Royalties() {
+  const r = await fetch('/api/admin/web3/royalty/dashboard');
+  const d = await r.json();
+  document.getElementById('p36-admin-output').innerHTML =
+    `<div class="success-alert">🎵 Artists Enrolled: ${d.artists_enrolled.toLocaleString()} | Total Royalties: $${(d.total_royalties_usdc/1e3).toFixed(0)}K | Avg Rate: ${d.avg_royalty_pct}% | Instant Settlement: ${d.instant_settlement ? '✅' : '❌'}</div>`;
+}
+async function loadP36ChainAnalytics() {
+  const r = await fetch('/api/admin/web3/analytics/dashboard');
+  const d = await r.json();
+  document.getElementById('p36-admin-output').innerHTML =
+    `<div class="info-alert">🔍 Txns: ${d.on_chain_txns_total.toLocaleString()} | Wallets: ${d.wallets_tracked.toLocaleString()} | Chains: ${d.chains_monitored} | Alerts: ${d.suspicious_activity_alerts} | Compliance: ${d.compliance_score_pct}%</div>`;
+}
+</script>
+<!-- END PHASE 36 ADMIN PORTAL -->
 </body></html>

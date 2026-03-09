@@ -5103,4 +5103,36 @@ async function loadP35OrgMA() {
 }
 </script>
 <!-- END PHASE 35 ORGANISER PORTAL -->
+
+<!-- PHASE 36 ORGANISER PORTAL: Smart Contracts & Royalties -->
+<div class="phase-section" id="p36-org-section">
+  <h3>⛓️ Phase 36 — Smart Contracts, Royalties & NFT Events</h3>
+  <div class="btn-row">
+    <button onclick="loadP36OrgContract()">Event Contract</button>
+    <button onclick="loadP36OrgRoyalties()">Artist Earnings</button>
+    <button onclick="loadP36OrgSettlement()">Settlement</button>
+  </div>
+  <div id="p36-org-output" class="output-box"></div>
+</div>
+<script>
+async function loadP36OrgContract() {
+  const r = await fetch('/api/organiser/web3/contracts/event-contract');
+  const d = await r.json();
+  document.getElementById('p36-org-output').innerHTML =
+    `<div class="info-alert">📜 Event: ${d.event} | Tickets: ${d.tickets_tokenised.toLocaleString()} | Revenue: $${(d.revenue_on_chain_usdc/1e3).toFixed(0)}K | Auto-settle: ${d.auto_settle ? '✅' : '❌'} | Escrow: ${d.escrow_days}d</div>`;
+}
+async function loadP36OrgRoyalties() {
+  const r = await fetch('/api/organiser/web3/royalty/artist-earnings');
+  const d = await r.json();
+  document.getElementById('p36-org-output').innerHTML =
+    `<div class="success-alert">🎵 ${d.artist}: Primary $${(d.primary_earned_usdc/1e3).toFixed(1)}K | Secondary $${(d.secondary_earned_usdc/1e3).toFixed(1)}K | Total $${(d.total_usdc/1e3).toFixed(1)}K | Pending $${(d.pending_usdc/1e3).toFixed(1)}K</div>`;
+}
+async function loadP36OrgSettlement() {
+  const r = await fetch('/api/organiser/web3/contracts/settlement');
+  const d = await r.json();
+  document.getElementById('p36-org-output').innerHTML =
+    `<div class="info-alert">💸 Pending: ${d.pending_settlements} ($${(d.total_usdc/1e3).toFixed(0)}K) | Auto-settled: ${d.auto_settled} | Avg Days: ${d.avg_settle_days}</div>`;
+}
+</script>
+<!-- END PHASE 36 ORGANISER PORTAL -->
 </body></html>

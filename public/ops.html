@@ -3302,5 +3302,37 @@ async function loadP35OpsInsurance() {
 }
 </script>
 <!-- END PHASE 35 OPS PORTAL -->
+
+<!-- PHASE 36 OPS PORTAL: Chain Ops & AML -->
+<div class="phase-section" id="p36-ops-section">
+  <h3>⛓️ Phase 36 — Blockchain Ops, AML & Gas Optimisation</h3>
+  <div class="btn-row">
+    <button onclick="loadP36OpsAML()">AML Dashboard</button>
+    <button onclick="loadP36OpsGas()">Gas Optimisation</button>
+    <button onclick="loadP36OpsTreasury()">Crypto Treasury</button>
+  </div>
+  <div id="p36-ops-output" class="output-box"></div>
+</div>
+<script>
+async function loadP36OpsAML() {
+  const r = await fetch('/api/ops/web3/analytics/aml-dashboard');
+  const d = await r.json();
+  document.getElementById('p36-ops-output').innerHTML =
+    `<div class="warning-alert">🔍 AML: Screened ${d.wallets_screened_24h.toLocaleString()}/24h | SARs YTD: ${d.sars_filed_ytd} | Blocked: ${d.blocked_txns} | Provider: ${d.provider} | False+: ${d.false_positive_pct}%</div>`;
+}
+async function loadP36OpsGas() {
+  const r = await fetch('/api/ops/web3/analytics/gas-optimization');
+  const d = await r.json();
+  document.getElementById('p36-ops-output').innerHTML =
+    `<div class="success-alert">⛽ Batched Txns: ${d.batched_txns.toLocaleString()} | Gas Saved: ${d.gas_saved_pct}% | Meta Txns Sponsored: ${d.meta_txns_sponsored.toLocaleString()} | Relayer: ${d.relayer_network}</div>`;
+}
+async function loadP36OpsTreasury() {
+  const r = await fetch('/api/ops/web3/payments/treasury');
+  const d = await r.json();
+  document.getElementById('p36-ops-output').innerHTML =
+    `<div class="info-alert">🏛️ USDC: $${(d.usdc_balance/1e6).toFixed(2)}M | ETH: ${d.eth_balance} | MATIC: ${d.matic_balance.toLocaleString()} | Total: $${(d.total_usd/1e6).toFixed(2)}M | Gnosis Safe: ${d.safe_multisig ? '✅' : '❌'}</div>`;
+}
+</script>
+<!-- END PHASE 36 OPS PORTAL -->
 </body>
 </html>

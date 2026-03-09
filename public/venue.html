@@ -3075,4 +3075,29 @@ async function loadP35VenueBCP() {
 }
 </script>
 <!-- END PHASE 35 VENUE PORTAL -->
+
+<!-- PHASE 36 VENUE PORTAL: Crypto Payments -->
+<div class="phase-section" id="p36-venue-section">
+  <h3>⛓️ Phase 36 — Crypto Payments at Venue</h3>
+  <div class="btn-row">
+    <button onclick="loadP36VenueCrypto()">Crypto Dashboard</button>
+    <button onclick="loadP36VenueFX()">FX Rates</button>
+  </div>
+  <div id="p36-venue-output" class="output-box"></div>
+</div>
+<script>
+async function loadP36VenueCrypto() {
+  const r = await fetch('/api/admin/web3/payments/dashboard');
+  const d = await r.json();
+  document.getElementById('p36-venue-output').innerHTML =
+    `<div class="info-alert">💳 Crypto Txns 24h: ${d.crypto_txns_24h.toLocaleString()} | Vol: $${(d.crypto_volume_usdc/1e3).toFixed(0)}K | Tokens: ${d.supported_tokens} | Confirmation: ${d.avg_confirmation_sec}s | Success: ${d.success_rate_pct}%</div>`;
+}
+async function loadP36VenueFX() {
+  const r = await fetch('/api/admin/web3/payments/fx-rates');
+  const d = await r.json();
+  document.getElementById('p36-venue-output').innerHTML =
+    `<div class="info-alert">💱 USDC: ₹${d.USDC_INR} | ETH: ₹${d.ETH_INR.toLocaleString()} | MATIC: ₹${d.MATIC_INR} | SOL: ₹${d.SOL_INR.toLocaleString()} | Source: ${d.source}</div>`;
+}
+</script>
+<!-- END PHASE 36 VENUE PORTAL -->
 </body></html>

@@ -3369,4 +3369,36 @@ async function loadP35EMCompliance() {
 }
 </script>
 <!-- END PHASE 35 EVENT MANAGER -->
+
+<!-- PHASE 36 EVENT MANAGER: NFT Collectibles & Drops -->
+<div class="phase-section" id="p36-em-section">
+  <h3>⛓️ Phase 36 — NFT Collectibles & Digital Drops</h3>
+  <div class="btn-row">
+    <button onclick="loadP36EMDrops()">Drop Planner</button>
+    <button onclick="loadP36EMAirdrop()">Airdrop</button>
+    <button onclick="loadP36EMRedemption()">Physical Redemption</button>
+  </div>
+  <div id="p36-em-output" class="output-box"></div>
+</div>
+<script>
+async function loadP36EMDrops() {
+  const r = await fetch('/api/event-manager/web3/collectibles/drop-planner');
+  const d = await r.json();
+  document.getElementById('p36-em-output').innerHTML =
+    `<div class="info-alert">🎁 Upcoming Drops: ${d.upcoming_drops} | Next: ${d.next_drop} | Expected Vol: $${(d.expected_volume_usdc/1e3).toFixed(0)}K | Whitelist Spots: ${d.whitelist_spots.toLocaleString()}</div>`;
+}
+async function loadP36EMAirdrop() {
+  const resp = await fetch('/api/event-manager/web3/collectibles/airdrop', {method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
+  const d = await resp.json();
+  document.getElementById('p36-em-output').innerHTML =
+    `<div class="success-alert">🧧 Airdrop ${d.airdrop_id}: ${d.recipients.toLocaleString()} recipients | ${d.tx_batch} batches | ETA: ${d.estimated_completion_min}min | Status: ${d.status}</div>`;
+}
+async function loadP36EMRedemption() {
+  const r = await fetch('/api/event-manager/web3/collectibles/physical-redemption');
+  const d = await r.json();
+  document.getElementById('p36-em-output').innerHTML =
+    `<div class="info-alert">📦 Redeemable NFTs: ${d.redeemable_nfts} | Completed: ${d.redemptions_completed} | Items: ${d.physical_items.join(', ')} | Window: ${d.redemption_window_days} days</div>`;
+}
+</script>
+<!-- END PHASE 36 EVENT MANAGER -->
 </body></html>

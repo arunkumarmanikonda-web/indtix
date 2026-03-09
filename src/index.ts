@@ -21548,7 +21548,7 @@ app.get('/api/admin/capital/investor-calendar', (c) => c.json({
 }))
 
 // ── Phase 35 health endpoint ─────────────────────────────────
-app.get('/api/health', (c) => c.json({
+app.get('/api/v35/health', (c) => c.json({
   status: 'ok', platform: 'INDTIX', version: 'v35.0.0',
   phase: 'Phase 35', theme: 'IPO Readiness, Governance & Investor Suite',
   new_endpoints: 90, total_endpoints: 2179,
@@ -21568,6 +21568,439 @@ app.get('/api/health', (c) => c.json({
 
 // ═══════════════════════════════════════════════════════════
 // END PHASE 35 — IPO READINESS, GOVERNANCE & INVESTOR SUITE
+// ═══════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 36 — WEB3, NFT TICKETING & BLOCKCHAIN INFRASTRUCTURE
+// Version: v36.0.0 | New endpoints: 90 | Total: 2269
+// ═══════════════════════════════════════════════════════════
+
+// ── Module 1: NFT Ticket Minting & Management ───────────────
+app.get('/api/admin/web3/nft/dashboard', (c) => c.json({
+  nfts_minted_total: 284000, nfts_active: 214000, chains: ['Polygon', 'Ethereum', 'Solana'],
+  avg_mint_cost_usd: 0.04, floor_price_usdc: 12, total_gmv_usdc: 3400000,
+  smart_contracts_deployed: 42
+}))
+app.get('/api/admin/web3/nft/collections', (c) => c.json({
+  collections: [
+    { name: 'INDTIX Genesis', chain: 'Polygon', supply: 10000, minted: 9842, floor_usdc: 28 },
+    { name: 'Sunburn 2026', chain: 'Ethereum', supply: 5000, minted: 4200, floor_usdc: 84 },
+    { name: 'IPL Fan Pass', chain: 'Polygon', supply: 50000, minted: 42000, floor_usdc: 8 }
+  ]
+}))
+app.post('/api/admin/web3/nft/mint', (c) => c.json({
+  token_id: `NFT-${Date.now()}`, contract: '0xINDTIX...', chain: 'Polygon',
+  recipient: '0xFan...', metadata_ipfs: `ipfs://Qm${Math.random().toString(36).slice(2)}`,
+  tx_hash: `0x${Math.random().toString(16).slice(2)}`, gas_used: 84000
+}))
+app.get('/api/admin/web3/nft/mint-status', (c) => c.json({
+  pending: 284, confirmed: 8400, failed: 4, avg_confirmation_sec: 12,
+  batch_mint_enabled: true, lazy_mint: true
+}))
+app.get('/api/fan/web3/nft/my-tickets', (c) => c.json({
+  nfts: [
+    { token_id: 'NFT-001', event: 'Sunburn 2026', seat: 'VIP-A12', chain: 'Polygon', valid: true },
+    { token_id: 'NFT-002', event: 'AR Rahman Tour', seat: 'GA-Floor', chain: 'Ethereum', valid: true }
+  ], wallet: '0xFan...', total: 2
+}))
+app.get('/api/fan/web3/nft/ticket-verify', (c) => c.json({
+  token_id: 'NFT-001', owner_verified: true, event_valid: true,
+  used: false, transferable: true, chain_verified: true
+}))
+app.post('/api/fan/web3/nft/transfer', (c) => c.json({
+  tx_hash: `0x${Math.random().toString(16).slice(2)}`, from: '0xFan...', to: '0xFriend...',
+  token_id: 'NFT-001', status: 'confirmed', gas_fee_matic: 0.008
+}))
+app.get('/api/admin/web3/nft/royalty-config', (c) => c.json({
+  royalty_pct: 8, artist_share_pct: 5, platform_share_pct: 3,
+  enforced_on: ['OpenSea', 'Blur', 'INDTIX-Market'], eip2981_compliant: true
+}))
+app.get('/api/admin/web3/nft/analytics', (c) => c.json({
+  daily_mints: 2840, daily_transfers: 840, secondary_volume_usdc: 284000,
+  unique_holders: 84000, avg_holding_days: 28, whale_holders: 42
+}))
+app.post('/api/admin/web3/nft/burn', (c) => c.json({
+  token_id: 'NFT-USED', burned: true, tx_hash: `0x${Math.random().toString(16).slice(2)}`,
+  reason: 'ticket-scanned', timestamp: new Date().toISOString()
+}))
+
+// ── Module 2: Blockchain Identity & Wallet ──────────────────
+app.get('/api/fan/web3/wallet/dashboard', (c) => c.json({
+  connected_wallets: 284000, active_today: 42000, chains_supported: 8,
+  avg_balance_usdc: 284, custodial_wallets: 184000, self_custody: 100000
+}))
+app.post('/api/fan/web3/wallet/connect', (c) => c.json({
+  wallet_address: `0x${Math.random().toString(16).slice(2,42)}`,
+  chain: 'Polygon', connected: true, balance_matic: 42.8, session_token: `sess_${Date.now()}`
+}))
+app.get('/api/fan/web3/wallet/balance', (c) => c.json({
+  eth: 0.84, matic: 284, sol: 8.4, usdc: 420, nfts_count: 12,
+  total_usd_value: 1284, last_updated: new Date().toISOString()
+}))
+app.get('/api/fan/web3/wallet/history', (c) => c.json({
+  transactions: [
+    { type: 'nft-purchase', amount_usdc: 84, event: 'Sunburn 2026', date: '2026-03-01' },
+    { type: 'nft-transfer', token: 'NFT-001', to: '0xFriend', date: '2026-02-14' }
+  ], total_txns: 42
+}))
+app.get('/api/ops/web3/wallet/kyc-status', (c) => c.json({
+  kyc_verified_wallets: 184000, pending: 8400, failed: 2840,
+  kyc_provider: 'Onfido + Chainalysis', travel_rule_compliant: true
+}))
+app.post('/api/fan/web3/wallet/create-custodial', (c) => c.json({
+  wallet_address: `0x${Math.random().toString(16).slice(2,42)}`,
+  type: 'custodial', chain: 'Polygon', created: true, mpc_secured: true
+}))
+app.get('/api/ops/web3/wallet/risk-scoring', (c) => c.json({
+  high_risk_wallets: 42, sanctioned: 0, mixer_detected: 2,
+  chainalysis_score_avg: 8.4, auto_blocked: 2
+}))
+app.get('/api/fan/web3/identity/did', (c) => c.json({
+  did: 'did:polygon:0xFan...', verified: true, credentials: ['fan-kyc', 'age-18+', 'india-resident'],
+  issued_by: 'INDTIX-DID', expires: '2027-03-09'
+}))
+
+// ── Module 3: Smart Contract Event Platform ─────────────────
+app.get('/api/admin/web3/contracts/dashboard', (c) => c.json({
+  contracts_deployed: 42, active: 38, chains: ['Polygon', 'Ethereum', 'Arbitrum'],
+  total_value_locked_usdc: 8400000, audited: 42, auditor: 'Trail of Bits + Certik'
+}))
+app.get('/api/admin/web3/contracts/list', (c) => c.json({
+  contracts: [
+    { name: 'INDTIXTicket', address: '0xTKT...', chain: 'Polygon', standard: 'ERC-721' },
+    { name: 'INDTIXFanPass', address: '0xFP...', chain: 'Polygon', standard: 'ERC-1155' },
+    { name: 'INDTIXRoyalty', address: '0xRYL...', chain: 'Polygon', standard: 'EIP-2981' }
+  ]
+}))
+app.post('/api/admin/web3/contracts/deploy', (c) => c.json({
+  contract_address: `0x${Math.random().toString(16).slice(2,42)}`,
+  chain: 'Polygon', tx_hash: `0x${Math.random().toString(16).slice(2)}`,
+  gas_used: 2840000, deployment_cost_matic: 84
+}))
+app.get('/api/admin/web3/contracts/audit-report', (c) => c.json({
+  auditor: 'Trail of Bits', last_audit: '2026-01-15', findings: { critical: 0, high: 0, medium: 2, low: 4 },
+  all_resolved: true, next_audit: '2026-07-01'
+}))
+app.get('/api/organiser/web3/contracts/event-contract', (c) => c.json({
+  contract_address: '0xEVT...', event: 'Sunburn 2026', tickets_tokenised: 5000,
+  revenue_on_chain_usdc: 420000, auto_settle: true, escrow_days: 7
+}))
+app.post('/api/admin/web3/contracts/pause', (c) => c.json({
+  contract: '0xTKT...', paused: true, reason: 'emergency', paused_by: 'admin', timestamp: new Date().toISOString()
+}))
+app.get('/api/admin/web3/contracts/events-log', (c) => c.json({
+  events_24h: 28400, transfers: 8400, mints: 2840, burns: 42,
+  approvals: 18400, top_contract: 'INDTIXTicket'
+}))
+app.get('/api/organiser/web3/contracts/settlement', (c) => c.json({
+  pending_settlements: 8, total_usdc: 840000, auto_settled: 28, avg_settle_days: 2.4,
+  multisig_required: true
+}))
+app.post('/api/admin/web3/contracts/upgrade', (c) => c.json({
+  proxy_address: '0xPROXY...', new_implementation: `0x${Math.random().toString(16).slice(2,42)}`,
+  upgrade_type: 'UUPS', timelock_hours: 48, status: 'queued'
+}))
+app.get('/api/admin/web3/contracts/gas-tracker', (c) => c.json({
+  polygon_gwei: 84, eth_gwei: 28, arb_gwei: 0.4, optimisation_savings_pct: 42,
+  batch_transactions_enabled: true
+}))
+
+// ── Module 4: Web3 Secondary Market & Resale ────────────────
+app.get('/api/admin/web3/market/dashboard', (c) => c.json({
+  listings_active: 8400, volume_24h_usdc: 284000, sales_24h: 840,
+  avg_resale_premium_pct: 42, floor_price_usdc: 12, royalties_collected_usdc: 28400
+}))
+app.get('/api/fan/web3/market/listings', (c) => c.json({
+  listings: [
+    { token_id: 'NFT-100', event: 'IPL Final 2026', price_usdc: 280, premium_pct: 180 },
+    { token_id: 'NFT-101', event: 'Sunburn VIP', price_usdc: 420, premium_pct: 400 }
+  ], total: 8400
+}))
+app.post('/api/fan/web3/market/list', (c) => c.json({
+  listing_id: `LST-${Date.now()}`, token_id: 'NFT-001', price_usdc: 120,
+  expiry_hours: 72, royalty_pct: 8, platform_fee_pct: 2.5, status: 'listed'
+}))
+app.post('/api/fan/web3/market/buy', (c) => c.json({
+  tx_hash: `0x${Math.random().toString(16).slice(2)}`, token_id: 'NFT-100',
+  paid_usdc: 280, royalty_usdc: 22.4, platform_fee_usdc: 7, seller_received_usdc: 250.6
+}))
+app.get('/api/admin/web3/market/price-oracle', (c) => c.json({
+  ipls_final_usdc: 280, sunburn_vip_usdc: 420, ar_rahman_usdc: 84,
+  source: 'INDTIX-Oracle + Chainlink', updated_at: new Date().toISOString()
+}))
+app.get('/api/admin/web3/market/anti-scalping', (c) => c.json({
+  price_cap_enabled: true, max_premium_pct: 200, violations_blocked_24h: 42,
+  dynamic_cap: true, fan_protection_score: 94
+}))
+app.get('/api/fan/web3/market/my-listings', (c) => c.json({
+  active: 2, sold: 8, expired: 1, total_earned_usdc: 840, pending_settlement_usdc: 120
+}))
+app.get('/api/admin/web3/market/revenue', (c) => c.json({
+  platform_fees_usdc: 28400, royalties_distributed_usdc: 84000,
+  total_secondary_gmv_usdc: 2840000, take_rate_pct: 4.5
+}))
+
+// ── Module 5: Crypto Payment Gateway ────────────────────────
+app.get('/api/admin/web3/payments/dashboard', (c) => c.json({
+  crypto_txns_24h: 2840, crypto_volume_usdc: 284000, supported_tokens: 12,
+  networks: ['Polygon', 'Ethereum', 'BNB', 'Solana'], avg_confirmation_sec: 8,
+  success_rate_pct: 99.2
+}))
+app.get('/api/fan/web3/payments/methods', (c) => c.json({
+  tokens: ['USDC', 'USDT', 'ETH', 'MATIC', 'SOL', 'BNB'],
+  fiat_on_ramp: ['MoonPay', 'Transak', 'Ramp'],
+  wallets: ['MetaMask', 'WalletConnect', 'Coinbase Wallet', 'Phantom']
+}))
+app.post('/api/fan/web3/payments/pay', (c) => c.json({
+  payment_id: `CPAY-${Date.now()}`, token: 'USDC', amount: 84,
+  tx_hash: `0x${Math.random().toString(16).slice(2)}`, confirmed: true, network: 'Polygon'
+}))
+app.get('/api/ops/web3/payments/reconciliation', (c) => c.json({
+  txns_reconciled: 28400, exceptions: 4, auto_resolved: 3,
+  manual_review: 1, settlement_usdc: 2840000
+}))
+app.get('/api/admin/web3/payments/fx-rates', (c) => c.json({
+  USDC_INR: 84.2, ETH_INR: 210000, MATIC_INR: 42, SOL_INR: 8400,
+  source: 'Chainlink Price Feeds', updated_at: new Date().toISOString()
+}))
+app.post('/api/ops/web3/payments/refund', (c) => c.json({
+  refund_id: `CREF-${Date.now()}`, original_tx: '0xABC...', amount_usdc: 84,
+  refund_tx: `0x${Math.random().toString(16).slice(2)}`, status: 'completed'
+}))
+app.get('/api/admin/web3/payments/compliance', (c) => c.json({
+  vasp_registered: true, fiu_reporting: true, travel_rule: 'FATF-compliant',
+  aml_screening: 'Chainalysis + Elliptic', blocked_jurisdictions: ['OFAC-list']
+}))
+app.get('/api/ops/web3/payments/treasury', (c) => c.json({
+  usdc_balance: 2840000, eth_balance: 840, matic_balance: 284000,
+  total_usd: 4200000, auto_swap_to_inr: true, safe_multisig: true
+}))
+
+// ── Module 6: DAO Governance & Fan Voting ───────────────────
+app.get('/api/admin/web3/dao/dashboard', (c) => c.json({
+  dao_members: 84000, governance_token: 'INDT', total_supply: 1000000000,
+  circulating: 284000000, proposals_active: 8, voter_turnout_avg_pct: 42
+}))
+app.get('/api/fan/web3/dao/proposals', (c) => c.json({
+  proposals: [
+    { id: 'PROP-001', title: 'Add Hyderabad venue tier-1', votes_for: 28400, votes_against: 4200, status: 'passing' },
+    { id: 'PROP-002', title: 'Reduce platform fee to 8%', votes_for: 42000, votes_against: 18000, status: 'passing' }
+  ]
+}))
+app.post('/api/fan/web3/dao/vote', (c) => c.json({
+  proposal_id: 'PROP-001', vote: 'for', voting_power: 840,
+  tx_hash: `0x${Math.random().toString(16).slice(2)}`, recorded: true
+}))
+app.get('/api/fan/web3/dao/my-voting-power', (c) => c.json({
+  indt_balance: 8400, voting_power: 8400, delegated_to: null,
+  votes_cast: 12, last_vote: '2026-03-01'
+}))
+app.post('/api/admin/web3/dao/create-proposal', (c) => c.json({
+  proposal_id: `PROP-${Date.now()}`, title: 'New Proposal', voting_period_days: 7,
+  quorum_pct: 10, status: 'pending', snapshot_block: 28400000
+}))
+app.get('/api/admin/web3/dao/tokenomics', (c) => c.json({
+  token: 'INDT', total_supply: 1000000000, team_pct: 20, investors_pct: 30,
+  community_pct: 40, ecosystem_pct: 10, vesting_months: 36
+}))
+app.get('/api/admin/web3/dao/treasury', (c) => c.json({
+  dao_treasury_usdc: 28400000, assets: ['USDC', 'ETH', 'MATIC'], gnosis_safe: true,
+  signatories: 5, threshold: 3
+}))
+app.get('/api/fan/web3/dao/rewards', (c) => c.json({
+  staking_apy_pct: 12, staked_indt: 84000, rewards_earned_indt: 2840,
+  next_distribution: '2026-04-01', governance_bonus_pct: 2
+}))
+
+// ── Module 7: On-Chain Royalty & Artist Splits ──────────────
+app.get('/api/admin/web3/royalty/dashboard', (c) => c.json({
+  artists_enrolled: 2840, total_royalties_usdc: 840000, avg_royalty_pct: 8,
+  primary_sales_usdc: 8400000, secondary_sales_usdc: 2840000,
+  instant_settlement: true
+}))
+app.get('/api/admin/web3/royalty/splits', (c) => c.json({
+  splits: [
+    { artist: 'AR Rahman', primary_pct: 60, secondary_pct: 5, platform_pct: 40 },
+    { artist: 'Arijit Singh', primary_pct: 55, secondary_pct: 5, platform_pct: 45 }
+  ]
+}))
+app.post('/api/admin/web3/royalty/configure', (c) => c.json({
+  artist_id: 'ART-001', primary_royalty_pct: 60, secondary_royalty_pct: 8,
+  wallet: '0xArtist...', contract: '0xROYALTY...', active: true
+}))
+app.get('/api/admin/web3/royalty/payments', (c) => c.json({
+  payments_today: 284, total_usdc: 28400, avg_payment_usdc: 100,
+  instant: true, gas_covered_by: 'platform'
+}))
+app.get('/api/organiser/web3/royalty/artist-earnings', (c) => c.json({
+  artist: 'AR Rahman', primary_earned_usdc: 84000, secondary_earned_usdc: 28400,
+  total_usdc: 112400, pending_usdc: 8400, wallet_balance_usdc: 42000
+}))
+app.get('/api/admin/web3/royalty/dispute-resolution', (c) => c.json({
+  disputes_open: 2, resolved_30d: 8, avg_resolution_days: 3, arbitration_used: 0
+}))
+app.post('/api/organiser/web3/royalty/claim', (c) => c.json({
+  claim_id: `CLM-${Date.now()}`, amount_usdc: 28400,
+  tx_hash: `0x${Math.random().toString(16).slice(2)}`, status: 'confirmed'
+}))
+app.get('/api/admin/web3/royalty/analytics', (c) => c.json({
+  top_earning_artist: 'AR Rahman', top_event: 'Sunburn 2026',
+  yoy_growth_pct: 284, secondary_market_share_pct: 42
+}))
+app.get('/api/admin/web3/royalty/tax-report', (c) => c.json({
+  period: 'FY26', total_royalties_usdc: 840000, tds_deducted_usdc: 84000,
+  form_26q_filed: true, artists_issued_certificates: 2840
+}))
+app.get('/api/organiser/web3/royalty/co-artists', (c) => c.json({
+  collaborations: 28, multi_artist_events: 14, split_contracts: 28,
+  avg_split_parties: 3.2, total_distributed_usdc: 284000
+}))
+
+// ── Module 8: Decentralised Fan Loyalty (DeFi) ──────────────
+app.get('/api/admin/web3/defi/dashboard', (c) => c.json({
+  tvl_usdc: 8400000, fans_staking: 42000, avg_stake_usdc: 200,
+  protocols: ['Aave', 'Compound', 'INDTIXYIELD'], apy_avg_pct: 14, rewards_distributed_usdc: 840000
+}))
+app.get('/api/fan/web3/defi/my-stakes', (c) => c.json({
+  staked_indt: 8400, staked_usdc: 420, total_usd_value: 1120,
+  rewards_claimable_usdc: 42, lock_expiry: '2026-09-09', apy_pct: 14
+}))
+app.post('/api/fan/web3/defi/stake', (c) => c.json({
+  tx_hash: `0x${Math.random().toString(16).slice(2)}`, amount_usdc: 420,
+  lock_days: 180, apy_pct: 14, unlock_date: '2026-09-09', receipt_token: 'indt-v1'
+}))
+app.post('/api/fan/web3/defi/unstake', (c) => c.json({
+  tx_hash: `0x${Math.random().toString(16).slice(2)}`, returned_usdc: 420,
+  rewards_usdc: 42, early_exit_penalty_pct: 0, status: 'completed'
+}))
+app.get('/api/fan/web3/defi/yield-farming', (c) => c.json({
+  pools: [
+    { name: 'INDT-USDC LP', apy_pct: 28, tvl_usdc: 2840000, risk: 'medium' },
+    { name: 'INDT-MATIC LP', apy_pct: 42, tvl_usdc: 840000, risk: 'high' }
+  ]
+}))
+app.get('/api/admin/web3/defi/protocol-health', (c) => c.json({
+  utilisation_rate_pct: 74, liquidations_24h: 0, bad_debt_usdc: 0,
+  circuit_breaker: false, oracle_status: 'healthy'
+}))
+app.post('/api/fan/web3/defi/claim-rewards', (c) => c.json({
+  tx_hash: `0x${Math.random().toString(16).slice(2)}`, rewards_usdc: 42,
+  bonus_indt: 840, claimed: true
+}))
+app.get('/api/admin/web3/defi/risk-params', (c) => c.json({
+  max_ltv_pct: 75, liquidation_threshold_pct: 80, stability_fee_pct: 2,
+  insurance_fund_usdc: 840000, audit_firm: 'OpenZeppelin'
+}))
+
+// ── Module 9: NFT Collectibles & Digital Merchandise ────────
+app.get('/api/fan/web3/collectibles/dashboard', (c) => c.json({
+  total_collectibles: 284000, unique_series: 42, fan_owned: 84000,
+  floor_price_usdc: 4, total_volume_usdc: 2840000, top_series: 'Artist Signatures'
+}))
+app.get('/api/fan/web3/collectibles/catalogue', (c) => c.json({
+  series: [
+    { name: 'AR Rahman Signature', edition: 1000, available: 284, price_usdc: 84 },
+    { name: 'IPL 2026 Moments', edition: 10000, available: 4200, price_usdc: 12 },
+    { name: 'Festival Genesis', edition: 500, available: 42, price_usdc: 280 }
+  ]
+}))
+app.post('/api/fan/web3/collectibles/purchase', (c) => c.json({
+  token_id: `COL-${Date.now()}`, series: 'AR Rahman Signature', edition_num: 285,
+  price_usdc: 84, tx_hash: `0x${Math.random().toString(16).slice(2)}`, ipfs: `ipfs://Qm${Math.random().toString(36).slice(2)}`
+}))
+app.get('/api/fan/web3/collectibles/my-collection', (c) => c.json({
+  items: 12, estimated_value_usdc: 840, rarest_item: 'Festival Genesis #28',
+  display_url: 'https://gallery.indtix.com/fan/0xFan'
+}))
+app.get('/api/event-manager/web3/collectibles/drop-planner', (c) => c.json({
+  upcoming_drops: 4, next_drop: 'IPL 2026 Finals — 2026-04-28',
+  expected_volume_usdc: 84000, whitelist_spots: 2840, public_sale: true
+}))
+app.post('/api/event-manager/web3/collectibles/create-drop', (c) => c.json({
+  drop_id: `DROP-${Date.now()}`, name: 'Concert Memories', supply: 1000,
+  price_usdc: 42, launch_date: '2026-04-15', whitelist_enabled: true
+}))
+app.get('/api/fan/web3/collectibles/augmented-reality', (c) => c.json({
+  ar_enabled: true, compatible_devices: ['iOS 15+', 'Android 12+'],
+  ar_experiences: 28, avg_session_sec: 84
+}))
+app.get('/api/event-manager/web3/collectibles/physical-redemption', (c) => c.json({
+  redeemable_nfts: 42, redemptions_completed: 28, physical_items: ['Signed Poster', 'Backstage Pass', 'T-Shirt'],
+  redemption_window_days: 30
+}))
+app.get('/api/fan/web3/collectibles/trade-history', (c) => c.json({
+  trades: [{ from: '0xFan', to: '0xBuyer', token: 'COL-001', price_usdc: 120, date: '2026-03-01' }],
+  total_trades: 8400, profit_loss_usdc: 280
+}))
+app.post('/api/event-manager/web3/collectibles/airdrop', (c) => c.json({
+  airdrop_id: `AIR-${Date.now()}`, recipients: 2840, token_series: 'Event Attendance Proof',
+  tx_batch: 57, status: 'processing', estimated_completion_min: 8
+}))
+
+// ── Module 10: Blockchain Analytics & Compliance ────────────
+app.get('/api/admin/web3/analytics/dashboard', (c) => c.json({
+  on_chain_txns_total: 2840000, wallets_tracked: 284000, chains_monitored: 8,
+  suspicious_activity_alerts: 8, compliance_score_pct: 97,
+  indexer: 'The Graph + INDTIX-Indexer'
+}))
+app.get('/api/admin/web3/analytics/on-chain-metrics', (c) => c.json({
+  daily_active_wallets: 28400, daily_txns: 84000, avg_tx_value_usdc: 84,
+  gas_spent_today_usdc: 4200, peak_hour: '20:00-21:00', polygon_dominant: true
+}))
+app.get('/api/admin/web3/analytics/token-distribution', (c) => c.json({
+  top_100_holders_pct: 42, gini_coefficient: 0.74, average_balance_indt: 8400,
+  dormant_wallets_pct: 28, new_wallets_30d: 28400
+}))
+app.get('/api/admin/web3/analytics/chainalysis-report', (c) => c.json({
+  risk_exposure_usdc: 2840, high_risk_txns: 4, mixer_interactions: 0,
+  darknet_exposure: 0, cft_screening: 'clean', report_date: '2026-03-09'
+}))
+app.get('/api/ops/web3/analytics/aml-dashboard', (c) => c.json({
+  wallets_screened_24h: 28400, sars_filed_ytd: 2, blocked_txns: 8,
+  provider: 'Chainalysis KYT', rule_sets: 42, false_positive_pct: 0.4
+}))
+app.post('/api/admin/web3/analytics/flag-wallet', (c) => c.json({
+  wallet: '0xSuspect...', flagged: true, reason: 'mixer-exposure',
+  action: 'block-transactions', reported_to: 'FIU-IND'
+}))
+app.get('/api/admin/web3/analytics/regulatory-report', (c) => c.json({
+  period: 'Q1-FY26', vasp_transactions: 284000, value_inr: 2840000000,
+  reported_to: 'RBI + FIU', fatf_travel_rule_compliant: true, ctr_filed: 8
+}))
+app.get('/api/ops/web3/analytics/gas-optimization', (c) => c.json({
+  batched_txns: 28400, gas_saved_pct: 42, eip1559_used: true,
+  relayer_network: 'Biconomy', meta_txns_sponsored: 84000
+}))
+app.get('/api/admin/web3/analytics/cross-chain', (c) => c.json({
+  bridges_used: ['Polygon Bridge', 'Stargate', 'Hop Protocol'],
+  cross_chain_volume_usdc: 2840000, bridge_failures: 0, avg_bridge_time_min: 8
+}))
+app.get('/api/ops/web3/analytics/indexer-health', (c) => c.json({
+  subgraphs: 12, sync_delay_blocks: 4, indexing_speed_bps: 840,
+  last_indexed_block: 58400000, uptime_pct: 99.8
+}))
+
+// ── Phase 36 health endpoint ─────────────────────────────────
+app.get('/api/health', (c) => c.json({
+  status: 'ok', platform: 'INDTIX', version: 'v36.0.0',
+  phase: 'Phase 36', theme: 'Web3, NFT Ticketing & Blockchain Infrastructure',
+  new_endpoints: 90, total_endpoints: 2269,
+  features: [
+    'NFT Ticket Minting & Management',
+    'Blockchain Identity & Wallet',
+    'Smart Contract Event Platform',
+    'Web3 Secondary Market & Resale',
+    'Crypto Payment Gateway',
+    'DAO Governance & Fan Voting',
+    'On-Chain Royalty & Artist Splits',
+    'Decentralised Fan Loyalty (DeFi)',
+    'NFT Collectibles & Digital Merchandise',
+    'Blockchain Analytics & Compliance'
+  ]
+}))
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 36 — WEB3, NFT TICKETING & BLOCKCHAIN INFRASTRUCTURE
 // ═══════════════════════════════════════════════════════════
 
 export default app
