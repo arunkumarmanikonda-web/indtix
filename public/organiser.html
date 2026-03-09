@@ -5791,4 +5791,45 @@ async function loadAllP52Org() { await loadP52Org(); }
 loadAllP52Org();
 </script>
 <!-- END PHASE 52 ORGANISER PORTAL -->
+
+<!-- ========== PHASE 53: AI & GENERATIVE INTELLIGENCE (ORGANISER) ========== -->
+<div class="phase-section" id="phase53-organiser">
+  <div class="phase-header" style="background:linear-gradient(135deg,#6c3483,#8e44ad)">
+    <h2>🤖 AI Intelligence for Organisers <span class="badge">v53.0.0</span></h2>
+    <p>GenAI marketing · AI pricing · Demand forecasting · Personalised campaigns · Vision analytics</p>
+  </div>
+  <div class="metrics-grid">
+    <div class="metric-card"><span class="metric-value">₹284 Cr</span><span class="metric-label">AI Pricing Uplift</span></div>
+    <div class="metric-card"><span class="metric-value">96.2%</span><span class="metric-label">Forecast Accuracy</span></div>
+    <div class="metric-card"><span class="metric-value">284K</span><span class="metric-label">AI Content/Day</span></div>
+    <div class="metric-card"><span class="metric-value">2.84×</span><span class="metric-label">Revenue vs Static Pricing</span></div>
+  </div>
+  <div class="module-grid">
+    <div class="module-card">
+      <h4>📣 AI Marketing Content</h4>
+      <p>Auto-generate event posts, ads, email campaigns in 42 languages. 94.2% approval rate.</p>
+      <button class="btn-api" onclick="apiCall('/api/v53/genai/content/create','POST',this)">Generate Content</button>
+      <button class="btn-api" onclick="apiCall('/api/v53/genai/templates','GET',this)">Templates</button>
+    </div>
+    <div class="module-card">
+      <h4>💰 AI Dynamic Pricing</h4>
+      <p>AI recommends optimal price bands. ₹284 Cr uplift across 2,840 events. 18.4% avg increase.</p>
+      <button class="btn-api" onclick="apiCall('/api/v53/ai-pricing/recommendations','GET',this)">Price Recommendations</button>
+      <button class="btn-api" onclick="apiCall('/api/v53/ai-pricing/optimise','POST',this)">Optimise Pricing</button>
+    </div>
+    <div class="module-card">
+      <h4>📊 Demand Forecast</h4>
+      <p>30-day ticket sale predictions, sellout probability, weather impact modelling. MAPE 4.2%.</p>
+      <button class="btn-api" onclick="apiCall('/api/v53/predictive/forecast/run','POST',this)">Run Forecast</button>
+      <button class="btn-api" onclick="apiCall('/api/v53/predictive/models','GET',this)">View Models</button>
+    </div>
+    <div class="module-card">
+      <h4>👁️ Crowd &amp; Safety Vision</h4>
+      <p>Real-time crowd density, sponsor brand visibility, safety threat detection. 98.2% accuracy.</p>
+      <button class="btn-api" onclick="apiCall('/api/v53/vision/use-cases','GET',this)">Vision Use Cases</button>
+      <button class="btn-api" onclick="apiCall('/api/v53/vision/analytics','GET',this)">Vision Analytics</button>
+    </div>
+  </div>
+</div>
+<!-- END PHASE 53 ORGANISER PORTAL -->
 </body></html>

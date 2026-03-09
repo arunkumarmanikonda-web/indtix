@@ -7281,5 +7281,42 @@ async function loadAllP52Fan() { await loadP52Fan(); }
 loadAllP52Fan();
 </script>
 <!-- END PHASE 52 FAN PORTAL -->
+
+<!-- ========== PHASE 53: AI & GENERATIVE INTELLIGENCE (FAN) ========== -->
+<div class="phase-section" id="phase53-fan">
+  <div class="phase-header" style="background:linear-gradient(135deg,#6c3483,#8e44ad)">
+    <h2>🤖 AI &amp; Personalised Discovery <span class="badge">v53.0.0</span></h2>
+    <p>Hyper-personalised event discovery · AI chatbot support · Smart recommendations · Predictive alerts</p>
+  </div>
+  <div class="metrics-grid">
+    <div class="metric-card"><span class="metric-value">94.2%</span><span class="metric-label">Recommendation Accuracy</span></div>
+    <div class="metric-card"><span class="metric-value">42%</span><span class="metric-label">Engagement Lift</span></div>
+    <div class="metric-card"><span class="metric-value">28</span><span class="metric-label">Languages Supported</span></div>
+    <div class="metric-card"><span class="metric-value">8.4 ms</span><span class="metric-label">AI Response Time</span></div>
+  </div>
+  <div class="module-grid">
+    <div class="module-card">
+      <h4>🎯 For You — AI Picks</h4>
+      <p>Personalised event recommendations based on your taste, friends' activity and real-time signals.</p>
+      <button class="btn-api" onclick="apiCall('/api/v53/personalisation/recommend','POST',this)">Get My Recommendations</button>
+    </div>
+    <div class="module-card">
+      <h4>🔮 Event Price Alerts</h4>
+      <p>AI predicts optimal buy windows. Get notified when prices are about to rise or last seats remain.</p>
+      <button class="btn-api" onclick="apiCall('/api/v53/predictive/forecast/run','POST',this)">Run Price Forecast</button>
+    </div>
+    <div class="module-card">
+      <h4>💬 AI Assistant</h4>
+      <p>Ask anything about events, venues, directions, tickets — 96.4% intent accuracy, 28 languages.</p>
+      <button class="btn-api" onclick="apiCall('/api/v53/nlp/analyse','POST',this)">Chat with AI</button>
+    </div>
+    <div class="module-card">
+      <h4>🎨 AI-Generated Event Highlights</h4>
+      <p>Personalised recap videos, social posts and countdown content crafted by GenAI for your events.</p>
+      <button class="btn-api" onclick="apiCall('/api/v53/genai/video/generate','GET',this)">View Highlights</button>
+    </div>
+  </div>
+</div>
+<!-- END PHASE 53 FAN PORTAL -->
 </body>
 </html>

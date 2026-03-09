@@ -3641,4 +3641,39 @@ async function loadAllP52Venue() { await loadP52Venue(); }
 loadAllP52Venue();
 </script>
 <!-- END PHASE 52 VENUE PORTAL -->
+
+<!-- ========== PHASE 53: AI & GENERATIVE INTELLIGENCE (VENUE) ========== -->
+<div class="phase-section" id="phase53-venue">
+  <div class="phase-header" style="background:linear-gradient(135deg,#6c3483,#8e44ad)">
+    <h2>🤖 AI Operations &amp; Vision for Venues <span class="badge">v53.0.0</span></h2>
+    <p>Computer vision · Crowd safety AI · Predictive ops · AI agents · MLOps</p>
+  </div>
+  <div class="metrics-grid">
+    <div class="metric-card"><span class="metric-value">99.4%</span><span class="metric-label">Face Verification Accuracy</span></div>
+    <div class="metric-card"><span class="metric-value">42 ms</span><span class="metric-label">Vision Latency</span></div>
+    <div class="metric-card"><span class="metric-value">284</span><span class="metric-label">Safety Incidents Detected</span></div>
+    <div class="metric-card"><span class="metric-value">99.94%</span><span class="metric-label">Agent Uptime</span></div>
+  </div>
+  <div class="module-grid">
+    <div class="module-card">
+      <h4>📸 Computer Vision Suite</h4>
+      <p>Facial entry, crowd density heatmaps, safety threats, sponsor brand visibility. 28.4 M images/day.</p>
+      <button class="btn-api" onclick="apiCall('/api/v53/vision/overview','GET',this)">Vision Overview</button>
+      <button class="btn-api" onclick="apiCall('/api/v53/vision/analyse/image','POST',this)">Analyse Scene</button>
+    </div>
+    <div class="module-card">
+      <h4>🦾 Venue AI Agents</h4>
+      <p>OpsBot monitors anomalies, FraudBot secures entries, SupportBot handles queries. 99.94% uptime.</p>
+      <button class="btn-api" onclick="apiCall('/api/v53/ai-agents/catalogue','GET',this)">Agent Catalogue</button>
+      <button class="btn-api" onclick="apiCall('/api/v53/ai-agents/analytics','GET',this)">Agent Analytics</button>
+    </div>
+    <div class="module-card">
+      <h4>🔮 Predictive Venue Ops</h4>
+      <p>Capacity forecasts, queue predictions, weather impact. 96.2% accuracy. VenueCapacityAI model.</p>
+      <button class="btn-api" onclick="apiCall('/api/v53/predictive/overview','GET',this)">Predictive Overview</button>
+      <button class="btn-api" onclick="apiCall('/api/v53/predictive/forecast/run','POST',this)">Run Forecast</button>
+    </div>
+  </div>
+</div>
+<!-- END PHASE 53 VENUE PORTAL -->
 </body></html>

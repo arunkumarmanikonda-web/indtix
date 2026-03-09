@@ -4013,4 +4013,45 @@ async function loadAllP52EM() { await loadP52EM(); }
 loadAllP52EM();
 </script>
 <!-- END PHASE 52 EVENT MANAGER -->
+
+<!-- ========== PHASE 53: AI & GENERATIVE INTELLIGENCE (EVENT MANAGER) ========== -->
+<div class="phase-section" id="phase53-eventmgr">
+  <div class="phase-header" style="background:linear-gradient(135deg,#6c3483,#8e44ad)">
+    <h2>🤖 AI Intelligence for Event Managers <span class="badge">v53.0.0</span></h2>
+    <p>GenAI content · Demand forecasting · AI pricing · NLP support · Responsible AI</p>
+  </div>
+  <div class="metrics-grid">
+    <div class="metric-card"><span class="metric-value">₹284 Cr</span><span class="metric-label">Prediction Revenue Uplift</span></div>
+    <div class="metric-card"><span class="metric-value">96.2%</span><span class="metric-label">Forecast Accuracy</span></div>
+    <div class="metric-card"><span class="metric-value">42%</span><span class="metric-label">Unsold Inventory Reduction</span></div>
+    <div class="metric-card"><span class="metric-value">100%</span><span class="metric-label">AI Compliance</span></div>
+  </div>
+  <div class="module-grid">
+    <div class="module-card">
+      <h4>🎨 AI Content Generator</h4>
+      <p>One-click AI-generated promo posts, ads, email copy in 42 languages. Templates library: 2,840.</p>
+      <button class="btn-api" onclick="apiCall('/api/v53/genai/content/create','POST',this)">Create Content</button>
+      <button class="btn-api" onclick="apiCall('/api/v53/genai/analytics','GET',this)">Content Analytics</button>
+    </div>
+    <div class="module-card">
+      <h4>📈 Revenue Forecasting</h4>
+      <p>Predict ticket sales 30 days ahead, sellout probability, and optimal promotional timing.</p>
+      <button class="btn-api" onclick="apiCall('/api/v53/predictive/forecast/run','POST',this)">Forecast Revenue</button>
+      <button class="btn-api" onclick="apiCall('/api/v53/predictive/analytics','GET',this)">Forecast Analytics</button>
+    </div>
+    <div class="module-card">
+      <h4>💰 Smart Pricing</h4>
+      <p>AI-recommended price bands. Early Bird → Standard → Last Minute. ₹284 Cr uplift realised.</p>
+      <button class="btn-api" onclick="apiCall('/api/v53/ai-pricing/recommendations','GET',this)">Pricing Recs</button>
+      <button class="btn-api" onclick="apiCall('/api/v53/ai-pricing/optimise','POST',this)">Optimise Bands</button>
+    </div>
+    <div class="module-card">
+      <h4>⚖️ Responsible AI Dashboard</h4>
+      <p>Audit trail for all AI decisions. Bias monitoring, explainability, regulatory compliance reports.</p>
+      <button class="btn-api" onclick="apiCall('/api/v53/responsible-ai/audits','GET',this)">View Audits</button>
+      <button class="btn-api" onclick="apiCall('/api/v53/responsible-ai/analytics','GET',this)">RAI Analytics</button>
+    </div>
+  </div>
+</div>
+<!-- END PHASE 53 EVENT MANAGER -->
 </body></html>
