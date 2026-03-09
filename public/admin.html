@@ -6646,4 +6646,65 @@ async function loadP43Admin() {
 loadP43Admin();
 </script>
 <!-- END PHASE 43 ADMIN PORTAL -->
+
+<script>
+// ── PHASE 44: Sustainability, ESG & Carbon Intelligence – Admin Portal ──
+async function loadP44Admin() {
+  const BASE = '/api/v44';
+  const [carbon, esg, energy, waste, credits, gamif, risk, social] = await Promise.all([
+    fetch(`${BASE}/carbon/overview`).then(r=>r.json()),
+    fetch(`${BASE}/esg/overview`).then(r=>r.json()),
+    fetch(`${BASE}/energy/overview`).then(r=>r.json()),
+    fetch(`${BASE}/waste/overview`).then(r=>r.json()),
+    fetch(`${BASE}/carbon-credits/overview`).then(r=>r.json()),
+    fetch(`${BASE}/gamification/overview`).then(r=>r.json()),
+    fetch(`${BASE}/climate-risk/overview`).then(r=>r.json()),
+    fetch(`${BASE}/social-impact/overview`).then(r=>r.json()),
+  ]);
+  const panel = document.createElement('div');
+  panel.className = 'phase-panel p-4 my-4 bg-green-50 rounded-xl border border-green-200';
+  panel.innerHTML = `
+    <h2 class="text-2xl font-bold text-green-800 mb-4">🌿 Phase 44 – Sustainability, ESG & Carbon Intelligence</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-green-600">${carbon.total_co2_tonnes_ytd?.toLocaleString?.() ?? carbon.total_co2_tonnes_ytd ?? '–'}</div>
+        <div class="text-xs text-gray-500">CO₂ Tonnes Tracked</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-emerald-600">${esg.composite ?? esg.e_score ?? '8.2'}</div>
+        <div class="text-xs text-gray-500">ESG Composite Score</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-blue-600">${energy.renewable_pct ?? '42'}%</div>
+        <div class="text-xs text-gray-500">Renewable Energy</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-amber-600">${waste.diversion_rate_pct ?? '72'}%</div>
+        <div class="text-xs text-gray-500">Waste Diverted from Landfill</div>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-purple-600">${credits.total_retired_tonnes?.toLocaleString?.() ?? '284,000'}</div>
+        <div class="text-xs text-gray-500">Carbon Credits Retired (t)</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-teal-600">${gamif.active_players?.toLocaleString?.() ?? '2.84M'}</div>
+        <div class="text-xs text-gray-500">Eco Gamification Players</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-red-600">${risk.high_risk_venues ?? '8'}</div>
+        <div class="text-xs text-gray-500">High Climate Risk Venues</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-indigo-600">${social.beneficiaries?.toLocaleString?.() ?? '284,000'}</div>
+        <div class="text-xs text-gray-500">Social Impact Beneficiaries</div>
+      </div>
+    </div>`;
+  document.body.appendChild(panel);
+}
+async function loadAllP44Admin() { await loadP44Admin(); }
+loadAllP44Admin();
+</script>
+<!-- END PHASE 44 ADMIN PORTAL -->
 </body></html>

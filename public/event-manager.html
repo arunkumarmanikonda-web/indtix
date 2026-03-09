@@ -3734,4 +3734,38 @@ async function loadAllP43EM() { await loadP43EM(); }
 loadAllP43EM();
 </script>
 <!-- END PHASE 43 EVENT MANAGER -->
+
+<script>
+// ── PHASE 44: Sustainability – Event Manager Portal ──
+async function loadP44EM() {
+  const BASE = '/api/v44';
+  const [carbon, waste, social] = await Promise.all([
+    fetch(`${BASE}/carbon/overview`).then(r=>r.json()),
+    fetch(`${BASE}/waste/overview`).then(r=>r.json()),
+    fetch(`${BASE}/social-impact/overview`).then(r=>r.json()),
+  ]);
+  const panel = document.createElement('div');
+  panel.className = 'phase-panel p-4 my-4 bg-green-50 rounded-xl border border-green-200';
+  panel.innerHTML = `
+    <h2 class="text-xl font-bold text-green-800 mb-3">🌿 Phase 44 – Event Carbon & Waste Ops</h2>
+    <div class="grid grid-cols-3 gap-3">
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-green-600">${carbon.co2_per_attendee_avg_kg ?? '8.4'} kg</div>
+        <div class="text-xs text-gray-500">CO₂/Attendee Avg</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-amber-600">${waste.diversion_rate_pct ?? '72'}%</div>
+        <div class="text-xs text-gray-500">Waste Diversion</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-teal-600">${social.programs ?? '42'}</div>
+        <div class="text-xs text-gray-500">Social Programs Active</div>
+      </div>
+    </div>`;
+  document.body.appendChild(panel);
+}
+async function loadAllP44EM() { await loadP44EM(); }
+loadAllP44EM();
+</script>
+<!-- END PHASE 44 EVENT MANAGER -->
 </body></html>

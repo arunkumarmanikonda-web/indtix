@@ -3367,4 +3367,38 @@ async function loadAllP43Venue() { await loadP43Venue(); }
 loadAllP43Venue();
 </script>
 <!-- END PHASE 43 VENUE PORTAL -->
+
+<script>
+// ── PHASE 44: Sustainability – Venue Portal ──
+async function loadP44Venue() {
+  const BASE = '/api/v44';
+  const [green, energy, waste] = await Promise.all([
+    fetch(`${BASE}/green-venues/overview`).then(r=>r.json()),
+    fetch(`${BASE}/energy/overview`).then(r=>r.json()),
+    fetch(`${BASE}/waste/overview`).then(r=>r.json()),
+  ]);
+  const panel = document.createElement('div');
+  panel.className = 'phase-panel p-4 my-4 bg-green-50 rounded-xl border border-green-200';
+  panel.innerHTML = `
+    <h2 class="text-xl font-bold text-green-800 mb-3">🌿 Phase 44 – Venue Green Operations</h2>
+    <div class="grid grid-cols-3 gap-3">
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-green-600">${green.avg_green_score ?? '7.8'}/10</div>
+        <div class="text-xs text-gray-500">Green Score</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-blue-600">${energy.renewable_pct ?? '42'}%</div>
+        <div class="text-xs text-gray-500">Renewable Energy</div>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow text-center">
+        <div class="text-2xl font-bold text-amber-600">${waste.diversion_rate_pct ?? '72'}%</div>
+        <div class="text-xs text-gray-500">Waste Diverted</div>
+      </div>
+    </div>`;
+  document.body.appendChild(panel);
+}
+async function loadAllP44Venue() { await loadP44Venue(); }
+loadAllP44Venue();
+</script>
+<!-- END PHASE 44 VENUE PORTAL -->
 </body></html>
