@@ -3959,4 +3959,31 @@ async function loadAllP50EM() { await loadP50EM(); }
 loadAllP50EM();
 </script>
 <!-- END PHASE 50 EVENT MANAGER -->
+
+<!-- PHASE 51 EVENT MANAGER PORTAL — Immersive Experiences & Extended Reality -->
+<script>
+async function loadP51EM() {
+  const base = '/api/v51';
+  const sections = [
+    ['📱 AR', `${base}/ar/overview`, ['ar_enabled_events','ar_revenue_cr','ar_ticket_upsell_pct']],
+    ['✨ Holograms', `${base}/hologram/overview`, ['hologram_shows_hosted','hologram_revenue_cr','roi_per_show_x']],
+    ['🏗️ Digital Twins', `${base}/digital-twin/overview`, ['events_simulated','simulation_accuracy_pct','safety_incidents_prevented']],
+    ['🛒 XR Commerce', `${base}/xr-commerce/overview`, ['xr_gmv_cr','virtual_try_on_sessions','try_on_conversion_pct']],
+    ['📊 XR Analytics', `${base}/immersive-analytics/overview`, ['xr_events_instrumented','attention_score_avg','xr_engagement_index']],
+  ];
+  let html = '<div class="phase-section"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — XR & Immersive Event Management</h2><div class="metrics-grid">';
+  for (const [title, url, keys] of sections) {
+    try {
+      const data = await fetch(url).then(r=>r.json()); const m = data.metrics||{};
+      html += `<div class="metric-card" style="border-left:4px solid #7b2ff7;"><h3>${title}</h3>${keys.map(k=>`<p><strong>${k.replace(/_/g,' ')}:</strong> ${m[k]!==undefined?(typeof m[k]==='number'?m[k].toLocaleString():m[k]):'—'}</p>`).join('')}</div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const el = document.getElementById('p51-em') || (() => { const d=document.createElement('div'); d.id='p51-em'; document.querySelector('.em-content,main,#app,body').appendChild(d); return d; })();
+  el.innerHTML = html;
+}
+async function loadAllP51EM() { await loadP51EM(); }
+loadAllP51EM();
+</script>
+<!-- END PHASE 51 EVENT MANAGER -->
 </body></html>

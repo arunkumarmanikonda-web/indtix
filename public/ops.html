@@ -3939,5 +3939,32 @@ async function loadAllP50Ops() { await loadP50Ops(); }
 loadAllP50Ops();
 </script>
 <!-- END PHASE 50 OPS PORTAL -->
+
+<!-- PHASE 51 OPS PORTAL — Immersive Experiences & Extended Reality -->
+<script>
+async function loadP51Ops() {
+  const base = '/api/v51';
+  const sections = [
+    ['📱 AR Ops', `${base}/ar/overview`, ['ar_enabled_events','ar_active_users','ar_sessions_per_day','ar_revenue_cr','venue_ar_overlays']],
+    ['🥽 VR Ops', `${base}/vr/overview`, ['vr_events_hosted','vr_attendees_total','concurrent_vr_peak','vr_revenue_cr','vr_retention_rate_pct']],
+    ['🏗️ Digital Twins', `${base}/digital-twin/overview`, ['venues_with_digital_twins','events_simulated','simulation_accuracy_pct','iot_sensors_feeding_twins','safety_incidents_prevented']],
+    ['📳 Haptics Ops', `${base}/haptics/overview`, ['wearable_devices_connected','haptic_wristbands_issued','crowd_sync_pct','nfc_tap_checkins','biometric_alerts_today']],
+    ['📊 XR Analytics', `${base}/immersive-analytics/overview`, ['xr_events_instrumented','data_points_per_session','gaze_heatmaps_generated','emotion_detection_accuracy_pct','xr_engagement_index']],
+  ];
+  let html = '<div class="phase-section"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — XR Operations Dashboard</h2><div class="metrics-grid">';
+  for (const [title, url, keys] of sections) {
+    try {
+      const data = await fetch(url).then(r=>r.json()); const m = data.metrics||{};
+      html += `<div class="metric-card" style="border-left:4px solid #7b2ff7;"><h3>${title}</h3><div class="metric-values">${keys.map(k=>`<div class="metric-item"><span class="metric-label">${k.replace(/_/g,' ')}</span><span class="metric-value">${m[k]!==undefined?(typeof m[k]==='number'?m[k].toLocaleString():m[k]):'—'}</span></div>`).join('')}</div></div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const el = document.getElementById('p51-ops') || (() => { const d=document.createElement('div'); d.id='p51-ops'; document.querySelector('.ops-content,main,#app,body').appendChild(d); return d; })();
+  el.innerHTML = html;
+}
+async function loadAllP51Ops() { await loadP51Ops(); }
+loadAllP51Ops();
+</script>
+<!-- END PHASE 51 OPS PORTAL -->
 </body>
 </html>

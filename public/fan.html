@@ -7187,5 +7187,52 @@ async function loadAllP50Fan() { await loadP50Fan(); }
 loadAllP50Fan();
 </script>
 <!-- END PHASE 50 FAN PORTAL -->
+
+<!-- PHASE 51 FAN PORTAL — Immersive Experiences & Extended Reality -->
+<script>
+async function loadP51Fan() {
+  const base = '/api/v51';
+  let html = '<div class="phase-section"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — Experience Events Like Never Before!</h2><div class="fan-cards">';
+  try {
+    const [ar, vr, haptics, xrc] = await Promise.all([
+      fetch(`${base}/ar/overview`).then(r=>r.json()),
+      fetch(`${base}/vr/overview`).then(r=>r.json()),
+      fetch(`${base}/haptics/overview`).then(r=>r.json()),
+      fetch(`${base}/xr-commerce/overview`).then(r=>r.json()),
+    ]);
+    html += `
+    <div class="fan-card" style="border-left:4px solid #7b2ff7;">
+      <h3>📱 AR Experiences</h3>
+      <p>AR-enabled events: ${ar.metrics?.ar_enabled_events?.toLocaleString()}</p>
+      <p>Active AR users: ${ar.metrics?.ar_active_users?.toLocaleString()}</p>
+      <p>Revenue: ₹${ar.metrics?.ar_revenue_cr} Cr</p>
+    </div>
+    <div class="fan-card" style="border-left:4px solid #e91e63;">
+      <h3>🥽 Virtual Events</h3>
+      <p>VR attendees total: ${vr.metrics?.vr_attendees_total?.toLocaleString()}</p>
+      <p>Avg ticket: ₹${vr.metrics?.avg_vr_ticket_price_inr}</p>
+      <p>VR NPS: ${vr.metrics?.vr_nps}</p>
+    </div>
+    <div class="fan-card" style="border-left:4px solid #ff9800;">
+      <h3>📳 Feel the Beat</h3>
+      <p>Wristbands issued: ${haptics.metrics?.haptic_wristbands_issued?.toLocaleString()}</p>
+      <p>Crowd sync: ${haptics.metrics?.crowd_sync_pct}%</p>
+      <p>NFC tap check-ins: ${haptics.metrics?.nfc_tap_checkins?.toLocaleString()}</p>
+    </div>
+    <div class="fan-card" style="border-left:4px solid #00bcd4;">
+      <h3>🛒 XR Shopping</h3>
+      <p>Virtual try-ons: ${xrc.metrics?.virtual_try_on_sessions?.toLocaleString()}</p>
+      <p>XR GMV: ₹${xrc.metrics?.xr_gmv_cr} Cr</p>
+      <p>Try-on CVR: ${xrc.metrics?.try_on_conversion_pct}%</p>
+    </div>`;
+  } catch(e) { html += '<div class="fan-card"><p>Loading XR data...</p></div>'; }
+  html += '</div></div>';
+  const el = document.getElementById('p51-fan') || (() => { const d=document.createElement('div'); d.id='p51-fan'; document.querySelector('.fan-content,main,#app,body').appendChild(d); return d; })();
+  el.innerHTML = html;
+}
+async function loadAllP51Fan() { await loadP51Fan(); }
+loadAllP51Fan();
+</script>
+<!-- END PHASE 51 FAN PORTAL -->
 </body>
 </html>

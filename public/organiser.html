@@ -5735,4 +5735,32 @@ async function loadAllP50Org() { await loadP50Org(); }
 loadAllP50Org();
 </script>
 <!-- END PHASE 50 ORGANISER PORTAL -->
+
+<!-- PHASE 51 ORGANISER PORTAL — Immersive Experiences & Extended Reality -->
+<script>
+async function loadP51Org() {
+  const base = '/api/v51';
+  const sections = [
+    ['📱 AR Events', `${base}/ar/overview`, ['ar_enabled_events','ar_active_users','ar_revenue_cr','ar_ticket_upsell_pct']],
+    ['🥽 VR Venues', `${base}/vr/overview`, ['vr_events_hosted','vr_attendees_total','vr_revenue_cr','vr_nps']],
+    ['✨ Holograms', `${base}/hologram/overview`, ['hologram_shows_hosted','hologram_revenue_cr','roi_per_show_x','fan_satisfaction']],
+    ['🏗️ Digital Twins', `${base}/digital-twin/overview`, ['venues_with_digital_twins','simulation_accuracy_pct','safety_incidents_prevented','roi_from_twins_x']],
+    ['🛒 XR Commerce', `${base}/xr-commerce/overview`, ['xr_storefronts','xr_gmv_cr','try_on_conversion_pct','xr_return_rate_pct']],
+    ['🎨 XR Studio', `${base}/xr-studio/overview`, ['registered_creators','xr_content_pieces','content_revenue_cr','avg_creator_earnings_inr']],
+  ];
+  let html = '<div class="phase-section"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — Immersive Tools for Organisers</h2><div class="metrics-grid">';
+  for (const [title, url, keys] of sections) {
+    try {
+      const data = await fetch(url).then(r=>r.json()); const m = data.metrics||{};
+      html += `<div class="metric-card" style="border-left:4px solid #7b2ff7;"><h3>${title}</h3><div class="metric-values">${keys.map(k=>`<div class="metric-item"><span class="metric-label">${k.replace(/_/g,' ')}</span><span class="metric-value">${m[k]!==undefined?(typeof m[k]==='number'?m[k].toLocaleString():m[k]):'—'}</span></div>`).join('')}</div></div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const el = document.getElementById('p51-org') || (() => { const d=document.createElement('div'); d.id='p51-org'; document.querySelector('.organiser-content,main,#app,body').appendChild(d); return d; })();
+  el.innerHTML = html;
+}
+async function loadAllP51Org() { await loadP51Org(); }
+loadAllP51Org();
+</script>
+<!-- END PHASE 51 ORGANISER PORTAL -->
 </body></html>

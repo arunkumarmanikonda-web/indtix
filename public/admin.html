@@ -7038,4 +7038,36 @@ async function loadP50Admin() {
 loadP50Admin();
 </script>
 <!-- END PHASE 50 ADMIN PORTAL -->
+
+<!-- PHASE 51 ADMIN PORTAL — Immersive Experiences & Extended Reality -->
+<script>
+async function loadP51Admin() {
+  const base = '/api/v51';
+  const sections = [
+    { title: '📱 AR Events', endpoint: `${base}/ar/overview` },
+    { title: '🥽 VR Venues', endpoint: `${base}/vr/overview` },
+    { title: '🔀 Mixed Reality', endpoint: `${base}/mr/overview` },
+    { title: '🔊 Spatial Audio', endpoint: `${base}/spatial-audio/overview` },
+    { title: '📳 Haptics & Wearables', endpoint: `${base}/haptics/overview` },
+    { title: '✨ Holograms', endpoint: `${base}/hologram/overview` },
+    { title: '🏗️ Digital Twins', endpoint: `${base}/digital-twin/overview` },
+    { title: '🛒 XR Commerce', endpoint: `${base}/xr-commerce/overview` },
+    { title: '📊 Immersive Analytics', endpoint: `${base}/immersive-analytics/overview` },
+    { title: '🎨 XR Creator Studio', endpoint: `${base}/xr-studio/overview` },
+  ];
+  let html = '<div class="phase-section"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — Immersive Experiences & Extended Reality</h2><div class="metrics-grid">';
+  for (const s of sections) {
+    try {
+      const data = await fetch(s.endpoint).then(r => r.json());
+      const m = data.metrics || {};
+      html += `<div class="metric-card" style="border-left:4px solid #7b2ff7;"><h3>${s.title}</h3><div class="metric-values">${Object.entries(m).slice(0,5).map(([k,v])=>`<div class="metric-item"><span class="metric-label">${k.replace(/_/g,' ')}</span><span class="metric-value">${typeof v==='number'?v.toLocaleString():v}</span></div>`).join('')}</div></div>`;
+    } catch(e) { html += `<div class="metric-card"><h3>${s.title}</h3><p>Loading...</p></div>`; }
+  }
+  html += '</div></div>';
+  const el = document.getElementById('p51-admin') || (() => { const d=document.createElement('div'); d.id='p51-admin'; document.querySelector('.dashboard-content,main,#app,body').appendChild(d); return d; })();
+  el.innerHTML = html;
+}
+loadP51Admin();
+</script>
+<!-- END PHASE 51 ADMIN PORTAL -->
 </body></html>
