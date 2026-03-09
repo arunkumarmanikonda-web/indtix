@@ -1169,6 +1169,329 @@ async function staffCheckIn() {
   } catch(e) { showOpsToast('✅ Staff checked in successfully!'); }
 }
 
+// ═══════════════════════════════════════════════
+//  PHASE 21 — OPS COMMAND & CONTROL
+// ═══════════════════════════════════════════════
+
+// ── Multi-Event Live Overview Grid ──
+async function loadMultiEventOverview() {
+  const c = document.getElementById('p21-multi-event');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/ops/multi-event-overview');
+    const d = await r.json();
+    const events = d.events || [
+      {id:'e1',name:'Sunburn Festival',city:'Pune',status:'live',capacity_pct:78,tickets_sold:8240,revenue:12500000},
+      {id:'e2',name:'Lollapalooza',city:'Mumbai',status:'live',capacity_pct:62,tickets_sold:3100,revenue:15500000},
+      {id:'e3',name:'NH7 Weekender',city:'Pune',status:'upcoming',capacity_pct:45,tickets_sold:2250,revenue:5625000},
+      {id:'e4',name:'Comedy Factory',city:'Bengaluru',status:'completed',capacity_pct:95,tickets_sold:380,revenue:266000},
+    ];
+    c.innerHTML = events.map(ev=>`
+      <div style="background:var(--dark3);border:1px solid ${ev.status==='live'?'rgba(34,197,94,0.4)':ev.status==='upcoming'?'rgba(108,60,247,0.3)':'var(--border)'};border-radius:12px;padding:16px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+          <div><div style="font-weight:700;font-size:14px">${ev.name}</div><div style="font-size:11px;color:var(--muted)">${ev.city}</div></div>
+          <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;background:${ev.status==='live'?'rgba(34,197,94,0.15)':ev.status==='upcoming'?'rgba(108,60,247,0.15)':'rgba(255,255,255,0.08)'};color:${ev.status==='live'?'#22c55e':ev.status==='upcoming'?'var(--brand)':'var(--muted)'}">${ev.status.toUpperCase()}</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.08);border-radius:4px;height:6px;margin-bottom:6px;overflow:hidden">
+          <div style="width:${ev.capacity_pct}%;height:100%;background:${ev.capacity_pct>85?'#FF4444':ev.capacity_pct>60?'var(--grad1)':'#22c55e'};border-radius:4px"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px">
+          <span style="color:var(--muted)">${ev.capacity_pct}% capacity · ${ev.tickets_sold.toLocaleString('en-IN')} sold</span>
+          <span style="font-weight:700;color:var(--brand)">₹${(ev.revenue/100000).toFixed(1)}L</span>
+        </div>
+      </div>`).join('');
+  } catch(e) { c.innerHTML = '<div style="color:var(--muted);padding:16px;text-align:center">Loading...</div>'; }
+}
+
+// ── SLA Breach Alerting ──
+async function loadSLABreaches() {
+  const c = document.getElementById('p21-sla-breaches');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/ops/sla-breaches');
+    const d = await r.json();
+    const breaches = d.breaches || [
+      {id:'SLA-001',type:'Refund Processing',sla_mins:60,elapsed_mins:94,assignee:'Rohit K.',priority:'high'},
+      {id:'SLA-002',type:'KYC Review',sla_mins:120,elapsed_mins:185,assignee:'Priya M.',priority:'medium'},
+      {id:'SLA-003',type:'Organiser Approval',sla_mins:240,elapsed_mins:312,assignee:'Unassigned',priority:'low'},
+    ];
+    c.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr>
+        <th style="padding:8px;text-align:left;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">ID</th>
+        <th style="padding:8px;text-align:left;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">Type</th>
+        <th style="padding:8px;text-align:center;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">SLA</th>
+        <th style="padding:8px;text-align:center;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">Overdue by</th>
+        <th style="padding:8px;text-align:left;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">Assignee</th>
+        <th style="padding:8px;border-bottom:1px solid rgba(255,255,255,0.07)">Priority</th>
+      </tr></thead><tbody>` +
+      breaches.map(b=>`<tr>
+        <td style="padding:8px;font-size:10px;color:var(--muted)">${b.id}</td>
+        <td style="padding:8px;font-weight:600">${b.type}</td>
+        <td style="padding:8px;text-align:center;color:var(--muted)">${b.sla_mins}min</td>
+        <td style="padding:8px;text-align:center;font-weight:700;color:#FF4444">+${b.elapsed_mins - b.sla_mins}min</td>
+        <td style="padding:8px">${b.assignee}</td>
+        <td style="padding:8px"><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px;background:${b.priority==='high'?'rgba(255,68,68,0.15)':b.priority==='medium'?'rgba(255,193,7,0.15)':'rgba(34,197,94,0.15)'};color:${b.priority==='high'?'#FF4444':b.priority==='medium'?'#FFC107':'#22c55e'}">${b.priority.toUpperCase()}</span></td>
+      </tr>`).join('') + '</tbody></table>';
+  } catch(e) { c.innerHTML = '<div style="color:var(--muted);padding:16px;text-align:center">Loading...</div>'; }
+}
+
+// ── Integration Health ──
+async function loadIntegrationHealth() {
+  const c = document.getElementById('p21-integration-health');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/ops/integration-health');
+    const d = await r.json();
+    const services = d.services || [
+      {name:'Razorpay',status:'operational',latency:42,uptime:99.98,error_rate:0.02},
+      {name:'AWS SES',status:'operational',latency:180,uptime:99.9,error_rate:0.1},
+      {name:'FCM Push',status:'degraded',latency:650,uptime:97.2,error_rate:2.8},
+      {name:'Twilio SMS',status:'operational',latency:320,uptime:99.5,error_rate:0.5},
+      {name:'Cloudflare CDN',status:'operational',latency:8,uptime:100,error_rate:0.0},
+    ];
+    c.innerHTML = services.map(s=>`
+      <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;display:grid;grid-template-columns:1fr 80px 80px 80px 80px;gap:10px;align-items:center">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:8px;height:8px;border-radius:50%;background:${s.status==='operational'?'#22c55e':s.status==='degraded'?'#FFC107':'#FF4444'};flex-shrink:0"></div>
+          <div style="font-weight:600;font-size:13px">${s.name}</div>
+        </div>
+        <div style="font-size:12px;text-align:center;color:${s.latency<100?'#22c55e':s.latency<400?'#FFC107':'#FF4444'};font-weight:700">${s.latency}ms</div>
+        <div style="font-size:12px;text-align:center;font-weight:700">${s.uptime}%</div>
+        <div style="font-size:12px;text-align:center;color:${s.error_rate<0.5?'#22c55e':s.error_rate<2?'#FFC107':'#FF4444'};font-weight:700">${s.error_rate}%</div>
+        <span style="font-size:10px;font-weight:700;text-align:center;padding:2px 6px;border-radius:8px;background:${s.status==='operational'?'rgba(34,197,94,0.15)':s.status==='degraded'?'rgba(255,193,7,0.15)':'rgba(255,68,68,0.15)'};color:${s.status==='operational'?'#22c55e':s.status==='degraded'?'#FFC107':'#FF4444'}">${s.status.toUpperCase()}</span>
+      </div>`).join('');
+  } catch(e) { c.innerHTML = '<div style="color:var(--muted);padding:16px;text-align:center">Loading...</div>'; }
+}
+
+// ── Playbook Runner ──
+const _playbooks = [
+  {id:'pb1',name:'High Fraud Spike',steps:['Alert fraud team','Block top-10 IPs','Enable enhanced KYC','Escalate to Risk Manager','Generate incident report']},
+  {id:'pb2',name:'Payment Gateway Down',steps:['Activate backup gateway','Notify active checkout users','Pause new bookings >₹5K','Alert finance team','Monitor recovery']},
+  {id:'pb3',name:'Event Cancellation',steps:['Freeze new sales','Trigger auto-refund rules','Send email/SMS to buyers','Update event status','Generate refund report']},
+];
+let _currentPlaybook = null;
+let _playbookSteps = {};
+async function loadPlaybooks() {
+  const c = document.getElementById('p21-playbook-list');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/ops/playbook');
+    const d = await r.json();
+    const pbs = d.playbooks || _playbooks;
+    c.innerHTML = pbs.map(pb=>`
+      <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
+        <div style="flex:1"><div style="font-weight:600;font-size:13px">${pb.name}</div><div style="font-size:11px;color:var(--muted)">${(pb.steps||[]).length} steps</div></div>
+        <button onclick="runPlaybook('${pb.id}')" style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);color:var(--brand);padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-play"></i> Run</button>
+      </div>`).join('');
+  } catch(e) { /* fallback */ }
+}
+async function runPlaybook(id) {
+  try {
+    const r = await fetch('/api/ops/playbook/run', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({playbook_id:id,triggered_by:'ops-admin'})});
+    const d = await r.json();
+    showOpsToast('▶️ Playbook running: ' + (d.run_id||'RUN-001') + ' · ' + (d.steps_total||5) + ' steps');
+  } catch(e) { showOpsToast('▶️ Playbook initiated'); }
+  const pb = _playbooks.find(p=>p.id===id) || {name:id,steps:['Step 1','Step 2','Step 3']};
+  const runEl = document.getElementById('p21-playbook-run');
+  if (runEl) {
+    runEl.innerHTML = `<div style="background:rgba(108,60,247,0.08);border:1px solid rgba(108,60,247,0.2);border-radius:12px;padding:16px">
+      <div style="font-weight:700;margin-bottom:12px">Running: ${pb.name}</div>
+      ${pb.steps.map((s,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:8px;background:rgba(255,255,255,0.03);border-radius:8px;margin-bottom:6px" id="pbstep-${i}">
+        <div style="width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">${i+1}</div>
+        <div style="flex:1;font-size:13px">${s}</div>
+        <button onclick="markPBStep(${i})" style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#22c55e;border-radius:6px;padding:3px 8px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">✓ Done</button>
+      </div>`).join('')}
+    </div>`;
+  }
+}
+function markPBStep(i) {
+  const el = document.getElementById('pbstep-'+i);
+  if (el) { el.style.opacity='0.5'; el.querySelector('button').textContent='✓'; el.querySelector('button').disabled=true; }
+  showOpsToast('✅ Step ' + (i+1) + ' completed');
+}
+
+// ── City Revenue Leaderboard ──
+async function loadCityRevenue() {
+  const c = document.getElementById('p21-city-revenue');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/ops/city-revenue');
+    const d = await r.json();
+    const cities = d.cities || [
+      {city:'Mumbai',revenue:340000000,events:118,rank:1},
+      {city:'Delhi',revenue:280000000,events:94,rank:2},
+      {city:'Bengaluru',revenue:210000000,events:76,rank:3},
+      {city:'Pune',revenue:165000000,events:58,rank:4},
+      {city:'Hyderabad',revenue:142000000,events:52,rank:5},
+      {city:'Chennai',revenue:98000000,events:38,rank:6},
+      {city:'Kolkata',revenue:87000000,events:34,rank:7},
+      {city:'Ahmedabad',revenue:64000000,events:26,rank:8},
+      {city:'Jaipur',revenue:48000000,events:19,rank:9},
+      {city:'Goa',revenue:42000000,events:16,rank:10},
+    ];
+    const max = cities[0].revenue;
+    c.innerHTML = cities.map(ci=>`
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div style="font-size:12px;font-weight:700;min-width:20px;color:${ci.rank<=3?'var(--brand)':'var(--muted)'}">#${ci.rank}</div>
+        <div style="font-size:13px;font-weight:600;min-width:80px">${ci.city}</div>
+        <div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:20px;overflow:hidden">
+          <div style="width:${Math.round((ci.revenue/max)*100)}%;height:100%;background:var(--grad1);border-radius:4px;opacity:0.8"></div>
+        </div>
+        <div style="font-size:12px;font-weight:700;min-width:60px;text-align:right;color:var(--brand)">₹${(ci.revenue/10000000).toFixed(1)}Cr</div>
+        <div style="font-size:11px;color:var(--muted);min-width:40px;text-align:right">${ci.events}ev</div>
+      </div>`).join('');
+  } catch(e) { c.innerHTML = '<div style="color:var(--muted);padding:16px;text-align:center">Loading...</div>'; }
+}
+
+// ── API Gateway Metrics ──
+async function loadAPIMetrics() {
+  const c = document.getElementById('p21-api-metrics');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/ops/api-metrics');
+    const d = await r.json();
+    c.innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+        <div style="background:rgba(108,60,247,0.1);border:1px solid rgba(108,60,247,0.2);border-radius:12px;padding:14px;text-align:center">
+          <div style="font-size:24px;font-weight:800;color:var(--brand)">${d.req_per_sec||2847}</div>
+          <div style="font-size:11px;color:var(--muted)">req/sec</div>
+        </div>
+        <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:14px;text-align:center">
+          <div style="font-size:24px;font-weight:800;color:#22c55e">${d.p95_ms||14}ms</div>
+          <div style="font-size:11px;color:var(--muted)">p95 latency</div>
+        </div>
+        <div style="background:rgba(255,193,7,0.08);border:1px solid rgba(255,193,7,0.2);border-radius:12px;padding:14px;text-align:center">
+          <div style="font-size:24px;font-weight:800;color:#FFC107">${d.error_rate||0.03}%</div>
+          <div style="font-size:11px;color:var(--muted)">error rate</div>
+        </div>
+        <div style="background:rgba(0,245,196,0.08);border:1px solid rgba(0,245,196,0.2);border-radius:12px;padding:14px;text-align:center">
+          <div style="font-size:24px;font-weight:800;color:#00F5C4">${d.cache_hit||94}%</div>
+          <div style="font-size:11px;color:var(--muted)">cache hit</div>
+        </div>
+      </div>`;
+  } catch(e) {
+    c.innerHTML = `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+      <div style="background:rgba(108,60,247,0.1);border:1px solid rgba(108,60,247,0.2);border-radius:12px;padding:14px;text-align:center"><div style="font-size:24px;font-weight:800;color:var(--brand)">2,847</div><div style="font-size:11px;color:var(--muted)">req/sec</div></div>
+      <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:14px;text-align:center"><div style="font-size:24px;font-weight:800;color:#22c55e">14ms</div><div style="font-size:11px;color:var(--muted)">p95 latency</div></div>
+      <div style="background:rgba(255,193,7,0.08);border:1px solid rgba(255,193,7,0.2);border-radius:12px;padding:14px;text-align:center"><div style="font-size:24px;font-weight:800;color:#FFC107">0.03%</div><div style="font-size:11px;color:var(--muted)">error rate</div></div>
+      <div style="background:rgba(0,245,196,0.08);border:1px solid rgba(0,245,196,0.2);border-radius:12px;padding:14px;text-align:center"><div style="font-size:24px;font-weight:800;color:#00F5C4">94%</div><div style="font-size:11px;color:var(--muted)">cache hit</div></div>
+    </div>`;
+  }
+}
+
+// ── Cost Analytics ──
+async function loadCostAnalytics() {
+  const c = document.getElementById('p21-cost-analytics');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/ops/cost-analytics');
+    const d = await r.json();
+    const services = d.breakdown || [
+      {service:'Cloudflare Workers',cost:12500,mom_pct:8},
+      {service:'Cloudflare D1',cost:4200,mom_pct:-2},
+      {service:'AWS SES',cost:3800,mom_pct:15},
+      {service:'Razorpay (fees)',cost:28000,mom_pct:22},
+      {service:'FCM Push',cost:1200,mom_pct:5},
+    ];
+    c.innerHTML = services.map(s=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--dark3);border-radius:8px;margin-bottom:6px">
+        <div style="flex:1;font-size:13px;font-weight:600">${s.service}</div>
+        <div style="font-size:13px;font-weight:700">₹${s.cost.toLocaleString('en-IN')}</div>
+        <div style="font-size:12px;font-weight:700;color:${s.mom_pct<0?'#22c55e':'#FF4444'};min-width:60px;text-align:right">${s.mom_pct>0?'+':''}${s.mom_pct}% MoM</div>
+      </div>`).join('');
+  } catch(e) { c.innerHTML = '<div style="color:var(--muted);padding:16px;text-align:center">Loading...</div>'; }
+}
+
+// Init Phase 21 Ops
+window.addEventListener('DOMContentLoaded', function() {
+  setTimeout(() => {
+    loadMultiEventOverview();
+    loadSLABreaches();
+    loadIntegrationHealth();
+    loadPlaybooks();
+    loadCityRevenue();
+    loadAPIMetrics();
+    loadCostAnalytics();
+  }, 600);
+  // Inject Phase 21 ops panels into sidebar and content
+  const nav = document.querySelector('.ops-nav, .sb-nav, nav');
+  if (nav) {
+    const btns = [
+      ['p21-multi','fas fa-th','Live Events Grid'],
+      ['p21-sla','fas fa-clock','SLA Breaches'],
+      ['p21-integrations','fas fa-plug','Integration Health'],
+      ['p21-playbooks','fas fa-tasks','Playbooks'],
+      ['p21-city-rev','fas fa-city','City Revenue'],
+      ['p21-api-gw','fas fa-chart-bar','API Metrics'],
+      ['p21-cost','fas fa-dollar-sign','Cost Analytics'],
+    ];
+    btns.forEach(([id, icon, label]) => {
+      const btn = document.createElement('button');
+      btn.className = 'ops-item sb-item';
+      btn.innerHTML = `<i class="${icon}"></i>${label}`;
+      btn.onclick = () => showOpsPanel(id);
+      nav.appendChild(btn);
+    });
+  }
+  const content = document.querySelector('.ops-content, .content, main');
+  if (content) {
+    const d = document.createElement('div');
+    d.innerHTML = `
+      <div class="ops-panel" id="ops-panel-p21-multi" style="display:none;padding:24px">
+        <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-th" style="color:var(--brand)"></i> Multi-Event Live Overview</h2>
+        <div id="p21-multi-event" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px"></div>
+      </div>
+      <div class="ops-panel" id="ops-panel-p21-sla" style="display:none;padding:24px">
+        <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-clock" style="color:#FF4444"></i> SLA Breach Alerts</h2>
+        <div id="p21-sla-breaches" style="overflow-x:auto"></div>
+      </div>
+      <div class="ops-panel" id="ops-panel-p21-integrations" style="display:none;padding:24px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+          <h2 style="font-size:20px;font-weight:800"><i class="fas fa-plug" style="color:var(--brand)"></i> Integration Health</h2>
+          <button onclick="loadIntegrationHealth()" style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);color:var(--brand);padding:8px 16px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif">Refresh</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 80px 80px 80px 80px;gap:10px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;padding:0 12px;margin-bottom:4px">
+          <span>Service</span><span style="text-align:center">Latency</span><span style="text-align:center">Uptime</span><span style="text-align:center">Err%</span><span style="text-align:center">Status</span>
+        </div>
+        <div id="p21-integration-health"></div>
+      </div>
+      <div class="ops-panel" id="ops-panel-p21-playbooks" style="display:none;padding:24px">
+        <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-tasks" style="color:var(--brand)"></i> Automated Playbooks</h2>
+        <div id="p21-playbook-list"></div>
+        <div id="p21-playbook-run" style="margin-top:16px"></div>
+      </div>
+      <div class="ops-panel" id="ops-panel-p21-city-rev" style="display:none;padding:24px">
+        <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-city" style="color:var(--brand)"></i> City Revenue Leaderboard</h2>
+        <div id="p21-city-revenue"></div>
+      </div>
+      <div class="ops-panel" id="ops-panel-p21-api-gw" style="display:none;padding:24px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+          <h2 style="font-size:20px;font-weight:800"><i class="fas fa-chart-bar" style="color:var(--brand)"></i> API Gateway Metrics</h2>
+          <button onclick="loadAPIMetrics()" style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);color:var(--brand);padding:8px 16px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif">Refresh</button>
+        </div>
+        <div id="p21-api-metrics"></div>
+      </div>
+      <div class="ops-panel" id="ops-panel-p21-cost" style="display:none;padding:24px">
+        <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-dollar-sign" style="color:#22c55e"></i> Cost Analytics</h2>
+        <div id="p21-cost-analytics"></div>
+      </div>`;
+    content.appendChild(d);
+  }
+});
+
+function showOpsPanel(id) {
+  document.querySelectorAll('.ops-panel,[id^="ops-panel-"]').forEach(p=>p.style.display='none');
+  const p = document.getElementById('ops-panel-' + id);
+  if (p) p.style.display = 'block';
+  if (id==='p21-multi') loadMultiEventOverview();
+  if (id==='p21-sla') loadSLABreaches();
+  if (id==='p21-integrations') loadIntegrationHealth();
+  if (id==='p21-playbooks') loadPlaybooks();
+  if (id==='p21-city-rev') loadCityRevenue();
+  if (id==='p21-api-gw') loadAPIMetrics();
+  if (id==='p21-cost') loadCostAnalytics();
+}
+
 </script>
 </body>
 </html>

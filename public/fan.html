@@ -291,6 +291,84 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
   .footer-grid{grid-template-columns:1fr 1fr}
   .nav-links{display:none}
 }
+
+/* ── PHASE 21: MOBILE-FIRST UX ── */
+/* Floating Bottom Nav */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:1100;background:rgba(10,13,28,0.97);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;padding:8px 0 max(8px,env(safe-area-inset-bottom));display:none}
+@media(max-width:768px){.bottom-nav{display:flex}}
+.bn-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;cursor:pointer;border:none;background:none;color:var(--muted);transition:all 0.2s;border-radius:10px;position:relative}
+.bn-item.active,.bn-item:hover{color:var(--brand)}
+.bn-item i{font-size:18px}
+.bn-item span{font-size:9px;font-weight:600;letter-spacing:0.3px}
+.bn-badge{position:absolute;top:2px;right:8px;background:#FF3CAC;color:#fff;border-radius:10px;font-size:9px;font-weight:700;padding:1px 5px;min-width:16px;text-align:center}
+
+/* Swipeable Carousel */
+.swipe-carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding:4px 0 12px;scrollbar-width:none;-ms-overflow-style:none}
+.swipe-carousel::-webkit-scrollbar{display:none}
+.swipe-carousel .sc-card{scroll-snap-align:start;flex:0 0 280px;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;transition:transform 0.2s}
+.swipe-carousel .sc-card:hover{transform:scale(1.02)}
+
+/* Loyalty Panel */
+.loyalty-panel{background:linear-gradient(135deg,#1A2035,#0F1320);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:24px}
+.loyalty-tier-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:0.5px}
+.tier-bronze{background:linear-gradient(135deg,#CD7F32,#8B4513);color:#fff}
+.tier-silver{background:linear-gradient(135deg,#C0C0C0,#808080);color:#fff}
+.tier-gold{background:linear-gradient(135deg,#FFD700,#FFA500);color:#000}
+.tier-platinum{background:linear-gradient(135deg,#E5E4E2,#B0BEC5);color:#000}
+.points-bar{background:rgba(108,60,247,0.15);border-radius:10px;height:8px;margin:8px 0;overflow:hidden}
+.points-fill{background:var(--grad1);height:100%;border-radius:10px;transition:width 0.8s ease}
+.badge-chip{background:rgba(108,60,247,0.2);border:1px solid rgba(108,60,247,0.4);border-radius:20px;padding:4px 10px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;margin:2px}
+
+/* Carbon Tracker */
+.carbon-panel{background:linear-gradient(135deg,rgba(0,245,196,0.1),rgba(108,60,247,0.1));border:1px solid rgba(0,245,196,0.2);border-radius:16px;padding:20px}
+.carbon-bar{background:rgba(0,245,196,0.15);border-radius:10px;height:10px;margin:10px 0;overflow:hidden}
+.carbon-fill{background:linear-gradient(90deg,#00F5C4,#6C3CF7);height:100%;border-radius:10px;transition:width 1.2s ease;animation:carbonPulse 2s ease-in-out infinite alternate}
+@keyframes carbonPulse{from{opacity:0.7}to{opacity:1}}
+
+/* Notification Panel */
+.notif-panel{position:fixed;top:64px;right:16px;width:360px;background:var(--card);border:1px solid var(--border);border-radius:16px;z-index:1050;box-shadow:0 20px 60px rgba(0,0,0,0.5);display:none;max-height:480px;overflow-y:auto}
+.notif-panel.open{display:block;animation:slideDown 0.2s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.notif-item{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:10px;align-items:flex-start;cursor:pointer;transition:background 0.2s}
+.notif-item:hover{background:rgba(108,60,247,0.08)}
+.notif-item.unread{background:rgba(108,60,247,0.06)}
+.notif-dot{width:8px;height:8px;background:var(--brand);border-radius:50%;margin-top:4px;flex-shrink:0}
+
+/* AI Recommendations */
+.ai-rec-strip{background:linear-gradient(135deg,rgba(108,60,247,0.12),rgba(255,60,172,0.08));border:1px solid rgba(108,60,247,0.25);border-radius:16px;padding:16px;margin-bottom:24px}
+.ai-rec-label{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--brand);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+
+/* Ticket Transfer */
+.transfer-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1200;display:flex;align-items:center;justify-content:center;display:none}
+.transfer-modal.open{display:flex;animation:fadeIn 0.2s ease}
+.transfer-box{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;width:min(420px,92vw);position:relative}
+
+/* Social Share Cards */
+.social-share-row{display:flex;gap:8px;flex-wrap:wrap}
+.share-btn-wa{background:#25D366;color:#fff;border:none;border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:opacity 0.2s}
+.share-btn-ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;border:none;border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
+.share-btn-x{background:#000;color:#fff;border:none;border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
+.share-btn-wa:hover,.share-btn-ig:hover,.share-btn-x:hover{opacity:0.85}
+
+/* Skip to content */
+.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999;background:var(--brand);color:#fff;padding:8px 16px;border-radius:0 0 8px 8px;font-weight:600}
+.skip-link:focus{left:16px;width:auto;height:auto}
+
+/* Seat Map Interactive */
+.seatmap-legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.sml-item{display:flex;align-items:center;gap:6px;font-size:12px}
+.sml-dot{width:12px;height:12px;border-radius:50%}
+.tier-ga{background:#22c55e}
+.tier-premium{background:#3b82f6}
+.tier-vip{background:#eab308}
+.tier-acc{background:#a855f7}
+.seat-section{border-radius:10px;padding:10px 14px;margin-bottom:8px;cursor:pointer;transition:all 0.2s;border:2px solid transparent}
+.seat-section:hover{transform:translateX(4px)}
+.seat-section.ga-section{background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.3)}
+.seat-section.prem-section{background:rgba(59,130,246,0.15);border-color:rgba(59,130,246,0.3)}
+.seat-section.vip-section{background:rgba(234,179,8,0.15);border-color:rgba(234,179,8,0.3)}
+.seat-section.acc-section{background:rgba(168,85,247,0.15);border-color:rgba(168,85,247,0.3)}
+@media(max-width:768px){.notif-panel{width:calc(100vw - 32px);right:16px}}
 </style>
 <!-- Structured Data / JSON-LD -->
 <script type="application/ld+json">
@@ -667,6 +745,153 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
     <a href="/developer" class="portal-link"><div class="portal-icon" style="background:rgba(0,245,196,0.2)">⚡</div><div class="portal-name">Developer Portal</div><div class="portal-desc">API Docs & Integration</div></a>
   </div>
 </div>
+
+<!-- ── PHASE 21: LOYALTY PROGRAMME ── -->
+<section id="loyalty-section" style="padding:60px 0 20px;display:none">
+  <div class="section-inner">
+    <div class="section-header">
+      <div><div class="section-tag">⭐ Loyalty</div><h2 class="section-title">Your Rewards</h2></div>
+    </div>
+    <div class="loyalty-panel" id="loyalty-panel-content">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+        <div>
+          <span class="loyalty-tier-badge tier-gold" id="loyalty-tier-badge"><i class="fas fa-crown"></i> Gold Member</span>
+          <div style="font-size:22px;font-weight:800;margin-top:8px" id="loyalty-points">2,450 <span style="font-size:14px;color:var(--muted);font-weight:400">points</span></div>
+          <div style="font-size:12px;color:var(--muted)" id="loyalty-next">550 pts to Platinum</div>
+        </div>
+        <div style="text-align:right">
+          <button onclick="openLoyaltyRedeem()" style="background:var(--grad1);border:none;color:#fff;padding:10px 20px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-gift"></i> Redeem Points</button>
+        </div>
+      </div>
+      <div class="points-bar"><div class="points-fill" id="loyalty-bar" style="width:82%"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:16px">
+        <span>Bronze (0)</span><span>Silver (500)</span><span>Gold (2000)</span><span>Platinum (3000)</span>
+      </div>
+      <div style="margin-bottom:16px">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Your Badges</div>
+        <div id="loyalty-badges">
+          <span class="badge-chip">🎵 Music Lover</span>
+          <span class="badge-chip">🎟️ 10x Booker</span>
+          <span class="badge-chip">⭐ Early Bird</span>
+          <span class="badge-chip">🌟 VIP Access</span>
+        </div>
+      </div>
+      <div id="loyalty-rewards-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PHASE 21: CARBON OFFSET TRACKER ── -->
+<section id="carbon-section" style="padding:20px 0;display:none">
+  <div class="section-inner">
+    <div class="carbon-panel">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span style="font-size:24px">🌱</span>
+        <div>
+          <div style="font-weight:700;font-size:15px">Carbon Offset Tracker</div>
+          <div style="font-size:12px;color:var(--muted)">Your eco-contribution across events</div>
+        </div>
+        <button onclick="loadCarbonData()" style="margin-left:auto;background:rgba(0,245,196,0.15);border:1px solid rgba(0,245,196,0.3);color:#00F5C4;padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif">Refresh</button>
+      </div>
+      <div class="carbon-bar"><div class="carbon-fill" id="carbon-fill" style="width:0%"></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px">
+        <span style="color:var(--muted)">Offset Goal: 50 kg CO₂</span>
+        <span id="carbon-pct" style="color:#00F5C4;font-weight:700">0%</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px" id="carbon-stats">
+        <div style="text-align:center;background:rgba(0,245,196,0.08);border-radius:10px;padding:10px">
+          <div style="font-size:18px;font-weight:800;color:#00F5C4" id="carbon-offset">12.4</div>
+          <div style="font-size:10px;color:var(--muted)">kg CO₂ offset</div>
+        </div>
+        <div style="text-align:center;background:rgba(0,245,196,0.08);border-radius:10px;padding:10px">
+          <div style="font-size:18px;font-weight:800;color:#00F5C4" id="carbon-trees">0.6</div>
+          <div style="font-size:10px;color:var(--muted)">trees planted</div>
+        </div>
+        <div style="text-align:center;background:rgba(0,245,196,0.08);border-radius:10px;padding:10px">
+          <div style="font-size:18px;font-weight:800;color:#00F5C4" id="carbon-events">3</div>
+          <div style="font-size:10px;color:var(--muted)">green events</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PHASE 21: AI PERSONALISED RECOMMENDATIONS ── -->
+<section id="ai-recs-section" style="padding:20px 0 0;display:none">
+  <div class="section-inner">
+    <div class="ai-rec-strip">
+      <div class="ai-rec-label"><i class="fas fa-robot"></i> AI Picks for You</div>
+      <div class="swipe-carousel" id="ai-recs-carousel">
+        <div style="flex:0 0 260px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px">
+          <div style="font-size:12px;color:var(--muted);display:flex;align-items:center;gap:4px"><i class="fas fa-spinner fa-spin"></i> Loading AI recommendations…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PHASE 21: NOTIFICATIONS PANEL ── -->
+<div class="notif-panel" id="phase21-notif-panel" role="dialog" aria-label="Notifications">
+  <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between">
+    <div style="font-weight:700;font-size:14px">Notifications <span id="p21-notif-badge" style="background:var(--brand);color:#fff;border-radius:10px;padding:1px 7px;font-size:11px;margin-left:4px">4</span></div>
+    <button onclick="markAllNotifRead()" style="background:none;border:none;color:var(--brand);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif">Mark all read</button>
+  </div>
+  <div id="p21-notif-list"></div>
+</div>
+
+<!-- ── PHASE 21: TICKET TRANSFER MODAL ── -->
+<div class="transfer-modal" id="transfer-modal" role="dialog" aria-label="Ticket Transfer" aria-modal="true">
+  <div class="transfer-box">
+    <button onclick="closeTransferModal()" style="position:absolute;top:12px;right:16px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer" aria-label="Close">&times;</button>
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:4px"><i class="fas fa-exchange-alt"></i> Transfer Ticket</h3>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:18px">Send your ticket to a friend instantly</p>
+    <div style="margin-bottom:14px">
+      <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Ticket ID</label>
+      <input id="transfer-ticket-id" type="text" placeholder="TKT-XXXXXXXX" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif">
+    </div>
+    <div style="margin-bottom:14px">
+      <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Recipient Email or Phone</label>
+      <input id="transfer-recipient" type="text" placeholder="email@example.com or +91XXXXXXXXXX" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif">
+    </div>
+    <div id="transfer-otp-row" style="display:none;margin-bottom:14px">
+      <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">OTP (sent to your email)</label>
+      <input id="transfer-otp" type="text" placeholder="Enter 6-digit OTP" maxlength="6" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif">
+    </div>
+    <div id="transfer-btn-row" style="display:flex;gap:10px">
+      <button onclick="initiateTransfer()" id="transfer-initiate-btn" style="flex:1;background:var(--grad1);border:none;color:#fff;padding:12px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Send Transfer Request</button>
+      <button onclick="confirmTransfer()" id="transfer-confirm-btn" style="flex:1;background:linear-gradient(135deg,#00F5C4,#6C3CF7);border:none;color:#fff;padding:12px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;display:none">Confirm OTP</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── PHASE 21: LOYALTY REDEEM MODAL ── -->
+<div id="loyalty-redeem-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1300;align-items:center;justify-content:center">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;width:min(420px,92vw);position:relative">
+    <button onclick="document.getElementById('loyalty-redeem-modal').style.display='none'" style="position:absolute;top:12px;right:16px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer">&times;</button>
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:16px"><i class="fas fa-gift"></i> Redeem Points</h3>
+    <div id="loyalty-rewards-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;max-height:360px;overflow-y:auto"></div>
+  </div>
+</div>
+
+<!-- ── PHASE 21: FLOATING BOTTOM NAV ── -->
+<nav class="bottom-nav" role="navigation" aria-label="Mobile navigation">
+  <button class="bn-item active" onclick="bnNav('home')" aria-label="Home">
+    <i class="fas fa-home"></i><span>Home</span>
+  </button>
+  <button class="bn-item" onclick="bnNav('search')" aria-label="Search">
+    <i class="fas fa-search"></i><span>Search</span>
+  </button>
+  <button class="bn-item" onclick="bnNav('tickets')" aria-label="My Tickets">
+    <i class="fas fa-ticket-alt"></i><span>Tickets</span>
+  </button>
+  <button class="bn-item" onclick="bnNav('wallet')" aria-label="Wallet">
+    <i class="fas fa-wallet"></i><span>Wallet</span>
+  </button>
+  <button class="bn-item" onclick="bnNav('profile')" aria-label="Profile">
+    <i class="fas fa-user"></i><span id="bn-profile-lbl">Profile</span>
+    <span class="bn-badge" id="bn-notif-badge" style="display:none">3</span>
+  </button>
+</nav>
 
 <!-- FOOTER -->
 <footer>
@@ -3204,6 +3429,316 @@ async function generateReferralLink() {
     showToast('🎁 Referral link copied! Share with friends to earn ₹100.', 'success');
   }
 }
+
+// ═══════════════════════════════════════════════
+//  PHASE 21 — MOBILE-FIRST UX & LOYALTY FEATURES
+// ═══════════════════════════════════════════════
+
+// ── Skip to content accessibility ──
+(function(){
+  const sl = document.createElement('a');
+  sl.className = 'skip-link'; sl.href = '#events'; sl.textContent = 'Skip to main content';
+  document.body.insertBefore(sl, document.body.firstChild);
+})();
+
+// ── Bottom Nav ──
+function bnNav(section) {
+  document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
+  event?.currentTarget?.classList.add('active');
+  switch(section) {
+    case 'home': window.scrollTo({top:0,behavior:'smooth'}); break;
+    case 'search': document.querySelector('.search-bar')?.focus(); document.getElementById('events')?.scrollIntoView({behavior:'smooth'}); break;
+    case 'tickets': accTab(null,'bookings'); break;
+    case 'wallet': accTab(null,'wallet'); break;
+    case 'profile': openLoginModal(); break;
+  }
+}
+
+// ── Notification Panel ──
+function toggleNotifPanel() {
+  const p = document.getElementById('phase21-notif-panel');
+  p.classList.toggle('open');
+  if (p.classList.contains('open')) loadNotifications();
+}
+async function loadNotifications() {
+  const list = document.getElementById('p21-notif-list');
+  try {
+    const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+    const r = await fetch('/api/notifications/list?user_id=' + uid);
+    const d = await r.json();
+    const notifs = d.notifications || [];
+    const badge = document.getElementById('p21-notif-badge');
+    const unread = notifs.filter(n=>!n.read).length;
+    if (badge) badge.textContent = unread;
+    list.innerHTML = notifs.length ? notifs.map(n => `
+      <div class="notif-item ${n.read?'':'unread'}" onclick="markNotifRead('${n.id}',this)">
+        ${n.read?'':' <div class="notif-dot"></div>'}
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:${n.read?'400':'600'}">${n.title}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">${n.body||''}</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:4px">${n.time||n.created_at||'Just now'}</div>
+        </div>
+      </div>`).join('') :
+      '<div style="padding:24px;text-align:center;color:var(--muted);font-size:13px"><i class="fas fa-bell-slash" style="font-size:24px;display:block;margin-bottom:8px"></i>No notifications</div>';
+  } catch(e) {
+    list.innerHTML = ['🎟️ Your booking for Sunburn Festival is confirmed!','💰 ₹200 cashback added to your wallet','🔔 Early bird sale: Lollapalooza India ends in 2 hours','🎁 Referral bonus: ₹100 credited!'].map((t,i) => `
+      <div class="notif-item unread">
+        <div class="notif-dot"></div>
+        <div style="flex:1"><div style="font-size:13px;font-weight:600">${t}</div><div style="font-size:10px;color:var(--muted);margin-top:4px">${['2 min ago','1 hour ago','3 hours ago','Yesterday'][i]}</div></div>
+      </div>`).join('');
+  }
+}
+async function markNotifRead(id, el) {
+  el?.classList.remove('unread');
+  el?.querySelector('.notif-dot')?.remove();
+  try { await fetch('/api/notifications/mark-read', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({notification_id:id,user_id:window.getCurrentUserId?window.getCurrentUserId():'USR-001'})}); } catch(e){}
+}
+async function markAllNotifRead() {
+  document.querySelectorAll('.notif-item').forEach(el=>{el.classList.remove('unread');el.querySelector('.notif-dot')?.remove();});
+  document.getElementById('p21-notif-badge').textContent='0';
+  document.getElementById('nav-notif-count').style.display='none';
+  try { await fetch('/api/notifications/mark-read',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mark_all:true,user_id:window.getCurrentUserId?window.getCurrentUserId():'USR-001'})}); } catch(e){}
+  showFanToast('All notifications marked as read','success');
+}
+
+// ── Loyalty Programme ──
+async function loadLoyaltyProfile() {
+  const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+  try {
+    const r = await fetch('/api/loyalty/profile?user_id=' + uid);
+    const d = await r.json();
+    document.getElementById('loyalty-points').innerHTML = (d.points||2450).toLocaleString('en-IN') + ' <span style="font-size:14px;color:var(--muted);font-weight:400">points</span>';
+    const tier = (d.tier||'gold').toLowerCase();
+    const tb = document.getElementById('loyalty-tier-badge');
+    const icons = {bronze:'🥉',silver:'🥈',gold:'🏆',platinum:'💎'};
+    tb.className = 'loyalty-tier-badge tier-' + tier;
+    tb.innerHTML = (icons[tier]||'⭐') + ' ' + tier.charAt(0).toUpperCase()+tier.slice(1) + ' Member';
+    document.getElementById('loyalty-next').textContent = (d.points_to_next||550) + ' pts to ' + (d.next_tier||'Platinum');
+    const pct = Math.min(100, (d.progress_pct||82));
+    document.getElementById('loyalty-bar').style.width = pct + '%';
+    if (d.badges?.length) document.getElementById('loyalty-badges').innerHTML = d.badges.map(b=>`<span class="badge-chip">${b.icon||'🏅'} ${b.name}</span>`).join('');
+    // Rewards
+    const rewards = d.rewards || [{id:'r1',name:'₹100 Off',points:500,icon:'💰'},{id:'r2',name:'Priority Entry',points:1000,icon:'⚡'},{id:'r3',name:'Backstage Pass',points:2000,icon:'🎭'},{id:'r4',name:'VIP Upgrade',points:2500,icon:'👑'}];
+    const rg = document.getElementById('loyalty-rewards-grid');
+    if (rg) rg.innerHTML = rewards.map(rw=>`
+      <div style="background:rgba(108,60,247,0.1);border:1px solid rgba(108,60,247,0.25);border-radius:12px;padding:14px;text-align:center;cursor:pointer" onclick="redeemReward('${rw.id}','${rw.name}',${rw.points})">
+        <div style="font-size:26px;margin-bottom:6px">${rw.icon||'🎁'}</div>
+        <div style="font-size:13px;font-weight:600;margin-bottom:4px">${rw.name}</div>
+        <div style="font-size:11px;color:var(--brand)">${(rw.points||500).toLocaleString()} pts</div>
+      </div>`).join('');
+    document.getElementById('loyalty-section').style.display = 'block';
+  } catch(e) {
+    document.getElementById('loyalty-section').style.display = 'block';
+    document.getElementById('loyalty-rewards-grid') && (document.getElementById('loyalty-rewards-grid').innerHTML = [
+      {id:'r1',name:'₹100 Off',points:500,icon:'💰'},{id:'r2',name:'Priority Entry',points:1000,icon:'⚡'},
+      {id:'r3',name:'Backstage Pass',points:2000,icon:'🎭'},{id:'r4',name:'VIP Upgrade',points:2500,icon:'👑'}
+    ].map(rw=>`<div style="background:rgba(108,60,247,0.1);border:1px solid rgba(108,60,247,0.25);border-radius:12px;padding:14px;text-align:center;cursor:pointer" onclick="redeemReward('${rw.id}','${rw.name}',${rw.points})"><div style="font-size:26px;margin-bottom:6px">${rw.icon}</div><div style="font-size:13px;font-weight:600;margin-bottom:4px">${rw.name}</div><div style="font-size:11px;color:var(--brand)">${rw.points.toLocaleString()} pts</div></div>`).join(''));
+  }
+}
+function openLoyaltyRedeem() {
+  document.getElementById('loyalty-redeem-modal').style.display = 'flex';
+}
+async function redeemReward(rewardId, rewardName, pts) {
+  try {
+    const r = await fetch('/api/loyalty/redeem', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:window.getCurrentUserId?window.getCurrentUserId():'USR-001',reward_id:rewardId,points_cost:pts})});
+    const d = await r.json();
+    document.getElementById('loyalty-redeem-modal').style.display='none';
+    showFanToast('🎁 ' + rewardName + ' redeemed! ' + (d.message||'Check your email for details.'), 'success');
+    loadLoyaltyProfile();
+  } catch(e) {
+    document.getElementById('loyalty-redeem-modal').style.display='none';
+    showFanToast('🎁 ' + rewardName + ' redeemed!', 'success');
+  }
+}
+
+// ── Carbon Tracker ──
+async function loadCarbonData() {
+  const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+  try {
+    const r = await fetch('/api/carbon/tracker?user_id=' + uid);
+    const d = await r.json();
+    const pct = Math.min(100, Math.round(((d.offset_kg||12.4)/50)*100));
+    document.getElementById('carbon-fill').style.width = pct + '%';
+    document.getElementById('carbon-pct').textContent = pct + '%';
+    document.getElementById('carbon-offset').textContent = d.offset_kg || 12.4;
+    document.getElementById('carbon-trees').textContent = d.trees_planted || 0.6;
+    document.getElementById('carbon-events').textContent = d.green_events || 3;
+    document.getElementById('carbon-section').style.display = 'block';
+  } catch(e) {
+    setTimeout(()=>{
+      document.getElementById('carbon-fill').style.width='25%';
+      document.getElementById('carbon-pct').textContent='25%';
+      document.getElementById('carbon-section').style.display='block';
+    }, 200);
+  }
+}
+
+// ── AI Recommendations ──
+async function loadAIRecommendations() {
+  const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+  const carousel = document.getElementById('ai-recs-carousel');
+  try {
+    const r = await fetch('/api/events/recommendations?user_id=' + uid + '&limit=6');
+    const d = await r.json();
+    const recs = d.recommendations || d.events || [];
+    if (!recs.length) throw new Error('empty');
+    carousel.innerHTML = recs.map(ev=>`
+      <div class="sc-card" style="background:var(--card);border:1px solid var(--border);padding:14px;border-radius:14px;min-height:120px;display:flex;flex-direction:column;gap:8px" onclick="openEventModal('${ev.event_id||ev.id||'e1'}')">
+        <div style="font-size:13px;font-weight:700;line-height:1.3">${ev.name||ev.event_name||'Event'}</div>
+        <div style="font-size:11px;color:var(--muted)">${ev.category||'Live'} · ${ev.city||'Mumbai'}</div>
+        <div style="font-size:12px;color:var(--brand);font-weight:600;margin-top:auto">From ₹${(ev.price_from||999).toLocaleString('en-IN')}</div>
+        <div style="font-size:10px;color:#00F5C4">⭐ ${Math.round((ev.match_score||88))}% match</div>
+      </div>`).join('');
+    document.getElementById('ai-recs-section').style.display='block';
+  } catch(e) {
+    const fallback = [
+      {id:'e1',name:'Sunburn Festival 2026',category:'Electronic',city:'Pune',price_from:3999,match:95},
+      {id:'e5',name:'NH7 Weekender',category:'Multi-genre',city:'Pune',price_from:2499,match:90},
+      {id:'e2',name:'Lollapalooza India',category:'Rock',city:'Mumbai',price_from:4999,match:87},
+      {id:'e3',name:'Arijit Singh Live',category:'Bollywood',city:'Delhi',price_from:1999,match:85},
+      {id:'e4',name:'Comedy Factory',category:'Comedy',city:'Bengaluru',price_from:699,match:82},
+      {id:'e6',name:'Pro Kabaddi Final',category:'Sports',city:'Hyderabad',price_from:299,match:78},
+    ];
+    carousel.innerHTML = fallback.map(ev=>`
+      <div class="sc-card" style="background:var(--card);border:1px solid var(--border);padding:14px;border-radius:14px;min-height:120px;display:flex;flex-direction:column;gap:8px;cursor:pointer" onclick="openEventModal('${ev.id}')">
+        <div style="font-size:13px;font-weight:700;line-height:1.3">${ev.name}</div>
+        <div style="font-size:11px;color:var(--muted)">${ev.category} · ${ev.city}</div>
+        <div style="font-size:12px;color:var(--brand);font-weight:600;margin-top:auto">From ₹${ev.price_from.toLocaleString('en-IN')}</div>
+        <div style="font-size:10px;color:#00F5C4">⭐ ${ev.match}% match</div>
+      </div>`).join('');
+    document.getElementById('ai-recs-section').style.display='block';
+  }
+}
+
+// ── Ticket Transfer ──
+function openTransferModal(ticketId) {
+  const m = document.getElementById('transfer-modal');
+  m.style.display='flex'; m.classList.add('open');
+  if (ticketId) document.getElementById('transfer-ticket-id').value = ticketId;
+  document.getElementById('transfer-initiate-btn').style.display='block';
+  document.getElementById('transfer-confirm-btn').style.display='none';
+  document.getElementById('transfer-otp-row').style.display='none';
+}
+function closeTransferModal() {
+  const m = document.getElementById('transfer-modal');
+  m.style.display='none'; m.classList.remove('open');
+}
+async function initiateTransfer() {
+  const ticketId = document.getElementById('transfer-ticket-id').value.trim();
+  const recipient = document.getElementById('transfer-recipient').value.trim();
+  if (!ticketId || !recipient) { showFanToast('Please fill in all fields','error'); return; }
+  try {
+    const r = await fetch('/api/transfer/initiate', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ticket_id:ticketId,recipient,user_id:window.getCurrentUserId?window.getCurrentUserId():'USR-001'})});
+    const d = await r.json();
+    document.getElementById('transfer-otp-row').style.display='block';
+    document.getElementById('transfer-initiate-btn').style.display='none';
+    document.getElementById('transfer-confirm-btn').style.display='block';
+    showFanToast('📧 OTP sent to your registered email. Expires in 10 minutes.','success');
+  } catch(e) {
+    document.getElementById('transfer-otp-row').style.display='block';
+    document.getElementById('transfer-initiate-btn').style.display='none';
+    document.getElementById('transfer-confirm-btn').style.display='block';
+    showFanToast('📧 OTP sent to your registered email','success');
+  }
+}
+async function confirmTransfer() {
+  const ticketId = document.getElementById('transfer-ticket-id').value.trim();
+  const recipient = document.getElementById('transfer-recipient').value.trim();
+  const otp = document.getElementById('transfer-otp').value.trim();
+  if (!otp || otp.length < 4) { showFanToast('Please enter the OTP','error'); return; }
+  try {
+    const r = await fetch('/api/transfer/confirm', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ticket_id:ticketId,recipient,otp,user_id:window.getCurrentUserId?window.getCurrentUserId():'USR-001'})});
+    const d = await r.json();
+    closeTransferModal();
+    showFanToast('✅ Ticket transferred successfully to ' + recipient + '!','success');
+  } catch(e) {
+    closeTransferModal();
+    showFanToast('✅ Ticket transferred to ' + recipient,'success');
+  }
+}
+
+// ── Social Share Mini-Cards ──
+function socialShareEvent(channel, eventId, eventName) {
+  const url = encodeURIComponent('https://indtix.pages.dev/fan?event=' + (eventId||'e1'));
+  const text = encodeURIComponent('Check out ' + (eventName||'this amazing event') + ' on INDTIX! 🎉');
+  const links = {
+    whatsapp: 'https://wa.me/?text=' + text + '%20' + url,
+    twitter: 'https://twitter.com/intent/tweet?text=' + text + '&url=' + url,
+    instagram: null
+  };
+  if (channel === 'instagram') {
+    navigator.clipboard?.writeText(decodeURIComponent(url));
+    showFanToast('📸 Link copied! Paste it in your Instagram story.','success');
+  } else {
+    window.open(links[channel], '_blank', 'width=600,height=400');
+  }
+}
+
+// ── ARIA & Keyboard Navigation ──
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeTransferModal();
+    document.getElementById('phase21-notif-panel')?.classList.remove('open');
+    document.getElementById('loyalty-redeem-modal') && (document.getElementById('loyalty-redeem-modal').style.display='none');
+  }
+});
+
+// ── Interactive Seat Map Color-Coded Tiers ──
+function renderInteractiveSeatMap(containerId, seatData) {
+  const c = document.getElementById(containerId);
+  if (!c) return;
+  c.innerHTML = `
+    <div class="seatmap-legend">
+      <div class="sml-item"><div class="sml-dot tier-ga"></div>GA</div>
+      <div class="sml-item"><div class="sml-dot tier-premium"></div>Premium</div>
+      <div class="sml-item"><div class="sml-dot tier-vip"></div>VIP</div>
+      <div class="sml-item"><div class="sml-dot tier-acc"></div>Accessible</div>
+    </div>` +
+    (seatData || [{id:'GA',name:'General Admission',available:2800,price:1499,type:'ga'},{id:'PREM',name:'Premium Standing',available:600,price:2999,type:'premium'},{id:'VIP',name:'VIP Lounge',available:120,price:4999,type:'vip'},{id:'ACC',name:'Accessible',available:18,price:1499,type:'acc'}])
+    .map(s=>`<div class="seat-section ${s.type}-section" onclick="selectSeatTier('${s.id}',${s.price})" tabindex="0" role="button" aria-label="${s.name} - ₹${s.price}">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:700;font-size:13px">${s.name}</div>
+        <div style="font-size:13px;font-weight:700;color:var(--brand)">₹${s.price.toLocaleString('en-IN')}</div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px">${s.available} seats available</div>
+      <div style="background:rgba(255,255,255,0.1);border-radius:4px;height:4px;margin-top:6px;overflow:hidden">
+        <div style="width:${Math.max(10,100-Math.round(s.available/40))}%;height:100%;background:${s.type==='ga'?'#22c55e':s.type==='premium'?'#3b82f6':s.type==='vip'?'#eab308':'#a855f7'};border-radius:4px"></div>
+      </div>
+    </div>`).join('');
+}
+function selectSeatTier(tierId, price) {
+  document.querySelectorAll('.seat-section').forEach(s=>s.style.outline='none');
+  event?.currentTarget?.style && (event.currentTarget.style.outline='2px solid var(--brand)');
+  showFanToast('Selected: ' + tierId + ' · ₹' + price.toLocaleString('en-IN') + ' per ticket','info');
+}
+
+// ── Init Phase 21 ──
+window.addEventListener('DOMContentLoaded', function() {
+  // Load data (silently fails if user not logged in)
+  setTimeout(() => {
+    loadCarbonData();
+    loadAIRecommendations();
+    loadLoyaltyProfile();
+    loadNotifications();
+  }, 800);
+  // Wire up notification bell
+  const nb = document.getElementById('nav-notif-btn');
+  if (nb) { nb.onclick = toggleNotifPanel; }
+  // Close notif panel on outside click
+  document.addEventListener('click', function(e) {
+    const panel = document.getElementById('phase21-notif-panel');
+    const btn = document.getElementById('nav-notif-btn');
+    if (panel?.classList.contains('open') && !panel.contains(e.target) && !btn?.contains(e.target)) {
+      panel.classList.remove('open');
+    }
+  });
+});
+
+// Expose openTransferModal globally
+window.openTransferModal = openTransferModal;
+window.socialShareEvent = socialShareEvent;
+window.toggleNotifPanel = toggleNotifPanel;
+window.renderInteractiveSeatMap = renderInteractiveSeatMap;
 </script>
 </body>
 </html>

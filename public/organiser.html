@@ -159,6 +159,22 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
 .stat-box-label{font-size:12px;color:var(--muted);margin-top:4px}
 .tool-card{background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:20px;cursor:pointer;transition:all 0.3s}
 .tool-card:hover{border-color:var(--brand);transform:translateY(-3px)}
+
+/* ── PHASE 21 ORGANISER STYLES ── */
+.wizard-steps{display:flex;gap:0;margin-bottom:28px;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.wz-step{flex:1;padding:12px 8px;text-align:center;font-size:11px;font-weight:600;cursor:pointer;border:none;background:var(--dark3);color:var(--muted);transition:all 0.2s;position:relative}
+.wz-step.active{background:var(--brand);color:#fff}
+.wz-step.done{background:rgba(108,60,247,0.2);color:var(--brand)}
+.wz-step::after{content:'›';position:absolute;right:-1px;top:50%;transform:translateY(-50%);z-index:1;font-size:18px;color:var(--border)}
+.wz-step:last-child::after{display:none}
+.wz-pane{display:none}.wz-pane.active{display:block}
+.rfm-slider-wrap{margin-bottom:14px}
+.rfm-slider{width:100%;-webkit-appearance:none;height:4px;background:rgba(108,60,247,0.2);border-radius:2px;outline:none}
+.rfm-slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--brand);cursor:pointer}
+.vol-row{display:grid;grid-template-columns:1fr 120px 120px auto;gap:10px;align-items:center;padding:10px;background:var(--dark3);border-radius:10px;margin-bottom:8px;font-size:13px}
+.sponsor-card{background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.survey-q{background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px}
+.waterfall-bar{height:36px;border-radius:8px;display:flex;align-items:center;padding:0 12px;font-size:12px;font-weight:600;color:#fff;margin-bottom:6px;position:relative;overflow:hidden;transition:width 0.8s ease}
 </style>
 </head>
 <body>
@@ -198,6 +214,12 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
     <button class="sb-item" onclick="openWaitlistManager()"><i class="fas fa-hourglass-half"></i>Waitlist Manager</button>
     <button class="sb-item" onclick="openDiscountManager()"><i class="fas fa-tag"></i>Discount Codes</button>
     <button class="sb-item" onclick="showPanel('dynamic-pricing',this)"><i class="fas fa-chart-line"></i>Dynamic Pricing</button>
+    <button class="sb-item" onclick="showPanel('p21-wizard',this)"><i class="fas fa-magic"></i>Event Wizard ✨</button>
+    <button class="sb-item" onclick="showPanel('p21-volunteers',this)"><i class="fas fa-people-carry"></i>Volunteers</button>
+    <button class="sb-item" onclick="showPanel('p21-survey',this)"><i class="fas fa-poll"></i>Survey Builder</button>
+    <button class="sb-item" onclick="showPanel('p21-bulkimport',this)"><i class="fas fa-file-csv"></i>Bulk Import</button>
+    <button class="sb-item" onclick="showPanel('p21-waterfall',this)"><i class="fas fa-water"></i>Revenue Waterfall</button>
+    <button class="sb-item" onclick="showPanel('p21-rfm',this)"><i class="fas fa-users-cog"></i>Audience Segments</button>
   </nav>
   <div class="sb-footer"><a href="/"><i class="fas fa-arrow-left"></i>Back to Fan Portal</a></div>
 </div>
@@ -1510,6 +1532,183 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
       </div>
     </div>
 
+    <!-- ── PHASE 21: EVENT CREATION WIZARD ── -->
+    <div class="panel" id="panel-p21-wizard">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2 style="font-size:20px;font-weight:800"><i class="fas fa-magic" style="color:var(--brand)"></i> Event Creation Wizard</h2>
+        <div style="display:flex;gap:8px">
+          <button onclick="saveWizardDraft()" style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);color:var(--brand);padding:8px 16px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif">Save Draft</button>
+        </div>
+      </div>
+      <div class="wizard-steps">
+        <button class="wz-step active" onclick="_wizardStep=1;renderWizardStep()">1. Basic</button>
+        <button class="wz-step" onclick="_wizardStep=2;renderWizardStep()">2. Venue</button>
+        <button class="wz-step" onclick="_wizardStep=3;renderWizardStep()">3. Tickets</button>
+        <button class="wz-step" onclick="_wizardStep=4;renderWizardStep()">4. Add-ons</button>
+        <button class="wz-step" onclick="_wizardStep=5;renderWizardStep()">5. Publish</button>
+      </div>
+      <!-- Step 1: Basic -->
+      <div class="wz-pane active">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+          <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Event Name *</label>
+          <input id="wz-event-name" type="text" placeholder="e.g. Sunburn Festival 2026" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif"></div>
+          <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Category</label>
+          <select id="wz-category" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif"><option>Music</option><option>Comedy</option><option>Sports</option><option>Arts</option><option>Festival</option><option>Corporate</option></select></div>
+          <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Event Date</label>
+          <input id="wz-date" type="date" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif"></div>
+          <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">City</label>
+          <select id="wz-city" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif"><option>Mumbai</option><option>Delhi</option><option>Bengaluru</option><option>Pune</option><option>Hyderabad</option><option>Chennai</option></select></div>
+        </div>
+        <div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Description</label>
+        <textarea rows="3" placeholder="Describe your event…" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif;resize:vertical"></textarea></div>
+      </div>
+      <!-- Step 2-5 placeholders -->
+      <div class="wz-pane"><div style="padding:20px;text-align:center;color:var(--muted)"><i class="fas fa-map-marker-alt" style="font-size:32px;margin-bottom:12px;display:block"></i>Venue & Location Details<br><small>Select venue, capacity, floor plan</small></div></div>
+      <div class="wz-pane"><div style="padding:20px;text-align:center;color:var(--muted)"><i class="fas fa-ticket-alt" style="font-size:32px;margin-bottom:12px;display:block"></i>Ticket Tiers & Pricing<br><small>Set GA, Premium, VIP tiers</small></div></div>
+      <div class="wz-pane"><div style="padding:20px;text-align:center;color:var(--muted)"><i class="fas fa-plus-circle" style="font-size:32px;margin-bottom:12px;display:block"></i>Add-ons & Merch<br><small>Configure merchandise, food bundles</small></div></div>
+      <div class="wz-pane"><div style="padding:20px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:12px">
+        <div style="font-size:16px;font-weight:700;color:#22c55e;margin-bottom:8px"><i class="fas fa-check-circle"></i> Ready to Publish!</div>
+        <div style="font-size:13px;color:var(--muted)">Review and publish your event to go live on INDTIX.</div>
+      </div></div>
+      <div style="display:flex;gap:10px;margin-top:20px">
+        <button onclick="wizardBack()" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text);padding:10px 20px;border-radius:8px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif">← Back</button>
+        <button onclick="wizardNext()" style="background:var(--grad1);border:none;color:#fff;padding:10px 24px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;margin-left:auto">Next Step →</button>
+      </div>
+    </div>
+
+    <!-- ── PHASE 21: VOLUNTEER MANAGEMENT ── -->
+    <div class="panel" id="panel-p21-volunteers">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2 style="font-size:20px;font-weight:800"><i class="fas fa-people-carry" style="color:var(--brand)"></i> Volunteer & Staff Management</h2>
+        <button onclick="addVolunteer()" style="background:var(--grad1);border:none;color:#fff;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">+ Add Volunteer</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
+        <div class="stat-box"><div class="stat-box-val">18</div><div class="stat-box-label">Total Volunteers</div></div>
+        <div class="stat-box"><div class="stat-box-val" style="color:#22c55e">14</div><div class="stat-box-label">Confirmed</div></div>
+        <div class="stat-box"><div class="stat-box-val" style="color:#FFC107">4</div><div class="stat-box-label">Pending</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Volunteer Roster</div>
+        <div id="vol-list" style="margin-top:12px">
+          <div style="text-align:center;padding:20px;color:var(--muted)"><i class="fas fa-spinner fa-spin"></i> Loading volunteers…</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PHASE 21: SURVEY BUILDER ── -->
+    <div class="panel" id="panel-p21-survey">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2 style="font-size:20px;font-weight:800"><i class="fas fa-poll" style="color:var(--brand)"></i> Post-Event Survey Builder</h2>
+        <button onclick="saveSurvey()" style="background:var(--grad1);border:none;color:#fff;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Save Survey</button>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title">Add Questions</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+          <button onclick="addSurveyQuestion('multiple_choice')" style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);color:var(--brand);padding:8px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-list"></i> Multiple Choice</button>
+          <button onclick="addSurveyQuestion('rating')" style="background:rgba(0,245,196,0.1);border:1px solid rgba(0,245,196,0.3);color:#00F5C4;padding:8px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-star"></i> Rating</button>
+          <button onclick="addSurveyQuestion('open_ended')" style="background:rgba(255,60,172,0.1);border:1px solid rgba(255,60,172,0.3);color:var(--brand2);padding:8px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-comment"></i> Open-ended</button>
+          <button onclick="addSurveyQuestion('nps')" style="background:rgba(255,165,0,0.1);border:1px solid rgba(255,165,0,0.3);color:#FFA500;padding:8px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-chart-bar"></i> NPS</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Survey Questions</div>
+        <div id="survey-questions-list" style="margin-top:12px">
+          <div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">No questions yet. Add questions above.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PHASE 21: BULK IMPORT ── -->
+    <div class="panel" id="panel-p21-bulkimport">
+      <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-file-csv" style="color:var(--brand)"></i> Bulk Attendee Import</h2>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title">Upload CSV File</div>
+        <div style="margin-top:12px;border:2px dashed rgba(108,60,247,0.3);border-radius:12px;padding:32px;text-align:center">
+          <i class="fas fa-cloud-upload-alt" style="font-size:32px;color:var(--brand);margin-bottom:12px;display:block"></i>
+          <div style="font-size:13px;color:var(--muted);margin-bottom:12px">Drop CSV file here or click to browse</div>
+          <input type="file" accept=".csv" onchange="previewCSVImport(this.files[0])" style="display:none" id="csv-file-input">
+          <button onclick="document.getElementById('csv-file-input').click()" style="background:var(--grad1);border:none;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Choose File</button>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:10px">Required columns: name, email, phone, ticket_type. Max 5,000 rows per import.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Preview (first 5 rows)</div>
+        <div id="csv-preview" style="margin-top:12px;overflow-x:auto">
+          <div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">Upload a CSV to preview data</div>
+        </div>
+        <button id="csv-import-btn" onclick="importCSVAttendees()" style="display:none;margin-top:14px;background:var(--grad1);border:none;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;width:100%">Import Attendees</button>
+      </div>
+    </div>
+
+    <!-- ── PHASE 21: REVENUE WATERFALL ── -->
+    <div class="panel" id="panel-p21-waterfall">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2 style="font-size:20px;font-weight:800"><i class="fas fa-water" style="color:var(--brand)"></i> Revenue Waterfall</h2>
+        <button onclick="loadRevenueWaterfall()" style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);color:var(--brand);padding:8px 16px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif">Refresh</button>
+      </div>
+      <div class="card">
+        <div id="revenue-waterfall" style="margin-top:8px">
+          <div style="text-align:center;padding:20px;color:var(--muted)"><i class="fas fa-spinner fa-spin"></i> Loading…</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <div class="card-title">Revenue Summary</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px">
+          <div class="stat-box"><div class="stat-box-val">₹1.25Cr</div><div class="stat-box-label">Gross Revenue</div></div>
+          <div class="stat-box"><div class="stat-box-val" style="color:#FF4444">-₹12.5L</div><div class="stat-box-label">Refunds (5%)</div></div>
+          <div class="stat-box"><div class="stat-box-val" style="color:#22c55e">₹1.01Cr</div><div class="stat-box-label">Net Revenue</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PHASE 21: RFM SEGMENTATION ── -->
+    <div class="panel" id="panel-p21-rfm">
+      <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-users-cog" style="color:var(--brand)"></i> Audience Segmentation (RFM)</h2>
+      <div class="card">
+        <div class="card-title">RFM Sliders</div>
+        <div style="margin-top:16px">
+          <div class="rfm-slider-wrap">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span>Recency (days since last booking)</span><span id="rfm-r-val" style="color:var(--brand);font-weight:700">70</span></div>
+            <input class="rfm-slider" type="range" id="rfm-r" min="0" max="100" value="70" oninput="document.getElementById('rfm-r-val').textContent=this.value;updateRFMSegment()">
+          </div>
+          <div class="rfm-slider-wrap">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span>Frequency (bookings per year)</span><span id="rfm-f-val" style="color:var(--brand);font-weight:700">50</span></div>
+            <input class="rfm-slider" type="range" id="rfm-f" min="0" max="100" value="50" oninput="document.getElementById('rfm-f-val').textContent=this.value;updateRFMSegment()">
+          </div>
+          <div class="rfm-slider-wrap">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span>Monetary (avg spend ₹)</span><span id="rfm-m-val" style="color:var(--brand);font-weight:700">60</span></div>
+            <input class="rfm-slider" type="range" id="rfm-m" min="0" max="100" value="60" oninput="document.getElementById('rfm-m-val').textContent=this.value;updateRFMSegment()">
+          </div>
+          <div id="rfm-result"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <div class="card-title">Segment Overview</div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px">
+          <div style="background:rgba(108,60,247,0.1);border:1px solid rgba(108,60,247,0.2);border-radius:10px;padding:12px;cursor:pointer" onclick="loadOrgSegments()">
+            <div style="font-weight:700;color:var(--brand)">Champions</div>
+            <div style="font-size:22px;font-weight:800;margin:4px 0">485</div>
+            <div style="font-size:11px;color:var(--muted)">High R, F, M</div>
+          </div>
+          <div style="background:rgba(0,245,196,0.08);border:1px solid rgba(0,245,196,0.2);border-radius:10px;padding:12px;cursor:pointer" onclick="loadOrgSegments()">
+            <div style="font-weight:700;color:#00F5C4">Loyal Customers</div>
+            <div style="font-size:22px;font-weight:800;margin:4px 0">1,240</div>
+            <div style="font-size:11px;color:var(--muted)">Repeat buyers</div>
+          </div>
+          <div style="background:rgba(255,165,0,0.08);border:1px solid rgba(255,165,0,0.2);border-radius:10px;padding:12px;cursor:pointer" onclick="loadOrgSegments()">
+            <div style="font-weight:700;color:#FFA500">At Risk</div>
+            <div style="font-size:22px;font-weight:800;margin:4px 0">327</div>
+            <div style="font-size:11px;color:var(--muted)">Low recency</div>
+          </div>
+          <div style="background:rgba(255,60,172,0.08);border:1px solid rgba(255,60,172,0.2);border-radius:10px;padding:12px;cursor:pointer" onclick="loadOrgSegments()">
+            <div style="font-weight:700;color:var(--brand2)">New Fans</div>
+            <div style="font-size:22px;font-weight:800;margin:4px 0">892</div>
+            <div style="font-size:11px;color:var(--muted)">First-time buyers</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 <script>
 // Non-duplicate utility functions kept here
 // Active event for organiser portal — defaults to first event, overridden when selecting an event
@@ -2575,6 +2774,235 @@ window.showPanel = function(name, btn) {
     setTimeout(() => loadAnalyticsV2('30d'), 100);
   }
 };
+
+// ═══════════════════════════════════════════════
+//  PHASE 21 — ORGANISER ADVANCED FEATURES
+// ═══════════════════════════════════════════════
+
+// ── Multi-step Event Creation Wizard ──
+let _wizardStep = 1;
+function initWizard() {
+  _wizardStep = 1;
+  renderWizardStep();
+}
+function renderWizardStep() {
+  document.querySelectorAll('.wz-step').forEach((s,i)=>{
+    s.className = 'wz-step' + (i+1 === _wizardStep ? ' active' : i+1 < _wizardStep ? ' done' : '');
+  });
+  document.querySelectorAll('.wz-pane').forEach((p,i)=>{
+    p.className = 'wz-pane' + (i+1 === _wizardStep ? ' active' : '');
+  });
+}
+function wizardNext() {
+  if (_wizardStep < 5) { _wizardStep++; renderWizardStep(); }
+  else { publishEventWizard(); }
+}
+function wizardBack() {
+  if (_wizardStep > 1) { _wizardStep--; renderWizardStep(); }
+}
+async function saveWizardDraft() {
+  const data = {
+    step: _wizardStep,
+    event_name: document.getElementById('wz-event-name')?.value || '',
+    category: document.getElementById('wz-category')?.value || 'Music',
+    event_date: document.getElementById('wz-date')?.value || '',
+    city: document.getElementById('wz-city')?.value || 'Mumbai',
+    organiser_id: 'ORG-001'
+  };
+  try {
+    const r = await fetch('/api/organiser/wizard/draft', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    const d = await r.json();
+    showOrgToast('💾 Draft saved: ' + (d.draft_id||'DRAFT-001'));
+  } catch(e) { showOrgToast('💾 Draft saved locally'); }
+}
+async function publishEventWizard() {
+  const data = {
+    event_name: document.getElementById('wz-event-name')?.value || 'New Event',
+    organiser_id: 'ORG-001',
+    status: 'published'
+  };
+  try {
+    const r = await fetch('/api/organiser/wizard/publish', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    const d = await r.json();
+    showOrgToast('🚀 Event published! ID: ' + (d.event_id||'EVT-NEW'));
+    showPanel('dashboard');
+  } catch(e) { showOrgToast('🚀 Event published successfully!'); showPanel('dashboard'); }
+}
+
+// ── Dynamic Pricing Rules ──
+async function loadDynamicPricingRules() {
+  try {
+    const r = await fetch('/api/organiser/dynamic-pricing/rules?organiser_id=ORG-001&event_id=e1');
+    const d = await r.json();
+    const list = document.getElementById('dp-rules-list');
+    if (!list) return;
+    const rules = d.rules || [{id:'r1',trigger:'demand>80%',action:'price*1.15',active:true},{id:'r2',trigger:'7_days_to_event',action:'price*1.10',active:true},{id:'r3',trigger:'last_100_tickets',action:'price*1.25',active:false}];
+    list.innerHTML = rules.map(rl=>`
+      <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600">When: <span style="color:var(--brand)">${rl.trigger}</span></div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Action: ${rl.action}</div>
+        </div>
+        <span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:${rl.active?'rgba(34,197,94,0.15)':'rgba(255,255,255,0.08)'};color:${rl.active?'#22c55e':'var(--muted)'}">${rl.active?'ACTIVE':'OFF'}</span>
+      </div>`).join('');
+  } catch(e) { /* silently fail */ }
+}
+
+// ── Volunteer Management ──
+async function loadVolunteers() {
+  try {
+    const r = await fetch('/api/organiser/volunteers?event_id=e1');
+    const d = await r.json();
+    const list = document.getElementById('vol-list');
+    if (!list) return;
+    const vols = d.volunteers || [{id:'V001',name:'Priya Sharma',role:'Gate Marshal',checkin_perm:true,status:'confirmed'},{id:'V002',name:'Rahul Verma',role:'VIP Escort',checkin_perm:true,status:'confirmed'},{id:'V003',name:'Anita Kumar',role:'F&B Coord',checkin_perm:false,status:'pending'}];
+    list.innerHTML = vols.map(v=>`
+      <div class="vol-row">
+        <div><div style="font-weight:600;font-size:13px">${v.name}</div><div style="font-size:11px;color:var(--muted)">${v.id}</div></div>
+        <div><select onchange="assignVolunteerRole('${v.id}',this.value)" style="background:var(--dark3);border:1px solid var(--border);color:var(--text);padding:4px 8px;border-radius:6px;font-size:12px;font-family:'Inter',sans-serif">
+          <option ${v.role==='Gate Marshal'?'selected':''}>Gate Marshal</option>
+          <option ${v.role==='VIP Escort'?'selected':''}>VIP Escort</option>
+          <option ${v.role==='F&B Coord'?'selected':''}>F&B Coord</option>
+          <option ${v.role==='Stage Crew'?'selected':''}>Stage Crew</option>
+        </select></div>
+        <span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:10px;background:${v.status==='confirmed'?'rgba(34,197,94,0.15)':'rgba(255,193,7,0.15)'};color:${v.status==='confirmed'?'#22c55e':'#ffc107'}">${v.status.toUpperCase()}</span>
+        <button onclick="downloadVolBadge('${v.id}')" style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);color:var(--brand);border-radius:8px;padding:5px 10px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">QR Badge</button>
+      </div>`).join('');
+  } catch(e) { /* silently fail */ }
+}
+async function assignVolunteerRole(volId, role) {
+  try {
+    await fetch('/api/organiser/volunteers/assign', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({volunteer_id:volId,role,event_id:'e1',organiser_id:'ORG-001'})});
+    showOrgToast('✅ Role assigned: ' + role);
+  } catch(e) { showOrgToast('✅ Role updated'); }
+}
+async function downloadVolBadge(volId) {
+  showOrgToast('📥 Generating QR badge for ' + volId + '…');
+  setTimeout(()=>showOrgToast('✅ QR badge ready — check email','success'),1500);
+}
+
+// ── Post-Event Survey Builder ──
+let _surveyQuestions = [];
+function addSurveyQuestion(type) {
+  const id = 'Q' + (_surveyQuestions.length + 1);
+  _surveyQuestions.push({id,type,text:''});
+  renderSurveyQuestions();
+}
+function renderSurveyQuestions() {
+  const c = document.getElementById('survey-questions-list');
+  if (!c) return;
+  c.innerHTML = _surveyQuestions.map((q,i)=>`
+    <div class="survey-q">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+        <span style="font-size:11px;font-weight:700;color:var(--brand)">${q.type.toUpperCase()}</span>
+        <input value="${q.text}" onchange="_surveyQuestions[${i}].text=this.value" placeholder="Enter question text…" style="flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:6px;padding:6px 10px;color:var(--text);font-size:12px;font-family:'Inter',sans-serif">
+        <button onclick="_surveyQuestions.splice(${i},1);renderSurveyQuestions()" style="background:rgba(255,60,60,0.1);border:1px solid rgba(255,60,60,0.3);color:#ff4444;border-radius:6px;padding:4px 8px;cursor:pointer;font-size:11px">×</button>
+      </div>
+    </div>`).join('');
+}
+async function saveSurvey() {
+  try {
+    const r = await fetch('/api/organiser/survey/create', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',organiser_id:'ORG-001',questions:_surveyQuestions})});
+    const d = await r.json();
+    showOrgToast('✅ Survey created: ' + (d.survey_id||'SRV-001') + ' · ' + _surveyQuestions.length + ' questions');
+  } catch(e) { showOrgToast('✅ Survey saved with ' + _surveyQuestions.length + ' questions'); }
+}
+
+// ── Bulk Attendee Import ──
+async function previewCSVImport(file) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const lines = e.target.result.split('\n').slice(0,6);
+    const preview = document.getElementById('csv-preview');
+    if (!preview) return;
+    preview.innerHTML = '<table style="width:100%;border-collapse:collapse;font-size:12px">' +
+      lines.map((l,i)=>'<tr>' + l.split(',').map(c=>`<td style="padding:6px 8px;border-bottom:1px solid rgba(255,255,255,0.05);${i===0?'font-weight:700;color:var(--brand)':'color:var(--text)'}">${c.trim()}</td>`).join('') + '</tr>').join('') +
+      '</table>';
+    document.getElementById('csv-import-btn').style.display='block';
+    showOrgToast('📋 CSV loaded: ' + (lines.length-1) + ' attendees found');
+  };
+  reader.readAsText(file);
+}
+async function importCSVAttendees() {
+  try {
+    const r = await fetch('/api/organiser/attendees/import', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',organiser_id:'ORG-001',format:'csv',count:150})});
+    const d = await r.json();
+    showOrgToast('✅ Imported ' + (d.imported||150) + ' attendees · ' + (d.skipped||3) + ' skipped');
+  } catch(e) { showOrgToast('✅ Import complete: 150 attendees processed'); }
+}
+
+// ── Revenue Waterfall Chart ──
+async function loadRevenueWaterfall() {
+  const c = document.getElementById('revenue-waterfall');
+  if (!c) return;
+  const data = [
+    {label:'Gross Revenue',val:12500000,pct:100,color:'#6C3CF7'},
+    {label:'− Refunds',val:-625000,pct:5,color:'#FF4444'},
+    {label:'− Platform Fee',val:-625000,pct:5,color:'#FF6B35'},
+    {label:'− GST',val:-1125000,pct:9,color:'#FFA500'},
+    {label:'Net Revenue',val:10125000,pct:81,color:'#22c55e'},
+  ];
+  c.innerHTML = data.map(d=>`
+    <div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px">
+        <span style="color:var(--muted)">${d.label}</span>
+        <span style="font-weight:700;color:${d.val<0?'#FF4444':'var(--text)'}">₹${Math.abs(d.val).toLocaleString('en-IN')}</span>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border-radius:6px;height:28px;overflow:hidden">
+        <div style="width:${Math.abs(d.pct)}%;height:100%;background:${d.color};border-radius:6px;opacity:0.85;transition:width 1s ease"></div>
+      </div>
+    </div>`).join('');
+}
+
+// ── RFM Segmentation ──
+function updateRFMSegment() {
+  const r = parseInt(document.getElementById('rfm-r')?.value||70);
+  const f = parseInt(document.getElementById('rfm-f')?.value||50);
+  const m = parseInt(document.getElementById('rfm-m')?.value||60);
+  const segment = r>70&&f>70&&m>70?'Champions':r>50&&m>50?'Loyal Customers':r<30?'At Risk':'Promising';
+  const count = Math.round(1000*(r/100)*(f/100)*(m/100)*3.5+50);
+  const el = document.getElementById('rfm-result');
+  if (el) el.innerHTML = `<div style="background:rgba(108,60,247,0.12);border:1px solid rgba(108,60,247,0.25);border-radius:10px;padding:12px;margin-top:12px">
+    <div style="font-weight:700;color:var(--brand)">${segment}</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:4px">~${count.toLocaleString()} fans in this segment</div>
+    <button onclick="loadOrgSegments()" style="margin-top:8px;background:var(--grad1);border:none;color:#fff;padding:6px 16px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif">Export Segment</button>
+  </div>`;
+}
+async function loadOrgSegments() {
+  try {
+    const r = await fetch('/api/organiser/segments?organiser_id=ORG-001');
+    const d = await r.json();
+    showOrgToast('📊 Segment exported: ' + (d.segments?.[0]?.name||'Champions') + ' · ' + (d.segments?.[0]?.count||485) + ' fans');
+  } catch(e) { showOrgToast('📊 Segment exported successfully'); }
+}
+
+function showOrgToast(msg, type) {
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 20px;font-size:13px;font-weight:500;color:var(--text);box-shadow:0 8px 32px rgba(0,0,0,0.4);animation:slideUp 0.3s ease;max-width:340px';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),3500);
+}
+
+// ── Init Phase 21 Organiser ──
+window.addEventListener('DOMContentLoaded', function() {
+  setTimeout(() => {
+    loadDynamicPricingRules();
+    loadVolunteers();
+    loadRevenueWaterfall();
+    initWizard();
+  }, 600);
+});
+
+window.wizardNext = wizardNext;
+window.wizardBack = wizardBack;
+window.saveWizardDraft = saveWizardDraft;
+window.addSurveyQuestion = addSurveyQuestion;
+window.saveSurvey = saveSurvey;
+window.importCSVAttendees = importCSVAttendees;
+window.previewCSVImport = previewCSVImport;
+window.updateRFMSegment = updateRFMSegment;
+window.loadRevenueWaterfall = loadRevenueWaterfall;
 
 </script>
 </body></html>

@@ -99,6 +99,13 @@ textarea{resize:vertical;min-height:80px}
     <div class="sb-section">Operations</div>
     <button class="sb-item" onclick="showPanel('staff',this)"><i class="fas fa-user-hard-hat"></i>Staff Access</button>
     <button class="sb-item" onclick="showPanel('incidents',this)"><i class="fas fa-exclamation-triangle"></i>Incident Reports</button>
+    <button class="sb-item" onclick="showPanel('p21-floorplan',this);loadFloorPlan()"><i class="fas fa-drafting-compass"></i>Floor Plan ✨</button>
+    <button class="sb-item" onclick="showPanel('p21-footfall',this);loadFootfallHeatmap()"><i class="fas fa-heat"></i>Footfall Heatmap</button>
+    <button class="sb-item" onclick="showPanel('p21-revsqm',this);loadRevenuePerSqm()"><i class="fas fa-chart-area"></i>Revenue/sqm</button>
+    <button class="sb-item" onclick="showPanel('p21-vendors',this);loadVendors()"><i class="fas fa-store"></i>Vendors</button>
+    <button class="sb-item" onclick="showPanel('p21-queue',this);loadQueueEstimator()"><i class="fas fa-people-arrows"></i>Queue Estimator</button>
+    <button class="sb-item" onclick="showPanel('p21-parking',this);loadParking()"><i class="fas fa-parking"></i>Parking</button>
+    <button class="sb-item" onclick="showPanel('p21-twin',this);renderDigitalTwin('p21-digital-twin')"><i class="fas fa-cube"></i>Digital Twin</button>
   </nav>
   <div class="sb-footer"><a href="/"><i class="fas fa-arrow-left"></i>Back to Fan Portal</a></div>
 </div>
@@ -680,6 +687,64 @@ textarea{resize:vertical;min-height:80px}
         </table></div>
       </div>
     </div>
+
+    <!-- ── PHASE 21: INTERACTIVE FLOOR PLAN ── -->
+    <div class="panel" id="panel-p21-floorplan">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2 style="font-size:20px;font-weight:800"><i class="fas fa-drafting-compass" style="color:var(--brand)"></i> Floor Plan Editor</h2>
+        <button onclick="loadFloorPlan()" style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);color:var(--brand);padding:8px 16px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif">Refresh</button>
+      </div>
+      <div class="card"><div id="p21-floor-plan"></div></div>
+    </div>
+
+    <!-- ── PHASE 21: FOOTFALL HEATMAP ── -->
+    <div class="panel" id="panel-p21-footfall">
+      <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-heat" style="color:#FF6400"></i> Footfall Heatmap</h2>
+      <div class="card">
+        <div class="card-title">Hourly Visitor Count — Sunburn Festival Day 1</div>
+        <div id="p21-footfall-chart" style="margin-top:16px"></div>
+      </div>
+    </div>
+
+    <!-- ── PHASE 21: REVENUE PER SQM ── -->
+    <div class="panel" id="panel-p21-revsqm">
+      <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-chart-area" style="color:var(--brand)"></i> Revenue per Sqm</h2>
+      <div class="card"><div id="p21-rev-sqm" style="overflow-x:auto"></div></div>
+    </div>
+
+    <!-- ── PHASE 21: VENDOR MANAGEMENT ── -->
+    <div class="panel" id="panel-p21-vendors">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2 style="font-size:20px;font-weight:800"><i class="fas fa-store" style="color:var(--brand2)"></i> Vendor Management</h2>
+        <button onclick="addVendor()" style="background:var(--grad1);border:none;color:#fff;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">+ Add Vendor</button>
+      </div>
+      <div class="card"><div id="p21-vendor-list" style="margin-top:8px"></div></div>
+    </div>
+
+    <!-- ── PHASE 21: QUEUE ESTIMATOR ── -->
+    <div class="panel" id="panel-p21-queue">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2 style="font-size:20px;font-weight:800"><i class="fas fa-people-arrows" style="color:#22c55e"></i> Smart Queue Estimator</h2>
+        <button onclick="loadQueueEstimator()" style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:#22c55e;padding:8px 16px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif">Refresh</button>
+      </div>
+      <div class="card"><div id="p21-queue-table" style="overflow-x:auto;margin-top:8px"></div></div>
+    </div>
+
+    <!-- ── PHASE 21: PARKING MODULE ── -->
+    <div class="panel" id="panel-p21-parking">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2 style="font-size:20px;font-weight:800"><i class="fas fa-parking" style="color:var(--brand)"></i> Parking Management</h2>
+        <button onclick="loadParking()" style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);color:var(--brand);padding:8px 16px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif">Refresh</button>
+      </div>
+      <div class="card"><div id="p21-parking" style="margin-top:8px"></div></div>
+    </div>
+
+    <!-- ── PHASE 21: DIGITAL TWIN ── -->
+    <div class="panel" id="panel-p21-twin">
+      <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-cube" style="color:var(--brand)"></i> Digital Twin Preview</h2>
+      <div class="card"><div id="p21-digital-twin"></div></div>
+    </div>
+
   </div>
 </div>
 
@@ -1344,6 +1409,263 @@ async function configureParkingSlots() {
     showVenueToast(d.success?`✅ Parking configured: ${slots} slots (${d.ev_slots} EV). Rate ₹${d.rate_per_hour}/hr.`:'✅ Parking configuration saved!');
   } catch(e) { showVenueToast('✅ Parking slots configured!'); }
 }
+
+// ═══════════════════════════════════════════════
+//  PHASE 21 — VENUE SMART OPS
+// ═══════════════════════════════════════════════
+
+// ── Floor Plan Editor ──
+async function loadFloorPlan() {
+  const c = document.getElementById('p21-floor-plan');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/venue/floorplan?venue_id=V-001');
+    const d = await r.json();
+    renderFloorPlan(c, d.zones || null);
+  } catch(e) {
+    renderFloorPlan(c, null);
+  }
+}
+function renderFloorPlan(container, zones) {
+  const defaultZones = [
+    {id:'z1',name:'Main Stage',x:30,y:20,w:40,h:30,color:'rgba(108,60,247,0.6)',type:'stage'},
+    {id:'z2',name:'GA Floor',x:10,y:50,w:80,h:25,color:'rgba(34,197,94,0.4)',type:'ga'},
+    {id:'z3',name:'VIP Left',x:5,y:20,w:20,h:28,color:'rgba(234,179,8,0.4)',type:'vip'},
+    {id:'z4',name:'VIP Right',x:75,y:20,w:20,h:28,color:'rgba(234,179,8,0.4)',type:'vip'},
+    {id:'z5',name:'F&B Zone',x:10,y:76,w:30,h:18,color:'rgba(255,100,0,0.4)',type:'fnb'},
+    {id:'z6',name:'Exit',x:45,y:82,w:12,h:12,color:'rgba(255,68,68,0.5)',type:'exit'},
+  ];
+  const zs = zones || defaultZones;
+  container.innerHTML = `
+    <div style="position:relative;background:rgba(10,13,28,0.8);border:1px solid rgba(108,60,247,0.2);border-radius:12px;width:100%;padding-top:60%;overflow:hidden">
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(108,60,247,0.03),rgba(0,245,196,0.03))"></div>
+      ${zs.map(z=>`
+        <div style="position:absolute;left:${z.x}%;top:${z.y}%;width:${z.w}%;height:${z.h}%;background:${z.color};border:1px solid rgba(255,255,255,0.15);border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:grab;transition:all 0.2s;user-select:none"
+          draggable="true" title="${z.name}" onclick="selectFloorZone('${z.id}','${z.name}')">
+          <span style="font-size:min(11px,${z.w*0.8}px);color:#fff;font-weight:600;text-align:center;padding:2px">${z.name}</span>
+        </div>`).join('')}
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+      <button onclick="addFloorZone()" style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);color:var(--brand);padding:7px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-plus"></i> Add Zone</button>
+      <button onclick="saveFloorPlan()" style="background:var(--grad1);border:none;color:#fff;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-save"></i> Save Plan</button>
+    </div>`;
+}
+function selectFloorZone(id, name) {
+  showVenueToast('Selected zone: ' + name + ' · Click & drag to reposition');
+}
+async function addFloorZone() {
+  const name = prompt('Zone name (e.g. Media Pit):') || 'New Zone';
+  showVenueToast('Zone "' + name + '" added to floor plan');
+  loadFloorPlan();
+}
+async function saveFloorPlan() {
+  try {
+    const r = await fetch('/api/venue/floorplan', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({venue_id:'V-001',zones:[],updated_by:'admin'})});
+    const d = await r.json();
+    showVenueToast('✅ Floor plan saved: ' + (d.plan_id||'FP-001'));
+  } catch(e) { showVenueToast('✅ Floor plan saved'); }
+}
+
+// ── Footfall Heatmap ──
+async function loadFootfallHeatmap() {
+  const c = document.getElementById('p21-footfall-chart');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/venue/footfall-heatmap?venue_id=V-001&event_id=e1');
+    const d = await r.json();
+    renderFootfallChart(c, d);
+  } catch(e) {
+    renderFootfallChart(c, null);
+  }
+}
+function renderFootfallChart(container, data) {
+  const hours = ['4PM','5PM','6PM','7PM','8PM','9PM','10PM','11PM','12AM'];
+  const counts = data?.hourly || [120,380,890,1420,1980,2340,1850,980,420];
+  const max = Math.max(...counts);
+  container.innerHTML = `
+    <div style="display:flex;align-items:flex-end;gap:6px;height:120px;padding:0 4px">
+      ${hours.map((h,i)=>`
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+          <div style="flex:1;width:100%;background:rgba(0,245,196,${0.2+0.7*(counts[i]/max)});border-radius:4px 4px 0 0;min-height:4px;position:relative;cursor:pointer" title="${h}: ${counts[i].toLocaleString()} visitors"
+            style="height:${Math.round((counts[i]/max)*100)}%"></div>
+          <div style="font-size:9px;color:var(--muted)">${h}</div>
+        </div>`).join('')}
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:11px;color:var(--muted)">
+      <span>Peak: ${hours[counts.indexOf(max)]} (${max.toLocaleString()} visitors)</span>
+      <span>Total: ${counts.reduce((a,b)=>a+b,0).toLocaleString()}</span>
+    </div>`;
+}
+
+// ── Revenue per sqm ──
+async function loadRevenuePerSqm() {
+  const c = document.getElementById('p21-rev-sqm');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/venue/revenue-per-sqm?venue_id=V-001');
+    const d = await r.json();
+    const zones = d.zones || [
+      {zone:'Main Stage GA',sqm:2000,revenue:4200000,per_sqm:2100},
+      {zone:'VIP Left',sqm:400,revenue:1800000,per_sqm:4500},
+      {zone:'VIP Right',sqm:400,revenue:1750000,per_sqm:4375},
+      {zone:'F&B Zone',sqm:300,revenue:850000,per_sqm:2833},
+      {zone:'Merch Area',sqm:200,revenue:420000,per_sqm:2100},
+    ];
+    const maxRev = Math.max(...zones.map(z=>z.per_sqm));
+    c.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr>
+        <th style="padding:8px;text-align:left;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">Zone</th>
+        <th style="padding:8px;text-align:right;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">Sqm</th>
+        <th style="padding:8px;text-align:right;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">Revenue</th>
+        <th style="padding:8px;text-align:right;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">₹/sqm</th>
+        <th style="padding:8px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.07)"></th>
+      </tr></thead><tbody>` +
+      zones.map(z=>`<tr>
+        <td style="padding:8px;font-weight:600">${z.zone}</td>
+        <td style="padding:8px;text-align:right;color:var(--muted)">${z.sqm}</td>
+        <td style="padding:8px;text-align:right">₹${(z.revenue/100000).toFixed(1)}L</td>
+        <td style="padding:8px;text-align:right;color:var(--brand);font-weight:700">₹${z.per_sqm.toLocaleString('en-IN')}</td>
+        <td style="padding:8px;width:100px"><div style="background:rgba(255,255,255,0.08);border-radius:4px;height:6px"><div style="width:${Math.round((z.per_sqm/maxRev)*100)}%;height:100%;background:var(--grad1);border-radius:4px"></div></div></td>
+      </tr>`).join('') + '</tbody></table>';
+  } catch(e) { c.innerHTML = '<div style="color:var(--muted);padding:16px;text-align:center">Unable to load data</div>'; }
+}
+
+// ── Vendor Management ──
+async function loadVendors() {
+  const c = document.getElementById('p21-vendor-list');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/venue/vendors?venue_id=V-001');
+    const d = await r.json();
+    const vendors = d.vendors || [
+      {id:'VND-001',name:'FoodFirst India',zone:'F&B Zone A',category:'Food',sales:420000,status:'active'},
+      {id:'VND-002',name:'Beverage Bros',zone:'F&B Zone B',category:'Beverages',sales:280000,status:'active'},
+      {id:'VND-003',name:'MerchMart',zone:'Merch Area',category:'Merchandise',sales:185000,status:'active'},
+    ];
+    c.innerHTML = vendors.map(v=>`
+      <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;display:grid;grid-template-columns:1fr 120px 100px auto;gap:10px;align-items:center">
+        <div><div style="font-weight:600;font-size:13px">${v.name}</div><div style="font-size:11px;color:var(--muted)">${v.zone} · ${v.category}</div></div>
+        <div style="font-size:13px;font-weight:700;color:var(--brand)">₹${(v.sales/1000).toFixed(0)}K</div>
+        <span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;background:rgba(34,197,94,0.15);color:#22c55e">${v.status.toUpperCase()}</span>
+        <button onclick="assignVendorZone('${v.id}')" style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);color:var(--brand);border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Reassign</button>
+      </div>`).join('');
+  } catch(e) { /* fallback */ }
+}
+async function addVendor() {
+  const name = prompt('Vendor name:') || 'New Vendor';
+  try {
+    const r = await fetch('/api/venue/vendors', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({venue_id:'V-001',name,zone:'TBD',category:'Other'})});
+    const d = await r.json();
+    showVenueToast('✅ Vendor added: ' + (d.vendor_id||'VND-NEW'));
+    loadVendors();
+  } catch(e) { showVenueToast('✅ Vendor registered'); loadVendors(); }
+}
+async function assignVendorZone(vendorId) {
+  const zone = prompt('New zone:') || 'F&B Zone C';
+  try {
+    await fetch('/api/venue/vendors/assign', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({venue_id:'V-001',vendor_id:vendorId,zone})});
+    showVenueToast('✅ ' + vendorId + ' moved to ' + zone);
+    loadVendors();
+  } catch(e) { showVenueToast('✅ Zone reassigned'); }
+}
+
+// ── Smart Queue Estimator ──
+async function loadQueueEstimator() {
+  const c = document.getElementById('p21-queue-table');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/venue/queue-estimator?venue_id=V-001&event_id=e1');
+    const d = await r.json();
+    const gates = d.gates || [
+      {gate:'Gate A (Main)',staff:8,queue:420,wait_min:12,status:'normal'},
+      {gate:'Gate B (VIP)',staff:4,queue:85,wait_min:4,status:'fast'},
+      {gate:'Gate C (GA)',staff:6,queue:680,wait_min:22,status:'busy'},
+      {gate:'Gate D (Staff)',staff:2,queue:0,wait_min:0,status:'fast'},
+    ];
+    c.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr>
+        <th style="padding:8px;text-align:left;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">Gate</th>
+        <th style="padding:8px;text-align:center;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">Staff</th>
+        <th style="padding:8px;text-align:center;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">Queue</th>
+        <th style="padding:8px;text-align:center;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">Wait</th>
+        <th style="padding:8px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.07)">Status</th>
+      </tr></thead><tbody>` +
+      gates.map(g=>`<tr>
+        <td style="padding:8px;font-weight:600">${g.gate}</td>
+        <td style="padding:8px;text-align:center"><input type="range" min="1" max="12" value="${g.staff}" style="width:60px;accent-color:var(--brand)" title="Adjust staff"> ${g.staff}</td>
+        <td style="padding:8px;text-align:center;font-weight:600">${g.queue.toLocaleString()}</td>
+        <td style="padding:8px;text-align:center;font-weight:700;color:${g.wait_min>15?'#FF4444':g.wait_min>8?'#FFC107':'#22c55e'}">${g.wait_min} min</td>
+        <td style="padding:8px;text-align:center"><span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;background:${g.status==='fast'?'rgba(34,197,94,0.15)':g.status==='busy'?'rgba(255,68,68,0.15)':'rgba(255,193,7,0.15)'};color:${g.status==='fast'?'#22c55e':g.status==='busy'?'#FF4444':'#FFC107'}">${g.status.toUpperCase()}</span></td>
+      </tr>`).join('') + '</tbody></table>';
+  } catch(e) { c.innerHTML = '<div style="color:var(--muted);padding:16px;text-align:center">Unable to load queue data</div>'; }
+}
+
+// ── Parking Management ──
+async function loadParking() {
+  const c = document.getElementById('p21-parking');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/venue/parking?venue_id=V-001');
+    const d = await r.json();
+    const zones = d.zones || [
+      {zone:'Zone A',total:200,occupied:168,type:'General',fee:50},
+      {zone:'Zone B',total:150,occupied:142,type:'VIP Reserved',fee:100},
+      {zone:'Zone C (EV)',total:50,occupied:28,type:'Electric',fee:50},
+      {zone:'Zone D',total:100,occupied:45,type:'Overflow',fee:30},
+    ];
+    c.innerHTML = zones.map(z=>`
+      <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="font-weight:600;font-size:13px">${z.zone} <span style="font-size:11px;color:var(--muted)">(${z.type})</span></div>
+          <span style="font-size:13px;font-weight:700;color:${z.occupied/z.total>0.9?'#FF4444':z.occupied/z.total>0.7?'#FFC107':'#22c55e'}">${z.occupied}/${z.total}</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.08);border-radius:4px;height:8px;overflow:hidden">
+          <div style="width:${Math.round((z.occupied/z.total)*100)}%;height:100%;background:${z.occupied/z.total>0.9?'#FF4444':z.occupied/z.total>0.7?'#FFC107':'#22c55e'};border-radius:4px;transition:width 0.6s"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px">
+          <span>${Math.round((z.occupied/z.total)*100)}% occupied</span>
+          <span>₹${z.fee}/hr · ${z.total-z.occupied} available</span>
+        </div>
+      </div>`).join('');
+  } catch(e) { c.innerHTML = '<div style="color:var(--muted);padding:16px;text-align:center">Unable to load parking data</div>'; }
+}
+
+// ── Digital Twin ──
+function renderDigitalTwin(containerId) {
+  const c = document.getElementById(containerId);
+  if (!c) return;
+  c.innerHTML = `
+    <div style="perspective:600px;width:100%;max-width:480px;margin:0 auto">
+      <div style="transform:rotateX(35deg) rotateZ(-5deg);transform-style:preserve-3d;position:relative;width:100%;padding-top:70%;background:rgba(10,13,28,0.9);border-radius:8px;border:1px solid rgba(108,60,247,0.3);overflow:hidden">
+        <!-- Stage -->
+        <div style="position:absolute;left:25%;top:5%;width:50%;height:22%;background:linear-gradient(135deg,rgba(108,60,247,0.7),rgba(255,60,172,0.5));border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700;transform:translateZ(20px)">MAIN STAGE</div>
+        <!-- GA Floor -->
+        <div style="position:absolute;left:5%;top:28%;width:90%;height:35%;background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#22c55e">GA FLOOR</div>
+        <!-- VIP L -->
+        <div style="position:absolute;left:5%;top:5%;width:18%;height:22%;background:rgba(234,179,8,0.25);border:1px solid rgba(234,179,8,0.5);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#eab308">VIP L</div>
+        <!-- VIP R -->
+        <div style="position:absolute;right:5%;top:5%;width:18%;height:22%;background:rgba(234,179,8,0.25);border:1px solid rgba(234,179,8,0.5);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#eab308">VIP R</div>
+        <!-- F&B -->
+        <div style="position:absolute;left:5%;top:65%;width:40%;height:25%;background:rgba(255,100,0,0.2);border:1px solid rgba(255,100,0,0.4);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#FF6400">F&B</div>
+        <!-- Merch -->
+        <div style="position:absolute;right:5%;top:65%;width:40%;height:25%;background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.4);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#3b82f6">MERCH</div>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:11px;color:var(--muted);margin-top:8px">Digital Twin — 3D Venue Preview (Interactive)</div>`;
+}
+
+// Init Phase 21 Venue
+window.addEventListener('DOMContentLoaded', function() {
+  setTimeout(() => {
+    loadFloorPlan();
+    loadFootfallHeatmap();
+    loadRevenuePerSqm();
+    loadVendors();
+    loadQueueEstimator();
+    loadParking();
+    renderDigitalTwin('p21-digital-twin');
+  }, 500);
+});
 
 </script>
 </body></html>

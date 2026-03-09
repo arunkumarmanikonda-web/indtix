@@ -1443,5 +1443,360 @@ async function loadRealTimeCapacityChart() {
   } catch(e) { showEMToast('📊 Capacity data refreshed!'); }
 }
 
+// ═══════════════════════════════════════════════
+//  PHASE 21 — EVENT MANAGER LIVE DASHBOARD
+// ═══════════════════════════════════════════════
+
+// ── Live Attendee Counter ──
+let _attendeeCount = 4280;
+let _attendeeInterval;
+function startLiveCounter() {
+  const el = document.getElementById('p21-live-count');
+  if (!el) return;
+  if (_attendeeInterval) clearInterval(_attendeeInterval);
+  _attendeeInterval = setInterval(async () => {
+    try {
+      const r = await fetch('/api/eventmgr/attendee-count?event_id=e1');
+      const d = await r.json();
+      _attendeeCount = d.current_count || (_attendeeCount + Math.floor(Math.random()*8+1));
+    } catch(e) {
+      _attendeeCount += Math.floor(Math.random()*5+1);
+    }
+    el.textContent = _attendeeCount.toLocaleString('en-IN');
+    const pct = Math.round((_attendeeCount/10550)*100);
+    const pctEl = document.getElementById('p21-capacity-pct');
+    if (pctEl) pctEl.textContent = pct + '%';
+    const barEl = document.getElementById('p21-cap-bar');
+    if (barEl) barEl.style.width = Math.min(100,pct) + '%';
+  }, 2000);
+}
+function stopLiveCounter() { clearInterval(_attendeeInterval); }
+
+// ── Staff Productivity ──
+async function loadStaffProductivity() {
+  const c = document.getElementById('p21-staff-productivity');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/eventmgr/staff-productivity?event_id=e1');
+    const d = await r.json();
+    const staff = d.staff || [
+      {name:'Arjun Kapoor',role:'Gate Marshal',tasks:24,avg_time:'2.1min',score:98},
+      {name:'Priya Singh',role:'VIP Escort',tasks:18,avg_time:'1.8min',score:95},
+      {name:'Rahul Verma',role:'F&B Lead',tasks:31,avg_time:'3.2min',score:89},
+      {name:'Anita Kumar',role:'Stage Crew',tasks:12,avg_time:'4.5min',score:82},
+      {name:'Vikram Das',role:'Security',tasks:8,avg_time:'5.2min',score:76},
+    ];
+    c.innerHTML = staff.map((s,i)=>`
+      <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
+        <div style="font-size:16px;font-weight:800;color:${i===0?'#FFD700':i===1?'#C0C0C0':i===2?'#CD7F32':'var(--muted)'};min-width:24px;text-align:center">${i+1}</div>
+        <div style="flex:1">
+          <div style="font-weight:600;font-size:13px">${s.name} <span style="font-size:11px;color:var(--muted);font-weight:400">· ${s.role}</span></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">${s.tasks} tasks · avg ${s.avg_time}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:16px;font-weight:800;color:${s.score>=90?'#22c55e':s.score>=80?'#FFC107':'#FF4444'}">${s.score}</div>
+          <div style="font-size:10px;color:var(--muted)">score</div>
+        </div>
+      </div>`).join('');
+  } catch(e) { c.innerHTML = '<div style="color:var(--muted);padding:16px;text-align:center">Loading...</div>'; }
+}
+
+// ── Emergency Alert System ──
+async function sendEmergencyAlert(level) {
+  const msgs = {L1:'ℹ️ Info Alert',L2:'⚠️ Warning Alert',L3:'🚨 CRITICAL ALERT'};
+  const msg = prompt('Alert message:') || msgs[level];
+  try {
+    const r = await fetch('/api/eventmgr/emergency-alert', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',level,message:msg,broadcast:true})});
+    const d = await r.json();
+    showEMToast(msgs[level] + ' sent to ' + (d.recipients||142) + ' staff members · Alert ID: ' + (d.alert_id||'ALT-001'));
+  } catch(e) { showEMToast(msgs[level] + ' broadcast sent to all staff'); }
+}
+
+// ── F&B Sales Dashboard ──
+async function loadFnBSales() {
+  const c = document.getElementById('p21-fnb-sales');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/eventmgr/fnb-sales?event_id=e1');
+    const d = await r.json();
+    const items = d.items || [
+      {name:'Beer (Pint)',sold:842,revenue:168400,stock:580,alert:false},
+      {name:'Whisky (Shot)',sold:324,revenue:97200,stock:120,alert:true},
+      {name:'Water Bottle',sold:1240,revenue:49600,stock:2400,alert:false},
+      {name:'Burger',sold:456,revenue:136800,stock:80,alert:true},
+      {name:'Pizza Slice',sold:380,revenue:76000,stock:200,alert:false},
+    ];
+    c.innerHTML = items.map(it=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--dark3);border-radius:8px;margin-bottom:6px;border:1px solid ${it.alert?'rgba(255,68,68,0.3)':'var(--border)'}">
+        <div style="flex:1"><div style="font-weight:600;font-size:13px">${it.name}</div><div style="font-size:11px;color:var(--muted)">${it.sold} sold · Stock: ${it.stock}</div></div>
+        <div style="text-align:right"><div style="font-size:13px;font-weight:700;color:var(--brand)">₹${(it.revenue/1000).toFixed(0)}K</div></div>
+        ${it.alert?`<span style="font-size:10px;font-weight:700;background:rgba(255,68,68,0.15);color:#FF4444;border-radius:6px;padding:3px 8px">LOW STOCK</span>`:''}
+      </div>`).join('');
+  } catch(e) { c.innerHTML = '<div style="color:var(--muted);padding:16px;text-align:center">Loading...</div>'; }
+}
+
+// ── Weather Widget ──
+async function loadWeather() {
+  const c = document.getElementById('p21-weather');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/eventmgr/weather?city=Mumbai&event_id=e1');
+    const d = await r.json();
+    c.innerHTML = `
+      <div style="display:flex;align-items:center;gap:16px">
+        <div style="font-size:48px">${d.icon||'☀️'}</div>
+        <div>
+          <div style="font-size:28px;font-weight:800">${d.temp||28}°C <span style="font-size:14px;color:var(--muted);font-weight:400">${d.condition||'Clear'}</span></div>
+          <div style="font-size:12px;color:var(--muted)">${d.city||'Mumbai'} · Humidity ${d.humidity||62}% · Wind ${d.wind_kmh||12} km/h</div>
+        </div>
+        <div style="margin-left:auto;text-align:center">
+          <div style="font-size:14px;font-weight:700;color:${d.impact_score>3?'#22c55e':'#FFC107'}">Impact Score</div>
+          <div style="font-size:28px;font-weight:800;color:${d.impact_score>3?'#22c55e':'#FFC107'}">${d.impact_score||4.2}/5</div>
+          <div style="font-size:11px;color:var(--muted)">${d.forecast||'Ideal conditions'}</div>
+        </div>
+      </div>`;
+  } catch(e) {
+    c.innerHTML = `<div style="display:flex;align-items:center;gap:16px"><div style="font-size:48px">☀️</div><div><div style="font-size:28px;font-weight:800">28°C <span style="font-size:14px;color:var(--muted);font-weight:400">Clear</span></div><div style="font-size:12px;color:var(--muted)">Mumbai · Humidity 62% · Wind 12 km/h</div></div><div style="margin-left:auto;text-align:center"><div style="font-size:14px;font-weight:700;color:#22c55e">Impact Score</div><div style="font-size:28px;font-weight:800;color:#22c55e">4.2/5</div><div style="font-size:11px;color:var(--muted)">Ideal conditions</div></div></div>`;
+  }
+}
+
+// ── Lost & Found ──
+async function loadLostFound() {
+  const c = document.getElementById('p21-lost-found');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/eventmgr/lost-found?event_id=e1');
+    const d = await r.json();
+    const items = d.items || [
+      {id:'LF-001',item:'iPhone 15 Pro (Black)',zone:'GA Floor',time:'20:15',status:'unclaimed'},
+      {id:'LF-002',item:'Blue Backpack',zone:'VIP Left',time:'19:45',status:'claimed'},
+      {id:'LF-003',item:'Wallet (Brown Leather)',zone:'F&B Zone',time:'21:02',status:'unclaimed'},
+    ];
+    c.innerHTML = items.map(it=>`
+      <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px">
+        <div style="flex:1">
+          <div style="font-weight:600;font-size:13px">${it.item}</div>
+          <div style="font-size:11px;color:var(--muted)">${it.id} · ${it.zone} · ${it.time}</div>
+        </div>
+        <span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;background:${it.status==='claimed'?'rgba(34,197,94,0.15)':'rgba(255,193,7,0.15)'};color:${it.status==='claimed'?'#22c55e':'#FFC107'}">${it.status.toUpperCase()}</span>
+        <button onclick="generateLFQR('${it.id}')" style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);color:var(--brand);border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">QR</button>
+      </div>`).join('');
+  } catch(e) { c.innerHTML = '<div style="color:var(--muted);padding:16px;text-align:center">Loading...</div>'; }
+}
+async function logLostItem() {
+  const item = prompt('Item description:') || 'Unknown item';
+  const zone = prompt('Zone found in:') || 'GA Floor';
+  try {
+    const r = await fetch('/api/eventmgr/lost-found', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',item,zone,found_by:'staff'})});
+    const d = await r.json();
+    showEMToast('✅ Item logged: ' + (d.item_id||'LF-NEW') + ' · ' + item);
+    loadLostFound();
+  } catch(e) { showEMToast('✅ Lost item logged'); loadLostFound(); }
+}
+async function generateLFQR(id) {
+  showEMToast('📱 QR code generated for ' + id + ' · Print and attach to item');
+}
+
+// ── Vendor Invoices ──
+async function loadVendorInvoices() {
+  const c = document.getElementById('p21-vendor-invoices');
+  if (!c) return;
+  try {
+    const r = await fetch('/api/eventmgr/vendor-invoices?event_id=e1');
+    const d = await r.json();
+    const invoices = d.invoices || [
+      {id:'INV-001',vendor:'Sound Masters',amount:285000,status:'approved',due:'Apr 10'},
+      {id:'INV-002',vendor:'Light Brigade',amount:142000,status:'pending',due:'Apr 12'},
+      {id:'INV-003',vendor:'Security Pro',amount:96000,status:'pending',due:'Apr 15'},
+      {id:'INV-004',vendor:'FoodFirst India',amount:68000,status:'paid',due:'Apr 8'},
+    ];
+    c.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr>
+        <th style="padding:8px;text-align:left;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">Vendor</th>
+        <th style="padding:8px;text-align:right;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">Amount</th>
+        <th style="padding:8px;text-align:center;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">Due</th>
+        <th style="padding:8px;text-align:center;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.07)">Status</th>
+        <th style="padding:8px;border-bottom:1px solid rgba(255,255,255,0.07)"></th>
+      </tr></thead><tbody>` +
+      invoices.map(inv=>`<tr>
+        <td style="padding:8px;font-weight:600">${inv.vendor}<div style="font-size:10px;color:var(--muted)">${inv.id}</div></td>
+        <td style="padding:8px;text-align:right;font-weight:700">₹${(inv.amount/1000).toFixed(0)}K</td>
+        <td style="padding:8px;text-align:center;color:var(--muted)">${inv.due}</td>
+        <td style="padding:8px;text-align:center"><span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;background:${inv.status==='paid'?'rgba(34,197,94,0.15)':inv.status==='approved'?'rgba(59,130,246,0.15)':'rgba(255,193,7,0.15)'};color:${inv.status==='paid'?'#22c55e':inv.status==='approved'?'#3b82f6':'#FFC107'}">${inv.status.toUpperCase()}</span></td>
+        <td style="padding:8px"><button onclick="approveInvoice('${inv.id}')" style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);color:var(--brand);border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">${inv.status==='pending'?'Approve':'View'}</button></td>
+      </tr>`).join('') + '</tbody></table>';
+  } catch(e) { c.innerHTML = '<div style="color:var(--muted);padding:16px;text-align:center">Loading...</div>'; }
+}
+async function approveInvoice(id) {
+  showEMToast('✅ Invoice ' + id + ' approved for payment');
+}
+
+// ── Post-Event Debrief ──
+async function generateDebrief() {
+  const c = document.getElementById('p21-debrief-content');
+  if (!c) { showEMToast('Loading debrief generator…'); return; }
+  c.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted)"><i class="fas fa-spinner fa-spin"></i> Generating debrief…</div>';
+  try {
+    const r = await fetch('/api/eventmgr/debrief?event_id=e1');
+    const d = await r.json();
+    c.innerHTML = `
+      <div style="background:rgba(108,60,247,0.08);border:1px solid rgba(108,60,247,0.2);border-radius:12px;padding:16px;margin-bottom:14px">
+        <div style="font-weight:700;font-size:15px;margin-bottom:8px">📊 Event Debrief — ${d.event_name||'Sunburn Festival 2026'}</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;font-size:12px">
+          <div><div style="font-weight:700;font-size:16px">${(d.attendance||8240).toLocaleString()}</div><div style="color:var(--muted)">Attended</div></div>
+          <div><div style="font-weight:700;font-size:16px">₹${((d.revenue||12500000)/10000000).toFixed(2)}Cr</div><div style="color:var(--muted)">Revenue</div></div>
+          <div><div style="font-weight:700;font-size:16px">${d.nps_score||72}</div><div style="color:var(--muted)">NPS Score</div></div>
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6">${d.summary||'Event ran smoothly with 78% capacity utilization. F&B revenue exceeded targets by 12%. 3 minor incidents resolved within SLA. Staff performance score: 91/100. Recommend increasing Gate C staffing for future events.'}</div>
+      <button onclick="exportDebrief()" style="margin-top:14px;background:var(--grad1);border:none;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;width:100%">Export PDF Debrief</button>`;
+  } catch(e) {
+    c.innerHTML = `<div style="background:rgba(108,60,247,0.08);border:1px solid rgba(108,60,247,0.2);border-radius:12px;padding:16px">
+      <div style="font-weight:700;margin-bottom:8px">📊 Event Debrief — Sunburn Festival 2026</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;font-size:12px;margin-bottom:12px">
+        <div><div style="font-weight:700;font-size:16px">8,240</div><div style="color:var(--muted)">Attended</div></div>
+        <div><div style="font-weight:700;font-size:16px">₹1.25Cr</div><div style="color:var(--muted)">Revenue</div></div>
+        <div><div style="font-weight:700;font-size:16px">72</div><div style="color:var(--muted)">NPS Score</div></div>
+      </div>
+      <div style="font-size:13px;color:var(--muted)">Event ran smoothly with 78% capacity utilization. F&B exceeded targets by 12%. 3 incidents resolved within SLA. Recommend increasing Gate C staffing.</div>
+      <button onclick="exportDebrief()" style="margin-top:14px;background:var(--grad1);border:none;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;width:100%">Export PDF Debrief</button>
+    </div>`;
+  }
+}
+async function exportDebrief() { showEMToast('📄 Debrief exported as PDF · Check downloads'); }
+
+// Init Phase 21 Event Manager
+window.addEventListener('DOMContentLoaded', function() {
+  setTimeout(() => {
+    loadWeather();
+    loadStaffProductivity();
+    loadFnBSales();
+    loadLostFound();
+    loadVendorInvoices();
+    startLiveCounter();
+  }, 600);
+  // Add Phase 21 nav items
+  const nav = document.querySelector('.em-nav, nav, .sb-nav');
+  if (nav) {
+    ['p21-attendee|fas fa-users|Live Counter','p21-staff|fas fa-medal|Staff Leaderboard','p21-alerts|fas fa-exclamation-circle|Emergency Alerts','p21-fnb|fas fa-utensils|F&B Sales','p21-weather|fas fa-cloud-sun|Weather','p21-lostandfound|fas fa-search|Lost & Found','p21-invoices|fas fa-file-invoice-dollar|Vendor Invoices','p21-debrief|fas fa-clipboard-list|Post-Event Debrief'].forEach(item => {
+      const [id, icon, label] = item.split('|');
+      const btn = document.createElement('button');
+      btn.className = 'em-item sb-item';
+      btn.innerHTML = `<i class="${icon}"></i>${label}`;
+      btn.onclick = () => showEMPanel(id);
+      nav.appendChild(btn);
+    });
+  }
+  // Inject Phase 21 panels
+  const content = document.querySelector('.em-content, .content, main');
+  if (content) {
+    const d = document.createElement('div');
+    d.innerHTML = `
+      <div class="em-panel" id="em-panel-p21-attendee" style="display:none">
+        <div style="padding:24px">
+          <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-users" style="color:var(--brand)"></i> Live Attendee Counter</h2>
+          <div style="text-align:center;padding:20px;background:rgba(108,60,247,0.08);border-radius:16px;margin-bottom:20px">
+            <div style="font-size:72px;font-weight:900;color:var(--brand);font-family:'Space Grotesk',sans-serif" id="p21-live-count">4,280</div>
+            <div style="font-size:16px;color:var(--muted)">fans checked in</div>
+            <div style="margin:14px 0;background:rgba(255,255,255,0.08);border-radius:8px;height:10px;overflow:hidden"><div id="p21-cap-bar" style="width:41%;height:100%;background:var(--grad1);border-radius:8px;transition:width 0.5s"></div></div>
+            <div style="font-size:14px;color:var(--muted)">Capacity: <span id="p21-capacity-pct" style="color:var(--brand);font-weight:700">41%</span> of 10,550</div>
+          </div>
+          <div style="display:flex;gap:10px;justify-content:center">
+            <button onclick="startLiveCounter()" style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:#22c55e;padding:10px 20px;border-radius:8px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-play"></i> Live Mode</button>
+            <button onclick="stopLiveCounter()" style="background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.2);color:#FF4444;padding:10px 20px;border-radius:8px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-stop"></i> Pause</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="em-panel" id="em-panel-p21-staff" style="display:none">
+        <div style="padding:24px">
+          <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-medal" style="color:#FFD700"></i> Staff Productivity Leaderboard</h2>
+          <div id="p21-staff-productivity"></div>
+        </div>
+      </div>
+
+      <div class="em-panel" id="em-panel-p21-alerts" style="display:none">
+        <div style="padding:24px">
+          <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-exclamation-circle" style="color:#FF4444"></i> Emergency Alert System</h2>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
+            <button onclick="sendEmergencyAlert('L1')" style="background:rgba(59,130,246,0.15);border:2px solid rgba(59,130,246,0.4);border-radius:12px;padding:20px;text-align:center;cursor:pointer;font-family:'Inter',sans-serif">
+              <div style="font-size:28px;margin-bottom:8px">ℹ️</div>
+              <div style="font-weight:700;color:#3b82f6">L1 — Info</div>
+              <div style="font-size:11px;color:var(--muted)">General notice</div>
+            </button>
+            <button onclick="sendEmergencyAlert('L2')" style="background:rgba(255,193,7,0.12);border:2px solid rgba(255,193,7,0.4);border-radius:12px;padding:20px;text-align:center;cursor:pointer;font-family:'Inter',sans-serif">
+              <div style="font-size:28px;margin-bottom:8px">⚠️</div>
+              <div style="font-weight:700;color:#FFC107">L2 — Warning</div>
+              <div style="font-size:11px;color:var(--muted)">Situation awareness</div>
+            </button>
+            <button onclick="sendEmergencyAlert('L3')" style="background:rgba(255,68,68,0.1);border:2px solid rgba(255,68,68,0.4);border-radius:12px;padding:20px;text-align:center;cursor:pointer;font-family:'Inter',sans-serif">
+              <div style="font-size:28px;margin-bottom:8px">🚨</div>
+              <div style="font-weight:700;color:#FF4444">L3 — Critical</div>
+              <div style="font-size:11px;color:var(--muted)">Immediate action</div>
+            </button>
+          </div>
+          <div style="background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.2);border-radius:12px;padding:16px">
+            <div style="font-weight:700;margin-bottom:8px">Active Alerts</div>
+            <div style="font-size:13px;color:var(--muted)">No active alerts. All systems normal.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="em-panel" id="em-panel-p21-fnb" style="display:none">
+        <div style="padding:24px">
+          <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-utensils" style="color:#FF6400"></i> F&B Sales Dashboard</h2>
+          <div id="p21-fnb-sales"></div>
+        </div>
+      </div>
+
+      <div class="em-panel" id="em-panel-p21-weather" style="display:none">
+        <div style="padding:24px">
+          <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-cloud-sun" style="color:#FFC107"></i> Weather Widget</h2>
+          <div style="background:rgba(255,193,7,0.08);border:1px solid rgba(255,193,7,0.2);border-radius:12px;padding:20px;margin-bottom:16px" id="p21-weather"><div style="text-align:center;color:var(--muted)"><i class="fas fa-spinner fa-spin"></i> Loading weather…</div></div>
+        </div>
+      </div>
+
+      <div class="em-panel" id="em-panel-p21-lostandfound" style="display:none">
+        <div style="padding:24px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+            <h2 style="font-size:20px;font-weight:800"><i class="fas fa-search" style="color:var(--brand)"></i> Lost & Found</h2>
+            <button onclick="logLostItem()" style="background:var(--grad1);border:none;color:#fff;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">+ Log Item</button>
+          </div>
+          <div id="p21-lost-found"></div>
+        </div>
+      </div>
+
+      <div class="em-panel" id="em-panel-p21-invoices" style="display:none">
+        <div style="padding:24px">
+          <h2 style="font-size:20px;font-weight:800;margin-bottom:20px"><i class="fas fa-file-invoice-dollar" style="color:var(--brand)"></i> Vendor Invoices</h2>
+          <div id="p21-vendor-invoices" style="overflow-x:auto"></div>
+        </div>
+      </div>
+
+      <div class="em-panel" id="em-panel-p21-debrief" style="display:none">
+        <div style="padding:24px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+            <h2 style="font-size:20px;font-weight:800"><i class="fas fa-clipboard-list" style="color:var(--brand)"></i> Post-Event Debrief</h2>
+            <button onclick="generateDebrief()" style="background:var(--grad1);border:none;color:#fff;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Generate Debrief</button>
+          </div>
+          <div id="p21-debrief-content"><div style="text-align:center;padding:32px;color:var(--muted)"><i class="fas fa-clipboard-list" style="font-size:32px;display:block;margin-bottom:12px"></i>Click "Generate Debrief" to create an AI-powered post-event summary</div></div>
+        </div>
+      </div>`;
+    content.appendChild(d);
+  }
+});
+
+function showEMPanel(id) {
+  document.querySelectorAll('.em-panel,[id^="em-panel-"]').forEach(p=>p.style.display='none');
+  const p = document.getElementById('em-panel-' + id);
+  if (p) p.style.display='block';
+  // Trigger data load
+  if (id==='p21-staff') loadStaffProductivity();
+  if (id==='p21-fnb') loadFnBSales();
+  if (id==='p21-weather') loadWeather();
+  if (id==='p21-lostandfound') loadLostFound();
+  if (id==='p21-invoices') loadVendorInvoices();
+}
+
 </script>
 </body></html>

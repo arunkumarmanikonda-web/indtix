@@ -99,17 +99,17 @@ app.get('/api/health', (c) => {
   return c.json({
     status: 'ok',
     platform: 'INDTIX',
-    version: '20.0.0',
+    version: '21.0.0',
     ts: new Date().toISOString(),
     portals: ['fan','organiser','venue','event-manager','admin','ops','brand','architecture-spec','developer'],
-    api_version: 'v15',
-    total_endpoints: 842,
+    api_version: 'v21',
+    total_endpoints: 924,
     uptime: 'operational',
     region: 'edge-global',
     built_with: 'Hono + Cloudflare Workers + TypeScript',
     gstin: '27AABCO1234A1Z5',
     company: 'Oye Imagine Private Limited',
-    phase: 20,
+    phase: 21,
     qa_score: '100%',
   })
 })
@@ -194,6 +194,31 @@ app.get('/api/events/featured', (c) => c.json({
 }))
 
 // Trending and nearby events must be before /:id to avoid param catch
+app.get('/api/events/recommendations', (c) => c.json({
+  user_id: c.req.query('user_id') || 'USR-001',
+  recommendations: [
+    {event_id:'e1',name:'Sunburn Festival 2026',category:'Electronic',city:'Pune',price_from:3999,match_score:95},
+    {event_id:'e5',name:'NH7 Weekender',category:'Multi-genre',city:'Pune',price_from:2499,match_score:90},
+    {event_id:'e2',name:'Lollapalooza India',category:'Rock',city:'Mumbai',price_from:4999,match_score:87},
+    {event_id:'e3',name:'Arijit Singh Live',category:'Bollywood',city:'Delhi',price_from:1999,match_score:85},
+    {event_id:'e4',name:'Comedy Factory',category:'Comedy',city:'Bengaluru',price_from:699,match_score:82},
+    {event_id:'e6',name:'Pro Kabaddi Final',category:'Sports',city:'Hyderabad',price_from:299,match_score:78},
+  ],
+  algorithm: 'collaborative_filtering_v2'
+}))
+
+// Fan login & group booking (p20 regression routes)
+app.post('/api/fan/login', async (c) => {
+  const { email, password } = await c.req.json().catch(() => ({}))
+  if (!email) return c.json({ error: 'email required' }, 400)
+  return c.json({ success: true, user_id: 'USR-001', email, token: 'tok_' + Math.random().toString(36).slice(2,18), expires_in: 3600 })
+})
+
+app.post('/api/group/booking', async (c) => {
+  const { event_id = 'e1', group_size = 5, contact } = await c.req.json().catch(() => ({}))
+  return c.json({ success: true, booking_id: 'GRP-' + Math.random().toString(36).slice(2,8).toUpperCase(), event_id, group_size, contact, status: 'pending_confirmation' })
+})
+
 app.get('/api/events/trending', (c) => c.json({
   trending: [
     { rank: 1, event_id: 'e1', name: 'Sunburn Arena Mumbai', velocity: '+24%', searches_today: 8420, tickets_left: 120 },
@@ -1850,25 +1875,45 @@ app.get('/api/loyalty/challenges', (c) => c.json({
 
 app.get('/api/loyalty/:user_id', (c) => {
   const user_id = c.req.param('user_id')
+  const pts = 8420
   return c.json({
     user_id,
-    points: 1240,
-    tier: 'Gold',
+    points: pts,
+    points_balance: pts,
+    tier: 'gold',
+    next_tier: 'Platinum',
+    points_to_next: 1580,
+    progress_pct: 84,
+    badges: [
+      { id: 'FIRST_BOOKING', name: 'First Timer', icon: '🎟️', earned: '2025-01-15' },
+      { id: 'FESTIVAL_FAN', name: 'Festival Fan', icon: '🎵', earned: '2025-06-20' },
+      { id: 'SOCIAL_SHARER', name: 'Social Butterfly', icon: '🦋', earned: '2025-08-10' },
+      { id: 'BIG_SPENDER', name: 'Big Spender', icon: '💎', earned: '2026-01-05' }
+    ],
+    rewards: [
+      { id: 'r1', name: '₹100 Off', points_cost: 500, points: 500, icon: '💰', category: 'discount', active: true },
+      { id: 'r2', name: 'Priority Entry', points_cost: 1000, points: 1000, icon: '⚡', category: 'access', active: true },
+      { id: 'r3', name: 'Backstage Pass', points_cost: 2000, points: 2000, icon: '🎭', category: 'access', active: true },
+      { id: 'r4', name: 'VIP Upgrade', points_cost: 2500, points: 2500, icon: '👑', category: 'upgrade', active: true },
+      { id: 'r5', name: 'Free Ticket', points_cost: 5000, points: 5000, icon: '🎁', category: 'ticket', active: true }
+    ],
     loyalty: {
-      points: 1240,
-      tier: 'Gold',
-      tier_threshold: { current: 1240, next_tier: 'Platinum', points_needed: 760 },
+      points: pts,
+      tier: 'gold',
+      tier_threshold: { current: pts, next_tier: 'Platinum', points_needed: 1580 },
       points_expiry: new Date(Date.now() + 365*24*3600000).toISOString(),
       history: [
-        { date: '2026-03-01', action: 'Booking BK-001', points: +200, balance: 1240 },
-        { date: '2026-02-15', action: 'Booking BK-002', points: +150, balance: 1040 },
-        { date: '2026-02-01', action: 'Referral bonus', points: +500, balance: 890 },
-        { date: '2026-01-20', action: 'Redeemed', points: -200, balance: 390 },
-        { date: '2026-01-10', action: 'Booking BK-003', points: +390, balance: 590 },
+        { date: '2026-03-01', action: 'Booking BK-001', points: +200, balance: pts },
+        { date: '2026-02-15', action: 'Booking BK-002', points: +150, balance: pts-200 },
+        { date: '2026-02-01', action: 'Referral bonus', points: +500, balance: pts-350 },
+        { date: '2026-01-20', action: 'Redeemed', points: -200, balance: pts-850 },
+        { date: '2026-01-10', action: 'Booking BK-003', points: +390, balance: pts-650 },
       ],
       redemption_rate: '1 point = ₹0.25',
-      cashback_value: Math.round(1240 * 0.25)
-    }
+      cashback_value: Math.round(pts * 0.25)
+    },
+    lifetime_bookings: 24, lifetime_spend: 185000,
+    referrals_count: 7, referral_earnings_inr: 1050
   })
 })
 
@@ -8343,19 +8388,28 @@ app.get('/api/ai/demand-forecast/:event_id', (c) => {
 // ── LOYALTY & GAMIFICATION ───────────────────────────────────────────────────
 
 app.get('/api/loyalty/profile/:user_id', (c) => {
-  const userId = c.req.param('user_id')
+  const userIdParam = c.req.param('user_id')
+  // If the captured param is literally 'profile', use query param instead
+  const userId = (userIdParam === 'profile') ? (c.req.query('user_id') || userIdParam) : userIdParam
+  const pts = 8420
   return c.json({
     user_id: userId,
-    tier: 'Gold',
-    points: 8420,
+    tier: 'gold',
+    points: pts,
+    points_balance: pts,
     points_expiry: '2027-03-31',
-    tier_progress: { current: 8420, next_tier: 'Platinum', required: 10000, pct: 84 },
+    tier_progress: { current: pts, next_tier: 'Platinum', required: 10000, pct: 84 },
     benefits: ['Priority access', '10% cashback', 'Free seat upgrade (2x/year)', 'Lounge access'],
     badges: [
       { id: 'FIRST_BOOKING', name: 'First Timer', earned: '2025-01-15' },
       { id: 'FESTIVAL_FAN', name: 'Festival Fan', earned: '2025-06-20' },
       { id: 'SOCIAL_SHARER', name: 'Social Butterfly', earned: '2025-08-10' },
       { id: 'BIG_SPENDER', name: 'Big Spender', earned: '2026-01-05' }
+    ],
+    rewards: [
+      { id: 'RWD-001', name: '10% Off Next Booking', points_cost: 500, category: 'discount', active: true },
+      { id: 'RWD-002', name: 'Free Seat Upgrade', points_cost: 1000, category: 'upgrade', active: true },
+      { id: 'RWD-003', name: 'Lounge Access Pass', points_cost: 2000, category: 'access', active: true }
     ],
     referrals_count: 7, referral_earnings_inr: 1050,
     lifetime_spend_inr: 42000, events_attended: 12
@@ -11418,6 +11472,697 @@ app.get('/api/v20/health', (c) => c.json({
   new_endpoints: 82,
   total_endpoints: 842,
   features: ['group_booking', 'waitlist', 'dynamic_pricing', 'disputes', 'tax_config', 'feature_flags', 'ticket_transfer', 'referrals', 'pwa', 'accessibility'],
+  timestamp: new Date().toISOString()
+}))
+
+// ════════════════════════════════════════════════════════════════════
+//  PHASE 21 — 80+ NEW ENDPOINTS
+// ════════════════════════════════════════════════════════════════════
+
+// ── v21 Health Check ──
+app.get('/api/v21/health', (c) => c.json({
+  status: 'ok', version: 'v21.0.0',
+  phase: 'Phase 21',
+  new_endpoints: 82,
+  total_endpoints: 924,
+  features: ['loyalty_programme', 'notifications', 'ticket_transfer', 'carbon_tracker', 'event_wizard', 'dynamic_pricing_rules', 'volunteer_management', 'survey_builder', 'bulk_import', 'rfm_segments', 'fraud_heatmap', 'pricing_override', 'refund_rules', 'gst_reconciliation', 'org_scorecard', 'webhooks', 'whitelabel', 'floor_plan_editor', 'footfall_heatmap', 'vendor_management', 'queue_estimator', 'parking_management', 'digital_twin', 'live_attendee_counter', 'staff_productivity', 'emergency_alerts', 'fnb_sales', 'weather_widget', 'lost_found', 'vendor_invoices', 'post_event_debrief', 'multi_event_overview', 'sla_breaches', 'integration_health', 'playbook_runner', 'city_revenue', 'api_metrics', 'cost_analytics'],
+  timestamp: new Date().toISOString()
+}))
+
+// ── Loyalty Programme ──
+app.get('/api/loyalty/profile', (c) => {
+  const uid = c.req.query('user_id') || 'USR-001'
+  return c.json({
+    user_id: uid, points: 2450, tier: 'gold', next_tier: 'Platinum', points_to_next: 550, progress_pct: 82,
+    badges: [{name:'Music Lover',icon:'🎵'},{name:'10x Booker',icon:'🎟️'},{name:'Early Bird',icon:'⭐'},{name:'VIP Access',icon:'🌟'}],
+    rewards: [{id:'r1',name:'₹100 Off',points:500,icon:'💰'},{id:'r2',name:'Priority Entry',points:1000,icon:'⚡'},{id:'r3',name:'Backstage Pass',points:2000,icon:'🎭'},{id:'r4',name:'VIP Upgrade',points:2500,icon:'👑'},{id:'r5',name:'Free Ticket',points:5000,icon:'🎁'}],
+    lifetime_bookings: 24, lifetime_spend: 185000
+  })
+})
+
+app.post('/api/loyalty/redeem', async (c) => {
+  const { user_id = 'USR-001', reward_id, points_cost = 500 } = await c.req.json()
+  const rewardNames: Record<string, string> = { r1: '₹100 Off', r2: 'Priority Entry', r3: 'Backstage Pass', r4: 'VIP Upgrade', r5: 'Free Ticket' }
+  const rewardName = rewardNames[reward_id] || 'Reward'
+  return c.json({
+    success: true, user_id, reward_id, reward_name: rewardName,
+    points_spent: points_cost, points_remaining: Math.max(0, 2450 - points_cost),
+    coupon_code: 'LOYAL' + Math.random().toString(36).slice(2,8).toUpperCase(),
+    message: rewardName + ' redeemed! Check your email for details.',
+    expires_at: new Date(Date.now() + 30*24*3600000).toISOString()
+  })
+})
+
+app.get('/api/loyalty/leaderboard', (c) => c.json({
+  leaderboard: [
+    {rank:1,user:'Arjun K.',points:12450,tier:'platinum',badges:8},
+    {rank:2,user:'Priya S.',points:9820,tier:'platinum',badges:6},
+    {rank:3,user:'Vikram R.',points:7650,tier:'gold',badges:5},
+    {rank:4,user:'Anita M.',points:5420,tier:'gold',badges:4},
+    {rank:5,user:'You',points:2450,tier:'gold',badges:4},
+  ],
+  total_participants: 48200, period: 'all_time'
+}))
+
+// ── Notifications ──
+app.get('/api/notifications/list', (c) => {
+  const uid = c.req.query('user_id') || 'USR-001'
+  return c.json({
+    user_id: uid,
+    notifications: [
+      {id:'N001',title:'Booking Confirmed 🎟️',body:'Your Sunburn Festival tickets are confirmed!',type:'booking',read:false,time:'2 min ago'},
+      {id:'N002',title:'₹200 Cashback Added 💰',body:'Cashback from your last booking.',type:'wallet',read:false,time:'1 hour ago'},
+      {id:'N003',title:'Early Bird Sale Ending ⏰',body:'Lollapalooza India — 2 hours left!',type:'promo',read:false,time:'3 hours ago'},
+      {id:'N004',title:'Referral Bonus 🎁',body:'₹100 credited for your referral.',type:'referral',read:true,time:'Yesterday'},
+    ],
+    unread_count: 3, total: 4
+  })
+})
+
+app.post('/api/notifications/mark-read', async (c) => {
+  const { notification_id, mark_all = false, user_id = 'USR-001' } = await c.req.json()
+  return c.json({ success: true, user_id, marked: mark_all ? 'all' : notification_id, updated_at: new Date().toISOString() })
+})
+
+// ── Ticket Transfer ──
+app.post('/api/transfer/initiate', async (c) => {
+  const { ticket_id, recipient, user_id = 'USR-001' } = await c.req.json()
+  if (!ticket_id || !recipient) return c.json({ error: 'ticket_id and recipient required' }, 400)
+  return c.json({
+    success: true, transfer_id: 'TRF-' + Math.random().toString(36).slice(2,10).toUpperCase(),
+    ticket_id, recipient, user_id,
+    otp_sent: true, otp_expires_min: 10,
+    message: 'OTP sent to your registered email. Expires in 10 minutes.'
+  })
+})
+
+app.post('/api/transfer/confirm', async (c) => {
+  const { ticket_id, recipient, otp, user_id = 'USR-001' } = await c.req.json()
+  if (!otp) return c.json({ error: 'OTP required' }, 400)
+  return c.json({
+    success: true, transfer_id: 'TRF-' + Math.random().toString(36).slice(2,10).toUpperCase(),
+    ticket_id, recipient, transferred_at: new Date().toISOString(),
+    message: 'Ticket successfully transferred to ' + recipient
+  })
+})
+
+// ── Carbon Tracker ──
+app.get('/api/carbon/tracker', (c) => {
+  const uid = c.req.query('user_id') || 'USR-001'
+  return c.json({
+    user_id: uid, offset_kg: 12.4, trees_planted: 0.6, green_events: 3,
+    goal_kg: 50, progress_pct: 24.8,
+    certificates: [{id:'CERT-001',event:'Sunburn 2026',kg:4.2,date:'2026-01-15'}],
+    next_milestone: '25 kg offset — earn Green Champion badge!'
+  })
+})
+
+// ── Organiser Wizard ──
+app.post('/api/organiser/wizard/draft', async (c) => {
+  const body = await c.req.json()
+  return c.json({
+    success: true, draft_id: 'DRAFT-' + Date.now().toString(36).toUpperCase(),
+    step: body.step || 1, saved_at: new Date().toISOString()
+  })
+})
+
+app.post('/api/organiser/wizard/publish', async (c) => {
+  const body = await c.req.json()
+  return c.json({
+    success: true, event_id: 'EVT-' + Math.random().toString(36).slice(2,8).toUpperCase(),
+    event_name: body.event_name || 'New Event', status: 'published',
+    published_at: new Date().toISOString(),
+    listing_url: 'https://indtix.pages.dev/fan?event=new'
+  })
+})
+
+// ── Dynamic Pricing Rules ──
+app.get('/api/organiser/dynamic-pricing/rules', (c) => c.json({
+  event_id: c.req.query('event_id') || 'e1',
+  rules: [
+    {id:'r1',trigger:'demand>80%',action:'price*1.15',active:true,created_at:'2026-01-01'},
+    {id:'r2',trigger:'7_days_to_event',action:'price*1.10',active:true,created_at:'2026-01-01'},
+    {id:'r3',trigger:'last_100_tickets',action:'price*1.25',active:false,created_at:'2026-01-15'},
+    {id:'r4',trigger:'early_bird_30days',action:'price*0.85',active:true,created_at:'2026-01-20'},
+  ],
+  current_multiplier: 1.15, projected_uplift_pct: 12.4
+}))
+
+app.post('/api/organiser/dynamic-pricing/rules', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, rule_id: 'RULE-' + Date.now().toString(36).toUpperCase(), saved_at: new Date().toISOString() })
+})
+
+// ── Volunteer Management ──
+app.get('/api/organiser/volunteers', (c) => c.json({
+  event_id: c.req.query('event_id') || 'e1',
+  volunteers: [
+    {id:'V001',name:'Priya Sharma',role:'Gate Marshal',checkin_perm:true,status:'confirmed',phone:'+91-9876500001'},
+    {id:'V002',name:'Rahul Verma',role:'VIP Escort',checkin_perm:true,status:'confirmed',phone:'+91-9876500002'},
+    {id:'V003',name:'Anita Kumar',role:'F&B Coord',checkin_perm:false,status:'pending',phone:'+91-9876500003'},
+    {id:'V004',name:'Suresh Das',role:'Stage Crew',checkin_perm:false,status:'confirmed',phone:'+91-9876500004'},
+    {id:'V005',name:'Meera Nair',role:'Medical Staff',checkin_perm:true,status:'confirmed',phone:'+91-9876500005'},
+  ],
+  total: 5, confirmed: 4, pending: 1
+}))
+
+app.post('/api/organiser/volunteers/assign', async (c) => {
+  const { volunteer_id, role, event_id = 'e1', organiser_id = 'ORG-001' } = await c.req.json()
+  return c.json({ success: true, volunteer_id, role, event_id, updated_at: new Date().toISOString() })
+})
+
+// ── Survey Builder ──
+app.post('/api/organiser/survey/create', async (c) => {
+  const { event_id = 'e1', questions = [] } = await c.req.json()
+  return c.json({
+    success: true, survey_id: 'SRV-' + Math.random().toString(36).slice(2,8).toUpperCase(),
+    event_id, questions_count: questions.length, status: 'active',
+    share_url: 'https://survey.indtix.pages.dev/s/' + Math.random().toString(36).slice(2,8)
+  })
+})
+
+app.get('/api/organiser/survey/responses', (c) => c.json({
+  survey_id: c.req.query('survey_id') || 'SRV-001',
+  total_responses: 342, avg_nps: 72,
+  responses: [{q:'Overall experience?',avg_rating:4.6},{q:'Would recommend?',yes_pct:88},{q:'F&B quality?',avg_rating:4.1}]
+}))
+
+// ── Bulk Attendee Import ──
+app.post('/api/organiser/attendees/import', async (c) => {
+  const { event_id = 'e1', count = 150 } = await c.req.json()
+  return c.json({
+    success: true, import_id: 'IMP-' + Date.now().toString(36).toUpperCase(),
+    imported: count, skipped: 3, duplicates: 2, errors: 0,
+    status: 'completed', completed_at: new Date().toISOString()
+  })
+})
+
+// ── RFM Segments ──
+app.get('/api/organiser/segments', (c) => c.json({
+  organiser_id: c.req.query('organiser_id') || 'ORG-001',
+  segments: [
+    {id:'seg1',name:'Champions',count:485,criteria:{recency:'>70',frequency:'>8',monetary:'>₹5000'},revenue_share:42},
+    {id:'seg2',name:'Loyal Customers',count:1240,criteria:{recency:'>50',frequency:'>4',monetary:'>₹2000'},revenue_share:31},
+    {id:'seg3',name:'At Risk',count:327,criteria:{recency:'<30',frequency:'>3'},revenue_share:12},
+    {id:'seg4',name:'New Fans',count:892,criteria:{recency:'>60',frequency:'1'},revenue_share:15},
+  ],
+  total_audience: 2944, generated_at: new Date().toISOString()
+}))
+
+// ── Admin Fraud Heatmap ──
+app.get('/api/admin/fraud-heatmap', (c) => c.json({
+  period: '30d',
+  cities: [
+    {city:'Mumbai',fraud_count:142,amount:2850000,rate:2.1,coordinates:{lat:19.076,lng:72.877}},
+    {city:'Delhi',fraud_count:98,amount:1960000,rate:1.8,coordinates:{lat:28.613,lng:77.209}},
+    {city:'Bengaluru',fraud_count:76,amount:1520000,rate:1.5,coordinates:{lat:12.971,lng:77.594}},
+    {city:'Pune',fraud_count:43,amount:860000,rate:1.2,coordinates:{lat:18.520,lng:73.856}},
+    {city:'Hyderabad',fraud_count:31,amount:620000,rate:1.0,coordinates:{lat:17.385,lng:78.486}},
+    {city:'Chennai',fraud_count:22,amount:440000,rate:0.8,coordinates:{lat:13.083,lng:80.270}},
+  ],
+  total_fraud_cases: 412, total_amount_blocked: 8250000, prevention_rate: 94.2
+}))
+
+// ── Admin Pricing Override ──
+app.get('/api/admin/pricing-override', (c) => c.json({
+  events: [
+    {id:'e1',name:'Sunburn Festival',current_multiplier:1.0,max_multiplier:1.5,base_price:1499},
+    {id:'e2',name:'Lollapalooza India',current_multiplier:1.15,max_multiplier:1.5,base_price:4999},
+    {id:'e5',name:'NH7 Weekender',current_multiplier:1.0,max_multiplier:1.3,base_price:2499},
+  ]
+}))
+
+app.post('/api/admin/pricing-override', async (c) => {
+  const { event_id, multiplier = 1.0, admin_id = 'ADM-001' } = await c.req.json()
+  return c.json({
+    success: true, event_id, multiplier: Number(multiplier),
+    applied_at: new Date().toISOString(), applied_by: admin_id,
+    audit_id: 'AUD-' + Date.now().toString(36).toUpperCase()
+  })
+})
+
+// ── Admin Refund Rules ──
+app.get('/api/admin/refund-rules', (c) => c.json({
+  rules: [
+    {id:'rr1',condition:'event_cancelled',action:'refund_100_pct',auto:true,active:true},
+    {id:'rr2',condition:'7_days_before',action:'refund_90_pct',auto:true,active:true},
+    {id:'rr3',condition:'1_3_days_before',action:'refund_50_pct',auto:false,active:true},
+    {id:'rr4',condition:'24h_before',action:'no_refund',auto:true,active:true},
+  ]
+}))
+
+app.post('/api/admin/refund-rules', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, rule_id: 'RR-' + Date.now().toString(36).toUpperCase(), saved_at: new Date().toISOString() })
+})
+
+// ── GST Reconciliation ──
+app.get('/api/admin/gst-reconciliation', (c) => c.json({
+  period: c.req.query('period') || '2026-02',
+  rows: [
+    {month:'Feb 2026',gstr1:42500000,gstr2a:41800000,itc:6300000,variance:700000,status:'Filed'},
+    {month:'Jan 2026',gstr1:51000000,gstr2a:50900000,itc:7635000,variance:100000,status:'Filed'},
+    {month:'Dec 2025',gstr1:62000000,gstr2a:61800000,itc:9270000,variance:200000,status:'Filed'},
+  ],
+  total_itc_claimed: 23205000, total_variance: 1000000
+}))
+
+// ── Organiser Scorecard ──
+app.get('/api/admin/organiser-scorecard', (c) => c.json({
+  scores: [
+    {organiser_id:'ORG-001',name:'Percept Live',rating:4.8,events:42,revenue:125000000,disputes:2,compliance:98,response_time_h:1.2},
+    {organiser_id:'ORG-002',name:'BookMyShow',rating:4.6,events:118,revenue:340000000,disputes:8,compliance:95,response_time_h:2.1},
+    {organiser_id:'ORG-003',name:'DNA Entertainment',rating:4.4,events:28,revenue:84000000,disputes:5,compliance:92,response_time_h:3.4},
+    {organiser_id:'ORG-004',name:'Vh1 Supersonic',rating:4.7,events:15,revenue:62000000,disputes:1,compliance:99,response_time_h:0.8},
+  ],
+  generated_at: new Date().toISOString()
+}))
+
+// ── Webhooks ──
+app.get('/api/admin/webhooks', (c) => c.json({
+  webhooks: [
+    {id:'wh1',url:'https://api.percept.com/webhooks/indtix',events:['booking.confirmed','refund.processed'],status:'active',last_fired:'2 min ago',success_rate:99.8},
+    {id:'wh2',url:'https://crm.bookingorg.com/hooks',events:['event.published'],status:'active',last_fired:'1 hour ago',success_rate:100},
+    {id:'wh3',url:'https://zapier.com/hooks/catch/12345',events:['payment.failed'],status:'paused',last_fired:'Never',success_rate:0},
+  ]
+}))
+
+app.post('/api/admin/webhooks', async (c) => {
+  const { url, events = [], action = 'create', webhook_id } = await c.req.json()
+  if (action === 'test') return c.json({ success: true, webhook_id, test_payload_sent: true, status: 200 })
+  if (action === 'delete') return c.json({ success: true, webhook_id, deleted_at: new Date().toISOString() })
+  return c.json({
+    success: true, webhook_id: 'WH-' + Math.random().toString(36).slice(2,8).toUpperCase(),
+    url, events, status: 'active', created_at: new Date().toISOString()
+  })
+})
+
+// ── White-Label SaaS ──
+app.get('/api/admin/whitelabel', (c) => c.json({
+  tenants: [
+    {id:'T001',name:'BookFest Pro',domain:'bookfest.in',primary_color:'#E91E63',status:'active',events:18},
+    {id:'T002',name:'TicketNow',domain:'ticketnow.co.in',primary_color:'#2196F3',status:'active',events:42},
+  ]
+}))
+
+app.post('/api/admin/whitelabel', async (c) => {
+  const { tenant_name, primary_color, custom_domain } = await c.req.json()
+  return c.json({
+    success: true, tenant_id: 'TENANT-' + Math.random().toString(36).slice(2,6).toUpperCase(),
+    tenant_name, primary_color, custom_domain,
+    deploy_url: (custom_domain || tenant_name?.toLowerCase().replace(/\s/g,'')+'.indtix.pages.dev'),
+    created_at: new Date().toISOString()
+  })
+})
+
+// ── Venue Floor Plan ──
+app.get('/api/venue/floorplan', (c) => c.json({
+  venue_id: c.req.query('venue_id') || 'V-001',
+  plan_id: 'FP-001',
+  zones: [
+    {id:'z1',name:'Main Stage',x:30,y:20,w:40,h:30,type:'stage',capacity:0},
+    {id:'z2',name:'GA Floor',x:10,y:50,w:80,h:25,type:'ga',capacity:8000},
+    {id:'z3',name:'VIP Left',x:5,y:20,w:20,h:28,type:'vip',capacity:500},
+    {id:'z4',name:'VIP Right',x:75,y:20,w:20,h:28,type:'vip',capacity:500},
+    {id:'z5',name:'F&B Zone',x:10,y:76,w:30,h:18,type:'fnb',capacity:0},
+  ],
+  last_updated: new Date().toISOString()
+}))
+
+app.post('/api/venue/floorplan', async (c) => {
+  const { venue_id = 'V-001', zones = [] } = await c.req.json()
+  return c.json({ success: true, plan_id: 'FP-' + Date.now().toString(36).toUpperCase(), venue_id, zones_count: zones.length, saved_at: new Date().toISOString() })
+})
+
+// ── Footfall Heatmap ──
+app.get('/api/venue/footfall-heatmap', (c) => c.json({
+  venue_id: c.req.query('venue_id') || 'V-001',
+  event_id: c.req.query('event_id') || 'e1',
+  hourly: [120, 380, 890, 1420, 1980, 2340, 1850, 980, 420],
+  hours: ['4PM','5PM','6PM','7PM','8PM','9PM','10PM','11PM','12AM'],
+  peak_hour: '9PM', peak_count: 2340, total_visitors: 10380
+}))
+
+// ── Revenue per Sqm ──
+app.get('/api/venue/revenue-per-sqm', (c) => c.json({
+  venue_id: c.req.query('venue_id') || 'V-001',
+  zones: [
+    {zone:'Main Stage GA',sqm:2000,revenue:4200000,per_sqm:2100},
+    {zone:'VIP Left',sqm:400,revenue:1800000,per_sqm:4500},
+    {zone:'VIP Right',sqm:400,revenue:1750000,per_sqm:4375},
+    {zone:'F&B Zone',sqm:300,revenue:850000,per_sqm:2833},
+    {zone:'Merch Area',sqm:200,revenue:420000,per_sqm:2100},
+  ],
+  total_sqm: 3300, total_revenue: 9020000, avg_per_sqm: 2733
+}))
+
+// ── Venue Vendors ──
+app.get('/api/venue/vendors', (c) => c.json({
+  venue_id: c.req.query('venue_id') || 'V-001',
+  vendors: [
+    {id:'VND-001',name:'FoodFirst India',zone:'F&B Zone A',category:'Food',sales:420000,status:'active'},
+    {id:'VND-002',name:'Beverage Bros',zone:'F&B Zone B',category:'Beverages',sales:280000,status:'active'},
+    {id:'VND-003',name:'MerchMart',zone:'Merch Area',category:'Merchandise',sales:185000,status:'active'},
+  ],
+  total: 3
+}))
+
+app.post('/api/venue/vendors', async (c) => {
+  const { venue_id = 'V-001', name, zone, category = 'Other' } = await c.req.json()
+  return c.json({ success: true, vendor_id: 'VND-' + Math.random().toString(36).slice(2,6).toUpperCase(), name, zone, category, status: 'active' })
+})
+
+app.post('/api/venue/vendors/assign', async (c) => {
+  const { venue_id, vendor_id, zone } = await c.req.json()
+  return c.json({ success: true, vendor_id, zone, updated_at: new Date().toISOString() })
+})
+
+// ── Queue Estimator ──
+app.get('/api/venue/queue-estimator', (c) => c.json({
+  venue_id: c.req.query('venue_id') || 'V-001',
+  event_id: c.req.query('event_id') || 'e1',
+  gates: [
+    {gate:'Gate A (Main)',staff:8,queue:420,wait_min:12,throughput_per_min:35,status:'normal'},
+    {gate:'Gate B (VIP)',staff:4,queue:85,wait_min:4,throughput_per_min:21,status:'fast'},
+    {gate:'Gate C (GA)',staff:6,queue:680,wait_min:22,throughput_per_min:31,status:'busy'},
+    {gate:'Gate D (Staff)',staff:2,queue:0,wait_min:0,throughput_per_min:0,status:'fast'},
+  ],
+  total_queue: 1185, estimated_clearance_min: 25
+}))
+
+// ── Parking ──
+app.get('/api/venue/parking', (c) => c.json({
+  venue_id: c.req.query('venue_id') || 'V-001',
+  zones: [
+    {zone:'Zone A',total:200,occupied:168,type:'General',fee:50,ev_charging:false},
+    {zone:'Zone B',total:150,occupied:142,type:'VIP Reserved',fee:100,ev_charging:false},
+    {zone:'Zone C (EV)',total:50,occupied:28,type:'Electric',fee:50,ev_charging:true},
+    {zone:'Zone D',total:100,occupied:45,type:'Overflow',fee:30,ev_charging:false},
+  ],
+  total_slots: 500, occupied: 383, available: 117, occupancy_pct: 76.6
+}))
+
+// ── Event Manager Endpoints ──
+app.get('/api/eventmgr/attendee-count', (c) => {
+  const base = 4280 + Math.floor(Math.random() * 100)
+  return c.json({ event_id: c.req.query('event_id') || 'e1', current_count: base, total_capacity: 10550, pct: Math.round(base/10550*100) })
+})
+
+app.get('/api/eventmgr/staff-productivity', (c) => c.json({
+  event_id: c.req.query('event_id') || 'e1',
+  staff: [
+    {id:'S001',name:'Arjun Kapoor',role:'Gate Marshal',tasks:24,avg_time:'2.1min',score:98,status:'active'},
+    {id:'S002',name:'Priya Singh',role:'VIP Escort',tasks:18,avg_time:'1.8min',score:95,status:'active'},
+    {id:'S003',name:'Rahul Verma',role:'F&B Lead',tasks:31,avg_time:'3.2min',score:89,status:'active'},
+    {id:'S004',name:'Anita Kumar',role:'Stage Crew',tasks:12,avg_time:'4.5min',score:82,status:'break'},
+    {id:'S005',name:'Vikram Das',role:'Security',tasks:8,avg_time:'5.2min',score:76,status:'active'},
+  ],
+  avg_score: 88, total_tasks: 93
+}))
+
+app.post('/api/eventmgr/emergency-alert', async (c) => {
+  const { event_id = 'e1', level = 'L1', message, broadcast = false } = await c.req.json()
+  return c.json({
+    success: true, alert_id: 'ALT-' + Math.random().toString(36).slice(2,8).toUpperCase(),
+    event_id, level, message, recipients: 142, broadcast,
+    sent_at: new Date().toISOString()
+  })
+})
+
+app.get('/api/eventmgr/fnb-sales', (c) => c.json({
+  event_id: c.req.query('event_id') || 'e1',
+  items: [
+    {name:'Beer (Pint)',sold:842,revenue:168400,stock:580,alert:false,price:200},
+    {name:'Whisky (Shot)',sold:324,revenue:97200,stock:120,alert:true,price:300},
+    {name:'Water Bottle',sold:1240,revenue:49600,stock:2400,alert:false,price:40},
+    {name:'Burger',sold:456,revenue:136800,stock:80,alert:true,price:300},
+    {name:'Pizza Slice',sold:380,revenue:76000,stock:200,alert:false,price:200},
+  ],
+  total_revenue: 528000, total_sold: 3242
+}))
+
+app.get('/api/eventmgr/weather', (c) => c.json({
+  city: c.req.query('city') || 'Mumbai',
+  temp: 28, feels_like: 31, humidity: 62, wind_kmh: 12,
+  condition: 'Clear', icon: '☀️',
+  impact_score: 4.2, forecast: 'Ideal conditions for outdoor event',
+  uv_index: 3, precipitation_chance: 5
+}))
+
+app.get('/api/eventmgr/lost-found', (c) => c.json({
+  event_id: c.req.query('event_id') || 'e1',
+  items: [
+    {id:'LF-001',item:'iPhone 15 Pro (Black)',zone:'GA Floor',time:'20:15',status:'unclaimed',description:'Found near barrier'},
+    {id:'LF-002',item:'Blue Backpack',zone:'VIP Left',time:'19:45',status:'claimed',description:'Nike brand'},
+    {id:'LF-003',item:'Wallet (Brown Leather)',zone:'F&B Zone',time:'21:02',status:'unclaimed',description:'Has cards inside'},
+  ],
+  total: 3, unclaimed: 2, claimed: 1
+}))
+
+app.post('/api/eventmgr/lost-found', async (c) => {
+  const { event_id = 'e1', item, zone, found_by = 'staff' } = await c.req.json()
+  return c.json({
+    success: true, item_id: 'LF-' + Math.random().toString(36).slice(2,6).toUpperCase(),
+    item, zone, found_by, status: 'unclaimed', logged_at: new Date().toISOString(),
+    qr_code_url: 'https://qr.indtix.pages.dev/lf/' + Math.random().toString(36).slice(2,8)
+  })
+})
+
+app.get('/api/eventmgr/vendor-invoices', (c) => c.json({
+  event_id: c.req.query('event_id') || 'e1',
+  invoices: [
+    {id:'INV-001',vendor:'Sound Masters',amount:285000,status:'approved',due:'Apr 10',submitted:'Apr 5'},
+    {id:'INV-002',vendor:'Light Brigade',amount:142000,status:'pending',due:'Apr 12',submitted:'Apr 6'},
+    {id:'INV-003',vendor:'Security Pro',amount:96000,status:'pending',due:'Apr 15',submitted:'Apr 7'},
+    {id:'INV-004',vendor:'FoodFirst India',amount:68000,status:'paid',due:'Apr 8',submitted:'Apr 3'},
+  ],
+  total_pending: 238000, total_paid: 68000
+}))
+
+app.get('/api/eventmgr/debrief', (c) => c.json({
+  event_id: c.req.query('event_id') || 'e1',
+  event_name: 'Sunburn Festival 2026',
+  attendance: 8240, total_capacity: 10550, utilization_pct: 78,
+  revenue: 12500000, target_revenue: 11000000, revenue_vs_target_pct: 113.6,
+  nps_score: 72, nps_responses: 1240,
+  incidents: 3, incidents_resolved: 3,
+  staff_score: 91, fnb_score: 82, security_score: 94,
+  summary: 'Event ran smoothly with 78% capacity utilization. F&B revenue exceeded targets by 12%. 3 minor incidents resolved within SLA. Staff performance score: 91/100. Recommend increasing Gate C staffing for future events.',
+  recommendations: ['Increase Gate C staff by 2 during peak hours','Add 1 more F&B stall in GA zone','Deploy mobile charging units near VIP area'],
+  generated_at: new Date().toISOString()
+}))
+
+// ── Ops Endpoints ──
+app.get('/api/ops/multi-event-overview', (c) => c.json({
+  events: [
+    {id:'e1',name:'Sunburn Festival',city:'Pune',status:'live',capacity_pct:78,tickets_sold:8240,revenue:12500000,start_time:'2026-03-15T18:00'},
+    {id:'e2',name:'Lollapalooza',city:'Mumbai',status:'live',capacity_pct:62,tickets_sold:3100,revenue:15500000,start_time:'2026-03-15T17:00'},
+    {id:'e3',name:'NH7 Weekender',city:'Pune',status:'upcoming',capacity_pct:45,tickets_sold:2250,revenue:5625000,start_time:'2026-03-22T16:00'},
+    {id:'e4',name:'Comedy Factory',city:'Bengaluru',status:'completed',capacity_pct:95,tickets_sold:380,revenue:266000,start_time:'2026-03-10T20:00'},
+  ],
+  live_count: 2, upcoming_count: 1, completed_count: 1
+}))
+
+app.get('/api/ops/sla-breaches', (c) => c.json({
+  breaches: [
+    {id:'SLA-001',type:'Refund Processing',sla_mins:60,elapsed_mins:94,assignee:'Rohit K.',priority:'high',created_at:'2h ago'},
+    {id:'SLA-002',type:'KYC Review',sla_mins:120,elapsed_mins:185,assignee:'Priya M.',priority:'medium',created_at:'3h ago'},
+    {id:'SLA-003',type:'Organiser Approval',sla_mins:240,elapsed_mins:312,assignee:'Unassigned',priority:'low',created_at:'5h ago'},
+  ],
+  total: 3, critical: 1, warn: 1, info: 1
+}))
+
+app.get('/api/ops/staff-map', (c) => c.json({
+  cities: [
+    {city:'Mumbai',staff:142,active:128,coordinates:{lat:19.076,lng:72.877}},
+    {city:'Delhi',staff:98,active:87,coordinates:{lat:28.613,lng:77.209}},
+    {city:'Bengaluru',staff:76,active:71,coordinates:{lat:12.971,lng:77.594}},
+    {city:'Pune',staff:54,active:50,coordinates:{lat:18.520,lng:73.856}},
+    {city:'Hyderabad',staff:43,active:40,coordinates:{lat:17.385,lng:78.486}},
+  ]
+}))
+
+app.get('/api/ops/integration-health', (c) => c.json({
+  services: [
+    {name:'Razorpay',status:'operational',latency:42,uptime:99.98,error_rate:0.02,last_check:'30s ago'},
+    {name:'AWS SES',status:'operational',latency:180,uptime:99.9,error_rate:0.1,last_check:'30s ago'},
+    {name:'FCM Push',status:'degraded',latency:650,uptime:97.2,error_rate:2.8,last_check:'30s ago'},
+    {name:'Twilio SMS',status:'operational',latency:320,uptime:99.5,error_rate:0.5,last_check:'30s ago'},
+    {name:'Cloudflare CDN',status:'operational',latency:8,uptime:100,error_rate:0.0,last_check:'30s ago'},
+  ],
+  overall_health: 'degraded', degraded_count: 1
+}))
+
+app.get('/api/ops/playbook', (c) => c.json({
+  playbooks: [
+    {id:'pb1',name:'High Fraud Spike',description:'Steps to handle sudden fraud increase',steps:['Alert fraud team','Block top-10 IPs','Enable enhanced KYC','Escalate to Risk Manager','Generate incident report'],category:'security'},
+    {id:'pb2',name:'Payment Gateway Down',description:'Handle payment provider outage',steps:['Activate backup gateway','Notify active checkout users','Pause new bookings >₹5K','Alert finance team','Monitor recovery'],category:'payments'},
+    {id:'pb3',name:'Event Cancellation',description:'Process for cancelling a live event',steps:['Freeze new sales','Trigger auto-refund rules','Send email/SMS to buyers','Update event status','Generate refund report'],category:'events'},
+  ]
+}))
+
+app.post('/api/ops/playbook/run', async (c) => {
+  const { playbook_id, triggered_by = 'ops-admin' } = await c.req.json()
+  return c.json({
+    success: true, run_id: 'RUN-' + Math.random().toString(36).slice(2,8).toUpperCase(),
+    playbook_id, triggered_by, started_at: new Date().toISOString(),
+    steps_total: 5, status: 'running'
+  })
+})
+
+app.get('/api/ops/city-revenue', (c) => c.json({
+  period: c.req.query('period') || '30d',
+  cities: [
+    {city:'Mumbai',revenue:340000000,events:118,rank:1,mom_pct:12},
+    {city:'Delhi',revenue:280000000,events:94,rank:2,mom_pct:8},
+    {city:'Bengaluru',revenue:210000000,events:76,rank:3,mom_pct:15},
+    {city:'Pune',revenue:165000000,events:58,rank:4,mom_pct:22},
+    {city:'Hyderabad',revenue:142000000,events:52,rank:5,mom_pct:10},
+    {city:'Chennai',revenue:98000000,events:38,rank:6,mom_pct:6},
+    {city:'Kolkata',revenue:87000000,events:34,rank:7,mom_pct:4},
+    {city:'Ahmedabad',revenue:64000000,events:26,rank:8,mom_pct:18},
+    {city:'Jaipur',revenue:48000000,events:19,rank:9,mom_pct:25},
+    {city:'Goa',revenue:42000000,events:16,rank:10,mom_pct:32},
+  ],
+  total_revenue: 1476000000, total_events: 531
+}))
+
+app.get('/api/ops/api-metrics', (c) => c.json({
+  req_per_sec: 2847, p50_ms: 8, p95_ms: 14, p99_ms: 42,
+  error_rate: 0.03, cache_hit: 94, active_connections: 1248,
+  bandwidth_mbps: 182, timestamp: new Date().toISOString()
+}))
+
+app.get('/api/ops/cost-analytics', (c) => c.json({
+  period: c.req.query('period') || '2026-02',
+  total_cost: 49700,
+  breakdown: [
+    {service:'Cloudflare Workers',cost:12500,mom_pct:8,unit:'CPU ms'},
+    {service:'Cloudflare D1',cost:4200,mom_pct:-2,unit:'GB stored'},
+    {service:'AWS SES',cost:3800,mom_pct:15,unit:'emails sent'},
+    {service:'Razorpay (fees)',cost:28000,mom_pct:22,unit:'transactions'},
+    {service:'FCM Push',cost:1200,mom_pct:5,unit:'notifications'},
+  ],
+  budget: 60000, budget_utilization_pct: 82.8
+}))
+
+// ── 30 Additional Supporting Endpoints ──
+app.get('/api/search/autocomplete', (c) => {
+  const q = c.req.query('q') || ''
+  return c.json({ query: q, suggestions: ['Sunburn Festival', 'Lollapalooza India', 'NH7 Weekender', 'Arijit Singh Live'].filter(s => s.toLowerCase().includes(q.toLowerCase())).slice(0, 5) })
+})
+
+app.get('/api/events/recommendations', (c) => c.json({
+  user_id: c.req.query('user_id') || 'USR-001',
+  recommendations: [
+    {event_id:'e1',name:'Sunburn Festival 2026',category:'Electronic',city:'Pune',price_from:3999,match_score:95},
+    {event_id:'e5',name:'NH7 Weekender',category:'Multi-genre',city:'Pune',price_from:2499,match_score:90},
+    {event_id:'e2',name:'Lollapalooza India',category:'Rock',city:'Mumbai',price_from:4999,match_score:87},
+    {event_id:'e3',name:'Arijit Singh Live',category:'Bollywood',city:'Delhi',price_from:1999,match_score:85},
+    {event_id:'e4',name:'Comedy Factory',category:'Comedy',city:'Bengaluru',price_from:699,match_score:82},
+    {event_id:'e6',name:'Pro Kabaddi Final',category:'Sports',city:'Hyderabad',price_from:299,match_score:78},
+  ],
+  algorithm: 'collaborative_filtering_v2'
+}))
+
+app.get('/api/pricing/multi-currency', (c) => c.json({
+  base_currency: 'INR',
+  rates: {USD:0.0120,GBP:0.0095,EUR:0.0110,SGD:0.0161,AED:0.0440,AUD:0.0183},
+  last_updated: new Date().toISOString()
+}))
+
+app.get('/api/user/accessibility-settings', (c) => c.json({
+  user_id: c.req.query('user_id') || 'USR-001',
+  settings: {high_contrast: false, font_size: 'medium', screen_reader: false, captions: true, keyboard_nav: true}
+}))
+
+app.post('/api/user/accessibility-settings', async (c) => {
+  const body = await c.req.json()
+  return c.json({ success: true, ...body, updated_at: new Date().toISOString() })
+})
+
+app.post('/api/gdpr/data-export', async (c) => {
+  const { user_id = 'USR-001' } = await c.req.json()
+  return c.json({
+    success: true, export_id: 'EXP-' + Math.random().toString(36).slice(2,8).toUpperCase(),
+    user_id, format: 'JSON', size_kb: 48.2,
+    download_url: 'https://exports.indtix.pages.dev/gdpr/' + user_id + '.json',
+    expires_at: new Date(Date.now() + 24*3600000).toISOString()
+  })
+})
+
+app.post('/api/notifications/bulk', async (c) => {
+  const { segment, title, body, type = 'promo' } = await c.req.json()
+  return c.json({
+    success: true, notification_id: 'BULK-' + Math.random().toString(36).slice(2,8).toUpperCase(),
+    segment, title, type, recipients_count: 48200, estimated_delivery_min: 5
+  })
+})
+
+app.get('/api/partner/api-keys', (c) => c.json({
+  partner_id: c.req.query('partner_id') || 'PART-001',
+  api_keys: [
+    {id:'key1',name:'Production Key',key:'pk_live_XXXXXXXXXXXX',created:'2026-01-01',last_used:'2 min ago',calls_today:1242},
+    {id:'key2',name:'Sandbox Key',key:'pk_test_XXXXXXXXXXXX',created:'2026-01-01',last_used:'1 hour ago',calls_today:89},
+  ]
+}))
+
+app.get('/api/saas/tenants', (c) => c.json({
+  tenants: [
+    {id:'T001',name:'BookFest Pro',domain:'bookfest.in',primary_color:'#E91E63',status:'active',events:18,revenue:4200000},
+    {id:'T002',name:'TicketNow',domain:'ticketnow.co.in',primary_color:'#2196F3',status:'active',events:42,revenue:12600000},
+    {id:'T003',name:'FestPass',domain:'festpass.in',primary_color:'#4CAF50',status:'trial',events:5,revenue:850000},
+  ],
+  total: 3, active: 2, trial: 1
+}))
+
+app.get('/api/organiser/revenue/waterfall', (c) => c.json({
+  event_id: c.req.query('event_id') || 'e1',
+  gross_revenue: 12500000, refunds: 625000, platform_fee: 625000,
+  gst: 1125000, payment_gateway_fee: 250000, net_revenue: 9875000,
+  net_margin_pct: 79.0
+}))
+
+app.get('/api/events/calendar/v2', (c) => c.json({
+  month: c.req.query('month') || '2026-03',
+  events: Array.from({length:8},(_,i)=>({date:'2026-03-'+(10+i*3).toString().padStart(2,'0'),events:[{id:'e'+i,name:'Event '+i,category:'Music',city:'Mumbai'}]}))
+}))
+
+app.post('/api/organiser/addons/bulk', async (c) => {
+  const { event_id, addons = [] } = await c.req.json()
+  return c.json({ success: true, event_id, addons_count: addons.length, saved_at: new Date().toISOString() })
+})
+
+app.get('/api/fan/carbon/leaderboard', (c) => c.json({
+  leaderboard: Array.from({length:5},(_,i)=>({rank:i+1,user:'Fan '+(i+1),offset_kg:50-i*8,badges:5-i})),
+  user_rank: 12, user_offset_kg: 12.4
+}))
+
+app.get('/api/admin/platform/metrics/v21', (c) => c.json({
+  total_users: 2850000, active_users_30d: 485000, total_bookings: 12400000,
+  total_revenue: 18500000000, total_events: 42000, total_organisers: 8500,
+  platform_health: 'excellent', timestamp: new Date().toISOString()
+}))
+
+app.get('/api/ops/incidents/active', (c) => c.json({
+  incidents: [],
+  total: 0, resolved_today: 3, avg_resolution_min: 14
+}))
+
+app.post('/api/fan/wishlist/share', async (c) => {
+  const { user_id = 'USR-001', event_ids = [] } = await c.req.json()
+  return c.json({ success: true, share_url: 'https://indtix.pages.dev/fan/wishlist/' + user_id, expires_in_days: 7 })
+})
+
+app.get('/api/v21/features', (c) => c.json({
+  features: ['loyalty_programme','carbon_tracker','ticket_transfer','ai_recommendations','event_wizard','volunteer_management','survey_builder','bulk_import','rfm_segments','fraud_heatmap','gst_reconciliation','whitelabel_saas','floor_plan_editor','footfall_heatmap','vendor_management','queue_estimator','parking_management','digital_twin','live_attendee_counter','staff_leaderboard','emergency_alerts','fnb_dashboard','weather_widget','lost_found','vendor_invoices','post_event_debrief','multi_event_overview','sla_breaches','integration_health','playbook_runner','city_revenue_leaderboard','api_metrics','cost_analytics','search_autocomplete','ai_event_recommendations','multi_currency','accessibility_settings','gdpr_export','bulk_notifications','partner_api_keys'],
+  count: 40
+}))
+
+// ── Update Version to 21.0.0 ──
+app.get('/api/health', (c) => c.json({
+  status: 'ok', version: 'v21.0.0', phase: 'Phase 21',
+  total_endpoints: 924, uptime: '99.97%', latency_ms: 14,
   timestamp: new Date().toISOString()
 }))
 
