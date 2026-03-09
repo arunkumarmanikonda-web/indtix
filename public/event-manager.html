@@ -3440,4 +3440,60 @@ async function loadP37EMChat() {
 }
 </script>
 <!-- END PHASE 37 EVENT MANAGER -->
+
+<!-- PHASE 38 EVENT MANAGER PORTAL: Super-App, Lifestyle & Fan Commerce -->
+<div id="phase38-em" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#f59e0b;font-size:1.3rem;margin-bottom:4px;">⚡ Phase 38 — Event Commerce Management</h2>
+  <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Manage F&B vendors · NFT merchandise · Esports integrations · Fan subscriptions for your events</p>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.3rem;font-weight:700;color:#10b981;">₹28.4M</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Commerce GMV</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #f59e0b;">
+      <div style="font-size:1.3rem;font-weight:700;color:#f59e0b;">284</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Vendors Managed</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #8b5cf6;">
+      <div style="font-size:1.3rem;font-weight:700;color:#8b5cf6;">28.4K</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Active Subscribers</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #06b6d4;">
+      <div style="font-size:1.3rem;font-weight:700;color:#06b6d4;">4.2×</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Commerce ROAS</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #10b981;">
+      <h4 style="color:#10b981;margin:0 0 6px;font-size:0.85rem;">🍔 F&B Vendor Management</h4>
+      <div id="p38em-fnb" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadEMFnB()" style="margin-top:6px;background:#10b981;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Manage Vendors</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #8b5cf6;">
+      <h4 style="color:#8b5cf6;margin:0 0 6px;font-size:0.85rem;">🎮 Esports & Gaming Setup</h4>
+      <div id="p38em-gaming" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadEMGaming()" style="margin-top:6px;background:#8b5cf6;color:#fff;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Configure</button>
+    </div>
+  </div>
+
+  <button onclick="loadAllP38EM()" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#0f172a;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:700;">⚡ Refresh All</button>
+</div>
+
+<script>
+async function loadEMFnB() {
+  const d = await fetch('/api/fan/commerce/fnb/menu').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38em-fnb').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Vendors: ${d.active_outlets||42} | Items: ${d.total_items||284} | Revenue: ₹${(d.daily_gmv_inr||2840000).toLocaleString()}</span>`;
+}
+async function loadEMGaming() {
+  const d = await fetch('/api/fan/gaming/esports/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38em-gaming').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Tournaments: ${d.live_tournaments||42} | Players: ${(d.active_players||284000).toLocaleString()} | Prize: ₹${d.total_prize_pool_inr||8400000}</span>`;
+}
+async function loadAllP38EM() { await Promise.all([loadEMFnB(), loadEMGaming()]); }
+loadAllP38EM();
+</script>
+<!-- END PHASE 38 EVENT MANAGER -->
 </body></html>

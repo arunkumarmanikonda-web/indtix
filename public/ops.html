@@ -3366,5 +3366,61 @@ async function loadP37OpsTelemetry() {
 }
 </script>
 <!-- END PHASE 37 OPS PORTAL -->
+
+<!-- PHASE 38 OPS PORTAL: Super-App, Lifestyle & Fan Commerce -->
+<div id="phase38-ops" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#f59e0b;font-size:1.3rem;margin-bottom:4px;">⚡ Phase 38 — Operations: Commerce & Subscriptions</h2>
+  <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Subscription ops · BNPL risk monitoring · Lifestyle partner network · F&B logistics · Commerce SLA</p>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #f59e0b;">
+      <div style="font-size:1.3rem;font-weight:700;color:#f59e0b;">99.2%</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Commerce SLA</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.3rem;font-weight:700;color:#10b981;">1.4%</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">BNPL NPA Rate</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #06b6d4;">
+      <div style="font-size:1.3rem;font-weight:700;color:#06b6d4;">284</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Partner Integrations</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #8b5cf6;">
+      <div style="font-size:1.3rem;font-weight:700;color:#8b5cf6;">2.4%</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Sub Churn Rate</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #06b6d4;">
+      <h4 style="color:#06b6d4;margin:0 0 6px;font-size:0.85rem;">💳 BNPL & Credit Risk Ops</h4>
+      <div id="p38ops-bnpl" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadOpsBNPL()" style="margin-top:6px;background:#06b6d4;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Risk Dashboard</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #10b981;">
+      <h4 style="color:#10b981;margin:0 0 6px;font-size:0.85rem;">🎁 Partner Network Health</h4>
+      <div id="p38ops-partners" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadOpsPartners()" style="margin-top:6px;background:#10b981;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View Partners</button>
+    </div>
+  </div>
+
+  <button onclick="loadAllP38Ops()" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#0f172a;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:700;">⚡ Refresh All</button>
+</div>
+
+<script>
+async function loadOpsBNPL() {
+  const d = await fetch('/api/fan/credit/bnpl/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38ops-bnpl').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Book: ₹${(d.book_size_inr||84000000).toLocaleString()} | NPA: ${d.npa_pct||1.4}% | Approvals: ${d.daily_approvals||840}/day | Recovery: ${d.recovery_pct||96}%</span>`;
+}
+async function loadOpsPartners() {
+  const d = await fetch('/api/admin/super-app/partner-network/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38ops-partners').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Partners: ${d.total_partners||284} | Active: ${d.active_integrations||264} | SLA: ${d.avg_sla_pct||99.2}% | Rev Share: ₹${d.monthly_rev_share_inr||8400000}</span>`;
+}
+async function loadAllP38Ops() { await Promise.all([loadOpsBNPL(), loadOpsPartners()]); }
+loadAllP38Ops();
+</script>
+<!-- END PHASE 38 OPS PORTAL -->
 </body>
 </html>

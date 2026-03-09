@@ -22418,7 +22418,7 @@ app.get('/api/admin/immersive/hardware/roadmap', (c) => c.json({
 }))
 
 // ── Phase 37 health endpoint ─────────────────────────────────
-app.get('/api/health', (c) => c.json({
+app.get('/api/v37/health', (c) => c.json({
   status: 'ok', platform: 'INDTIX', version: 'v37.0.0',
   phase: 'Phase 37', theme: 'Immersive Experiences: AR/VR, Metaverse & Live Streaming',
   new_endpoints: 90, total_endpoints: 2359,
@@ -22438,6 +22438,459 @@ app.get('/api/health', (c) => c.json({
 
 // ═══════════════════════════════════════════════════════════
 // END PHASE 37 — IMMERSIVE EXPERIENCES: AR/VR, METAVERSE & LIVE STREAMING
+// ═══════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 38 — SUPER-APP, LIFESTYLE & FAN COMMERCE ECOSYSTEM
+// Version: v38.0.0 | New endpoints: 90 | Total: 2449
+// ═══════════════════════════════════════════════════════════
+
+// ── Module 1: Super-App Hub & Mini-Programs ─────────────────
+app.get('/api/admin/superapp/dashboard', (c) => c.json({
+  mini_programs: 42, active_users_mau: 8400000, avg_apps_used_per_user: 4.2,
+  super_app_gmv_inr: 2840000000, partner_integrations: 284, session_per_day: 2.8,
+  app_store_rating: 4.7
+}))
+app.get('/api/fan/superapp/home', (c) => c.json({
+  featured: ['Concerts', 'Food-Order', 'Travel', 'Fashion', 'Gaming'],
+  personalized_tiles: 8, quick_actions: ['My Tickets', 'Wallet', 'Rewards', 'Scan-QR'],
+  notifications: 3, nearby_events: 12
+}))
+app.get('/api/admin/superapp/mini-programs', (c) => c.json({
+  programs: [
+    { name: 'FOOD@VENUE', category: 'F&B', mau: 840000, gmv_inr: 420000000 },
+    { name: 'TRAVEL-BUNDLE', category: 'Travel', mau: 284000, gmv_inr: 840000000 },
+    { name: 'FAN-FASHION', category: 'Merch', mau: 184000, gmv_inr: 280000000 },
+    { name: 'ESPORTS-HUB', category: 'Gaming', mau: 420000, gmv_inr: 84000000 }
+  ]
+}))
+app.post('/api/admin/superapp/launch-mini-program', (c) => c.json({
+  program_id: `MP-${Date.now()}`, name: 'New Mini Program', status: 'launched',
+  review_time_hours: 24, sdk_version: 'v3.2', sandbox_url: 'https://sandbox.indtix.com'
+}))
+app.get('/api/fan/superapp/wallet-overview', (c) => c.json({
+  balance_inr: 2840, points: 28400, cashback_pending_inr: 284,
+  saved_cards: 3, upi_linked: 2, crypto_wallet: true, bnpl_limit_inr: 8400
+}))
+app.get('/api/admin/superapp/partner-ecosystem', (c) => c.json({
+  partners: 284, categories: ['F&B', 'Travel', 'Fashion', 'Health', 'Finance', 'Gaming'],
+  revenue_share_avg_pct: 18, api_calls_daily: 28400000, uptime_pct: 99.97
+}))
+app.post('/api/admin/superapp/onboard-partner', (c) => c.json({
+  partner_id: `PART-${Date.now()}`, integration_type: 'API', sandbox_ready: true,
+  go_live_days: 7, revenue_share_pct: 18, sla_guaranteed: true
+}))
+app.get('/api/fan/superapp/discover', (c) => c.json({
+  trending_mini_apps: ['Sunburn-Food', 'IPL-Fantasy', 'Artist-Merch'],
+  new_launches: 4, exclusive_offers: 8, loyalty_bonus_apps: 12
+}))
+app.get('/api/admin/superapp/analytics', (c) => c.json({
+  dau: 2840000, mau: 8400000, stickiness_pct: 33.8, avg_revenue_per_user_inr: 338,
+  cross_sell_rate_pct: 42, super_app_retention_d30_pct: 64
+}))
+app.post('/api/admin/superapp/push-notification', (c) => c.json({
+  notification_id: `NOTIF-${Date.now()}`, segments: 3, recipients: 8400000,
+  channels: ['push', 'in-app', 'sms'], delivery_rate_pct: 97.2
+}))
+
+// ── Module 2: Food, Beverage & In-Venue Commerce ────────────
+app.get('/api/venue/superapp/food/dashboard', (c) => c.json({
+  vendors_active: 284, orders_today: 28400, gmv_today_inr: 8400000,
+  avg_order_value_inr: 296, delivery_time_avg_min: 8, contactless_pct: 94
+}))
+app.get('/api/fan/superapp/food/menu', (c) => c.json({
+  categories: ['Starters', 'Mains', 'Beverages', 'Desserts', 'Health'],
+  items: 284, dietary_filters: ['Veg', 'Vegan', 'GF', 'Jain', 'Keto'],
+  popular: ['Vada Pav', 'Pizza Slice', 'Cold Coffee', 'Masala Chips'],
+  combos_available: 42
+}))
+app.post('/api/fan/superapp/food/order', (c) => c.json({
+  order_id: `ORD-${Date.now()}`, items: 3, total_inr: 420,
+  delivery_slot: 'Seat 12A — 20 min', payment: 'UPI', status: 'confirmed',
+  tracking_url: `https://track.indtix.com/f/${Math.random().toString(36).slice(2)}`
+}))
+app.get('/api/fan/superapp/food/track-order', (c) => c.json({
+  order_id: 'ORD-001', status: 'preparing', eta_min: 12,
+  runner: 'Rohit S.', runner_location: 'Zone-B Kitchen', live_updates: true
+}))
+app.get('/api/venue/superapp/food/vendor-analytics', (c) => c.json({
+  top_vendor: 'Mumbai Snacks Co.', orders_hr: 284, avg_rating: 4.6,
+  waste_pct: 4.2, peak_rush_time: '20:00', upsell_rate_pct: 28
+}))
+app.post('/api/venue/superapp/food/pre-order', (c) => c.json({
+  preorder_id: `PRE-${Date.now()}`, event: 'Sunburn 2026', items: 4,
+  total_inr: 840, pickup_time: '18:30', seat: 'VIP-A-12', confirmed: true
+}))
+app.get('/api/admin/superapp/food/inventory', (c) => c.json({
+  items_tracked: 840, low_stock_alerts: 8, wastage_inr: 84000,
+  reorder_auto: true, vendor_sla_pct: 97, peak_prep_time_min: 12
+}))
+app.get('/api/fan/superapp/food/loyalty', (c) => c.json({
+  food_points: 8400, tier: 'Foodie-Gold', cashback_pct: 8,
+  free_item_threshold: 500, streak_bonus: true, referral_credit_inr: 100
+}))
+app.post('/api/venue/superapp/food/rate', (c) => c.json({
+  rating_id: `RAT-${Date.now()}`, rating: 4, feedback: 'Great taste!',
+  response_time_sec: 30, vendor_notified: true
+}))
+app.get('/api/admin/superapp/food/revenue', (c) => c.json({
+  total_inr: 420000000, platform_commission_pct: 18, vendor_payout_inr: 344400000,
+  delivery_fee_inr: 8400000, surge_revenue_inr: 2840000
+}))
+
+// ── Module 3: Travel, Hotels & Transport Bundle ─────────────
+app.get('/api/admin/superapp/travel/dashboard', (c) => c.json({
+  bookings_ytd: 284000, gmv_inr: 2840000000, hotels_partnered: 8400,
+  transport_partners: 42, avg_booking_value_inr: 10000, repeat_bookers_pct: 48
+}))
+app.get('/api/fan/superapp/travel/packages', (c) => c.json({
+  packages: [
+    { name: 'Sunburn Goa Package', hotel: 'Marriott', travel: 'IndiGo', price_inr: 18400, available: 284 },
+    { name: 'IPL Mumbai Package', hotel: 'Taj Colaba', travel: 'Vande Bharat', price_inr: 12400, available: 840 }
+  ]
+}))
+app.post('/api/fan/superapp/travel/book-bundle', (c) => c.json({
+  booking_id: `TRV-${Date.now()}`, package: 'Sunburn Goa Package', pax: 2,
+  total_inr: 36800, hotel_conf: `HTL-${Date.now()}`, flight_pnr: `6E${Math.floor(Math.random()*9999)}`,
+  insurance_included: true
+}))
+app.get('/api/fan/superapp/travel/nearby-hotels', (c) => c.json({
+  hotels: [
+    { name: 'Grand Hyatt Mumbai', distance_km: 2.4, price_inr: 8400, rating: 4.8 },
+    { name: 'ITC Grand Central', distance_km: 3.1, price_inr: 6400, rating: 4.7 }
+  ], event_discount_pct: 18
+}))
+app.get('/api/fan/superapp/travel/transport', (c) => c.json({
+  options: [
+    { type: 'Ola-SUV', eta_min: 8, price_inr: 420, promo: 'EVENT20' },
+    { type: 'Metro-Pass', eta_min: 18, price_inr: 84, eco: true },
+    { type: 'BEST-Shuttle', eta_min: 12, price_inr: 42, event_special: true }
+  ]
+}))
+app.get('/api/admin/superapp/travel/partner-performance', (c) => c.json({
+  top_hotel: 'Marriott Goa', top_airline: 'IndiGo', cancellation_rate_pct: 4.2,
+  nps_travel: 68, avg_lead_time_days: 28, last_minute_pct: 18
+}))
+app.post('/api/fan/superapp/travel/group-booking', (c) => c.json({
+  group_id: `GRP-${Date.now()}`, size: 12, discount_pct: 18, coordinator: '0xFan',
+  rooms_blocked: 6, transport_arranged: true, total_inr: 184800
+}))
+app.get('/api/admin/superapp/travel/revenue', (c) => c.json({
+  hotel_commission_inr: 284000000, transport_commission_inr: 84000000,
+  insurance_inr: 28400000, ancillary_inr: 42000000, total_inr: 438400000
+}))
+
+// ── Module 4: Fan Fashion & Merchandise Store ───────────────
+app.get('/api/admin/superapp/fashion/dashboard', (c) => c.json({
+  products_listed: 28400, brands_partnered: 284, orders_ytd: 840000,
+  gmv_inr: 840000000, avg_order_value_inr: 1000, returns_pct: 4.2
+}))
+app.get('/api/fan/superapp/fashion/catalogue', (c) => c.json({
+  categories: ['Artist Tees', 'Band Merch', 'Festival Wear', 'Accessories', 'Limited Edition'],
+  trending: ['Sunburn Hoodie', 'AR Rahman Tee', 'INDT Snapback'],
+  price_range_inr: { min: 299, max: 28400 }, exclusive_drops: 4
+}))
+app.post('/api/fan/superapp/fashion/order', (c) => c.json({
+  order_id: `FASH-${Date.now()}`, items: 2, total_inr: 1840,
+  delivery_days: 4, tracking: `https://track.indtix.com/fashion/${Math.random().toString(36).slice(2)}`,
+  gift_wrap: false, personalisation: 'Name printed'
+}))
+app.get('/api/fan/superapp/fashion/try-ar', (c) => c.json({
+  ar_try_on: true, items_ar_enabled: 8400, avg_try_on_duration_sec: 28,
+  conversion_uplift_pct: 42, compatible_ios: true, compatible_android: true
+}))
+app.get('/api/organiser/superapp/fashion/artist-merch', (c) => c.json({
+  artist: 'AR Rahman', products: 42, sold_ytd: 28400, revenue_inr: 28400000,
+  royalty_pct: 20, top_product: 'Symphony Tee', limited_edition_sold_out: true
+}))
+app.post('/api/organiser/superapp/fashion/create-drop', (c) => c.json({
+  drop_id: `DRP-${Date.now()}`, name: 'Sunburn X 2026 Limited', quantity: 2840,
+  launch_date: '2026-04-15', price_inr: 2840, waitlist: 8400
+}))
+app.get('/api/admin/superapp/fashion/analytics', (c) => c.json({
+  top_category: 'Artist Tees', repeat_buyer_pct: 38, cart_abandonment_pct: 28,
+  return_rate_pct: 4.2, influencer_driven_sales_pct: 42
+}))
+app.get('/api/admin/superapp/fashion/fulfilment', (c) => c.json({
+  warehouses: 8, same_day_cities: 12, avg_dispatch_hours: 4,
+  ndr_rate_pct: 2.8, last_mile_partner: 'Delhivery', return_pick_up: true
+}))
+
+// ── Module 5: Health, Wellness & Fitness Events ─────────────
+app.get('/api/admin/superapp/wellness/dashboard', (c) => c.json({
+  wellness_events_ytd: 840, participants: 284000, categories: ['Yoga', 'Marathon', 'Meditation', 'Dance', 'Cycling'],
+  avg_ticket_inr: 840, partner_studios: 2840, corporate_wellness_clients: 84
+}))
+app.get('/api/fan/superapp/wellness/events', (c) => c.json({
+  events: [
+    { name: 'Mumbai Half Marathon 2026', date: '2026-04-28', slots: 28400, price_inr: 1200 },
+    { name: 'Sunburn Yoga Sunrise', date: '2026-04-19', slots: 500, price_inr: 840 }
+  ]
+}))
+app.post('/api/fan/superapp/wellness/register', (c) => c.json({
+  registration_id: `WEL-${Date.now()}`, event: 'Mumbai Half Marathon 2026',
+  bib_number: 8401, kit_size: 'L', t_shirt: true, finisher_medal: true
+}))
+app.get('/api/fan/superapp/wellness/fitness-profile', (c) => c.json({
+  events_attended: 12, km_run_total: 284, yoga_sessions: 42,
+  calories_burned: 28400, badges: ['5K', '10K', 'Sunrise-Yogi'], next_goal: 'Half-Marathon'
+}))
+app.get('/api/admin/superapp/wellness/corporate', (c) => c.json({
+  corporate_clients: 84, employees_enrolled: 28400, avg_package_inr: 840000,
+  wellness_score_improvement_pct: 28, top_client: 'TCS Employee Wellness'
+}))
+app.post('/api/admin/superapp/wellness/create-event', (c) => c.json({
+  event_id: `WEVT-${Date.now()}`, category: 'Marathon', capacity: 10000,
+  venue_confirmed: true, sponsor_secured: true, media_partner: 'TimesNow'
+}))
+app.get('/api/admin/superapp/wellness/analytics', (c) => c.json({
+  repeat_participant_pct: 48, nps_wellness: 74, avg_group_size: 4.2,
+  social_share_rate_pct: 28, waitlist_conversion_pct: 62
+}))
+app.get('/api/fan/superapp/wellness/challenges', (c) => c.json({
+  active_challenges: 8, my_rank: 284, participants: 28400,
+  prize: 'Free VIP Concert Ticket', days_remaining: 14, progress_pct: 42
+}))
+
+// ── Module 6: Gaming, Esports & Fantasy Leagues ─────────────
+app.get('/api/admin/superapp/gaming/dashboard', (c) => c.json({
+  games_hosted: 284, esports_tournaments: 42, fantasy_leagues: 840,
+  players_active: 2840000, prize_pool_inr: 284000000, streaming_viewers: 8400000
+}))
+app.get('/api/fan/superapp/gaming/fantasy-leagues', (c) => c.json({
+  active_leagues: [
+    { name: 'IPL Fantasy 2026', players: 2840000, prize_inr: 100000000, entry_inr: 99 },
+    { name: 'Sunburn DJ Battle', players: 84000, prize_inr: 2840000, entry_inr: 49 }
+  ]
+}))
+app.post('/api/fan/superapp/gaming/join-league', (c) => c.json({
+  team_id: `TM-${Date.now()}`, league: 'IPL Fantasy 2026', rank: 28401,
+  team_name: 'Thunder Strikers', credits_used: 100, status: 'active'
+}))
+app.get('/api/fan/superapp/gaming/my-team', (c) => c.json({
+  team: 'Thunder Strikers', points: 28400, rank: 284, top_player: 'Rohit Sharma',
+  transfers_remaining: 2, captain: 'Virat Kohli', potential_winnings_inr: 8400
+}))
+app.get('/api/event-manager/superapp/gaming/tournament', (c) => c.json({
+  tournament: 'INDIEN Esports Championship 2026', game: 'BGMI',
+  teams: 128, prize_pool_inr: 28400000, sponsor: 'JioGames',
+  broadcast: 'YouTube + JioTV', viewers_expected: 2840000
+}))
+app.post('/api/event-manager/superapp/gaming/create-tournament', (c) => c.json({
+  tournament_id: `TOUR-${Date.now()}`, format: 'Single-Elimination',
+  teams: 64, registration_open: true, prize_inr: 8400000
+}))
+app.get('/api/fan/superapp/gaming/leaderboard', (c) => c.json({
+  top_players: [
+    { rank: 1, name: 'ProGamer2026', points: 284000, prize_inr: 1000000 },
+    { rank: 2, name: 'ESportsStar', points: 184000, prize_inr: 500000 }
+  ], my_rank: 28401, total_players: 2840000
+}))
+app.get('/api/admin/superapp/gaming/monetisation', (c) => c.json({
+  entry_fees_inr: 84000000, sponsorships_inr: 84000000, streaming_inr: 28400000,
+  in_game_purchases_inr: 42000000, total_inr: 238400000
+}))
+app.get('/api/event-manager/superapp/gaming/broadcast-tools', (c) => c.json({
+  obs_integration: true, overlay_customisation: true, real_time_stats: true,
+  multi_stream: ['YouTube', 'Twitch', 'JioTV'], auto_highlights: true
+}))
+app.get('/api/admin/superapp/gaming/analytics', (c) => c.json({
+  dau_gaming: 840000, avg_session_min: 42, churn_pct: 8,
+  top_game: 'BGMI', conversion_free_to_paid_pct: 18, arpu_inr: 84
+}))
+
+// ── Module 7: Social Commerce & Group Buying ────────────────
+app.get('/api/admin/superapp/social-commerce/dashboard', (c) => c.json({
+  social_shops: 28400, influencers: 8400, gmv_inr: 840000000,
+  group_buys_active: 2840, avg_group_size: 8.4, viral_coefficient: 2.4
+}))
+app.get('/api/fan/superapp/social-commerce/group-buys', (c) => c.json({
+  active: [
+    { event: 'Sunburn VIP 4-Pack', price_each_inr: 4200, members_joined: 84, target: 100, discount_pct: 18 },
+    { event: 'AR Rahman Premium 6-Pack', price_each_inr: 2800, members_joined: 42, target: 60, discount_pct: 15 }
+  ]
+}))
+app.post('/api/fan/superapp/social-commerce/start-group', (c) => c.json({
+  group_id: `GBY-${Date.now()}`, event: 'IPL Final 2026', target_size: 8,
+  price_inr: 2840, discount_pct: 15, share_link: `https://share.indtix.com/g/${Math.random().toString(36).slice(2)}`,
+  expires_hours: 48
+}))
+app.post('/api/fan/superapp/social-commerce/join-group', (c) => c.json({
+  joined: true, group_id: 'GBY-001', members_now: 7, target: 8,
+  one_more_needed: true, locked_price_inr: 2840
+}))
+app.get('/api/fan/superapp/social-commerce/influencer-shops', (c) => c.json({
+  shops: [
+    { influencer: 'FestivalKing', followers: 8400000, products: 42, sales_inr: 8400000 },
+    { influencer: 'MusicLover28', followers: 2840000, products: 18, sales_inr: 2840000 }
+  ]
+}))
+app.get('/api/admin/superapp/social-commerce/analytics', (c) => c.json({
+  referral_conversion_pct: 28, social_share_revenue_pct: 42,
+  top_influencer_gmv_inr: 8400000, group_buy_success_rate_pct: 84
+}))
+app.post('/api/admin/superapp/social-commerce/influencer-invite', (c) => c.json({
+  invite_id: `INV-${Date.now()}`, influencer: 'FestivalKing', commission_pct: 12,
+  promo_code: 'FK20', dashboard_access: true
+}))
+app.get('/api/admin/superapp/social-commerce/viral-campaigns', (c) => c.json({
+  active_campaigns: 8, total_shares: 2840000, attributed_revenue_inr: 284000000,
+  top_campaign: 'Sunburn-Share-Win', cost_per_acquisition_inr: 284
+}))
+
+// ── Module 8: Subscriptions, Passes & Bundles ───────────────
+app.get('/api/admin/superapp/subscriptions/dashboard', (c) => c.json({
+  total_subscribers: 840000, mrr_inr: 252000000, plans: ['Basic', 'Fan+', 'Elite', 'Corporate'],
+  churn_pct: 4.2, ltv_inr: 8400, nrr_pct: 118
+}))
+app.get('/api/fan/superapp/subscriptions/plans', (c) => c.json({
+  plans: [
+    { name: 'Fan+', price_inr: 299, features: ['2 tickets/mo', 'F&B 10% off', 'Early access'], subscribers: 284000 },
+    { name: 'Elite', price_inr: 999, features: ['5 tickets/mo', 'VIP lounge', 'Meet & Greet', 'NFT badge'], subscribers: 84000 }
+  ]
+}))
+app.post('/api/fan/superapp/subscriptions/subscribe', (c) => c.json({
+  subscription_id: `SUB-${Date.now()}`, plan: 'Fan+', billing: 'monthly',
+  start_date: new Date().toISOString().slice(0, 10), next_billing: '2026-04-09',
+  benefits_unlocked: 6
+}))
+app.get('/api/fan/superapp/subscriptions/season-pass', (c) => c.json({
+  pass: 'INDIEN Summer Season Pass 2026', events_covered: 28,
+  valid_until: '2026-09-30', value_inr: 28400, paid_inr: 8400, savings_pct: 70
+}))
+app.get('/api/fan/superapp/subscriptions/my-benefits', (c) => c.json({
+  plan: 'Elite', tickets_used: 2, tickets_remaining: 3, f_and_b_credit_inr: 500,
+  lounge_visits: 1, meet_greet_booked: false, nft_badge: 'Minted'
+}))
+app.post('/api/ops/superapp/subscriptions/upgrade', (c) => c.json({
+  upgrade_id: `UPG-${Date.now()}`, from_plan: 'Fan+', to_plan: 'Elite',
+  proration_inr: 700, effective_immediately: true
+}))
+app.get('/api/ops/superapp/subscriptions/churn-risk', (c) => c.json({
+  at_risk: 8400, predicted_churn_30d: 2840, intervention_sent: 1840,
+  win_back_offer: '3-months-elite-50pct', recovery_rate_pct: 38
+}))
+app.get('/api/admin/superapp/subscriptions/revenue', (c) => c.json({
+  mrr_inr: 252000000, arr_inr: 3024000000, expansion_mrr_inr: 28400000,
+  churned_mrr_inr: 10584000, net_new_mrr_inr: 17816000
+}))
+
+// ── Module 9: Fan Credit, BNPL & Financial Services ─────────
+app.get('/api/admin/superapp/finserv/dashboard', (c) => c.json({
+  bnpl_users: 840000, loan_book_inr: 8400000000, npa_pct: 1.2,
+  avg_ticket_inr: 10000, nbfc_partner: 'LoanTap + ZestMoney', rbi_registered: true
+}))
+app.get('/api/fan/superapp/finserv/bnpl-status', (c) => c.json({
+  limit_inr: 8400, used_inr: 2840, available_inr: 5560,
+  emi_options: [3, 6, 9, 12], next_due_inr: 840, due_date: '2026-04-05',
+  credit_score: 784
+}))
+app.post('/api/fan/superapp/finserv/bnpl-checkout', (c) => c.json({
+  transaction_id: `BNPL-${Date.now()}`, amount_inr: 2840, emi_months: 6,
+  monthly_emi_inr: 484, processing_fee_inr: 84, approval_sec: 2, approved: true
+}))
+app.get('/api/fan/superapp/finserv/fan-credit-score', (c) => c.json({
+  score: 784, grade: 'A', factors: ['payment-history', 'event-attendance', 'wallet-usage'],
+  credit_limit_inr: 8400, last_updated: new Date().toISOString().slice(0, 10)
+}))
+app.get('/api/admin/superapp/finserv/risk-model', (c) => c.json({
+  model: 'INDIEN-CreditAI-v3', features: 84, auc_roc: 0.92,
+  approval_rate_pct: 74, npa_prediction_accuracy_pct: 94
+}))
+app.post('/api/fan/superapp/finserv/apply-credit', (c) => c.json({
+  application_id: `APP-${Date.now()}`, limit_offered_inr: 8400,
+  decision: 'approved', decision_time_sec: 4, bureau_hit: 'Experian'
+}))
+app.get('/api/admin/superapp/finserv/collection', (c) => c.json({
+  overdue_accounts: 8400, overdue_value_inr: 84000000, recovered_30d_inr: 42000000,
+  recovery_rate_pct: 50, legal_action: 84, write_off_pct: 0.4
+}))
+app.get('/api/ops/superapp/finserv/compliance', (c) => c.json({
+  rbi_circulars_adhered: 8, fair_practice_code: true, grievance_officer: 'Priya Mehta',
+  ombudsman_complaints: 2, resolved_pct: 100
+}))
+app.get('/api/fan/superapp/finserv/insurance', (c) => c.json({
+  event_cancellation_cover: true, travel_insurance: true, device_protection: true,
+  premium_inr_per_event: 84, claims_settled_pct: 98
+}))
+app.get('/api/admin/superapp/finserv/portfolio', (c) => c.json({
+  total_disbursed_inr: 28400000000, active_loans: 840000, avg_tenor_months: 9,
+  yield_pct: 18, cost_of_funds_pct: 8.4, net_interest_margin_pct: 9.6
+}))
+
+// ── Module 10: Lifestyle Rewards & Partner Network ──────────
+app.get('/api/admin/superapp/rewards/dashboard', (c) => c.json({
+  members: 8400000, points_outstanding: 28400000000, redemption_rate_pct: 42,
+  partners: 284, categories: ['Entertainment', 'Travel', 'Food', 'Fashion', 'Health', 'Finance'],
+  breakage_revenue_inr: 284000000
+}))
+app.get('/api/fan/superapp/rewards/my-points', (c) => c.json({
+  total_points: 28400, expiring_30d: 2840, tier: 'Gold',
+  cashback_value_inr: 2840, next_tier_points: 1600, perks: ['Priority Queue', '2x Points Weekends', 'VIP Access']
+}))
+app.post('/api/fan/superapp/rewards/redeem', (c) => c.json({
+  redemption_id: `RDM-${Date.now()}`, points_used: 2840, value_inr: 284,
+  applied_to: 'Concert Ticket', balance_after: 25560
+}))
+app.get('/api/fan/superapp/rewards/partner-offers', (c) => c.json({
+  offers: [
+    { partner: 'Marriott', reward: '500 Bonvoy Points per booking', active: true },
+    { partner: 'IndiGo', reward: '2x Miles on event bookings', active: true },
+    { partner: 'Swiggy', reward: '8% cashback on food orders', active: true }
+  ]
+}))
+app.get('/api/admin/superapp/rewards/tier-management', (c) => c.json({
+  tiers: [
+    { name: 'Silver', members: 4200000, min_points: 1000, benefits: 4 },
+    { name: 'Gold', members: 2840000, min_points: 8400, benefits: 8 },
+    { name: 'Platinum', members: 840000, min_points: 28400, benefits: 14 },
+    { name: 'Black', members: 84000, min_points: 84000, benefits: 28 }
+  ]
+}))
+app.post('/api/admin/superapp/rewards/add-partner', (c) => c.json({
+  partner_id: `RWD-${Date.now()}`, name: 'New Partner', points_per_inr: 1,
+  redemption_rate: 0.1, min_redemption: 500, category: 'Lifestyle'
+}))
+app.get('/api/fan/superapp/rewards/challenges', (c) => c.json({
+  active: [
+    { name: 'Attend 3 Events', reward_points: 2840, progress: 2, target: 3 },
+    { name: 'Spend ₹5K on F&B', reward_points: 840, progress_inr: 3200, target_inr: 5000 }
+  ]
+}))
+app.get('/api/admin/superapp/rewards/analytics', (c) => c.json({
+  earn_rate_pts_per_inr: 1.8, burn_rate_pts_per_inr: 0.84, nps_rewards: 74,
+  partner_driven_gmv_inr: 840000000, reward_cac_inr: 84
+}))
+app.get('/api/admin/superapp/rewards/co-brand-cards', (c) => c.json({
+  cards_issued: 284000, active: 184000, spends_mtd_inr: 8400000000,
+  partners: ['HDFC', 'SBI', 'ICICI', 'Axis'], reward_rate_pct: 4.2
+}))
+app.post('/api/fan/superapp/rewards/transfer-points', (c) => c.json({
+  transfer_id: `TRF-${Date.now()}`, points: 2840, to_program: 'Marriott Bonvoy',
+  conversion_rate: 0.5, bonvoy_points: 1420, status: 'completed'
+}))
+
+// ── Phase 38 health endpoint ─────────────────────────────────
+app.get('/api/health', (c) => c.json({
+  status: 'ok', platform: 'INDTIX', version: 'v38.0.0',
+  phase: 'Phase 38', theme: 'Super-App, Lifestyle & Fan Commerce Ecosystem',
+  new_endpoints: 90, total_endpoints: 2449,
+  features: [
+    'Super-App Hub & Mini-Programs',
+    'Food, Beverage & In-Venue Commerce',
+    'Travel, Hotels & Transport Bundle',
+    'Fan Fashion & Merchandise Store',
+    'Health, Wellness & Fitness Events',
+    'Gaming, Esports & Fantasy Leagues',
+    'Social Commerce & Group Buying',
+    'Subscriptions, Passes & Bundles',
+    'Fan Credit, BNPL & Financial Services',
+    'Lifestyle Rewards & Partner Network'
+  ]
+}))
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 38 — SUPER-APP, LIFESTYLE & FAN COMMERCE ECOSYSTEM
 // ═══════════════════════════════════════════════════════════
 
 export default app

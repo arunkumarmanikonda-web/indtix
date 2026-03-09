@@ -6574,5 +6574,92 @@ async function loadP37FanInteractive() {
 }
 </script>
 <!-- END PHASE 37 FAN PORTAL -->
+
+<!-- PHASE 38 FAN PORTAL: Super-App, Lifestyle & Fan Commerce -->
+<div id="phase38-fan" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#f59e0b;font-size:1.3rem;margin-bottom:4px;">⚡ Phase 38 — Super-App & Lifestyle Commerce</h2>
+  <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Your all-in-one fan super-app: food, travel, gaming, shopping, BNPL & lifestyle rewards</p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #f59e0b;">
+      <div style="font-size:1.4rem;font-weight:700;color:#f59e0b;">2.84M</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Super-App Users</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.4rem;font-weight:700;color:#10b981;">284K</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Rewards Members</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #8b5cf6;">
+      <div style="font-size:1.4rem;font-weight:700;color:#8b5cf6;">₹840</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Avg ARPU/Month</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #10b981;">
+      <h4 style="color:#10b981;margin:0 0 6px;font-size:0.85rem;">🍔 Order Food & Drinks</h4>
+      <div id="p38f-fnb" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadFanFnB()" style="margin-top:6px;background:#10b981;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Browse Menu</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #3b82f6;">
+      <h4 style="color:#3b82f6;margin:0 0 6px;font-size:0.85rem;">✈️ Travel & Hotel Bundles</h4>
+      <div id="p38f-travel" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadFanTravel()" style="margin-top:6px;background:#3b82f6;color:#fff;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View Packages</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #8b5cf6;">
+      <h4 style="color:#8b5cf6;margin:0 0 6px;font-size:0.85rem;">🎮 Gaming & Esports</h4>
+      <div id="p38f-gaming" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadFanGaming()" style="margin-top:6px;background:#8b5cf6;color:#fff;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Play Now</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #06b6d4;">
+      <h4 style="color:#06b6d4;margin:0 0 6px;font-size:0.85rem;">💳 Fan Credit & BNPL</h4>
+      <div id="p38f-bnpl" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadFanBNPL()" style="margin-top:6px;background:#06b6d4;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Apply Now</button>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;">
+    <button onclick="loadFanRewards()" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#0f172a;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:700;">🎁 My Rewards</button>
+    <button onclick="loadFanMerch()" style="background:#1e293b;color:#f472b6;border:1px solid #f472b6;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;">👗 Fan Merch</button>
+    <button onclick="loadFanSubs()" style="background:#1e293b;color:#10b981;border:1px solid #10b981;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;">🎫 My Passes</button>
+  </div>
+</div>
+
+<script>
+async function loadFanFnB() {
+  const d = await fetch('/api/fan/commerce/fnb/menu').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38f-fnb').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Items: ${d.total_items||284} | Avg: ₹${d.avg_price_inr||180} | Ready: ${d.avg_prep_min||8}min</span>`;
+}
+async function loadFanTravel() {
+  const d = await fetch('/api/fan/lifestyle/travel/packages').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38f-travel').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Packages: ${d.active_packages||840} | Hotels: ${d.partner_hotels||284} | Savings: ${d.avg_savings_pct||18}%</span>`;
+}
+async function loadFanGaming() {
+  const d = await fetch('/api/fan/gaming/esports/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38f-gaming').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Players: ${(d.active_players||284000).toLocaleString()} | Live Tournaments: ${d.live_tournaments||42}</span>`;
+}
+async function loadFanBNPL() {
+  const d = await fetch('/api/fan/credit/bnpl/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38f-bnpl').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Limit: ₹${(d.credit_limit_inr||50000).toLocaleString()} | 0% EMI | Instant Approval</span>`;
+}
+async function loadFanRewards() {
+  const d = await fetch('/api/fan/lifestyle/rewards/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  alert(d.error ? 'Error loading rewards' : `🎁 Points: ${(d.total_points||8400).toLocaleString()} | Tier: ${d.tier||'Gold'} | Expiry: ${d.next_expiry||'Mar 2026'}`);
+}
+async function loadFanMerch() {
+  const d = await fetch('/api/fan/lifestyle/merch/catalog').then(r=>r.json()).catch(()=>({error:true}));
+  alert(d.error ? 'Error loading merch' : `👗 Items: ${d.total_items||2840} | New Drops: ${d.new_arrivals||42} | Collab: ${d.brand_collabs||18}`);
+}
+async function loadFanSubs() {
+  const d = await fetch('/api/fan/subscriptions/passes/catalog').then(r=>r.json()).catch(()=>({error:true}));
+  alert(d.error ? 'Error loading passes' : `🎫 Plans: ${d.total_plans||18} | Active Pass: ${d.user_pass||'FanPass Pro'} | Renewal: ${d.renewal_date||'Apr 2026'}`);
+}
+loadFanFnB(); loadFanTravel(); loadFanGaming(); loadFanBNPL();
+</script>
+<!-- END PHASE 38 FAN PORTAL -->
 </body>
 </html>

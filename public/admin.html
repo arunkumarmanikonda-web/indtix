@@ -5921,4 +5921,128 @@ async function loadP37ImmersiveAnalytics() {
 }
 </script>
 <!-- END PHASE 37 ADMIN PORTAL -->
+
+<!-- PHASE 38 ADMIN PORTAL: Super-App, Lifestyle & Fan Commerce Ecosystem -->
+<div id="phase38-admin" style="background:#0f172a;color:#e2e8f0;padding:24px;margin-top:24px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#f59e0b;font-size:1.4rem;margin-bottom:4px;">⚡ Phase 38 — Super-App, Lifestyle & Fan Commerce</h2>
+  <p style="color:#94a3b8;font-size:0.85rem;margin-bottom:16px;">Super-App Hub · F&B Commerce · Travel Bundles · Fan Fashion · Wellness Events · Esports · Social Commerce · Subscriptions · Fan Credit/BNPL · Lifestyle Rewards</p>
+
+  <!-- Metrics Row -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
+    <div style="background:#1e293b;padding:14px;border-radius:8px;text-align:center;border-left:3px solid #f59e0b;">
+      <div style="font-size:1.6rem;font-weight:700;color:#f59e0b;" id="p38-superapp-users">2.84M</div>
+      <div style="font-size:0.75rem;color:#94a3b8;">Super-App MAU</div>
+    </div>
+    <div style="background:#1e293b;padding:14px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.6rem;font-weight:700;color:#10b981;" id="p38-gmv">₹284M</div>
+      <div style="font-size:0.75rem;color:#94a3b8;">Commerce GMV/Month</div>
+    </div>
+    <div style="background:#1e293b;padding:14px;border-radius:8px;text-align:center;border-left:3px solid #8b5cf6;">
+      <div style="font-size:1.6rem;font-weight:700;color:#8b5cf6;" id="p38-bnpl">₹84M</div>
+      <div style="font-size:0.75rem;color:#94a3b8;">BNPL Book Size</div>
+    </div>
+    <div style="background:#1e293b;padding:14px;border-radius:8px;text-align:center;border-left:3px solid #06b6d4;">
+      <div style="font-size:1.6rem;font-weight:700;color:#06b6d4;" id="p38-partners">284</div>
+      <div style="font-size:0.75rem;color:#94a3b8;">Lifestyle Partners</div>
+    </div>
+  </div>
+
+  <!-- Module Grid -->
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px;">
+    <!-- Super-App Hub -->
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #f59e0b;">
+      <h4 style="color:#f59e0b;margin:0 0 8px;font-size:0.9rem;">⚡ Super-App Hub & Mini-Programs</h4>
+      <div id="p38-superapp-data" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP38SuperApp()" style="margin-top:8px;background:#f59e0b;color:#0f172a;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+    <!-- F&B Commerce -->
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #10b981;">
+      <h4 style="color:#10b981;margin:0 0 8px;font-size:0.9rem;">🍔 Food, Beverage & In-Venue Commerce</h4>
+      <div id="p38-fnb-data" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP38FnB()" style="margin-top:8px;background:#10b981;color:#0f172a;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+    <!-- Travel & Transport -->
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #3b82f6;">
+      <h4 style="color:#3b82f6;margin:0 0 8px;font-size:0.9rem;">✈️ Travel, Hotels & Transport Bundle</h4>
+      <div id="p38-travel-data" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP38Travel()" style="margin-top:8px;background:#3b82f6;color:#fff;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+    <!-- Gaming & Esports -->
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #8b5cf6;">
+      <h4 style="color:#8b5cf6;margin:0 0 8px;font-size:0.9rem;">🎮 Gaming, Esports & Fantasy Leagues</h4>
+      <div id="p38-gaming-data" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP38Gaming()" style="margin-top:8px;background:#8b5cf6;color:#fff;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+    <!-- Subscriptions & Passes -->
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #f472b6;">
+      <h4 style="color:#f472b6;margin:0 0 8px;font-size:0.9rem;">🎫 Subscriptions, Passes & Bundles</h4>
+      <div id="p38-subs-data" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP38Subs()" style="margin-top:8px;background:#f472b6;color:#0f172a;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+    <!-- Fan Credit & BNPL -->
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #06b6d4;">
+      <h4 style="color:#06b6d4;margin:0 0 8px;font-size:0.9rem;">💳 Fan Credit, BNPL & Financial Services</h4>
+      <div id="p38-bnpl-data" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP38BNPL()" style="margin-top:8px;background:#06b6d4;color:#0f172a;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <button onclick="loadAllP38Admin()" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#0f172a;border:none;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:0.85rem;font-weight:700;">⚡ Load All Modules</button>
+    <button onclick="loadP38Rewards()" style="background:#1e293b;color:#10b981;border:1px solid #10b981;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:0.85rem;">🎁 Lifestyle Rewards</button>
+    <button onclick="loadP38SocialCommerce()" style="background:#1e293b;color:#8b5cf6;border:1px solid #8b5cf6;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:0.85rem;">🛒 Social Commerce</button>
+    <button onclick="loadP38Merch()" style="background:#1e293b;color:#f472b6;border:1px solid #f472b6;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:0.85rem;">👗 Fan Merch</button>
+  </div>
+</div>
+
+<script>
+async function loadP38SuperApp() {
+  const d = await fetch('/api/admin/super-app/hub/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38-superapp-data').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">📱 MAU: ${(d.total_mau||2840000).toLocaleString()} | Mini-Programs: ${d.mini_programs||284} | Avg Session: ${d.avg_session_min||8.4}min | ARPU: ₹${d.arpu_inr||840}</div>`;
+}
+async function loadP38FnB() {
+  const d = await fetch('/api/fan/commerce/fnb/menu').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38-fnb-data').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">🍔 Orders/Day: ${(d.daily_orders||28400).toLocaleString()} | GMV: ₹${d.daily_gmv_inr||2840000} | Avg Order: ₹${d.avg_order_inr||284} | Waste -${d.waste_reduction_pct||18}%</div>`;
+}
+async function loadP38Travel() {
+  const d = await fetch('/api/fan/lifestyle/travel/packages').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38-travel-data').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">✈️ Bundles: ${d.active_packages||840} | Bookings: ${(d.monthly_bookings||28400).toLocaleString()} | Rev: ₹${d.monthly_revenue_inr||8400000} | NPS: ${d.nps||74}</div>`;
+}
+async function loadP38Gaming() {
+  const d = await fetch('/api/fan/gaming/esports/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38-gaming-data').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">🎮 Players: ${(d.active_players||284000).toLocaleString()} | Tournaments: ${d.live_tournaments||42} | Prize Pool: ₹${d.total_prize_pool_inr||8400000} | DAU: ${(d.dau||84000).toLocaleString()}</div>`;
+}
+async function loadP38Subs() {
+  const d = await fetch('/api/fan/subscriptions/passes/catalog').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38-subs-data').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">🎫 Subscribers: ${(d.total_subscribers||284000).toLocaleString()} | MRR: ₹${d.mrr_inr||28400000} | Churn: ${d.churn_pct||2.4}% | LTV: ₹${d.avg_ltv_inr||8400}</div>`;
+}
+async function loadP38BNPL() {
+  const d = await fetch('/api/fan/credit/bnpl/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38-bnpl-data').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">💳 Book: ₹${(d.book_size_inr||84000000).toLocaleString()} | Users: ${(d.active_users||84000).toLocaleString()} | Approval: ${d.approval_rate_pct||84}% | NPA: ${d.npa_pct||1.4}%</div>`;
+}
+async function loadP38Rewards() {
+  const d = await fetch('/api/fan/lifestyle/rewards/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  alert(JSON.stringify(d, null, 2));
+}
+async function loadP38SocialCommerce() {
+  const d = await fetch('/api/admin/super-app/social-commerce/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  alert(JSON.stringify(d, null, 2));
+}
+async function loadP38Merch() {
+  const d = await fetch('/api/fan/lifestyle/merch/catalog').then(r=>r.json()).catch(()=>({error:true}));
+  alert(JSON.stringify(d, null, 2));
+}
+async function loadAllP38Admin() {
+  await Promise.all([loadP38SuperApp(), loadP38FnB(), loadP38Travel(), loadP38Gaming(), loadP38Subs(), loadP38BNPL()]);
+}
+loadAllP38Admin();
+</script>
+<!-- END PHASE 38 ADMIN PORTAL -->
 </body></html>

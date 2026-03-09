@@ -3125,4 +3125,56 @@ async function loadP37VenueAccessibility() {
 }
 </script>
 <!-- END PHASE 37 VENUE PORTAL -->
+
+<!-- PHASE 38 VENUE PORTAL: Super-App, Lifestyle & Fan Commerce -->
+<div id="phase38-venue" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#f59e0b;font-size:1.3rem;margin-bottom:4px;">⚡ Phase 38 — Venue Commerce & F&B</h2>
+  <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">In-venue food & beverage · Merchandise stalls · Fan BNPL · Wellness amenities</p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.4rem;font-weight:700;color:#10b981;">28.4K</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">F&B Orders/Event</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #f59e0b;">
+      <div style="font-size:1.4rem;font-weight:700;color:#f59e0b;">₹284</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Avg Spend/Fan</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #8b5cf6;">
+      <div style="font-size:1.4rem;font-weight:700;color:#8b5cf6;">8min</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Avg Queue Wait</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #10b981;">
+      <h4 style="color:#10b981;margin:0 0 6px;font-size:0.85rem;">🍔 F&B Live Dashboard</h4>
+      <div id="p38v-fnb" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadVenueFnB()" style="margin-top:6px;background:#10b981;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Live Orders</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #f472b6;">
+      <h4 style="color:#f472b6;margin:0 0 6px;font-size:0.85rem;">👗 Merch Stall Analytics</h4>
+      <div id="p38v-merch" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadVenueMerch()" style="margin-top:6px;background:#f472b6;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View Sales</button>
+    </div>
+  </div>
+
+  <button onclick="loadAllP38Venue()" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#0f172a;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:700;">⚡ Refresh All</button>
+</div>
+
+<script>
+async function loadVenueFnB() {
+  const d = await fetch('/api/fan/commerce/fnb/menu').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38v-fnb').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Items: ${d.total_items||284} | Active Outlets: ${d.active_outlets||42} | Avg Prep: ${d.avg_prep_min||8}min</span>`;
+}
+async function loadVenueMerch() {
+  const d = await fetch('/api/fan/lifestyle/merch/catalog').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p38v-merch').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">SKUs: ${d.total_items||2840} | Today's Sales: ₹${(d.today_sales_inr||284000).toLocaleString()} | Top: ${d.top_category||'Jerseys'}</span>`;
+}
+async function loadAllP38Venue() { await Promise.all([loadVenueFnB(), loadVenueMerch()]); }
+loadAllP38Venue();
+</script>
+<!-- END PHASE 38 VENUE PORTAL -->
 </body></html>
