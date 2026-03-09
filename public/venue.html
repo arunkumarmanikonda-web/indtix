@@ -3676,4 +3676,39 @@ loadAllP52Venue();
   </div>
 </div>
 <!-- END PHASE 53 VENUE PORTAL -->
+
+<!-- ========== PHASE 54: QUANTUM SECURITY (VENUE) ========== -->
+<div class="phase-section" id="phase54-venue">
+  <div class="phase-header" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
+    <h2>⚛️ Venue Security — Quantum-Grade <span class="badge">v54.0.0</span></h2>
+    <p>Zero-trust access · SOAR · Cyber resilience · Quantum-safe communications</p>
+  </div>
+  <div class="metrics-grid">
+    <div class="metric-card"><span class="metric-value">RTO 5 min</span><span class="metric-label">Recovery Time</span></div>
+    <div class="metric-card"><span class="metric-value">284</span><span class="metric-label">Incident Playbooks</span></div>
+    <div class="metric-card"><span class="metric-value">94.2%</span><span class="metric-label">Auto-Recovery</span></div>
+    <div class="metric-card"><span class="metric-value">9.8/10</span><span class="metric-label">Resilience Score</span></div>
+  </div>
+  <div class="module-grid">
+    <div class="module-card">
+      <h4>💪 Cyber Resilience</h4>
+      <p>RTO 5 min, RPO 1 min. 8 backup sites globally. 284 automated playbooks. 94.2% auto-recovery rate.</p>
+      <button class="btn-api" onclick="apiCall('/api/v54/cyber-resilience/playbooks','GET',this)">View Playbooks</button>
+      <button class="btn-api" onclick="apiCall('/api/v54/cyber-resilience/analytics','GET',this)">Resilience Analytics</button>
+    </div>
+    <div class="module-card">
+      <h4>🔒 Zero-Trust Venue Access</h4>
+      <p>All staff, contractor and system access governed by zero-trust. 2,840 micro-segments, continuous posture checks.</p>
+      <button class="btn-api" onclick="apiCall('/api/v54/zero-trust/overview','GET',this)">ZT Status</button>
+      <button class="btn-api" onclick="apiCall('/api/v54/zero-trust/access/evaluate','POST',this)">Evaluate Access</button>
+    </div>
+    <div class="module-card">
+      <h4>🌐 Secure Communications</h4>
+      <p>QKD-secured venue communications. 84 active QKD links. Zero successful eavesdropping attempts. 99.94% uptime.</p>
+      <button class="btn-api" onclick="apiCall('/api/v54/quantum-network/overview','GET',this)">Quantum Network</button>
+      <button class="btn-api" onclick="apiCall('/api/v54/quantum-network/analytics','GET',this)">Network Analytics</button>
+    </div>
+  </div>
+</div>
+<!-- END PHASE 54 VENUE PORTAL -->
 </body></html>

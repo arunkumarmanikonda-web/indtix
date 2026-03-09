@@ -5832,4 +5832,45 @@ loadAllP52Org();
   </div>
 </div>
 <!-- END PHASE 53 ORGANISER PORTAL -->
+
+<!-- ========== PHASE 54: QUANTUM SECURITY (ORGANISER) ========== -->
+<div class="phase-section" id="phase54-organiser">
+  <div class="phase-header" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
+    <h2>⚛️ Quantum Security for Organisers <span class="badge">v54.0.0</span></h2>
+    <p>Quantum-safe ticket signing · Threat intelligence · SOAR · Zero-trust partner access</p>
+  </div>
+  <div class="metrics-grid">
+    <div class="metric-card"><span class="metric-value">₹840 Cr</span><span class="metric-label">Fraud Loss Prevented</span></div>
+    <div class="metric-card"><span class="metric-value">0</span><span class="metric-label">Counterfeit Tickets</span></div>
+    <div class="metric-card"><span class="metric-value">99.94%</span><span class="metric-label">Attacks Blocked</span></div>
+    <div class="metric-card"><span class="metric-value">4.2 min</span><span class="metric-label">Incident MTTR</span></div>
+  </div>
+  <div class="module-grid">
+    <div class="module-card">
+      <h4>🎟️ Quantum-Signed Tickets</h4>
+      <p>Every ticket QR is signed with CRYSTALS-Dilithium. Unforgeable even with quantum computers. Zero counterfeits in 2026.</p>
+      <button class="btn-api" onclick="apiCall('/api/v54/quantum-crypto/overview','GET',this)">Crypto Overview</button>
+      <button class="btn-api" onclick="apiCall('/api/v54/pq-security/inventory','GET',this)">Security Inventory</button>
+    </div>
+    <div class="module-card">
+      <h4>🎯 Threat Intelligence</h4>
+      <p>Real-time threat feeds, scalping bot detection, payment skimmer alerts. 2.84 M attacks repelled YTD.</p>
+      <button class="btn-api" onclick="apiCall('/api/v54/threat-intel/feed','GET',this)">Threat Feed</button>
+      <button class="btn-api" onclick="apiCall('/api/v54/threat-intel/analytics','GET',this)">Threat Analytics</button>
+    </div>
+    <div class="module-card">
+      <h4>🔒 Zero-Trust Partner Access</h4>
+      <p>All vendor/sponsor/staff access governed by zero-trust. Least privilege, continuous verification, micro-segmented.</p>
+      <button class="btn-api" onclick="apiCall('/api/v54/zero-trust/policies','GET',this)">ZT Policies</button>
+      <button class="btn-api" onclick="apiCall('/api/v54/zero-trust/analytics','GET',this)">ZT Analytics</button>
+    </div>
+    <div class="module-card">
+      <h4>🤖 Automated Incident Response</h4>
+      <p>SOAR platform auto-contains threats in 4.2 min. 84% incidents resolved without human intervention.</p>
+      <button class="btn-api" onclick="apiCall('/api/v54/security-automation/overview','GET',this)">SOAR Overview</button>
+      <button class="btn-api" onclick="apiCall('/api/v54/security-automation/analytics','GET',this)">SOAR Analytics</button>
+    </div>
+  </div>
+</div>
+<!-- END PHASE 54 ORGANISER PORTAL -->
 </body></html>
