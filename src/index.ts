@@ -23624,34 +23624,854 @@ app.get('/api/admin/privacy-ai/synthetic-data/generator', (c) => c.json({
   privacy_guarantee: 'DP-SGD epsilon=2.84',
 }))
 
-// ── Phase 39 Health Endpoint ──
-// ── Phase 39 main health endpoint (canonical) ────────────────
-app.get('/api/health', (c) => c.json({
-  status: 'ok',
-  platform: 'INDTIX',
-  version: 'v39.0.0',
-  phase: 'Phase 39',
-  theme: 'Advanced Data Platform, AI/ML Infrastructure & Predictive Intelligence',
-  new_endpoints: 90,
+// ── Phase 39 versioned health alias ──────────────────────────
+app.get('/api/v39/health', (c) => c.json({
+  status: 'ok', platform: 'INDTIX', version: 'v39.0.0',
+  phase: 'Phase 39', theme: 'Advanced Data Platform, AI/ML Infrastructure & Predictive Intelligence',
   total_endpoints: 2539,
-  features: [
-    'Real-Time Data Lakehouse & Stream Processing',
-    'ML Model Registry & Feature Store',
-    'Predictive Demand & Pricing Intelligence',
-    'Customer 360 & Audience Intelligence',
-    'Experiment Platform & A/B Testing',
-    'Observability & AIOps Platform',
-    'Natural Language Processing Suite',
-    'Computer Vision & Image Intelligence',
-    'Graph Analytics & Network Intelligence',
-    'Federated Learning & Privacy-Preserving AI',
-  ],
-  timestamp: new Date().toISOString(),
 }))
 
 // ═══════════════════════════════════════════════════════════
 // END PHASE 39 — ADVANCED DATA PLATFORM, AI/ML INFRASTRUCTURE
 //               & PREDICTIVE INTELLIGENCE
+// ═══════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 40 — GLOBAL PAYMENTS, FINANCIAL INFRASTRUCTURE
+//            & EMBEDDED FINANCE (v40.0.0)
+// 90 new endpoints | Total: 2,629
+// ═══════════════════════════════════════════════════════════
+
+// ── Module 1: Unified Payments Orchestration (10 endpoints) ──
+app.get('/api/admin/payments/orchestration/dashboard', (c) => c.json({
+  total_transactions_today: 2840000,
+  total_gmv_inr_today: 284000000,
+  success_rate_pct: 99.2,
+  avg_latency_ms: 284,
+  active_payment_methods: 42,
+  payment_rails: ['UPI','Cards','NetBanking','BNPL','Wallets','Crypto','NACH','RTGS','SWIFT'],
+  refund_rate_pct: 0.84,
+  chargeback_rate_ppm: 14,
+  acquirers: ['Razorpay','PayU','Cashfree','Stripe','PayPal','Adyen'],
+  currency_pairs_active: 28,
+}))
+app.get('/api/admin/payments/orchestration/routing', (c) => c.json({
+  active_rules: 84,
+  routing_model: 'ML-based waterfall + success-rate optimizer',
+  primary_acquirer: 'Razorpay',
+  fallback_chain: ['PayU','Cashfree','Paytm'],
+  upi_success_rate_pct: 99.4,
+  card_success_rate_pct: 97.8,
+  avg_routing_decision_ms: 4,
+  smart_retry_enabled: true,
+  retry_uplift_pct: 4.2,
+}))
+app.post('/api/admin/payments/orchestration/route', async (c) => {
+  const b = await c.req.json()
+  return c.json({ transaction_id:'txn-'+Math.random().toString(36).slice(2,12), method: b.preferred_method||'UPI', acquirer:'Razorpay', routing_score:0.942, estimated_success_pct:99.4, fallback_available:true })
+})
+app.get('/api/admin/payments/orchestration/methods', (c) => c.json({
+  methods: [
+    { type:'UPI', share_pct:58, success_rate:99.4, avg_ms:284, instruments:['GPay','PhonePe','Paytm','BHIM','CRED'] },
+    { type:'Cards', share_pct:22, success_rate:97.8, avg_ms:840, instruments:['Visa','Mastercard','Rupay','Amex'] },
+    { type:'NetBanking', share_pct:8, success_rate:96.4, avg_ms:1840, instruments:['HDFC','ICICI','SBI','Axis'] },
+    { type:'BNPL', share_pct:6, success_rate:98.4, avg_ms:420, instruments:['LazyPay','Simpl','ZestMoney','Slice'] },
+    { type:'Wallets', share_pct:4, success_rate:99.1, avg_ms:184, instruments:['Paytm','PhonePe','Amazon Pay'] },
+    { type:'Crypto', share_pct:2, success_rate:98.8, avg_ms:2840, instruments:['BTC','ETH','USDC','MATIC'] },
+  ],
+}))
+app.get('/api/admin/payments/orchestration/failures', (c) => c.json({
+  failure_reasons: [
+    { reason:'Insufficient Funds', pct:28.4, trend:'stable' },
+    { reason:'Bank Timeout', pct:18.4, trend:'falling' },
+    { reason:'Invalid OTP', pct:14.2, trend:'stable' },
+    { reason:'Card Declined', pct:12.1, trend:'falling' },
+    { reason:'Network Error', pct:8.4, trend:'stable' },
+  ],
+  auto_retry_success_pct: 42.1,
+  smart_suggestions_shown: 2840000,
+}))
+app.get('/api/admin/payments/reconciliation/dashboard', (c) => c.json({
+  matched_today: 2798400,
+  unmatched_today: 4200,
+  match_rate_pct: 99.85,
+  auto_reconciled_pct: 97.4,
+  pending_manual: 840,
+  settlement_lag_hours: 1.4,
+  nocturnal_batch_status: 'completed',
+  last_reconciliation: '2026-03-09T05:00:00Z',
+}))
+app.post('/api/admin/payments/reconciliation/run', async (c) => {
+  return c.json({ job_id:'recon-'+Math.random().toString(36).slice(2,8), transactions_processed:2840000, matched:2798400, exceptions:4200, status:'completed', duration_sec:184 })
+})
+app.get('/api/admin/payments/settlement/schedule', (c) => c.json({
+  next_settlement: '2026-03-10T06:00:00Z',
+  pending_amount_inr: 28400000,
+  beneficiaries: 840,
+  rails: ['NEFT','RTGS','IMPS'],
+  t_plus_1_enabled: true,
+  instant_settlement_eligible_pct: 74.2,
+  escrow_balance_inr: 84000000,
+}))
+app.get('/api/ops/payments/health', (c) => c.json({
+  gateway_health: 'green',
+  upi_switch_health: 'green',
+  card_network_health: 'green',
+  bank_api_health: 'yellow',
+  alert: 'HDFC NetBanking elevated latency',
+  p99_ms: 840,
+  tps_current: 2840,
+  tps_capacity: 28400,
+}))
+app.get('/api/admin/payments/orchestration/analytics', (c) => c.json({
+  gmv_trend_7d: [18,22,28,24,32,38,42].map((v,i) => ({ day:`D-${6-i}`, gmv_cr:v })),
+  top_events_by_gmv: [
+    { event:'Coldplay Night 1', gmv_inr:28400000, tickets:42000 },
+    { event:'IPL Final 2026', gmv_inr:18400000, tickets:88000 },
+  ],
+  peak_tps: 28400,
+  peak_time: '21:00 IST',
+  currency_mix: { INR:94, USD:3, GBP:1, AED:1, SGD:1 },
+}))
+
+// ── Module 2: UPI 2.0 & India Stack Payments (8 endpoints) ──
+app.get('/api/admin/payments/upi/dashboard', (c) => c.json({
+  upi_transactions_today: 1647200,
+  upi_gmv_inr_today: 164720000,
+  vpa_registered: 2840000,
+  upi_autopay_mandates: 284000,
+  upi_credit_on_rupay: true,
+  upi_one_world_enabled: true,
+  collect_success_pct: 99.4,
+  intent_success_pct: 99.6,
+  p2m_share_pct: 84.2,
+  npci_api_latency_ms: 84,
+}))
+app.post('/api/admin/payments/upi/collect/initiate', async (c) => {
+  const b = await c.req.json()
+  return c.json({ transaction_id:'UPI'+Date.now(), vpa:b.vpa, amount_inr:b.amount, status:'pending', collect_expiry_sec:300, deep_link:`upi://pay?pa=${b.vpa}&am=${b.amount}&cu=INR` })
+})
+app.get('/api/admin/payments/upi/mandates', (c) => c.json({
+  total_mandates: 284000,
+  active_mandates: 264000,
+  paused_mandates: 18000,
+  revoked_mandates: 2000,
+  mandate_success_rate_pct: 94.2,
+  avg_mandate_amount_inr: 840,
+  use_cases: ['Season Pass Auto-Renewal','Monthly FanPass','Installment EMI','Group Booking Deposit'],
+}))
+app.get('/api/admin/payments/upi/vpa-analytics', (c) => c.json({
+  total_vpas: 2840000,
+  linked_banks: 42,
+  most_popular_handles: ['@okicici','@oksbi','@okhdfcbank','@ybl','@paytm'],
+  avg_balance_inr: 4200,
+  upi_lite_enabled: 284000,
+  upi_lite_balance_inr: 200,
+}))
+app.get('/api/admin/payments/india-stack/aadhaar-payments', (c) => c.json({
+  aadhaar_pay_enabled: true,
+  biometric_transactions_today: 28400,
+  avg_authentication_ms: 840,
+  success_rate_pct: 97.4,
+  use_cases: ['Venue Entry Biometric Pay','Senior Citizen Concession'],
+  uidai_api_status: 'green',
+}))
+app.get('/api/admin/payments/india-stack/account-aggregator', (c) => c.json({
+  aa_consents_active: 84000,
+  linked_fips: 28,
+  data_fetch_latency_ms: 284,
+  use_cases: ['BNPL Underwriting','Credit Score','Spend Analysis','KYC Enrichment'],
+  consent_approval_rate_pct: 74.2,
+  aa_framework: 'Sahamati',
+}))
+app.get('/api/admin/payments/india-stack/ondc', (c) => c.json({
+  ondc_enabled: true,
+  ondc_gmv_inr_month: 8400000,
+  buyer_apps_integrated: 18,
+  seller_apps_integrated: 42,
+  categories: ['Event Tickets','F&B Delivery','Merchandise','Travel Packages'],
+  order_success_rate_pct: 97.8,
+}))
+app.get('/api/admin/payments/upi/compliance', (c) => c.json({
+  npci_guidelines_compliant: true,
+  psp_license_valid_till: '2027-03-31',
+  tpap_partner: 'Razorpay',
+  daily_transaction_limit_inr: 100000,
+  per_transaction_limit_inr: 100000,
+  fraud_reporting_sla_hours: 4,
+  chargeback_resolution_sla_days: 30,
+}))
+
+// ── Module 3: International Payments & Multi-Currency (10 endpoints) ──
+app.get('/api/admin/payments/international/dashboard', (c) => c.json({
+  international_gmv_usd_today: 2840000,
+  currencies_accepted: 28,
+  countries_supported: 42,
+  fx_providers: ['Wise','Currencycloud','XE','Stripe FX'],
+  avg_fx_spread_bps: 84,
+  cross_border_success_rate_pct: 97.4,
+  swift_transactions_today: 284,
+  sepa_transactions_today: 840,
+  regional_gateways: { SEA:'Adyen APAC', MENA:'Network International', UK:'Stripe UK', US:'Stripe US' },
+}))
+app.get('/api/admin/payments/international/fx/rates', (c) => {
+  const rates: Record<string, number> = { USD:0.01196, GBP:0.00941, EUR:0.01099, AED:0.04394, SGD:0.01609, MYR:0.05284, BHD:0.00451 }
+  return c.json({ base:'INR', rates, timestamp: new Date().toISOString(), provider:'XE', next_refresh_min:15 })
+})
+app.post('/api/admin/payments/international/fx/convert', async (c) => {
+  const b = await c.req.json()
+  const rates: Record<string, number> = { USD:0.01196, GBP:0.00941, EUR:0.01099, AED:0.04394, SGD:0.01609 }
+  const rate = rates[b.to_currency] || 0.012
+  return c.json({ from:'INR', to:b.to_currency||'USD', amount_inr:b.amount_inr||10000, converted_amount: parseFloat(((b.amount_inr||10000) * rate).toFixed(2)), rate, spread_bps:84, timestamp: new Date().toISOString() })
+})
+app.get('/api/admin/payments/international/swift/transactions', (c) => c.json({
+  transactions: [
+    { id:'SWIFT001', amount_usd:28400, currency:'USD', beneficiary:'Coldplay Touring LLC', status:'completed', correspondent:'HSBC London' },
+    { id:'SWIFT002', amount_gbp:8400, currency:'GBP', beneficiary:'WME Entertainment', status:'pending', correspondent:'Barclays' },
+  ],
+  total_today: 284,
+  pending: 42,
+  avg_settlement_hours: 18.4,
+}))
+app.get('/api/admin/payments/international/regional/sea', (c) => c.json({
+  region: 'Southeast Asia',
+  gmv_usd_month: 840000,
+  methods: ['GrabPay','OVO','GoPay','TrueMoney','FPX','PayNow'],
+  countries: ['Singapore','Malaysia','Thailand','Indonesia','Philippines'],
+  fx_gateway: 'Adyen APAC',
+  avg_ticket_usd: 84,
+  growth_mom_pct: 28.4,
+}))
+app.get('/api/admin/payments/international/regional/mena', (c) => c.json({
+  region: 'Middle East & North Africa',
+  gmv_usd_month: 284000,
+  methods: ['Cards','Apple Pay','Samsung Pay','STC Pay','Fawry'],
+  countries: ['UAE','Saudi Arabia','Egypt','Kuwait','Bahrain'],
+  fx_gateway: 'Network International',
+  avg_ticket_usd: 142,
+  growth_mom_pct: 42.1,
+}))
+app.get('/api/admin/payments/international/regional/uk', (c) => c.json({
+  region: 'United Kingdom',
+  gmv_gbp_month: 184000,
+  methods: ['Open Banking','Cards','PayPal','Apple Pay','Google Pay'],
+  gateway: 'Stripe UK',
+  strong_customer_auth: true,
+  psd2_compliant: true,
+  avg_ticket_gbp: 84,
+}))
+app.post('/api/admin/payments/international/payout', async (c) => {
+  const b = await c.req.json()
+  return c.json({ payout_id:'pyt-'+Math.random().toString(36).slice(2,8), beneficiary:b.beneficiary, amount:b.amount, currency:b.currency||'USD', method:b.method||'SWIFT', status:'queued', estimated_arrival_hours:24 })
+})
+app.get('/api/admin/payments/international/compliance/aml', (c) => c.json({
+  aml_checks_today: 28400,
+  flagged_transactions: 8,
+  auto_blocked: 4,
+  manual_review_queue: 4,
+  sanctions_screening: 'Refinitiv World-Check',
+  fatf_countries_blocked: 8,
+  pep_matches_today: 2,
+  suspicious_activity_reports: 0,
+}))
+app.get('/api/admin/payments/international/tax/gst-tcs', (c) => c.json({
+  tcs_applicable: true,
+  tcs_rate_pct: 1,
+  tcs_collected_today_inr: 284000,
+  gst_on_international_fees_pct: 18,
+  fema_reporting_enabled: true,
+  form_15ca_auto_generated: true,
+  rbi_oda_limit_usd: 250000,
+}))
+
+// ── Module 4: Embedded Finance & Banking-as-a-Service (8 endpoints) ──
+app.get('/api/admin/finance/embedded/dashboard', (c) => c.json({
+  banking_partner: 'RBL Bank + SBM Bank',
+  prepaid_instruments_issued: 284000,
+  virtual_accounts_active: 840000,
+  nodal_account_balance_inr: 284000000,
+  total_float_inr: 84000000,
+  rbi_ppi_license: 'valid',
+  ppi_outstanding_inr: 28400000,
+  escrow_accounts: 42,
+  ledger_transactions_today: 2840000,
+}))
+app.get('/api/admin/finance/embedded/virtual-accounts', (c) => c.json({
+  total_vas: 840000,
+  active_vas: 784000,
+  daily_inflows_inr: 284000000,
+  auto_sweep_enabled: true,
+  sweep_threshold_inr: 100000,
+  va_providers: ['Razorpay','Yes Bank','ICICI Bank'],
+  reconciliation_rate_pct: 99.94,
+  vas_by_type: { organiser:42000, venue:8400, event:284000, fan_wallet:505600 },
+}))
+app.get('/api/admin/finance/embedded/wallets', (c) => c.json({
+  total_wallets: 2840000,
+  active_wallets: 1840000,
+  total_wallet_balance_inr: 28400000,
+  avg_balance_inr: 840,
+  kyd_verified_pct: 84.2,
+  min_kyc_limit_inr: 10000,
+  full_kyc_limit_inr: 100000,
+  wallet_usage: { ticket_purchase:74, food_order:14, merchandise:8, gaming:4 },
+}))
+app.post('/api/admin/finance/embedded/wallet/topup', async (c) => {
+  const b = await c.req.json()
+  return c.json({ transaction_id:'WAL'+Date.now(), wallet_id:b.wallet_id, amount_inr:b.amount_inr, new_balance_inr:(b.amount_inr||0)+2840, status:'success', method:b.method||'UPI' })
+})
+app.get('/api/admin/finance/embedded/prepaid/cards', (c) => c.json({
+  cards_issued: 284000,
+  active_cards: 264000,
+  total_spend_inr_month: 28400000,
+  avg_spend_per_card_inr: 840,
+  card_types: ['Fan Club Prepaid','VIP Experience Card','Artist Merch Card'],
+  network: 'Rupay',
+  issuer: 'SBM Bank',
+  cashback_distributed_inr: 2840000,
+}))
+app.get('/api/admin/finance/embedded/lending/dashboard', (c) => c.json({
+  total_loans_disbursed_inr: 840000000,
+  active_loan_book_inr: 284000000,
+  borrowers_active: 84000,
+  avg_loan_inr: 8400,
+  ticket_financing_pct: 74.2,
+  npa_rate_pct: 1.84,
+  partner_nbfc: 'InCred + Stashfin + Axio',
+  co_lending_bank: 'IDFC First Bank',
+  irr_avg_pct: 18.4,
+}))
+app.get('/api/admin/finance/embedded/insurance/dashboard', (c) => c.json({
+  policies_active: 840000,
+  products: ['Event Cancellation Insurance','Personal Accident Cover','Travel Insurance','Ticket Protection Plan'],
+  premium_collected_inr_month: 8400000,
+  claims_settled_today: 84,
+  claim_settlement_hours: 4.2,
+  partner_insurer: 'Bajaj Allianz + HDFC Ergo',
+  irdai_license: 'Corporate Agent',
+  nps_claims: 84.2,
+}))
+app.get('/api/admin/finance/embedded/revenue-share', (c) => c.json({
+  total_interchange_inr_month: 8400000,
+  float_income_inr_month: 2840000,
+  lending_fee_inr_month: 4200000,
+  insurance_commission_inr_month: 840000,
+  total_embedded_finance_revenue_inr_month: 16280000,
+  mom_growth_pct: 18.4,
+  margin_pct: 42.1,
+}))
+
+// ── Module 5: Real-Time Fraud Prevention & Risk Engine (8 endpoints) ──
+app.get('/api/admin/risk/fraud/dashboard', (c) => c.json({
+  transactions_screened_today: 2840000,
+  fraud_detected: 284,
+  fraud_prevented_inr: 28400000,
+  false_positive_rate_ppm: 84,
+  model: 'XGBoost + Neural Network ensemble',
+  rules_active: 284,
+  avg_decision_ms: 4,
+  auto_block_rate_pct: 0.01,
+  manual_review_queue: 42,
+  fraud_types: { card_testing:42, account_takeover:18, scalping:84, identity_theft:8, friendly_fraud:42, bot_attacks:84 },
+}))
+app.post('/api/admin/risk/fraud/score', async (c) => {
+  const b = await c.req.json()
+  const score = parseFloat((Math.random()*0.2).toFixed(3))
+  return c.json({ transaction_id:b.transaction_id||'txn-001', fraud_score:score, risk_level: score<0.05?'low':'medium', recommendation: score<0.05?'approve':'review', model_version:'v4.2.1', decision_ms:4, rules_triggered:score>0.05?['velocity_check']:[] })
+})
+app.get('/api/admin/risk/fraud/rules', (c) => c.json({
+  rules: [
+    { id:'R001', name:'Velocity Check', trigger:'5+ txns/min same IP', action:'block', hits_today:284 },
+    { id:'R002', name:'Card Testing', trigger:'<₹10 followed by ₹50K+', action:'flag', hits_today:42 },
+    { id:'R003', name:'Geo Mismatch', trigger:'IP country ≠ card country', action:'3DS', hits_today:840 },
+    { id:'R004', name:'Scalping Bot', trigger:'Same IP 10+ events', action:'captcha', hits_today:1840 },
+  ],
+  ml_model_auc: 0.984,
+  precision: 0.924,
+  recall: 0.874,
+}))
+app.get('/api/admin/risk/chargeback/dashboard', (c) => c.json({
+  chargebacks_received: 284,
+  chargebacks_won: 184,
+  win_rate_pct: 64.8,
+  chargeback_rate_ppm: 14,
+  total_exposure_inr: 2840000,
+  auto_representment: true,
+  evidence_auto_generated: 184,
+  avg_resolution_days: 45,
+}))
+app.get('/api/admin/risk/aml/monitoring', (c) => c.json({
+  transactions_monitored_today: 2840000,
+  suspicious_patterns_detected: 8,
+  str_filed_today: 0,
+  pep_screenings: 284,
+  sanctions_checks: 2840,
+  fiu_ind_reporting_compliant: true,
+  pmla_compliant: true,
+  next_audit: '2026-04-01',
+}))
+app.get('/api/admin/risk/device/fingerprinting', (c) => c.json({
+  devices_fingerprinted_today: 2840000,
+  new_devices: 284000,
+  suspicious_devices: 284,
+  emulator_detected: 42,
+  vpn_detected: 840,
+  device_trust_score_avg: 0.924,
+  provider: 'Fingerprint.js Pro + custom ML',
+}))
+app.post('/api/admin/risk/fraud/dispute/raise', async (c) => {
+  const b = await c.req.json()
+  return c.json({ dispute_id:'DIS-'+Math.random().toString(36).slice(2,8).toUpperCase(), transaction_id:b.transaction_id, type:b.type||'chargeback', status:'raised', estimated_resolution_days:30, evidence_required:['transaction_log','delivery_proof','customer_communication'] })
+})
+app.get('/api/admin/risk/limits/configuration', (c) => c.json({
+  per_transaction_max_inr: 500000,
+  daily_limit_inr: 1000000,
+  wallet_max_balance_inr: 100000,
+  upi_per_txn_inr: 100000,
+  card_per_txn_inr: 500000,
+  international_per_txn_usd: 10000,
+  ticket_purchase_max_per_txn: 10,
+  scalping_velocity_limit_per_hour: 5,
+}))
+
+// ── Module 6: Revenue Accounting & Financial Close (8 endpoints) ──
+app.get('/api/admin/finance/accounting/dashboard', (c) => c.json({
+  total_revenue_inr_mtd: 284000000,
+  deferred_revenue_inr: 84000000,
+  accounts_receivable_inr: 28400000,
+  accounts_payable_inr: 14200000,
+  cash_balance_inr: 840000000,
+  monthly_close_status: 'in_progress',
+  close_day_target: 5,
+  current_close_day: 3,
+  erp_system: 'Oracle NetSuite',
+  auto_journal_entries_today: 28400,
+}))
+app.get('/api/admin/finance/accounting/revenue-recognition', (c) => c.json({
+  standard: 'Ind AS 115 + IFRS 15',
+  recognition_rules: [
+    { product:'Ticket Sale', recognition:'At event date', deferred_days:14 },
+    { product:'Service Fee', recognition:'At transaction', deferred_days:0 },
+    { product:'Annual Pass', recognition:'Over 12 months', deferred_days:365 },
+    { product:'Merchandise', recognition:'At delivery', deferred_days:7 },
+  ],
+  deferred_balance_inr: 84000000,
+  recognition_waterfall_inr_month: 28400000,
+}))
+app.get('/api/admin/finance/accounting/gl/entries', (c) => c.json({
+  entries_today: 28400,
+  auto_posted: 27840,
+  pending_approval: 560,
+  gl_accounts_active: 840,
+  cost_centres: 42,
+  profit_centres: 18,
+  intercompany_eliminations: 4,
+  chart_of_accounts_version: '2026.1',
+}))
+app.get('/api/admin/finance/accounting/cash-flow', (c) => c.json({
+  operating_cashflow_inr_month: 284000000,
+  investing_cashflow_inr_month: -84000000,
+  financing_cashflow_inr_month: -28400000,
+  free_cash_flow_inr_month: 200000000,
+  cash_conversion_cycle_days: 8.4,
+  runway_months: 42,
+  next_funding_round: 'Series D — Q3 2026',
+}))
+app.post('/api/admin/finance/accounting/close/trigger', async (c) => {
+  return c.json({ close_id:'close-'+new Date().toISOString().slice(0,7), status:'initiated', tasks:['Reconcile payments','Post accruals','Intercompany elimination','Tax provision','Board pack prep'], estimated_hours:18 })
+})
+app.get('/api/admin/finance/accounting/tax/provision', (c) => c.json({
+  corporate_tax_provision_inr: 28400000,
+  effective_tax_rate_pct: 22,
+  deferred_tax_asset_inr: 8400000,
+  advance_tax_paid_inr: 14200000,
+  gst_payable_inr: 14200000,
+  tds_payable_inr: 2840000,
+  transfer_pricing_documentation: 'completed',
+  tax_jurisdiction: 'India',
+}))
+app.get('/api/admin/finance/accounting/audit/trail', (c) => c.json({
+  total_audit_entries: 284000000,
+  entries_today: 2840000,
+  immutable: true,
+  storage: 'append-only PostgreSQL + S3',
+  retention_years: 8,
+  sox_compliant: true,
+  last_internal_audit: '2026-01-15',
+  next_external_audit: '2026-03-31',
+}))
+app.get('/api/admin/finance/accounting/reports/p-and-l', (c) => c.json({
+  period: 'FY2026 Q4 MTD',
+  gross_revenue_inr: 284000000,
+  refunds_inr: 2840000,
+  net_revenue_inr: 281160000,
+  cost_of_revenue_inr: 56232000,
+  gross_profit_inr: 224928000,
+  gross_margin_pct: 79.98,
+  opex_inr: 112464000,
+  ebitda_inr: 112464000,
+  ebitda_margin_pct: 40,
+  pat_inr: 84140000,
+}))
+
+// ── Module 7: Organiser & Artist Payouts (8 endpoints) ──
+app.get('/api/admin/payouts/dashboard', (c) => c.json({
+  total_payouts_today: 284,
+  total_payout_amount_inr_today: 28400000,
+  pending_payouts: 42,
+  failed_payouts: 2,
+  success_rate_pct: 99.3,
+  avg_payout_processing_min: 4.2,
+  payout_methods: ['NEFT','RTGS','IMPS','SWIFT','PayPal'],
+  beneficiaries_onboarded: 2840,
+  kyc_verified_pct: 97.4,
+}))
+app.get('/api/admin/payouts/organiser/schedule', (c) => c.json({
+  payouts: [
+    { organiser:'Bookmyshow Events', event:'Coldplay Night 1', amount_inr:14200000, due:'2026-04-16', status:'scheduled' },
+    { organiser:'Live Nation India', event:'Lollapalooza 2026', amount_inr:8400000, due:'2026-04-13', status:'scheduled' },
+    { organiser:'DNA Entertainment', event:'IPL Opening Ceremony', amount_inr:2840000, due:'2026-04-01', status:'processed' },
+  ],
+  total_pending_inr: 28400000,
+  next_bulk_run: '2026-03-10T06:00:00Z',
+}))
+app.get('/api/admin/payouts/artist/royalties', (c) => c.json({
+  total_royalties_inr_month: 8400000,
+  artists_paid: 840,
+  avg_royalty_inr: 10000,
+  split_types: ['Flat Fee','Revenue Share','Guarantee+%','NFT Royalty'],
+  auto_split_enabled: true,
+  smart_contract_splits: 284,
+  payment_methods: ['IMPS','SWIFT','Crypto'],
+  tax_deducted_at_source_pct: 10,
+}))
+app.post('/api/admin/payouts/process', async (c) => {
+  const b = await c.req.json()
+  return c.json({ payout_id:'PYT-'+Math.random().toString(36).slice(2,10).toUpperCase(), beneficiary_id:b.beneficiary_id, amount_inr:b.amount_inr, method:b.method||'IMPS', utr:'UTR'+Date.now(), status:'processing', expected_completion_min:4 })
+})
+app.get('/api/admin/payouts/tax/tds', (c) => c.json({
+  tds_deducted_today_inr: 840000,
+  tds_rate_pct_artists: 10,
+  tds_rate_pct_vendors: 2,
+  form_16a_auto_generated: true,
+  traces_filing_status: 'current',
+  tds_payable_inr: 8400000,
+  next_payment_due: '2026-04-07',
+}))
+app.get('/api/admin/payouts/vendor/schedule', (c) => c.json({
+  vendors_due_this_week: 84,
+  total_payable_inr: 14200000,
+  vendors: [
+    { name:'EventPro Lighting', amount_inr:840000, due:'2026-03-12', payment_terms:'Net 30' },
+    { name:'SoundMasters AV', amount_inr:1840000, due:'2026-03-15', payment_terms:'Net 45' },
+    { name:'F&B Catering Co', amount_inr:2840000, due:'2026-03-10', payment_terms:'Net 7' },
+  ],
+  payment_run_frequency: 'weekly',
+}))
+app.get('/api/admin/payouts/international/wire', (c) => c.json({
+  wire_transfers_pending: 18,
+  total_amount_usd: 284000,
+  fema_approval_required: true,
+  rbi_oda_utilised_pct: 42.1,
+  correspondent_banks: ['HSBC London','Citi NY','DBS Singapore'],
+  avg_settlement_hours: 24,
+  charges_per_wire_usd: 25,
+}))
+app.get('/api/admin/payouts/escrow/dashboard', (c) => c.json({
+  escrow_accounts: 42,
+  total_escrow_balance_inr: 84000000,
+  largest_escrow: { event:'Coldplay Night 1', balance_inr:28400000, release_date:'2026-04-16' },
+  auto_release_enabled: true,
+  dispute_hold_count: 4,
+  dispute_hold_amount_inr: 8400000,
+}))
+
+// ── Module 8: Tax Automation & Compliance (8 endpoints) ──
+app.get('/api/admin/tax/automation/dashboard', (c) => c.json({
+  gst_returns_filed: 12,
+  pending_gst_returns: 0,
+  total_gst_liability_inr_mtd: 28400000,
+  input_tax_credit_inr: 14200000,
+  net_gst_payable_inr: 14200000,
+  tds_compliance_pct: 100,
+  tcs_compliance_pct: 100,
+  tax_engine: 'ClearTax Enterprise + custom rules',
+  auto_filing_enabled: true,
+  audit_risk_score: 'low',
+}))
+app.get('/api/admin/tax/gst/returns', (c) => c.json({
+  returns: [
+    { type:'GSTR-1', period:'Feb 2026', status:'filed', filing_date:'2026-03-11', liability_inr:28400000 },
+    { type:'GSTR-3B', period:'Feb 2026', status:'filed', filing_date:'2026-03-20', liability_inr:14200000 },
+    { type:'GSTR-9', period:'FY2025', status:'filed', filing_date:'2025-12-31', liability_inr:284000000 },
+  ],
+  next_due: { type:'GSTR-1', period:'Mar 2026', due_date:'2026-04-11' },
+}))
+app.get('/api/admin/tax/gst/hsn-mapping', (c) => c.json({
+  products: [
+    { product:'Event Ticket (Entertainment)', hsn:'9989', gst_rate_pct:18, cess_pct:0 },
+    { product:'Online Ticket Service Fee', hsn:'998439', gst_rate_pct:18, cess_pct:0 },
+    { product:'Food & Beverage at Venue', hsn:'9963', gst_rate_pct:5, cess_pct:0 },
+    { product:'Merchandise', hsn:'6109', gst_rate_pct:12, cess_pct:0 },
+    { product:'NFT (Digital Asset)', hsn:'998439', gst_rate_pct:18, cess_pct:0 },
+  ],
+}))
+app.get('/api/admin/tax/tds/dashboard', (c) => c.json({
+  total_tds_deducted_inr_mtd: 8400000,
+  tds_payable_inr: 8400000,
+  challan_payment_status: 'paid',
+  form_26q_status: 'filed',
+  lower_deduction_certificates: 42,
+  non_resident_tds_section: '195',
+  total_deductees: 840,
+}))
+app.post('/api/admin/tax/gst/invoice/generate', async (c) => {
+  const b = await c.req.json()
+  const amt = b.amount || 10000
+  return c.json({ invoice_number:`INDT/2026/${Math.floor(Math.random()*100000)}`, gstin_seller:'27AABCI1234Z1Z5', gstin_buyer:b.buyer_gstin||'', invoice_date:new Date().toISOString().slice(0,10), taxable_value:amt, cgst:amt*0.09, sgst:amt*0.09, total_inr:amt*1.18, irn:'IRN'+Math.random().toString(36).slice(2,20) })
+})
+app.get('/api/admin/tax/international/withholding', (c) => c.json({
+  dtaa_countries: ['USA','UK','Singapore','UAE','Netherlands'],
+  withholding_rates: { USA:15, UK:15, Singapore:10, UAE:0 },
+  form_15ca_auto: true,
+  form_15cb_required_above_usd: 5000,
+  royalty_tds_rate_pct: 10,
+  technical_services_tds_pct: 10,
+}))
+app.get('/api/admin/tax/automation/e-invoicing', (c) => c.json({
+  e_invoices_today: 28400,
+  irp_api_status: 'green',
+  avg_irn_generation_ms: 840,
+  e_invoice_threshold_inr: 500000,
+  qr_code_generated: true,
+  eway_bill_integration: true,
+  cancellation_rate_ppm: 28,
+}))
+app.get('/api/admin/tax/compliance/calendar', (c) => c.json({
+  upcoming: [
+    { obligation:'GSTR-1 March 2026', due:'2026-04-11', days_remaining:33, status:'pending' },
+    { obligation:'TDS Challan March 2026', due:'2026-04-07', days_remaining:29, status:'pending' },
+    { obligation:'Advance Tax Q4', due:'2026-03-15', days_remaining:6, status:'pending' },
+    { obligation:'GSTR-3B March 2026', due:'2026-04-20', days_remaining:42, status:'pending' },
+  ],
+  overdue: [],
+  compliance_score: 98.4,
+}))
+
+// ── Module 9: Treasury & Cash Management (8 endpoints) ──
+app.get('/api/admin/treasury/dashboard', (c) => c.json({
+  total_cash_inr: 840000000,
+  liquid_investments_inr: 284000000,
+  total_liquidity_inr: 1124000000,
+  daily_cash_burn_inr: 8400000,
+  runway_months: 42,
+  short_term_investments: ['Liquid Mutual Funds','T-Bills','FDs'],
+  fx_exposure_usd: 2840000,
+  hedged_pct: 74.2,
+  weighted_avg_cost_of_capital_pct: 12.4,
+}))
+app.get('/api/admin/treasury/investments/portfolio', (c) => c.json({
+  holdings: [
+    { instrument:'Axis Liquid Fund', amount_inr:84000000, yield_pct:7.2, maturity:'liquid', risk:'low' },
+    { instrument:'HDFC Ultra Short Duration', amount_inr:42000000, yield_pct:7.4, maturity:'3 months', risk:'low' },
+    { instrument:'91-day T-Bill', amount_inr:28400000, yield_pct:6.9, maturity:'2026-06-01', risk:'sovereign' },
+    { instrument:'FD — ICICI Bank', amount_inr:14200000, yield_pct:7.0, maturity:'2026-09-01', risk:'low' },
+  ],
+  total_invested_inr: 168600000,
+  total_yield_inr_month: 1020000,
+  yield_avg_pct: 7.2,
+}))
+app.get('/api/admin/treasury/fx/hedging', (c) => c.json({
+  total_fx_exposure_usd: 2840000,
+  hedged_amount_usd: 2108960,
+  hedged_pct: 74.2,
+  instruments: ['Forward Contracts','Options'],
+  forwards: [
+    { currency:'USD', notional:840000, rate:84.2, maturity:'2026-06-30', pnl_inr:-84000 },
+    { currency:'GBP', notional:284000, rate:106.4, maturity:'2026-09-30', pnl_inr:28400 },
+  ],
+  mark_to_market_inr: -55600,
+  hedge_effectiveness_pct: 94.2,
+}))
+app.get('/api/admin/treasury/cash/forecast', (c) => c.json({
+  forecast_horizon_days: 90,
+  ending_cash_balance_inr: 1124000000,
+  peak_cash_date: '2026-04-16',
+  peak_cash_balance_inr: 1840000000,
+  trough_cash_date: '2026-06-30',
+  trough_cash_balance_inr: 284000000,
+  model_accuracy_pct: 91.4,
+}))
+app.post('/api/admin/treasury/investments/execute', async (c) => {
+  const b = await c.req.json()
+  return c.json({ order_id:'INV-'+Math.random().toString(36).slice(2,8).toUpperCase(), instrument:b.instrument, amount_inr:b.amount_inr, order_type:b.order_type||'buy', status:'executed', nav:b.nav||100.42, units: parseFloat(((b.amount_inr||10000)/100.42).toFixed(4)) })
+})
+app.get('/api/admin/treasury/banking/accounts', (c) => c.json({
+  accounts: [
+    { bank:'HDFC Bank', type:'Current', balance_inr:284000000, purpose:'Operations' },
+    { bank:'ICICI Bank', type:'Current', balance_inr:184000000, purpose:'Payouts' },
+    { bank:'Yes Bank', type:'Nodal', balance_inr:840000000, purpose:'Collections' },
+    { bank:'RBL Bank', type:'Escrow', balance_inr:84000000, purpose:'Event Escrow' },
+    { bank:'HSBC', type:'EEFC', balance_usd:840000, purpose:'International' },
+  ],
+  total_banking_relationships: 8,
+  net_banking_enabled: true,
+}))
+app.get('/api/admin/treasury/working-capital/analytics', (c) => c.json({
+  days_sales_outstanding: 4.2,
+  days_payable_outstanding: 42,
+  cash_conversion_cycle: -37.8,
+  working_capital_inr: 140000000,
+  current_ratio: 4.2,
+  quick_ratio: 3.8,
+  operating_cash_flow_inr_month: 200000000,
+}))
+app.get('/api/admin/treasury/risk/counterparty', (c) => c.json({
+  bank_exposure_limits: { HDFC:5000000000, ICICI:4000000000, Yes:2000000000 },
+  current_exposures: { HDFC:284000000, ICICI:184000000, Yes:840000000 },
+  concentration_risk: 'acceptable',
+  credit_ratings: { HDFC:'AAA', ICICI:'AAA', Yes:'A+' },
+  counterparty_review_date: '2026-04-01',
+}))
+
+// ── Module 10: Financial Reporting & Investor Metrics (10 endpoints) ──
+app.get('/api/admin/finance/reporting/dashboard', (c) => c.json({
+  reporting_period: 'FY2026 Q4 MTD',
+  arr_inr: 8400000000,
+  mrr_inr: 700000000,
+  gmv_inr_ytd: 8400000000,
+  take_rate_pct: 8.4,
+  net_revenue_inr_ytd: 705600000,
+  ebitda_inr_ytd: 282240000,
+  ebitda_margin_pct: 40,
+  gross_margin_pct: 79.98,
+  nrr_pct: 118,
+  ltv_cac_ratio: 10.2,
+  rule_of_40_score: 68.4,
+}))
+app.get('/api/admin/finance/reporting/unit-economics', (c) => c.json({
+  avg_ticket_price_inr: 1840,
+  take_rate_pct: 8.4,
+  net_revenue_per_ticket_inr: 154.56,
+  cogs_per_ticket_inr: 30.91,
+  gross_profit_per_ticket_inr: 123.65,
+  cac_inr: 840,
+  ltv_inr: 8400,
+  ltv_cac: 10,
+  payback_months: 5.4,
+  contribution_margin_pct: 67.2,
+}))
+app.get('/api/admin/finance/reporting/cohort-metrics', (c) => c.json({
+  cohorts: [
+    { cohort:'2024-Q1', users:284000, m6_retention:74.2, m12_retention:58.4, ltv_inr:8400 },
+    { cohort:'2024-Q3', users:420000, m6_retention:71.4, m12_retention:54.2, ltv_inr:7800 },
+    { cohort:'2025-Q1', users:840000, m6_retention:78.4, m12_retention:null, ltv_inr:null },
+  ],
+  avg_m12_retention_pct: 56.3,
+  best_cohort_channel: 'Social Referral',
+}))
+app.get('/api/admin/finance/reporting/saas-metrics', (c) => c.json({
+  arr_inr: 8400000000,
+  arr_growth_yoy_pct: 142,
+  net_revenue_retention_pct: 118,
+  gross_revenue_retention_pct: 94.2,
+  customer_count: 28400,
+  arpu_inr_month: 24648,
+  acv_inr: 295776,
+  expansion_revenue_pct: 28.4,
+  churn_rate_monthly_pct: 0.48,
+}))
+app.get('/api/admin/finance/reporting/board-pack', (c) => c.json({
+  period: 'February 2026',
+  generated_at: new Date().toISOString(),
+  sections: ['CEO Letter','P&L Summary','Cash Flow','GMV Dashboard','KPI Scorecard','Department OKRs','Headcount','Risk Register','Investor Metrics'],
+  kpis: { gmv_inr:8400000000, net_revenue_inr:705600000, ebitda_margin_pct:40, cac_inr:840, ltv_inr:8400, nrr_pct:118, arr_inr:8400000000, gross_margin_pct:79.98 },
+  presentation_url: 'https://board.indtix.internal/feb2026',
+}))
+app.get('/api/admin/finance/reporting/investor/metrics', (c) => c.json({
+  series_c_raised_usd: 84000000,
+  post_money_valuation_usd: 840000000,
+  runway_months: 42,
+  burn_multiple: 0.42,
+  magic_number: 1.84,
+  quick_ratio: 4.2,
+  rule_of_40: 68.4,
+  dau_mau_ratio: 0.42,
+  nps_overall: 74,
+  employee_count: 840,
+  revenue_per_employee_inr: 840000,
+}))
+app.get('/api/admin/finance/reporting/forecasting', (c) => c.json({
+  fy2026_gmv_inr_forecast: 28400000000,
+  fy2026_revenue_inr_forecast: 2386000000,
+  fy2027_gmv_inr_forecast: 84000000000,
+  fy2027_revenue_inr_forecast: 7056000000,
+  scenarios: {
+    bear: { gmv_cr:240, rev_cr:20, ebitda_pct:30 },
+    base: { gmv_cr:284, rev_cr:24, ebitda_pct:40 },
+    bull: { gmv_cr:420, rev_cr:35, ebitda_pct:48 },
+  },
+  model: '3-statement + DCF',
+}))
+app.get('/api/admin/finance/reporting/benchmarks', (c) => c.json({
+  peers: [
+    { company:'BookMyShow', take_rate_pct:8.2, ebitda_margin_pct:18, nrr_pct:104 },
+    { company:'Ticketmaster', take_rate_pct:9.4, ebitda_margin_pct:28, nrr_pct:108 },
+    { company:'Insider (SEA)', take_rate_pct:7.8, ebitda_margin_pct:14, nrr_pct:112 },
+    { company:'INDTIX', take_rate_pct:8.4, ebitda_margin_pct:40, nrr_pct:118 },
+  ],
+  ranking: 'Best-in-class EBITDA margin & NRR in global ticketing',
+}))
+app.get('/api/admin/finance/reporting/ipo-metrics', (c) => c.json({
+  target_ipo_year: 2027,
+  pre_ipo_valuation_inr: 8400000000000,
+  revenue_multiple_target: 15,
+  ebitda_multiple_target: 42,
+  comparable_public_cos: ['Zomato','PolicyBazaar','Paytm','Nykaa'],
+  drhp_readiness_pct: 74.2,
+  sebi_drhp_submission: 'Q1 2027',
+  exchange_target: ['NSE','BSE'],
+  ipo_proceeds_use: { growth:50, debt_payoff:20, acquisitions:30 },
+}))
+app.get('/api/admin/finance/reporting/esg-financials', (c) => c.json({
+  green_revenue_pct: 28.4,
+  carbon_cost_inr_year: 8400000,
+  sustainability_capex_inr_year: 28400000,
+  social_impact_value_inr: 84000000,
+  governance_score: 84.2,
+  esg_rating: 'A+',
+  un_sdg_alignment: ['SDG 8: Decent Work','SDG 9: Innovation','SDG 11: Sustainable Cities','SDG 17: Partnerships'],
+  integrated_reporting_standard: 'IFRS S1/S2 + GRI',
+}))
+
+// ── Phase 40 versioned health alias ──────────────────────────
+// ── Phase 40 main health endpoint ────────────────────────────
+app.get('/api/health', (c) => c.json({
+  status: 'ok',
+  platform: 'INDTIX',
+  version: 'v40.0.0',
+  phase: 'Phase 40',
+  theme: 'Global Payments, Financial Infrastructure & Embedded Finance',
+  new_endpoints: 90,
+  total_endpoints: 2629,
+  features: [
+    'Unified Payments Orchestration',
+    'UPI 2.0 & India Stack Payments',
+    'International Payments & Multi-Currency',
+    'Embedded Finance & Banking-as-a-Service',
+    'Real-Time Fraud Prevention & Risk Engine',
+    'Revenue Accounting & Financial Close',
+    'Organiser & Artist Payouts',
+    'Tax Automation & Compliance',
+    'Treasury & Cash Management',
+    'Financial Reporting & Investor Metrics',
+  ],
+  timestamp: new Date().toISOString(),
+}))
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 40 — GLOBAL PAYMENTS, FINANCIAL INFRASTRUCTURE
+//               & EMBEDDED FINANCE
 // ═══════════════════════════════════════════════════════════
 
 export default app

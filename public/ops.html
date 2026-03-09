@@ -3498,5 +3498,81 @@ async function loadAllP39Ops() { await Promise.all([loadOpsStream(), loadOpsAnom
 loadAllP39Ops();
 </script>
 <!-- END PHASE 39 OPS PORTAL -->
+
+<!-- PHASE 40 OPS PORTAL: Payments Operations & Financial Risk -->
+<div id="phase40-ops" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#10b981;font-size:1.3rem;margin-bottom:4px;">💳 Phase 40 — Ops: Payments, Risk & Treasury</h2>
+  <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Gateway health · Fraud monitoring · AML · Reconciliation · Treasury operations · Settlement ops</p>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.3rem;font-weight:700;color:#10b981;">green</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Gateway Status</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #ef4444;">
+      <div style="font-size:1.3rem;font-weight:700;color:#ef4444;">284</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Fraud Detected Today</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #f59e0b;">
+      <div style="font-size:1.3rem;font-weight:700;color:#f59e0b;">₹840Cr</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Treasury Cash</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #06b6d4;">
+      <div style="font-size:1.3rem;font-weight:700;color:#06b6d4;">99.85%</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Recon Match Rate</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #10b981;">
+      <h4 style="color:#10b981;margin:0 0 6px;font-size:0.85rem;">💳 Payment Gateway Health</h4>
+      <div id="p40ops-gw" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadOpsGateway()" style="margin-top:6px;background:#10b981;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Live Status</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #ef4444;">
+      <h4 style="color:#ef4444;margin:0 0 6px;font-size:0.85rem;">🛡️ Fraud & AML Monitoring</h4>
+      <div id="p40ops-fraud" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadOpsFraud40()" style="margin-top:6px;background:#ef4444;color:#fff;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View Alerts</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #f59e0b;">
+      <h4 style="color:#f59e0b;margin:0 0 6px;font-size:0.85rem;">💰 Treasury Status</h4>
+      <div id="p40ops-treasury" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadOpsTreasury()" style="margin-top:6px;background:#f59e0b;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View Dashboard</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #06b6d4;">
+      <h4 style="color:#06b6d4;margin:0 0 6px;font-size:0.85rem;">📋 Settlement Queue</h4>
+      <div id="p40ops-settlement" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadOpsSettlement()" style="margin-top:6px;background:#06b6d4;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View Queue</button>
+    </div>
+  </div>
+
+  <button onclick="loadAllP40Ops()" style="background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:700;">💳 Refresh All</button>
+</div>
+
+<script>
+async function loadOpsGateway() {
+  const d = await fetch('/api/ops/payments/health').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40ops-gw').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Gateway: ${d.gateway_health} | UPI: ${d.upi_switch_health} | Cards: ${d.card_network_health} | TPS: ${(d.tps_current||0).toLocaleString()}</span>`;
+}
+async function loadOpsFraud40() {
+  const d = await fetch('/api/admin/risk/fraud/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40ops-fraud').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Screened: ${(d.transactions_screened_today||0).toLocaleString()} | Fraud: ${d.fraud_detected} | Prevented: ₹${(d.fraud_prevented_inr/1e7).toFixed(0)}Cr | Queue: ${d.manual_review_queue}</span>`;
+}
+async function loadOpsTreasury() {
+  const d = await fetch('/api/admin/treasury/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40ops-treasury').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Cash: ₹${(d.total_cash_inr/1e7).toFixed(0)}Cr | Runway: ${d.runway_months}mo | Hedged: ${d.hedged_pct}% | WACC: ${d.weighted_avg_cost_of_capital_pct}%</span>`;
+}
+async function loadOpsSettlement() {
+  const d = await fetch('/api/admin/payments/settlement/schedule').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40ops-settlement').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Pending: ₹${(d.pending_amount_inr/1e7).toFixed(0)}Cr | Beneficiaries: ${d.beneficiaries} | T+1: ✅ | Instant Eligible: ${d.instant_settlement_eligible_pct}%</span>`;
+}
+async function loadAllP40Ops() { await Promise.all([loadOpsGateway(), loadOpsFraud40(), loadOpsTreasury(), loadOpsSettlement()]); }
+loadAllP40Ops();
+</script>
+<!-- END PHASE 40 OPS PORTAL -->
 </body>
 </html>

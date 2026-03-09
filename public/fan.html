@@ -6727,5 +6727,77 @@ async function loadFanSentiment() {
 loadFanChat(); loadFanPrivacy();
 </script>
 <!-- END PHASE 39 FAN PORTAL -->
+
+<!-- PHASE 40 FAN PORTAL: Global Payments & Embedded Finance -->
+<div id="phase40-fan" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#10b981;font-size:1.3rem;margin-bottom:4px;">💳 Phase 40 — Your Payments & Wallet</h2>
+  <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">UPI · Cards · BNPL · Fan Wallet · Prepaid Cards · Event Insurance · Instant Refunds</p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.4rem;font-weight:700;color:#10b981;">42</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Payment Methods</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #06b6d4;">
+      <div style="font-size:1.4rem;font-weight:700;color:#06b6d4;">99.2%</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Success Rate</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #f59e0b;">
+      <div style="font-size:1.4rem;font-weight:700;color:#f59e0b;">Instant</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Refund Processing</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #10b981;">
+      <h4 style="color:#10b981;margin:0 0 6px;font-size:0.85rem;">👜 My Fan Wallet</h4>
+      <div id="p40f-wallet" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadFanWallet()" style="margin-top:6px;background:#10b981;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View Wallet</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #06b6d4;">
+      <h4 style="color:#06b6d4;margin:0 0 6px;font-size:0.85rem;">📱 UPI Payments</h4>
+      <div id="p40f-upi" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadFanUPI()" style="margin-top:6px;background:#06b6d4;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Pay via UPI</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #f472b6;">
+      <h4 style="color:#f472b6;margin:0 0 6px;font-size:0.85rem;">🛡️ Event Insurance</h4>
+      <div id="p40f-insurance" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadFanInsurance()" style="margin-top:6px;background:#f472b6;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Get Insured</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #f59e0b;">
+      <h4 style="color:#f59e0b;margin:0 0 6px;font-size:0.85rem;">💳 Fan Prepaid Card</h4>
+      <div id="p40f-card" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadFanCard()" style="margin-top:6px;background:#f59e0b;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Apply Card</button>
+    </div>
+  </div>
+
+  <button onclick="loadAllP40Fan()" style="background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:700;">💳 Refresh All</button>
+</div>
+
+<script>
+async function loadFanWallet() {
+  const d = await fetch('/api/admin/finance/embedded/wallets').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40f-wallet').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Total Wallets: ${(d.total_wallets||0).toLocaleString()} | Avg Balance: ₹${d.avg_balance_inr} | KYC: ${d.kyd_verified_pct}%</span>`;
+}
+async function loadFanUPI() {
+  const d = await fetch('/api/admin/payments/upi/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40f-upi').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">VPAs: ${(d.vpa_registered||0).toLocaleString()} | Success: ${d.collect_success_pct}% | Mandates: ${(d.upi_autopay_mandates||0).toLocaleString()}</span>`;
+}
+async function loadFanInsurance() {
+  const d = await fetch('/api/admin/finance/embedded/insurance/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40f-insurance').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Policies: ${(d.policies_active||0).toLocaleString()} | Claim in ${d.claim_settlement_hours}hrs | Partners: Bajaj Allianz + HDFC Ergo</span>`;
+}
+async function loadFanCard() {
+  const d = await fetch('/api/admin/finance/embedded/prepaid/cards').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40f-card').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Cards Issued: ${(d.cards_issued||0).toLocaleString()} | Network: ${d.network} | Cashback: ₹${(d.cashback_distributed_inr/1e5).toFixed(0)}L/mo</span>`;
+}
+async function loadAllP40Fan() { await Promise.all([loadFanWallet(), loadFanUPI(), loadFanInsurance(), loadFanCard()]); }
+loadAllP40Fan();
+</script>
+<!-- END PHASE 40 FAN PORTAL -->
 </body>
 </html>

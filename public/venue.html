@@ -3229,4 +3229,43 @@ async function loadAllP39Venue() { await Promise.all([loadVenueCV(), loadVenueFl
 loadAllP39Venue();
 </script>
 <!-- END PHASE 39 VENUE PORTAL -->
+
+<!-- PHASE 40 VENUE PORTAL: Payments at Venue -->
+<div id="phase40-venue" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#10b981;font-size:1.3rem;margin-bottom:4px;">💳 Phase 40 — Venue Payment Terminals</h2>
+  <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Tap-to-pay · UPI QR · Biometric Aadhaar Pay · Wallet top-ups · F&B cashless payments</p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.4rem;font-weight:700;color:#10b981;">99.2%</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">POS Success Rate</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #06b6d4;">
+      <div style="font-size:1.4rem;font-weight:700;color:#06b6d4;">284ms</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Avg Payment Time</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #f59e0b;">
+      <div style="font-size:1.4rem;font-weight:700;color:#f59e0b;">58%</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">UPI Share</div>
+    </div>
+  </div>
+
+  <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #10b981;margin-bottom:14px;">
+    <h4 style="color:#10b981;margin:0 0 6px;font-size:0.85rem;">💳 Live Payment Terminal Health</h4>
+    <div id="p40v-payments" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+    <button onclick="loadVenuePayments()" style="margin-top:6px;background:#10b981;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Check Status</button>
+  </div>
+
+  <button onclick="loadVenuePayments()" style="background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:700;">💳 Refresh</button>
+</div>
+
+<script>
+async function loadVenuePayments() {
+  const d = await fetch('/api/ops/payments/health').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40v-payments').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Gateway: ${d.gateway_health} | UPI Switch: ${d.upi_switch_health} | TPS: ${(d.tps_current||0).toLocaleString()}/${(d.tps_capacity||0).toLocaleString()} | p99: ${d.p99_ms}ms</span>`;
+}
+loadVenuePayments();
+</script>
+<!-- END PHASE 40 VENUE PORTAL -->
 </body></html>

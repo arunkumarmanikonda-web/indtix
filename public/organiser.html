@@ -5291,4 +5291,56 @@ async function loadAllP39Org() { await Promise.all([loadOrgDemand(), loadOrgAudi
 loadAllP39Org();
 </script>
 <!-- END PHASE 39 ORGANISER PORTAL -->
+
+<!-- PHASE 40 ORGANISER PORTAL: Payments, Payouts & Financial Reporting -->
+<div id="phase40-org" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#10b981;font-size:1.3rem;margin-bottom:4px;">💳 Phase 40 — Organiser Finance & Payouts</h2>
+  <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Your event payouts · Reconciliation · Revenue reporting · Tax invoices · Escrow management</p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.4rem;font-weight:700;color:#10b981;">₹28.4Cr</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Pending Payouts</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #06b6d4;">
+      <div style="font-size:1.4rem;font-weight:700;color:#06b6d4;">99.85%</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Reconciliation Rate</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #f59e0b;">
+      <div style="font-size:1.4rem;font-weight:700;color:#f59e0b;">T+1</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Settlement Speed</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #10b981;">
+      <h4 style="color:#10b981;margin:0 0 6px;font-size:0.85rem;">💸 My Payout Schedule</h4>
+      <div id="p40o-payouts" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadOrgPayouts()" style="margin-top:6px;background:#10b981;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View Schedule</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #06b6d4;">
+      <h4 style="color:#06b6d4;margin:0 0 6px;font-size:0.85rem;">📋 Reconciliation Status</h4>
+      <div id="p40o-recon" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadOrgRecon()" style="margin-top:6px;background:#06b6d4;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View Report</button>
+    </div>
+  </div>
+
+  <button onclick="loadAllP40Org()" style="background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:700;">💳 Refresh All</button>
+</div>
+
+<script>
+async function loadOrgPayouts() {
+  const d = await fetch('/api/admin/payouts/organiser/schedule').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40o-payouts').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Pending: ₹${(d.total_pending_inr/1e7).toFixed(0)}Cr | Events: ${d.payouts?.length||0} | Next Run: ${d.next_bulk_run?.slice(0,10)}</span>`;
+}
+async function loadOrgRecon() {
+  const d = await fetch('/api/admin/payments/reconciliation/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40o-recon').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Match Rate: ${d.match_rate_pct}% | Unmatched: ${(d.unmatched_today||0).toLocaleString()} | Settlement Lag: ${d.settlement_lag_hours}hrs</span>`;
+}
+async function loadAllP40Org() { await Promise.all([loadOrgPayouts(), loadOrgRecon()]); }
+loadAllP40Org();
+</script>
+<!-- END PHASE 40 ORGANISER PORTAL -->
 </body></html>

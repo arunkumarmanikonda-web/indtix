@@ -3552,4 +3552,60 @@ async function loadAllP39EM() { await Promise.all([loadEMSignals(), loadEMPricin
 loadAllP39EM();
 </script>
 <!-- END PHASE 39 EVENT MANAGER -->
+
+<!-- PHASE 40 EVENT MANAGER PORTAL: Financial & Tax Tools -->
+<div id="phase40-em" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#10b981;font-size:1.3rem;margin-bottom:4px;">💳 Phase 40 — Event Finance & Tax Management</h2>
+  <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">GST invoicing · Payment settlement · Revenue P&L · Vendor payouts · Artist royalties</p>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.3rem;font-weight:700;color:#10b981;">79.98%</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Gross Margin</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #f59e0b;">
+      <div style="font-size:1.3rem;font-weight:700;color:#f59e0b;">40%</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">EBITDA Margin</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #06b6d4;">
+      <div style="font-size:1.3rem;font-weight:700;color:#06b6d4;">100%</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">GST Compliance</div>
+    </div>
+    <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:center;border-left:3px solid #8b5cf6;">
+      <div style="font-size:1.3rem;font-weight:700;color:#8b5cf6;">T+1</div>
+      <div style="font-size:0.7rem;color:#94a3b8;">Settlement</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #f59e0b;">
+      <h4 style="color:#f59e0b;margin:0 0 6px;font-size:0.85rem;">📊 Event P&L</h4>
+      <div id="p40em-pnl" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadEMPnL()" style="margin-top:6px;background:#f59e0b;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">View P&L</button>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;border-top:2px solid #06b6d4;">
+      <h4 style="color:#06b6d4;margin:0 0 6px;font-size:0.85rem;">🧾 Tax Compliance</h4>
+      <div id="p40em-tax" style="font-size:0.78rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadEMTax()" style="margin-top:6px;background:#06b6d4;color:#0f172a;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:600;">Tax Calendar</button>
+    </div>
+  </div>
+
+  <button onclick="loadAllP40EM()" style="background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:700;">💳 Refresh All</button>
+</div>
+
+<script>
+async function loadEMPnL() {
+  const d = await fetch('/api/admin/finance/accounting/reports/p-and-l').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40em-pnl').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Revenue: ₹${(d.net_revenue_inr/1e7).toFixed(0)}Cr | Gross Margin: ${d.gross_margin_pct}% | EBITDA: ${d.ebitda_margin_pct}%</span>`;
+}
+async function loadEMTax() {
+  const d = await fetch('/api/admin/tax/compliance/calendar').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40em-tax').innerHTML = d.error ? '❌ Error' :
+    `<span style="color:#e2e8f0;">Upcoming: ${d.upcoming?.length||0} obligations | Score: ${d.compliance_score}% | Overdue: ${d.overdue?.length||0}</span>`;
+}
+async function loadAllP40EM() { await Promise.all([loadEMPnL(), loadEMTax()]); }
+loadAllP40EM();
+</script>
+<!-- END PHASE 40 EVENT MANAGER -->
 </body></html>

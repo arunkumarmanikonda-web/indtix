@@ -6172,4 +6172,125 @@ async function loadAllP39Admin() {
 loadAllP39Admin();
 </script>
 <!-- END PHASE 39 ADMIN PORTAL -->
+
+<!-- PHASE 40 ADMIN PORTAL: Global Payments, Financial Infrastructure & Embedded Finance -->
+<div id="phase40-admin" style="background:#0f172a;color:#e2e8f0;padding:24px;margin-top:24px;border-radius:12px;font-family:system-ui,sans-serif;">
+  <h2 style="color:#10b981;font-size:1.4rem;margin-bottom:4px;">💳 Phase 40 — Global Payments, Financial Infrastructure & Embedded Finance</h2>
+  <p style="color:#94a3b8;font-size:0.85rem;margin-bottom:16px;">Payments Orchestration · UPI 2.0 · International FX · Embedded Finance · Fraud Prevention · Accounting · Payouts · Tax Automation · Treasury · Investor Metrics</p>
+
+  <!-- KPI Row -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:18px;">
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #10b981;">
+      <div style="font-size:1.4rem;font-weight:700;color:#10b981;">₹284Cr</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">GMV Today</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #06b6d4;">
+      <div style="font-size:1.4rem;font-weight:700;color:#06b6d4;">99.2%</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Payment Success Rate</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #f59e0b;">
+      <div style="font-size:1.4rem;font-weight:700;color:#f59e0b;">₹840Cr</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Cash & Liquidity</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #8b5cf6;">
+      <div style="font-size:1.4rem;font-weight:700;color:#8b5cf6;">₹8,400Cr</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">ARR</div>
+    </div>
+    <div style="background:#1e293b;padding:12px;border-radius:8px;text-align:center;border-left:3px solid #ef4444;">
+      <div style="font-size:1.4rem;font-weight:700;color:#ef4444;">4ppm</div>
+      <div style="font-size:0.72rem;color:#94a3b8;">Fraud Rate</div>
+    </div>
+  </div>
+
+  <!-- Module Grid -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;">
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #10b981;">
+      <h4 style="color:#10b981;margin:0 0 8px;font-size:0.9rem;">💳 Payments Orchestration</h4>
+      <div id="p40-payments" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP40Payments()" style="margin-top:8px;background:#10b981;color:#0f172a;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #06b6d4;">
+      <h4 style="color:#06b6d4;margin:0 0 8px;font-size:0.9rem;">📱 UPI & India Stack</h4>
+      <div id="p40-upi" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP40UPI()" style="margin-top:8px;background:#06b6d4;color:#0f172a;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #3b82f6;">
+      <h4 style="color:#3b82f6;margin:0 0 8px;font-size:0.9rem;">🌍 International & FX</h4>
+      <div id="p40-intl" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP40Intl()" style="margin-top:8px;background:#3b82f6;color:#fff;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #f59e0b;">
+      <h4 style="color:#f59e0b;margin:0 0 8px;font-size:0.9rem;">🏦 Embedded Finance</h4>
+      <div id="p40-embedded" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP40Embedded()" style="margin-top:8px;background:#f59e0b;color:#0f172a;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #ef4444;">
+      <h4 style="color:#ef4444;margin:0 0 8px;font-size:0.9rem;">🛡️ Fraud & Risk Engine</h4>
+      <div id="p40-fraud" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP40Fraud()" style="margin-top:8px;background:#ef4444;color:#fff;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+    <div style="background:#1e293b;padding:14px;border-radius:8px;border-top:2px solid #8b5cf6;">
+      <h4 style="color:#8b5cf6;margin:0 0 8px;font-size:0.9rem;">📊 Investor & Financial Metrics</h4>
+      <div id="p40-reporting" style="font-size:0.8rem;color:#94a3b8;">Loading...</div>
+      <button onclick="loadP40Reporting()" style="margin-top:8px;background:#8b5cf6;color:#fff;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:0.78rem;font-weight:600;">Refresh</button>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <button onclick="loadAllP40Admin()" style="background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:0.85rem;font-weight:700;">💳 Load All Modules</button>
+    <button onclick="loadP40Treasury()" style="background:#1e293b;color:#f59e0b;border:1px solid #f59e0b;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;">💰 Treasury</button>
+    <button onclick="loadP40Tax()" style="background:#1e293b;color:#06b6d4;border:1px solid #06b6d4;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;">🧾 Tax Automation</button>
+    <button onclick="loadP40Payouts()" style="background:#1e293b;color:#10b981;border:1px solid #10b981;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:0.82rem;">💸 Payouts</button>
+  </div>
+</div>
+
+<script>
+async function loadP40Payments() {
+  const d = await fetch('/api/admin/payments/orchestration/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40-payments').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">💳 Txns: ${(d.total_transactions_today||0).toLocaleString()} | GMV: ₹${(d.total_gmv_inr_today/1e7).toFixed(0)}Cr | Success: ${d.success_rate_pct}% | Rails: ${d.payment_rails?.length}</div>`;
+}
+async function loadP40UPI() {
+  const d = await fetch('/api/admin/payments/upi/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40-upi').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">📱 UPI Txns: ${(d.upi_transactions_today||0).toLocaleString()} | VPAs: ${(d.vpa_registered||0).toLocaleString()} | Mandates: ${(d.upi_autopay_mandates||0).toLocaleString()} | Success: ${d.collect_success_pct}%</div>`;
+}
+async function loadP40Intl() {
+  const d = await fetch('/api/admin/payments/international/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40-intl').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">🌍 GMV: $${(d.international_gmv_usd_today||0).toLocaleString()} | Currencies: ${d.currencies_accepted} | Countries: ${d.countries_supported} | FX Spread: ${d.avg_fx_spread_bps}bps</div>`;
+}
+async function loadP40Embedded() {
+  const d = await fetch('/api/admin/finance/embedded/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40-embedded').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">🏦 Virtual A/Cs: ${(d.virtual_accounts_active||0).toLocaleString()} | PPI: ₹${(d.ppi_outstanding_inr/1e7).toFixed(0)}Cr | Nodal: ₹${(d.nodal_account_balance_inr/1e7).toFixed(0)}Cr</div>`;
+}
+async function loadP40Fraud() {
+  const d = await fetch('/api/admin/risk/fraud/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40-fraud').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">🛡️ Screened: ${(d.transactions_screened_today||0).toLocaleString()} | Fraud Prevented: ₹${(d.fraud_prevented_inr/1e7).toFixed(0)}Cr | FP Rate: ${d.false_positive_rate_ppm}ppm</div>`;
+}
+async function loadP40Reporting() {
+  const d = await fetch('/api/admin/finance/reporting/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  document.getElementById('p40-reporting').innerHTML = d.error ? '❌ Error' :
+    `<div class="success-alert">📊 ARR: ₹${(d.arr_inr/1e9).toFixed(0)}Bn | GMV YTD: ₹${(d.gmv_inr_ytd/1e9).toFixed(0)}Bn | EBITDA: ${d.ebitda_margin_pct}% | NRR: ${d.nrr_pct}%</div>`;
+}
+async function loadP40Treasury() {
+  const d = await fetch('/api/admin/treasury/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  alert(d.error ? 'Error' : `💰 Cash: ₹${(d.total_cash_inr/1e7).toFixed(0)}Cr | Liquidity: ₹${(d.total_liquidity_inr/1e7).toFixed(0)}Cr | Runway: ${d.runway_months}mo | WACC: ${d.weighted_avg_cost_of_capital_pct}%`);
+}
+async function loadP40Tax() {
+  const d = await fetch('/api/admin/tax/automation/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  alert(d.error ? 'Error' : `🧾 GST Returns Filed: ${d.gst_returns_filed} | Net GST Payable: ₹${(d.net_gst_payable_inr/1e7).toFixed(0)}Cr | TDS: ${d.tds_compliance_pct}% compliant | Score: ${d.audit_risk_score}`);
+}
+async function loadP40Payouts() {
+  const d = await fetch('/api/admin/payouts/dashboard').then(r=>r.json()).catch(()=>({error:true}));
+  alert(d.error ? 'Error' : `💸 Payouts Today: ${d.total_payouts_today} | Amount: ₹${(d.total_payout_amount_inr_today/1e7).toFixed(0)}Cr | Success: ${d.success_rate_pct}% | Beneficiaries: ${(d.beneficiaries_onboarded||0).toLocaleString()}`);
+}
+async function loadAllP40Admin() {
+  await Promise.all([loadP40Payments(), loadP40UPI(), loadP40Intl(), loadP40Embedded(), loadP40Fraud(), loadP40Reporting()]);
+}
+loadAllP40Admin();
+</script>
+<!-- END PHASE 40 ADMIN PORTAL -->
 </body></html>
