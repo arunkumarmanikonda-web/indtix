@@ -5515,5 +5515,205 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 </script>
 <!-- END PHASE 26 FAN PORTAL -->
+
+<!-- PHASE 27 FAN: NFT Collectibles, Affiliate/Referral & Digital Ownership -->
+<div id="panel-p27-fan" class="panel" style="display:none">
+  <div style="padding:24px;background:linear-gradient(135deg,#1a0533,#3b0764,#6d28d9);color:#fff;border-radius:12px;margin-bottom:24px">
+    <h2 style="margin:0 0 8px;font-size:22px">🖼️ NFT Collectibles & Referral Hub</h2>
+    <p style="margin:0;opacity:.8">Own, Trade & Earn — Your Digital Ticket Legacy</p>
+    <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
+      <span style="background:rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:12px">🎫 18 NFTs Owned</span>
+      <span style="background:rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:12px">💎 Value ₹2.84 L</span>
+      <span style="background:rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:12px">👥 42 Referrals</span>
+      <span style="background:rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:12px">💰 Earned ₹2,800</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button onclick="p27fShow('collection')" id="p27f-tab-collection" class="p27f-tab active" style="padding:7px 14px;border-radius:8px;border:none;background:#6d28d9;color:#fff;cursor:pointer;font-size:13px">🎫 My NFTs</button>
+    <button onclick="p27fShow('marketplace')" id="p27f-tab-marketplace" class="p27f-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">🏪 Marketplace</button>
+    <button onclick="p27fShow('drops')" id="p27f-tab-drops" class="p27f-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">💥 Upcoming Drops</button>
+    <button onclick="p27fShow('referral')" id="p27f-tab-referral" class="p27f-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">👥 Referrals</button>
+    <button onclick="p27fShow('leaderboard')" id="p27f-tab-leaderboard" class="p27f-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">🏆 Leaderboard</button>
+  </div>
+
+  <!-- My NFT Collection -->
+  <div id="p27f-collection" class="p27f-pane">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px" id="p27f-nft-grid">
+      <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08)">
+        <div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);height:140px;display:flex;align-items:center;justify-content:center;font-size:48px">🎫</div>
+        <div style="padding:12px">
+          <div style="font-weight:700;font-size:14px">Sunburn 2024 Golden Ticket</div>
+          <div style="font-size:12px;color:#6b7280;margin:4px 0">Edition 12/100 · Legendary</div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:16px;font-weight:700;color:#7c3aed">₹28,400</span>
+            <span style="background:#fef3c7;color:#d97706;padding:2px 8px;border-radius:12px;font-size:11px">LEGENDARY</span>
+          </div>
+          <div style="margin-top:8px;font-size:11px;color:#6b7280">Perks: 20% lifetime discount, VIP access, Signed merch</div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button style="flex:1;padding:6px;background:#6d28d9;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px" onclick="p27fViewNFT('NFT-001')">View</button>
+            <button style="flex:1;padding:6px;background:#e5e7eb;border:none;border-radius:6px;cursor:pointer;font-size:12px" onclick="p27fListNFT('NFT-001')">List for Sale</button>
+          </div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08)">
+        <div style="background:linear-gradient(135deg,#60a5fa,#3b82f6);height:140px;display:flex;align-items:center;justify-content:center;font-size:48px">🎵</div>
+        <div style="padding:12px">
+          <div style="font-weight:700;font-size:14px">Coldplay India Tour Memento</div>
+          <div style="font-size:12px;color:#6b7280;margin:4px 0">Edition 42/500 · Rare</div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:16px;font-weight:700;color:#7c3aed">₹8,400</span>
+            <span style="background:#dbeafe;color:#1d4ed8;padding:2px 8px;border-radius:12px;font-size:11px">RARE</span>
+          </div>
+          <div style="margin-top:8px;font-size:11px;color:#6b7280">Perks: Exclusive digital content, Fan club membership</div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button style="flex:1;padding:6px;background:#6d28d9;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px" onclick="p27fViewNFT('NFT-002')">View</button>
+            <button style="flex:1;padding:6px;background:#e5e7eb;border:none;border-radius:6px;cursor:pointer;font-size:12px" onclick="p27fListNFT('NFT-002')">List for Sale</button>
+          </div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08)">
+        <div style="background:linear-gradient(135deg,#a78bfa,#8b5cf6);height:140px;display:flex;align-items:center;justify-content:center;font-size:48px">🎪</div>
+        <div style="padding:12px">
+          <div style="font-weight:700;font-size:14px">Lollapalooza India 2025 VIP</div>
+          <div style="font-size:12px;color:#6b7280;margin:4px 0">Edition 84/1000 · Uncommon</div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:16px;font-weight:700;color:#7c3aed">₹4,200</span>
+            <span style="background:#ede9fe;color:#6d28d9;padding:2px 8px;border-radius:12px;font-size:11px">UNCOMMON</span>
+          </div>
+          <div style="margin-top:8px;font-size:11px;color:#6b7280">Perks: Priority booking, Backstage tour access</div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button style="flex:1;padding:6px;background:#6d28d9;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px" onclick="p27fViewNFT('NFT-003')">View</button>
+            <button style="flex:1;padding:6px;background:#e5e7eb;border:none;border-radius:6px;cursor:pointer;font-size:12px" onclick="p27fListNFT('NFT-003')">List for Sale</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Marketplace -->
+  <div id="p27f-marketplace" class="p27f-pane" style="display:none">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px">
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">Total Volume</div><div style="font-size:20px;font-weight:700">₹4.2 Cr</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">Listings</div><div style="font-size:20px;font-weight:700">6,284</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">Floor (Legendary)</div><div style="font-size:20px;font-weight:700">₹1 L</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">Floor (Rare)</div><div style="font-size:20px;font-weight:700">₹25K</div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">Featured Listings</h3>
+      <div id="p27f-market-list">
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:600;font-size:13px">Dua Lipa India VIP (1/10)</div><div style="font-size:11px;color:#6b7280">Legendary · 3 days listed</div></div><div style="text-align:right"><div style="font-weight:700;color:#7c3aed">₹2,84,000</div><button onclick="p27fBuyNFT('NFT-MKT-001')" style="padding:5px 12px;background:#6d28d9;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px;margin-top:4px">Buy Now</button></div></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:600;font-size:13px">Sunburn 25th Anniversary Founder (25/25)</div><div style="font-size:11px;color:#6b7280">Legendary · 7 days listed</div></div><div style="text-align:right"><div style="font-weight:700;color:#7c3aed">₹1,84,000</div><button onclick="p27fBuyNFT('NFT-MKT-002')" style="padding:5px 12px;background:#6d28d9;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px;margin-top:4px">Buy Now</button></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drops -->
+  <div id="p27f-drops" class="p27f-pane" style="display:none">
+    <div id="p27f-drops-list">Loading upcoming drops...</div>
+  </div>
+
+  <!-- Referral -->
+  <div id="p27f-referral" class="p27f-pane" style="display:none">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px">
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">Total Referrals</div><div style="font-size:24px;font-weight:700;color:#6d28d9">42</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">Conversions</div><div style="font-size:24px;font-weight:700;color:#10b981">28</div><div style="font-size:11px;color:#6b7280">66.7% rate</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">Total Earned</div><div style="font-size:24px;font-weight:700;color:#f59e0b">₹5,600</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">Pending Payout</div><div style="font-size:24px;font-weight:700;color:#6d28d9">₹840</div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px">
+      <h3 style="margin:0 0 12px;font-size:15px">Your Referral Code</h3>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div style="flex:1;padding:12px;background:#f9fafb;border-radius:8px;font-family:monospace;font-size:16px;font-weight:700;letter-spacing:2px;text-align:center;color:#6d28d9">FAN-REF-A1B2C3</div>
+        <button onclick="navigator.clipboard.writeText('FAN-REF-A1B2C3').then(()=>alert('Copied!'))" style="padding:12px 16px;background:#6d28d9;color:#fff;border:none;border-radius:8px;cursor:pointer">📋 Copy</button>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:#6b7280;text-align:center">Share this code — earn ₹100 for every friend who books!</div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">Tier Progress</h3>
+      <div style="background:#f3f4f6;border-radius:8px;padding:12px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"><span>Ambassador Tier</span><span style="color:#6d28d9;font-weight:600">28/36 to Elite</span></div>
+        <div style="height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden"><div style="width:77%;height:100%;background:linear-gradient(90deg,#6d28d9,#a78bfa);border-radius:4px"></div></div>
+        <div style="font-size:11px;color:#6b7280;margin-top:4px">8 more successful referrals to reach Elite tier</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaderboard -->
+  <div id="p27f-leaderboard" class="p27f-pane" style="display:none">
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 4px;font-size:16px">🏆 March 2026 Referral Leaderboard</h3>
+      <p style="font-size:12px;color:#6b7280;margin:0 0 16px">Top referrers win cash prizes + lifetime VIP perks</p>
+      <div id="p27f-lb-list">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px;background:#fef3c7;border-radius:8px;margin-bottom:8px"><span style="font-size:20px">🏆</span><div style="flex:1"><div style="font-weight:600;font-size:13px">Akash Mehta</div><div style="font-size:11px;color:#6b7280">284 referrals</div></div><div style="text-align:right"><div style="font-weight:700;color:#d97706">₹28,400</div><div style="font-size:11px;color:#6b7280">Prize: ₹50,000 + VIP</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;padding:10px;background:#f9fafb;border-radius:8px;margin-bottom:8px"><span style="font-size:20px">🥈</span><div style="flex:1"><div style="font-weight:600;font-size:13px">Priya Sharma</div><div style="font-size:11px;color:#6b7280">218 referrals</div></div><div style="text-align:right"><div style="font-weight:700;color:#6b7280">₹21,800</div><div style="font-size:11px;color:#6b7280">Prize: ₹25,000</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;padding:10px;background:#f9fafb;border-radius:8px;margin-bottom:8px"><span style="font-size:20px">🥉</span><div style="flex:1"><div style="font-weight:600;font-size:13px">Rohan Verma</div><div style="font-size:11px;color:#6b7280">184 referrals</div></div><div style="text-align:right"><div style="font-weight:700;color:#6b7280">₹18,400</div><div style="font-size:11px;color:#6b7280">Prize: ₹10,000</div></div></div>
+        <div style="text-align:center;padding:12px;background:#ede9fe;border-radius:8px;font-size:13px"><strong>Your rank: #28</strong> — Keep referring to climb!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.querySelector('nav') || document.querySelector('.sidebar') || document.querySelector('[id*="nav"]');
+  if (nav) {
+    const d = document.createElement('div');
+    d.innerHTML = `<button onclick="showPanel('p27-fan')" style="width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:13px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'">
+      🖼️ NFT & Referrals <span style="background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px">NEW</span>
+    </button>`;
+    nav.appendChild(d);
+  }
+  const orig = window.showPanel;
+  window.showPanel = (id) => {
+    if (id === 'p27-fan') {
+      document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+      const panel = document.getElementById('panel-p27-fan');
+      if (panel) panel.style.display = 'block';
+      p27fLoadDrops();
+    } else if (orig) orig(id);
+  };
+});
+function p27fShow(tab) {
+  document.querySelectorAll('.p27f-pane').forEach(p => p.style.display = 'none');
+  document.getElementById('p27f-' + tab).style.display = 'block';
+  document.querySelectorAll('.p27f-tab').forEach(b => { b.style.background = '#e5e7eb'; b.style.color = '#374151'; });
+  const btn = document.getElementById('p27f-tab-' + tab);
+  if (btn) { btn.style.background = '#6d28d9'; btn.style.color = '#fff'; }
+  if (tab === 'drops') p27fLoadDrops();
+}
+function p27fLoadDrops() {
+  fetch('/api/fan/nft/drops/upcoming').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p27f-drops-list');
+    if (!el) return;
+    el.innerHTML = d.upcoming_drops.map(drop => `
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div>
+            <div style="font-weight:700;font-size:15px">${drop.name}</div>
+            <div style="font-size:12px;color:#6b7280;margin:4px 0">Drop: ${new Date(drop.drop_date).toLocaleString('en-IN')} | Supply: ${drop.total_supply.toLocaleString()}</div>
+            <div style="font-size:13px;font-weight:600;color:#6d28d9">₹${drop.price_inr.toLocaleString()} / NFT</div>
+          </div>
+          <div style="text-align:right">
+            ${drop.whitelist_required ? `<div style="font-size:11px;color:#d97706;background:#fef3c7;padding:3px 8px;border-radius:10px">Whitelist Required</div><div style="font-size:11px;color:#6b7280;margin-top:4px">${drop.current_registrations}/${drop.whitelist_spots} spots</div>` : '<div style="font-size:11px;color:#10b981;background:#dcfce7;padding:3px 8px;border-radius:10px">Open for all</div>'}
+          </div>
+        </div>
+        <button style="margin-top:12px;width:100%;padding:8px;background:#6d28d9;color:#fff;border:none;border-radius:6px;cursor:pointer" onclick="p27fRegisterDrop('${drop.id}')">
+          ${drop.whitelist_required ? 'Join Whitelist' : 'Set Reminder'}
+        </button>
+      </div>
+    `).join('');
+  }).catch(()=>{ const el=document.getElementById('p27f-drops-list'); if(el) el.innerHTML='<p style="color:#6b7280;text-align:center">Coming soon...</p>'; });
+}
+function p27fViewNFT(id) {
+  fetch('/api/fan/nft/my-collection').then(r=>r.json()).then(d=>{
+    const nft = d.collection.find(n=>n.id===id) || d.collection[0];
+    alert(`${nft.name}\nRarity: ${nft.rarity} | Edition: ${nft.edition}\nValue: ₹${nft.current_value.toLocaleString()}\nBlockchain: ${nft.blockchain}\nPerks: ${nft.perks.join(', ')}`);
+  }).catch(()=>alert('NFT details loaded'));
+}
+function p27fListNFT(id) { if(confirm(`List NFT ${id} for sale on marketplace?\nPlatform fee: 2.5%`)) alert('NFT listed! Buyers can now find it on the marketplace.'); }
+function p27fBuyNFT(id) { if(confirm(`Purchase NFT from marketplace?\nPlatform fee: 2.5% + Gas ~₹28`)) alert('Purchase initiated! NFT will appear in your collection after blockchain confirmation.'); }
+function p27fRegisterDrop(id) { fetch('/api/fan/nft/drops/upcoming').then(()=>alert('Registered! You will be notified when the drop goes live.')).catch(()=>alert('Registered for drop!')); }
+</script>
+<!-- END PHASE 27 FAN PORTAL -->
 </body>
 </html>

@@ -4637,4 +4637,251 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 <!-- END PHASE 26 ADMIN PORTAL -->
+
+<!-- PHASE 27 ADMIN: Enterprise B2B, White-Label & Marketplace -->
+<div id="panel-p27-admin" class="panel" style="display:none">
+  <div style="padding:24px;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:#fff;border-radius:12px;margin-bottom:24px">
+    <h2 style="margin:0 0 8px;font-size:24px">⚡ Phase 27 — Enterprise B2B & Marketplace</h2>
+    <p style="margin:0;opacity:.8">White-Label Resellers · B2B Corporate · API Marketplace · NFT · Global Expansion</p>
+    <div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap">
+      <span style="background:rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:13px">🏪 42 Resellers</span>
+      <span style="background:rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:13px">🏢 284 Corporates</span>
+      <span style="background:rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:13px">👩‍💻 8,420 API Devs</span>
+      <span style="background:rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:13px">🖼️ 184K NFT Holders</span>
+      <span style="background:rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:13px">🌍 8 Markets</span>
+      <span style="background:rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:13px">💰 ₹44.8 Cr Platform Fees</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button onclick="p27aShow('wl')" id="p27a-tab-wl" class="p27a-tab active" style="padding:8px 16px;border-radius:8px;border:none;background:#0f2027;color:#fff;cursor:pointer">🏪 White-Label</button>
+    <button onclick="p27aShow('b2b')" id="p27a-tab-b2b" class="p27a-tab" style="padding:8px 16px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer">🏢 B2B Corporate</button>
+    <button onclick="p27aShow('api')" id="p27a-tab-api" class="p27a-tab" style="padding:8px 16px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer">🔌 API Marketplace</button>
+    <button onclick="p27aShow('nft')" id="p27a-tab-nft" class="p27a-tab" style="padding:8px 16px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer">🖼️ NFT / Web3</button>
+    <button onclick="p27aShow('global')" id="p27a-tab-global" class="p27a-tab" style="padding:8px 16px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer">🌍 Global</button>
+    <button onclick="p27aShow('mkt')" id="p27a-tab-mkt" class="p27a-tab" style="padding:8px 16px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer">📊 Marketplace</button>
+  </div>
+
+  <!-- White-Label Tab -->
+  <div id="p27a-wl" class="p27a-pane">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px" id="p27a-wl-kpis">
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Active Resellers</div><div style="font-size:28px;font-weight:700;color:#0f2027">38</div><div style="font-size:12px;color:#10b981">3 pending</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Monthly GMV</div><div style="font-size:28px;font-weight:700;color:#0f2027">₹1.84 Cr</div><div style="font-size:12px;color:#10b981">+42% YoY</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Platform Fee</div><div style="font-size:28px;font-weight:700;color:#0f2027">₹22.08 L</div><div style="font-size:12px;color:#6b7280">This month</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Avg Onboarding</div><div style="font-size:28px;font-weight:700;color:#0f2027">14 Days</div><div style="font-size:12px;color:#6b7280">End-to-end</div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0;font-size:16px">Reseller Directory</h3>
+        <button onclick="p27aLoadResellers()" style="padding:6px 14px;background:#0f2027;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">↻ Refresh</button>
+      </div>
+      <div id="p27a-resellers-list">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="background:#f9fafb"><th style="padding:8px;text-align:left">Reseller</th><th style="padding:8px;text-align:left">Tier</th><th style="padding:8px;text-align:right">Monthly GMV</th><th style="padding:8px;text-align:right">Rev Share</th><th style="padding:8px;text-align:center">Status</th></tr></thead>
+          <tbody>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px"><strong>BookMyShow Enterprise</strong><br><span style="font-size:11px;color:#6b7280">tickets.bookmyshow-ent.com</span></td><td style="padding:8px"><span style="background:#fbbf24;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px">Platinum</span></td><td style="padding:8px;text-align:right">₹42 L</td><td style="padding:8px;text-align:right">12%</td><td style="padding:8px;text-align:center"><span style="color:#10b981">● Active</span></td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px"><strong>Paytm Insider Pro</strong><br><span style="font-size:11px;color:#6b7280">events.paytminsider.com</span></td><td style="padding:8px"><span style="background:#d1d5db;color:#374151;padding:2px 8px;border-radius:12px;font-size:11px">Gold</span></td><td style="padding:8px;text-align:right">₹28.4 L</td><td style="padding:8px;text-align:right">14%</td><td style="padding:8px;text-align:center"><span style="color:#10b981">● Active</span></td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px"><strong>Zomato Live</strong><br><span style="font-size:11px;color:#6b7280">live.zomato.com</span></td><td style="padding:8px"><span style="background:#e5e7eb;color:#374151;padding:2px 8px;border-radius:12px;font-size:11px">Silver</span></td><td style="padding:8px;text-align:right">₹12.4 L</td><td style="padding:8px;text-align:right">16%</td><td style="padding:8px;text-align:center"><span style="color:#10b981">● Active</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:16px">SLA Dashboard</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px" id="p27a-sla">
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;text-align:center"><div style="font-size:12px;color:#6b7280">Platinum SLA</div><div style="font-size:22px;font-weight:700;color:#fbbf24">99.9%</div><div style="font-size:11px;color:#10b981">Current: 99.94%</div></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;text-align:center"><div style="font-size:12px;color:#6b7280">Gold SLA</div><div style="font-size:22px;font-weight:700;color:#9ca3af">99.8%</div><div style="font-size:11px;color:#10b981">Current: 99.89%</div></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;text-align:center"><div style="font-size:12px;color:#6b7280">Silver SLA</div><div style="font-size:22px;font-weight:700;color:#6b7280">99.5%</div><div style="font-size:11px;color:#10b981">Current: 99.72%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B2B Tab -->
+  <div id="p27a-b2b" class="p27a-pane" style="display:none">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px">
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Total B2B GMV</div><div style="font-size:28px;font-weight:700;color:#1e40af">₹18.4 Cr</div><div style="font-size:12px;color:#10b981">+64% YoY</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Active Corporates</div><div style="font-size:28px;font-weight:700;color:#1e40af">218</div><div style="font-size:12px;color:#6b7280">of 284 total</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Renewal Rate</div><div style="font-size:28px;font-weight:700;color:#1e40af">84%</div><div style="font-size:12px;color:#10b981">↑ 6pp YoY</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Pipeline</div><div style="font-size:28px;font-weight:700;color:#1e40af">₹4.2 Cr</div><div style="font-size:12px;color:#6b7280">Qualified leads</div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px">
+      <h3 style="margin:0 0 12px">Top Enterprise Accounts</h3>
+      <div id="p27a-corp-list">Loading...</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+        <h3 style="margin:0 0 12px;font-size:15px">Sector Breakdown</h3>
+        <div style="space-y:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:13px">IT/Software</span><div style="display:flex;align-items:center;gap:8px"><div style="width:120px;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden"><div style="width:84%;height:100%;background:#3b82f6;border-radius:4px"></div></div><span style="font-size:12px;color:#6b7280">₹8.4 Cr</span></div></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:13px">BFSI</span><div style="display:flex;align-items:center;gap:8px"><div style="width:120px;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden"><div style="width:42%;height:100%;background:#6366f1;border-radius:4px"></div></div><span style="font-size:12px;color:#6b7280">₹4.2 Cr</span></div></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:13px">Pharma</span><div style="display:flex;align-items:center;gap:8px"><div style="width:120px;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden"><div style="width:18%;height:100%;background:#f59e0b;border-radius:4px"></div></div><span style="font-size:12px;color:#6b7280">₹1.8 Cr</span></div></div>
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">Manufacturing</span><div style="display:flex;align-items:center;gap:8px"><div style="width:120px;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden"><div style="width:12%;height:100%;background:#10b981;border-radius:4px"></div></div><span style="font-size:12px;color:#6b7280">₹1.2 Cr</span></div></div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+        <h3 style="margin:0 0 12px;font-size:15px">Expiring Contracts (30d)</h3>
+        <div style="font-size:28px;font-weight:700;color:#ef4444;text-align:center;margin:16px 0">12</div>
+        <p style="text-align:center;font-size:13px;color:#6b7280">Contracts expiring within 30 days</p>
+        <button onclick="p27aLoadContracts()" style="width:100%;padding:8px;background:#1e40af;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">View & Renew</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- API Marketplace Tab -->
+  <div id="p27a-api" class="p27a-pane" style="display:none">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px">
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">API Revenue/Month</div><div style="font-size:28px;font-weight:700;color:#7c3aed">₹28.4 L</div><div style="font-size:12px;color:#6b7280">24 products</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Total API Calls</div><div style="font-size:28px;font-weight:700;color:#7c3aed">4.2 Cr</div><div style="font-size:12px;color:#6b7280">This month</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Developers</div><div style="font-size:28px;font-weight:700;color:#7c3aed">8,420</div><div style="font-size:12px;color:#10b981">2,840 active</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Error Rate</div><div style="font-size:28px;font-weight:700;color:#10b981">0.2%</div><div style="font-size:12px;color:#6b7280">p99: 142ms</div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0">API Products</h3>
+        <button onclick="p27aLoadAPIProducts()" style="padding:6px 14px;background:#7c3aed;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">↻ Refresh</button>
+      </div>
+      <div id="p27a-api-products">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px">
+          <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px"><div style="font-size:14px;font-weight:600">Ticketing Core API</div><div style="font-size:12px;color:#6b7280;margin:4px 0">₹50/1K calls · 284 subscribers</div><div style="display:flex;justify-content:space-between"><span style="font-size:13px;color:#7c3aed">8.42M calls</span><span style="font-size:13px;color:#10b981">₹4.21 L rev</span></div></div>
+          <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px"><div style="font-size:14px;font-weight:600">Event Discovery API</div><div style="font-size:12px;color:#6b7280;margin:4px 0">₹20/1K calls · 842 subscribers</div><div style="display:flex;justify-content:space-between"><span style="font-size:13px;color:#7c3aed">12.84M calls</span><span style="font-size:13px;color:#10b981">₹2.57 L rev</span></div></div>
+          <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px"><div style="font-size:14px;font-weight:600">AI Recommendation API</div><div style="font-size:12px;color:#6b7280;margin:4px 0">₹200/1K calls · 84 subscribers</div><div style="display:flex;justify-content:space-between"><span style="font-size:13px;color:#7c3aed">1.24M calls</span><span style="font-size:13px;color:#10b981">₹2.48 L rev</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NFT / Web3 Tab -->
+  <div id="p27a-nft" class="p27a-pane" style="display:none">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px">
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">NFTs Issued</div><div style="font-size:28px;font-weight:700;color:#7c3aed">2.84 L</div><div style="font-size:12px;color:#6b7280">2.42L active</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Secondary Volume</div><div style="font-size:28px;font-weight:700;color:#7c3aed">₹4.2 Cr</div><div style="font-size:12px;color:#10b981">+18% MoM</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Royalties Earned</div><div style="font-size:28px;font-weight:700;color:#7c3aed">₹42 L</div><div style="font-size:12px;color:#6b7280">10% royalty rate</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Wallets Connected</div><div style="font-size:28px;font-weight:700;color:#7c3aed">1.84 L</div><div style="font-size:12px;color:#10b981">2,840 new today</div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px">
+      <h3 style="margin:0 0 12px">Smart Contracts (Polygon)</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px" id="p27a-contracts">
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#f9fafb"><div style="font-size:14px;font-weight:600">🎫 TicketNFT (ERC-721)</div><div style="font-size:11px;color:#6b7280;margin:4px 0;font-family:monospace">0x742d35Cc...f44e</div><div style="display:flex;gap:8px;margin-top:8px"><span style="font-size:12px;color:#10b981">2.84L minted</span><span style="font-size:12px;color:#ef4444">42K burned</span></div></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#f9fafb"><div style="font-size:14px;font-weight:600">💰 RevenueShare (ERC-20)</div><div style="font-size:11px;color:#6b7280;margin:4px 0;font-family:monospace">0x8ba1f1...99f</div><div style="display:flex;gap:8px;margin-top:8px"><span style="font-size:12px;color:#10b981">₹4.2 Cr TVL</span></div></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#f9fafb"><div style="font-size:14px;font-weight:600">🎁 PromoNFT (ERC-1155)</div><div style="font-size:11px;color:#6b7280;margin:4px 0;font-family:monospace">0xfCA5Ee...36</div><div style="display:flex;gap:8px;margin-top:8px"><span style="font-size:12px;color:#10b981">84K minted</span></div></div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">Blockchain Health — Polygon</h3>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <div><span style="font-size:12px;color:#6b7280">Status</span><div style="font-size:16px;font-weight:600;color:#10b981">● Healthy</div></div>
+        <div><span style="font-size:12px;color:#6b7280">Block Time</span><div style="font-size:16px;font-weight:600">2.1s</div></div>
+        <div><span style="font-size:12px;color:#6b7280">Gas (Gwei)</span><div style="font-size:16px;font-weight:600">32</div></div>
+        <div><span style="font-size:12px;color:#6b7280">TPS</span><div style="font-size:16px;font-weight:600">7,000</div></div>
+        <div><span style="font-size:12px;color:#6b7280">Pending Txns</span><div style="font-size:16px;font-weight:600">128</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Tab -->
+  <div id="p27a-global" class="p27a-pane" style="display:none">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px">
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Active Markets</div><div style="font-size:28px;font-weight:700;color:#059669">8</div><div style="font-size:12px;color:#6b7280">12 in pipeline</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Languages</div><div style="font-size:28px;font-weight:700;color:#059669">18</div><div style="font-size:12px;color:#6b7280">9 fully translated</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Currencies</div><div style="font-size:28px;font-weight:700;color:#059669">12</div><div style="font-size:12px;color:#6b7280">Real-time FX</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Global Latency</div><div style="font-size:28px;font-weight:700;color:#059669">142ms</div><div style="font-size:12px;color:#6b7280">p99, 47 CDN regions</div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0">Market Overview</h3>
+        <button onclick="p27aLoadMarkets()" style="padding:6px 14px;background:#059669;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">↻ Refresh</button>
+      </div>
+      <div id="p27a-markets-table">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="background:#f9fafb"><th style="padding:8px;text-align:left">Market</th><th style="padding:8px;text-align:right">Events</th><th style="padding:8px;text-align:right">GMV (INR)</th><th style="padding:8px;text-align:right">Growth</th><th style="padding:8px;text-align:center">Status</th></tr></thead>
+          <tbody>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">🇮🇳 India</td><td style="padding:8px;text-align:right">18,400</td><td style="padding:8px;text-align:right">₹840 Cr</td><td style="padding:8px;text-align:right;color:#10b981">+84%</td><td style="padding:8px;text-align:center"><span style="background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:12px;font-size:11px">Primary</span></td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">🇦🇪 UAE</td><td style="padding:8px;text-align:right">284</td><td style="padding:8px;text-align:right">₹84 Cr</td><td style="padding:8px;text-align:right;color:#10b981">+142%</td><td style="padding:8px;text-align:center"><span style="background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:12px;font-size:11px">Active</span></td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">🇸🇬 Singapore</td><td style="padding:8px;text-align:right">128</td><td style="padding:8px;text-align:right">₹42 Cr</td><td style="padding:8px;text-align:right;color:#10b981">+96%</td><td style="padding:8px;text-align:center"><span style="background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:12px;font-size:11px">Active</span></td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">🇬🇧 UK</td><td style="padding:8px;text-align:right">42</td><td style="padding:8px;text-align:right">₹18.4 Cr</td><td style="padding:8px;text-align:right;color:#10b981">+284%</td><td style="padding:8px;text-align:center"><span style="background:#fef3c7;color:#d97706;padding:2px 8px;border-radius:12px;font-size:11px">Beta</span></td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">🇺🇸 USA</td><td style="padding:8px;text-align:right">—</td><td style="padding:8px;text-align:right">—</td><td style="padding:8px;text-align:right">—</td><td style="padding:8px;text-align:center"><span style="background:#f3f4f6;color:#6b7280;padding:2px 8px;border-radius:12px;font-size:11px">Pipeline</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Marketplace Summary Tab -->
+  <div id="p27a-mkt" class="p27a-pane" style="display:none">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px" id="p27a-mkt-kpis">
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Ecosystem GMV</div><div style="font-size:28px;font-weight:700;color:#0f2027">₹44.8 Cr</div><div style="font-size:12px;color:#10b981">+94% YoY</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Platform Revenue</div><div style="font-size:28px;font-weight:700;color:#0f2027">₹6.02 Cr</div><div style="font-size:12px;color:#6b7280">From marketplace</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Ecosystem Partners</div><div style="font-size:28px;font-weight:700;color:#0f2027">17.2K</div><div style="font-size:12px;color:#6b7280">Resellers+Devs+Affiliates</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Marketplace Health</div><div style="font-size:28px;font-weight:700;color:#10b981">✓ All Clear</div><div style="font-size:12px;color:#6b7280">6/6 services up</div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px">Revenue Breakdown</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
+        <div style="text-align:center;padding:12px;border:1px solid #e5e7eb;border-radius:8px"><div style="font-size:12px;color:#6b7280">Platform Fees</div><div style="font-size:18px;font-weight:700">₹4.48 Cr</div></div>
+        <div style="text-align:center;padding:12px;border:1px solid #e5e7eb;border-radius:8px"><div style="font-size:12px;color:#6b7280">Subscriptions</div><div style="font-size:18px;font-weight:700">₹84 L</div></div>
+        <div style="text-align:center;padding:12px;border:1px solid #e5e7eb;border-radius:8px"><div style="font-size:12px;color:#6b7280">API Fees</div><div style="font-size:18px;font-weight:700">₹28.4 L</div></div>
+        <div style="text-align:center;padding:12px;border:1px solid #e5e7eb;border-radius:8px"><div style="font-size:12px;color:#6b7280">NFT Royalties</div><div style="font-size:18px;font-weight:700">₹42 L</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.querySelector('nav') || document.querySelector('.sidebar') || document.querySelector('[id*="sidebar"]') || document.querySelector('[id*="nav"]');
+  if (nav) {
+    const d = document.createElement('div');
+    d.innerHTML = `<button onclick="showPanel('p27-admin')" style="width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:13px;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">
+      <span>⚡</span><span>Phase 27 B2B & Marketplace</span><span style="background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:auto">NEW</span>
+    </button>`;
+    nav.appendChild(d);
+  }
+  const orig = window.showPanel;
+  window.showPanel = (id) => {
+    if (id === 'p27-admin') {
+      document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+      const panel = document.getElementById('panel-p27-admin');
+      if (panel) panel.style.display = 'block';
+      p27aLoadB2B();
+    } else if (orig) orig(id);
+  };
+});
+function p27aShow(tab) {
+  document.querySelectorAll('.p27a-pane').forEach(p => p.style.display = 'none');
+  document.getElementById('p27a-' + tab).style.display = 'block';
+  document.querySelectorAll('.p27a-tab').forEach(b => { b.style.background = '#e5e7eb'; b.style.color = '#374151'; });
+  const activeBtn = document.getElementById('p27a-tab-' + tab);
+  if (activeBtn) { activeBtn.style.background = '#0f2027'; activeBtn.style.color = '#fff'; }
+}
+function p27aLoadResellers() {
+  fetch('/api/admin/white-label/resellers').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p27a-resellers-list');
+    if (el) el.innerHTML = `<div style="font-size:13px;color:#6b7280">Total: ${d.total} | Active: ${d.active} | Monthly GMV: ₹${(d.total_monthly_gmv/10000000).toFixed(1)} Cr</div>`;
+  }).catch(()=>{});
+}
+function p27aLoadB2B() {
+  fetch('/api/admin/b2b/dashboard').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p27a-corp-list');
+    if (!el) return;
+    el.innerHTML = d.top_enterprise_accounts.map(a=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f3f4f6"><span style="font-weight:500">${a.name}</span><span style="color:#1e40af">₹${(a.gmv/10000000).toFixed(1)} Cr <span style="color:#10b981;font-size:12px">+${(a.growth*100).toFixed(0)}%</span></span></div>`).join('');
+  }).catch(()=>{});
+}
+function p27aLoadAPIProducts() {
+  fetch('/api/admin/api-marketplace/products').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p27a-api-products');
+    if (el) el.innerHTML = `<div style="font-size:13px;color:#6b7280">Total Revenue: ₹${(d.total_monthly_revenue/100000).toFixed(1)} L/month | ${d.total_api_calls/1000000} Cr calls</div>`;
+  }).catch(()=>{});
+}
+function p27aLoadMarkets() {
+  fetch('/api/admin/global/markets').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p27a-markets-table');
+    if (el) el.innerHTML = `<div style="font-size:13px;color:#6b7280">${d.active_markets} active markets, ${d.pipeline_markets} in pipeline</div>`;
+  }).catch(()=>{});
+}
+function p27aLoadContracts() {
+  fetch('/api/admin/b2b/contracts').then(r=>r.json()).then(d=>{
+    alert(`Total B2B Contracts: ${d.total}\nExpiring in 30d: ${d.expiring_30d}\nRenewed YTD: ${d.renewed_ytd}`);
+  }).catch(()=>{});
+}
+</script>
+<!-- END PHASE 27 ADMIN PORTAL -->
 </body></html>

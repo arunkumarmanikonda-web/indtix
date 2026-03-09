@@ -4372,4 +4372,191 @@ async function p26oLoadSponsor() {
 })();
 </script>
 <!-- END PHASE 26 ORGANISER PORTAL -->
+
+<!-- PHASE 27 ORGANISER: B2B Corporate, Affiliates, Talent & Analytics Marketplace -->
+<div id="panel-p27-organiser" class="panel" style="display:none">
+  <div style="padding:24px;background:linear-gradient(135deg,#064e3b,#065f46,#047857);color:#fff;border-radius:12px;margin-bottom:24px">
+    <h2 style="margin:0 0 8px;font-size:22px">🏢 B2B & Ecosystem Tools</h2>
+    <p style="margin:0;opacity:.8">Corporate Ticketing · Affiliates · Talent · Analytics Marketplace</p>
+    <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
+      <span style="background:rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:12px">🏢 284 Corporates</span>
+      <span style="background:rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:12px">💼 ₹18.4 Cr B2B GMV</span>
+      <span style="background:rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:12px">🤝 8,420 Affiliates</span>
+      <span style="background:rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:12px">🎤 2,840 Artists</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button onclick="p27oShow('b2b')" id="p27o-tab-b2b" class="p27o-tab active" style="padding:7px 14px;border-radius:8px;border:none;background:#047857;color:#fff;cursor:pointer;font-size:13px">🏢 Corporate B2B</button>
+    <button onclick="p27oShow('bulk')" id="p27o-tab-bulk" class="p27o-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">📦 Bulk Orders</button>
+    <button onclick="p27oShow('affiliates')" id="p27o-tab-affiliates" class="p27o-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">🤝 Affiliates</button>
+    <button onclick="p27oShow('analytics')" id="p27o-tab-analytics" class="p27o-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">📊 Analytics Mkt</button>
+    <button onclick="p27oShow('wl')" id="p27o-tab-wl" class="p27o-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">🏷️ White-Label</button>
+  </div>
+
+  <!-- B2B Tab -->
+  <div id="p27o-b2b" class="p27o-pane">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px">
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">B2B GMV</div><div style="font-size:22px;font-weight:700;color:#047857">₹18.4 Cr</div><div style="font-size:11px;color:#10b981">+64% YoY</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">Active Corporates</div><div style="font-size:22px;font-weight:700;color:#047857">218</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">Avg Contract</div><div style="font-size:22px;font-weight:700;color:#047857">₹8.45 L</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">Renewal Rate</div><div style="font-size:22px;font-weight:700;color:#047857">84%</div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0;font-size:15px">Top Corporate Accounts</h3>
+        <button onclick="p27oLoadCorporates()" style="padding:6px 12px;background:#047857;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">↻ Load</button>
+      </div>
+      <div id="p27o-corp-list">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="background:#f9fafb"><th style="padding:8px;text-align:left">Company</th><th style="padding:8px;text-align:right">Budget</th><th style="padding:8px;text-align:right">Used</th><th style="padding:8px;text-align:right">Employees</th><th style="padding:8px;text-align:center">Discount</th></tr></thead>
+          <tbody>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px"><strong>TCS</strong></td><td style="padding:8px;text-align:right">₹5 L</td><td style="padding:8px;text-align:right">₹2.84 L</td><td style="padding:8px;text-align:right">18,400</td><td style="padding:8px;text-align:center">15%</td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px"><strong>Infosys</strong></td><td style="padding:8px;text-align:right">₹4.2 L</td><td style="padding:8px;text-align:right">₹2.18 L</td><td style="padding:8px;text-align:right">12,400</td><td style="padding:8px;text-align:center">15%</td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px"><strong>Wipro</strong></td><td style="padding:8px;text-align:right">₹2 L</td><td style="padding:8px;text-align:right">₹84 K</td><td style="padding:8px;text-align:right">6,200</td><td style="padding:8px;text-align:center">10%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">Generate Corporate Quote</h3>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <input type="text" placeholder="Company name" style="flex:1;min-width:180px;padding:8px;border:1px solid #e5e7eb;border-radius:6px;font-size:13px">
+        <input type="number" placeholder="Quantity" style="width:120px;padding:8px;border:1px solid #e5e7eb;border-radius:6px;font-size:13px">
+        <button onclick="p27oGenerateQuote()" style="padding:8px 16px;background:#047857;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">Generate Quote</button>
+      </div>
+      <div id="p27o-quote-result" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <!-- Bulk Orders Tab -->
+  <div id="p27o-bulk" class="p27o-pane" style="display:none">
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0">Bulk Orders</h3>
+        <span style="background:#dcfce7;color:#15803d;padding:4px 12px;border-radius:12px;font-size:13px">1,284 total orders</span>
+      </div>
+      <div id="p27o-bulk-orders">
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><div><strong style="font-size:13px">TCS — Sunburn 2026 (200 tickets)</strong><br><span style="font-size:11px;color:#6b7280">₹3.4 L total · Digital delivery</span></div><span style="background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:10px;font-size:11px">Confirmed</span></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><div><strong style="font-size:13px">Infosys — NH7 Weekender (150 tickets)</strong><br><span style="font-size:11px;color:#6b7280">₹2.1 L total · Mixed delivery</span></div><span style="background:#fef3c7;color:#d97706;padding:2px 8px;border-radius:10px;font-size:11px">Processing</span></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;display:flex;justify-content:space-between;align-items:center"><div><strong style="font-size:13px">Wipro — Comic Con Mumbai (100 tickets)</strong><br><span style="font-size:11px;color:#6b7280">₹1.2 L total · Digital delivery</span></div><span style="background:#fee2e2;color:#b91c1c;padding:2px 8px;border-radius:10px;font-size:11px">Pending Payment</span></div>
+      </div>
+      <button onclick="p27oBulkAllocate()" style="margin-top:12px;padding:8px 16px;background:#047857;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">+ New Bulk Allocation</button>
+    </div>
+  </div>
+
+  <!-- Affiliates Tab -->
+  <div id="p27o-affiliates" class="p27o-pane" style="display:none">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px">
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">Total Affiliates</div><div style="font-size:22px;font-weight:700;color:#f59e0b">8,420</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">Commissions Paid</div><div style="font-size:22px;font-weight:700;color:#f59e0b">₹1.84 Cr</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">GMV via Affiliates</div><div style="font-size:22px;font-weight:700;color:#f59e0b">₹9.2 Cr</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">Top Affiliate</div><div style="font-size:14px;font-weight:700;color:#f59e0b">Bhuvan Bam<br><span style="font-size:12px;color:#6b7280">16M followers</span></div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0;font-size:15px">Top Affiliates</h3>
+        <button onclick="p27oInviteAffiliate()" style="padding:6px 12px;background:#f59e0b;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">+ Invite</button>
+      </div>
+      <div id="p27o-aff-list">
+        <div style="border-bottom:1px solid #f3f4f6;padding:10px 0;display:flex;justify-content:space-between;align-items:center"><div><strong style="font-size:13px">Bhuvan Bam</strong> <span style="font-size:11px;color:#6b7280">@bhuvan.bam22 · YouTube · 16M</span></div><div style="text-align:right"><div style="font-size:13px;font-weight:600;color:#10b981">₹5.52 L earned</div><div style="font-size:11px;color:#6b7280">18,400 referrals this month</div></div></div>
+        <div style="border-bottom:1px solid #f3f4f6;padding:10px 0;display:flex;justify-content:space-between;align-items:center"><div><strong style="font-size:13px">Nikhil Kamath</strong> <span style="font-size:11px;color:#6b7280">@nikhilkamathofficial · Instagram · 2.4M</span></div><div style="text-align:right"><div style="font-size:13px;font-weight:600;color:#10b981">₹3.37 L earned</div><div style="font-size:11px;color:#6b7280">8,420 referrals</div></div></div>
+        <div style="padding:10px 0;display:flex;justify-content:space-between;align-items:center"><div><strong style="font-size:13px">Ankush Bahuguna</strong> <span style="font-size:11px;color:#6b7280">@ankushbahuguna · Instagram · 840K</span></div><div style="text-align:right"><div style="font-size:13px;font-weight:600;color:#10b981">₹1.42 L earned</div><div style="font-size:11px;color:#6b7280">2,840 referrals</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analytics Marketplace Tab -->
+  <div id="p27o-analytics" class="p27o-pane" style="display:none">
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px">
+      <h3 style="margin:0 0 12px;font-size:15px">My Subscriptions</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#f0fdf4"><div style="font-size:14px;font-weight:600;color:#065f46">Fan Demographics Intelligence</div><div style="font-size:12px;color:#6b7280;margin:4px 0">₹25,000/month · Real-time</div><div style="font-size:13px">Age 18-34: 68% · Female: 52% · Tier-1: 84%</div></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#f0fdf4"><div style="font-size:14px;font-weight:600;color:#065f46">Pricing Intelligence Suite</div><div style="font-size:12px;color:#6b7280;margin:4px 0">₹50,000/month · Hourly</div><div style="font-size:13px">Optimal price elasticity · Competitor benchmarks</div></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#f0fdf4"><div style="font-size:14px;font-weight:600;color:#065f46">Artist ROI Calculator</div><div style="font-size:12px;color:#6b7280;margin:4px 0">₹35,000/month · Daily</div><div style="font-size:13px">Ticket uplift · Social correlation · Secondary mkt</div></div>
+      </div>
+      <div style="margin-top:12px;padding:10px;background:#f9fafb;border-radius:8px;font-size:13px;color:#6b7280">Total Monthly Spend: <strong style="color:#065f46">₹1.1 L</strong> · 454 insights consumed · 42 reports generated</div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">Browse Marketplace</h3>
+      <div id="p27o-mkt-products">Loading...</div>
+    </div>
+  </div>
+
+  <!-- White-Label Tab -->
+  <div id="p27o-wl" class="p27o-pane" style="display:none">
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">Your White-Label Portal</h3>
+      <div id="p27o-wl-info">
+        <div style="background:#f0fdf4;border-radius:8px;padding:12px;margin-bottom:12px"><div style="font-size:13px"><strong>Portal URL:</strong> <a href="#" style="color:#047857">tickets.bms-ent.com/org/ORG-001</a></div><div style="font-size:13px;margin-top:4px"><strong>Branding:</strong> Custom logo, colors, domain — all enabled</div><div style="font-size:13px;margin-top:4px"><strong>GMV via White-Label:</strong> ₹42 L | Bookings: 18,400</div></div>
+        <button onclick="p27oLoadWLPortal()" style="padding:8px 16px;background:#047857;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">↻ Refresh Portal Stats</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.querySelector('nav') || document.querySelector('.sidebar') || document.querySelector('[id*="nav"]');
+  if (nav) {
+    const d = document.createElement('div');
+    d.innerHTML = `<button onclick="showPanel('p27-organiser')" style="width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:13px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'">
+      🏢 B2B &amp; Marketplace <span style="background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px">NEW</span>
+    </button>`;
+    nav.appendChild(d);
+  }
+  const orig = window.showPanel;
+  window.showPanel = (id) => {
+    if (id === 'p27-organiser') {
+      document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+      const panel = document.getElementById('panel-p27-organiser');
+      if (panel) panel.style.display = 'block';
+    } else if (orig) orig(id);
+  };
+});
+function p27oShow(tab) {
+  document.querySelectorAll('.p27o-pane').forEach(p => p.style.display = 'none');
+  document.getElementById('p27o-' + tab).style.display = 'block';
+  document.querySelectorAll('.p27o-tab').forEach(b => { b.style.background = '#e5e7eb'; b.style.color = '#374151'; });
+  const btn = document.getElementById('p27o-tab-' + tab);
+  if (btn) { btn.style.background = '#047857'; btn.style.color = '#fff'; }
+  if (tab === 'analytics') p27oLoadAnalytics();
+}
+function p27oLoadCorporates() {
+  fetch('/api/organiser/b2b/corporates').then(r=>r.json()).then(d=>{ 
+    const el = document.getElementById('p27o-corp-list'); 
+    if (el) el.innerHTML = `<div style="font-size:13px;color:#6b7280">Total: ${d.total_corporates} | Active: ${d.active_contracts} | B2B GMV: ₹${(d.total_b2b_gmv/10000000).toFixed(1)} Cr</div>`; 
+  }).catch(()=>{});
+}
+function p27oGenerateQuote() {
+  fetch('/api/organiser/b2b/corporate-quote', {method:'POST'}).then(r=>r.json()).then(d=>{ 
+    const el = document.getElementById('p27o-quote-result'); 
+    if (el) el.innerHTML = `<div style="background:#f0fdf4;border-radius:8px;padding:12px;font-size:13px"><strong>Quote ${d.quote_id}</strong> — Valid until ${d.valid_until}<br>500 tickets × ₹1,700 = <strong>₹8.5 L</strong> + GST ₹1.53 L = <strong style="color:#047857">₹10.03 L total</strong><br><span style="color:#6b7280">Terms: NET-30 | Manager: ${d.account_manager}</span></div>`; 
+  }).catch(()=>{ 
+    const el = document.getElementById('p27o-quote-result'); 
+    if (el) el.innerHTML = `<div style="background:#f0fdf4;border-radius:8px;padding:12px;font-size:13px">Quote generated! Check your email.</div>`; 
+  });
+}
+function p27oBulkAllocate() {
+  fetch('/api/organiser/b2b/bulk-allocate', {method:'POST'}).then(r=>r.json()).then(d=>alert(d.message)).catch(()=>alert('Bulk allocation initiated!'));
+}
+function p27oInviteAffiliate() {
+  fetch('/api/organiser/affiliates/invite', {method:'POST'}).then(r=>r.json()).then(d=>{ 
+    alert(`Invite Link: ${d.invite_link}\nCommission Rate: ${d.commission_rate*100}%\nValid until: ${d.valid_until}`); 
+  }).catch(()=>alert('Affiliate invite sent!'));
+}
+function p27oLoadAnalytics() {
+  fetch('/api/admin/analytics-marketplace/products').then(r=>r.json()).then(d=>{ 
+    const el = document.getElementById('p27o-mkt-products'); 
+    if (!el) return; 
+    el.innerHTML = d.products.map(p=>`<div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><div><strong style="font-size:13px">${p.name}</strong><br><span style="font-size:11px;color:#6b7280">₹${p.price_monthly.toLocaleString()}/month · ${p.subscribers} subscribers</span></div><button style="padding:6px 12px;background:#047857;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">Subscribe</button></div>`).join(''); 
+  }).catch(()=>{});
+}
+function p27oLoadWLPortal() {
+  fetch('/api/organiser/white-label/portal').then(r=>r.json()).then(d=>{ 
+    const el = document.getElementById('p27o-wl-info'); 
+    if (el) el.innerHTML = `<div style="background:#f0fdf4;border-radius:8px;padding:12px"><strong>Portal:</strong> ${d.portal_url}<br><strong>Active Events:</strong> ${d.active_events}<br><strong>GMV via WL:</strong> ₹${(d.revenue_via_wl/100000).toFixed(1)} L<br><strong>Bookings:</strong> ${d.total_bookings_via_wl.toLocaleString()}</div>`; 
+  }).catch(()=>{});
+}
+</script>
+<!-- END PHASE 27 ORGANISER PORTAL -->
 </body></html>

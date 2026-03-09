@@ -2468,4 +2468,159 @@ async function p26vLoadConcessions() {
 })();
 </script>
 <!-- END PHASE 26 VENUE PORTAL -->
+
+<!-- PHASE 27 VENUE: Multi-Tenant Network & Shared Inventory -->
+<div id="panel-p27-venue" class="panel" style="display:none">
+  <div style="padding:22px;background:linear-gradient(135deg,#1e3a5f,#1e40af,#2563eb);color:#fff;border-radius:12px;margin-bottom:20px">
+    <h2 style="margin:0 0 6px;font-size:20px">🏟️ Venue Network</h2>
+    <p style="margin:0;opacity:.8">Multi-Tenant Networks · Shared Inventory · Benchmarks</p>
+    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+      <span style="background:rgba(255,255,255,.15);padding:4px 10px;border-radius:14px;font-size:12px">🏟️ 284 Venues</span>
+      <span style="background:rgba(255,255,255,.15);padding:4px 10px;border-radius:14px;font-size:12px">🏙️ 48 Cities</span>
+      <span style="background:rgba(255,255,255,.15);padding:4px 10px;border-radius:14px;font-size:12px">👥 84 Cr Capacity</span>
+      <span style="background:rgba(255,255,255,.15);padding:4px 10px;border-radius:14px;font-size:12px">📊 76% Utilisation</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+    <button onclick="p27vShow('network')" id="p27v-tab-network" class="p27v-tab active" style="padding:7px 14px;border-radius:8px;border:none;background:#1e40af;color:#fff;cursor:pointer;font-size:13px">🌐 Network</button>
+    <button onclick="p27vShow('benchmarks')" id="p27v-tab-benchmarks" class="p27v-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">📊 Benchmarks</button>
+    <button onclick="p27vShow('inventory')" id="p27v-tab-inventory" class="p27v-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">📦 Shared Inventory</button>
+    <button onclick="p27vShow('analytics')" id="p27v-tab-analytics" class="p27v-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">💹 Analytics</button>
+  </div>
+
+  <!-- Network Tab -->
+  <div id="p27v-network" class="p27v-pane">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:14px">
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">Network MRR</div><div style="font-size:20px;font-weight:700;color:#1e40af">₹8.4 Cr</div><div style="font-size:11px;color:#10b981">+52% YoY</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">Avg Utilisation</div><div style="font-size:20px;font-weight:700;color:#1e40af">76%</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">Infra Score</div><div style="font-size:20px;font-weight:700;color:#1e40af">88/100</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">CO₂ Saved</div><div style="font-size:20px;font-weight:700;color:#10b981">42T</div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0;font-size:15px">Network Venues</h3>
+        <button onclick="p27vLoadNetwork()" style="padding:6px 12px;background:#1e40af;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">↻ Refresh</button>
+      </div>
+      <div id="p27v-venue-list">
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <thead><tr style="background:#f9fafb"><th style="padding:8px;text-align:left">Venue</th><th style="padding:8px;text-align:left">City</th><th style="padding:8px;text-align:right">Capacity</th><th style="padding:8px;text-align:right">Utilisation</th><th style="padding:8px;text-align:right">Revenue/Month</th></tr></thead>
+          <tbody>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">NSCI Dome Mumbai</td><td style="padding:8px">Mumbai</td><td style="padding:8px;text-align:right">25,000</td><td style="padding:8px;text-align:right;color:#10b981">84%</td><td style="padding:8px;text-align:right">₹42 L</td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">Palace Grounds</td><td style="padding:8px">Bengaluru</td><td style="padding:8px;text-align:right">50,000</td><td style="padding:8px;text-align:right;color:#10b981">72%</td><td style="padding:8px;text-align:right">₹28.4 L</td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">JLN Stadium</td><td style="padding:8px">Delhi</td><td style="padding:8px;text-align:right">75,000</td><td style="padding:8px;text-align:right;color:#f59e0b">68%</td><td style="padding:8px;text-align:right">₹62.8 L</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <button onclick="p27vJoinNetwork()" style="margin-top:12px;padding:8px 16px;background:#1e40af;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">+ Join Network</button>
+    </div>
+  </div>
+
+  <!-- Benchmarks Tab -->
+  <div id="p27v-benchmarks" class="p27v-pane" style="display:none">
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">Category Benchmarks</h3>
+      <div id="p27v-benchmarks-data">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="background:#f9fafb"><th style="padding:8px;text-align:left">Category</th><th style="padding:8px;text-align:right">Avg Yield</th><th style="padding:8px;text-align:right">Avg Fill Rate</th></tr></thead>
+          <tbody>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">🎵 Music Festivals</td><td style="padding:8px;text-align:right">₹2,200</td><td style="padding:8px;text-align:right;color:#10b981">88%</td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">🏏 Sports</td><td style="padding:8px;text-align:right">₹1,600</td><td style="padding:8px;text-align:right;color:#10b981">92%</td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">😂 Comedy</td><td style="padding:8px;text-align:right">₹800</td><td style="padding:8px;text-align:right;color:#f59e0b">78%</td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">🏢 Corporate</td><td style="padding:8px;text-align:right">₹3,200</td><td style="padding:8px;text-align:right;color:#f59e0b">64%</td></tr>
+          </tbody>
+        </table>
+        <button onclick="p27vLoadBenchmarks()" style="margin-top:12px;padding:8px 16px;background:#1e40af;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">Load Live Benchmarks</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Inventory Tab -->
+  <div id="p27v-inventory" class="p27v-pane" style="display:none">
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0;font-size:15px">Shared Equipment Pool</h3>
+        <span style="font-size:13px;color:#6b7280">₹84 L total value · 72% utilised</span>
+      </div>
+      <div id="p27v-inventory-list">
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><div><strong style="font-size:13px">LED Stage Lighting</strong><br><span style="font-size:11px;color:#6b7280">42 units · ₹15,000/day</span></div><div style="text-align:right"><span style="color:#10b981;font-size:13px">28 available</span><br><button style="padding:4px 10px;background:#1e40af;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:11px;margin-top:4px">Book</button></div></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><div><strong style="font-size:13px">PA Sound System</strong><br><span style="font-size:11px;color:#6b7280">18 units · ₹25,000/day</span></div><div style="text-align:right"><span style="color:#10b981;font-size:13px">12 available</span><br><button style="padding:4px 10px;background:#1e40af;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:11px;margin-top:4px">Book</button></div></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;display:flex;justify-content:space-between;align-items:center"><div><strong style="font-size:13px">Crowd Control Barriers</strong><br><span style="font-size:11px;color:#6b7280">840 units · ₹200/day each</span></div><div style="text-align:right"><span style="color:#10b981;font-size:13px">620 available</span><br><button style="padding:4px 10px;background:#1e40af;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:11px;margin-top:4px">Book</button></div></div>
+      </div>
+      <button onclick="p27vLoadInventory()" style="margin-top:12px;padding:8px 16px;background:#1e40af;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">↻ Refresh Inventory</button>
+    </div>
+  </div>
+
+  <!-- Analytics Tab -->
+  <div id="p27v-analytics" class="p27v-pane" style="display:none">
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">Network Analytics</h3>
+      <div id="p27v-net-analytics">
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px">
+          <div style="flex:1;min-width:160px;padding:12px;border:1px solid #e5e7eb;border-radius:8px;text-align:center"><div style="font-size:11px;color:#6b7280">30-day Forecast</div><div style="font-size:18px;font-weight:700;color:#1e40af">82%</div><div style="font-size:11px;color:#6b7280">utilisation</div></div>
+          <div style="flex:1;min-width:160px;padding:12px;border:1px solid #e5e7eb;border-radius:8px;text-align:center"><div style="font-size:11px;color:#6b7280">Best City</div><div style="font-size:18px;font-weight:700;color:#1e40af">Mumbai</div></div>
+          <div style="flex:1;min-width:160px;padding:12px;border:1px solid #e5e7eb;border-radius:8px;text-align:center"><div style="font-size:11px;color:#6b7280">Maintenance Alerts</div><div style="font-size:18px;font-weight:700;color:#ef4444">4</div></div>
+        </div>
+        <button onclick="p27vLoadAnalytics()" style="padding:8px 16px;background:#1e40af;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">Load Full Analytics</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.querySelector('nav') || document.querySelector('.sidebar') || document.querySelector('[id*="nav"]');
+  if (nav) {
+    const d = document.createElement('div');
+    d.innerHTML = `<button onclick="showPanel('p27-venue')" style="width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:13px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'">
+      🏟️ Venue Network <span style="background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px">NEW</span>
+    </button>`;
+    nav.appendChild(d);
+  }
+  const orig = window.showPanel;
+  window.showPanel = (id) => {
+    if (id === 'p27-venue') {
+      document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+      const panel = document.getElementById('panel-p27-venue');
+      if (panel) panel.style.display = 'block';
+    } else if (orig) orig(id);
+  };
+});
+function p27vShow(tab) {
+  document.querySelectorAll('.p27v-pane').forEach(p => p.style.display = 'none');
+  document.getElementById('p27v-' + tab).style.display = 'block';
+  document.querySelectorAll('.p27v-tab').forEach(b => { b.style.background = '#e5e7eb'; b.style.color = '#374151'; });
+  const btn = document.getElementById('p27v-tab-' + tab);
+  if (btn) { btn.style.background = '#1e40af'; btn.style.color = '#fff'; }
+}
+function p27vLoadNetwork() {
+  fetch('/api/venue/network/venues').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p27v-venue-list');
+    if (el) el.innerHTML = `<div style="font-size:13px;color:#6b7280">Network: ${d.total_venues} venues, ${d.cities_covered} cities, avg utilisation: ${(d.active/d.total_venues*100).toFixed(0)}%</div>`;
+  }).catch(()=>{});
+}
+function p27vLoadBenchmarks() {
+  fetch('/api/venue/network/benchmarks').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p27v-benchmarks-data');
+    if (el) el.innerHTML = `<div style="font-size:13px;color:#6b7280">Network Avg Yield: ₹${d.network_avg_ticket_yield.toLocaleString()} | Top Quartile: ₹${d.top_quartile_yield.toLocaleString()}</div>`;
+  }).catch(()=>{});
+}
+function p27vLoadInventory() {
+  fetch('/api/venue/network/shared-inventory').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p27v-inventory-list');
+    if (el) el.innerHTML = `<div style="font-size:13px;color:#6b7280">Total Pool Value: ₹${(d.total_shared_value/100000).toFixed(1)} L | Utilisation: ${(d.utilisation_rate*100).toFixed(0)}%</div>`;
+  }).catch(()=>{});
+}
+function p27vLoadAnalytics() {
+  fetch('/api/venue/network/analytics').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p27v-net-analytics');
+    if (el) el.innerHTML = `<div style="font-size:13px;color:#6b7280">MRR: ₹${(d.network_mrr/10000000).toFixed(1)} Cr | YoY Growth: +${(d.yoy_growth*100).toFixed(0)}% | Score: ${d.infrastructure_score}/100</div>`;
+  }).catch(()=>{});
+}
+function p27vJoinNetwork() {
+  fetch('/api/venue/network/venues/VEN-NEW/join', {method:'POST'}).then(r=>r.json()).then(d=>{
+    alert(`Status: ${d.status}\nDocs required: ${d.documents_required.join(', ')}\nReview ETA: ${d.review_eta}\nAccount Manager: ${d.account_manager}`);
+  }).catch(()=>alert('Application submitted!'));
+}
+</script>
+<!-- END PHASE 27 VENUE PORTAL -->
 </body></html>

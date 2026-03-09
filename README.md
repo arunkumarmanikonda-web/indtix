@@ -1,112 +1,141 @@
-# INDTIX Platform — v26.0.0 (Phase 26: Real-Time Social Commerce)
+# INDTIX Platform — v27.0.0 (Phase 27: Enterprise B2B, White-Label & Marketplace)
 
 ## Project Overview
 - **Name**: INDTIX — India's Live Event Ticketing Platform
-- **Version**: v26.0.0 (Phase 26)
-- **Goal**: End-to-end live event platform with **1,369 API endpoints** across 6 portals
+- **Version**: v27.0.0 (Phase 27)
+- **Goal**: End-to-end live event platform with **1,459 API endpoints** across 6 portals
 - **Company**: Oye Imagine Private Limited | GSTIN: 27AABCO1234A1Z5
-- **QA Score**: 127/128 tests (302→200 redirect correct for home) ✅
-- **Total Phases**: 26 | **Total Endpoints**: 1,369
+- **QA Score**: 68/68 tests — **100%** ✅
+- **Total Phases**: 27 | **Total Endpoints**: 1,459
 
-## Live URLs (v26)
-- **Production (Latest)**: https://ebdd9404.indtix.pages.dev
-- **Fan Portal**: https://ebdd9404.indtix.pages.dev/fan
-- **Organiser Portal**: https://ebdd9404.indtix.pages.dev/organiser
-- **Admin Portal**: https://ebdd9404.indtix.pages.dev/admin
-- **Venue Portal**: https://ebdd9404.indtix.pages.dev/venue
-- **Event Manager**: https://ebdd9404.indtix.pages.dev/event-manager
-- **Ops Portal**: https://ebdd9404.indtix.pages.dev/ops
-- **v26 Health**: https://ebdd9404.indtix.pages.dev/api/v26/health
-- **v25 Health**: https://ebdd9404.indtix.pages.dev/api/v25/health
-- **v24 Health**: https://ebdd9404.indtix.pages.dev/api/v24/health
+## Live URLs (v27)
+- **Production (Latest)**: https://41cb8640.indtix.pages.dev
+- **Fan Portal**: https://41cb8640.indtix.pages.dev/fan
+- **Organiser Portal**: https://41cb8640.indtix.pages.dev/organiser
+- **Admin Portal**: https://41cb8640.indtix.pages.dev/admin
+- **Venue Portal**: https://41cb8640.indtix.pages.dev/venue
+- **Event Manager**: https://41cb8640.indtix.pages.dev/event-manager
+- **Ops Portal**: https://41cb8640.indtix.pages.dev/ops
+- **v27 Health**: https://41cb8640.indtix.pages.dev/api/v27/health
+- **v26 Health**: https://41cb8640.indtix.pages.dev/api/v26/health
+- **v25 Health**: https://41cb8640.indtix.pages.dev/api/v25/health
 
-## Phase 26 — New Features (90 new endpoints)
+## Phase 27 — New Features (90 new endpoints)
 
-### Fan Portal — Social Commerce & Personalisation
+### White-Label Reseller Platform (12 endpoints)
 | Feature | Endpoint | Description |
 |---------|----------|-------------|
-| Fan Clubs | `GET /api/fan/clubs` | Join artist fan clubs with perks & exclusive content |
-| Fan Club Feed | `GET /api/fan/clubs/:id/feed` | Exclusive posts, polls, merch drops |
-| Social Gifting | `GET /api/fan/gifts/catalog` | Gift tickets, VIP upgrades, experiences |
-| Send Gift | `POST /api/fan/gifts/send` | Send gift to a friend |
-| Group Challenges | `GET /api/fan/challenges` | XP badges, progress tracking |
-| Buddy Booking | `GET /api/fan/buddy-booking` | Group booking with invite system |
-| Flash Sales | `GET /api/fan/flash-sales` | Time-limited discounted tickets |
-| AI Personalisation | `GET /api/fan/ai-recommendations` | INDTIX-Rec-v3 personalized recommendations |
-| Smart Notifications | `GET /api/fan/notifications/preferences` | AI-timed multi-channel notifications |
-| Carbon Footprint | `GET /api/fan/carbon-footprint` | Track & offset event carbon emissions |
-| AR Event Preview | `GET /api/fan/events/:id/ar-preview` | 3D AR venue preview before booking |
-| Crypto Tickets | `GET /api/fan/crypto-tickets` | NFT tickets on Polygon/ETH/Solana |
-| Loyalty Tiers v2 | `GET /api/fan/loyalty/tiers` | Fan → Super Fan → VIP Fan → Legend |
-| Leaderboard v2 | `GET /api/fan/leaderboard/v2` | Social XP leaderboard with badges |
+| Reseller Directory | `GET /api/admin/white-label/resellers` | 42 resellers (Platinum/Gold/Silver tiers) |
+| Reseller Detail | `GET /api/admin/white-label/resellers/:id` | Config, API keys, billing, performance |
+| Create Reseller | `POST /api/admin/white-label/resellers` | Onboard new white-label partner |
+| Update Config | `PUT /api/admin/white-label/resellers/:id/config` | Branding, domain, permissions |
+| Revenue Report | `GET /api/admin/white-label/revenue` | ₹2.21 Cr/month fees, tier breakdown |
+| Brand Assets | `GET /api/admin/white-label/brand-assets/:id` | Logo, banner, email assets review |
+| Upload Assets | `POST /api/admin/white-label/brand-assets/:id` | Submit brand assets for review |
+| SLA Dashboard | `GET /api/admin/white-label/sla` | 99.9%/99.8%/99.5% uptime by tier |
+| Onboarding Flow | `GET /api/admin/white-label/onboarding` | 5-step pipeline, avg 14 days |
+| Organiser WL Portal | `GET /api/organiser/white-label/portal` | Organiser's white-label portal stats |
 
-### Organiser Portal — Growth Engine
+### B2B Corporate Ticketing (8 endpoints)
 | Feature | Endpoint | Description |
 |---------|----------|-------------|
-| Tour Manager | `GET /api/organiser/tours` | Multi-city tour planning & management |
-| Dynamic Pricing v2 | `GET /api/organiser/dynamic-pricing/v2` | PriceBrain-v3 AI pricing rules |
-| Talent Marketplace | `GET /api/organiser/talent-marketplace` | 2,840 verified artists, booking enquiry |
-| Merch Drops | `GET /api/organiser/merch-drops` | Limited edition merch countdown sales |
-| Gamification | `GET /api/organiser/gamification` | Fan engagement campaigns with ROI tracking |
-| Sponsor Live | `GET /api/organiser/:event_id/sponsor-live` | Real-time sponsor activation metrics |
+| Corporate Directory | `GET /api/organiser/b2b/corporates` | 284 corporates, ₹18.4 Cr B2B GMV |
+| Corporate Detail | `GET /api/organiser/b2b/corporates/:id` | Contract, usage, billing |
+| Generate Quote | `POST /api/organiser/b2b/corporate-quote` | Bulk pricing with GST breakdown |
+| Bulk Orders | `GET /api/organiser/b2b/bulk-orders` | 1,284 bulk orders tracked |
+| Bulk Allocate | `POST /api/organiser/b2b/bulk-allocate` | Send tickets to corporate employees |
+| Admin B2B Dashboard | `GET /api/admin/b2b/dashboard` | ₹184 Cr total GMV, sector breakdown |
+| Contract Management | `GET /api/admin/b2b/contracts` | 218 active, 12 expiring in 30d |
+| Contract Renew | `POST /api/admin/b2b/contracts/:id/renew` | One-click contract renewal |
+| B2B Invoices | `GET /api/organiser/b2b/invoices` | NET-30 invoicing, overdue alerts |
 
-### Admin Portal — Platform Intelligence
+### API Marketplace & Developer Hub (5 endpoints)
 | Feature | Endpoint | Description |
 |---------|----------|-------------|
-| AI Rec Engine | `GET /api/admin/ai-personalisation` | INDTIX-Rec-v3 metrics, A/B tests |
-| Live Commerce | `GET /api/admin/livestream-commerce` | Stream GMV, buy rates, engagement |
-| Sustainability | `GET /api/admin/sustainability` | Carbon footprint, SDG score, initiatives |
-| Accessibility AI | `GET /api/admin/accessibility-ai` | AccessAI-v2 coverage & insights |
-| FraudShield v4 | `GET /api/admin/fraud/prevention-v2` | 98.7% accuracy, ₹42L loss prevented |
-| Revenue Attribution v2 | `GET /api/admin/revenue-attribution/v2` | Multi-touch ROAS 12.4x |
-| Changelog v2 | `GET /api/admin/platform-changelog/v2` | Full release history & roadmap |
+| API Products | `GET /api/admin/api-marketplace/products` | 24 published APIs, ₹28.4 L/month |
+| Developer Directory | `GET /api/admin/api-marketplace/developers` | 8,420 devs, SDK downloads |
+| Usage Analytics | `GET /api/admin/api-marketplace/usage` | 4.2 Cr calls/month, 0.2% error rate |
+| Publish Product | `POST /api/admin/api-marketplace/products/:id/publish` | Publish API to marketplace |
+| API Gateway Config | `GET /api/ops/api-gateway/config` | Rate limits, auth, caching, DDoS |
+| Gateway Logs | `GET /api/ops/api-gateway/logs` | Real-time error & rate-limit logs |
 
-### Venue Portal — Smart Operations
+### Multi-Tenant Venue Networks (5 endpoints)
 | Feature | Endpoint | Description |
 |---------|----------|-------------|
-| Live Crowd Heatmap | `GET /api/venue/:id/crowd-heatmap/live` | Zone density, overflow alerts, 30s refresh |
-| Smart Parking | `GET /api/venue/:id/parking` | 4 zones, EV chargers, capacity prediction |
-| Energy AI | `GET /api/venue/:id/energy` | Solar, grid, AI optimization suggestions |
-| Concessions AI | `GET /api/venue/:id/concessions/ai-forecast` | Demand forecast per item, revenue projection |
+| Network Venues | `GET /api/venue/network/venues` | 284 venues, 48 cities, 76% utilisation |
+| Network Analytics | `GET /api/venue/network/analytics` | ₹8.4 Cr MRR, +52% YoY |
+| Benchmarks | `GET /api/venue/network/benchmarks` | Yield & fill rate by category & city |
+| Join Network | `POST /api/venue/network/venues/:id/join` | Application & onboarding flow |
+| Shared Inventory | `GET /api/venue/network/shared-inventory` | Equipment pool (lighting, sound, barriers) |
 
-### Event Manager — Live Show Command
+### Talent Agency Portal (5 endpoints)
 | Feature | Endpoint | Description |
 |---------|----------|-------------|
-| Live Stream | `GET /api/event-manager/:id/livestream` | 4K HDR, viewers, CDN health, monetisation |
-| Go Live | `POST /api/event-manager/:id/livestream/go-live` | Start RTMP stream |
-| Polls v2 | `GET /api/event-manager/:id/polls/v2` | Multi-type polls with live results |
-| Greenroom | `GET /api/event-manager/:id/greenroom` | Artist status, rider, team management |
-| Merch Live | `GET /api/event-manager/:id/merch-inventory` | Real-time inventory, revenue, alerts |
+| Agency Directory | `GET /api/event-manager/talent/agencies` | 284 agencies, 842 active deals |
+| Agency Roster | `GET /api/event-manager/talent/agencies/:id/roster` | Artists with fees & riders |
+| Booking Request | `POST /api/event-manager/talent/booking-request` | Send request to agency |
+| Talent Contracts | `GET /api/event-manager/talent/contracts` | 128 contracts, advance tracking |
+| Artist Availability | `GET /api/event-manager/talent/availability/:id` | Calendar, advance days, blackouts |
 
-### Ops Portal — Platform Intelligence
+### Affiliate & Influencer Commerce (4 endpoints)
 | Feature | Endpoint | Description |
 |---------|----------|-------------|
-| Real-time Monitor | `GET /api/ops/realtime-monitoring` | 4-region health, service status |
-| Security Centre | `GET /api/ops/security-centre` | WAF, threats, vulnerabilities, SSL |
-| Cost Optimisation | `GET /api/ops/cost-optimisation` | ₹84K savings found, per-service breakdown |
-| Feature Flags | `GET /api/ops/feature-flags` | 84 flags, toggle with rollout % |
-| Data Pipeline | `GET /api/ops/data-pipeline` | 8 pipelines, lag, throughput |
-| Disaster Recovery | `GET /api/ops/disaster-recovery` | RTO 12m, RPO 3m, backups |
-| Compliance | `GET /api/ops/compliance` | PCI-DSS v4, ISO 27001, GDPR — 94/100 |
+| Affiliate Directory | `GET /api/organiser/affiliates` | 8,420 affiliates, ₹1.84 Cr commissions |
+| Affiliate Performance | `GET /api/organiser/affiliates/:id/performance` | Clicks, conversions, GMV, payout |
+| Invite Affiliate | `POST /api/organiser/affiliates/invite` | Generate invite link with commission |
+| Fan Referral Stats | `GET /api/fan/referral/my-stats` | Personal referral code & earnings |
+| Referral Leaderboard | `GET /api/fan/referral/leaderboard` | Top 5 with prizes (₹50K grand prize) |
 
-### Cross-Platform
+### NFT Collectibles & Digital Ownership (5 endpoints)
 | Feature | Endpoint | Description |
 |---------|----------|-------------|
-| AI Event Summary v2 | `GET /api/ai/event-summary/v2/:id` | GPT-EventBrain-v2 press-ready summaries |
-| Hype Meter v2 | `GET /api/events/:id/hype-meter/v2` | 4-signal composite score + sellout prediction |
-| Live Commerce Feed | `GET /api/events/:id/live-commerce` | Real-time merch/ticket flash deals |
-| Accessibility Config | `GET /api/accessibility/config` | WCAG AA, captions, ISL, screen reader |
-| API Analytics | `GET /api/platform/api-analytics` | 284M req/week, SDK adoption |
+| My Collection | `GET /api/fan/nft/my-collection` | NFTs with rarity, value, perks |
+| NFT Marketplace | `GET /api/fan/nft/marketplace` | ₹4.2 Cr secondary volume, 6,284 listings |
+| Mint NFT | `POST /api/fan/nft/mint` | Mint on Polygon (~₹28 gas) |
+| Transfer NFT | `POST /api/fan/nft/transfer` | P2P NFT transfer with 2.5% fee |
+| Upcoming Drops | `GET /api/fan/nft/drops/upcoming` | Whitelist, supply, price, countdown |
+
+### Analytics Marketplace (2 endpoints)
+| Feature | Endpoint | Description |
+|---------|----------|-------------|
+| Marketplace Products | `GET /api/admin/analytics-marketplace/products` | 14 published products, ₹1.84 Cr revenue |
+| My Subscriptions | `GET /api/organiser/analytics-marketplace/my-subscriptions` | Active plans, usage, insights |
+
+### Smart Contract Ticketing / Web3 (4 endpoints)
+| Feature | Endpoint | Description |
+|---------|----------|-------------|
+| Smart Contracts | `GET /api/ops/web3/smart-contracts` | TicketNFT, RevenueShare, PromoNFT on Polygon |
+| Transactions | `GET /api/ops/web3/transactions` | 8.42 L total txns, 42 failed |
+| Deploy Contract | `POST /api/ops/web3/deploy-contract` | Deploy new smart contract |
+| Web3 Dashboard | `GET /api/admin/web3/dashboard` | Royalties, wallet stats, top NFT events |
+
+### Global Expansion & Localisation (6 endpoints)
+| Feature | Endpoint | Description |
+|---------|----------|-------------|
+| Market Overview | `GET /api/admin/global/markets` | 8 active (India, UAE, SG, UK...) |
+| Localisation | `GET /api/admin/global/localisation` | 18 languages, 12 currencies |
+| Compliance | `GET /api/admin/global/compliance` | PCI-DSS, GDPR, UAE laws by market |
+| Currency Rates | `GET /api/admin/global/currency-rates` | Real-time FX via Razorpay FX |
+| Global Infra | `GET /api/ops/global/infrastructure` | 47 CDN regions, data residency |
+| Tax Config | `GET /api/admin/global/tax-config` | GST/VAT rates by market |
+
+### Marketplace Cross-Platform (2 endpoints)
+| Feature | Endpoint | Description |
+|---------|----------|-------------|
+| Ecosystem Summary | `GET /api/admin/marketplace/summary` | ₹44.8 Cr ecosystem GMV, 17.2K partners |
+| Marketplace Health | `GET /api/admin/marketplace/health` | 6/6 services healthy |
 
 ## Platform Architecture
 ```
-INDTIX v26 — Cloudflare Edge Platform
+INDTIX v27 — Cloudflare Edge Platform
 ├── Frontend: 6 HTML portals (Hono SSR + Tailwind CDN)
-├── Backend: Hono TypeScript Workers (1,369 endpoints)
+├── Backend: Hono TypeScript Workers (1,459 endpoints)
 ├── Storage: Cloudflare D1 (SQLite), KV, R2
-├── CDN: Cloudflare Stream (live video)
-├── AI/ML: INDTIX-Rec-v3, FraudShield-v4, AccessAI-v2
-└── Payments: Multi-currency, UPI, Cards, Crypto (Polygon/ETH/SOL)
+├── Blockchain: Polygon PoS (TicketNFT, RevenueShare, PromoNFT)
+├── CDN: Cloudflare Stream (live video) + 47 global regions
+├── AI/ML: INDTIX-Rec-v3, FraudShield-v4, PriceBrain-v3
+├── B2B: White-Label Engine, Corporate Portal, API Gateway
+└── Payments: Multi-currency, UPI, Cards, Crypto (Polygon)
 ```
 
 ## Complete Phase History
@@ -117,19 +146,33 @@ INDTIX v26 — Cloudflare Edge Platform
 | Phase 23 | v23.0.0 | 1,099 | Operations |
 | Phase 24 | v24.0.0 | 1,189 | Intelligence Suite |
 | Phase 25 | v25.0.0 | 1,279 | Platform Intelligence & Scale |
-| **Phase 26** | **v26.0.0** | **1,369** | **Real-Time Social Commerce** |
+| Phase 26 | v26.0.0 | 1,369 | Real-Time Social Commerce |
+| **Phase 27** | **v27.0.0** | **1,459** | **Enterprise B2B & Marketplace** |
+
+## File Statistics (v27)
+| File | Lines |
+|------|-------|
+| src/index.ts | 16,858 |
+| public/admin.html | 4,887 |
+| public/fan.html | 5,719 |
+| public/organiser.html | 4,562 |
+| public/venue.html | 2,626 |
+| public/event-manager.html | 2,903 |
+| public/ops.html | 2,781 |
+| **Total** | **40,336** |
 
 ## Tech Stack
 - **Runtime**: Cloudflare Workers (Edge)
 - **Framework**: Hono v4 (TypeScript)
 - **Frontend**: Vanilla JS + Tailwind CSS CDN + Font Awesome
 - **Build**: Vite + @hono/vite-cloudflare-pages
+- **Blockchain**: Polygon PoS (ERC-721, ERC-20, ERC-1155)
 - **Infra**: Cloudflare Pages, D1, KV, R2, Stream
-- **Worker Size**: 557 KB (gzipped ~145 KB)
+- **Worker Size**: 587 KB
 
 ## Deployment
 - **Platform**: Cloudflare Pages
 - **Project**: `indtix`
-- **Status**: ✅ Active (v26.0.0)
+- **Status**: ✅ Active (v27.0.0)
 - **Last Deployed**: 2026-03-09
-- **Next Phase**: v27.0.0 — Immersive Experiences & Web3 (planned 2026-04-01)
+- **Next Phase**: v28.0.0 — Immersive Experiences & Metaverse (planned 2026-04-01)

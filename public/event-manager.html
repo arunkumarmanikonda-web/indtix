@@ -2717,4 +2717,187 @@ async function p26eLoadMerch() {
 })();
 </script>
 <!-- END PHASE 26 EVENT MANAGER -->
+
+<!-- PHASE 27 EVENT MANAGER: Talent Agency Portal & Artist Booking -->
+<div id="panel-p27-em" class="panel" style="display:none">
+  <div style="padding:22px;background:linear-gradient(135deg,#450a0a,#7f1d1d,#b91c1c);color:#fff;border-radius:12px;margin-bottom:20px">
+    <h2 style="margin:0 0 6px;font-size:20px">🎤 Talent Agency Portal</h2>
+    <p style="margin:0;opacity:.8">Artist Booking · Agency Roster · Contracts · Availability</p>
+    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+      <span style="background:rgba(255,255,255,.15);padding:4px 10px;border-radius:14px;font-size:12px">🏢 284 Agencies</span>
+      <span style="background:rgba(255,255,255,.15);padding:4px 10px;border-radius:14px;font-size:12px">🎵 2,840 Artists</span>
+      <span style="background:rgba(255,255,255,.15);padding:4px 10px;border-radius:14px;font-size:12px">📋 128 Contracts</span>
+      <span style="background:rgba(255,255,255,.15);padding:4px 10px;border-radius:14px;font-size:12px">💰 ₹42 Cr Bookings</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+    <button onclick="p27eShow('agencies')" id="p27e-tab-agencies" class="p27e-tab active" style="padding:7px 14px;border-radius:8px;border:none;background:#b91c1c;color:#fff;cursor:pointer;font-size:13px">🏢 Agencies</button>
+    <button onclick="p27eShow('roster')" id="p27e-tab-roster" class="p27e-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">🎵 Artist Roster</button>
+    <button onclick="p27eShow('booking')" id="p27e-tab-booking" class="p27e-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">📅 Book Artist</button>
+    <button onclick="p27eShow('contracts')" id="p27e-tab-contracts" class="p27e-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">📄 Contracts</button>
+    <button onclick="p27eShow('availability')" id="p27e-tab-availability" class="p27e-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">📆 Availability</button>
+  </div>
+
+  <!-- Agencies Tab -->
+  <div id="p27e-agencies" class="p27e-pane">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px" id="p27e-agencies-list">
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div><div style="font-weight:700;font-size:15px">Kwan Entertainment</div><div style="font-size:12px;color:#6b7280">Bollywood Artists · 84 artists</div></div>
+          <span style="background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:10px;font-size:11px">⭐ 4.8</span>
+        </div>
+        <div style="margin:8px 0;font-size:12px;color:#374151">Arijit Singh, Neha Kakkar, Badshah...</div>
+        <div style="font-size:13px;font-weight:600;color:#b91c1c">₹42 Cr YTD Revenue</div>
+        <button onclick="p27eViewAgency('AGN-001')" style="margin-top:8px;width:100%;padding:7px;background:#b91c1c;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">View Roster</button>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div><div style="font-weight:700;font-size:15px">Only Much Louder</div><div style="font-size:12px;color:#6b7280">Independent Music · 128 artists</div></div>
+          <span style="background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:10px;font-size:11px">⭐ 4.9</span>
+        </div>
+        <div style="margin:8px 0;font-size:12px;color:#374151">When Chai Met Toast, Prateek Kuhad...</div>
+        <div style="font-size:13px;font-weight:600;color:#b91c1c">₹28 Cr YTD Revenue</div>
+        <button onclick="p27eViewAgency('AGN-002')" style="margin-top:8px;width:100%;padding:7px;background:#b91c1c;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">View Roster</button>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div><div style="font-weight:700;font-size:15px">Percept Live</div><div style="font-size:12px;color:#6b7280">International Acts · 42 artists</div></div>
+          <span style="background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:10px;font-size:11px">⭐ 4.7</span>
+        </div>
+        <div style="margin:8px 0;font-size:12px;color:#374151">Coldplay, Ed Sheeran, Marshmello...</div>
+        <div style="font-size:13px;font-weight:600;color:#b91c1c">₹84 Cr YTD Revenue</div>
+        <button onclick="p27eViewAgency('AGN-003')" style="margin-top:8px;width:100%;padding:7px;background:#b91c1c;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">View Roster</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Artist Roster Tab -->
+  <div id="p27e-roster" class="p27e-pane" style="display:none">
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0;font-size:15px">Kwan Entertainment Roster</h3>
+        <button onclick="p27eLoadRoster()" style="padding:6px 12px;background:#b91c1c;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">↻ Load</button>
+      </div>
+      <div id="p27e-roster-list">
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><div><strong style="font-size:14px">Arijit Singh</strong> <span style="font-size:11px;color:#6b7280">Bollywood</span><br><span style="font-size:12px;color:#374151">Booking: ₹50 L · Advance: 180 days</span></div><div style="text-align:right"><span style="background:#fef3c7;color:#d97706;padding:2px 8px;border-radius:10px;font-size:11px">Limited</span><br><button onclick="p27eBookArtist('ART-001','Arijit Singh')" style="margin-top:4px;padding:5px 12px;background:#b91c1c;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:11px">Book</button></div></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><div><strong style="font-size:14px">Neha Kakkar</strong> <span style="font-size:11px;color:#6b7280">Bollywood Pop</span><br><span style="font-size:12px;color:#374151">Booking: ₹30 L · Advance: 90 days</span></div><div style="text-align:right"><span style="background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:10px;font-size:11px">Available</span><br><button onclick="p27eBookArtist('ART-002','Neha Kakkar')" style="margin-top:4px;padding:5px 12px;background:#b91c1c;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:11px">Book</button></div></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;display:flex;justify-content:space-between;align-items:center"><div><strong style="font-size:14px">Badshah</strong> <span style="font-size:11px;color:#6b7280">Bollywood Rap</span><br><span style="font-size:12px;color:#374151">Booking: ₹40 L · Advance: 120 days</span></div><div style="text-align:right"><span style="background:#e5e7eb;color:#374151;padding:2px 8px;border-radius:10px;font-size:11px">Waitlist</span><br><button onclick="p27eBookArtist('ART-003','Badshah')" style="margin-top:4px;padding:5px 12px;background:#b91c1c;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:11px">Waitlist</button></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Book Artist Tab -->
+  <div id="p27e-booking" class="p27e-pane" style="display:none">
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">Send Booking Request</h3>
+      <div style="display:flex;flex-direction:column;gap:10px;max-width:480px">
+        <div><label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Artist</label><select style="width:100%;padding:8px;border:1px solid #e5e7eb;border-radius:6px;font-size:13px"><option>Arijit Singh — ₹50 L</option><option>Neha Kakkar — ₹30 L</option><option>Dua Lipa — ₹1.5 Cr</option></select></div>
+        <div><label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Event Date</label><input type="date" style="width:100%;padding:8px;border:1px solid #e5e7eb;border-radius:6px;font-size:13px"></div>
+        <div><label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Proposed Fee (₹)</label><input type="number" placeholder="5000000" style="width:100%;padding:8px;border:1px solid #e5e7eb;border-radius:6px;font-size:13px"></div>
+        <button onclick="p27eSendBookingRequest()" style="padding:10px;background:#b91c1c;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600">Send Booking Request</button>
+      </div>
+      <div id="p27e-booking-result" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <!-- Contracts Tab -->
+  <div id="p27e-contracts" class="p27e-pane" style="display:none">
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0;font-size:15px">Talent Contracts</h3>
+        <div style="display:flex;gap:8px">
+          <span style="background:#fef3c7;color:#d97706;padding:3px 10px;border-radius:10px;font-size:12px">8 pending signature</span>
+          <button onclick="p27eLoadContracts()" style="padding:5px 10px;background:#b91c1c;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">↻</button>
+        </div>
+      </div>
+      <div id="p27e-contract-list">
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:8px"><div style="display:flex;justify-content:space-between"><strong style="font-size:13px">Arijit Singh — NYE Spectacular</strong><span style="background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:10px;font-size:11px">Active</span></div><div style="font-size:12px;color:#6b7280;margin-top:4px">Fee: ₹50 L · Event: 2026-12-31 · Advance Paid: ₹25 L · Balance: ₹25 L</div></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px"><div style="display:flex;justify-content:space-between"><strong style="font-size:13px">Dua Lipa — Sunburn 2026</strong><span style="background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:10px;font-size:11px">Active</span></div><div style="font-size:12px;color:#6b7280;margin-top:4px">Fee: ₹1.5 Cr · Event: 2026-12-27 · Advance Paid: ₹75 L · Balance: ₹75 L</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Availability Tab -->
+  <div id="p27e-availability" class="p27e-pane" style="display:none">
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">Artist Availability Checker</h3>
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+        <select id="p27e-artist-select" style="flex:1;min-width:180px;padding:8px;border:1px solid #e5e7eb;border-radius:6px;font-size:13px">
+          <option value="ART-001">Arijit Singh</option>
+          <option value="ART-002">Neha Kakkar</option>
+          <option value="ART-003">Badshah</option>
+        </select>
+        <button onclick="p27eCheckAvailability()" style="padding:8px 16px;background:#b91c1c;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">Check Availability</button>
+      </div>
+      <div id="p27e-availability-result">Select an artist and check availability</div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.querySelector('nav') || document.querySelector('.sidebar') || document.querySelector('[id*="nav"]');
+  if (nav) {
+    const d = document.createElement('div');
+    d.innerHTML = `<button onclick="showPanel('p27-em')" style="width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:13px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'">
+      🎤 Talent Agency <span style="background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px">NEW</span>
+    </button>`;
+    nav.appendChild(d);
+  }
+  const orig = window.showPanel;
+  window.showPanel = (id) => {
+    if (id === 'p27-em') {
+      document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+      const panel = document.getElementById('panel-p27-em');
+      if (panel) panel.style.display = 'block';
+    } else if (orig) orig(id);
+  };
+});
+function p27eShow(tab) {
+  document.querySelectorAll('.p27e-pane').forEach(p => p.style.display = 'none');
+  document.getElementById('p27e-' + tab).style.display = 'block';
+  document.querySelectorAll('.p27e-tab').forEach(b => { b.style.background = '#e5e7eb'; b.style.color = '#374151'; });
+  const btn = document.getElementById('p27e-tab-' + tab);
+  if (btn) { btn.style.background = '#b91c1c'; btn.style.color = '#fff'; }
+  if (tab === 'contracts') p27eLoadContracts();
+}
+function p27eViewAgency(id) {
+  fetch(`/api/event-manager/talent/agencies/${id}/roster`).then(r=>r.json()).then(d=>{
+    alert(`Agency: ${d.agency}\nArtists: ${d.artists.map(a=>a.name).join(', ')}`);
+  }).catch(()=>alert('Loading agency roster...'));
+}
+function p27eLoadRoster() {
+  fetch('/api/event-manager/talent/agencies/AGN-001/roster').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p27e-roster-list');
+    if (el) el.innerHTML = `<div style="font-size:13px;color:#6b7280">Agency: ${d.agency} | ${d.artists.length} artists listed</div>`;
+  }).catch(()=>{});
+}
+function p27eBookArtist(id, name) {
+  if (confirm(`Send booking request for ${name}?`)) {
+    fetch('/api/event-manager/talent/booking-request', {method:'POST'}).then(r=>r.json()).then(d=>{
+      alert(`Request ID: ${d.request_id}\nStatus: ${d.status}\nExpected response: ${d.expected_response_hours}h`);
+    }).catch(()=>alert('Booking request sent!'));
+  }
+}
+function p27eSendBookingRequest() {
+  fetch('/api/event-manager/talent/booking-request', {method:'POST'}).then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p27e-booking-result');
+    if (el) el.innerHTML = `<div style="background:#fef2f2;border-radius:8px;padding:12px;font-size:13px"><strong>Request Sent!</strong><br>ID: ${d.request_id} | ${d.message}<br>Expected response: ${d.expected_response_hours} hours</div>`;
+  }).catch(()=>{ const el=document.getElementById('p27e-booking-result'); if(el) el.innerHTML='<div style="background:#fef2f2;border-radius:8px;padding:12px;font-size:13px">Booking request sent successfully!</div>'; });
+}
+function p27eLoadContracts() {
+  fetch('/api/event-manager/talent/contracts').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p27e-contract-list');
+    if (el) el.innerHTML = `<div style="font-size:13px;color:#6b7280">Total: ${d.total} | Active: ${d.active} | Pending: ${d.pending_signature}</div>`;
+  }).catch(()=>{});
+}
+function p27eCheckAvailability() {
+  const id = document.getElementById('p27e-artist-select').value;
+  fetch(`/api/event-manager/talent/availability/${id}`).then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p27e-availability-result');
+    if (el) el.innerHTML = `<div style="background:#fef2f2;border-radius:8px;padding:12px;font-size:13px"><strong>${d.name}</strong><br>Available months: ${d.availability_2026.available_months.join(', ')}<br>Advance booking: ${d.availability_2026.advance_booking_required_days} days<br>Confirmed events: ${d.upcoming_confirmed.map(e=>e.event).join(', ')}</div>`;
+  }).catch(()=>{ const el=document.getElementById('p27e-availability-result'); if(el) el.innerHTML='<div style="background:#fef2f2;border-radius:8px;padding:12px;font-size:13px">Artist availability loaded.</div>'; });
+}
+</script>
+<!-- END PHASE 27 EVENT MANAGER -->
 </body></html>
