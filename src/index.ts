@@ -13127,8 +13127,15 @@ app.get('/api/v21/features', (c) => c.json({
 
 // ── Update Version to 21.0.0 ──
 app.get('/api/health', (c) => c.json({
-  status: 'ok', version: 'v24.0.0', phase: 'Phase 24',
-  total_endpoints: 1189, uptime: '99.98%', latency_ms: 12,
+  status: 'ok', version: 'v28.0.0', phase: 'Phase 28',
+  new_endpoints: 90, total_endpoints: 1549,
+  uptime: '99.98%', latency_ms: 12,
+  features: [
+    'metaverse_events','ai_concert_companion','hyper_personalisation_v2',
+    'voice_conversational_ticketing','live_experience_commerce',
+    'predictive_ops_ai','creator_economy','smart_venue_iot',
+    'community_social_graph','platform_monetisation_v3'
+  ],
   timestamp: new Date().toISOString()
 }))
 
@@ -16855,4 +16862,790 @@ app.get('/api/scan/qr/:ticket_id', (c) => c.json({
   message:'Ticket is valid — Welcome!'
 }))
 
+// ╔═══════════════════════════════════════════════════════════════════╗
+// ║        PHASE 28 — IMMERSIVE EXPERIENCES, METAVERSE &             ║
+// ║              AI-FIRST PLATFORM  (v28.0.0)                        ║
+// ║  90 new endpoints  |  Total → 1,549 endpoints                    ║
+// ╚═══════════════════════════════════════════════════════════════════╝
+
+// ── 28.1 Health ──────────────────────────────────────────────────────
+app.get('/api/v28/health', (c) => c.json({
+  status: 'ok', version: 'v28.0.0', phase: 'Phase 28',
+  new_endpoints: 90, total_endpoints: 1549,
+  features: [
+    'metaverse_events','ai_concert_companion','hyper_personalisation_v2',
+    'voice_conversational_ticketing','live_experience_commerce',
+    'predictive_ops_ai','creator_economy','smart_venue_iot',
+    'community_social_graph','platform_monetisation_v3'
+  ]
+}))
+
+// ── 28.2 METAVERSE EVENT EXPERIENCES ─────────────────────────────────
+app.get('/api/fan/metaverse/events', (c) => c.json({
+  total_virtual_events: 284,
+  platforms: ['INDTIX-Verse','Decentraland','The Sandbox','VRChat'],
+  featured: [
+    { id:'MVE-001', name:'Arijit Singh Virtual Concert', platform:'INDTIX-Verse',
+      date:'2026-04-15T20:00:00+05:30', ticket_price:499, total_seats:100000,
+      sold:84200, status:'on_sale', vr_supported:true, ar_mode:true,
+      avatar_customisation:true, virtual_merch:true,
+      world_url:'https://verse.indtix.com/events/arijit-2026',
+      preview_thumbnail:'https://cdn.verse.indtix.com/arijit-2026.jpg' },
+    { id:'MVE-002', name:'Sunburn Virtual 2026', platform:'INDTIX-Verse',
+      date:'2026-12-26T18:00:00+05:30', ticket_price:999, total_seats:500000,
+      sold:218000, status:'on_sale', vr_supported:true, ar_mode:true,
+      avatar_customisation:true, virtual_merch:true,
+      world_url:'https://verse.indtix.com/events/sunburn-2026' },
+    { id:'MVE-003', name:'Coldplay Metaverse Experience', platform:'Decentraland',
+      date:'2026-06-21T19:00:00+05:30', ticket_price:2499, total_seats:50000,
+      sold:42000, status:'on_sale', vr_supported:true, ar_mode:false,
+      avatar_customisation:true, virtual_merch:true,
+      world_url:'https://events.decentraland.org/coldplay-india' }
+  ],
+  my_virtual_tickets: 3, virtual_wallet_balance: 4200
+}))
+
+app.get('/api/fan/metaverse/events/:id', (c) => c.json({
+  id: c.req.param('id'), name:'Arijit Singh Virtual Concert',
+  platform:'INDTIX-Verse', status:'on_sale',
+  world_features: {
+    stages: 3, interactive_zones: 8, merch_booths: 12,
+    fan_meet_greet: true, backstage_vr_tour: true,
+    photo_booth: true, karaoke_zone: true
+  },
+  tech_requirements: { min_device:'smartphone', vr_headset_optional:true,
+    supported_headsets:['Meta Quest 2','PSVR2','HTC Vive','Apple Vision Pro'],
+    internet_speed_mbps:25 },
+  social_features: { watch_with_friends:true, max_party_size:8,
+    avatar_emotes:48, voice_chat:true, text_chat:true },
+  ticket_tiers: [
+    { name:'General', price:499, perks:['Virtual front row','Exclusive emote'] },
+    { name:'VIP', price:1499, perks:['Artist meet zone','Signed digital poster','Premium avatar frame'] },
+    { name:'Backstage', price:4999, perks:['1-on-1 VR meet & greet','Physical + digital merch pack'] }
+  ],
+  concurrent_capacity: 100000, peak_concurrent_last_event: 84200
+}))
+
+app.get('/api/fan/metaverse/my-avatar', (c) => c.json({
+  fan_id:'fan_001', avatar_id:'AVT-001',
+  name:'StarFan_Akash', level:28, xp:42000,
+  appearance: { skin:'medium', hair:'black_curly', outfit:'INDTIX-Exclusive-2026',
+    accessories:['Sunburn_2024_Cap','Coldplay_Wings','INDIE_Badge'],
+    frame:'Gold_Supporter' },
+  inventory: [
+    { item:'Arijit_Signed_Poster_NFT', rarity:'rare', equipped:false },
+    { item:'Sunburn_2026_Lanyard', rarity:'uncommon', equipped:true },
+    { item:'VIP_Backstage_Badge', rarity:'legendary', equipped:true }
+  ],
+  achievements:['First Virtual Gig','Party Animal (8 friends)','Merch Collector x5'],
+  friends_online: 12, events_attended_virtual: 8
+}))
+
+app.post('/api/fan/metaverse/avatar/customise', (c) => c.json({
+  success:true, avatar_id:'AVT-001', updated_at: new Date().toISOString(),
+  message:'Avatar updated! Changes visible in all virtual events'
+}))
+
+app.get('/api/admin/metaverse/dashboard', (c) => c.json({
+  total_virtual_events_hosted: 284, active_now: 3,
+  total_virtual_attendees_ytd: 8420000, peak_concurrent_ever: 284000,
+  revenue: { ticket_sales:84000000, virtual_merch:18400000,
+    avatar_items:8400000, sponsorships:28000000, total:138800000 },
+  platform_breakdown: [
+    { platform:'INDTIX-Verse', events:218, attendees:7200000, revenue:110000000 },
+    { platform:'Decentraland', events:42, attendees:840000, revenue:18000000 },
+    { platform:'The Sandbox', events:18, attendees:280000, revenue:8000000 },
+    { platform:'VRChat', events:6, attendees:100000, revenue:2800000 }
+  ],
+  tech_metrics: { avg_latency_ms:48, uptime:0.9997, crash_rate:0.0003,
+    avg_concurrent_per_event:29648, peak_rps:284000 }
+}))
+
+app.get('/api/admin/metaverse/virtual-merch', (c) => c.json({
+  total_items:8420, sold_this_month:18400, revenue_this_month:18400000,
+  top_items: [
+    { id:'VM-001', name:'Arijit Singh Holographic Poster', price:299,
+      sold:18400, revenue:5501600, type:'digital_art' },
+    { id:'VM-002', name:'Sunburn 2026 Avatar Outfit', price:999,
+      sold:8420, revenue:8419580, type:'avatar_wearable' },
+    { id:'VM-003', name:'Coldplay Wings Avatar Item', price:499,
+      sold:4200, revenue:2095800, type:'avatar_accessory' }
+  ],
+  categories: { avatar_wearables:2840, digital_art:1840,
+    emotes:1200, backgrounds:840, sound_effects:400, other:1300 }
+}))
+
+// ── 28.3 AI CONCERT COMPANION ─────────────────────────────────────────
+app.get('/api/fan/ai-companion/:event_id', (c) => c.json({
+  event_id: c.req.param('event_id'), companion_id:'AICO-001',
+  name:'AIKO — Your AI Event Companion', model:'AIKO-v2',
+  capabilities: ['setlist_predictions','crowd_sentiment','artist_facts',
+    'local_recommendations','real_time_lyrics','merch_finder',
+    'queue_predictor','lost_and_found','emergency_assist'],
+  current_event_insights: {
+    crowd_mood:'euphoric', energy_level:94, setlist_completion:0.62,
+    predicted_next_song:'Tum Hi Ho', time_to_show_end_min:42,
+    queue_wait_gate_a_min:3, queue_wait_gate_b_min:8,
+    nearest_merch_booth:'Zone C Booth 12 (2 min walk)',
+    food_wait_min:5, restroom_wait_min:2
+  },
+  proactive_alerts: [
+    { type:'setlist', message:'Next up: Tum Hi Ho — fan favourite! Get your phones out 📱', urgency:'low' },
+    { type:'logistics', message:'Gate B queue spiking — use Gate A instead ⚡', urgency:'medium' }
+  ]
+}))
+
+app.post('/api/fan/ai-companion/chat', (c) => c.json({
+  session_id:'CHAT-2026-4284', model:'AIKO-v2',
+  response:'Based on the crowd flow I can see, Gate C has almost no queue right now — about 2 minutes to get through. The merch booth near Gate C also has the exclusive Sunburn 2026 hoodie still in stock (Size M and L). Want me to reserve one for you?',
+  suggestions:['Reserve hoodie now','Show me Gate C route','What\'s next on the setlist?'],
+  confidence:0.96
+}))
+
+app.get('/api/fan/ai-companion/setlist-prediction/:event_id', (c) => c.json({
+  event_id: c.req.param('event_id'), artist:'Arijit Singh',
+  prediction_model:'SetlistAI-v3', confidence:0.84,
+  predicted_setlist: [
+    { position:1, song:'Gerua', status:'played', confidence:0.98 },
+    { position:2, song:'Tum Hi Ho', status:'played', confidence:0.97 },
+    { position:3, song:'Ek Villain - Galliyan', status:'playing', confidence:0.95 },
+    { position:4, song:'Ae Dil Hai Mushkil', status:'predicted', confidence:0.91 },
+    { position:5, song:'Channa Mereya', status:'predicted', confidence:0.88 },
+    { position:6, song:'Raabta', status:'predicted', confidence:0.82 },
+    { position:7, song:'Kesariya', status:'predicted', confidence:0.79 }
+  ],
+  encore_prediction:['Ilahi','Kabira'], encore_probability:0.72
+}))
+
+app.get('/api/event-manager/ai-companion/crowd-insights/:event_id', (c) => c.json({
+  event_id: c.req.param('event_id'),
+  real_time: { total_checked_in:24200, capacity:25000, fill_rate:0.968,
+    crowd_energy_index:94, avg_age_estimate:26, male_pct:0.48, female_pct:0.52,
+    social_posts_per_min:284, trending_hashtag:'#SunburnGoa2026' },
+  zone_breakdown: [
+    { zone:'GA Floor', density:'high', energy:98, incidents:0 },
+    { zone:'VIP Terrace', density:'medium', energy:88, incidents:0 },
+    { zone:'Seated', density:'medium', energy:72, incidents:0 }
+  ],
+  sentiment: { positive:0.84, neutral:0.12, negative:0.04 },
+  ai_recommendations: [
+    'Consider opening Gate D — GA floor at 96.8% capacity',
+    'Social sentiment peak predicted in 12 min — queued artist announcement timing'
+  ]
+}))
+
+app.get('/api/event-manager/ai-companion/realtime-ops/:event_id', (c) => c.json({
+  event_id: c.req.param('event_id'), timestamp: new Date().toISOString(),
+  operations: {
+    sound_check:'optimal', lighting:'programmed', pyro_clearance:true,
+    stage_crew_ready:true, artist_on_site:true, medical_team_on_standby:true
+  },
+  anomaly_alerts: [
+    { severity:'low', zone:'Gate B', message:'Queue building — 18 min wait', action:'Open additional lane' }
+  ],
+  ai_stage_manager: { next_cue:'Confetti drop at bridge of song 4',
+    lighting_preset:'Warm gold — romantic set approaching',
+    pyro_sequence:'Finale pyro armed for encore' }
+}))
+
+// ── 28.4 HYPER-PERSONALISATION ENGINE v2 ─────────────────────────────
+app.get('/api/fan/personalisation/profile', (c) => c.json({
+  fan_id:'fan_001', engine:'HyperRec-v2',
+  taste_profile: {
+    genres: [
+      { genre:'Bollywood', affinity:0.94 },
+      { genre:'Electronic/EDM', affinity:0.82 },
+      { genre:'Indie', affinity:0.76 },
+      { genre:'Pop', affinity:0.68 }
+    ],
+    artists: [
+      { artist:'Arijit Singh', affinity:0.98, bookings:4 },
+      { artist:'Nucleya', affinity:0.89, bookings:2 },
+      { artist:'Prateek Kuhad', affinity:0.84, bookings:1 }
+    ],
+    venues: ['NSCI Dome','Mahalaxmi Grounds','Horniman Circle'],
+    price_sensitivity:'medium', advance_booking_days:18,
+    preferred_days:['Saturday','Sunday'], preferred_time:'evening'
+  },
+  behavioural_signals: {
+    avg_booking_lead_time_days:18, cart_abandon_rate:0.12,
+    opens_notifications:true, avg_spend_per_event:2840,
+    groups_usually:3, uses_upi:true
+  },
+  model_scores: { next_event_probability:0.94, churn_risk:0.04,
+    ltv_predicted:184000, segment:'Super Fan' }
+}))
+
+app.get('/api/fan/personalisation/feed', (c) => c.json({
+  fan_id:'fan_001', generated_at: new Date().toISOString(),
+  feed_items: [
+    { type:'event_recommendation', score:0.98, reason:'Your top artist',
+      event:{ id:'e1', name:'Arijit Singh Live — Mumbai', date:'2026-05-15',
+        price_from:2499, venue:'NSCI Dome' }},
+    { type:'flash_sale_alert', score:0.95, reason:'Artist you follow, 20% off for 2hrs',
+      event:{ id:'e2', name:'Prateek Kuhad Acoustic', date:'2026-04-20',
+        price_from:999, original_price:1249 }},
+    { type:'social_proof', score:0.88, reason:'12 friends attending',
+      event:{ id:'e3', name:'NH7 Weekender 2026', date:'2026-11-28',
+        price_from:1999, friends_going:12 }},
+    { type:'similar_artist', score:0.84, reason:'Fans of Prateek Kuhad also love this',
+      event:{ id:'e4', name:'Ritviz Live', date:'2026-04-05',
+        price_from:799, venue:'Blue Frog Mumbai' }}
+  ],
+  next_refresh_seconds:300, ab_variant:'v2_feed_dense'
+}))
+
+app.get('/api/admin/personalisation/engine-metrics', (c) => c.json({
+  model:'HyperRec-v2', deployed:'2026-01-15', version:'2.4.1',
+  performance: { ctr_improvement_vs_control:0.42, booking_lift:0.28,
+    revenue_lift:0.34, avg_recommendations_per_session:8.4,
+    recommendation_acceptance_rate:0.38 },
+  ab_tests: [
+    { name:'Feed density v2 vs v3', variant_a_ctr:0.38, variant_b_ctr:0.41,
+      winner:'B', confidence:0.97, status:'graduated' },
+    { name:'Notification timing ML vs rule', variant_a_open:0.28, variant_b_open:0.34,
+      winner:'B (ML)', confidence:0.94, status:'live' }
+  ],
+  signals_per_second:28400, model_latency_ms:12, daily_predictions:84000000,
+  training_schedule:'weekly', last_trained:'2026-03-05'
+}))
+
+app.get('/api/admin/personalisation/segments', (c) => c.json({
+  total_fans:8420000, segmented:8200000, unsegmented:220000,
+  segments: [
+    { name:'Legend Fan', size:42000, avg_ltv:284000, avg_events_pa:12, churn_risk:0.02 },
+    { name:'Super Fan', size:420000, avg_ltv:84000, avg_events_pa:6, churn_risk:0.04 },
+    { name:'Regular', size:2840000, avg_ltv:18400, avg_events_pa:2, churn_risk:0.12 },
+    { name:'Occasional', size:3500000, avg_ltv:4200, avg_events_pa:1, churn_risk:0.28 },
+    { name:'At Risk', size:1398000, avg_ltv:1200, avg_events_pa:0, churn_risk:0.68 }
+  ]
+}))
+
+app.post('/api/admin/personalisation/retrain', (c) => c.json({
+  success:true, job_id:'TRAIN-2026-0842', model:'HyperRec-v2',
+  started_at: new Date().toISOString(), estimated_completion_minutes:45,
+  training_data_rows:280000000, features:248, message:'Model retraining initiated'
+}))
+
+// ── 28.5 VOICE & CONVERSATIONAL TICKETING ───────────────────────────
+app.get('/api/fan/voice/assistants', (c) => c.json({
+  supported: [
+    { platform:'Google Assistant', skill_name:'INDTIX', status:'live',
+      users:284000, monthly_queries:1840000, rating:4.6 },
+    { platform:'Amazon Alexa', skill_name:'INDTIX Events', status:'live',
+      users:128000, monthly_queries:840000, rating:4.5 },
+    { platform:'Siri Shortcuts', skill_name:'INDTIX', status:'live',
+      users:420000, monthly_queries:2840000, rating:4.7 },
+    { platform:'WhatsApp Bot', skill_name:'+91-9000-INDTIX', status:'live',
+      users:2840000, monthly_queries:18400000, rating:4.8 }
+  ],
+  voice_commands_supported:128,
+  sample_commands:[
+    '"Book 2 tickets for Arijit Singh this weekend"',
+    '"What events are near me this month?"',
+    '"Show my upcoming events"',
+    '"Cancel my ticket for NH7"'
+  ]
+}))
+
+app.post('/api/fan/voice/intent', (c) => c.json({
+  session_id:'VOICE-2026-4284', intent:'book_tickets',
+  entities: { artist:'Arijit Singh', quantity:2, date_range:'this weekend' },
+  confidence:0.94,
+  response: { text:'I found Arijit Singh Live at NSCI Dome on Saturday March 14. 2 tickets at ₹2,499 each = ₹4,998. Shall I proceed with UPI payment?',
+    quick_replies:['Yes, pay now','Show other options','Cancel'],
+    suggested_events:[{ id:'e1', name:'Arijit Singh Live', date:'2026-03-14', price:2499 }]
+  }
+}))
+
+app.get('/api/fan/voice/conversation-history', (c) => c.json({
+  fan_id:'fan_001', total_sessions:142, bookings_via_voice:18,
+  recent_sessions: [
+    { date:'2026-03-08', platform:'WhatsApp', intent:'check_events', outcome:'browsed' },
+    { date:'2026-03-07', platform:'Alexa', intent:'book_tickets', outcome:'booked', event:'Sunburn 2026' },
+    { date:'2026-03-05', platform:'Google', intent:'cancel_ticket', outcome:'cancelled' }
+  ],
+  voice_booking_rate:0.127, preferred_platform:'WhatsApp'
+}))
+
+app.get('/api/ops/voice/analytics', (c) => c.json({
+  total_daily_queries:22080000, platforms: {
+    whatsapp:18400000, siri:2840000, alexa:840000, google:0
+  },
+  intent_distribution: { book_tickets:0.42, search_events:0.28, check_bookings:0.18,
+    cancel:0.06, support:0.04, other:0.02 },
+  booking_conversion_rate:0.127, avg_conversation_turns:3.8,
+  nlu_accuracy:0.962, top_failed_intents:['complex_group_booking','international_artist_search']
+}))
+
+// ── 28.6 LIVE EXPERIENCE COMMERCE ────────────────────────────────────
+app.get('/api/fan/experience-commerce/:event_id', (c) => c.json({
+  event_id: c.req.param('event_id'), event:'Sunburn 2026',
+  experience_packages: [
+    { id:'EXP-001', name:'Sunburn Ultimate Bundle', price:15000,
+      includes:['GA Ticket x2','Artist Meet & Greet','VIP Merch Pack (hoodie+cap+poster)',
+        'Pre-show Dinner at Stage Kitchen','Exclusive AF backstage tour'],
+      availability:50, sold:42, expires:'2026-11-30' },
+    { id:'EXP-002', name:'Glamping Weekend Pack', price:28000,
+      includes:['2-night Premium Glamping Tent','2x GA Tickets','Breakfast + Dinner',
+        'Exclusive Sunburn x INDIA merch box','Airport shuttle'],
+      availability:100, sold:84, expires:'2026-11-01' },
+    { id:'EXP-003', name:'VIP Day Pass', price:7500,
+      includes:['VIP Ticket','Open bar (6hrs)','VIP lounge access','Fast-track entry'],
+      availability:200, sold:128, expires:'2026-12-15' }
+  ],
+  add_ons: [
+    { id:'ADD-001', name:'Professional Photo Session', price:2500, available:true },
+    { id:'ADD-002', name:'Signed Artist Poster', price:1500, available:true },
+    { id:'ADD-003', name:'Custom Henna Tattoo', price:500, available:true },
+    { id:'ADD-004', name:'Pre-show Yoga Session', price:800, available:false }
+  ]
+}))
+
+app.post('/api/fan/experience-commerce/book', (c) => c.json({
+  success:true, booking_id:'EXB-2026-4284',
+  package:'Sunburn Ultimate Bundle', quantity:1,
+  total:15000, gst:2700, grand_total:17700,
+  confirmation_sent:'akash@example.com',
+  experience_coordinator:'Priya Sharma (priya@sunburn.in)',
+  message:'Experience package booked! Your coordinator will reach out 48hrs before the event.'
+}))
+
+app.get('/api/organiser/experience-commerce/packages', (c) => c.json({
+  event_id:'e1', total_packages:12,
+  packages: [
+    { id:'EXP-001', name:'Ultimate Bundle', price:15000, available:8, sold:42,
+      revenue:630000, margin:0.42 },
+    { id:'EXP-002', name:'Glamping Weekend', price:28000, available:16, sold:84,
+      revenue:2352000, margin:0.38 }
+  ],
+  total_experience_revenue:4200000,
+  avg_upsell_per_booking:2840, attach_rate:0.18
+}))
+
+app.get('/api/organiser/experience-commerce/upsell-engine', (c) => c.json({
+  model:'UpsellAI-v2', active:true,
+  triggers: [
+    { trigger:'post_ticket_purchase', offer:'VIP upgrade', conversion:0.14, revenue_lift:1840 },
+    { trigger:'7_days_before_event', offer:'Experience package', conversion:0.08, revenue_lift:4200 },
+    { trigger:'day_of_event', offer:'Add-on items', conversion:0.22, revenue_lift:640 }
+  ],
+  total_upsell_revenue_ytd:18400000, avg_order_value_lift:2840
+}))
+
+app.get('/api/fan/experience-commerce/wishlist', (c) => c.json({
+  fan_id:'fan_001', items: [
+    { id:'EXP-001', event:'Sunburn 2026', package:'Ultimate Bundle',
+      price:15000, added:'2026-02-15', price_drop_alert:false },
+    { id:'EXP-002', event:'NH7 Weekender', package:'Glamping Pack',
+      price:28000, added:'2026-03-01', price_drop_alert:true }
+  ]
+}))
+
+// ── 28.7 PREDICTIVE OPERATIONS AI ────────────────────────────────────
+app.get('/api/ops/predictive-ai/demand-forecast', (c) => c.json({
+  model:'DemandSeer-v3', generated_at: new Date().toISOString(),
+  forecasts: [
+    { event:'Sunburn 2026', date:'2026-12-27', predicted_demand:1.42,
+      confidence:0.94, recommended_actions:['Release 500 more GA tickets','Activate waitlist'],
+      price_elasticity:-0.42, optimal_price:2799 },
+    { event:'NH7 Weekender 2026', date:'2026-11-28', predicted_demand:0.94,
+      confidence:0.88, recommended_actions:['Hold current pricing'],
+      price_elasticity:-0.38, optimal_price:1999 },
+    { event:'Lollapalooza India 2027', date:'2027-01-16', predicted_demand:1.84,
+      confidence:0.91, recommended_actions:['Consider premium tier','Dynamic surge pricing'],
+      price_elasticity:-0.28, optimal_price:5499 }
+  ],
+  model_accuracy_last_30d:0.94
+}))
+
+app.get('/api/ops/predictive-ai/infrastructure', (c) => c.json({
+  model:'InfraPredict-v2', horizon_hours:24,
+  predictions: [
+    { time:'20:00-22:00', event:'Sunburn goes on sale', predicted_rps:284000,
+      current_capacity:300000, scaling_action:'None — sufficient', confidence:0.92 },
+    { time:'2026-03-15 18:00', event:'Coldplay ticket drop', predicted_rps:840000,
+      current_capacity:300000, scaling_action:'Auto-scale to 1M RPS — prepare surge queue', confidence:0.88 }
+  ],
+  auto_scaling_enabled:true, current_headroom_pct:0.72,
+  cost_forecast_24h:28400
+}))
+
+app.get('/api/ops/predictive-ai/fraud-signals', (c) => c.json({
+  model:'FraudSeer-v2', real_time:true,
+  current_risk_level:'low', active_alerts:2,
+  signals: [
+    { type:'bot_detection', count:842, blocked:840, passed:2, risk:'low' },
+    { type:'card_testing', count:28, blocked:28, passed:0, risk:'resolved' },
+    { type:'account_takeover', count:4, blocked:3, investigating:1, risk:'medium' }
+  ],
+  fraud_prevented_today:84000, loss_prevented_inr:420000,
+  model_accuracy:0.987, false_positive_rate:0.002
+}))
+
+app.get('/api/admin/predictive-ai/revenue-forecast', (c) => c.json({
+  model:'RevenueSeer-v2', period:'Q2 2026',
+  forecast: { gmv:8400000000, net_revenue:420000000,
+    confidence_interval:{ low:7560000000, high:9240000000 } },
+  by_segment: [
+    { segment:'Concerts', gmv:4200000000, growth:0.42 },
+    { segment:'Festivals', gmv:2100000000, growth:0.84 },
+    { segment:'Sports', gmv:840000000, growth:0.28 },
+    { segment:'B2B Corporate', gmv:840000000, growth:0.64 },
+    { segment:'Virtual', gmv:420000000, growth:2.84 }
+  ],
+  key_risks:['Artist cancellation','Weather events','Regulatory changes'],
+  key_opportunities:['International expansion','B2B growth','Virtual concerts']
+}))
+
+// ── 28.8 CREATOR ECONOMY PLATFORM ────────────────────────────────────
+app.get('/api/organiser/creator-economy/hub', (c) => c.json({
+  creators_on_platform:18400, verified:8420, top_tier:284,
+  creator_types: { event_promoters:8420, content_creators:6000,
+    photographers:2000, videographers:1000, reviewers:980 },
+  revenue_shared_this_month:28000000,
+  top_creators: [
+    { id:'CR-001', name:'Mumbai Events Official', type:'promoter',
+      followers:2400000, events_promoted:284, revenue_earned:4200000 },
+    { id:'CR-002', name:'Bollywood Concerts', type:'content_creator',
+      followers:1800000, events_promoted:128, revenue_earned:2840000 },
+    { id:'CR-003', name:'Live Nation India', type:'promoter',
+      followers:840000, events_promoted:842, revenue_earned:18400000 }
+  ]
+}))
+
+app.get('/api/organiser/creator-economy/my-profile', (c) => c.json({
+  creator_id:'CR-001', name:'Sunburn Official', tier:'platinum',
+  followers:2400000, verified:true,
+  monetisation: { revenue_share_rate:0.08, this_month:4200000,
+    ytd:42000000, pending_payout:4200000, next_payout:'2026-03-31' },
+  content: { events_listed:284, posts:1840, videos:284, avg_engagement:0.084 },
+  tools: { ai_thumbnail_generator:true, auto_caption:true,
+    smart_scheduling:true, ab_testing_posts:true }
+}))
+
+app.post('/api/organiser/creator-economy/publish-event', (c) => c.json({
+  success:true, event_id:'EVT-CR-2026-4284',
+  ai_enhancements: { seo_title_generated:true, description_optimised:true,
+    thumbnails_generated:3, best_posting_time:'Saturday 7PM IST' },
+  distribution: { platform_featured:true, email_blast:true,
+    push_notifications:true, social_auto_post:true },
+  estimated_reach:2400000, predicted_clicks:96000, predicted_bookings:4800
+}))
+
+app.get('/api/fan/creator-economy/follow', (c) => c.json({
+  fan_id:'fan_001', following_creators:28,
+  creators: [
+    { id:'CR-001', name:'Sunburn Official', type:'promoter', new_posts:3 },
+    { id:'CR-002', name:'Arijit Singh Official', type:'artist', new_posts:1 },
+    { id:'CR-003', name:'Mumbai Live Music', type:'content_creator', new_posts:8 }
+  ],
+  creator_exclusives: [
+    { creator:'Arijit Singh Official', content:'Early access: Sunburn 2026 tickets' },
+    { creator:'Sunburn Official', content:'Lineup reveal: 12 new artists announced' }
+  ]
+}))
+
+app.get('/api/organiser/creator-economy/analytics', (c) => c.json({
+  period:'2026-03',
+  content_performance: { total_posts:284, total_views:24000000,
+    total_clicks:960000, click_to_booking:0.05, revenue_attributed:4800000 },
+  top_content: [
+    { post:'Sunburn 2026 lineup revealed!', views:4200000, clicks:168000, bookings:8400 },
+    { post:'Early bird tickets — 40% off for 24hrs', views:2840000, clicks:226000, bookings:11300 }
+  ],
+  ai_insights:['Posts at 7-8PM get 42% more reach','Video posts 3x higher engagement than image']
+}))
+
+// ── 28.9 SMART VENUE IoT NETWORK ─────────────────────────────────────
+app.get('/api/venue/iot/dashboard/:venue_id', (c) => c.json({
+  venue_id: c.req.param('venue_id'), name:'NSCI Dome Mumbai',
+  iot_devices: { total:2840, online:2820, offline:18, alerts:4 },
+  sensors: {
+    crowd_density: { zones:8, avg_density:0.76, hotspots:['GA Floor Centre','Main Stage Barrier'] },
+    temperature: { avg_celsius:28.4, max:32, min:24, hvac_zones:12, ac_running:10 },
+    noise_level: { avg_db:84, max_db:112, compliance_limit_db:120 },
+    air_quality: { pm25:12.4, co2_ppm:842, voc_index:18, status:'good' },
+    water_usage: { total_litres_today:84000, per_head_litres:3.5, waste_detected:false },
+    power: { total_kw:2840, solar_kw:284, grid_kw:2556, cost_per_hour:28400 }
+  },
+  smart_gates: [
+    { gate:'A', status:'open', scan_rate:284, queue_length:18, avg_wait_sec:38 },
+    { gate:'B', status:'open', scan_rate:218, queue_length:42, avg_wait_sec:84 },
+    { gate:'C', status:'open', scan_rate:128, queue_length:8, avg_wait_sec:22 }
+  ],
+  predictive_alerts: [
+    { sensor:'gate_b_queue', message:'Gate B queue projected to hit 15min in 20min', severity:'medium' },
+    { sensor:'power_main', message:'Power draw at 84% — consider load shedding backstage', severity:'low' }
+  ]
+}))
+
+app.get('/api/venue/iot/sensors/:venue_id', (c) => c.json({
+  venue_id: c.req.param('venue_id'),
+  sensor_categories: [
+    { category:'Environmental', count:284, status:'all_nominal' },
+    { category:'Security Cameras', count:128, status:'all_recording' },
+    { category:'Smart Lights', count:1840, status:'programmed_show_mode' },
+    { category:'RFID Gates', count:12, status:'operational' },
+    { category:'Crowd Counters', count:48, status:'tracking' },
+    { category:'Emergency Beacons', count:28, status:'armed_standby' }
+  ],
+  data_ingestion_rate_events_per_sec:28400,
+  edge_processing_latency_ms:8
+}))
+
+app.get('/api/venue/iot/alerts/:venue_id', (c) => c.json({
+  venue_id: c.req.param('venue_id'), active_alerts:4,
+  alerts: [
+    { id:'ALT-001', severity:'medium', category:'crowd', zone:'Gate B',
+      message:'Queue 42 people — approaching slow threshold', ts:'10:42:18', resolved:false },
+    { id:'ALT-002', severity:'low', category:'power', zone:'Backstage',
+      message:'Power draw 84% of limit', ts:'10:38:00', resolved:false },
+    { id:'ALT-003', severity:'low', category:'air_quality', zone:'Restrooms Block C',
+      message:'VOC slightly elevated', ts:'10:12:00', resolved:false },
+    { id:'ALT-004', severity:'high', category:'medical', zone:'GA Floor',
+      message:'Fan collapse reported — medical team dispatched', ts:'10:55:00', resolved:true }
+  ]
+}))
+
+app.post('/api/venue/iot/command', (c) => c.json({
+  success:true, command_id:'CMD-2026-4284',
+  executed_at: new Date().toISOString(),
+  message:'IoT command executed across target devices'
+}))
+
+// ── 28.10 COMMUNITY & SOCIAL GRAPH ───────────────────────────────────
+app.get('/api/fan/community/my-graph', (c) => c.json({
+  fan_id:'fan_001',
+  social: { friends:284, followers:1840, following:428,
+    mutual_fans:128, fan_clubs_joined:4 },
+  activity: { posts_this_month:18, likes_given:284, comments:42,
+    events_shared:8, tickets_gifted:2 },
+  friend_activity: [
+    { friend:'Rohan M', action:'booked', event:'NH7 Weekender', time:'2h ago' },
+    { friend:'Priya S', action:'joined_club', club:'Arijit Singh Fan Club', time:'4h ago' },
+    { friend:'Ankit D', action:'shared_setlist', event:'Prateek Kuhad', time:'1d ago' }
+  ],
+  recommendations_from_friends: [
+    { event:'Sunburn 2026', friends_going:12, avg_interest_score:0.94 },
+    { event:'Ritviz Live', friends_going:4, avg_interest_score:0.82 }
+  ]
+}))
+
+app.get('/api/fan/community/feed', (c) => c.json({
+  total_posts:18400, trending_posts: [
+    { id:'POST-001', author:'SunburnOfficial', content:'Lineup reveal dropping in 1 hour! 🔥',
+      likes:18400, comments:2840, shares:4200, type:'announcement',
+      event_tag:'Sunburn 2026' },
+    { id:'POST-002', author:'fan_Akash', content:'Arijit Singh just sang Tum Hi Ho and I am crying happy tears 😭❤️',
+      likes:8420, comments:1240, shares:2100, type:'moment',
+      event_tag:'Arijit Live Mumbai' },
+    { id:'POST-003', author:'fan_Priya', content:'Pro tip: Gate C has zero queue right now!',
+      likes:2840, comments:420, shares:840, type:'tip',
+      event_tag:'NH7 Weekender' }
+  ]
+}))
+
+app.get('/api/admin/community/moderation', (c) => c.json({
+  total_posts_today:284000, flagged:842, removed:128, appealed:18, reinstated:4,
+  ai_moderation: { enabled:true, model:'ContentGuard-v2',
+    auto_removed:420, accuracy:0.94, false_positive_rate:0.018 },
+  categories: { spam:284, hate_speech:42, explicit:18, misinformation:28,
+    copyright:12, other:438 },
+  escalated_to_human:128, avg_resolution_hours:2.4
+}))
+
+app.get('/api/fan/community/events-social/:event_id', (c) => c.json({
+  event_id: c.req.param('event_id'),
+  social_stats: { posts:18400, stories:8420, live_videos:42,
+    photos_uploaded:28400, check_ins:24200, tags:42000 },
+  trending_moments: [
+    { song:'Tum Hi Ho', social_posts_during:8420, peak_per_min:842 },
+    { song:'Gerua', social_posts_during:6284, peak_per_min:628 }
+  ],
+  top_hashtags:['#SunburnGoa2026','#SunburnIndia','#Arijit2026'],
+  user_photos_wall_enabled:true, moderated_wall_posts:18400
+}))
+
+// ── 28.11 PLATFORM MONETISATION v3 ───────────────────────────────────
+app.get('/api/admin/monetisation/v3/dashboard', (c) => c.json({
+  model_version:'MonetisationOS-v3',
+  mrr:840000000, arr:10080000000, yoy_growth:0.84,
+  revenue_streams: [
+    { stream:'Ticketing Fees', mrr:420000000, share:0.50, growth:0.42 },
+    { stream:'Premium Services', mrr:126000000, share:0.15, growth:0.84 },
+    { stream:'Advertising', mrr:84000000, share:0.10, growth:1.28 },
+    { stream:'B2B & White Label', mrr:84000000, share:0.10, growth:0.64 },
+    { stream:'Virtual Events', mrr:42000000, share:0.05, growth:2.84 },
+    { stream:'Creator Economy', mrr:42000000, share:0.05, growth:1.84 },
+    { stream:'API Marketplace', mrr:21000000, share:0.025, growth:0.96 },
+    { stream:'NFT Royalties', mrr:21000000, share:0.025, growth:3.42 }
+  ],
+  unit_economics: { cac:840, ltv:18400, ltv_cac_ratio:21.9,
+    payback_months:2.8, gross_margin:0.72 },
+  growth_initiatives: ['International expansion','B2B enterprise','Creator monetisation']
+}))
+
+app.get('/api/admin/monetisation/v3/advertising', (c) => c.json({
+  platform:'INDTIX Ads', monthly_revenue:84000000,
+  ad_formats: [
+    { format:'Sponsored Events', cpm:284, fill_rate:0.92, revenue:42000000 },
+    { format:'In-App Banner', cpm:84, fill_rate:0.88, revenue:18000000 },
+    { format:'Push Notification Ads', cpm:420, fill_rate:0.72, revenue:14000000 },
+    { format:'Email Sponsored', cpm:180, fill_rate:0.84, revenue:10000000 }
+  ],
+  advertisers:284, active_campaigns:842,
+  top_advertisers: [
+    { brand:'Kingfisher', spend:8400000, campaigns:12 },
+    { brand:'Jio', spend:6200000, campaigns:8 },
+    { brand:'HDFC Credit Card', spend:4200000, campaigns:6 }
+  ]
+}))
+
+app.get('/api/admin/monetisation/v3/premium-features', (c) => c.json({
+  total_subscribers:840000, mrr:126000000,
+  tiers: [
+    { name:'INDTIX Plus', price_monthly:99, subscribers:700000, mrr:69300000,
+      features:['Early access','Priority support','No ads','1 free cancellation/month'] },
+    { name:'INDTIX Pro', price_monthly:299, subscribers:120000, mrr:35880000,
+      features:['All Plus','VIP lounge access','Dedicated concierge','Exclusive pre-sales'] },
+    { name:'INDTIX Black', price_monthly:999, subscribers:20000, mrr:19980000,
+      features:['All Pro','Unlimited cancellations','Private events access','Artist meet & greet annual'] }
+  ],
+  retention_rate:0.88, churn_rate:0.12, net_revenue_retention:1.18
+}))
+
+app.get('/api/admin/monetisation/v3/growth-model', (c) => c.json({
+  scenarios: [
+    { scenario:'base', gmv_q4_2026:12600000000, revenue:630000000,
+      assumptions:['84% YoY growth','8 markets'] },
+    { scenario:'optimistic', gmv_q4_2026:16800000000, revenue:840000000,
+      assumptions:['120% YoY','12 markets','B2B acceleration'] },
+    { scenario:'conservative', gmv_q4_2026:9240000000, revenue:462000000,
+      assumptions:['50% YoY','6 markets stable'] }
+  ],
+  key_drivers:['International expansion','B2B Enterprise','Virtual events','Creator economy'],
+  north_star_metric:'GMV', north_star_target_2026:50400000000
+}))
+
+// ── 28.12 CROSS-PLATFORM PHASE 28 ────────────────────────────────────
+app.get('/api/fan/immersive/upcoming', (c) => c.json({
+  experiences: [
+    { type:'virtual_concert', event:'Arijit Singh VR Live', platform:'INDTIX-Verse',
+      date:'2026-04-15', price:499, vr_required:false },
+    { type:'ar_experience', event:'Sunburn AR Teaser', platform:'INDTIX App',
+      date:'2026-03-20', price:0, ar_required:true },
+    { type:'experience_package', event:'Sunburn Ultimate Bundle', date:'2026-12-27',
+      price:15000, includes:['Ticket','Meet & Greet','Merch'] }
+  ]
+}))
+
+app.get('/api/admin/platform/ai-summary', (c) => c.json({
+  ai_systems: [
+    { name:'HyperRec-v2', purpose:'Personalisation', latency_ms:12, accuracy:0.94, status:'healthy' },
+    { name:'AIKO-v2', purpose:'Concert Companion', latency_ms:48, accuracy:0.96, status:'healthy' },
+    { name:'DemandSeer-v3', purpose:'Demand Forecast', latency_ms:284, accuracy:0.94, status:'healthy' },
+    { name:'FraudSeer-v2', purpose:'Fraud Prediction', latency_ms:8, accuracy:0.987, status:'healthy' },
+    { name:'UpsellAI-v2', purpose:'Experience Upsell', latency_ms:18, accuracy:0.89, status:'healthy' },
+    { name:'SetlistAI-v3', purpose:'Setlist Prediction', latency_ms:142, accuracy:0.84, status:'healthy' },
+    { name:'ContentGuard-v2', purpose:'Community Mod', latency_ms:28, accuracy:0.94, status:'healthy' },
+    { name:'InfraPredict-v2', purpose:'Infrastructure', latency_ms:84, accuracy:0.91, status:'healthy' }
+  ],
+  total_ai_predictions_daily:840000000, total_ai_revenue_attribution:0.42
+}))
+
+// ── Phase 28 QA Aliases ───────────────────────────────────────────────
+app.get('/api/admin/monetisation/dashboard', (c) =>
+  c.redirect('/api/admin/monetisation/v3/dashboard'))
+
+app.get('/api/ops/predictive/demand', (c) =>
+  c.redirect('/api/ops/predictive-ai/demand-forecast'))
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 28 QA FIX — Missing Route Aliases
+// ═══════════════════════════════════════════════════════════
+
+// ── Metaverse aliases ──
+app.get('/api/fan/metaverse/spaces', (c) => c.json({ spaces: [{id:'MS001',name:'Virtual Coldplay Arena',capacity:50000,type:'Concert',status:'Live'},{id:'MS002',name:'NH7 Metaverse Stage',capacity:25000,type:'Festival',status:'Upcoming'},{id:'MS003',name:'Bollywood VR Lounge',capacity:10000,type:'Lounge',status:'Available'}], total:42, active:18 }))
+app.get('/api/fan/metaverse/avatar', (c) => c.json({ avatar_id:'AVT-284', name:'CoolFan_84', skin:'Premium Gold', accessories:['Neon Wings','Star Crown','Bass Guitar'], level:42, xp:28400, achievements:18 }))
+app.get('/api/fan/metaverse/tickets', (c) => c.json({ metaverse_tickets:[{event:'Coldplay VR Show',tier:'Front Row VR',seat:'VR-R1-C42',nft_token:'0xABC123'},{event:'Arijit 360° Experience',tier:'Immersive Pod',seat:'POD-7',nft_token:'0xDEF456'}], total:8 }))
+app.post('/api/fan/metaverse/join', (c) => c.json({ session_id:'SES-28400', space_id:'MS001', avatar_position:{x:0,y:0,z:0}, joined_at:new Date().toISOString(), stream_url:'wss://metaverse.indtix.com/live/MS001' }))
+
+// ── AI Companion aliases ──
+app.get('/api/fan/ai-companion/setlist-recommendations', (c) => c.json({ event_id:'EVT-284', artist:'Arijit Singh', recommended_setlist:['Tum Hi Ho','Channa Mereya','Gerua','Ae Dil','Kabira'], based_on:'crowd_energy+fan_history', confidence:0.94 }))
+app.get('/api/fan/ai-companion/crowd-vibe', (c) => c.json({ vibe:'Euphoric 🔥', energy_score:8.4, happiness:94, engagement:92, predicted_peak:'21:30', sentiment:'Very Positive' }))
+app.post('/api/fan/ai-companion/query', (c) => c.json({ answer:'Best seats for Arijit Singh are Rows C-E in the Golden Circle for closest proximity to centre stage. VIP Pit gives artist interaction.', confidence:0.96, follow_up_suggestions:['Book VIP Pit','Upgrade to Platinum','View seat map'] }))
+
+// ── Personalisation aliases ──
+app.get('/api/admin/personalisation/profiles', (c) => c.json({ total_profiles:1284000, persona_segments:['Music Enthusiast','Social Fan','Experience Seeker','VIP Collector','Budget Traveller'], last_retrained:'2026-03-01', model_accuracy:0.94 }))
+app.get('/api/admin/personalisation/models', (c) => c.json({ models:[{name:'Content Recommender',type:'Collaborative Filtering',accuracy:94.2,status:'Active'},{name:'Price Optimizer',type:'Reinforcement Learning',accuracy:91.8,status:'Active'},{name:'Churn Predictor',type:'XGBoost',accuracy:88.4,status:'Active'}] }))
+app.get('/api/admin/personalisation/analytics', (c) => c.json({ personalized_ctr:'18.4%', revenue_lift:'+34%', click_through_rate:0.184, conversion_improvement:0.28, segments_active:48, ab_tests_running:12 }))
+app.post('/api/admin/personalisation/update', (c) => c.json({ success:true, user_id:'U001', updated_prefs:true, next_recommendations_at:new Date(Date.now()+3600000).toISOString() }))
+app.get('/api/admin/personalisation/engine-status', (c) => c.json({ status:'Healthy', version:'v2.4.0', models_loaded:18, inference_latency_ms:42, requests_today:2840000, cache_hit_rate:0.84 }))
+
+// ── Voice Ticketing aliases ──
+app.get('/api/fan/voice/intents', (c) => c.json({ intents:['book_ticket','search_events','check_booking','cancel_ticket','find_venue','get_recommendations'], total:48, languages:18 }))
+app.get('/api/fan/voice/sessions', (c) => c.json({ total_sessions:284000, voice_bookings:42000, nlu_accuracy:'97.2%', avg_session_duration_s:84, top_language:'Hindi', completion_rate:0.84 }))
+app.post('/api/fan/voice/book', (c) => c.json({ success:true, booking_ref:'VBK-28400', query_parsed:{event:'Coldplay',city:'Mumbai',qty:2}, tickets_reserved:2, payment_link:'https://pay.indtix.com/VBK-28400' }))
+app.post('/api/fan/voice/query', (c) => c.json({ intent:'search_events', entities:{location:'user_location',genre:'concerts'}, results:[{event:'Coldplay Mumbai',date:'2026-04-15'},{event:'Arijit Delhi',date:'2026-04-22'}], confidence:0.94 }))
+app.get('/api/ops/voice-ticketing/stats', (c) => c.json({ total_sessions:284000, voice_bookings:42000, nlu_accuracy:'97.2%', languages_supported:18, channels:{whatsapp:42,alexa:28,google:18,siri:12}, daily_active:28400 }))
+app.post('/api/ops/voice-ticketing/query', (c) => c.json({ processed:true, intent:'book_tickets', artist:'Coldplay', qty:2, confidence:0.97, session_id:'OPS-SES-284' }))
+
+// ── Experience Commerce aliases ──
+app.get('/api/fan/experience-commerce/packages', (c) => c.json({ packages:[{id:'PKG001',name:'VIP Backstage Pass',price:12500,sold:284,available:16},{id:'PKG002',name:'Meet & Greet',price:8500,sold:420,available:80},{id:'PKG003',name:'Premium Lounge',price:4500,sold:1240,available:260}], total_packages:148, total_revenue:'₹3.84 Cr', upsell_conversion:'34.2%' }))
+app.post('/api/organiser/experience-commerce/packages', (c) => c.json({ success:true, package_id:'PKG-4842', name:'VIP Backstage Package', created_at:new Date().toISOString(), status:'Active' }))
+app.get('/api/organiser/experience-commerce/analytics', (c) => c.json({ top_package:'VIP Backstage Pass', avg_spend:'₹6,840', nps:84, total_revenue:'₹3.84 Cr', upsell_conversion:'34.2%', packages_active:148 }))
+
+// ── Predictive Ops aliases ──
+app.get('/api/ops/predictive-ops/dashboard', (c) => c.json({ live_predictions:284, active_alerts:12, auto_resolved:248, active_models:18, accuracy:'94.8%', last_updated:new Date().toISOString() }))
+app.get('/api/ops/predictive-ops/predictions', (c) => c.json({ predictions:[{type:'Crowd Surge',location:'Gate 3',time:'19:45',risk:'High',confidence:0.94,action:'Mitigated'},{type:'Queue Overflow',location:'Food Court',time:'20:30',risk:'Medium',confidence:0.89,action:'Monitoring'},{type:'Technical Failure',location:'Sound System',time:'21:00',risk:'Low',confidence:0.84,action:'Resolved'}] }))
+app.get('/api/ops/predictive-ops/models', (c) => c.json({ models:[{name:'Crowd Surge Predictor',type:'LSTM',accuracy:94.8},{name:'Demand Forecaster',type:'XGBoost',accuracy:92.1},{name:'Sentiment Analyser',type:'BERT-Hindi',accuracy:89.4},{name:'Fraud Detector',type:'Random Forest',accuracy:97.2},{name:'Price Optimizer',type:'RL-Agent',accuracy:88.6}] }))
+app.post('/api/ops/predictive-ops/simulate', (c) => c.json({ simulation_id:'SIM-284', scenario:'peak_crowd', capacity:42000, result:'All systems green', bottleneck:'Gate 2 at 19:15', recommendation:'Open additional lane 5 mins early', confidence:0.91 }))
+app.get('/api/admin/predictive-ops/insights', (c) => c.json({ insights:[{area:'Revenue',prediction:'₹2.84 Cr spike next weekend',confidence:0.88},{area:'Attendance',prediction:'94% capacity fill rate',confidence:0.91},{area:'Fraud',prediction:'12 suspicious transactions detected',confidence:0.97}] }))
+app.get('/api/event-manager/predictive-ops/predictions', (c) => c.json({ event_predictions:[{type:'Crowd Surge',eta:'30 mins',risk:'High'},{type:'Sound Issue',eta:'2h',risk:'Low'}], accuracy:'94.8%', models_active:18 }))
+
+// ── Creator Economy aliases ──
+app.get('/api/organiser/creator-economy/creators', (c) => c.json({ creators:[{name:'Nikhil Kamath',category:'Finance',followers:'4.2M',gmv:'₹84L'},{name:'Bhuvan Bam',category:'Comedy',followers:'14M',gmv:'₹1.2Cr'},{name:'Ranveer Allahbadia',category:'Podcast',followers:'8.4M',gmv:'₹96L'}], total_creators:2840, total_gmv:'₹18.4 Cr', total_earnings:'₹3.68 Cr', digital_products:1240 }))
+app.get('/api/organiser/creator-economy/payouts', (c) => c.json({ pending_amount:'₹42L', paid_this_month:'₹3.68 Cr', creators_count:2840, next_payout_date:'2026-03-15', breakdown:[{creator:'Bhuvan Bam',amount:'₹8.4L'},{creator:'Ranveer Allahbadia',amount:'₹5.2L'}] }))
+app.post('/api/organiser/creator-economy/invite', (c) => c.json({ success:true, invitation_sent:true, onboarding_link:'https://creator.indtix.com/onboard/INV-284', expires_in_hours:48 }))
+app.get('/api/fan/creator-economy/feed', (c) => c.json({ feed:[{creator:'Bhuvan Bam',content:'Exclusive backstage pass giveaway!',type:'post',likes:42000},{creator:'Nikhil Kamath',content:'Meet me at NH7 VIP lounge',type:'event',likes:28400}], total:284, unread:42 }))
+app.get('/api/fan/creator-economy/products', (c) => c.json({ products:[{id:'PROD001',name:'Exclusive Setlist NFT',creator:'Arijit Singh',price:'₹2,500',type:'NFT'},{id:'PROD002',name:'Virtual Backstage Tour',creator:'Coldplay India',price:'₹5,000',type:'Digital Experience'}], total:1240 }))
+app.get('/api/admin/creator-economy/stats', (c) => c.json({ total_creators:2840, total_gmv:'₹18.4 Cr', platform_take_rate:0.20, top_creator:'Bhuvan Bam', fastest_growing:'Ranveer Allahbadia', digital_products:1240 }))
+
+// ── IoT aliases ──
+app.get('/api/venue/iot/devices', (c) => c.json({ online_devices:1284, offline_devices:42, active_alerts:3, uptime:'99.84%', avg_crowd_density:'68%', zones:4, last_sync:new Date().toISOString() }))
+app.get('/api/venue/iot/automation', (c) => c.json({ total_rules:48, triggers_today:284, energy_savings:'₹84K', rules:[{name:'Crowd Alert → PA',trigger:'Density>85%',action:'Broadcast',active:true},{name:'Night Mode',trigger:'Time>23:00',action:'Lighting',active:true}] }))
+app.post('/api/venue/iot/automation', (c) => c.json({ success:true, rule_id:'RULE-284', trigger:'density>85', action:'open_gate', created_at:new Date().toISOString() }))
+app.get('/api/venue/iot/environment', (c) => c.json({ temperature:'24.2', humidity:'58', noise:'84', aqi:'42', co2_ppm:420, zones:{main_stage:{temp:26.1,humidity:62},vip_lounge:{temp:23.4,humidity:55}} }))
+app.get('/api/venue/iot/alerts', (c) => c.json({ alerts:[{type:'Crowd Density',location:'Gate 3',severity:'High',message:'Density 89% exceeds threshold 85%'},{type:'Queue Length',location:'Food Court',severity:'Medium',message:'Queue 42 people'},{type:'AC Temperature',location:'Zone 7',severity:'Low',message:'28°C vs set 24°C'}], total:3 }))
+app.get('/api/ops/iot/dashboard', (c) => c.json({ total_venues:284, online_devices:28400, alerts_active:42, energy_saved_kwh:28400, automation_efficiency:0.84, last_updated:new Date().toISOString() }))
+
+// ── Social Graph aliases ──
+app.get('/api/fan/social/graph', (c) => c.json({ node_count:2840000, edge_count:18400000, clustering_coefficient:0.68, diameter:6, top_communities:['Coldplay Mumbai Fans','Bollywood Music Lovers','EDM Underground'], user_connections:284 }))
+app.get('/api/fan/social/communities', (c) => c.json({ communities:[{id:'COM001',name:'Coldplay Mumbai Fans',members:28400,events:18},{id:'COM002',name:'Arijit Singh Superfans',members:84200,events:42},{id:'COM003',name:'EDM Underground India',members:18400,events:28}], total:4284, joined:12 }))
+app.post('/api/fan/social/communities/join', (c) => c.json({ success:true, community_id:'COM001', joined:true, member_count:28401, welcome_badge:'New Member' }))
+app.get('/api/fan/social/viral-events', (c) => c.json({ viral_events:[{event:'Coldplay Mumbai Afterparty',shares:28400,reach:840000,virality_score:9.2},{event:'Arijit Delhi Surprise Set',shares:18400,reach:560000,virality_score:8.4}], total_viral:284 }))
+app.get('/api/ops/community/graph', (c) => c.json({ total_nodes:2840000, total_edges:18400000, communities:4284, viral_events:284, most_connected_fan:{connections:4284}, spread_time_mins:42 }))
+
+// ── Monetisation aliases ──
+app.get('/api/admin/monetisation/revenue-streams', (c) => c.json({ total_streams:18, total_revenue:'₹28.4 Cr', mom_growth:'+42%', streams:[{name:'Ticket Service Fees',revenue:'₹12.4 Cr',share:'43.7%'},{name:'Experience Commerce',revenue:'₹6.2 Cr',share:'21.8%'},{name:'Creator Revenue',revenue:'₹3.68 Cr',share:'12.9%'},{name:'API Marketplace',revenue:'₹2.84 Cr',share:'10.0%'},{name:'White-Label SaaS',revenue:'₹3.28 Cr',share:'11.6%'}] }))
+app.get('/api/organiser/monetisation/revenue-streams', (c) => c.json({ total_streams:18, total_revenue:'₹28.4 Cr', mom_growth:'+42%', your_revenue:'₹4.2 Cr', take_rate:'8%', upcoming_payouts:'₹84L' }))
+app.get('/api/admin/monetisation/analytics', (c) => c.json({ ltv_per_user:'₹4,284', arpu:'₹1,840', churn_rate:'2.4%', nrr:'142%', gross_margin:'68%', payback_period_months:8 }))
+app.post('/api/admin/monetisation/pricing-config', (c) => c.json({ success:true, tier:'premium', fee_pct:12, effective_from:new Date().toISOString(), applies_to:'events>50000' }))
+app.get('/api/admin/monetisation/forecast', (c) => c.json({ q1_forecast:'₹84 Cr', q2_forecast:'₹1.2 Cr ARR', annual_forecast:'₹420 Cr', growth_drivers:['Creator Economy','Experience Commerce','White-Label'], confidence:0.88 }))
+
+// ── Event Manager AI aliases ──
+app.get('/api/event-manager/ai-companion/insights', (c) => c.json({ sessions_today:28400, satisfaction:'94.2%', setlists_generated:284, recommendations:84200, top_insight:'Crowd energy building — upbeat tracks recommended for next 30 mins' }))
+app.post('/api/event-manager/ai-companion/setlist', (c) => c.json({ setlist:['Tum Hi Ho','Channa Mereya','Ae Dil Hai Mushkil','Gerua','Kabira','Ek Din','Phir Le Aya Dil'], total_tracks:7, duration_mins:98, mood:'Energetic→Emotional', confidence:0.94 }))
+app.get('/api/event-manager/ai-companion/crowd-mood', (c) => c.json({ overall_mood:'Euphoric', energy_level:'8.4/10', engagement:'92%', happiness_index:94, sentiment:'Very Positive', peak_expected:'21:30' }))
+app.get('/api/event-manager/personalisation/stats', (c) => c.json({ persona_profiles:128400, personalized_ctr:'18.4%', revenue_lift:'+34%', segments:['Music Enthusiast 38%','Social Fan 28%','Experience Seeker 22%','VIP Collector 12%'] }))
+
+// ── Admin Metaverse alias ──
+app.get('/api/admin/metaverse/overview', (c) => c.json({ total_metaverse_events:42, active_spaces:18, total_users:284000, revenue:'₹8.4 Cr', nft_volume:'₹4.2 Cr', avg_session_mins:48, platforms:['Polygon','Ethereum','Solana'] }))
+
+// ── Venue Info & Ops Status (backward compat) ──
+app.get('/api/venue/info', (c) => c.json({ venue_id:'VEN-001', name:'MMRDA Grounds', city:'Mumbai', capacity:80000, status:'Active', facilities:['Parking','F&B','Medical','Security','IoT Network'] }))
+app.get('/api/ops/status', (c) => c.json({ status:'Operational', active_events:18, support_tickets_open:42, system_health:'Green', alerts:3, uptime:'99.98%', timestamp:new Date().toISOString() }))
+
+// END PHASE 28 QA FIXES
 export default app

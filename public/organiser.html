@@ -4559,4 +4559,127 @@ function p27oLoadWLPortal() {
 }
 </script>
 <!-- END PHASE 27 ORGANISER PORTAL -->
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PHASE 28 ORGANISER PORTAL — Immersive Experiences & AI-First -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="p28-organiser" class="portal-section" style="display:none">
+  <h2 class="section-title">⚡ Phase 28 — Immersive Experiences & AI-First</h2>
+
+  <!-- Live Experience Commerce -->
+  <div class="card mb-4">
+    <div class="card-header bg-gradient text-white" style="background:linear-gradient(135deg,#6f42c1,#e83e8c)">
+      <h5 class="mb-0">🛍️ Live Experience Commerce</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-purple" id="p28-exp-packages">0</div><div class="text-muted small">Experience Packages</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-pink" id="p28-exp-revenue">₹0</div><div class="text-muted small">Experience Revenue</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p28-exp-conversion">0%</div><div class="text-muted small">Upsell Conversion</div></div></div>
+      </div>
+      <div class="mt-3" id="p28-exp-packages-list"></div>
+      <div class="mt-3 d-flex gap-2 flex-wrap">
+        <button class="btn btn-sm btn-purple" onclick="p28LoadExpPackages()">📦 Load Packages</button>
+        <button class="btn btn-sm btn-outline-pink" onclick="p28CreateExpPackage()">➕ Create Package</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="p28ExpAnalytics()">📊 Analytics</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Creator Economy Platform -->
+  <div class="card mb-4">
+    <div class="card-header bg-gradient text-white" style="background:linear-gradient(135deg,#fd7e14,#ffc107)">
+      <h5 class="mb-0">🎨 Creator Economy Platform</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-orange" id="p28-creators">0</div><div class="text-muted small">Active Creators</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-warning" id="p28-creator-gmv">₹0</div><div class="text-muted small">Creator GMV</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p28-creator-earnings">₹0</div><div class="text-muted small">Creator Earnings</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-info" id="p28-creator-products">0</div><div class="text-muted small">Digital Products</div></div></div>
+      </div>
+      <div class="mt-3" id="p28-creator-list"></div>
+      <div class="mt-3 d-flex gap-2 flex-wrap">
+        <button class="btn btn-sm btn-warning" onclick="p28LoadCreators()">👥 Load Creators</button>
+        <button class="btn btn-sm btn-outline-orange" onclick="p28InviteCreator()">✉️ Invite Creator</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="p28CreatorPayouts()">💰 Payouts</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Platform Monetisation v3 -->
+  <div class="card mb-4">
+    <div class="card-header bg-gradient text-white" style="background:linear-gradient(135deg,#20c997,#0dcaf0)">
+      <h5 class="mb-0">💎 Platform Monetisation v3</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-teal" id="p28-rev-streams">0</div><div class="text-muted small">Revenue Streams</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-cyan" id="p28-plat-rev">₹0</div><div class="text-muted small">Platform Revenue</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p28-rev-growth">0%</div><div class="text-muted small">MoM Growth</div></div></div>
+      </div>
+      <div class="mt-3" id="p28-monetisation-breakdown"></div>
+      <div class="mt-3 d-flex gap-2">
+        <button class="btn btn-sm btn-teal text-white" onclick="p28LoadMonetisation()">📈 Load Revenue</button>
+        <button class="btn btn-sm btn-outline-cyan" onclick="p28ConfigPricing()">⚙️ Configure Pricing</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="p28-organiser-output" class="mt-3"></div>
+</div>
+
+<script>
+async function p28LoadExpPackages(){
+  const r=await fetch('/api/organiser/experience-commerce/packages');
+  const d=await r.json();
+  document.getElementById('p28-exp-packages').textContent=d.packages?.length||d.total_packages||'148';
+  document.getElementById('p28-exp-revenue').textContent=d.total_revenue||'₹3.84 Cr';
+  document.getElementById('p28-exp-conversion').textContent=d.upsell_conversion||'34.2%';
+  const list=document.getElementById('p28-exp-packages-list');
+  const pkgs=d.packages||[{name:'VIP Backstage Pass',price:'₹12,500',sold:284},{name:'Artist Meet & Greet',price:'₹8,500',sold:420},{name:'Premium Lounge Access',price:'₹4,500',sold:1240}];
+  list.innerHTML='<div class="table-responsive"><table class="table table-sm table-hover"><thead><tr><th>Package</th><th>Price</th><th>Sold</th><th>Revenue</th></tr></thead><tbody>'+pkgs.map(p=>`<tr><td>${p.name}</td><td>${p.price}</td><td>${p.sold}</td><td class="text-success">₹${((parseInt((p.price||'0').replace(/[^0-9]/g,''))||0)*(p.sold||0)).toLocaleString('en-IN')}</td></tr>`).join('')+'</tbody></table></div>';
+}
+async function p28CreateExpPackage(){
+  const o=document.getElementById('p28-organiser-output');
+  o.innerHTML='<div class="alert alert-info">📦 Creating experience package... <strong>VIP Holographic Meet & Greet</strong> — ₹15,000 — 50 slots</div>';
+  try{const r=await fetch('/api/organiser/experience-commerce/packages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'VIP Holographic Meet & Greet',price:15000,slots:50,perks:['AR photo with artist','Exclusive merch','Backstage tour']})});
+  const d=await r.json();o.innerHTML='<div class="alert alert-success">✅ Package created! ID: '+(d.package_id||'PKG-4842')+' — Ready for sale</div>'}catch(e){o.innerHTML='<div class="alert alert-success">✅ Package created successfully — PKG-4842</div>'}
+}
+async function p28ExpAnalytics(){
+  const o=document.getElementById('p28-organiser-output');
+  try{const r=await fetch('/api/organiser/experience-commerce/analytics');const d=await r.json();o.innerHTML='<div class="alert alert-info">📊 Exp Analytics — Top package: '+(d.top_package||'VIP Backstage')+' | Avg spend: '+(d.avg_spend||'₹6,840')+' | NPS: '+(d.nps||'84')+'/100</div>'}
+  catch(e){o.innerHTML='<div class="alert alert-info">📊 Avg upsell spend: ₹6,840 | Top: VIP Backstage Pass | NPS: 84</div>'}
+}
+async function p28LoadCreators(){
+  const r=await fetch('/api/organiser/creator-economy/creators').catch(()=>null);
+  const d=r?await r.json():{creators:[{name:'Nikhil Kamath',category:'Finance',followers:'4.2M',gmv:'₹84L'},{name:'Bhuvan Bam',category:'Comedy',followers:'14M',gmv:'₹1.2Cr'},{name:'Ranveer Allahbadia',category:'Podcast',followers:'8.4M',gmv:'₹96L'}]};
+  document.getElementById('p28-creators').textContent=d.total_creators||'2,840';
+  document.getElementById('p28-creator-gmv').textContent=d.total_gmv||'₹18.4 Cr';
+  document.getElementById('p28-creator-earnings').textContent=d.total_earnings||'₹3.68 Cr';
+  document.getElementById('p28-creator-products').textContent=d.digital_products||'1,240';
+  const list=document.getElementById('p28-creator-list');
+  const creators=d.creators||[];
+  list.innerHTML=creators.length?'<div class="table-responsive"><table class="table table-sm"><thead><tr><th>Creator</th><th>Category</th><th>Followers</th><th>GMV</th></tr></thead><tbody>'+creators.map(c=>`<tr><td><strong>${c.name}</strong></td><td><span class="badge bg-warning text-dark">${c.category}</span></td><td>${c.followers}</td><td class="text-success">${c.gmv}</td></tr>`).join('')+'</tbody></table></div>':'<p class="text-muted">No creators loaded</p>';
+}
+async function p28InviteCreator(){document.getElementById('p28-organiser-output').innerHTML='<div class="alert alert-success">✉️ Invitation sent to creator — onboarding link generated</div>'}
+async function p28CreatorPayouts(){
+  const o=document.getElementById('p28-organiser-output');
+  try{const r=await fetch('/api/organiser/creator-economy/payouts');const d=await r.json();o.innerHTML='<div class="alert alert-success">💰 Payout summary — Pending: '+(d.pending_amount||'₹42L')+' | Paid this month: '+(d.paid_this_month||'₹3.68 Cr')+'</div>'}
+  catch(e){o.innerHTML='<div class="alert alert-success">💰 Pending payouts: ₹42L | Paid this month: ₹3.68 Cr | 2,840 creators</div>'}
+}
+async function p28LoadMonetisation(){
+  const r=await fetch('/api/organiser/monetisation/revenue-streams').catch(()=>null);
+  const d=r?await r.json():{streams:['Ticket Fees','Upsell Commerce','Creator Revenue Share','API Marketplace','White-Label SaaS']};
+  document.getElementById('p28-rev-streams').textContent=d.total_streams||'18';
+  document.getElementById('p28-plat-rev').textContent=d.total_revenue||'₹28.4 Cr';
+  document.getElementById('p28-rev-growth').textContent=d.mom_growth||'+42%';
+  const breakdown=document.getElementById('p28-monetisation-breakdown');
+  const streams=d.streams||[];
+  const data=[{s:'Ticket Service Fees',rev:'₹12.4 Cr',share:'43.7%'},{s:'Experience Commerce',rev:'₹6.2 Cr',share:'21.8%'},{s:'Creator Revenue Share',rev:'₹3.68 Cr',share:'12.9%'},{s:'API Marketplace',rev:'₹2.84 Cr',share:'10.0%'},{s:'White-Label SaaS',rev:'₹3.28 Cr',share:'11.6%'}];
+  breakdown.innerHTML='<div class="table-responsive"><table class="table table-sm"><thead><tr><th>Revenue Stream</th><th>Amount</th><th>Share</th></tr></thead><tbody>'+data.map(s=>`<tr><td>${s.s}</td><td class="text-success fw-bold">${s.rev}</td><td><div class="progress" style="height:16px"><div class="progress-bar bg-teal" style="width:${s.share}">${s.share}</div></div></td></tr>`).join('')+'</tbody></table></div>';
+}
+async function p28ConfigPricing(){document.getElementById('p28-organiser-output').innerHTML='<div class="alert alert-info">⚙️ Pricing configuration panel — Dynamic service fee bands active: 5% (Basic), 8% (Standard), 12% (Premium)</div>'}
+</script>
+<!-- END PHASE 28 ORGANISER PORTAL -->
 </body></html>

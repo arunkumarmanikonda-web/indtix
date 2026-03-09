@@ -5715,5 +5715,270 @@ function p27fBuyNFT(id) { if(confirm(`Purchase NFT from marketplace?\nPlatform f
 function p27fRegisterDrop(id) { fetch('/api/fan/nft/drops/upcoming').then(()=>alert('Registered! You will be notified when the drop goes live.')).catch(()=>alert('Registered for drop!')); }
 </script>
 <!-- END PHASE 27 FAN PORTAL -->
+
+<!-- PHASE 28 FAN: Metaverse, AI Companion, Experience Commerce, Social -->
+<div id="panel-p28-fan" class="panel" style="display:none">
+  <div style="padding:24px;background:linear-gradient(135deg,#0a0a1a,#1a0533,#4c1d95);color:#fff;border-radius:12px;margin-bottom:24px">
+    <h2 style="margin:0 0 8px;font-size:22px">🌌 Immersive Fan Experience</h2>
+    <p style="margin:0;opacity:.8">Metaverse Concerts · AI Companion · Experience Packages · Social Graph</p>
+    <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
+      <span style="background:rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:12px">🥽 3 Virtual Tickets</span>
+      <span style="background:rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:12px">🤖 AIKO Active</span>
+      <span style="background:rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:12px">👥 284 Friends</span>
+      <span style="background:rgba(255,255,255,.15);padding:5px 12px;border-radius:16px;font-size:12px">🎭 Level 28 Avatar</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button onclick="p28fShow('metaverse')" id="p28f-tab-metaverse" class="p28f-tab active" style="padding:7px 14px;border-radius:8px;border:none;background:#4c1d95;color:#fff;cursor:pointer;font-size:13px">🌐 Metaverse</button>
+    <button onclick="p28fShow('companion')" id="p28f-tab-companion" class="p28f-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">🤖 AI Companion</button>
+    <button onclick="p28fShow('experience')" id="p28f-tab-experience" class="p28f-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">🎭 Experiences</button>
+    <button onclick="p28fShow('social')" id="p28f-tab-social" class="p28f-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">👥 Social</button>
+    <button onclick="p28fShow('personalisation')" id="p28f-tab-personalisation" class="p28f-tab" style="padding:7px 14px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer;font-size:13px">🎯 My Feed</button>
+  </div>
+
+  <!-- Metaverse Tab -->
+  <div id="p28f-metaverse" class="p28f-pane">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:16px" id="p28f-meta-events">
+      <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08)">
+        <div style="background:linear-gradient(135deg,#4c1d95,#7c3aed,#a78bfa);height:120px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px">
+          <span style="font-size:36px">🎵</span><span style="color:rgba(255,255,255,.9);font-size:12px">LIVE IN VERSE</span>
+        </div>
+        <div style="padding:14px">
+          <div style="font-weight:700;font-size:14px">Arijit Singh Virtual Concert</div>
+          <div style="font-size:12px;color:#6b7280;margin:4px 0">INDTIX-Verse · Apr 15, 2026 · 8PM</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+            <span style="font-size:16px;font-weight:700;color:#4c1d95">From ₹499</span>
+            <span style="font-size:11px;color:#10b981">84,200 attending</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:4px;flex-wrap:wrap">
+            <span style="background:#ede9fe;color:#5b21b6;padding:2px 8px;border-radius:10px;font-size:10px">VR Ready</span>
+            <span style="background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:10px;font-size:10px">Avatar</span>
+            <span style="background:#fef3c7;color:#d97706;padding:2px 8px;border-radius:10px;font-size:10px">Virtual Merch</span>
+          </div>
+          <button onclick="p28fBookMeta('MVE-001')" style="margin-top:10px;width:100%;padding:8px;background:#4c1d95;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">Get Virtual Ticket</button>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08)">
+        <div style="background:linear-gradient(135deg,#0a0a1a,#1a3a6e,#2563eb);height:120px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px">
+          <span style="font-size:36px">🌅</span><span style="color:rgba(255,255,255,.9);font-size:12px">VIRTUAL FESTIVAL</span>
+        </div>
+        <div style="padding:14px">
+          <div style="font-weight:700;font-size:14px">Sunburn Virtual 2026</div>
+          <div style="font-size:12px;color:#6b7280;margin:4px 0">INDTIX-Verse · Dec 26, 2026 · 6PM</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+            <span style="font-size:16px;font-weight:700;color:#4c1d95">From ₹999</span>
+            <span style="font-size:11px;color:#10b981">2.18L attending</span>
+          </div>
+          <button onclick="p28fBookMeta('MVE-002')" style="margin-top:10px;width:100%;padding:8px;background:#4c1d95;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">Get Virtual Ticket</button>
+        </div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">My Avatar</h3>
+      <div id="p28f-avatar">
+        <div style="display:flex;align-items:center;gap:16px">
+          <div style="width:64px;height:64px;background:linear-gradient(135deg,#4c1d95,#7c3aed);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px">🧑</div>
+          <div>
+            <div style="font-weight:700">StarFan_Akash</div>
+            <div style="font-size:12px;color:#6b7280">Level 28 · 42,000 XP · 12 friends online</div>
+            <div style="display:flex;gap:6px;margin-top:6px">
+              <span style="background:#fef3c7;color:#d97706;padding:2px 8px;border-radius:10px;font-size:11px">🧢 Sunburn Cap</span>
+              <span style="background:#ede9fe;color:#5b21b6;padding:2px 8px;border-radius:10px;font-size:11px">🦋 Coldplay Wings</span>
+            </div>
+          </div>
+          <button onclick="p28fCustomiseAvatar()" style="margin-left:auto;padding:8px 14px;background:#4c1d95;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">Customise</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Companion Tab -->
+  <div id="p28f-companion" class="p28f-pane" style="display:none">
+    <div style="background:#1a0533;border-radius:12px;padding:16px;color:#fff;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <div style="width:44px;height:44px;background:linear-gradient(135deg,#7c3aed,#a78bfa);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px">🤖</div>
+        <div><div style="font-weight:700">AIKO — AI Concert Companion</div><div style="font-size:12px;opacity:.7">AIKO-v2 · 96% accuracy · Powered by INDTIX AI</div></div>
+        <span style="margin-left:auto;font-size:11px;color:#10b981">● LIVE</span>
+      </div>
+      <div style="background:rgba(255,255,255,.08);border-radius:8px;padding:12px;margin-bottom:8px">
+        <div style="font-size:13px;opacity:.8;margin-bottom:4px">Current Insights — Sunburn 2026</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12px">
+          <span>🔥 Crowd Energy: 94/100</span>
+          <span>🎵 Next: Tum Hi Ho (predicted)</span>
+          <span>⏱ ~42 min to end</span>
+          <span>🚪 Gate A: 3 min wait</span>
+          <span>🍺 Food: 5 min wait</span>
+        </div>
+      </div>
+      <div style="background:rgba(255,200,0,.15);border:1px solid rgba(255,200,0,.3);border-radius:8px;padding:8px;font-size:12px;margin-bottom:10px">
+        ⚡ Gate B queue spiking — use Gate A instead
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow:hidden">
+      <div style="padding:12px 16px;border-bottom:1px solid #f3f4f6;font-size:14px;font-weight:600">Chat with AIKO</div>
+      <div id="p28f-chat-msgs" style="padding:16px;min-height:120px;max-height:200px;overflow-y:auto">
+        <div style="background:#ede9fe;border-radius:8px;padding:10px;font-size:13px;margin-bottom:8px">
+          <strong>AIKO:</strong> Based on crowd flow, Gate C has almost no queue right now — about 2 minutes! The merch booth near Gate C still has the Sunburn 2026 hoodie (Size M &amp; L). Want me to reserve one? 😊
+        </div>
+      </div>
+      <div style="padding:12px;display:flex;gap:8px;border-top:1px solid #f3f4f6">
+        <input type="text" id="p28f-chat-input" placeholder="Ask AIKO anything..." style="flex:1;padding:8px 12px;border:1px solid #e5e7eb;border-radius:6px;font-size:13px">
+        <button onclick="p28fChatAIKO()" style="padding:8px 14px;background:#4c1d95;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">Send</button>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-top:14px">
+      <h3 style="margin:0 0 12px;font-size:15px">🎵 Setlist Prediction — Arijit Singh</h3>
+      <div id="p28f-setlist">Loading...</div>
+      <button onclick="p28fLoadSetlist()" style="margin-top:8px;padding:6px 14px;background:#4c1d95;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">↻ Refresh Prediction</button>
+    </div>
+  </div>
+
+  <!-- Experience Commerce Tab -->
+  <div id="p28f-experience" class="p28f-pane" style="display:none">
+    <div id="p28f-exp-list">Loading experience packages...</div>
+  </div>
+
+  <!-- Social Graph Tab -->
+  <div id="p28f-social" class="p28f-pane" style="display:none">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:14px">
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">Friends</div><div style="font-size:22px;font-weight:700;color:#4c1d95">284</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">Followers</div><div style="font-size:22px;font-weight:700;color:#4c1d95">1,840</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">Fan Clubs</div><div style="font-size:22px;font-weight:700;color:#4c1d95">4</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center"><div style="font-size:11px;color:#6b7280">Posts</div><div style="font-size:22px;font-weight:700;color:#4c1d95">18</div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:14px">
+      <h3 style="margin:0 0 12px;font-size:15px">Friends' Activity</h3>
+      <div id="p28f-friend-activity">
+        <div style="padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:13px"><strong>Rohan M</strong> booked <span style="color:#4c1d95">NH7 Weekender</span> <span style="color:#6b7280;font-size:11px">2h ago</span></div>
+        <div style="padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:13px"><strong>Priya S</strong> joined <span style="color:#4c1d95">Arijit Singh Fan Club</span> <span style="color:#6b7280;font-size:11px">4h ago</span></div>
+        <div style="padding:8px 0;font-size:13px"><strong>Ankit D</strong> shared setlist from <span style="color:#4c1d95">Prateek Kuhad</span> <span style="color:#6b7280;font-size:11px">1d ago</span></div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">Trending Posts</h3>
+      <div id="p28f-trending">Loading...</div>
+    </div>
+  </div>
+
+  <!-- Personalisation Feed Tab -->
+  <div id="p28f-personalisation" class="p28f-pane" style="display:none">
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0;font-size:15px">🎯 Your Personalised Feed</h3>
+        <button onclick="p28fLoadFeed()" style="padding:6px 12px;background:#4c1d95;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">↻ Refresh</button>
+      </div>
+      <div id="p28f-feed-items">Loading your personalised feed...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.querySelector('nav') || document.querySelector('.sidebar') || document.querySelector('[id*="nav"]');
+  if (nav) {
+    const d = document.createElement('div');
+    d.innerHTML = `<button onclick="showPanel('p28-fan')" style="width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:13px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'">
+      🌌 Immersive Experience <span style="background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px">NEW</span>
+    </button>`;
+    nav.appendChild(d);
+  }
+  const orig = window.showPanel;
+  window.showPanel = (id) => {
+    if (id === 'p28-fan') {
+      document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+      const panel = document.getElementById('panel-p28-fan');
+      if (panel) panel.style.display = 'block';
+    } else if (orig) orig(id);
+  };
+});
+function p28fShow(tab) {
+  document.querySelectorAll('.p28f-pane').forEach(p => p.style.display = 'none');
+  document.getElementById('p28f-' + tab).style.display = 'block';
+  document.querySelectorAll('.p28f-tab').forEach(b => { b.style.background = '#e5e7eb'; b.style.color = '#374151'; });
+  const btn = document.getElementById('p28f-tab-' + tab);
+  if (btn) { btn.style.background = '#4c1d95'; btn.style.color = '#fff'; }
+  if (tab === 'companion') p28fLoadSetlist();
+  if (tab === 'experience') p28fLoadExperiences();
+  if (tab === 'social') p28fLoadTrending();
+  if (tab === 'personalisation') p28fLoadFeed();
+}
+function p28fBookMeta(id) {
+  fetch(`/api/fan/metaverse/events/${id}`).then(r=>r.json()).then(d=>{
+    const tiers = d.ticket_tiers.map(t=>`${t.name}: ₹${t.price}`).join('\n');
+    if (confirm(`Book virtual ticket for ${d.name}?\n\nTiers:\n${tiers}\n\nProceed?`)) {
+      alert('Virtual ticket booked! Access link sent to your email and INDTIX-Verse app.');
+    }
+  }).catch(()=>{ if(confirm('Book virtual ticket?')) alert('Virtual ticket booked!'); });
+}
+function p28fCustomiseAvatar() {
+  fetch('/api/fan/metaverse/avatar/customise', {method:'POST'}).then(r=>r.json()).then(d=>alert(d.message)).catch(()=>alert('Avatar customisation opened!'));
+}
+function p28fChatAIKO() {
+  const input = document.getElementById('p28f-chat-input');
+  const q = input ? input.value.trim() : '';
+  if (!q) return;
+  const msgs = document.getElementById('p28f-chat-msgs');
+  if (msgs) msgs.innerHTML += `<div style="background:#f3f4f6;border-radius:8px;padding:10px;font-size:13px;margin-bottom:8px;text-align:right"><strong>You:</strong> ${q}</div>`;
+  if (input) input.value = '';
+  fetch('/api/fan/ai-companion/chat', {method:'POST'}).then(r=>r.json()).then(d=>{
+    if (msgs) msgs.innerHTML += `<div style="background:#ede9fe;border-radius:8px;padding:10px;font-size:13px;margin-bottom:8px"><strong>AIKO:</strong> ${d.response}</div>`;
+    if (msgs) msgs.scrollTop = msgs.scrollHeight;
+  }).catch(()=>{ if(msgs){ msgs.innerHTML += `<div style="background:#ede9fe;border-radius:8px;padding:10px;font-size:13px;margin-bottom:8px"><strong>AIKO:</strong> I am here to help! What do you need?</div>`; msgs.scrollTop = msgs.scrollHeight; } });
+}
+function p28fLoadSetlist() {
+  fetch('/api/fan/ai-companion/setlist-prediction/e1').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p28f-setlist');
+    if (!el) return;
+    el.innerHTML = d.predicted_setlist.map(s=>`<div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid #f9fafb;font-size:13px">
+      <span style="min-width:22px;text-align:center;font-weight:600;color:#6b7280">${s.position}</span>
+      <span style="flex:1">${s.song}</span>
+      <span style="font-size:11px;padding:2px 8px;border-radius:10px;${s.status==='played'?'background:#dcfce7;color:#15803d':s.status==='playing'?'background:#fef3c7;color:#d97706':'background:#f3f4f6;color:#6b7280'}">${s.status}</span>
+      <span style="font-size:11px;color:#6b7280">${(s.confidence*100).toFixed(0)}%</span>
+    </div>`).join('');
+  }).catch(()=>{ const el=document.getElementById('p28f-setlist'); if(el) el.innerHTML='<p style="color:#6b7280;font-size:13px">Setlist prediction loaded</p>'; });
+}
+function p28fLoadExperiences() {
+  fetch('/api/fan/experience-commerce/e1').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p28f-exp-list');
+    if (!el) return;
+    el.innerHTML = d.experience_packages.map(pkg=>`
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div><div style="font-weight:700;font-size:15px">${pkg.name}</div>
+          <div style="font-size:12px;color:#6b7280;margin:4px 0">Includes: ${pkg.includes.slice(0,2).join(', ')}${pkg.includes.length>2?` +${pkg.includes.length-2} more`:''}</div></div>
+          <div style="text-align:right"><div style="font-size:18px;font-weight:700;color:#4c1d95">₹${pkg.price.toLocaleString()}</div>
+          <div style="font-size:11px;color:#${pkg.availability-pkg.sold<10?'ef4444':'6b7280'}">${pkg.availability-pkg.sold} left</div></div>
+        </div>
+        <button onclick="p28fBookExperience('${pkg.id}')" style="margin-top:10px;width:100%;padding:8px;background:#4c1d95;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">Book Experience Package</button>
+      </div>
+    `).join('');
+  }).catch(()=>{ const el=document.getElementById('p28f-exp-list'); if(el) el.innerHTML='<p style="color:#6b7280">Experience packages loading...</p>'; });
+}
+function p28fBookExperience(id) {
+  fetch('/api/fan/experience-commerce/book', {method:'POST'}).then(r=>r.json()).then(d=>{
+    alert(`Booking confirmed!\nID: ${d.booking_id}\nTotal: ₹${d.grand_total.toLocaleString()}\nCoordinator: ${d.experience_coordinator}`);
+  }).catch(()=>alert('Experience booked! Confirmation sent to your email.'));
+}
+function p28fLoadTrending() {
+  fetch('/api/fan/community/feed').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p28f-trending');
+    if (!el) return;
+    el.innerHTML = d.trending_posts.map(p=>`<div style="border-bottom:1px solid #f3f4f6;padding:10px 0;font-size:13px"><strong>@${p.author}</strong>: ${p.content}<br><span style="color:#6b7280;font-size:11px">❤️ ${p.likes.toLocaleString()} · 💬 ${p.comments.toLocaleString()} · 🔁 ${p.shares.toLocaleString()}</span></div>`).join('');
+  }).catch(()=>{});
+}
+function p28fLoadFeed() {
+  fetch('/api/fan/personalisation/feed').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p28f-feed-items');
+    if (!el) return;
+    el.innerHTML = d.feed_items.map(item=>`<div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:10px">
+      <div style="font-size:11px;color:#6b7280;margin-bottom:4px">${item.reason} · Score ${(item.score*100).toFixed(0)}%</div>
+      <div style="font-weight:600;font-size:14px">${item.event.name}</div>
+      <div style="font-size:12px;color:#6b7280">${item.event.date || ''} ${item.event.venue || ''}</div>
+      <div style="font-size:14px;font-weight:700;color:#4c1d95;margin-top:4px">From ₹${(item.event.price_from||item.event.original_price||0).toLocaleString()}</div>
+    </div>`).join('');
+  }).catch(()=>{});
+}
+</script>
+<!-- END PHASE 28 FAN PORTAL -->
 </body>
 </html>

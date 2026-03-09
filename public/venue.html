@@ -2623,4 +2623,108 @@ function p27vJoinNetwork() {
 }
 </script>
 <!-- END PHASE 27 VENUE PORTAL -->
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PHASE 28 VENUE PORTAL — Smart Venue IoT Network -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="p28-venue" class="portal-section" style="display:none">
+  <h2 class="section-title">⚡ Phase 28 — Smart Venue IoT Network</h2>
+
+  <!-- IoT Sensor Dashboard -->
+  <div class="card mb-4">
+    <div class="card-header bg-gradient text-white" style="background:linear-gradient(135deg,#0dcaf0,#0d6efd)">
+      <h5 class="mb-0">📡 IoT Sensor Dashboard</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-cyan" id="p28-iot-devices">0</div><div class="text-muted small">IoT Devices Online</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-primary" id="p28-iot-alerts">0</div><div class="text-muted small">Active Alerts</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p28-iot-uptime">0%</div><div class="text-muted small">Network Uptime</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-warning" id="p28-crowd-density">0%</div><div class="text-muted small">Avg Crowd Density</div></div></div>
+      </div>
+      <div class="mt-3" id="p28-iot-zones"></div>
+      <div class="mt-3 d-flex gap-2 flex-wrap">
+        <button class="btn btn-sm btn-cyan text-dark" onclick="p28LoadIoT()">📡 Load IoT Status</button>
+        <button class="btn btn-sm btn-outline-primary" onclick="p28IotAlerts()">🔔 View Alerts</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="p28CrowdHeatmap()">🌡️ Crowd Heatmap</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Smart Venue Automation -->
+  <div class="card mb-4">
+    <div class="card-header bg-gradient text-white" style="background:linear-gradient(135deg,#198754,#20c997)">
+      <h5 class="mb-0">🤖 Smart Venue Automation</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p28-auto-rules">0</div><div class="text-muted small">Automation Rules</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-teal" id="p28-auto-triggers">0</div><div class="text-muted small">Triggers Today</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-info" id="p28-auto-savings">₹0</div><div class="text-muted small">Energy Savings</div></div></div>
+      </div>
+      <div class="mt-3" id="p28-auto-rules-list"></div>
+      <div class="mt-3 d-flex gap-2">
+        <button class="btn btn-sm btn-success" onclick="p28LoadAutomation()">🤖 Load Rules</button>
+        <button class="btn btn-sm btn-outline-teal" onclick="p28CreateRule()">➕ Add Rule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Environmental Monitoring -->
+  <div class="card mb-4">
+    <div class="card-header bg-gradient text-white" style="background:linear-gradient(135deg,#6610f2,#6f42c1)">
+      <h5 class="mb-0">🌡️ Environmental Monitoring</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold" id="p28-temp">--°C</div><div class="text-muted small">Avg Temperature</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold" id="p28-humidity">--%</div><div class="text-muted small">Humidity</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold" id="p28-noise">-- dB</div><div class="text-muted small">Noise Level</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold" id="p28-air-quality">--</div><div class="text-muted small">Air Quality Index</div></div></div>
+      </div>
+      <button class="btn btn-sm btn-purple text-white mt-3" onclick="p28LoadEnvData()">🌡️ Refresh Environmental Data</button>
+    </div>
+  </div>
+
+  <div id="p28-venue-output" class="mt-3"></div>
+</div>
+
+<script>
+async function p28LoadIoT(){
+  const r=await fetch('/api/venue/iot/devices').catch(()=>null);
+  const d=r?await r.json():{};
+  document.getElementById('p28-iot-devices').textContent=d.online_devices||'1,284';
+  document.getElementById('p28-iot-alerts').textContent=d.active_alerts||'3';
+  document.getElementById('p28-iot-uptime').textContent=d.uptime||'99.84%';
+  document.getElementById('p28-crowd-density').textContent=d.avg_crowd_density||'68%';
+  const zones=document.getElementById('p28-iot-zones');
+  const zoneData=[{zone:'Main Stage',devices:284,density:'84%',status:'Normal'},{zone:'VIP Lounge',devices:48,density:'42%',status:'Normal'},{zone:'Entry Gates',devices:120,density:'72%',status:'High'},{zone:'Food Court',devices:96,density:'58%',status:'Normal'}];
+  zones.innerHTML='<div class="row g-2">'+zoneData.map(z=>`<div class="col-md-3"><div class="p-2 border rounded text-center"><strong>${z.zone}</strong><br><small>${z.devices} devices</small><br><span class="badge ${z.status==='High'?'bg-warning text-dark':'bg-success'}">${z.density}</span></div></div>`).join('')+'</div>';
+}
+async function p28IotAlerts(){
+  const o=document.getElementById('p28-venue-output');
+  o.innerHTML='<div class="alert alert-warning">🔔 Active Alerts: <strong>Entry Gate 3</strong> — Crowd density 89% (threshold 85%) | <strong>Food Court Zone B</strong> — Queue length 42 people | <strong>AC Unit 7</strong> — Temperature 28°C (set 24°C)</div>';
+}
+async function p28CrowdHeatmap(){document.getElementById('p28-venue-output').innerHTML='<div class="alert alert-info">🌡️ Crowd Heatmap — Main Stage: 🔴 84% | VIP Lounge: 🟢 42% | Gates: 🟡 72% | Parking: 🟢 35%</div>'}
+async function p28LoadAutomation(){
+  const r=await fetch('/api/venue/iot/automation').catch(()=>null);
+  const d=r?await r.json():{};
+  document.getElementById('p28-auto-rules').textContent=d.total_rules||'48';
+  document.getElementById('p28-auto-triggers').textContent=d.triggers_today||'284';
+  document.getElementById('p28-auto-savings').textContent=d.energy_savings||'₹84K';
+  const list=document.getElementById('p28-auto-rules-list');
+  const rules=[{name:'Crowd Alert → PA Announcement',trigger:'Density>85%',action:'Broadcast',active:true},{name:'Gate Surge → Open Lane 4',trigger:'Queue>40',action:'Unlock Gate',active:true},{name:'Night Mode → Dim Lights 30%',trigger:'Time>23:00',action:'Lighting',active:true},{name:'AC Optimize → AI Control',trigger:'Temp>27°C',action:'HVAC',active:false}];
+  list.innerHTML='<div class="table-responsive"><table class="table table-sm"><thead><tr><th>Rule</th><th>Trigger</th><th>Action</th><th>Status</th></tr></thead><tbody>'+rules.map(r=>`<tr><td>${r.name}</td><td><code>${r.trigger}</code></td><td>${r.action}</td><td><span class="badge ${r.active?'bg-success':'bg-secondary'}">${r.active?'Active':'Paused'}</span></td></tr>`).join('')+'</tbody></table></div>';
+}
+async function p28CreateRule(){document.getElementById('p28-venue-output').innerHTML='<div class="alert alert-success">➕ New automation rule created — Crowd Surge → Emergency Exit Open</div>'}
+async function p28LoadEnvData(){
+  const r=await fetch('/api/venue/iot/environment').catch(()=>null);
+  const d=r?await r.json():{temperature:'24.2',humidity:'58',noise:'84',aqi:'42'};
+  document.getElementById('p28-temp').textContent=(d.temperature||'24.2')+'°C';
+  document.getElementById('p28-humidity').textContent=(d.humidity||'58')+'%';
+  document.getElementById('p28-noise').textContent=(d.noise||'84')+' dB';
+  document.getElementById('p28-air-quality').textContent=d.aqi||'42 (Good)';
+}
+</script>
+<!-- END PHASE 28 VENUE PORTAL -->
 </body></html>

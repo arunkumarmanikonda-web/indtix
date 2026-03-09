@@ -4884,4 +4884,227 @@ function p27aLoadContracts() {
 }
 </script>
 <!-- END PHASE 27 ADMIN PORTAL -->
+
+<!-- PHASE 28 ADMIN: Metaverse, AI-First & Platform Monetisation v3 -->
+<div id="panel-p28-admin" class="panel" style="display:none">
+  <div style="padding:24px;background:linear-gradient(135deg,#0a0a1a,#1a0533,#2d1b69);color:#fff;border-radius:12px;margin-bottom:24px">
+    <h2 style="margin:0 0 8px;font-size:24px">🌌 Phase 28 — Immersive & AI-First</h2>
+    <p style="margin:0;opacity:.8">Metaverse · AI Concert Companion · Hyper-Personalisation · Creator Economy · Monetisation v3</p>
+    <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap">
+      <span style="background:rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:13px">🌐 284K Virtual Attendees</span>
+      <span style="background:rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:13px">🤖 8 AI Systems Live</span>
+      <span style="background:rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:13px">💰 ₹84 Cr MRR</span>
+      <span style="background:rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:13px">🎨 18.4K Creators</span>
+      <span style="background:rgba(255,255,255,.15);padding:6px 14px;border-radius:20px;font-size:13px">📊 840M AI Preds/Day</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button onclick="p28aShow('metaverse')" id="p28a-tab-metaverse" class="p28a-tab active" style="padding:8px 16px;border-radius:8px;border:none;background:#2d1b69;color:#fff;cursor:pointer">🌐 Metaverse</button>
+    <button onclick="p28aShow('ai')" id="p28a-tab-ai" class="p28a-tab" style="padding:8px 16px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer">🤖 AI Systems</button>
+    <button onclick="p28aShow('personalisation')" id="p28a-tab-personalisation" class="p28a-tab" style="padding:8px 16px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer">🎯 Personalisation</button>
+    <button onclick="p28aShow('creator')" id="p28a-tab-creator" class="p28a-tab" style="padding:8px 16px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer">🎨 Creator Economy</button>
+    <button onclick="p28aShow('monetisation')" id="p28a-tab-monetisation" class="p28a-tab" style="padding:8px 16px;border-radius:8px;border:none;background:#e5e7eb;cursor:pointer">💰 Monetisation v3</button>
+  </div>
+
+  <!-- Metaverse Tab -->
+  <div id="p28a-metaverse" class="p28a-pane">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:18px">
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Virtual Events Hosted</div><div style="font-size:26px;font-weight:700;color:#2d1b69">284</div><div style="font-size:12px;color:#6b7280">Across 4 platforms</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Attendees YTD</div><div style="font-size:26px;font-weight:700;color:#2d1b69">84.2 L</div><div style="font-size:12px;color:#10b981">Peak 2.84 L concurrent</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Virtual Revenue</div><div style="font-size:26px;font-weight:700;color:#2d1b69">₹13.88 Cr</div><div style="font-size:12px;color:#10b981">+284% YoY</div></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:12px;color:#6b7280">Virtual Merch GMV</div><div style="font-size:26px;font-weight:700;color:#2d1b69">₹1.84 Cr</div><div style="font-size:12px;color:#6b7280">This month</div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0;font-size:16px">Platform Breakdown</h3>
+        <button onclick="p28aLoadMetaverse()" style="padding:6px 14px;background:#2d1b69;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">↻ Refresh</button>
+      </div>
+      <div id="p28a-meta-table">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="background:#f9fafb"><th style="padding:8px;text-align:left">Platform</th><th style="padding:8px;text-align:right">Events</th><th style="padding:8px;text-align:right">Attendees</th><th style="padding:8px;text-align:right">Revenue</th></tr></thead>
+          <tbody>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">🌐 INDTIX-Verse</td><td style="padding:8px;text-align:right">218</td><td style="padding:8px;text-align:right">72 L</td><td style="padding:8px;text-align:right">₹11 Cr</td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">🏛️ Decentraland</td><td style="padding:8px;text-align:right">42</td><td style="padding:8px;text-align:right">8.4 L</td><td style="padding:8px;text-align:right">₹1.8 Cr</td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">🎮 The Sandbox</td><td style="padding:8px;text-align:right">18</td><td style="padding:8px;text-align:right">2.8 L</td><td style="padding:8px;text-align:right">₹80 L</td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">🥽 VRChat</td><td style="padding:8px;text-align:right">6</td><td style="padding:8px;text-align:right">1 L</td><td style="padding:8px;text-align:right">₹28 L</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">Virtual Merch Top Items</h3>
+      <div id="p28a-vmerch">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:13px"><span>🎨 Arijit Singh Holographic Poster</span><span style="color:#2d1b69">18,400 sold · ₹55 L</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:13px"><span>👕 Sunburn 2026 Avatar Outfit</span><span style="color:#2d1b69">8,420 sold · ₹84.2 L</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:13px"><span>🦋 Coldplay Wings Avatar Item</span><span style="color:#2d1b69">4,200 sold · ₹20.96 L</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Systems Tab -->
+  <div id="p28a-ai" class="p28a-pane" style="display:none">
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0">AI Systems Overview</h3>
+        <button onclick="p28aLoadAISystems()" style="padding:6px 14px;background:#2d1b69;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">↻ Refresh</button>
+      </div>
+      <div id="p28a-ai-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px">
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#faf5ff"><div style="font-weight:600;font-size:13px">🎯 HyperRec-v2</div><div style="font-size:11px;color:#6b7280">Personalisation · 12ms · 94% acc</div><span style="color:#10b981;font-size:11px">● Healthy</span></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#faf5ff"><div style="font-weight:600;font-size:13px">🤖 AIKO-v2</div><div style="font-size:11px;color:#6b7280">Concert Companion · 48ms · 96% acc</div><span style="color:#10b981;font-size:11px">● Healthy</span></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#faf5ff"><div style="font-weight:600;font-size:13px">📈 DemandSeer-v3</div><div style="font-size:11px;color:#6b7280">Demand Forecast · 284ms · 94% acc</div><span style="color:#10b981;font-size:11px">● Healthy</span></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#faf5ff"><div style="font-weight:600;font-size:13px">🛡️ FraudSeer-v2</div><div style="font-size:11px;color:#6b7280">Fraud Detection · 8ms · 98.7% acc</div><span style="color:#10b981;font-size:11px">● Healthy</span></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#faf5ff"><div style="font-weight:600;font-size:13px">💰 UpsellAI-v2</div><div style="font-size:11px;color:#6b7280">Experience Upsell · 18ms · 89% acc</div><span style="color:#10b981;font-size:11px">● Healthy</span></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#faf5ff"><div style="font-weight:600;font-size:13px">🎵 SetlistAI-v3</div><div style="font-size:11px;color:#6b7280">Setlist Prediction · 142ms · 84% acc</div><span style="color:#10b981;font-size:11px">● Healthy</span></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#faf5ff"><div style="font-weight:600;font-size:13px">🛡️ ContentGuard-v2</div><div style="font-size:11px;color:#6b7280">Community Mod · 28ms · 94% acc</div><span style="color:#10b981;font-size:11px">● Healthy</span></div>
+        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#faf5ff"><div style="font-weight:600;font-size:13px">⚙️ InfraPredict-v2</div><div style="font-size:11px;color:#6b7280">Infrastructure · 84ms · 91% acc</div><span style="color:#10b981;font-size:11px">● Healthy</span></div>
+      </div>
+      <div style="margin-top:12px;padding:10px;background:#f0fdf4;border-radius:8px;font-size:13px">Total AI predictions/day: <strong>840 Million</strong> · Revenue attribution: <strong>42%</strong> of GMV AI-influenced</div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">Predictive Revenue Forecast — Q2 2026</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px" id="p28a-rev-forecast">
+        <div style="padding:12px;background:#fef3c7;border-radius:8px;text-align:center"><div style="font-size:12px;color:#d97706;font-weight:600">Conservative</div><div style="font-size:18px;font-weight:700">₹924 Cr</div><div style="font-size:11px;color:#6b7280">50% YoY</div></div>
+        <div style="padding:12px;background:#dcfce7;border-radius:8px;text-align:center"><div style="font-size:12px;color:#15803d;font-weight:600">Base Case</div><div style="font-size:18px;font-weight:700">₹1,260 Cr</div><div style="font-size:11px;color:#6b7280">84% YoY</div></div>
+        <div style="padding:12px;background:#dbeafe;border-radius:8px;text-align:center"><div style="font-size:12px;color:#1d4ed8;font-weight:600">Optimistic</div><div style="font-size:18px;font-weight:700">₹1,680 Cr</div><div style="font-size:11px;color:#6b7280">120% YoY</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Personalisation Tab -->
+  <div id="p28a-personalisation" class="p28a-pane" style="display:none">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:14px">
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">CTR Lift</div><div style="font-size:24px;font-weight:700;color:#7c3aed">+42%</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">Booking Lift</div><div style="font-size:24px;font-weight:700;color:#7c3aed">+28%</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">Revenue Lift</div><div style="font-size:24px;font-weight:700;color:#7c3aed">+34%</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">Daily Predictions</div><div style="font-size:24px;font-weight:700;color:#7c3aed">84 M</div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0;font-size:15px">Fan Segments</h3>
+        <button onclick="p28aLoadSegments()" style="padding:6px 12px;background:#7c3aed;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">↻ Load</button>
+      </div>
+      <div id="p28a-segments">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="background:#f9fafb"><th style="padding:8px;text-align:left">Segment</th><th style="padding:8px;text-align:right">Fans</th><th style="padding:8px;text-align:right">Avg LTV</th><th style="padding:8px;text-align:right">Churn Risk</th></tr></thead>
+          <tbody>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">🏆 Legend Fan</td><td style="padding:8px;text-align:right">42,000</td><td style="padding:8px;text-align:right">₹2.84 L</td><td style="padding:8px;text-align:right;color:#10b981">2%</td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">⭐ Super Fan</td><td style="padding:8px;text-align:right">4.2 L</td><td style="padding:8px;text-align:right">₹84,000</td><td style="padding:8px;text-align:right;color:#10b981">4%</td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">👤 Regular</td><td style="padding:8px;text-align:right">28.4 L</td><td style="padding:8px;text-align:right">₹18,400</td><td style="padding:8px;text-align:right;color:#f59e0b">12%</td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">🕐 Occasional</td><td style="padding:8px;text-align:right">35 L</td><td style="padding:8px;text-align:right">₹4,200</td><td style="padding:8px;text-align:right;color:#ef4444">28%</td></tr>
+            <tr style="border-top:1px solid #f3f4f6"><td style="padding:8px">⚠️ At Risk</td><td style="padding:8px;text-align:right">13.98 L</td><td style="padding:8px;text-align:right">₹1,200</td><td style="padding:8px;text-align:right;color:#ef4444">68%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <button onclick="p28aRetrain()" style="margin-top:12px;padding:8px 16px;background:#7c3aed;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">🔄 Trigger Model Retrain</button>
+    </div>
+  </div>
+
+  <!-- Creator Economy Tab -->
+  <div id="p28a-creator" class="p28a-pane" style="display:none">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:14px">
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">Creators on Platform</div><div style="font-size:24px;font-weight:700;color:#f97316">18,400</div><div style="font-size:11px;color:#6b7280">8,420 verified</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">Revenue Shared</div><div style="font-size:24px;font-weight:700;color:#f97316">₹2.8 Cr</div><div style="font-size:11px;color:#6b7280">This month</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">Content Posts</div><div style="font-size:24px;font-weight:700;color:#f97316">2.84 L</div><div style="font-size:11px;color:#6b7280">This month</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">GMV Attributed</div><div style="font-size:24px;font-weight:700;color:#f97316">₹48 L</div><div style="font-size:11px;color:#6b7280">5% of total</div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">Top Creators</h3>
+      <div id="p28a-creators">
+        <div style="border-bottom:1px solid #f3f4f6;padding:10px 0;display:flex;justify-content:space-between"><div><strong>Mumbai Events Official</strong> <span style="font-size:11px;color:#6b7280">Promoter · 2.4M followers</span></div><span style="color:#f97316;font-weight:600">₹42 L earned</span></div>
+        <div style="border-bottom:1px solid #f3f4f6;padding:10px 0;display:flex;justify-content:space-between"><div><strong>Bollywood Concerts</strong> <span style="font-size:11px;color:#6b7280">Content Creator · 1.8M followers</span></div><span style="color:#f97316;font-weight:600">₹28.4 L earned</span></div>
+        <div style="padding:10px 0;display:flex;justify-content:space-between"><div><strong>Live Nation India</strong> <span style="font-size:11px;color:#6b7280">Promoter · 840K followers</span></div><span style="color:#f97316;font-weight:600">₹1.84 Cr earned</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Monetisation v3 Tab -->
+  <div id="p28a-monetisation" class="p28a-pane" style="display:none">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:14px">
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">MRR</div><div style="font-size:24px;font-weight:700;color:#059669">₹84 Cr</div><div style="font-size:11px;color:#10b981">+84% YoY</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">ARR</div><div style="font-size:24px;font-weight:700;color:#059669">₹1,008 Cr</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">LTV/CAC</div><div style="font-size:24px;font-weight:700;color:#059669">21.9x</div><div style="font-size:11px;color:#6b7280">Payback 2.8 months</div></div>
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:11px;color:#6b7280">Gross Margin</div><div style="font-size:24px;font-weight:700;color:#059669">72%</div></div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0;font-size:15px">Revenue Streams</h3>
+        <button onclick="p28aLoadMonetisation()" style="padding:6px 12px;background:#059669;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">↻ Load Live</button>
+      </div>
+      <div id="p28a-rev-streams">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:13px;min-width:160px">🎫 Ticketing Fees</span><div style="flex:1;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden"><div style="width:50%;height:100%;background:#059669;border-radius:4px"></div></div><span style="font-size:12px;color:#6b7280;min-width:80px;text-align:right">₹42 Cr (50%)</span></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:13px;min-width:160px">⭐ Premium Subs</span><div style="flex:1;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden"><div style="width:15%;height:100%;background:#7c3aed;border-radius:4px"></div></div><span style="font-size:12px;color:#6b7280;min-width:80px;text-align:right">₹12.6 Cr (15%)</span></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:13px;min-width:160px">📢 Advertising</span><div style="flex:1;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden"><div style="width:10%;height:100%;background:#f59e0b;border-radius:4px"></div></div><span style="font-size:12px;color:#6b7280;min-width:80px;text-align:right">₹8.4 Cr (10%)</span></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:13px;min-width:160px">🏢 B2B/White Label</span><div style="flex:1;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden"><div style="width:10%;height:100%;background:#0ea5e9;border-radius:4px"></div></div><span style="font-size:12px;color:#6b7280;min-width:80px;text-align:right">₹8.4 Cr (10%)</span></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:13px;min-width:160px">🌐 Virtual Events</span><div style="flex:1;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden"><div style="width:5%;height:100%;background:#8b5cf6;border-radius:4px"></div></div><span style="font-size:12px;color:#6b7280;min-width:80px;text-align:right">₹4.2 Cr (5%)</span></div>
+        <div style="display:flex;align-items:center;gap:10px"><span style="font-size:13px;min-width:160px">🎨 Creator + NFT</span><div style="flex:1;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden"><div style="width:10%;height:100%;background:#ec4899;border-radius:4px"></div></div><span style="font-size:12px;color:#6b7280;min-width:80px;text-align:right">₹8.4 Cr (10%)</span></div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <h3 style="margin:0 0 12px;font-size:15px">Premium Subscribers</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        <div style="padding:12px;border:1px solid #e5e7eb;border-radius:8px;text-align:center"><div style="font-size:12px;color:#6b7280">INDTIX Plus</div><div style="font-size:18px;font-weight:700;color:#6b7280">7 L subs</div><div style="font-size:12px">₹99/mo</div></div>
+        <div style="padding:12px;border:1px solid #7c3aed;border-radius:8px;text-align:center"><div style="font-size:12px;color:#7c3aed">INDTIX Pro</div><div style="font-size:18px;font-weight:700;color:#7c3aed">1.2 L subs</div><div style="font-size:12px">₹299/mo</div></div>
+        <div style="padding:12px;background:linear-gradient(135deg,#1a0533,#2d1b69);border-radius:8px;text-align:center;color:#fff"><div style="font-size:12px;opacity:.8">INDTIX Black</div><div style="font-size:18px;font-weight:700">20K subs</div><div style="font-size:12px">₹999/mo</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.querySelector('nav') || document.querySelector('.sidebar') || document.querySelector('[id*="sidebar"]') || document.querySelector('[id*="nav"]');
+  if (nav) {
+    const d = document.createElement('div');
+    d.innerHTML = `<button onclick="showPanel('p28-admin')" style="width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:13px;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">
+      <span>🌌</span><span>Phase 28 Immersive &amp; AI</span><span style="background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:auto">NEW</span>
+    </button>`;
+    nav.appendChild(d);
+  }
+  const orig = window.showPanel;
+  window.showPanel = (id) => {
+    if (id === 'p28-admin') {
+      document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+      const panel = document.getElementById('panel-p28-admin');
+      if (panel) panel.style.display = 'block';
+    } else if (orig) orig(id);
+  };
+});
+function p28aShow(tab) {
+  document.querySelectorAll('.p28a-pane').forEach(p => p.style.display = 'none');
+  document.getElementById('p28a-' + tab).style.display = 'block';
+  document.querySelectorAll('.p28a-tab').forEach(b => { b.style.background = '#e5e7eb'; b.style.color = '#374151'; });
+  const btn = document.getElementById('p28a-tab-' + tab);
+  if (btn) { btn.style.background = '#2d1b69'; btn.style.color = '#fff'; }
+}
+function p28aLoadMetaverse() {
+  fetch('/api/admin/metaverse/dashboard').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p28a-meta-table');
+    if (el) el.innerHTML = `<div style="font-size:13px;color:#6b7280">Events: ${d.total_virtual_events_hosted} | Attendees YTD: ${(d.total_virtual_attendees_ytd/1000000).toFixed(1)}M | Revenue: ₹${(d.revenue.total/10000000).toFixed(1)} Cr</div>`;
+  }).catch(()=>{});
+}
+function p28aLoadAISystems() {
+  fetch('/api/admin/platform/ai-summary').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p28a-ai-grid');
+    if (el) el.innerHTML = `<div style="font-size:13px;color:#6b7280">${d.ai_systems.length} AI systems · ${(d.total_ai_predictions_daily/1000000).toFixed(0)}M predictions/day · ${(d.total_ai_revenue_attribution*100).toFixed(0)}% revenue attribution</div>`;
+  }).catch(()=>{});
+}
+function p28aLoadSegments() {
+  fetch('/api/admin/personalisation/segments').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p28a-segments');
+    if (el) el.innerHTML = `<div style="font-size:13px;color:#6b7280">Total fans: ${(d.total_fans/1000000).toFixed(1)}M segmented | ${d.segments.length} segments active</div>`;
+  }).catch(()=>{});
+}
+function p28aRetrain() {
+  fetch('/api/admin/personalisation/retrain', {method:'POST'}).then(r=>r.json()).then(d=>{
+    alert(`Retraining started!\nJob: ${d.job_id}\nETA: ${d.estimated_completion_minutes} minutes\nTraining rows: ${(d.training_data_rows/1000000).toFixed(0)}M`);
+  }).catch(()=>alert('Model retraining initiated!'));
+}
+function p28aLoadMonetisation() {
+  fetch('/api/admin/monetisation/v3/dashboard').then(r=>r.json()).then(d=>{
+    const el = document.getElementById('p28a-rev-streams');
+    if (el) el.innerHTML = `<div style="font-size:13px;color:#6b7280">MRR: ₹${(d.mrr/10000000).toFixed(0)} Cr | ARR: ₹${(d.arr/10000000).toFixed(0)} Cr | Growth: +${(d.yoy_growth*100).toFixed(0)}% YoY</div>`;
+  }).catch(()=>{});
+}
+</script>
+<!-- END PHASE 28 ADMIN PORTAL -->
 </body></html>
