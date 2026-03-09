@@ -24448,22 +24448,22 @@ app.get('/api/admin/finance/reporting/esg-financials', (c) => c.json({
 app.get('/api/health', (c) => c.json({
   status: 'ok',
   platform: 'INDTIX',
-  version: 'v58.0.0',
-  phase: 'Phase 58',
-  theme: 'Intelligent Supply Chain & Vendor Ecosystem',
+  version: 'v59.0.0',
+  phase: 'Phase 59',
+  theme: 'Creator Economy & Content Monetisation',
   new_endpoints: 90,
-  total_endpoints: 4249,
+  total_endpoints: 4339,
   features: [
-    'Smart Procurement & Sourcing Engine',
-    'Vendor Intelligence Platform',
-    'Real-Time Inventory Optimisation',
-    'Cold-Chain & Logistics Automation',
-    'Supplier Risk & Compliance',
-    'Demand-Driven Supply Planning',
-    'Warehouse Automation & Robotics',
-    'Reverse Logistics & Returns',
-    'Supply Chain Finance & Payments',
-    'Supply Chain Analytics & Control Tower',
+    'Creator Discovery & Onboarding Platform',
+    'Content Studio & Production Tools',
+    'Multi-Channel Distribution Engine',
+    'Monetisation & Revenue Management',
+    'Creator Analytics & Intelligence',
+    'Brand Collaboration Marketplace',
+    'Fan Subscription & Membership',
+    'Live Streaming Commerce',
+    'Creator Fund & Financial Services',
+    'Creator Community & Talent Development',
   ],
   timestamp: new Date().toISOString(),
 }))
@@ -32177,6 +32177,142 @@ app.get('/api/v58/control-tower/analytics', (c) => c.json({ success: true, suppl
 
 // ═══════════════════════════════════════════════════════════
 // END PHASE 58 — INTELLIGENT SUPPLY CHAIN & VENDOR ECOSYSTEM
+// ═══════════════════════════════════════════════════════════
+
+// ╔═══════════════════════════════════════════════════════════╗
+// ║  PHASE 59 — CREATOR ECONOMY & CONTENT MONETISATION      ║
+// ║  Version: v59.0.0  |  Endpoints: +90  |  Total: 4,339   ║
+// ╚═══════════════════════════════════════════════════════════╝
+
+// ── Health endpoint update ──
+app.get('/api/health', (c) => c.json({
+  status: 'ok', platform: 'INDTIX', version: 'v59.0.0',
+  phase: 'Phase 59', theme: 'Creator Economy & Content Monetisation',
+  new_endpoints: 90, total_endpoints: 4339,
+  features: [
+    'Creator Discovery & Onboarding Platform',
+    'Content Studio & Production Tools',
+    'Multi-Channel Distribution Engine',
+    'Monetisation & Revenue Management',
+    'Creator Analytics & Intelligence',
+    'Brand Collaboration Marketplace',
+    'Fan Subscription & Membership',
+    'Live Streaming Commerce',
+    'Creator Fund & Financial Services',
+    'Creator Community & Talent Development'
+  ],
+  timestamp: new Date().toISOString()
+}))
+
+// ── MODULE 1: Creator Discovery & Onboarding Platform ──
+app.get('/api/v59/creator-discovery/overview', (c) => c.json({ success: true, module: 'Creator Discovery', total_creators: 2840000, verified_creators: 284000, new_this_month: 28400, avg_followers: 84000, top_categories: ['Music', 'Comedy', 'Dance', 'Food', 'Travel'], ai_matched: 284000, discovery_reach: '28.4M fans', onboarding_time_hrs: 2.8, creator_nps: 84, platform_exclusives: 2840 }))
+app.get('/api/v59/creator-discovery/creators', (c) => c.json({ success: true, featured: [
+  { id: 'CRT001', name: 'Priya Beats', category: 'Music', followers: 8400000, engagement: 8.4, monthly_revenue_lakh: 28.4, verified: true, tier: 'platinum' },
+  { id: 'CRT002', name: 'Comedy King Raju', category: 'Comedy', followers: 4200000, engagement: 12.4, monthly_revenue_lakh: 18.4, verified: true, tier: 'gold' },
+  { id: 'CRT003', name: 'DanceFloor Anya', category: 'Dance', followers: 2840000, engagement: 14.2, monthly_revenue_lakh: 14.2, verified: true, tier: 'gold' },
+  { id: 'CRT004', name: 'Street Food Ramesh', category: 'Food', followers: 1420000, engagement: 18.4, monthly_revenue_lakh: 8.4, verified: true, tier: 'silver' },
+  { id: 'CRT005', name: 'Indie Vibes Studio', category: 'Music', followers: 840000, engagement: 22.4, monthly_revenue_lakh: 4.2, verified: false, tier: 'rising' }
+], total: 2840000, page: 1 }))
+app.on(['GET','POST'], '/api/v59/creator-discovery/onboard', (c) => c.json({ success: true, creator_id: 'CRT-NEW-001', profile_created: true, verification_status: 'pending', onboarding_steps_completed: 8, studio_access: 'granted', monetisation_unlocked: true, first_payout_date: '2026-04-01', welcome_bonus_inr: 2840, mentor_assigned: 'CRT001', estimated_revenue_m1_lakh: 1.4 }))
+app.get('/api/v59/creator-discovery/analytics', (c) => c.json({ success: true, creator_growth_pct: 28.4, avg_time_to_first_revenue_days: 14, top_earner_cr_yr: 8.4, platform_gmv_cr: 840, creator_satisfaction: 9.2, churn_rate_pct: 2.8, retention_12m: 84, discovery_algorithm_precision: 94.2, new_creator_roi: '18.4x', ecosystem_value_cr: 2840 }))
+
+// ── MODULE 2: Content Studio & Production Tools ──
+app.get('/api/v59/content-studio/overview', (c) => c.json({ success: true, module: 'Content Studio', active_studios: 28400, content_pieces_day: 840000, ai_tools_available: 84, avg_production_time_min: 28, storage_tb: 2840, collaboration_sessions: 28400, templates: 8400, brand_kits: 2840, export_formats: 28, render_queue: 284 }))
+app.get('/api/v59/content-studio/tools', (c) => c.json({ success: true, tools: [
+  { id: 'TL001', name: 'AI Video Editor', type: 'video', users: 284000, rating: 4.8, free: true },
+  { id: 'TL002', name: 'Thumbnail Generator', type: 'image', users: 840000, rating: 4.9, free: true },
+  { id: 'TL003', name: 'Caption AI', type: 'text', users: 1420000, rating: 4.7, free: true },
+  { id: 'TL004', name: 'Music Mixer Pro', type: 'audio', users: 140000, rating: 4.6, free: false, price_mo: 499 },
+  { id: 'TL005', name: '3D Stage Visualiser', type: '3d', users: 28400, rating: 4.5, free: false, price_mo: 1499 }
+], total: 84 }))
+app.on(['GET','POST'], '/api/v59/content-studio/create', (c) => c.json({ success: true, project_id: 'PRJ59-001', title: 'Sunburn 2026 Teaser', type: 'short_video', duration_sec: 60, resolution: '4K', ai_suggestions: 8, estimated_render_sec: 28, collaborators: 3, scheduled_publish: '2026-03-15T10:00', predicted_views: 840000 }))
+app.get('/api/v59/content-studio/analytics', (c) => c.json({ success: true, content_output_mo: 840000, ai_assistance_rate: 84, production_cost_saved_cr: 84, avg_quality_score: 9.2, viral_content_pct: 8.4, collab_projects: 28400, brand_approved_pct: 94.2, time_to_publish_hrs: 4.2, roi: '28.4x' }))
+
+// ── MODULE 3: Multi-Channel Distribution Engine ──
+app.get('/api/v59/distribution/overview', (c) => c.json({ success: true, module: 'Multi-Channel Distribution', channels: 28, total_reach: '840M', daily_posts: 284000, auto_scheduling: true, cross_post_rate: 84, optimal_time_accuracy: 94.2, content_adaption_ai: true, avg_reach_per_post: 28400, engagement_rate: 8.4, trending_placement_rate: 18.4 }))
+app.get('/api/v59/distribution/channels', (c) => c.json({ success: true, channels: [
+  { name: 'Instagram Reels', reach_m: 284, avg_engagement: 8.4, best_time: '20:00 IST', auto_publish: true },
+  { name: 'YouTube Shorts', reach_m: 840, avg_engagement: 6.2, best_time: '18:00 IST', auto_publish: true },
+  { name: 'INDTIX Live', reach_m: 28.4, avg_engagement: 18.4, best_time: '21:00 IST', auto_publish: true },
+  { name: 'WhatsApp Broadcast', reach_m: 140, avg_engagement: 42, best_time: '12:00 IST', auto_publish: true },
+  { name: 'Spotify Canvas', reach_m: 42, avg_engagement: 4.2, best_time: '09:00 IST', auto_publish: false }
+], total: 28 }))
+app.on(['GET','POST'], '/api/v59/distribution/schedule', (c) => c.json({ success: true, schedule_id: 'SCH59-001', content_id: 'PRJ59-001', channels: ['Instagram Reels', 'YouTube Shorts', 'INDTIX Live'], times: ['20:00', '18:30', '21:00'], ai_optimised: true, predicted_total_reach: 8400000, predicted_engagement: 840000, boosted: false, ab_test: true }))
+app.get('/api/v59/distribution/analytics', (c) => c.json({ success: true, total_impressions_day: 840000000, total_engagements_day: 28400000, viral_posts: 284, avg_ctr: 8.4, platform_traffic_cr: 28.4, conversion_from_content: 4.2, content_roi: '42x', top_channel: 'INDTIX Live', reach_growth_pct: 28.4 }))
+
+// ── MODULE 4: Monetisation & Revenue Management ──
+app.get('/api/v59/monetisation/overview', (c) => c.json({ success: true, module: 'Monetisation', total_revenue_cr: 840, creator_payout_cr: 588, platform_rev_cr: 252, revenue_streams: 8, avg_creator_rev_lakh: 2.84, top_creator_rev_cr: 8.4, monetised_creators: 284000, payout_frequency: 'weekly', instant_payout: true, payment_methods: 12 }))
+app.get('/api/v59/monetisation/streams', (c) => c.json({ success: true, streams: [
+  { type: 'Ad Revenue Share', volume_cr: 284, creator_share: 70, active_creators: 140000 },
+  { type: 'Brand Collaborations', volume_cr: 284, creator_share: 85, active_creators: 28400 },
+  { type: 'Fan Subscriptions', volume_cr: 140, creator_share: 80, active_creators: 84000 },
+  { type: 'Live Streaming Tips', volume_cr: 84, creator_share: 90, active_creators: 42000 },
+  { type: 'Merch & Digital Goods', volume_cr: 28.4, creator_share: 75, active_creators: 14000 },
+  { type: 'Exclusive Content', volume_cr: 14.2, creator_share: 85, active_creators: 8400 },
+  { type: 'Event Ticket Commissions', volume_cr: 8.4, creator_share: 15, active_creators: 2840 },
+  { type: 'Course & Workshop Sales', volume_cr: 4.2, creator_share: 80, active_creators: 1420 }
+] }))
+app.on(['GET','POST'], '/api/v59/monetisation/payout', (c) => c.json({ success: true, payout_id: 'PYT59-001', creator_id: 'CRT001', amount_inr: 2840000, breakdown: { ad_rev: 840000, brand_deals: 1200000, subscriptions: 560000, tips: 240000 }, upi_ref: 'INDT20260309284', settled: true, tax_deducted: 142000, net_inr: 2698000, next_payout: '2026-03-16' }))
+app.get('/api/v59/monetisation/analytics', (c) => c.json({ success: true, gmv_growth_pct: 84, avg_rev_per_creator_growth: 42, monetisation_rate: 72, payout_accuracy: 99.8, dispute_rate_pct: 0.04, creator_ltv_lakh: 28.4, platform_take_rate: 18.4, revenue_per_million_views: 8400, roi: '42x' }))
+
+// ── MODULE 5: Creator Analytics & Intelligence ──
+app.get('/api/v59/creator-analytics/overview', (c) => c.json({ success: true, module: 'Creator Analytics', dashboards_active: 284000, data_points_day: 28400000000, ai_insights_day: 2840000, predictive_models: 284, benchmark_categories: 42, real_time_alerts: 28400, competitor_tracking: true, audience_segments: 840, sentiment_accuracy: 94.2, trend_prediction_accuracy: 84 }))
+app.get('/api/v59/creator-analytics/dashboard', (c) => c.json({ success: true, creator_id: 'CRT001', period: '30d', summary: { views: 84000000, engagements: 7056000, new_followers: 840000, revenue_lakh: 28.4, brand_deals: 3, viral_posts: 12 }, top_content: [{ title: 'Sunburn Teaser 2026', views: 28400000, eng: 8.4 }, { title: 'Behind the Scenes NH7', views: 14200000, eng: 12.4 }], audience: { age_18_24: 42, age_25_34: 35, female: 54, top_city: 'Mumbai' }, growth_score: 9.2 }))
+app.on(['GET','POST'], '/api/v59/creator-analytics/insights', (c) => c.json({ success: true, creator_id: 'CRT001', insights: ['Post at 20:30 IST for 28% more reach', 'Collab with CRT003 for 42% engagement lift', 'Trending topic: Sunburn2026 — use within 6 hrs', 'Subscribers lapsing in 72 hrs: re-engage with exclusive clip', 'Optimal video length: 47s for max completion rate'], next_best_action: 'Publish teaser now', predicted_viral_prob: 0.84 }))
+app.get('/api/v59/creator-analytics/analytics', (c) => c.json({ success: true, insight_adoption_rate: 72, revenue_lift_from_ai: 28.4, churn_predictions_accuracy: 94.2, trend_latency_min: 4.2, competitor_gap_closed_pct: 18.4, audience_growth_rate: 8.4, engagement_lift_ai: 42, roi: '28.4x' }))
+
+// ── MODULE 6: Brand Collaboration Marketplace ──
+app.get('/api/v59/brand-collab/overview', (c) => c.json({ success: true, module: 'Brand Collaboration', brands: 28400, creators: 284000, active_campaigns: 8400, gmv_cr: 840, avg_deal_lakh: 2.84, ai_match_accuracy: 94.2, campaign_roi_avg: '18.4x', dispute_rate: 0.4, completion_rate: 97.8, new_brands_mo: 284 }))
+app.get('/api/v59/brand-collab/campaigns', (c) => c.json({ success: true, campaigns: [
+  { id: 'CAM001', brand: 'Bacardi', budget_cr: 2.84, creators_needed: 84, category: 'Music', deliverables: 'Reels + Stories', deadline: '2026-04-01', status: 'open', applications: 284 },
+  { id: 'CAM002', brand: 'boAt Audio', budget_cr: 1.42, creators_needed: 42, category: 'Tech+Music', deliverables: 'YouTube + Instagram', deadline: '2026-03-25', status: 'open', applications: 140 },
+  { id: 'CAM003', brand: 'Swiggy', budget_cr: 0.84, creators_needed: 28, category: 'Food', deliverables: 'Instagram Reels', deadline: '2026-03-20', status: 'in_progress', applications: 28 }
+], total: 8400 }))
+app.on(['GET','POST'], '/api/v59/brand-collab/apply', (c) => c.json({ success: true, application_id: 'APP59-001', campaign_id: 'CAM001', creator_id: 'CRT001', match_score: 0.94, ai_pitch_generated: true, pitch_preview: 'Priya Beats brings 8.4M engaged followers — perfect for Bacardi Live Sets campaign', shortlisted: true, expected_deal_lakh: 28.4, response_by: '2026-03-12' }))
+app.get('/api/v59/brand-collab/analytics', (c) => c.json({ success: true, total_brand_spend_cr: 840, creator_earnings_cr: 714, avg_campaign_roi: '18.4x', brand_satisfaction: 9.2, creator_satisfaction: 9.0, time_to_match_hrs: 4.2, content_approval_rate: 97.8, repeat_brand_rate: 72, platform_gmv_cr: 840, roi: '42x' }))
+
+// ── MODULE 7: Fan Subscription & Membership ──
+app.get('/api/v59/fan-subscription/overview', (c) => c.json({ success: true, module: 'Fan Subscriptions', total_subscribers: 28400000, paid_subscribers: 8400000, avg_rev_per_sub_mo: 99, sub_growth_pct: 42, churn_rate_pct: 2.4, ltv_inr: 2840, creator_sub_pages: 284000, tiers_avg: 3, exclusive_content_pieces: 840000, gifted_subs: 284000 }))
+app.get('/api/v59/fan-subscription/tiers', (c) => c.json({ success: true, tiers: [
+  { tier: 'Fan', price_mo: 49, benefits: ['Ad-free', 'Early access'], subscribers: 5600000, rev_cr: 27.4 },
+  { tier: 'Super Fan', price_mo: 149, benefits: ['All Fan + Backstage content', 'Monthly Q&A', 'Merch discount'], subscribers: 2240000, rev_cr: 33.4 },
+  { tier: 'VIP', price_mo: 499, benefits: ['All Super Fan + Meet & Greet ballot', 'Signed merch', 'Private Discord'], subscribers: 560000, rev_cr: 27.9 }
+], total_mrr_cr: 88.7 }))
+app.on(['GET','POST'], '/api/v59/fan-subscription/subscribe', (c) => c.json({ success: true, subscription_id: 'SUB59-001', fan_id: 'FAN001', creator_id: 'CRT001', tier: 'Super Fan', price_mo: 149, start: '2026-03-09', next_billing: '2026-04-09', welcome_reward: 'Exclusive Sunburn BTS clip', gifted: false, auto_renew: true }))
+app.get('/api/v59/fan-subscription/analytics', (c) => c.json({ success: true, mrr_cr: 88.7, arr_cr: 1064.4, churn_reduction_pct: 42, ltv_improvement: '28.4x', upsell_rate: 18.4, sub_conversion_from_free: 8.4, creator_rev_from_subs_pct: 28, gift_sub_virality: 4.2, roi: '42x' }))
+
+// ── MODULE 8: Live Streaming Commerce ──
+app.get('/api/v59/livestream-commerce/overview', (c) => c.json({ success: true, module: 'Live Streaming Commerce', daily_streams: 28400, concurrent_peak: 8400000, gmv_day_cr: 28.4, avg_cart_value: 840, conversion_rate: 8.4, products_featured: 284000, creators_live: 2840, tip_revenue_day_cr: 2.84, stream_avg_duration_min: 42, replay_views: 840000 }))
+app.get('/api/v59/livestream-commerce/streams', (c) => c.json({ success: true, live_now: [
+  { id: 'STR001', creator: 'Priya Beats', title: 'Sunburn Countdown Party', viewers: 840000, products: 8, gmv_so_far_lakh: 28.4, tips_lakh: 2.84, duration_min: 42 },
+  { id: 'STR002', creator: 'Comedy King Raju', title: 'Pre-Show Comedy Night', viewers: 280000, products: 3, gmv_so_far_lakh: 8.4, tips_lakh: 0.84, duration_min: 28 }
+], scheduled_today: 284, total_live: 2840 }))
+app.on(['GET','POST'], '/api/v59/livestream-commerce/start', (c) => c.json({ success: true, stream_id: 'STR59-001', creator_id: 'CRT001', rtmp_url: 'rtmp://live.indtix.com/stream/CRT001', stream_key: 'sk_live_INDT_abc123', hls_playback: 'https://cdn.indtix.com/live/CRT001/index.m3u8', products_linked: 8, ai_moderation: 'active', predicted_viewers: 840000, revenue_forecast_lakh: 28.4 }))
+app.get('/api/v59/livestream-commerce/analytics', (c) => c.json({ success: true, gmv_mo_cr: 840, conversion_lift_vs_vod: '8.4x', avg_watch_time_min: 28.4, engagement_rate: 42, tip_revenue_cr: 84, top_product_sold: 'Festival Pass - Sunburn', product_discovery_lift: 284, return_rate_pct: 2.4, creator_rev_per_stream_lakh: 8.4, roi: '42x' }))
+
+// ── MODULE 9: Creator Fund & Financial Services ──
+app.get('/api/v59/creator-fund/overview', (c) => c.json({ success: true, module: 'Creator Fund', fund_size_cr: 284, disbursed_cr: 140, active_loans: 2840, avg_loan_lakh: 5, interest_rate_pct: 8.4, repayment_rate: 97.8, insurance_holders: 28400, gst_filing_auto: true, advance_payout: true, financial_literacy_score: 8.4 }))
+app.get('/api/v59/creator-fund/products', (c) => c.json({ success: true, products: [
+  { id: 'FIN001', name: 'Creator Advance', type: 'loan', limit_lakh: 50, rate_pct: 8.4, tenure_mo: 12, disbursal_hrs: 4, collateral: 'future_earnings', eligible: true },
+  { id: 'FIN002', name: 'Equipment Finance', type: 'loan', limit_lakh: 20, rate_pct: 9.8, tenure_mo: 24, disbursal_hrs: 24, collateral: 'equipment', eligible: true },
+  { id: 'FIN003', name: 'Creator Health Insurance', type: 'insurance', premium_mo: 499, coverage_lakh: 20, type_cov: 'health', eligible: true },
+  { id: 'FIN004', name: 'Content Creator Shield', type: 'insurance', premium_mo: 299, coverage_lakh: 10, type_cov: 'income_protection', eligible: true }
+] }))
+app.on(['GET','POST'], '/api/v59/creator-fund/apply', (c) => c.json({ success: true, application_id: 'FUND59-001', creator_id: 'CRT001', product: 'Creator Advance', amount_lakh: 20, approved: true, disbursal_hrs: 4, emi_lakh: 1.84, tenure_mo: 12, rate_pct: 8.4, linked_account: 'UPI:priya@ybl', next_emi: '2026-04-09' }))
+app.get('/api/v59/creator-fund/analytics', (c) => c.json({ success: true, total_disbursed_cr: 140, repayment_rate: 97.8, default_rate_pct: 0.28, npa_rate_pct: 0.4, avg_creator_rev_uplift_pct: 42, insurance_claims_settled: 284, gst_filings_auto: 28400, financial_inclusion_score: 9.2, roi: '18.4x' }))
+
+// ── MODULE 10: Creator Community & Talent Development ──
+app.get('/api/v59/creator-community/overview', (c) => c.json({ success: true, module: 'Creator Community', community_members: 2840000, active_groups: 28400, mentorship_pairs: 84000, courses_available: 2840, certified_creators: 140000, events_mo: 284, hackathons_yr: 42, avg_skill_improvement: 28.4, community_nps: 88, alumni_top_earners: 8400 }))
+app.get('/api/v59/creator-community/programs', (c) => c.json({ success: true, programs: [
+  { id: 'PRG001', name: 'Creator Accelerator', duration_wks: 8, enrolled: 8400, completion: 84, avg_rev_uplift_pct: 284, next_cohort: '2026-04-01' },
+  { id: 'PRG002', name: 'Monetisation Masterclass', duration_wks: 4, enrolled: 28400, completion: 92, avg_rev_uplift_pct: 142, next_cohort: '2026-03-20' },
+  { id: 'PRG003', name: 'Brand Deals Bootcamp', duration_wks: 2, enrolled: 14200, completion: 96, avg_rev_uplift_pct: 84, next_cohort: '2026-03-15' }
+], total: 2840 }))
+app.on(['GET','POST'], '/api/v59/creator-community/enroll', (c) => c.json({ success: true, enrollment_id: 'ENR59-001', creator_id: 'CRT005', program: 'Creator Accelerator', cohort: '2026-04-01', mentor_assigned: 'CRT001', expected_rev_uplift_pct: 284, community_group: 'Cohort-27-Mumbai', certification: 'INDT-Certified Creator Pro', scholarship: false }))
+app.get('/api/v59/creator-community/analytics', (c) => c.json({ success: true, alumni_avg_rev_cr_yr: 2.84, program_completion_rate: 88, mentorship_satisfaction: 9.4, community_engagement: 84, events_attended_avg: 8.4, course_completion_rate: 92, talent_pipeline_active: 28400, industry_placements: 2840, platform_loyalty_score: 9.2, roi: '42x' }))
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 59 — CREATOR ECONOMY & CONTENT MONETISATION
 // ═══════════════════════════════════════════════════════════
 
 export default app
