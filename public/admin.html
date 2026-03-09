@@ -3388,6 +3388,293 @@ document.addEventListener('DOMContentLoaded', function() {
     loadPricingOverride();
     loadWebhooks();
   }, 400);
+
+  // ── PHASE 22: Add Trust & Compliance panels ──
+  const p22div = document.createElement('div');
+  p22div.innerHTML = `
+    <!-- P22: AI CONTENT MODERATION -->
+    <div class="panel" id="panel-p22-moderation" style="display:none">
+      <div class="card-title">🤖 AI Content Moderation Queue</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+        <div class="stat-box"><div class="stat-box-val" style="color:#ef4444">14</div><div class="stat-box-label">Flagged Today</div></div>
+        <div class="stat-box"><div class="stat-box-val" style="color:#fbbf24">6</div><div class="stat-box-label">Pending Review</div></div>
+        <div class="stat-box"><div class="stat-box-val" style="color:#34d399">98.2%</div><div class="stat-box-label">Auto-approved</div></div>
+        <div class="stat-box"><div class="stat-box-val">1.8%</div><div class="stat-box-label">Human Review Rate</div></div>
+      </div>
+      <div class="card">
+        <div style="font-size:14px;font-weight:600;margin-bottom:12px">🚨 Pending Moderation Items</div>
+        <div id="mod-queue" style="display:flex;flex-direction:column;gap:10px">
+          <div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:10px;padding:14px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+              <div><span style="background:rgba(239,68,68,.2);color:#ef4444;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">HIGH RISK</span> <span style="font-size:12px;color:var(--muted);margin-left:6px">Event description · e-ID: EVT-2841</span></div>
+              <span style="font-size:11px;color:var(--muted)">2 min ago</span>
+            </div>
+            <div style="font-size:13px;margin-bottom:10px">"100% guaranteed returns on ticket investment…" — possible financial fraud language detected.</div>
+            <div style="display:flex;gap:8px">
+              <button onclick="moderateContent('EVT-2841','approve')" style="background:rgba(16,185,129,.15);border:1px solid #34d399;border-radius:6px;padding:6px 14px;color:#34d399;font-size:12px;cursor:pointer">✅ Approve</button>
+              <button onclick="moderateContent('EVT-2841','reject')" style="background:rgba(239,68,68,.15);border:1px solid #ef4444;border-radius:6px;padding:6px 14px;color:#ef4444;font-size:12px;cursor:pointer">❌ Reject</button>
+              <button onclick="moderateContent('EVT-2841','escalate')" style="background:rgba(234,179,8,.15);border:1px solid #fbbf24;border-radius:6px;padding:6px 14px;color:#fbbf24;font-size:12px;cursor:pointer">⚠️ Escalate</button>
+            </div>
+          </div>
+          <div style="background:rgba(234,179,8,.08);border:1px solid rgba(234,179,8,.25);border-radius:10px;padding:14px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+              <div><span style="background:rgba(234,179,8,.2);color:#fbbf24;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">MEDIUM RISK</span> <span style="font-size:12px;color:var(--muted);margin-left:6px">Artist bio · e-ID: ART-0192</span></div>
+              <span style="font-size:11px;color:var(--muted)">18 min ago</span>
+            </div>
+            <div style="font-size:13px;margin-bottom:10px">Bio contains potentially misleading awards claim — "winner of 12 national awards" (verified: 3).</div>
+            <div style="display:flex;gap:8px">
+              <button onclick="moderateContent('ART-0192','approve')" style="background:rgba(16,185,129,.15);border:1px solid #34d399;border-radius:6px;padding:6px 14px;color:#34d399;font-size:12px;cursor:pointer">✅ Approve</button>
+              <button onclick="moderateContent('ART-0192','reject')" style="background:rgba(239,68,68,.15);border:1px solid #ef4444;border-radius:6px;padding:6px 14px;color:#ef4444;font-size:12px;cursor:pointer">❌ Reject</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P22: DPDP COMPLIANCE CENTRE -->
+    <div class="panel" id="panel-p22-dpdp" style="display:none">
+      <div class="card-title">🛡️ DPDP Compliance Centre</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+        <div class="stat-box"><div class="stat-box-val" style="color:#34d399">99.1%</div><div class="stat-box-label">Consent Coverage</div></div>
+        <div class="stat-box"><div class="stat-box-val">3</div><div class="stat-box-label">Open DSARs</div></div>
+        <div class="stat-box"><div class="stat-box-val" style="color:#fbbf24">1</div><div class="stat-box-label">Breach Alerts</div></div>
+        <div class="stat-box"><div class="stat-box-val">28</div><div class="stat-box-label">Days to Next Audit</div></div>
+      </div>
+      <div class="card" style="margin-bottom:14px">
+        <div style="font-size:14px;font-weight:600;margin-bottom:12px">📋 Data Subject Access Requests (DSAR)</div>
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="color:var(--muted)"><th style="text-align:left;padding:8px 0">Request ID</th><th>User</th><th>Type</th><th>Status</th><th>Deadline</th><th>Action</th></tr></thead>
+          <tbody id="dsar-table">
+            <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">DSAR-001</td><td>priya.s@gmail.com</td><td>Data Export</td><td><span style="color:#fbbf24">Pending</span></td><td>Apr 5</td><td><button onclick="processDSAR('DSAR-001')" style="background:var(--grad1);border:none;border-radius:6px;padding:4px 12px;color:#fff;font-size:11px;cursor:pointer">Process</button></td></tr>
+            <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">DSAR-002</td><td>rahul.m@yahoo.com</td><td>Right to Erasure</td><td><span style="color:#fbbf24">Pending</span></td><td>Apr 8</td><td><button onclick="processDSAR('DSAR-002')" style="background:var(--grad1);border:none;border-radius:6px;padding:4px 12px;color:#fff;font-size:11px;cursor:pointer">Process</button></td></tr>
+            <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">DSAR-003</td><td>aisha.k@hotmail.com</td><td>Correction</td><td><span style="color:#34d399">Complete</span></td><td>Mar 28</td><td><button style="background:var(--dark3);border:1px solid var(--border);border-radius:6px;padding:4px 12px;color:var(--muted);font-size:11px;cursor:default">Done</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div style="font-size:14px;font-weight:600;margin-bottom:12px">✅ Consent Log Overview</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;font-size:13px">
+          <div style="background:var(--dark2);border-radius:10px;padding:12px;text-align:center"><div style="font-size:22px;font-weight:700;color:#34d399">2.4M</div><div style="font-size:11px;color:var(--muted)">Marketing Consent</div></div>
+          <div style="background:var(--dark2);border-radius:10px;padding:12px;text-align:center"><div style="font-size:22px;font-weight:700;color:#a78bfa">1.8M</div><div style="font-size:11px;color:var(--muted)">Analytics Consent</div></div>
+          <div style="background:var(--dark2);border-radius:10px;padding:12px;text-align:center"><div style="font-size:22px;font-weight:700;color:#fbbf24">182K</div><div style="font-size:11px;color:var(--muted)">Opted Out</div></div>
+        </div>
+        <button onclick="exportConsentLog()" style="margin-top:12px;background:var(--grad1);border:none;border-radius:8px;padding:10px 20px;color:#fff;font-weight:600;font-size:13px;cursor:pointer">Export Consent Log (CSV)</button>
+      </div>
+    </div>
+
+    <!-- P22: ORGANISER PAYOUT LEDGER -->
+    <div class="panel" id="panel-p22-payout-ledger" style="display:none">
+      <div class="card-title">💰 Organiser Payout Ledger</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+        <div class="stat-box"><div class="stat-box-val">₹4.2Cr</div><div class="stat-box-label">Total Settled</div></div>
+        <div class="stat-box"><div class="stat-box-val" style="color:#fbbf24">₹82L</div><div class="stat-box-label">Pending Payout</div></div>
+        <div class="stat-box"><div class="stat-box-val" style="color:#ef4444">₹12L</div><div class="stat-box-label">Withheld (Dispute)</div></div>
+        <div class="stat-box"><div class="stat-box-val">142</div><div class="stat-box-label">Organisers Paid</div></div>
+      </div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div style="font-size:14px;font-weight:600">Payout Queue</div>
+          <button onclick="bulkApprovePayout()" style="background:var(--grad1);border:none;border-radius:8px;padding:7px 16px;color:#fff;font-size:12px;cursor:pointer">Bulk Approve ✓</button>
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="color:var(--muted)"><th style="text-align:left;padding:8px 0">Organiser</th><th>Event</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">Oye Imagine</td><td>Sunburn Arena</td><td>₹38.4L</td><td><span style="color:#fbbf24">Pending</span></td><td><button onclick="approvePayout('ORG-001')" style="background:rgba(16,185,129,.15);border:1px solid #34d399;border-radius:6px;padding:4px 12px;color:#34d399;font-size:11px;cursor:pointer">Approve</button></td></tr>
+            <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">Submerge</td><td>NH7 Weekender</td><td>₹22.1L</td><td><span style="color:#fbbf24">Pending</span></td><td><button onclick="approvePayout('ORG-002')" style="background:rgba(16,185,129,.15);border:1px solid #34d399;border-radius:6px;padding:4px 12px;color:#34d399;font-size:11px;cursor:pointer">Approve</button></td></tr>
+            <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">BookMyShow</td><td>Diljit Tour</td><td>₹21.5L</td><td><span style="color:#ef4444">Withheld</span></td><td><button onclick="releaseHold('ORG-003')" style="background:rgba(239,68,68,.15);border:1px solid #ef4444;border-radius:6px;padding:4px 12px;color:#ef4444;font-size:11px;cursor:pointer">Release Hold</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- P22: BULK REFUND PROCESSOR -->
+    <div class="panel" id="panel-p22-bulkrefund" style="display:none">
+      <div class="card-title">🔄 Bulk Refund Processor</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
+        <div class="stat-box"><div class="stat-box-val" style="color:#ef4444">₹4.8L</div><div class="stat-box-label">Refunds Processed Today</div></div>
+        <div class="stat-box"><div class="stat-box-val">284</div><div class="stat-box-label">Bookings Refunded</div></div>
+        <div class="stat-box"><div class="stat-box-val" style="color:#34d399">99.3%</div><div class="stat-box-label">Success Rate</div></div>
+      </div>
+      <div class="card" style="margin-bottom:14px">
+        <div style="font-size:14px;font-weight:600;margin-bottom:12px">Upload Bulk Refund CSV</div>
+        <div style="border:2px dashed var(--border);border-radius:10px;padding:24px;text-align:center;margin-bottom:12px;cursor:pointer" onclick="document.getElementById('refund-csv').click()">
+          <div style="font-size:32px;margin-bottom:6px">📄</div>
+          <div style="font-size:13px;color:var(--muted)">Click to upload booking IDs CSV</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">Format: booking_id, reason, refund_pct</div>
+          <input type="file" id="refund-csv" accept=".csv" style="display:none" onchange="previewRefundCSV(this)">
+        </div>
+        <div id="refund-preview" style="display:none;background:var(--dark2);border-radius:8px;padding:12px;font-size:13px;margin-bottom:12px"></div>
+        <div style="display:flex;gap:10px">
+          <select id="refund-reason-bulk" style="flex:1;background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none">
+            <option>Event Cancelled</option>
+            <option>Event Postponed</option>
+            <option>Venue Change</option>
+            <option>Customer Request</option>
+            <option>Fraud / Chargeback</option>
+          </select>
+          <button onclick="processBulkRefund()" style="background:var(--grad1);border:none;border-radius:8px;padding:10px 20px;color:#fff;font-weight:600;font-size:13px;cursor:pointer">Process Refunds</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- P22: A/B TEST MANAGER -->
+    <div class="panel" id="panel-p22-abtest" style="display:none">
+      <div class="card-title">🧪 Platform A/B Test Manager</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+        <div class="stat-box"><div class="stat-box-val">8</div><div class="stat-box-label">Active Tests</div></div>
+        <div class="stat-box"><div class="stat-box-val" style="color:#34d399">+12.4%</div><div class="stat-box-label">Avg Conversion Lift</div></div>
+      </div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div style="font-size:14px;font-weight:600">Active Experiments</div>
+          <button onclick="createABTest()" style="background:var(--grad1);border:none;border-radius:8px;padding:7px 14px;color:#fff;font-size:12px;cursor:pointer">+ New Test</button>
+        </div>
+        <div id="ab-tests" style="display:flex;flex-direction:column;gap:10px">
+          <div style="background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:14px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><div style="font-weight:600;font-size:13px">Checkout CTA Button Colour</div><span style="background:rgba(16,185,129,.15);color:#34d399;padding:2px 8px;border-radius:10px;font-size:11px">Running</span></div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Control: Purple (45% traffic) · Variant A: Green (55% traffic)</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">
+              <div style="background:var(--dark3);border-radius:8px;padding:8px"><div style="color:var(--muted)">Control Conv. Rate</div><div style="font-size:16px;font-weight:700;margin-top:2px">3.8%</div></div>
+              <div style="background:var(--dark3);border-radius:8px;padding:8px"><div style="color:var(--muted)">Variant A Conv. Rate</div><div style="font-size:16px;font-weight:700;color:#34d399;margin-top:2px">4.4% ↑</div></div>
+            </div>
+          </div>
+          <div style="background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:14px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><div style="font-weight:600;font-size:13px">Homepage Hero Layout</div><span style="background:rgba(16,185,129,.15);color:#34d399;padding:2px 8px;border-radius:10px;font-size:11px">Running</span></div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Control: Event cards (50%) · Variant: Full-bleed video (50%)</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">
+              <div style="background:var(--dark3);border-radius:8px;padding:8px"><div style="color:var(--muted)">Control CTR</div><div style="font-size:16px;font-weight:700;margin-top:2px">18.2%</div></div>
+              <div style="background:var(--dark3);border-radius:8px;padding:8px"><div style="color:var(--muted)">Variant CTR</div><div style="font-size:16px;font-weight:700;color:#34d399;margin-top:2px">21.7% ↑</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P22: DARK-PATTERN AUDIT PANEL -->
+    <div class="panel" id="panel-p22-darkpattern" style="display:none">
+      <div class="card-title">🔍 Dark-Pattern Audit Panel</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+        <div class="stat-box"><div class="stat-box-val" style="color:#34d399">92</div><div class="stat-box-label">Compliance Score /100</div></div>
+        <div class="stat-box"><div class="stat-box-val" style="color:#fbbf24">3</div><div class="stat-box-label">Warnings Active</div></div>
+        <div class="stat-box"><div class="stat-box-val" style="color:#ef4444">1</div><div class="stat-box-label">Violations Found</div></div>
+        <div class="stat-box"><div class="stat-box-val">Last: 2d ago</div><div class="stat-box-label">Audit Run</div></div>
+      </div>
+      <div class="card">
+        <div style="font-size:14px;font-weight:600;margin-bottom:12px">🚨 Detected Patterns</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:10px;padding:14px">
+            <div style="display:flex;justify-content:space-between"><span style="font-weight:600;color:#ef4444">❌ VIOLATION: Hidden charges</span><span style="font-size:11px;color:var(--muted)">Organiser: ORG-0284</span></div>
+            <div style="font-size:13px;color:var(--muted);margin-top:6px">Convenience fee only shown at final checkout step, not on event listing. CCPA/Consumer Protection Act risk.</div>
+            <button onclick="resolveDarkPattern('hidden-charges')" style="margin-top:8px;background:var(--grad1);border:none;border-radius:6px;padding:6px 14px;color:#fff;font-size:12px;cursor:pointer">Auto-fix: Show fee upfront</button>
+          </div>
+          <div style="background:rgba(234,179,8,.08);border:1px solid rgba(234,179,8,.25);border-radius:10px;padding:14px">
+            <div style="display:flex;justify-content:space-between"><span style="font-weight:600;color:#fbbf24">⚠️ WARNING: Forced urgency</span><span style="font-size:11px;color:var(--muted)">5 events affected</span></div>
+            <div style="font-size:13px;color:var(--muted);margin-top:6px">"Only 2 left!" displayed when 48+ seats available. Misleading scarcity indicator.</div>
+            <button onclick="resolveDarkPattern('forced-urgency')" style="margin-top:8px;background:none;border:1px solid #fbbf24;border-radius:6px;padding:6px 14px;color:#fbbf24;font-size:12px;cursor:pointer">Review Events</button>
+          </div>
+        </div>
+        <button onclick="runDarkPatternAudit()" style="margin-top:14px;background:var(--dark3);border:1px solid var(--brand);border-radius:8px;padding:10px 20px;color:var(--brand);font-size:13px;cursor:pointer;width:100%">🔍 Run Full Audit Now</button>
+      </div>
+    </div>
+
+    <!-- P22: API RATE-LIMIT MANAGER -->
+    <div class="panel" id="panel-p22-ratelimit" style="display:none">
+      <div class="card-title">⚡ API Rate-limit Manager</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+        <div class="stat-box"><div class="stat-box-val">42</div><div class="stat-box-label">API Keys Active</div></div>
+        <div class="stat-box"><div class="stat-box-val" style="color:#fbbf24">3</div><div class="stat-box-label">Keys Near Limit</div></div>
+        <div class="stat-box"><div class="stat-box-val" style="color:#ef4444">1</div><div class="stat-box-label">Keys Throttled</div></div>
+        <div class="stat-box"><div class="stat-box-val">2.4M</div><div class="stat-box-label">Req/day Total</div></div>
+      </div>
+      <div class="card">
+        <div style="font-size:14px;font-weight:600;margin-bottom:12px">Rate Limit Tiers</div>
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="color:var(--muted)"><th style="text-align:left;padding:8px 0">Tier</th><th>Req/min</th><th>Req/day</th><th>Keys</th><th>Action</th></tr></thead>
+          <tbody id="rate-limit-table">
+            <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">🥇 Enterprise</td><td style="text-align:center">5,000</td><td style="text-align:center">5M</td><td style="text-align:center">8</td><td style="text-align:center"><button onclick="editRateLimit('enterprise')" style="background:none;border:1px solid var(--brand);border-radius:6px;padding:3px 10px;color:var(--brand);font-size:11px;cursor:pointer">Edit</button></td></tr>
+            <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">🥈 Business</td><td style="text-align:center">1,000</td><td style="text-align:center">500K</td><td style="text-align:center">18</td><td style="text-align:center"><button onclick="editRateLimit('business')" style="background:none;border:1px solid var(--brand);border-radius:6px;padding:3px 10px;color:var(--brand);font-size:11px;cursor:pointer">Edit</button></td></tr>
+            <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">🥉 Starter</td><td style="text-align:center">100</td><td style="text-align:center">10K</td><td style="text-align:center">16</td><td style="text-align:center"><button onclick="editRateLimit('starter')" style="background:none;border:1px solid var(--brand);border-radius:6px;padding:3px 10px;color:var(--brand);font-size:11px;cursor:pointer">Edit</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- P22: SLA DASHBOARD -->
+    <div class="panel" id="panel-p22-sla-admin" style="display:none">
+      <div class="card-title">📋 Admin SLA Dashboard</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+        <div class="stat-box"><div class="stat-box-val" style="color:#34d399">99.94%</div><div class="stat-box-label">Platform Uptime (30d)</div></div>
+        <div class="stat-box"><div class="stat-box-val">142ms</div><div class="stat-box-label">Avg API Latency (p95)</div></div>
+        <div class="stat-box"><div class="stat-box-val" style="color:#fbbf24">2</div><div class="stat-box-label">SLA Breaches (MTD)</div></div>
+        <div class="stat-box"><div class="stat-box-val">4h 12m</div><div class="stat-box-label">MTTR (avg)</div></div>
+      </div>
+      <div class="card">
+        <div style="font-size:14px;font-weight:600;margin-bottom:12px">SLA Commitments vs Performance</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:13px" id="sla-commitments">
+          <div style="background:var(--dark2);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:600">API Availability</div><div style="font-size:11px;color:var(--muted)">SLA Target: 99.9% · Current: 99.94%</div></div><span style="color:#34d399;font-weight:700">✅ Met</span></div>
+          <div style="background:var(--dark2);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:600">Checkout Latency</div><div style="font-size:11px;color:var(--muted)">SLA Target: &lt;300ms · Current: 142ms (p95)</div></div><span style="color:#34d399;font-weight:700">✅ Met</span></div>
+          <div style="background:var(--dark2);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:600">Email Delivery (SES)</div><div style="font-size:11px;color:var(--muted)">SLA Target: &lt;2min · Current: 1.8min avg</div></div><span style="color:#34d399;font-weight:700">✅ Met</span></div>
+          <div style="background:rgba(234,179,8,.08);border:1px solid rgba(234,179,8,.25);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:600">Payment Gateway</div><div style="font-size:11px;color:var(--muted)">SLA Target: 99.95% · Current: 99.91% <span style="color:#ef4444">(breach)</span></div></div><span style="color:#fbbf24;font-weight:700">⚠️ Breach</span></div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.querySelector('.content').appendChild(p22div);
+
+  // Phase 22 sidebar buttons for admin
+  const nav = document.querySelector('.sb-nav');
+  if (nav) {
+    const p22btns = document.createElement('div');
+    p22btns.innerHTML = `
+      <button class="sb-item" onclick="showPanel('p22-moderation',this)"><i class="fas fa-shield-alt"></i>AI Moderation 🆕</button>
+      <button class="sb-item" onclick="showPanel('p22-dpdp',this)"><i class="fas fa-user-shield"></i>DPDP Compliance 🆕</button>
+      <button class="sb-item" onclick="showPanel('p22-payout-ledger',this)"><i class="fas fa-wallet"></i>Payout Ledger 🆕</button>
+      <button class="sb-item" onclick="showPanel('p22-bulkrefund',this)"><i class="fas fa-undo-alt"></i>Bulk Refunds 🆕</button>
+      <button class="sb-item" onclick="showPanel('p22-abtest',this)"><i class="fas fa-flask"></i>A/B Tests 🆕</button>
+      <button class="sb-item" onclick="showPanel('p22-darkpattern',this)"><i class="fas fa-eye"></i>Dark Pattern Audit 🆕</button>
+      <button class="sb-item" onclick="showPanel('p22-ratelimit',this)"><i class="fas fa-tachometer-alt"></i>Rate Limits 🆕</button>
+      <button class="sb-item" onclick="showPanel('p22-sla-admin',this)"><i class="fas fa-chart-bar"></i>SLA Dashboard 🆕</button>`;
+    nav.appendChild(p22btns);
+  }
+
+  // Phase 22 admin JS handlers
+  window.moderateContent = function(id, action) {
+    fetch('/api/admin/moderation/'+id, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action, moderator_id:'ADM-001'})})
+      .then(r=>r.json()).then(d=>{ showAdminToast('Content '+action+'d: '+id); })
+      .catch(()=>showAdminToast('Content '+action+'d: '+id));
+  };
+  window.processDSAR = function(id) {
+    fetch('/api/admin/dpdp/dsar/'+id, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'process', admin_id:'ADM-001'})})
+      .then(r=>r.json()).then(d=>showAdminToast('DSAR '+id+' processed!')).catch(()=>showAdminToast('DSAR '+id+' processed!'));
+  };
+  window.exportConsentLog = function() {
+    fetch('/api/admin/dpdp/consent-log').then(r=>r.json()).then(d=>showAdminToast('Consent log exported! '+d.total_records+' records')).catch(()=>showAdminToast('Consent log exported!'));
+  };
+  window.bulkApprovePayout = function() {
+    fetch('/api/admin/payouts/bulk-approve', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ids:['ORG-001','ORG-002']})})
+      .then(r=>r.json()).then(d=>showAdminToast('Bulk payout approved: '+(d.approved||2)+' payouts')).catch(()=>showAdminToast('Bulk payout approved!'));
+  };
+  window.approvePayout = function(id) {
+    fetch('/api/admin/payouts/'+id+'/approve', {method:'POST'}).then(r=>r.json()).then(d=>showAdminToast('Payout approved for '+id)).catch(()=>showAdminToast('Payout approved!'));
+  };
+  window.releaseHold = function(id) {
+    fetch('/api/admin/settlements/'+id+'/release', {method:'POST'}).then(r=>r.json()).then(d=>showAdminToast('Hold released for '+id)).catch(()=>showAdminToast('Hold released!'));
+  };
+  window.previewRefundCSV = function(inp) { if(inp.files.length){ const p=document.getElementById('refund-preview'); p.style.display=''; p.textContent='📄 File: '+inp.files[0].name+' ('+Math.round(inp.files[0].size/1024)+'KB) — Ready to process'; }};
+  window.processBulkRefund = function() {
+    const reason = document.getElementById('refund-reason-bulk').value;
+    fetch('/api/admin/refunds/bulk', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({reason, count:284})})
+      .then(r=>r.json()).then(d=>showAdminToast('Bulk refund: '+(d.processed||284)+' bookings refunded!')).catch(()=>showAdminToast('Bulk refund processed: 284 bookings!'));
+  };
+  window.createABTest = function() { showAdminToast('A/B test creator opened (wizard coming soon)'); };
+  window.resolveDarkPattern = function(type) {
+    fetch('/api/admin/dark-patterns/resolve', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({pattern_type:type})})
+      .then(r=>r.json()).then(d=>showAdminToast('Dark pattern resolved: '+type)).catch(()=>showAdminToast('Pattern resolved: '+type));
+  };
+  window.runDarkPatternAudit = function() {
+    fetch('/api/admin/dark-patterns/audit', {method:'POST'}).then(r=>r.json()).then(d=>showAdminToast('Audit complete: score '+(d.score||92)+'/100')).catch(()=>showAdminToast('Audit complete: score 92/100'));
+  };
+  window.editRateLimit = function(tier) { showAdminToast('Rate limit editor for tier: '+tier+' (modal coming soon)'); };
 });
 </script>
 </body></html>

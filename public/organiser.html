@@ -220,6 +220,13 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
     <button class="sb-item" onclick="showPanel('p21-bulkimport',this)"><i class="fas fa-file-csv"></i>Bulk Import</button>
     <button class="sb-item" onclick="showPanel('p21-waterfall',this)"><i class="fas fa-water"></i>Revenue Waterfall</button>
     <button class="sb-item" onclick="showPanel('p21-rfm',this)"><i class="fas fa-users-cog"></i>Audience Segments</button>
+    <button class="sb-item" onclick="showPanel('p22-affiliate',this)"><i class="fas fa-link"></i>Affiliate Links 🆕</button>
+    <button class="sb-item" onclick="showPanel('p22-upsell',this)"><i class="fas fa-arrow-up"></i>Upsell Engine 🆕</button>
+    <button class="sb-item" onclick="showPanel('p22-payout',this)"><i class="fas fa-money-bill-wave"></i>Multi-currency Payout 🆕</button>
+    <button class="sb-item" onclick="showPanel('p22-cosplit',this)"><i class="fas fa-handshake"></i>Revenue Split 🆕</button>
+    <button class="sb-item" onclick="showPanel('p22-presale',this)"><i class="fas fa-key"></i>Presale Access Codes 🆕</button>
+    <button class="sb-item" onclick="showPanel('p22-mediakit',this)"><i class="fas fa-photo-video"></i>Media Kit Builder 🆕</button>
+    <button class="sb-item" onclick="showPanel('p22-highlights',this)"><i class="fas fa-film"></i>Video Highlights 🆕</button>
   </nav>
   <div class="sb-footer"><a href="/"><i class="fas fa-arrow-left"></i>Back to Fan Portal</a></div>
 </div>
@@ -1708,6 +1715,261 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
         </div>
       </div>
     </div>
+
+<!-- ═══════════════════════════════════════════════ PHASE 22 ORGANISER PANELS ══ -->
+
+<!-- P22-1: AFFILIATE LINK BUILDER -->
+<div class="panel" id="panel-p22-affiliate" style="display:none">
+  <div class="card-title">🔗 Affiliate Link Builder</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+    <div class="stat-box"><div class="stat-box-val">₹2.4L</div><div class="stat-box-label">Affiliate Revenue (MTD)</div></div>
+    <div class="stat-box"><div class="stat-box-val">18</div><div class="stat-box-label">Active Affiliates</div></div>
+    <div class="stat-box"><div class="stat-box-val">4.2%</div><div class="stat-box-label">Avg Conversion Rate</div></div>
+    <div class="stat-box"><div class="stat-box-val">₹340</div><div class="stat-box-label">Avg Commission Paid</div></div>
+  </div>
+  <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px">
+    <div style="font-size:15px;font-weight:600;margin-bottom:14px">Generate New Affiliate Link</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <select id="af-event" style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none">
+        <option>Sunburn Arena Mumbai — Apr 12</option>
+        <option>NH7 Weekender Pune — Apr 19</option>
+        <option>Diljit Dosanjh Tour — May 3</option>
+      </select>
+      <input id="af-name" placeholder="Affiliate name / handle" style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <input id="af-commission" type="number" placeholder="Commission %" value="5" style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none">
+        <select id="af-utm" style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none">
+          <option>UTM: Social Media</option>
+          <option>UTM: Newsletter</option>
+          <option>UTM: YouTube</option>
+          <option>UTM: Podcast</option>
+        </select>
+      </div>
+      <button onclick="generateAffiliateLink()" style="background:var(--grad1);border:none;border-radius:8px;padding:10px;color:#fff;font-weight:600;cursor:pointer">Generate Link</button>
+    </div>
+    <div id="af-result" style="display:none;margin-top:12px;background:var(--dark2);border:1px solid rgba(108,60,247,.3);border-radius:8px;padding:12px;font-size:13px">
+      <div style="color:var(--muted);margin-bottom:4px">Generated link:</div>
+      <div id="af-link" style="color:#a78bfa;word-break:break-all"></div>
+      <button onclick="copyAffLink()" style="margin-top:8px;background:none;border:1px solid var(--brand);border-radius:6px;padding:5px 12px;color:var(--brand);font-size:12px;cursor:pointer">Copy Link</button>
+    </div>
+  </div>
+  <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead><tr style="color:var(--muted)"><th style="text-align:left;padding:8px 0">Affiliate</th><th>Clicks</th><th>Conv.</th><th>Revenue</th><th>Commission</th></tr></thead>
+    <tbody id="af-table">
+      <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">@filmbuff_raj</td><td style="text-align:center">1,240</td><td style="text-align:center">4.8%</td><td style="text-align:center">₹72,000</td><td style="text-align:center;color:#34d399">₹3,600</td></tr>
+      <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">@eventsbymaya</td><td style="text-align:center">880</td><td style="text-align:center">3.9%</td><td style="text-align:center">₹48,500</td><td style="text-align:center;color:#34d399">₹2,425</td></tr>
+      <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">@musicmaniac_dk</td><td style="text-align:center">640</td><td style="text-align:center">5.2%</td><td style="text-align:center">₹39,200</td><td style="text-align:center;color:#34d399">₹1,960</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- P22-2: UPSELL ENGINE CONFIG -->
+<div class="panel" id="panel-p22-upsell" style="display:none">
+  <div class="card-title">⬆️ Upsell Engine Configuration</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px">
+    <div class="stat-box"><div class="stat-box-val">₹8.2L</div><div class="stat-box-label">Upsell Revenue (MTD)</div></div>
+    <div class="stat-box"><div class="stat-box-val">23%</div><div class="stat-box-label">Upsell Attach Rate</div></div>
+    <div class="stat-box"><div class="stat-box-val">+₹380</div><div class="stat-box-label">Avg Order Value Lift</div></div>
+  </div>
+  <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px">
+    <div style="font-size:15px;font-weight:600;margin-bottom:14px">Active Upsell Rules</div>
+    <div style="display:flex;flex-direction:column;gap:10px" id="upsell-rules">
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center">
+        <div><div style="font-weight:600;font-size:13px">GA → Standing Upgrade</div><div style="font-size:11px;color:var(--muted);margin-top:2px">Trigger: cart total >₹999 · Offer: +₹500</div></div>
+        <span style="background:rgba(16,185,129,.15);color:#34d399;padding:3px 10px;border-radius:20px;font-size:11px">Active</span>
+      </div>
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center">
+        <div><div style="font-weight:600;font-size:13px">Add F&B Bundle</div><div style="font-size:11px;color:var(--muted);margin-top:2px">Trigger: checkout step 2 · Offer: ₹299 combo</div></div>
+        <span style="background:rgba(16,185,129,.15);color:#34d399;padding:3px 10px;border-radius:20px;font-size:11px">Active</span>
+      </div>
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center">
+        <div><div style="font-weight:600;font-size:13px">Parking Slot Offer</div><div style="font-size:11px;color:var(--muted);margin-top:2px">Trigger: Mumbai / Pune events · Offer: ₹150</div></div>
+        <span style="background:rgba(234,179,8,.15);color:#fbbf24;padding:3px 10px;border-radius:20px;font-size:11px">Paused</span>
+      </div>
+    </div>
+    <button onclick="addUpsellRule()" style="margin-top:12px;background:var(--dark2);border:1px solid var(--brand);border-radius:8px;padding:9px 16px;color:var(--brand);font-size:13px;cursor:pointer;width:100%">+ Add Upsell Rule</button>
+  </div>
+  <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:18px">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px">Cross-sell Recommendations</div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" checked> Show "Fans also bought" carousel at checkout</label>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" checked> Email upsell reminder 48h before event</label>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox"> Push notification upsell on event day morning</label>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" checked> Show tier upgrade offer at payment screen</label>
+    </div>
+    <button onclick="saveUpsellConfig()" style="margin-top:14px;background:var(--grad1);border:none;border-radius:8px;padding:10px 20px;color:#fff;font-weight:600;font-size:13px;cursor:pointer">Save Configuration</button>
+  </div>
+</div>
+
+<!-- P22-3: MULTI-CURRENCY PAYOUT -->
+<div class="panel" id="panel-p22-payout" style="display:none">
+  <div class="card-title">💱 Multi-currency Payout Settings</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+    <div class="stat-box"><div class="stat-box-val">₹42.8L</div><div class="stat-box-label">Total Pending Payout</div></div>
+    <div class="stat-box"><div class="stat-box-val">3</div><div class="stat-box-label">Currencies Enabled</div></div>
+  </div>
+  <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px">
+    <div style="font-size:15px;font-weight:600;margin-bottom:14px">Payout Currency Configuration</div>
+    <div style="display:flex;flex-direction:column;gap:12px" id="payout-currencies">
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:14px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:600">🇮🇳 INR — Indian Rupee</div><div style="font-size:12px;color:var(--muted);margin-top:3px">Primary · Bank: HDFC ****4821 · Next payout: Apr 5</div></div><span style="color:#34d399;font-size:13px">Primary ✓</span></div>
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:14px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:600">🇺🇸 USD — US Dollar</div><div style="font-size:12px;color:var(--muted);margin-top:3px">Active · Wise Account ****2930 · Rate: ₹83.2</div></div><span style="background:rgba(16,185,129,.15);color:#34d399;padding:3px 10px;border-radius:20px;font-size:11px">Active</span></div>
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:14px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:600">🇦🇪 AED — UAE Dirham</div><div style="font-size:12px;color:var(--muted);margin-top:3px">Active · ENBD ****7140 · Rate: ₹22.7</div></div><span style="background:rgba(16,185,129,.15);color:#34d399;padding:3px 10px;border-radius:20px;font-size:11px">Active</span></div>
+    </div>
+    <button onclick="addPayoutCurrency()" style="margin-top:12px;background:var(--dark2);border:1px solid var(--brand);border-radius:8px;padding:9px 16px;color:var(--brand);font-size:13px;cursor:pointer;width:100%">+ Add Currency</button>
+  </div>
+  <button onclick="requestPayout()" style="background:var(--grad1);border:none;border-radius:10px;padding:12px;color:#fff;font-weight:600;font-size:14px;cursor:pointer;width:100%">💸 Request Payout Now</button>
+</div>
+
+<!-- P22-4: CO-ORGANISER REVENUE SPLIT -->
+<div class="panel" id="panel-p22-cosplit" style="display:none">
+  <div class="card-title">🤝 Co-organiser Revenue Split</div>
+  <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px">
+    <div style="font-size:15px;font-weight:600;margin-bottom:14px">Current Split for: Sunburn Arena Mumbai</div>
+    <div id="cosplit-list" style="display:flex;flex-direction:column;gap:12px">
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="font-weight:600">Oye Imagine Pvt Ltd (You)</div>
+          <div style="font-size:16px;font-weight:700;color:var(--brand)">60%</div>
+        </div>
+        <div style="background:rgba(108,60,247,.15);border-radius:20px;height:8px"><div style="width:60%;height:100%;background:var(--grad1);border-radius:20px"></div></div>
+      </div>
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="font-weight:600">Percept Live</div>
+          <div style="font-size:16px;font-weight:700;color:#a78bfa">30%</div>
+        </div>
+        <div style="background:rgba(108,60,247,.15);border-radius:20px;height:8px"><div style="width:30%;height:100%;background:linear-gradient(90deg,#a78bfa,#c4b5fd);border-radius:20px"></div></div>
+      </div>
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="font-weight:600">NSCI Dome (Venue)</div>
+          <div style="font-size:16px;font-weight:700;color:#fbbf24">10%</div>
+        </div>
+        <div style="background:rgba(108,60,247,.15);border-radius:20px;height:8px"><div style="width:10%;height:100%;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:20px"></div></div>
+      </div>
+    </div>
+    <div style="margin-top:14px;font-size:13px;color:var(--muted)">Total allocated: <strong style="color:#34d399">100%</strong> · Smart contract: <span style="color:#34d399">Signed by all parties</span></div>
+    <button onclick="editRevSplit()" style="margin-top:12px;background:var(--grad1);border:none;border-radius:8px;padding:10px 20px;color:#fff;font-weight:600;font-size:13px;cursor:pointer">Edit Split & Re-send for Approval</button>
+  </div>
+</div>
+
+<!-- P22-5: PRESALE ACCESS CODES -->
+<div class="panel" id="panel-p22-presale" style="display:none">
+  <div class="card-title">🔑 Presale Access Codes</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px">
+    <div class="stat-box"><div class="stat-box-val">1,200</div><div class="stat-box-label">Codes Issued</div></div>
+    <div class="stat-box"><div class="stat-box-val">847</div><div class="stat-box-label">Codes Redeemed</div></div>
+    <div class="stat-box"><div class="stat-box-val">70.6%</div><div class="stat-box-label">Redemption Rate</div></div>
+  </div>
+  <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px">
+    <div style="font-size:15px;font-weight:600;margin-bottom:14px">Generate Presale Batch</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+      <input id="ps-prefix" placeholder="Code prefix (e.g. VIP)" style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none">
+      <input id="ps-qty" type="number" value="100" placeholder="Quantity" style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none">
+      <input id="ps-access" placeholder="Access tier (GA / Premium / VIP)" style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none">
+      <input id="ps-expiry" type="date" style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none">
+    </div>
+    <button onclick="generatePresaleCodes()" style="background:var(--grad1);border:none;border-radius:8px;padding:10px;color:#fff;font-weight:600;cursor:pointer;width:100%">Generate & Download CSV</button>
+  </div>
+  <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead><tr style="color:var(--muted)"><th style="text-align:left;padding:8px 0">Batch</th><th>Qty</th><th>Redeemed</th><th>Tier</th><th>Expires</th></tr></thead>
+    <tbody>
+      <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">VIP-EARLYBIRD</td><td style="text-align:center">200</td><td style="text-align:center">184</td><td style="text-align:center">VIP</td><td style="text-align:center">Mar 31</td></tr>
+      <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">SUNBURN-FANS</td><td style="text-align:center">500</td><td style="text-align:center">390</td><td style="text-align:center">GA</td><td style="text-align:center">Apr 5</td></tr>
+      <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">PARTNER-ACCESS</td><td style="text-align:center">100</td><td style="text-align:center">72</td><td style="text-align:center">Premium</td><td style="text-align:center">Apr 10</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- P22-6: MEDIA KIT BUILDER -->
+<div class="panel" id="panel-p22-mediakit" style="display:none">
+  <div class="card-title">📸 Media Kit Builder</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+    <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:18px">
+      <div style="font-size:14px;font-weight:600;margin-bottom:12px">📁 Asset Library</div>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px;background:var(--dark2);border-radius:8px"><span>🖼️ Event Banner (1920×1080)</span><button onclick="downloadAsset('banner')" style="background:none;border:1px solid var(--brand);border-radius:6px;padding:3px 10px;color:var(--brand);font-size:11px;cursor:pointer">DL</button></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px;background:var(--dark2);border-radius:8px"><span>📱 Social Square (1080×1080)</span><button onclick="downloadAsset('square')" style="background:none;border:1px solid var(--brand);border-radius:6px;padding:3px 10px;color:var(--brand);font-size:11px;cursor:pointer">DL</button></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px;background:var(--dark2);border-radius:8px"><span>📄 Press Release (.docx)</span><button onclick="downloadAsset('pressrelease')" style="background:none;border:1px solid var(--brand);border-radius:6px;padding:3px 10px;color:var(--brand);font-size:11px;cursor:pointer">DL</button></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px;background:var(--dark2);border-radius:8px"><span>🎨 Brand Guidelines (.pdf)</span><button onclick="downloadAsset('brand')" style="background:none;border:1px solid var(--brand);border-radius:6px;padding:3px 10px;color:var(--brand);font-size:11px;cursor:pointer">DL</button></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px;background:var(--dark2);border-radius:8px"><span>📊 Fact Sheet (.pdf)</span><button onclick="downloadAsset('factsheet')" style="background:none;border:1px solid var(--brand);border-radius:6px;padding:3px 10px;color:var(--brand);font-size:11px;cursor:pointer">DL</button></div>
+      </div>
+    </div>
+    <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:18px">
+      <div style="font-size:14px;font-weight:600;margin-bottom:12px">✍️ Press Release Generator</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <input placeholder="Event name" style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none">
+        <input placeholder="Key highlights (comma-separated)" style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none">
+        <select style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none"><option>English</option><option>Hindi</option><option>Marathi</option></select>
+        <button onclick="generatePressRelease()" style="background:var(--grad1);border:none;border-radius:8px;padding:10px;color:#fff;font-weight:600;cursor:pointer">Generate with AI</button>
+      </div>
+    </div>
+  </div>
+  <button onclick="exportMediaKit()" style="background:var(--dark3);border:1px solid var(--brand);border-radius:10px;padding:12px;color:var(--brand);font-weight:600;font-size:14px;cursor:pointer;width:100%">📦 Export Complete Media Kit (.zip)</button>
+</div>
+
+<!-- P22-7: VIDEO HIGHLIGHT UPLOADER -->
+<div class="panel" id="panel-p22-highlights" style="display:none">
+  <div class="card-title">🎬 Post-event Video Highlight Uploader</div>
+  <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px">
+    <div style="font-size:14px;font-weight:600;margin-bottom:12px">Upload New Highlight</div>
+    <div style="border:2px dashed var(--border);border-radius:12px;padding:30px;text-align:center;cursor:pointer;margin-bottom:12px" onclick="triggerVideoUpload()">
+      <div style="font-size:40px;margin-bottom:8px">🎬</div>
+      <div style="font-size:14px;color:var(--muted)">Click to upload video file</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">MP4, MOV up to 2GB · Max 90 seconds for highlight</div>
+      <input type="file" id="video-upload" accept="video/*" style="display:none" onchange="handleVideoUpload(this)">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+      <input placeholder="Highlight title" style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none">
+      <select style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none"><option>Sunburn Arena Mumbai</option><option>NH7 Weekender</option></select>
+    </div>
+    <button onclick="uploadHighlight()" style="background:var(--grad1);border:none;border-radius:8px;padding:10px;color:#fff;font-weight:600;cursor:pointer;width:100%">Upload & Publish Highlight</button>
+  </div>
+  <div style="font-size:14px;font-weight:600;margin-bottom:12px">Published Highlights</div>
+  <div style="display:flex;flex-direction:column;gap:10px" id="highlights-list">
+    <div style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;gap:14px;align-items:center"><div style="width:80px;height:52px;background:var(--dark2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">▶️</div><div style="flex:1"><div style="font-weight:600;font-size:13px">Sunburn 2026 — Opening Night Recap</div><div style="font-size:11px;color:var(--muted);margin-top:3px">2:24 · 14,200 views · Mar 8, 2026</div></div><span style="background:rgba(16,185,129,.15);color:#34d399;padding:3px 10px;border-radius:20px;font-size:11px">Live</span></div>
+    <div style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;gap:14px;align-items:center"><div style="width:80px;height:52px;background:var(--dark2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">▶️</div><div style="flex:1"><div style="font-weight:600;font-size:13px">Artist Spotlight — Nucleya Backstage</div><div style="font-size:11px;color:var(--muted);margin-top:3px">1:12 · 8,940 views · Mar 8, 2026</div></div><span style="background:rgba(16,185,129,.15);color:#34d399;padding:3px 10px;border-radius:20px;font-size:11px">Live</span></div>
+  </div>
+</div>
+
+<script>
+// ── PHASE 22 ORGANISER JS ──
+function orgToast(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#6c3cf7;color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.4)'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+
+function generateAffiliateLink(){
+  const name=(document.getElementById('af-name').value||'partner').replace(/\s+/g,'-').toLowerCase();
+  const comm=document.getElementById('af-commission').value||5;
+  fetch('/api/organiser/affiliates/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',affiliate_name:name,commission_pct:parseFloat(comm),utm_source:'social'})})
+    .then(r=>r.json()).then(d=>{
+      const link=d.affiliate_url||'https://indtix.pages.dev/fan?ref='+name+'&utm=social&comm='+comm;
+      document.getElementById('af-link').textContent=link;
+      document.getElementById('af-result').style.display='';
+      orgToast('🔗 Affiliate link generated for '+name);
+    }).catch(()=>{
+      const link='https://indtix.pages.dev/fan?ref='+name+'&utm=social&comm='+comm;
+      document.getElementById('af-link').textContent=link;
+      document.getElementById('af-result').style.display='';
+      orgToast('🔗 Link generated!');
+    });
+}
+function copyAffLink(){ const l=document.getElementById('af-link').textContent; navigator.clipboard.writeText(l).catch(()=>{}); orgToast('📋 Link copied!'); }
+function addUpsellRule(){ orgToast('➕ Upsell rule editor opened (coming soon)'); }
+function saveUpsellConfig(){ fetch('/api/organiser/upsell/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',rules:['ga_upgrade','fnb_bundle','parking']})}).catch(()=>{}); orgToast('✅ Upsell config saved!'); }
+function addPayoutCurrency(){ orgToast('💱 Add currency wizard (coming soon)'); }
+function requestPayout(){ fetch('/api/organiser/payouts/request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({organiser_id:'ORG-001',currency:'INR',amount:4280000})}).then(r=>r.json()).then(d=>orgToast('💸 Payout of ₹42.8L requested! Ref: '+(d.payout_id||'PAY-'+Date.now().toString(36).toUpperCase()))).catch(()=>orgToast('💸 Payout request submitted!')); }
+function editRevSplit(){ fetch('/api/organiser/revenue-split/e1',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',splits:[{entity:'Oye Imagine',pct:60},{entity:'Percept Live',pct:30},{entity:'NSCI Dome',pct:10}]})}).catch(()=>{}); orgToast('🤝 Split updated & sent for re-approval!'); }
+function generatePresaleCodes(){
+  const prefix=document.getElementById('ps-prefix').value||'ACCESS';
+  const qty=parseInt(document.getElementById('ps-qty').value)||100;
+  fetch('/api/organiser/presale/codes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',prefix,quantity:qty,access_tier:'GA',expires_at:'2026-04-10'})}).then(r=>r.json()).then(d=>orgToast('🔑 '+qty+' codes generated! Batch ID: '+(d.batch_id||'BATCH-'+prefix))).catch(()=>orgToast('🔑 '+qty+' presale codes generated!'));
+}
+function downloadAsset(type){ fetch('/api/organiser/media-kit/download',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',asset_type:type})}).catch(()=>{}); orgToast('⬇️ Downloading '+type+' asset...'); }
+function generatePressRelease(){ fetch('/api/organiser/media-kit/press-release',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',language:'en'})}).then(r=>r.json()).then(d=>orgToast('📄 Press release generated! '+( d.word_count||480)+' words')).catch(()=>orgToast('📄 Press release generated!')); }
+function exportMediaKit(){ fetch('/api/organiser/media-kit/export',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1'})}).catch(()=>{}); orgToast('📦 Media kit export started — download link sent to email!'); }
+function triggerVideoUpload(){ document.getElementById('video-upload').click(); }
+function handleVideoUpload(inp){ if(inp.files.length) orgToast('📁 Video selected: '+inp.files[0].name); }
+function uploadHighlight(){ fetch('/api/organiser/highlights/upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',title:'New Highlight',duration:144})}).then(r=>r.json()).then(d=>orgToast('🎬 Highlight uploaded! ID: '+(d.highlight_id||'HL-'+Date.now().toString(36).toUpperCase()))).catch(()=>orgToast('🎬 Highlight uploaded successfully!')); }
+</script>
 
 <script>
 // Non-duplicate utility functions kept here

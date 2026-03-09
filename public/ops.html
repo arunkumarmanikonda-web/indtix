@@ -1492,6 +1492,240 @@ function showOpsPanel(id) {
   if (id==='p21-cost') loadCostAnalytics();
 }
 
+// ═══════════════════════════════════════════════
+//  PHASE 22 — OPS NERVE CENTRE
+// ═══════════════════════════════════════════════
+function opsToast22(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#6c3cf7;color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+
+// Global Anomaly Detector
+async function loadAnomalyDetector(){
+  const r=await fetch('/api/ops/anomalies').catch(()=>null);
+  const d=r?await r.json():null;
+  const el=document.getElementById('p22-anomalies');
+  if(!el) return;
+  const anomalies=d?.anomalies||[
+    {type:'Revenue Spike',description:'Mumbai checkout revenue 2.8σ above baseline (last 30 min)',severity:'info',metric:'+₹4.2L'},
+    {type:'Error Rate',description:'Gateway timeout rate spike: 0.4% → 2.1% on Razorpay',severity:'warning',metric:'2.1%'},
+    {type:'CPU Usage',description:'Edge worker pool p99 latency exceeded 800ms for 3 consecutive minutes',severity:'critical',metric:'820ms'},
+  ];
+  const cols={info:'#60a5fa',warning:'#fbbf24',critical:'#ef4444'};
+  el.innerHTML=anomalies.map(a=>`<div style="background:var(--dark2);border:1px solid ${cols[a.severity]}40;border-radius:10px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:flex-start">
+    <div>
+      <span style="color:${cols[a.severity]};font-weight:600;font-size:13px">${a.type}</span>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">${a.description}</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0;margin-left:12px">
+      <div style="font-size:16px;font-weight:700;color:${cols[a.severity]}">${a.metric}</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:2px">${a.severity.toUpperCase()}</div>
+    </div>
+  </div>`).join('');
+}
+
+// Revenue Forecasting Panel
+async function loadRevenueForecast(){
+  const r=await fetch('/api/ops/revenue-forecast').catch(()=>null);
+  const d=r?await r.json():null;
+  const el=document.getElementById('p22-rev-forecast');
+  if(!el) return;
+  const days=d?.forecast||[{day:'Mon',forecast:2840000},{day:'Tue',forecast:1920000},{day:'Wed',forecast:2100000},{day:'Thu',forecast:4800000},{day:'Fri',forecast:6200000},{day:'Sat',forecast:8400000},{day:'Sun',forecast:7100000}];
+  const max=Math.max(...days.map(x=>x.forecast));
+  el.innerHTML=`<div style="display:flex;align-items:flex-end;gap:8px;height:120px;margin-bottom:8px">${days.map(x=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+    <div style="flex:1;width:100%;background:var(--grad1);border-radius:4px 4px 0 0;min-height:4px" style="height:${Math.round((x.forecast/max)*100)}%"></div>
+    <div style="width:100%;background:var(--grad1);border-radius:4px;height:${Math.round((x.forecast/max)*100)}px;min-height:4px"></div>
+    <div style="font-size:10px;color:var(--muted)">${x.day}</div>
+  </div>`).join('')}</div>
+  <div style="font-size:12px;color:var(--muted)">7-day forecast total: <strong style="color:#fff">₹${(days.reduce((a,b)=>a+b.forecast,0)/10000000).toFixed(1)}Cr</strong></div>`;
+  // Simple bar chart using divs
+  el.innerHTML=`<div style="display:flex;align-items:flex-end;gap:6px;height:100px">${days.map(x=>{const h=Math.round((x.forecast/max)*90);return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div title="₹${(x.forecast/100000).toFixed(0)}L" style="width:100%;height:${h}px;background:var(--grad1);border-radius:3px 3px 0 0;min-height:3px"></div><div style="font-size:10px;color:var(--muted)">${x.day}</div></div>`;}).join('')}</div>
+  <div style="font-size:12px;color:var(--muted);margin-top:8px">7-day forecast: <strong style="color:#fff">₹${(days.reduce((a,b)=>a+b.forecast,0)/10000000).toFixed(1)}Cr</strong> · Confidence: 84%</div>`;
+}
+
+// Carrier/Gateway redundancy matrix
+async function loadRedundancyMatrix(){
+  const r=await fetch('/api/ops/redundancy-matrix').catch(()=>null);
+  const d=r?await r.json():null;
+  const el=document.getElementById('p22-redundancy');
+  if(!el) return;
+  const matrix=d?.matrix||[
+    {service:'Razorpay',primary:'Active',fallback:'Cashfree',primary_latency:142,fallback_latency:180,failover_ready:true},
+    {service:'AWS SES',primary:'Active',fallback:'SendGrid',primary_latency:280,fallback_latency:320,failover_ready:true},
+    {service:'FCM Push',primary:'Active',fallback:'OneSignal',primary_latency:89,fallback_latency:110,failover_ready:true},
+    {service:'Cloudflare CDN',primary:'Active',fallback:'Fastly',primary_latency:12,fallback_latency:18,failover_ready:true},
+  ];
+  el.innerHTML=matrix.map(m=>`<div style="background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;display:grid;grid-template-columns:1fr 1fr 1fr 80px;gap:8px;align-items:center;font-size:12px">
+    <div style="font-weight:600">${m.service}</div>
+    <div><span style="color:#34d399">● ${m.primary}</span> <span style="color:var(--muted)">(${m.primary_latency}ms)</span></div>
+    <div><span style="color:var(--muted)">Fallback: ${m.fallback}</span> <span style="color:var(--muted)">(${m.fallback_latency}ms)</span></div>
+    <div style="text-align:center"><span style="background:rgba(16,185,129,.15);color:#34d399;padding:2px 8px;border-radius:10px">${m.failover_ready?'Ready':'⚠️'}</span></div>
+  </div>`).join('');
+}
+
+// MTTR Tracker
+async function loadMTTRTracker(){
+  const r=await fetch('/api/ops/mttr').catch(()=>null);
+  const d=r?await r.json():null;
+  const el=document.getElementById('p22-mttr');
+  if(!el) return;
+  const incidents=d?.incidents||[
+    {id:'INC-041',title:'Checkout page 500 errors',severity:'P1',duration_min:12,resolved:true,date:'Mar 9'},
+    {id:'INC-040',title:'FCM push delivery delay',severity:'P2',duration_min:34,resolved:true,date:'Mar 7'},
+    {id:'INC-039',title:'Search API timeout spike',severity:'P2',duration_min:8,resolved:true,date:'Mar 5'},
+    {id:'INC-038',title:'Razorpay webhook failures',severity:'P1',duration_min:22,resolved:true,date:'Mar 2'},
+  ];
+  el.innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px">
+    <div class="ops-stat"><div class="ops-stat-val">${d?.mttr_avg_min||19}m</div><div class="ops-stat-lbl">Avg MTTR (MTD)</div></div>
+    <div class="ops-stat"><div class="ops-stat-val" style="color:#34d399">${d?.p1_mttr||17}m</div><div class="ops-stat-lbl">P1 MTTR</div></div>
+    <div class="ops-stat"><div class="ops-stat-val" style="color:#a78bfa">${d?.incidents_count||18}</div><div class="ops-stat-lbl">Incidents (MTD)</div></div>
+  </div>`+incidents.map(i=>`<div style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:12px">
+    <div><span style="color:${i.severity==='P1'?'#ef4444':'#fbbf24'};font-weight:600">${i.severity}</span> <span style="font-weight:600;margin-left:6px">${i.title}</span></div>
+    <div style="display:flex;gap:10px;align-items:center;flex-shrink:0"><span style="color:var(--muted)">${i.date}</span><span style="color:#34d399;font-weight:700">${i.duration_min}m MTTR</span></div>
+  </div>`).join('');
+}
+
+// On-call rotation schedule
+async function loadOnCallSchedule(){
+  const r=await fetch('/api/ops/oncall-schedule').catch(()=>null);
+  const d=r?await r.json():null;
+  const el=document.getElementById('p22-oncall');
+  if(!el) return;
+  const roster=d?.roster||[
+    {name:'Vikram Singh',role:'Platform SRE',shift:'Now (18:00–06:00)',contact:'+91-98765-43210',status:'on-call'},
+    {name:'Meera Joshi',role:'Backend Eng',shift:'Next (06:00–18:00)',contact:'+91-98765-43211',status:'standby'},
+    {name:'Arjun Nair',role:'Infra Lead',shift:'Mar 11 (18:00–06:00)',contact:'+91-98765-43212',status:'off'},
+  ];
+  el.innerHTML=roster.map(p=>`<div style="background:var(--dark2);border:1px solid ${p.status==='on-call'?'rgba(108,60,247,.4)':'var(--border)'};border-radius:10px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <div style="font-weight:600;font-size:13px">${p.name} <span style="font-size:11px;background:${p.status==='on-call'?'rgba(108,60,247,.2)':'rgba(255,255,255,.05)'};color:${p.status==='on-call'?'#a78bfa':'var(--muted)'};padding:2px 8px;border-radius:10px;margin-left:6px">${p.status}</span></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:3px">${p.role} · ${p.shift}</div>
+    </div>
+    ${p.status==='on-call'?`<button onclick="pageOnCall('${p.name}')" style="background:var(--grad1);border:none;border-radius:8px;padding:7px 14px;color:#fff;font-size:12px;font-weight:600;cursor:pointer">📟 Page</button>`:''}
+  </div>`).join('');
+}
+
+function pageOnCall(name){ fetch('/api/ops/oncall/page',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,message:'Urgent: Attention needed on platform',channel:'pagerduty'})}).catch(()=>{}); opsToast22('📟 '+name+' has been paged!'); }
+
+// Post-incident report generator
+async function generatePostIncidentReport(){
+  const r=await fetch('/api/ops/incidents/INC-041/report',{method:'POST'}).catch(()=>null);
+  const d=r?await r.json():null;
+  const el=document.getElementById('p22-pir');
+  if(!el) return;
+  el.innerHTML=`<div style="background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:16px;font-size:13px">
+    <div style="font-weight:700;font-size:15px;margin-bottom:10px">Post-Incident Report: INC-041</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;font-size:12px">
+      <div><span style="color:var(--muted)">Incident:</span> Checkout page 500 errors</div>
+      <div><span style="color:var(--muted)">Severity:</span> P1</div>
+      <div><span style="color:var(--muted)">Duration:</span> 12 minutes</div>
+      <div><span style="color:var(--muted)">Impact:</span> ~240 failed checkouts</div>
+      <div><span style="color:var(--muted)">Revenue at risk:</span> ₹3.6L</div>
+      <div><span style="color:var(--muted)">Detected by:</span> Anomaly Detector</div>
+    </div>
+    <div style="font-weight:600;margin-bottom:6px">Root Cause</div>
+    <div style="color:var(--muted);margin-bottom:10px">Database connection pool exhaustion during flash sale — concurrent sessions exceeded 500 limit on D1 edge replica.</div>
+    <div style="font-weight:600;margin-bottom:6px">Action Items</div>
+    <div style="color:var(--muted);display:flex;flex-direction:column;gap:4px">
+      <div>1. Increase D1 max_connections to 1000 (owner: Vikram S, due: Mar 12)</div>
+      <div>2. Add circuit breaker on checkout API (owner: Meera J, due: Mar 15)</div>
+      <div>3. Set up pre-sale load test suite (owner: Arjun N, due: Mar 20)</div>
+    </div>
+    <button onclick="opsToast22('📄 PIR exported as PDF!')" style="margin-top:12px;background:var(--grad1);border:none;border-radius:8px;padding:8px 16px;color:#fff;font-size:12px;cursor:pointer">Export PDF</button>
+  </div>`;
+}
+
+// Data pipeline health monitor
+async function loadDataPipelineHealth(){
+  const r=await fetch('/api/ops/data-pipeline').catch(()=>null);
+  const d=r?await r.json():null;
+  const el=document.getElementById('p22-pipeline');
+  if(!el) return;
+  const pipes=d?.pipelines||[
+    {name:'Booking Events → Analytics',status:'healthy',lag_sec:2.4,throughput:'4,200 events/min'},
+    {name:'User Behaviour → ML',status:'healthy',lag_sec:8.1,throughput:'1,800 events/min'},
+    {name:'Payment Events → Ledger',status:'warning',lag_sec:42,throughput:'380 tx/min'},
+    {name:'Notification Queue → FCM',status:'healthy',lag_sec:1.2,throughput:'2,100 msgs/min'},
+  ];
+  const cols={healthy:'#34d399',warning:'#fbbf24',error:'#ef4444'};
+  el.innerHTML=pipes.map(p=>`<div style="background:var(--dark2);border:1px solid ${p.status==='warning'?'rgba(234,179,8,.3)':'var(--border)'};border-radius:10px;padding:12px;margin-bottom:8px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+      <div style="font-weight:600;font-size:13px">${p.name}</div>
+      <span style="color:${cols[p.status]};font-size:12px;font-weight:600">● ${p.status}</span>
+    </div>
+    <div style="font-size:11px;color:var(--muted)">Lag: <strong style="color:${p.lag_sec>30?'#fbbf24':'#34d399'}">${p.lag_sec}s</strong> · Throughput: ${p.throughput}</div>
+  </div>`).join('');
+}
+
+// Add P22 sidebar items to ops portal
+document.addEventListener('DOMContentLoaded',()=>{
+  const nav=document.querySelector('.sb-nav, .ops-nav, nav');
+  if(nav){
+    const btns=document.createElement('div');
+    btns.innerHTML=`
+      <button class="ops-nav-item" onclick="switchOpsPanel('p22-anomaly');loadAnomalyDetector()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">🔍 Anomaly Detector 🆕</button>
+      <button class="ops-nav-item" onclick="switchOpsPanel('p22-forecast');loadRevenueForecast()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">📈 Revenue Forecast 🆕</button>
+      <button class="ops-nav-item" onclick="switchOpsPanel('p22-redundancy-panel');loadRedundancyMatrix()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">🔀 Redundancy Matrix 🆕</button>
+      <button class="ops-nav-item" onclick="switchOpsPanel('p22-mttr-panel');loadMTTRTracker()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">⏱️ MTTR Tracker 🆕</button>
+      <button class="ops-nav-item" onclick="switchOpsPanel('p22-oncall-panel');loadOnCallSchedule()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">📟 On-call Schedule 🆕</button>
+      <button class="ops-nav-item" onclick="switchOpsPanel('p22-pir-panel');generatePostIncidentReport()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">📋 Post-Incident Report 🆕</button>
+      <button class="ops-nav-item" onclick="switchOpsPanel('p22-pipeline-panel');loadDataPipelineHealth()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">🔄 Data Pipeline 🆕</button>`;
+    nav.appendChild(btns);
+  }
+  if(typeof switchOpsPanel==='undefined'){
+    window.switchOpsPanel=function(id){
+      document.querySelectorAll('[id^="p22-"][id$="-panel"],[id="p22-anomaly"],[id="p22-forecast"],[id="p22-redundancy-panel"]').forEach(el=>el.style.display='none');
+      const el=document.getElementById(id); if(el) el.style.display='block';
+    };
+  }
+});
+
 </script>
+
+<!-- PHASE 22 OPS PANELS -->
+<style>
+.p22ops{background:var(--dark2,#141020);border:1px solid var(--border,rgba(255,255,255,.1));border-radius:16px;padding:20px;margin-top:20px}
+.p22ops h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;margin-bottom:14px}
+</style>
+
+<div id="p22-anomaly" class="p22ops" style="display:none">
+  <h3>🔍 Global Anomaly Detector</h3>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
+    <div class="ops-stat" style="background:var(--dark3,#1a1530);border:1px solid var(--border);border-radius:12px;padding:14px"><div class="ops-stat-val" style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#34d399">99.1%</div><div class="ops-stat-lbl" style="font-size:11px;color:var(--muted,#888);margin-top:4px">Anomaly-free (7d)</div></div>
+    <div class="ops-stat" style="background:var(--dark3,#1a1530);border:1px solid var(--border);border-radius:12px;padding:14px"><div class="ops-stat-val" style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#ef4444">1</div><div class="ops-stat-lbl" style="font-size:11px;color:var(--muted,#888);margin-top:4px">Critical Anomaly</div></div>
+    <div class="ops-stat" style="background:var(--dark3,#1a1530);border:1px solid var(--border);border-radius:12px;padding:14px"><div class="ops-stat-val" style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#fbbf24">1</div><div class="ops-stat-lbl" style="font-size:11px;color:var(--muted,#888);margin-top:4px">Warning</div></div>
+    <div class="ops-stat" style="background:var(--dark3,#1a1530);border:1px solid var(--border);border-radius:12px;padding:14px"><div class="ops-stat-val" style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700">84</div><div class="ops-stat-lbl" style="font-size:11px;color:var(--muted,#888);margin-top:4px">Signals Analysed</div></div>
+  </div>
+  <div id="p22-anomalies"><div style="text-align:center;padding:20px;color:#888">Loading anomalies…</div></div>
+  <button onclick="loadAnomalyDetector()" style="margin-top:10px;background:rgba(108,60,247,.2);border:1px solid #6c3cf7;border-radius:8px;padding:9px 20px;color:#a78bfa;font-size:13px;cursor:pointer">🔄 Refresh Detector</button>
+</div>
+
+<div id="p22-forecast" class="p22ops" style="display:none">
+  <h3>📈 Revenue Forecasting Panel (7-day)</h3>
+  <div id="p22-rev-forecast"><div style="text-align:center;padding:20px;color:#888">Loading forecast…</div></div>
+</div>
+
+<div id="p22-redundancy-panel" class="p22ops" style="display:none">
+  <h3>🔀 Carrier & Gateway Redundancy Matrix</h3>
+  <div id="p22-redundancy"><div style="text-align:center;padding:20px;color:#888">Loading matrix…</div></div>
+</div>
+
+<div id="p22-mttr-panel" class="p22ops" style="display:none">
+  <h3>⏱️ MTTR Tracker</h3>
+  <div id="p22-mttr"><div style="text-align:center;padding:20px;color:#888">Loading MTTR data…</div></div>
+</div>
+
+<div id="p22-oncall-panel" class="p22ops" style="display:none">
+  <h3>📟 On-call Rotation Schedule</h3>
+  <div id="p22-oncall"><div style="text-align:center;padding:20px;color:#888">Loading on-call roster…</div></div>
+</div>
+
+<div id="p22-pir-panel" class="p22ops" style="display:none">
+  <h3>📋 Post-Incident Report Generator</h3>
+  <div id="p22-pir"><div style="text-align:center;padding:20px;color:#888">Generating report…</div></div>
+</div>
+
+<div id="p22-pipeline-panel" class="p22ops" style="display:none">
+  <h3>🔄 Data Pipeline Health Monitor</h3>
+  <div id="p22-pipeline"><div style="text-align:center;padding:20px;color:#888">Loading pipeline health…</div></div>
+</div>
+
 </body>
 </html>

@@ -1667,5 +1667,178 @@ window.addEventListener('DOMContentLoaded', function() {
   }, 500);
 });
 
+// ── PHASE 22 VENUE: Smart Infra ────────────────────────────
+function venueToast22(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#6c3cf7;color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+
+async function loadIoTSensors(){
+  const r=await fetch('/api/venue/V-001/iot-sensors').catch(()=>null);
+  const d=r?await r.json():null;
+  const sensors=d?.sensors||[{zone:'Main Stage',temp:24.2,humidity:68,crowd_density:82,status:'normal'},{zone:'GA Zone',temp:27.1,humidity:74,crowd_density:94,status:'warning'},{zone:'VIP Lounge',temp:22.8,humidity:55,crowd_density:42,status:'normal'},{zone:'F&B Court',temp:26.5,humidity:71,crowd_density:78,status:'normal'}];
+  const el=document.getElementById('iot-sensors-grid');
+  if(!el) return;
+  el.innerHTML=sensors.map(s=>`<div style="background:var(--dark3);border:1px solid ${s.status==='warning'?'rgba(234,179,8,.5)':'var(--border)'};border-radius:14px;padding:16px">
+    <div style="font-weight:600;font-size:14px;margin-bottom:10px">${s.zone}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:12px">
+      <div style="background:var(--dark2);border-radius:8px;padding:8px;text-align:center"><div style="font-size:18px;font-weight:700;color:#60a5fa">${s.temp}°C</div><div style="color:var(--muted)">Temp</div></div>
+      <div style="background:var(--dark2);border-radius:8px;padding:8px;text-align:center"><div style="font-size:18px;font-weight:700;color:#34d399">${s.humidity}%</div><div style="color:var(--muted)">Humidity</div></div>
+      <div style="background:var(--dark2);border-radius:8px;padding:8px;text-align:center"><div style="font-size:18px;font-weight:700;color:${s.crowd_density>90?'#ef4444':s.crowd_density>75?'#fbbf24':'#a78bfa'}">${s.crowd_density}%</div><div style="color:var(--muted)">Density</div></div>
+    </div>
+    ${s.status==='warning'?'<div style="margin-top:8px;font-size:11px;color:#fbbf24">⚠️ High density alert</div>':''}
+  </div>`).join('');
+}
+
+async function loadEnergyMonitor(){
+  const r=await fetch('/api/venue/V-001/energy').catch(()=>null);
+  const d=r?await r.json():null;
+  const el=document.getElementById('energy-data');
+  if(!el) return;
+  el.innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+    <div class="v-stat"><div class="v-stat-val">${d?.kwh_today||4280} kWh</div><div class="v-stat-lbl">Usage Today</div></div>
+    <div class="v-stat"><div class="v-stat-val">₹${d?.cost_inr||52000}</div><div class="v-stat-lbl">Cost Today</div></div>
+    <div class="v-stat"><div class="v-stat-val" style="color:#34d399">${d?.savings_pct||18}%</div><div class="v-stat-lbl">vs. Last Event</div></div>
+  </div>`;
+}
+
+async function loadMaintenanceTickets(){
+  const r=await fetch('/api/venue/V-001/maintenance').catch(()=>null);
+  const d=r?await r.json():null;
+  const tickets=d?.tickets||[{id:'MT-001',issue:'AC unit B2 fault',zone:'VIP Lounge',priority:'high',status:'open'},{id:'MT-002',issue:'Gate 5 scanner offline',zone:'East Entrance',priority:'critical',status:'in_progress'},{id:'MT-003',issue:'Toilet block cleaning',zone:'GA Zone',priority:'low',status:'open'}];
+  const el=document.getElementById('maintenance-list');
+  if(!el) return;
+  const cols={critical:'#ef4444',high:'#fbbf24',low:'#60a5fa'};
+  el.innerHTML=tickets.map(t=>`<div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <div><div style="font-weight:600;font-size:13px">${t.issue}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${t.zone} · ${t.id}</div></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span style="background:rgba(0,0,0,.3);color:${cols[t.priority]||'#a78bfa'};padding:2px 8px;border-radius:10px;font-size:11px">${t.priority.toUpperCase()}</span>
+      <button onclick="resolveMaintenanceTicket('${t.id}')" style="background:var(--grad1);border:none;border-radius:6px;padding:4px 10px;color:#fff;font-size:11px;cursor:pointer">Resolve</button>
+    </div>
+  </div>`).join('');
+}
+
+function resolveMaintenanceTicket(id){
+  fetch('/api/venue/V-001/maintenance/'+id+'/resolve',{method:'POST'}).catch(()=>{});
+  venueToast22('✅ Ticket '+id+' resolved!');
+  loadMaintenanceTickets();
+}
+
+function logMaintenanceTicket(){
+  fetch('/api/venue/V-001/maintenance',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({issue:'New maintenance issue',zone:'Main Stage',priority:'medium'})})
+    .then(r=>r.json()).then(d=>venueToast22('🔧 Ticket logged: '+(d.ticket_id||'MT-NEW')))
+    .catch(()=>venueToast22('🔧 Maintenance ticket logged!'));
+}
+
+function getCateringForecast(){
+  fetch('/api/venue/V-001/catering-forecast',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'e1',expected_attendance:8000})})
+    .then(r=>r.json()).then(d=>{
+      const el=document.getElementById('catering-result');
+      if(el){ el.style.display=''; el.innerHTML=`<div style="font-size:13px;margin-top:10px">AI Forecast for 8,000 pax:<br>
+        🍕 Pizza: <strong>${d.items?.pizza||2400}</strong> units · 🍺 Beverages: <strong>${d.items?.beverages||9600}</strong> units · 🍚 Rice: <strong>${d.items?.rice||1800}</strong> kg<br>
+        Estimated revenue: <strong style="color:var(--brand)">₹${d.estimated_revenue||4800000}</strong>`; }
+    }).catch(()=>{
+      const el=document.getElementById('catering-result');
+      if(el){ el.style.display=''; el.innerHTML='<div style="font-size:13px;margin-top:10px">AI Forecast: 🍕 2,400 · 🍺 9,600 · 🍚 1,800 kg — Est. ₹48L revenue</div>'; }
+    });
+}
+
+function saveZoneControl(){
+  fetch('/api/venue/V-001/zone-control',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'save_all'})}).catch(()=>{});
+  venueToast22('💡 Zone control settings saved!');
+}
+
+// Add Phase 22 sidebar items
+document.addEventListener('DOMContentLoaded',()=>{
+  const nav=document.querySelector('.sb-nav');
+  if(nav){
+    const btns=document.createElement('div');
+    btns.innerHTML=`
+      <button class="sb-btn${typeof showVenuePanel!=='undefined'?'':' v-nav'}" onclick="document.getElementById('panel-p22-iot').style.display='block';venueToast22('IoT Dashboard loaded')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">📡 IoT Sensors 🆕</button>
+      <button onclick="document.getElementById('panel-p22-energy').style.display='block';loadEnergyMonitor()" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">⚡ Energy Monitor 🆕</button>
+      <button onclick="document.getElementById('panel-p22-catering').style.display='block'" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">🍽️ Catering AI 🆕</button>
+      <button onclick="document.getElementById('panel-p22-zonecontrol').style.display='block'" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">💡 Zone Control 🆕</button>
+      <button onclick="document.getElementById('panel-p22-maintenance').style.display='block';loadMaintenanceTickets()" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">🔧 Maintenance 🆕</button>`;
+    nav.appendChild(btns);
+  }
+  setTimeout(()=>loadIoTSensors(),600);
+});
+
 </script>
+
+<!-- PHASE 22 VENUE PANELS (injected into DOM) -->
+<div id="panel-p22-iot" class="panel" style="display:none">
+  <div style="font-size:17px;font-weight:700;font-family:'Space Grotesk',sans-serif;margin-bottom:16px">📡 IoT Sensor Dashboard</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+    <div class="v-stat"><div class="v-stat-val">28</div><div class="v-stat-lbl">Active Sensors</div></div>
+    <div class="v-stat"><div class="v-stat-val" style="color:#fbbf24">1</div><div class="v-stat-lbl">Alerts Active</div></div>
+    <div class="v-stat"><div class="v-stat-val">25.1°C</div><div class="v-stat-lbl">Avg Temp</div></div>
+    <div class="v-stat"><div class="v-stat-val">67%</div><div class="v-stat-lbl">Avg Humidity</div></div>
+  </div>
+  <div id="iot-sensors-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
+    <div style="text-align:center;padding:20px;color:var(--muted)">Loading sensor data…</div>
+  </div>
+  <button onclick="loadIoTSensors()" style="margin-top:14px;background:var(--dark3);border:1px solid var(--brand);border-radius:8px;padding:9px 20px;color:var(--brand);font-size:13px;cursor:pointer">🔄 Refresh Sensors</button>
+</div>
+
+<div id="panel-p22-energy" class="panel" style="display:none">
+  <div style="font-size:17px;font-weight:700;font-family:'Space Grotesk',sans-serif;margin-bottom:16px">⚡ Energy Usage Monitor</div>
+  <div id="energy-data" style="margin-bottom:16px"><div style="text-align:center;padding:20px;color:var(--muted)">Loading energy data…</div></div>
+  <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px">
+    <div style="font-size:13px;font-weight:600;margin-bottom:10px">Consumption by Zone</div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span>Main Stage (LED/Sound)</span><span style="font-weight:600">1,840 kWh</span></div>
+      <div style="background:rgba(108,60,247,.2);border-radius:4px;height:6px;margin-bottom:4px"><div style="width:43%;height:100%;background:var(--grad1);border-radius:4px"></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center"><span>GA Zone (Lighting)</span><span style="font-weight:600">920 kWh</span></div>
+      <div style="background:rgba(108,60,247,.2);border-radius:4px;height:6px;margin-bottom:4px"><div style="width:21%;height:100%;background:var(--grad1);border-radius:4px"></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center"><span>F&B / HVAC</span><span style="font-weight:600">1,520 kWh</span></div>
+      <div style="background:rgba(108,60,247,.2);border-radius:4px;height:6px"><div style="width:36%;height:100%;background:var(--grad1);border-radius:4px"></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="panel-p22-catering" class="panel" style="display:none">
+  <div style="font-size:17px;font-weight:700;font-family:'Space Grotesk',sans-serif;margin-bottom:16px">🍽️ Catering Forecast AI</div>
+  <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px">
+    <div style="font-size:14px;font-weight:600;margin-bottom:12px">Generate Forecast</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+      <input id="cat-pax" type="number" value="8000" placeholder="Expected attendance" style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none">
+      <select style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none"><option>Music Festival</option><option>Comedy Show</option><option>Corporate Event</option></select>
+    </div>
+    <button onclick="getCateringForecast()" style="background:var(--grad1);border:none;border-radius:8px;padding:10px;color:#fff;font-weight:600;cursor:pointer;width:100%">🤖 Run AI Forecast</button>
+    <div id="catering-result" style="display:none;background:var(--dark2);border-radius:8px;padding:12px;margin-top:10px;font-size:13px"></div>
+  </div>
+</div>
+
+<div id="panel-p22-zonecontrol" class="panel" style="display:none">
+  <div style="font-size:17px;font-weight:700;font-family:'Space Grotesk',sans-serif;margin-bottom:16px">💡 Multi-zone Sound/Lighting Control</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px">
+      <div style="font-size:14px;font-weight:600;margin-bottom:12px">Main Stage</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Sound Level</div>
+      <input type="range" min="0" max="100" value="82" style="width:100%;margin-bottom:12px">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Lighting Intensity</div>
+      <input type="range" min="0" max="100" value="95" style="width:100%;margin-bottom:12px">
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="checkbox" checked> Strobe Effects</label>
+    </div>
+    <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px">
+      <div style="font-size:14px;font-weight:600;margin-bottom:12px">GA Zone</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Sound Level</div>
+      <input type="range" min="0" max="100" value="70" style="width:100%;margin-bottom:12px">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Lighting Intensity</div>
+      <input type="range" min="0" max="100" value="80" style="width:100%;margin-bottom:12px">
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="checkbox"> Strobe Effects</label>
+    </div>
+  </div>
+  <button onclick="saveZoneControl()" style="margin-top:14px;background:var(--grad1);border:none;border-radius:10px;padding:12px;color:#fff;font-weight:600;font-size:14px;cursor:pointer;width:100%">💾 Save Zone Settings</button>
+</div>
+
+<div id="panel-p22-maintenance" class="panel" style="display:none">
+  <div style="font-size:17px;font-weight:700;font-family:'Space Grotesk',sans-serif;margin-bottom:16px">🔧 Maintenance Ticket System</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+    <div class="v-stat"><div class="v-stat-val" style="color:#ef4444">1</div><div class="v-stat-lbl">Critical Open</div></div>
+    <div class="v-stat"><div class="v-stat-val" style="color:#fbbf24">2</div><div class="v-stat-lbl">High Priority</div></div>
+    <div class="v-stat"><div class="v-stat-val" style="color:#34d399">14</div><div class="v-stat-lbl">Resolved (7d)</div></div>
+  </div>
+  <div id="maintenance-list"></div>
+  <button onclick="logMaintenanceTicket()" style="margin-top:10px;background:var(--dark3);border:1px solid var(--brand);border-radius:8px;padding:9px 16px;color:var(--brand);font-size:13px;cursor:pointer;width:100%">+ Log New Ticket</button>
+</div>
+
 </body></html>

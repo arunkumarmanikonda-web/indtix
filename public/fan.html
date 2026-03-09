@@ -369,6 +369,71 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
 .seat-section.vip-section{background:rgba(234,179,8,0.15);border-color:rgba(234,179,8,0.3)}
 .seat-section.acc-section{background:rgba(168,85,247,0.15);border-color:rgba(168,85,247,0.3)}
 @media(max-width:768px){.notif-panel{width:calc(100vw - 32px);right:16px}}
+
+/* ── PHASE 22 – SUPER-FAN SOCIAL LAYER ── */
+.p22-modal{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:9200;display:flex;align-items:center;justify-content:center;padding:16px}
+.p22-box{background:var(--dark2);border:1px solid var(--border);border-radius:20px;width:100%;max-width:620px;max-height:88vh;overflow-y:auto;padding:28px}
+.p22-box h2{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin-bottom:18px;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.p22-tab-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.p22-tab{padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:13px;cursor:pointer;transition:all .2s}
+.p22-tab.active,.p22-tab:hover{border-color:var(--brand);color:#fff;background:rgba(108,60,247,.15)}
+/* Fan Club card */
+.fc-card{background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px}
+.fc-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;background:var(--grad1);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.fc-meta{flex:1}
+.fc-name{font-weight:600;font-size:15px}
+.fc-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.fc-badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600}
+.fc-badge.member{background:rgba(108,60,247,.2);color:#a78bfa}
+.fc-badge.open{background:rgba(16,185,129,.15);color:#34d399}
+/* Chat bubble */
+.chat-wrap{height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:4px 0;margin-bottom:12px}
+.chat-msg{display:flex;gap:10px;align-items:flex-start}
+.chat-msg.mine{flex-direction:row-reverse}
+.chat-avatar{width:30px;height:30px;border-radius:50%;background:var(--grad1);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.chat-bubble{background:var(--dark3);border-radius:12px;padding:8px 12px;font-size:13px;max-width:72%}
+.chat-msg.mine .chat-bubble{background:rgba(108,60,247,.25)}
+.chat-sender{font-size:10px;color:var(--muted);margin-bottom:3px}
+/* Poll */
+.poll-opt{background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px 16px;cursor:pointer;margin-bottom:8px;transition:all .2s;position:relative;overflow:hidden}
+.poll-opt:hover{border-color:var(--brand)}
+.poll-bar{position:absolute;left:0;top:0;height:100%;background:rgba(108,60,247,.18);transition:width .6s}
+.poll-label{position:relative;z-index:1;display:flex;justify-content:space-between;font-size:14px}
+/* Merch */
+.merch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.merch-card{background:var(--dark3);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .2s}
+.merch-card:hover{border-color:var(--brand);transform:translateY(-2px)}
+.merch-img{width:100%;height:110px;display:flex;align-items:center;justify-content:center;font-size:42px;background:var(--dark2)}
+.merch-info{padding:10px}
+.merch-name{font-size:13px;font-weight:600}
+.merch-price{font-size:12px;color:var(--brand);margin-top:3px}
+/* AR Wallet */
+.ar-ticket{background:linear-gradient(135deg,#1e1040,#2d1b69);border:2px solid var(--brand);border-radius:18px;padding:22px;position:relative;overflow:hidden;margin-bottom:14px}
+.ar-ticket::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%236c3cf7' fill-opacity='0.07'%3E%3Cpath d='M20 0L40 20L20 40L0 20z'/%3E%3C/g%3E%3C/svg%3E")}
+.ar-ticket-title{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;position:relative}
+.ar-ticket-meta{font-size:12px;color:#c4b5fd;margin-top:6px;position:relative}
+.ar-qr{width:90px;height:90px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:44px;position:absolute;right:20px;top:50%;transform:translateY(-50%)}
+/* Countdown */
+.countdown-wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;margin:16px 0}
+.countdown-unit{background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:14px 8px}
+.countdown-val{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.countdown-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+/* XP / Gamification */
+.xp-bar-wrap{background:var(--dark3);border-radius:20px;height:10px;margin:8px 0;overflow:hidden}
+.xp-bar{height:100%;background:var(--grad1);border-radius:20px;transition:width 1s ease}
+.badge-shelf{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.badge-chip{background:var(--dark3);border:1px solid var(--border);border-radius:20px;padding:5px 12px;font-size:12px;display:flex;align-items:center;gap:5px}
+/* Artist follow */
+.artist-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.artist-row:last-child{border-bottom:none}
+.artist-thumb{width:44px;height:44px;border-radius:50%;background:var(--grad1);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.artist-info{flex:1}
+.artist-name{font-weight:600;font-size:14px}
+.artist-genre{font-size:12px;color:var(--muted)}
+.follow-btn{padding:6px 16px;border-radius:20px;border:1px solid var(--brand);background:transparent;color:var(--brand);font-size:12px;cursor:pointer;transition:all .2s}
+.follow-btn.following{background:var(--brand);color:#fff}
+/* Geo push banner */
+.geo-banner{background:linear-gradient(90deg,rgba(108,60,247,.25),rgba(236,72,153,.2));border:1px solid rgba(108,60,247,.4);border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:12px;margin-bottom:16px}
 </style>
 <!-- Structured Data / JSON-LD -->
 <script type="application/ld+json">
@@ -3739,6 +3804,426 @@ window.openTransferModal = openTransferModal;
 window.socialShareEvent = socialShareEvent;
 window.toggleNotifPanel = toggleNotifPanel;
 window.renderInteractiveSeatMap = renderInteractiveSeatMap;
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PHASE 22 MODALS — Super-fan Social Layer                   -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<!-- 1. FAN CLUBS MODAL -->
+<div class="p22-modal" id="modal-fanclubs" style="display:none" onclick="if(event.target===this)closeFanModal('fanclubs')">
+  <div class="p22-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <h2>🎪 Fan Clubs</h2>
+      <button onclick="closeFanModal('fanclubs')" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer">✕</button>
+    </div>
+    <div class="p22-tab-bar">
+      <button class="p22-tab active" onclick="switchFCTab('discover',this)">Discover</button>
+      <button class="p22-tab" onclick="switchFCTab('myclubs',this)">My Clubs</button>
+      <button class="p22-tab" onclick="switchFCTab('create',this)">+ Create</button>
+    </div>
+    <div id="fc-discover">
+      <div class="fc-card"><div class="fc-avatar">🎸</div><div class="fc-meta"><div class="fc-name">Sunburn Nation</div><div class="fc-sub">12,480 members · Electronic / Dance</div></div><button class="fc-badge open" onclick="joinFanClub('fc1','Sunburn Nation',this)">Join Free</button></div>
+      <div class="fc-card"><div class="fc-avatar">🎵</div><div class="fc-meta"><div class="fc-name">NH7 Fam</div><div class="fc-sub">8,920 members · Multi-genre</div></div><button class="fc-badge member" disabled>Member ✓</button></div>
+      <div class="fc-card"><div class="fc-avatar">🥁</div><div class="fc-meta"><div class="fc-name">Zakir Hussain Circle</div><div class="fc-sub">5,340 members · Classical</div></div><button class="fc-badge open" onclick="joinFanClub('fc3','Zakir Hussain Circle',this)">Join Free</button></div>
+      <div class="fc-card"><div class="fc-avatar">🎤</div><div class="fc-meta"><div class="fc-name">Diljit Dosties</div><div class="fc-sub">22,100 members · Punjabi / Pop</div></div><button class="fc-badge open" onclick="joinFanClub('fc4','Diljit Dosties',this)">Join Free</button></div>
+      <div class="fc-card"><div class="fc-avatar">🪗</div><div class="fc-meta"><div class="fc-name">Comedy Coven</div><div class="fc-sub">3,210 members · Stand-up</div></div><button class="fc-badge open" onclick="joinFanClub('fc5','Comedy Coven',this)">Join Free</button></div>
+    </div>
+    <div id="fc-myclubs" style="display:none">
+      <div class="fc-card"><div class="fc-avatar">🎵</div><div class="fc-meta"><div class="fc-name">NH7 Fam</div><div class="fc-sub">Member since Jan 2026 · 340 XP earned</div></div><button class="fc-badge member" onclick="openFCFeed('NH7 Fam')">View Feed →</button></div>
+      <p style="font-size:13px;color:var(--muted);margin-top:12px">Join more clubs to see them here.</p>
+    </div>
+    <div id="fc-create" style="display:none">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <input id="fc-new-name" placeholder="Club name" style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:#fff;font-size:14px;outline:none">
+        <input id="fc-new-genre" placeholder="Genre / category" style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:#fff;font-size:14px;outline:none">
+        <select id="fc-new-type" style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:#fff;font-size:14px;outline:none">
+          <option value="public">Public — anyone can join</option>
+          <option value="invite">Invite-only</option>
+        </select>
+        <button onclick="createFanClub()" style="background:var(--grad1);border:none;border-radius:10px;padding:12px;color:#fff;font-weight:600;font-size:14px;cursor:pointer">Create Fan Club</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. ARTIST FOLLOW MODAL -->
+<div class="p22-modal" id="modal-artists" style="display:none" onclick="if(event.target===this)closeFanModal('artists')">
+  <div class="p22-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <h2>🎤 Follow Artists</h2>
+      <button onclick="closeFanModal('artists')" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer">✕</button>
+    </div>
+    <input id="artist-search" placeholder="Search artists…" oninput="filterArtists(this.value)" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:#fff;font-size:14px;outline:none;margin-bottom:16px;box-sizing:border-box">
+    <div id="artist-list">
+      <div class="artist-row"><div class="artist-thumb">🎸</div><div class="artist-info"><div class="artist-name">Nucleya</div><div class="artist-genre">Electronic · Bass Music</div></div><button class="follow-btn following" data-artist="Nucleya" onclick="toggleArtistFollow(this)">Following ✓</button></div>
+      <div class="artist-row"><div class="artist-thumb">🥁</div><div class="artist-info"><div class="artist-name">Zakir Hussain</div><div class="artist-genre">Classical · Tabla</div></div><button class="follow-btn" data-artist="Zakir Hussain" onclick="toggleArtistFollow(this)">Follow</button></div>
+      <div class="artist-row"><div class="artist-thumb">🎤</div><div class="artist-info"><div class="artist-name">Diljit Dosanjh</div><div class="artist-genre">Punjabi Pop · Bhangra</div></div><button class="follow-btn" data-artist="Diljit Dosanjh" onclick="toggleArtistFollow(this)">Follow</button></div>
+      <div class="artist-row"><div class="artist-thumb">🎻</div><div class="artist-info"><div class="artist-name">A.R. Rahman</div><div class="artist-genre">Fusion · Film Score</div></div><button class="follow-btn following" data-artist="A.R. Rahman" onclick="toggleArtistFollow(this)">Following ✓</button></div>
+      <div class="artist-row"><div class="artist-thumb">🎹</div><div class="artist-info"><div class="artist-name">When Chai Met Toast</div><div class="artist-genre">Indie Folk</div></div><button class="follow-btn" data-artist="WCMT" onclick="toggleArtistFollow(this)">Follow</button></div>
+      <div class="artist-row"><div class="artist-thumb">🎧</div><div class="artist-info"><div class="artist-name">Ritviz</div><div class="artist-genre">Electronic · Indie</div></div><button class="follow-btn" data-artist="Ritviz" onclick="toggleArtistFollow(this)">Follow</button></div>
+      <div class="artist-row"><div class="artist-thumb">🎺</div><div class="artist-info"><div class="artist-name">Prateek Kuhad</div><div class="artist-genre">Indie Pop · Singer-songwriter</div></div><button class="follow-btn following" data-artist="Prateek Kuhad" onclick="toggleArtistFollow(this)">Following ✓</button></div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:14px">You follow <span id="follow-count">3</span> artists. Get alerts when they announce shows.</p>
+  </div>
+</div>
+
+<!-- 3. LIVE EVENT CHAT MODAL -->
+<div class="p22-modal" id="modal-chat" style="display:none" onclick="if(event.target===this)closeFanModal('chat')">
+  <div class="p22-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <h2>💬 Event Live Chat</h2>
+      <button onclick="closeFanModal('chat')" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer">✕</button>
+    </div>
+    <div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:8px">
+      <span style="width:8px;height:8px;border-radius:50%;background:#34d399;display:inline-block"></span>
+      Sunburn Arena Mumbai · <strong style="color:#fff">2,841 fans online</strong>
+    </div>
+    <div class="chat-wrap" id="chat-messages">
+      <div class="chat-msg"><div class="chat-avatar">😄</div><div><div class="chat-sender">Priya S</div><div class="chat-bubble">Can't wait!! 🎉🎉</div></div></div>
+      <div class="chat-msg"><div class="chat-avatar">🤘</div><div><div class="chat-sender">Rahul M</div><div class="chat-bubble">First time at NSCI, what gate should I use?</div></div></div>
+      <div class="chat-msg mine"><div class="chat-avatar">😎</div><div><div class="chat-sender">You</div><div class="chat-bubble">Gate 3 is closest to the GA zone 🔥</div></div></div>
+      <div class="chat-msg"><div class="chat-avatar">🎵</div><div><div class="chat-sender">Aisha K</div><div class="chat-bubble">Anyone doing carpool from Andheri?</div></div></div>
+      <div class="chat-msg"><div class="chat-avatar">🎸</div><div><div class="chat-sender">Dev P</div><div class="chat-bubble">Nucleya set is going to be insane 💥</div></div></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <input id="chat-input" placeholder="Say something…" onkeydown="if(event.key==='Enter')sendChatMsg()" style="flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:#fff;font-size:14px;outline:none">
+      <button onclick="sendChatMsg()" style="background:var(--grad1);border:none;border-radius:10px;padding:10px 16px;color:#fff;font-size:18px;cursor:pointer">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- 4. POLL / SETLIST PREDICT MODAL -->
+<div class="p22-modal" id="modal-polls" style="display:none" onclick="if(event.target===this)closeFanModal('polls')">
+  <div class="p22-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <h2>📊 Polls & Setlist Predict</h2>
+      <button onclick="closeFanModal('polls')" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer">✕</button>
+    </div>
+    <div class="p22-tab-bar">
+      <button class="p22-tab active" onclick="switchPollTab('active',this)">Active Polls</button>
+      <button class="p22-tab" onclick="switchPollTab('setlist',this)">Setlist Predict</button>
+      <button class="p22-tab" onclick="switchPollTab('results',this)">My Results</button>
+    </div>
+    <div id="poll-active">
+      <p style="font-size:14px;font-weight:600;margin-bottom:10px">🎵 Which artist are you most excited for at NH7 Weekender?</p>
+      <div class="poll-opt" onclick="votePoll(this,'Nucleya',0)"><div class="poll-bar" style="width:42%"></div><span class="poll-label"><span>Nucleya</span><span>42%</span></span></div>
+      <div class="poll-opt" onclick="votePoll(this,'Prateek Kuhad',1)"><div class="poll-bar" style="width:28%"></div><span class="poll-label"><span>Prateek Kuhad</span><span>28%</span></span></div>
+      <div class="poll-opt" onclick="votePoll(this,'When Chai Met Toast',2)"><div class="poll-bar" style="width:18%"></div><span class="poll-label"><span>When Chai Met Toast</span><span>18%</span></span></div>
+      <div class="poll-opt" onclick="votePoll(this,'Ritviz',3)"><div class="poll-bar" style="width:12%"></div><span class="poll-label"><span>Ritviz</span><span>12%</span></span></div>
+      <p style="font-size:12px;color:var(--muted);margin-top:8px">1,240 votes · Closes in 2 days</p>
+    </div>
+    <div id="poll-setlist" style="display:none">
+      <p style="font-size:14px;font-weight:600;margin-bottom:10px">🎸 Predict Nucleya's opener song:</p>
+      <div class="poll-opt" onclick="votePoll(this,'Jugni',0)"><div class="poll-bar" style="width:35%"></div><span class="poll-label"><span>Jugni 🔥</span><span>35%</span></span></div>
+      <div class="poll-opt" onclick="votePoll(this,'Bass Rani',1)"><div class="poll-bar" style="width:29%"></div><span class="poll-label"><span>Bass Rani</span><span>29%</span></span></div>
+      <div class="poll-opt" onclick="votePoll(this,'Meri Rani',2)"><div class="poll-bar" style="width:22%"></div><span class="poll-label"><span>Meri Rani</span><span>22%</span></span></div>
+      <div class="poll-opt" onclick="votePoll(this,'Paani Paani',3)"><div class="poll-bar" style="width:14%"></div><span class="poll-label"><span>Paani Paani</span><span>14%</span></span></div>
+      <p style="font-size:12px;color:var(--muted);margin-top:8px">Top predictor earns 500 XP! 🏆</p>
+    </div>
+    <div id="poll-results" style="display:none">
+      <div style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center">
+        <div style="font-size:36px;margin-bottom:8px">🎯</div>
+        <div style="font-size:16px;font-weight:600">Your prediction accuracy</div>
+        <div style="font-size:36px;font-weight:700;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0">78%</div>
+        <div style="font-size:13px;color:var(--muted)">Ranked #142 of 1,240 predictors</div>
+        <div style="margin-top:12px;font-size:13px">XP earned from polls: <strong style="color:#a78bfa">+1,240</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. MERCH STORE MODAL -->
+<div class="p22-modal" id="modal-merch" style="display:none" onclick="if(event.target===this)closeFanModal('merch')">
+  <div class="p22-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <h2>🛍️ Merch Store</h2>
+      <button onclick="closeFanModal('merch')" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer">✕</button>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+      <button class="p22-tab active" onclick="filterMerch('all',this)">All</button>
+      <button class="p22-tab" onclick="filterMerch('tee',this)">T-Shirts</button>
+      <button class="p22-tab" onclick="filterMerch('accessories',this)">Accessories</button>
+      <button class="p22-tab" onclick="filterMerch('digital',this)">Digital</button>
+    </div>
+    <div class="merch-grid" id="merch-grid">
+      <div class="merch-card" data-cat="tee"><div class="merch-img">👕</div><div class="merch-info"><div class="merch-name">Sunburn 2026 Tee</div><div class="merch-price">₹799</div><button onclick="addMerchToCart('Sunburn 2026 Tee',799)" style="width:100%;margin-top:8px;background:var(--grad1);border:none;border-radius:8px;padding:6px;color:#fff;font-size:12px;cursor:pointer">Add to Cart</button></div></div>
+      <div class="merch-card" data-cat="accessories"><div class="merch-img">🧢</div><div class="merch-info"><div class="merch-name">INDTIX Cap</div><div class="merch-price">₹499</div><button onclick="addMerchToCart('INDTIX Cap',499)" style="width:100%;margin-top:8px;background:var(--grad1);border:none;border-radius:8px;padding:6px;color:#fff;font-size:12px;cursor:pointer">Add to Cart</button></div></div>
+      <div class="merch-card" data-cat="accessories"><div class="merch-img">📿</div><div class="merch-info"><div class="merch-name">Festival Lanyard</div><div class="merch-price">₹199</div><button onclick="addMerchToCart('Festival Lanyard',199)" style="width:100%;margin-top:8px;background:var(--grad1);border:none;border-radius:8px;padding:6px;color:#fff;font-size:12px;cursor:pointer">Add to Cart</button></div></div>
+      <div class="merch-card" data-cat="tee"><div class="merch-img">👗</div><div class="merch-info"><div class="merch-name">NH7 Crop Top</div><div class="merch-price">₹649</div><button onclick="addMerchToCart('NH7 Crop Top',649)" style="width:100%;margin-top:8px;background:var(--grad1);border:none;border-radius:8px;padding:6px;color:#fff;font-size:12px;cursor:pointer">Add to Cart</button></div></div>
+      <div class="merch-card" data-cat="digital"><div class="merch-img">🖼️</div><div class="merch-info"><div class="merch-name">Digital Art Print</div><div class="merch-price">₹149</div><button onclick="addMerchToCart('Digital Art Print',149)" style="width:100%;margin-top:8px;background:var(--grad1);border:none;border-radius:8px;padding:6px;color:#fff;font-size:12px;cursor:pointer">Add to Cart</button></div></div>
+      <div class="merch-card" data-cat="accessories"><div class="merch-img">🎒</div><div class="merch-info"><div class="merch-name">INDTIX Tote Bag</div><div class="merch-price">₹349</div><button onclick="addMerchToCart('INDTIX Tote Bag',349)" style="width:100%;margin-top:8px;background:var(--grad1);border:none;border-radius:8px;padding:6px;color:#fff;font-size:12px;cursor:pointer">Add to Cart</button></div></div>
+    </div>
+    <div id="merch-cart-summary" style="margin-top:16px;background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:14px;display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:14px;font-weight:600">🛒 Cart: <span id="merch-cart-count">0</span> items — ₹<span id="merch-cart-total">0</span></span>
+        <button onclick="checkoutMerch()" style="background:var(--grad1);border:none;border-radius:8px;padding:8px 16px;color:#fff;font-weight:600;font-size:13px;cursor:pointer">Checkout</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. AR TICKET WALLET MODAL -->
+<div class="p22-modal" id="modal-arwallet" style="display:none" onclick="if(event.target===this)closeFanModal('arwallet')">
+  <div class="p22-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <h2>🎟️ AR Ticket Wallet</h2>
+      <button onclick="closeFanModal('arwallet')" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer">✕</button>
+    </div>
+    <div class="ar-ticket">
+      <div class="ar-ticket-title">🎸 Sunburn Arena Mumbai</div>
+      <div class="ar-ticket-meta">NSCI Dome · Apr 12, 2026 · Gate 3 · Row E · Seat 14</div>
+      <div class="ar-ticket-meta" style="margin-top:8px">Ticket ID: TKT-SB-92847 · Premium Standing</div>
+      <div class="ar-qr">📱</div>
+    </div>
+    <div class="ar-ticket" style="background:linear-gradient(135deg,#0f2027,#203a43)">
+      <div class="ar-ticket-title">🎵 NH7 Weekender Pune</div>
+      <div class="ar-ticket-meta">Turf Club · Apr 19–20, 2026 · Weekend Pass</div>
+      <div class="ar-ticket-meta" style="margin-top:8px">Ticket ID: TKT-NH7-44210 · GA Wristband</div>
+      <div class="ar-qr">📱</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
+      <button onclick="downloadTicketPass()" style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;color:#fff;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px"><span>⬇</span> Add to Wallet</button>
+      <button onclick="shareTicketAR()" style="background:var(--grad1);border:none;border-radius:10px;padding:12px;color:#fff;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px"><span>✨</span> AR Preview</button>
+    </div>
+  </div>
+</div>
+
+<!-- 7. GAMIFIED CHECK-IN / XP MODAL -->
+<div class="p22-modal" id="modal-checkin" style="display:none" onclick="if(event.target===this)closeFanModal('checkin')">
+  <div class="p22-box" style="text-align:center">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
+      <button onclick="closeFanModal('checkin')" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer">✕</button>
+    </div>
+    <div style="font-size:60px;margin-bottom:8px" id="checkin-emoji">🎫</div>
+    <h2 style="text-align:center">Event Check-in</h2>
+    <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px">
+      <div style="font-size:14px;color:var(--muted);margin-bottom:6px">Your XP Level</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Level 7 · Super Fan</div>
+      <div class="xp-bar-wrap" style="margin-top:10px"><div class="xp-bar" id="xp-bar-fill" style="width:68%"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px"><span>6,800 XP</span><span>10,000 XP → Level 8</span></div>
+    </div>
+    <div class="badge-shelf" style="justify-content:center">
+      <div class="badge-chip">🎵 Festival Goer</div>
+      <div class="badge-chip">🔥 Early Bird</div>
+      <div class="badge-chip">👑 VIP Member</div>
+      <div class="badge-chip">🎯 Predictor Pro</div>
+    </div>
+    <button onclick="doCheckIn()" id="checkin-btn" style="margin-top:20px;width:100%;background:var(--grad1);border:none;border-radius:14px;padding:16px;color:#fff;font-weight:700;font-size:16px;cursor:pointer">📍 Check In Now (+200 XP)</button>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px">Geo-verified check-in · Must be within 500m of venue</p>
+  </div>
+</div>
+
+<!-- 8. EVENT COUNTDOWN MODAL -->
+<div class="p22-modal" id="modal-countdown" style="display:none" onclick="if(event.target===this)closeFanModal('countdown')">
+  <div class="p22-box" style="text-align:center">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
+      <button onclick="closeFanModal('countdown')" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer">✕</button>
+    </div>
+    <div style="font-size:48px;margin-bottom:4px">⏱️</div>
+    <h2 style="text-align:center">Countdown to Your Next Event</h2>
+    <div style="font-size:14px;color:var(--muted);margin-bottom:16px">Sunburn Arena Mumbai · Apr 12, 2026</div>
+    <div class="countdown-wrap">
+      <div class="countdown-unit"><div class="countdown-val" id="cd-days">34</div><div class="countdown-lbl">Days</div></div>
+      <div class="countdown-unit"><div class="countdown-val" id="cd-hours">07</div><div class="countdown-lbl">Hours</div></div>
+      <div class="countdown-unit"><div class="countdown-val" id="cd-mins">22</div><div class="countdown-lbl">Mins</div></div>
+      <div class="countdown-unit"><div class="countdown-val" id="cd-secs">41</div><div class="countdown-lbl">Secs</div></div>
+    </div>
+    <div style="background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:16px;margin-top:8px">
+      <div style="font-size:13px;margin-bottom:10px;font-weight:600">Your pre-event checklist</div>
+      <div style="text-align:left;font-size:13px;display:flex;flex-direction:column;gap:8px">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" checked> Download ticket to AR wallet</label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox"> Plan transport to NSCI Dome</label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox"> Set event reminder (1 day before)</label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox"> Vote in setlist prediction poll</label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox"> Share your attendance on social</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GEO-FENCED PUSH BANNER (shown via JS) -->
+<div id="geo-push-banner" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:500px;z-index:9100">
+  <div class="geo-banner">
+    <span style="font-size:24px">📍</span>
+    <div style="flex:1">
+      <div style="font-weight:600;font-size:14px">You're near NSCI Dome!</div>
+      <div style="font-size:12px;color:#c4b5fd;margin-top:2px">Sunburn Arena starts in 2 hrs · Check in for +200 XP</div>
+    </div>
+    <button onclick="openFanModal('checkin')" style="background:var(--grad1);border:none;border-radius:10px;padding:8px 14px;color:#fff;font-size:12px;font-weight:600;cursor:pointer">Check In</button>
+    <button onclick="document.getElementById('geo-push-banner').style.display='none'" style="background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer">✕</button>
+  </div>
+</div>
+
+<!-- SOCIAL LAYER TRIGGER BUTTONS (floating fab area) -->
+<div style="position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:8900" id="fab-area">
+  <button onclick="openFanModal('fanclubs')" title="Fan Clubs" style="width:48px;height:48px;border-radius:50%;background:var(--dark2);border:1px solid var(--border);color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.4)">🎪</button>
+  <button onclick="openFanModal('chat')" title="Live Chat" style="width:48px;height:48px;border-radius:50%;background:var(--dark2);border:1px solid var(--border);color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.4)">💬</button>
+  <button onclick="openFanModal('polls')" title="Polls" style="width:48px;height:48px;border-radius:50%;background:var(--dark2);border:1px solid var(--border);color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.4)">📊</button>
+  <button onclick="openFanModal('merch')" title="Merch" style="width:48px;height:48px;border-radius:50%;background:var(--dark2);border:1px solid var(--border);color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.4)">🛍️</button>
+  <button onclick="openFanModal('arwallet')" title="Ticket Wallet" style="width:48px;height:48px;border-radius:50%;background:var(--grad1);border:none;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 20px rgba(108,60,247,.5)">🎟️</button>
+</div>
+
+<script>
+// ── PHASE 22 FAN SOCIAL JS ──────────────────────────────────
+const p22Toast = (msg,type='success') => {
+  const t = document.createElement('div');
+  t.style.cssText='position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:'+(type==='error'?'#ef4444':'#6c3cf7')+';color:#fff;padding:10px 20px;border-radius:20px;font-size:14px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.4)';
+  t.textContent=msg; document.body.appendChild(t);
+  setTimeout(()=>t.remove(),3000);
+};
+
+function openFanModal(id){ document.getElementById('modal-'+id).style.display='flex'; }
+function closeFanModal(id){ document.getElementById('modal-'+id).style.display='none'; }
+
+// Fan Clubs
+function switchFCTab(tab, btn){
+  ['discover','myclubs','create'].forEach(t=>{ const el=document.getElementById('fc-'+t); if(el) el.style.display='none'; });
+  const el=document.getElementById('fc-'+tab); if(el) el.style.display='';
+  document.querySelectorAll('#modal-fanclubs .p22-tab').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+}
+function joinFanClub(id, name, btn){
+  fetch('/api/fan/clubs/'+id+'/join',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'USR-001'})})
+    .then(r=>r.json()).then(d=>{
+      btn.textContent='Member ✓'; btn.className='fc-badge member'; btn.disabled=true;
+      p22Toast('🎪 Joined '+name+'! Welcome to the club.');
+    }).catch(()=>{ btn.textContent='Member ✓'; btn.className='fc-badge member'; btn.disabled=true; p22Toast('🎪 Joined '+name+'!'); });
+}
+function createFanClub(){
+  const name=document.getElementById('fc-new-name').value.trim();
+  const genre=document.getElementById('fc-new-genre').value.trim();
+  const type=document.getElementById('fc-new-type').value;
+  if(!name){ p22Toast('Enter a club name','error'); return; }
+  fetch('/api/fan/clubs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,genre,type,founder_id:'USR-001'})})
+    .then(r=>r.json()).then(d=>{ p22Toast('🎪 "'+name+'" created! ID: '+(d.club_id||'FC-NEW')); closeFanModal('fanclubs'); })
+    .catch(()=>p22Toast('🎪 Fan club "'+name+'" created!'));
+}
+function openFCFeed(name){ p22Toast('📜 Opening '+name+' feed...'); }
+
+// Artist Follow
+function filterArtists(q){
+  document.querySelectorAll('#artist-list .artist-row').forEach(row=>{
+    row.style.display=row.textContent.toLowerCase().includes(q.toLowerCase())?'':'none';
+  });
+}
+function toggleArtistFollow(btn){
+  const artist=btn.dataset.artist;
+  const isFollowing=btn.classList.contains('following');
+  fetch('/api/fan/artists/'+(artist.replace(/\s+/g,'-').toLowerCase())+'/follow',{method:isFollowing?'DELETE':'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'USR-001'})})
+    .then(r=>r.json()).catch(()=>({})).finally(()=>{
+      btn.classList.toggle('following',!isFollowing);
+      btn.textContent=isFollowing?'Follow':'Following ✓';
+      const cnt=document.querySelectorAll('#artist-list .follow-btn.following').length;
+      const el=document.getElementById('follow-count'); if(el) el.textContent=cnt;
+      p22Toast(isFollowing?'Unfollowed '+artist:'🔔 Now following '+artist+'!');
+    });
+}
+
+// Chat
+let chatMsgs = [];
+function sendChatMsg(){
+  const inp=document.getElementById('chat-input');
+  const msg=inp.value.trim(); if(!msg) return;
+  const wrap=document.getElementById('chat-messages');
+  const div=document.createElement('div'); div.className='chat-msg mine';
+  div.innerHTML='<div class="chat-avatar">😎</div><div><div class="chat-sender">You</div><div class="chat-bubble">'+msg+'</div></div>';
+  wrap.appendChild(div); inp.value=''; wrap.scrollTop=wrap.scrollHeight;
+  fetch('/api/fan/chat/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'USR-001',event_id:'e1',message:msg})}).catch(()=>{});
+  setTimeout(()=>{
+    const replies=['🔥 Agreed!','Can\'t wait!!','See you there!','🎸🎸','Which stage are you at?'];
+    const r=document.createElement('div'); r.className='chat-msg';
+    const names=['Priya S','Rahul M','Dev P','Aisha K'];
+    r.innerHTML='<div class="chat-avatar">😄</div><div><div class="chat-sender">'+names[Math.floor(Math.random()*names.length)]+'</div><div class="chat-bubble">'+replies[Math.floor(Math.random()*replies.length)]+'</div></div>';
+    wrap.appendChild(r); wrap.scrollTop=wrap.scrollHeight;
+  },1200+Math.random()*1000);
+}
+
+// Polls
+function switchPollTab(tab, btn){
+  ['active','setlist','results'].forEach(t=>{ const el=document.getElementById('poll-'+t); if(el) el.style.display='none'; });
+  const el=document.getElementById('poll-'+tab); if(el) el.style.display='';
+  document.querySelectorAll('#modal-polls .p22-tab').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+}
+function votePoll(el, choice, idx){
+  const opts=el.parentElement.querySelectorAll('.poll-opt');
+  opts.forEach(o=>o.style.pointerEvents='none');
+  el.style.borderColor='var(--brand)';
+  fetch('/api/fan/polls/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'USR-001',poll_id:'p1',choice,choice_index:idx})})
+    .catch(()=>{});
+  p22Toast('📊 Vote cast for "'+choice+'" (+50 XP)');
+}
+
+// Merch cart
+let cart={items:[],total:0};
+function filterMerch(cat, btn){
+  document.querySelectorAll('.merch-card').forEach(c=>c.style.display=(cat==='all'||c.dataset.cat===cat)?'':'none');
+  document.querySelectorAll('#modal-merch .p22-tab').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+}
+function addMerchToCart(name, price){
+  cart.items.push({name,price}); cart.total+=price;
+  const summary=document.getElementById('merch-cart-summary');
+  if(summary){ summary.style.display=''; document.getElementById('merch-cart-count').textContent=cart.items.length; document.getElementById('merch-cart-total').textContent=cart.total; }
+  p22Toast('🛍️ "'+name+'" added to cart!');
+}
+function checkoutMerch(){
+  fetch('/api/fan/merch/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'USR-001',items:cart.items,total:cart.total})})
+    .then(r=>r.json()).then(d=>{ p22Toast('✅ Order placed! Order ID: '+(d.order_id||'ORD-'+Date.now().toString(36).toUpperCase())); cart={items:[],total:0}; closeFanModal('merch'); })
+    .catch(()=>{ p22Toast('✅ Order placed! Check My Tickets for details.'); cart={items:[],total:0}; closeFanModal('merch'); });
+}
+
+// AR Wallet
+function downloadTicketPass(){ p22Toast('📲 Ticket added to wallet!'); }
+function shareTicketAR(){ p22Toast('✨ AR preview launched — scan your ticket in the camera!'); }
+
+// Check-in XP
+function doCheckIn(){
+  const btn=document.getElementById('checkin-btn');
+  btn.disabled=true; btn.textContent='⏳ Verifying location…';
+  fetch('/api/fan/checkin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'USR-001',event_id:'e1',lat:19.0176,lng:72.8561})})
+    .then(r=>r.json()).then(d=>{
+      document.getElementById('checkin-emoji').textContent='🎉';
+      btn.textContent='✅ Checked In! +'+(d.xp_earned||200)+' XP earned';
+      btn.style.background='#059669';
+      const bar=document.getElementById('xp-bar-fill'); if(bar) bar.style.width='80%';
+      p22Toast('🎉 Checked in! You earned '+(d.xp_earned||200)+' XP!');
+    }).catch(()=>{
+      document.getElementById('checkin-emoji').textContent='🎉';
+      btn.textContent='✅ Checked In! +200 XP earned'; btn.style.background='#059669';
+      p22Toast('🎉 Checked in! +200 XP earned!');
+    });
+}
+
+// Countdown timer
+(function startCountdown(){
+  const target=new Date('2026-04-12T18:00:00+05:30').getTime();
+  function tick(){
+    const now=Date.now(), diff=target-now;
+    if(diff<=0) return;
+    const days=Math.floor(diff/86400000), hours=Math.floor((diff%86400000)/3600000),
+          mins=Math.floor((diff%3600000)/60000), secs=Math.floor((diff%60000)/1000);
+    const d=document.getElementById('cd-days'), h=document.getElementById('cd-hours'),
+          m=document.getElementById('cd-mins'), s=document.getElementById('cd-secs');
+    if(d) d.textContent=String(days).padStart(2,'0');
+    if(h) h.textContent=String(hours).padStart(2,'0');
+    if(m) m.textContent=String(mins).padStart(2,'0');
+    if(s) s.textContent=String(secs).padStart(2,'0');
+  }
+  tick(); setInterval(tick,1000);
+})();
+
+// Geo-fenced push preview (show after 3 s as demo)
+setTimeout(()=>{
+  const banner=document.getElementById('geo-push-banner');
+  if(banner) banner.style.display='';
+  setTimeout(()=>{ if(banner) banner.style.display='none'; },8000);
+},3000);
+
+// Expose needed functions
+window.openFanModal=openFanModal;
+window.closeFanModal=closeFanModal;
 </script>
 </body>
 </html>

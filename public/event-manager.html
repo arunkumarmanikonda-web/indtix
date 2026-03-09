@@ -1798,5 +1798,235 @@ function showEMPanel(id) {
   if (id==='p21-invoices') loadVendorInvoices();
 }
 
+// ── PHASE 22 EVENT MANAGER: Day-of Ops ──────────────────────
+function emToast22(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#6c3cf7;color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+
+// NFC Wristband scan log
+let nfcScans=[];
+async function loadNFCScanLog(){
+  const r=await fetch('/api/events/e1/nfc-scans').catch(()=>null);
+  const d=r?await r.json():null;
+  const scans=d?.scans||[
+    {id:'NFC-0941',name:'Priya Sharma',zone:'Gate 1',time:'18:42:11',status:'valid'},
+    {id:'NFC-0942',name:'Rahul Mehta',zone:'Gate 3',time:'18:42:28',status:'valid'},
+    {id:'NFC-0943',name:'Unknown',zone:'VIP Entry',time:'18:42:45',status:'flagged'},
+    {id:'NFC-0944',name:'Aisha Khan',zone:'Gate 1',time:'18:43:02',status:'valid'},
+    {id:'NFC-0945',name:'Dev Patel',zone:'Gate 2',time:'18:43:18',status:'duplicate'},
+  ];
+  const el=document.getElementById('nfc-log');
+  if(!el) return;
+  const cols={valid:'#34d399',flagged:'#ef4444',duplicate:'#fbbf24'};
+  el.innerHTML=scans.map(s=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px">
+    <div><span style="font-weight:600">${s.name}</span> <span style="color:var(--muted)">${s.zone}</span></div>
+    <div style="display:flex;gap:10px;align-items:center"><span style="color:var(--muted)">${s.time}</span><span style="color:${cols[s.status]||'#a78bfa'};font-weight:600">${s.status.toUpperCase()}</span></div>
+  </div>`).join('');
+}
+
+// Gate throughput speedometer
+async function loadGateThroughput(){
+  const r=await fetch('/api/events/e1/gate-throughput').catch(()=>null);
+  const d=r?await r.json():null;
+  const el=document.getElementById('gate-throughput');
+  if(!el) return;
+  const gates=d?.gates||[{gate:'Gate 1',scans_per_min:84,queue_length:120,status:'normal'},{gate:'Gate 2',scans_per_min:92,queue_length:85,status:'normal'},{gate:'Gate 3',scans_per_min:41,queue_length:320,status:'slow'},{gate:'VIP Entry',scans_per_min:22,queue_length:18,status:'normal'}];
+  el.innerHTML=gates.map(g=>`<div style="background:var(--dark3);border:1px solid ${g.status==='slow'?'rgba(239,68,68,.4)':'var(--border)'};border-radius:12px;padding:14px">
+    <div style="font-weight:600;font-size:13px;margin-bottom:8px">${g.gate} ${g.status==='slow'?'⚠️':''}</div>
+    <div style="font-size:28px;font-weight:700;font-family:'Space Grotesk',sans-serif;color:${g.status==='slow'?'#ef4444':'#34d399'}">${g.scans_per_min}<span style="font-size:12px;color:var(--muted)"> /min</span></div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px">Queue: ${g.queue_length} people</div>
+  </div>`).join('');
+}
+
+// VIP concierge queue
+async function loadVIPConcierge(){
+  const r=await fetch('/api/events/e1/vip-concierge').catch(()=>null);
+  const d=r?await r.json():null;
+  const reqs=d?.requests||[
+    {id:'VIP-001',guest:'Arjun Kapoor',request:'Private booth seating',status:'pending',priority:'high'},
+    {id:'VIP-002',guest:'Pooja Bhatt',request:'Artist meet & greet access',status:'in_progress',priority:'urgent'},
+    {id:'VIP-003',guest:'Rahul Dravid',request:'Vegetarian meal + backstage tour',status:'fulfilled',priority:'normal'},
+  ];
+  const el=document.getElementById('vip-queue');
+  if(!el) return;
+  el.innerHTML=reqs.map(r=>`<div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <div><div style="font-weight:600;font-size:13px">${r.guest}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${r.request}</div></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span style="font-size:11px;padding:2px 8px;border-radius:10px;background:${r.status==='fulfilled'?'rgba(16,185,129,.15)':r.status==='in_progress'?'rgba(234,179,8,.15)':'rgba(108,60,247,.15)'};color:${r.status==='fulfilled'?'#34d399':r.status==='in_progress'?'#fbbf24':'#a78bfa'}">${r.status.replace('_',' ')}</span>
+      ${r.status!=='fulfilled'?`<button onclick="fulfillVIPRequest('${r.id}')" style="background:var(--grad1);border:none;border-radius:6px;padding:4px 10px;color:#fff;font-size:11px;cursor:pointer">Fulfil</button>`:''}
+    </div>
+  </div>`).join('');
+}
+
+function fulfillVIPRequest(id){
+  fetch('/api/events/e1/vip-concierge/'+id+'/fulfil',{method:'POST'}).catch(()=>{});
+  emToast22('✅ VIP request '+id+' marked as fulfilled!');
+  setTimeout(loadVIPConcierge,500);
+}
+
+// Social sentiment wall
+async function loadSentimentWall(){
+  const r=await fetch('/api/events/e1/social-sentiment').catch(()=>null);
+  const d=r?await r.json():null;
+  const el=document.getElementById('sentiment-wall');
+  if(!el) return;
+  el.innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px">
+    <div style="background:var(--dark3);border-radius:12px;padding:14px;text-align:center"><div style="font-size:28px;font-weight:700;color:#34d399">${d?.score||84}%</div><div style="font-size:11px;color:var(--muted)">Positive Sentiment</div></div>
+    <div style="background:var(--dark3);border-radius:12px;padding:14px;text-align:center"><div style="font-size:28px;font-weight:700;color:#a78bfa">${(d?.mentions||2840).toLocaleString()}</div><div style="font-size:11px;color:var(--muted)">Total Mentions</div></div>
+    <div style="background:var(--dark3);border-radius:12px;padding:14px;text-align:center"><div style="font-size:28px;font-weight:700;color:#60a5fa">${d?.trending_hashtag||'#Sunburn2026'}</div><div style="font-size:11px;color:var(--muted)">Top Hashtag</div></div>
+  </div>
+  <div style="font-size:13px;font-weight:600;margin-bottom:10px">🔥 Trending Posts</div>
+  <div style="display:flex;flex-direction:column;gap:8px;font-size:12px">
+    <div style="background:var(--dark3);border-radius:8px;padding:10px"><span style="color:#1d9bf0">@nucleya_bass</span>: "The crowd at NSCI is INSANE tonight 🔥🔥🔥 #Sunburn2026 @INDTIX"<span style="float:right;color:var(--muted)">❤️ 2.4K</span></div>
+    <div style="background:var(--dark3);border-radius:8px;padding:10px"><span style="color:#e1306c">@priya.shoots</span>: "Best event I've been to this year! Sound quality 🙌 #Sunburn2026"<span style="float:right;color:var(--muted)">❤️ 840</span></div>
+    <div style="background:var(--dark3);border-radius:8px;padding:10px"><span style="color:#1d9bf0">@rahul_m</span>: "Gate 3 queue is moving slow… but totally worth it! #NSCI"<span style="float:right;color:var(--muted)">❤️ 320</span></div>
+  </div>`;
+}
+
+// Live merch sales
+async function loadMerchSales(){
+  const r=await fetch('/api/events/e1/merch-sales').catch(()=>null);
+  const d=r?await r.json():null;
+  const el=document.getElementById('merch-live-sales');
+  if(!el) return;
+  const items=d?.items||[{name:'Sunburn 2026 Tee',sold:284,revenue:227116},{name:'INDTIX Cap',sold:192,revenue:95808},{name:'Festival Lanyard',sold:440,revenue:87560},{name:'Tote Bag',sold:128,revenue:44672}];
+  el.innerHTML=items.map(i=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px">
+    <div style="font-weight:600">${i.name}</div>
+    <div style="display:flex;gap:16px">
+      <span style="color:var(--muted)">${i.sold} sold</span>
+      <span style="font-weight:700;color:var(--brand)">₹${(i.revenue/100000).toFixed(1)}L</span>
+    </div>
+  </div>`).join('');
+}
+
+// Artist rider tracker
+async function loadArtistRider(){
+  const r=await fetch('/api/events/e1/artist-rider').catch(()=>null);
+  const d=r?await r.json():null;
+  const el=document.getElementById('artist-rider');
+  if(!el) return;
+  const items=d?.items||[{item:'Green room (24°C AC)',status:'ready'},{item:'6× Evian water (still)',status:'ready'},{item:'Vegetarian catering (2 pax)',status:'pending'},{item:'2× In-ear monitors (Nucleya custom)',status:'ready'},{item:'Dressing room with full-length mirror',status:'ready'},{item:'10-min pre-show briefing with FOH',status:'pending'}];
+  el.innerHTML=items.map(i=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px">
+    <span>${i.item}</span>
+    <button onclick="toggleRiderItem(this,'${i.item}')" style="background:${i.status==='ready'?'rgba(16,185,129,.15)':'rgba(234,179,8,.15)'};border:1px solid ${i.status==='ready'?'#34d399':'#fbbf24'};border-radius:6px;padding:3px 10px;color:${i.status==='ready'?'#34d399':'#fbbf24'};font-size:11px;cursor:pointer">${i.status==='ready'?'✅ Ready':'⚠️ Pending'}</button>
+  </div>`).join('');
+}
+
+function toggleRiderItem(btn,item){
+  const isReady=btn.textContent.includes('Ready');
+  btn.style.background=!isReady?'rgba(16,185,129,.15)':'rgba(234,179,8,.15)';
+  btn.style.borderColor=!isReady?'#34d399':'#fbbf24';
+  btn.style.color=!isReady?'#34d399':'#fbbf24';
+  btn.textContent=!isReady?'✅ Ready':'⚠️ Pending';
+  emToast22((isReady?'⚠️ ':'✅ ')+item+' marked as '+(isReady?'pending':'ready'));
+}
+
+// Press credential manager
+async function loadPressCredentials(){
+  const r=await fetch('/api/events/e1/press-credentials').catch(()=>null);
+  const d=r?await r.json():null;
+  const el=document.getElementById('press-creds');
+  if(!el) return;
+  const creds=d?.credentials||[{name:'Rahul Verma',org:'Mumbai Mirror',type:'Photographer',status:'approved',badge:'PH-042'},{name:'Sneha Rao',org:'Rolling Stone India',type:'Press',status:'approved',badge:'PR-018'},{name:'Arjun Anand',org:'Freelance',type:'Videographer',status:'pending',badge:'—'}];
+  el.innerHTML=creds.map(c=>`<div style="background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <div><div style="font-weight:600;font-size:13px">${c.name} · <span style="color:var(--muted)">${c.org}</span></div><div style="font-size:11px;color:var(--muted);margin-top:2px">${c.type} · Badge: ${c.badge}</div></div>
+    <span style="background:${c.status==='approved'?'rgba(16,185,129,.15)':'rgba(234,179,8,.15)'};color:${c.status==='approved'?'#34d399':'#fbbf24'};padding:3px 10px;border-radius:20px;font-size:11px">${c.status}</span>
+  </div>`).join('');
+}
+
+// Add sidebar items for P22
+document.addEventListener('DOMContentLoaded',()=>{
+  const nav=document.querySelector('.em-nav, .sb-nav, nav');
+  if(nav){
+    const btns=document.createElement('div');
+    btns.innerHTML=`
+      <button onclick="document.getElementById('panel-p22-nfc').style.display='block';loadNFCScanLog()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">📲 NFC Scan Log 🆕</button>
+      <button onclick="document.getElementById('panel-p22-gates').style.display='block';loadGateThroughput()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">🚪 Gate Throughput 🆕</button>
+      <button onclick="document.getElementById('panel-p22-vip').style.display='block';loadVIPConcierge()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">👑 VIP Concierge 🆕</button>
+      <button onclick="document.getElementById('panel-p22-sentiment').style.display='block';loadSentimentWall()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">📢 Social Sentiment 🆕</button>
+      <button onclick="document.getElementById('panel-p22-merch-live').style.display='block';loadMerchSales()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">🛍️ Live Merch Sales 🆕</button>
+      <button onclick="document.getElementById('panel-p22-rider').style.display='block';loadArtistRider()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">🎸 Artist Rider 🆕</button>
+      <button onclick="document.getElementById('panel-p22-press').style.display='block';loadPressCredentials()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">📸 Press Credentials 🆕</button>`;
+    nav.appendChild(btns);
+  }
+});
+
+</script>
+
+<!-- PHASE 22 EVENT MANAGER PANELS -->
+<style>
+.p22em-panel{background:var(--dark2,#141020);border:1px solid var(--border,rgba(255,255,255,.1));border-radius:16px;padding:20px;margin-bottom:20px}
+.p22em-panel h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;margin-bottom:14px}
+</style>
+
+<div id="panel-p22-nfc" class="p22em-panel" style="display:none;position:fixed;top:80px;right:20px;width:420px;max-height:80vh;overflow-y:auto;z-index:8800;box-shadow:0 8px 32px rgba(0,0,0,.6)">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <h3>📲 NFC Wristband Scan Log</h3>
+    <button onclick="this.closest('[id]').style.display='none'" style="background:none;border:none;color:#888;font-size:18px;cursor:pointer">✕</button>
+  </div>
+  <div style="display:flex;gap:12px;margin-bottom:12px;font-size:13px">
+    <div style="flex:1;text-align:center;background:rgba(16,185,129,.15);border-radius:8px;padding:8px"><div style="font-size:20px;font-weight:700;color:#34d399">4,820</div><div style="color:var(--muted,#888)">Scanned In</div></div>
+    <div style="flex:1;text-align:center;background:rgba(239,68,68,.15);border-radius:8px;padding:8px"><div style="font-size:20px;font-weight:700;color:#ef4444">3</div><div style="color:var(--muted,#888)">Flagged</div></div>
+    <div style="flex:1;text-align:center;background:rgba(234,179,8,.15);border-radius:8px;padding:8px"><div style="font-size:20px;font-weight:700;color:#fbbf24">7</div><div style="color:var(--muted,#888)">Duplicates</div></div>
+  </div>
+  <div id="nfc-log"><div style="text-align:center;padding:20px;color:#888">Loading scan log…</div></div>
+  <button onclick="loadNFCScanLog()" style="margin-top:10px;background:rgba(108,60,247,.2);border:1px solid #6c3cf7;border-radius:8px;padding:8px 16px;color:#a78bfa;font-size:12px;cursor:pointer;width:100%">🔄 Refresh Log</button>
+</div>
+
+<div id="panel-p22-gates" class="p22em-panel" style="display:none;position:fixed;top:80px;left:20px;width:420px;max-height:80vh;overflow-y:auto;z-index:8800;box-shadow:0 8px 32px rgba(0,0,0,.6)">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <h3>🚪 Gate Throughput Speedometer</h3>
+    <button onclick="this.closest('[id]').style.display='none'" style="background:none;border:none;color:#888;font-size:18px;cursor:pointer">✕</button>
+  </div>
+  <div id="gate-throughput" style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div style="text-align:center;padding:20px;color:#888;grid-column:span 2">Loading gates…</div></div>
+  <button onclick="loadGateThroughput()" style="margin-top:10px;background:rgba(108,60,247,.2);border:1px solid #6c3cf7;border-radius:8px;padding:8px 16px;color:#a78bfa;font-size:12px;cursor:pointer;width:100%">🔄 Refresh</button>
+</div>
+
+<div id="panel-p22-vip" class="p22em-panel" style="display:none;position:fixed;bottom:40px;right:20px;width:420px;max-height:70vh;overflow-y:auto;z-index:8800;box-shadow:0 8px 32px rgba(0,0,0,.6)">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <h3>👑 VIP Concierge Queue</h3>
+    <button onclick="this.closest('[id]').style.display='none'" style="background:none;border:none;color:#888;font-size:18px;cursor:pointer">✕</button>
+  </div>
+  <div id="vip-queue"><div style="text-align:center;padding:20px;color:#888">Loading VIP requests…</div></div>
+</div>
+
+<div id="panel-p22-sentiment" class="p22em-panel" style="display:none;position:fixed;bottom:40px;left:20px;width:420px;max-height:70vh;overflow-y:auto;z-index:8800;box-shadow:0 8px 32px rgba(0,0,0,.6)">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <h3>📢 Social Media Sentiment Wall</h3>
+    <button onclick="this.closest('[id]').style.display='none'" style="background:none;border:none;color:#888;font-size:18px;cursor:pointer">✕</button>
+  </div>
+  <div id="sentiment-wall"><div style="text-align:center;padding:20px;color:#888">Loading sentiment…</div></div>
+</div>
+
+<div id="panel-p22-merch-live" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:480px;max-height:80vh;overflow-y:auto;z-index:8900;background:#141020;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;box-shadow:0 8px 32px rgba(0,0,0,.8)">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;margin:0">🛍️ Live Merchandise Sales</h3>
+    <button onclick="this.closest('[id]').style.display='none'" style="background:none;border:none;color:#888;font-size:18px;cursor:pointer">✕</button>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;font-size:13px">
+    <div style="background:rgba(108,60,247,.15);border-radius:10px;padding:12px;text-align:center"><div style="font-size:22px;font-weight:700;color:#a78bfa">₹4.6L</div><div style="color:#888">Merch Revenue</div></div>
+    <div style="background:rgba(16,185,129,.15);border-radius:10px;padding:12px;text-align:center"><div style="font-size:22px;font-weight:700;color:#34d399">1,044</div><div style="color:#888">Items Sold</div></div>
+  </div>
+  <div id="merch-live-sales"></div>
+</div>
+
+<div id="panel-p22-rider" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:480px;max-height:80vh;overflow-y:auto;z-index:8900;background:#141020;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;box-shadow:0 8px 32px rgba(0,0,0,.8)">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;margin:0">🎸 Artist Rider Tracker</h3>
+    <button onclick="this.closest('[id]').style.display='none'" style="background:none;border:none;color:#888;font-size:18px;cursor:pointer">✕</button>
+  </div>
+  <div style="font-size:13px;color:#888;margin-bottom:12px">Artist: Nucleya · Show: 21:00–22:30</div>
+  <div id="artist-rider"></div>
+</div>
+
+<div id="panel-p22-press" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:480px;max-height:80vh;overflow-y:auto;z-index:8900;background:#141020;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;box-shadow:0 8px 32px rgba(0,0,0,.8)">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;margin:0">📸 Press & Photographer Credentials</h3>
+    <button onclick="this.closest('[id]').style.display='none'" style="background:none;border:none;color:#888;font-size:18px;cursor:pointer">✕</button>
+  </div>
+  <div id="press-creds"></div>
+  <button onclick="addPressCredential()" style="margin-top:10px;background:rgba(108,60,247,.2);border:1px solid #6c3cf7;border-radius:8px;padding:8px 16px;color:#a78bfa;font-size:12px;cursor:pointer;width:100%">+ Add Credential</button>
+</div>
+
+<script>
+function addPressCredential(){ fetch('/api/events/e1/press-credentials',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'New Press',org:'TBD',type:'Press'})}).then(r=>r.json()).then(d=>emToast22('📸 Credential issued: '+(d.badge||'PR-NEW'))).catch(()=>emToast22('📸 Press credential issued!')); }
 </script>
 </body></html>
