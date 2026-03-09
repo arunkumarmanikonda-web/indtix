@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Event Detail – INDTIX</title>
+<meta name="description" content="Book tickets for live events on INDTIX – India's premier ticketing platform.">
+<meta name="theme-color" content="#6C3CF7">
+<link rel="manifest" href="/manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+:root{--brand:#6C3CF7;--brand2:#FF3CAC;--brand3:#00F5C4;--dark:#080B14;--dark2:#0F1320;--dark3:#161B2E;--card:#1A2035;--border:rgba(108,60,247,0.2);--text:#E8EAFF;--muted:#8B93B8;--grad1:linear-gradient(135deg,#6C3CF7 0%,#FF3CAC 100%);--grad2:linear-gradient(135deg,#00F5C4 0%,#6C3CF7 100%);--glow:0 0 40px rgba(108,60,247,0.3)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--brand);border-radius:2px}
+a{text-decoration:none;color:inherit}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(8,11,20,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:36px;height:36px;background:var(--grad1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;font-family:'Space Grotesk',sans-serif}
+.logo-text{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:#fff}
+.logo-text span{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.btn-primary{background:var(--grad1);border:none;color:#fff;padding:9px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text);padding:8px 18px;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+/* HERO BANNER */
+.event-hero{position:relative;height:520px;overflow:hidden;margin-top:64px}
+.event-hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(108,60,247,0.5),rgba(255,60,172,0.3));display:flex;align-items:center;justify-content:center;font-size:120px}
+.event-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,11,20,0.1) 0%,rgba(8,11,20,0.7) 60%,rgba(8,11,20,1) 100%)}
+.event-hero-content{position:absolute;bottom:0;left:0;right:0;padding:40px;max-width:1400px;margin:0 auto}
+.event-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.badge-cat{background:rgba(108,60,247,0.3);border:1px solid var(--brand);color:var(--brand)}
+.badge-age{background:rgba(255,60,172,0.2);border:1px solid var(--brand2);color:var(--brand2)}
+.badge-lang{background:rgba(0,245,196,0.15);border:1px solid var(--brand3);color:var(--brand3)}
+.badge-trending{background:rgba(255,165,0,0.2);border:1px solid orange;color:orange}
+.event-hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:700;line-height:1.1;margin-bottom:12px}
+.event-hero-meta{display:flex;flex-wrap:wrap;gap:20px;color:var(--muted);font-size:14px}
+.event-hero-meta span{display:flex;align-items:center;gap:6px}
+/* MAIN LAYOUT */
+.main{max-width:1400px;margin:0 auto;padding:40px 24px;display:grid;grid-template-columns:1fr 380px;gap:40px}
+@media(max-width:900px){.main{grid-template-columns:1fr}}
+/* LEFT COLUMN */
+.section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;margin-bottom:24px}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+/* ABOUT */
+.about-text{color:var(--muted);line-height:1.8;font-size:15px}
+.read-more-btn{background:none;border:none;color:var(--brand);font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;margin-top:10px;padding:0}
+/* LINEUP */
+.lineup-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px}
+.artist-card{background:var(--dark3);border:1px solid var(--border);border-radius:16px;padding:20px;text-align:center;cursor:pointer;transition:all 0.2s}
+.artist-card:hover{border-color:var(--brand);transform:translateY(-2px)}
+.artist-avatar{width:72px;height:72px;border-radius:50%;background:var(--grad1);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 12px}
+.artist-name{font-weight:600;font-size:14px;margin-bottom:4px}
+.artist-role{font-size:11px;color:var(--muted)}
+/* GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.gallery-img{border-radius:12px;aspect-ratio:1;background:var(--dark3);display:flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;transition:all 0.2s;overflow:hidden;border:1px solid var(--border)}
+.gallery-img:hover{transform:scale(1.03);border-color:var(--brand)}
+/* SOCIAL PROOF */
+.social-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.attendee-avatars{display:flex}
+.attendee-avatar{width:32px;height:32px;border-radius:50%;border:2px solid var(--dark);background:var(--grad1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-left:-8px}
+.attendee-avatar:first-child{margin-left:0}
+.going-count{font-weight:700;font-size:15px}
+.going-label{color:var(--muted);font-size:13px}
+.interest-btn{padding:8px 20px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif}
+.btn-going{background:var(--grad1);border:none;color:#fff}
+.btn-interested{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-interested:hover{border-color:var(--brand);color:var(--brand)}
+/* SCHEDULE */
+.schedule-item{display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--border)}
+.schedule-item:last-child{border-bottom:none}
+.schedule-time{min-width:60px;font-size:13px;color:var(--brand3);font-weight:600}
+.schedule-act{font-size:14px;font-weight:600}
+.schedule-sub{font-size:12px;color:var(--muted)}
+/* VENUE MAP */
+.venue-map-box{background:var(--dark3);border:1px solid var(--border);border-radius:16px;height:200px;display:flex;align-items:center;justify-content:center;font-size:40px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden}
+.venue-map-box:hover{border-color:var(--brand)}
+.venue-map-label{position:absolute;bottom:12px;left:12px;background:rgba(8,11,20,0.85);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600}
+/* SIMILAR EVENTS */
+.similar-scroll{display:flex;gap:16px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+.similar-scroll::-webkit-scrollbar{display:none}
+.similar-card{min-width:220px;background:var(--dark3);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:all 0.2s;flex-shrink:0}
+.similar-card:hover{border-color:var(--brand);transform:translateY(-2px)}
+.similar-img{height:110px;background:var(--grad1);display:flex;align-items:center;justify-content:center;font-size:36px}
+.similar-body{padding:12px}
+.similar-name{font-size:13px;font-weight:700;margin-bottom:4px}
+.similar-meta{font-size:11px;color:var(--muted)}
+/* REVIEWS */
+.review-card{background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
+.review-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.reviewer-avatar{width:36px;height:36px;border-radius:50%;background:var(--grad2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.reviewer-name{font-weight:600;font-size:14px}
+.review-stars{color:gold;font-size:12px}
+.review-text{font-size:13px;color:var(--muted);line-height:1.6}
+.review-date{font-size:11px;color:var(--muted);margin-top:6px}
+/* FAQ CHATBOT */
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{background:var(--dark3);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.faq-q{padding:14px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600}
+.faq-q:hover{background:rgba(108,60,247,0.1)}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:all 0.3s;color:var(--muted);font-size:13px;line-height:1.7}
+.faq-a.open{max-height:200px;padding:0 16px 14px}
+/* RIGHT COLUMN – BOOKING WIDGET */
+.booking-widget{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;position:sticky;top:84px}
+.widget-title{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;margin-bottom:4px}
+.widget-sub{font-size:13px;color:var(--muted);margin-bottom:20px}
+.ticket-tier{background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:10px;cursor:pointer;transition:all 0.2s;position:relative}
+.ticket-tier:hover{border-color:var(--brand)}
+.ticket-tier.selected{border-color:var(--brand);background:rgba(108,60,247,0.12)}
+.tier-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.tier-name{font-weight:700;font-size:15px}
+.tier-price{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--brand3)}
+.tier-desc{font-size:12px;color:var(--muted);margin-bottom:8px}
+.tier-avail{font-size:11px;font-weight:600}
+.avail-low{color:#FF6B6B}
+.avail-ok{color:var(--brand3)}
+.tier-qty{display:flex;align-items:center;gap:10px;margin-top:10px}
+.qty-btn{width:28px;height:28px;border-radius:8px;border:1px solid var(--border);background:var(--dark);color:var(--text);cursor:pointer;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.qty-btn:hover{border-color:var(--brand);color:var(--brand)}
+.qty-num{font-weight:700;font-size:16px;min-width:24px;text-align:center}
+/* ADD-ONS */
+.addon-item{display:flex;align-items:center;gap:10px;padding:10px;background:var(--dark3);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:all 0.2s}
+.addon-item:hover{border-color:var(--brand)}
+.addon-item.selected{border-color:var(--brand3);background:rgba(0,245,196,0.08)}
+.addon-icon{font-size:20px;min-width:28px;text-align:center}
+.addon-info{flex:1}
+.addon-name{font-size:13px;font-weight:600}
+.addon-sub{font-size:11px;color:var(--muted)}
+.addon-price{font-size:13px;font-weight:700;color:var(--brand3);white-space:nowrap}
+.addon-check{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;flex-shrink:0}
+.addon-item.selected .addon-check{background:var(--brand3);border-color:var(--brand3)}
+/* MERCH SIZE */
+.size-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.size-pill{padding:4px 10px;border-radius:6px;border:1px solid var(--border);font-size:11px;font-weight:600;cursor:pointer;transition:all 0.2s;background:var(--dark)}
+.size-pill:hover{border-color:var(--brand);color:var(--brand)}
+.size-pill.active{background:var(--brand);border-color:var(--brand);color:#fff}
+/* PROMO */
+.promo-row{display:flex;gap:8px;margin:12px 0}
+.promo-input{flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;font-family:'Inter',sans-serif}
+.promo-input:focus{border-color:var(--brand)}
+/* ORDER SUMMARY */
+.order-summary{background:var(--dark3);border-radius:12px;padding:14px;margin:14px 0}
+.order-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}
+.order-row.total{border-top:1px solid var(--border);padding-top:10px;margin-top:8px;font-weight:700;font-size:15px}
+.order-row.disc{color:var(--brand3)}
+/* PAYMENT METHODS */
+.pay-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0}
+.pay-btn{padding:10px 6px;background:var(--dark3);border:1px solid var(--border);border-radius:10px;color:var(--text);cursor:pointer;font-size:11px;font-family:'Inter',sans-serif;font-weight:600;transition:all 0.2s;text-align:center}
+.pay-btn:hover,.pay-btn.active{border-color:var(--brand);background:rgba(108,60,247,0.15);color:var(--brand)}
+/* SEAT TIMER */
+.seat-timer{background:rgba(255,60,172,0.1);border:1px solid rgba(255,60,172,0.3);border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;color:var(--brand2);display:flex;align-items:center;gap:6px;margin-bottom:12px;display:none}
+/* SHARE BAR */
+.share-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.share-btn{padding:8px 16px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;border:1px solid var(--border);background:var(--dark3);color:var(--text);display:flex;align-items:center;gap:6px}
+.share-btn:hover{border-color:var(--brand);color:var(--brand)}
+/* CALENDAR/WISHLIST ROW */
+.action-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.action-btn{flex:1;min-width:100px;padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:var(--dark3);color:var(--text);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px}
+.action-btn:hover{border-color:var(--brand);color:var(--brand)}
+.action-btn.active{background:rgba(108,60,247,0.15);border-color:var(--brand);color:var(--brand)}
+/* GST BREAKUP */
+.gst-box{background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0;font-size:12px}
+.gst-row{display:flex;justify-content:space-between;margin-bottom:4px;color:var(--muted)}
+.gst-row.total{color:var(--text);font-weight:700;border-top:1px solid var(--border);padding-top:6px;margin-top:4px}
+/* CONFIRMATION */
+.conf-box{text-align:center;padding:20px 0}
+.conf-qr{width:150px;height:150px;background:var(--dark3);border:1px solid var(--border);border-radius:16px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:60px}
+.conf-booking-id{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--brand3)}
+/* SEATS MODAL */
+#seatMapModal .modal{max-width:900px;width:96vw}
+.zone-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.ztab{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s}
+.ztab.active{border-color:var(--brand);background:rgba(108,60,247,0.2);color:var(--brand)}
+/* MODAL BASE */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:24px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;position:relative}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--dark3);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;z-index:1}
+.modal-body{padding:28px}
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card);border:1px solid var(--brand);border-radius:12px;padding:12px 24px;font-size:14px;font-weight:600;z-index:9999;transition:all 0.4s;opacity:0;pointer-events:none;white-space:nowrap;max-width:90vw}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+/* LOADING */
+.loading{display:inline-block;width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--brand);border-radius:50%;animation:spin 0.6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* KYC INLINE */
+.kyc-notice{background:rgba(255,165,0,0.1);border:1px solid rgba(255,165,0,0.3);border-radius:12px;padding:14px;margin-bottom:16px;font-size:13px;color:orange;display:flex;gap:8px;align-items:flex-start}
+/* PROGRESS STEPS */
+.steps{display:flex;align-items:center;gap:0;margin-bottom:24px}
+.step{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600}
+.step-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.step.done .step-dot{background:var(--brand);color:#fff}
+.step.active .step-dot{background:var(--grad1);color:#fff}
+.step.idle .step-dot{background:var(--dark3);border:1px solid var(--border);color:var(--muted)}
+.step.idle span{color:var(--muted)}
+.step-line{flex:1;height:2px;background:var(--border);margin:0 4px}
+.step-line.done{background:var(--brand)}
+/* GROUP BOOKING */
+.group-box{background:rgba(0,245,196,0.05);border:1px solid rgba(0,245,196,0.2);border-radius:12px;padding:14px;margin-top:10px;font-size:13px}
+/* INVITE */
+.invite-row{display:flex;gap:8px;margin-top:10px}
+.invite-input{flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;font-family:'Inter',sans-serif}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/fan" class="logo">
+      <div class="logo-mark">IX</div>
+      <div class="logo-text">IND<span>TIX</span></div>
+    </a>
+    <div style="display:flex;align-items:center;gap:10px">
+      <a href="/fan" class="btn-ghost" style="padding:8px 14px;font-size:13px"><i class="fas fa-arrow-left"></i> All Events</a>
+      <button class="btn-primary" onclick="scrollToWidget()"><i class="fas fa-ticket"></i> Book Now</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO BANNER -->
+<div class="event-hero" id="heroSection">
+  <div class="event-hero-bg" id="heroBg">🎵</div>
+  <div class="event-hero-overlay"></div>
+  <div class="event-hero-content">
+    <div class="event-badges" id="heroBadges">
+      <span class="badge badge-cat" id="heroCat">Music</span>
+      <span class="badge badge-trending">🔥 Trending</span>
+      <span class="badge badge-age" id="heroAge">18+</span>
+      <span class="badge badge-lang" id="heroLang">Hindi / English</span>
+    </div>
+    <h1 class="event-hero-title" id="heroTitle">Loading Event...</h1>
+    <div class="event-hero-meta">
+      <span><i class="fas fa-calendar"></i> <span id="heroDate">—</span></span>
+      <span><i class="fas fa-clock"></i> <span id="heroTime">—</span></span>
+      <span><i class="fas fa-location-dot"></i> <span id="heroVenue">—</span></span>
+      <span><i class="fas fa-city"></i> <span id="heroCity">—</span></span>
+      <span id="heroOrganiserMeta"><i class="fas fa-user-circle"></i> <span id="heroOrganiser">—</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="main">
+
+  <!-- LEFT COLUMN -->
+  <div>
+
+    <!-- SHARE & ACTIONS -->
+    <div class="section">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+        <div class="social-row">
+          <div class="attendee-avatars" id="attendeeAvatars">
+            <div class="attendee-avatar">A</div>
+            <div class="attendee-avatar">B</div>
+            <div class="attendee-avatar">C</div>
+            <div class="attendee-avatar">+</div>
+          </div>
+          <div>
+            <div class="going-count" id="goingCount">2,480 going</div>
+            <div class="going-label" id="interestedCount">5,120 interested</div>
+          </div>
+          <button class="interest-btn btn-going" id="goingBtn" onclick="markGoing()">✓ I'm Going</button>
+          <button class="interest-btn btn-interested" id="interestedBtn" onclick="markInterested()">★ Interested</button>
+        </div>
+        <div class="share-bar">
+          <button class="share-btn" onclick="shareEvent('whatsapp')"><i class="fab fa-whatsapp" style="color:#25D366"></i> WhatsApp</button>
+          <button class="share-btn" onclick="shareEvent('copy')"><i class="fas fa-link"></i> Copy Link</button>
+          <button class="share-btn" onclick="shareEvent('twitter')"><i class="fab fa-twitter" style="color:#1DA1F2"></i> Tweet</button>
+          <button class="share-btn" onclick="calendarAdd()"><i class="fas fa-calendar-plus"></i> Calendar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="section">
+      <div class="section-title"><i class="fas fa-info-circle" style="color:var(--brand)"></i> About This Event</div>
+      <div class="about-text" id="aboutText">Loading event details...</div>
+      <button class="read-more-btn" id="readMoreBtn" onclick="toggleReadMore()" style="display:none">Read more ↓</button>
+    </div>
+
+    <!-- ARTIST LINEUP -->
+    <div class="section" id="lineupSection">
+      <div class="section-title"><i class="fas fa-microphone-alt" style="color:var(--brand2)"></i> Artist Lineup</div>
+      <div class="lineup-grid" id="lineupGrid">
+        <div style="color:var(--muted);font-size:13px">Loading lineup...</div>
+      </div>
+    </div>
+
+    <!-- EVENT SCHEDULE -->
+    <div class="section" id="scheduleSection">
+      <div class="section-title"><i class="fas fa-clock" style="color:var(--brand3)"></i> Schedule</div>
+      <div id="scheduleList">
+        <div style="color:var(--muted);font-size:13px">Loading schedule...</div>
+      </div>
+    </div>
+
+    <!-- GALLERY -->
+    <div class="section" id="gallerySection">
+      <div class="section-title"><i class="fas fa-images" style="color:var(--brand)"></i> Gallery</div>
+      <div class="gallery-grid" id="galleryGrid">
+        <div class="gallery-img">🎶</div>
+        <div class="gallery-img">🎸</div>
+        <div class="gallery-img">🎤</div>
+        <div class="gallery-img">🎵</div>
+      </div>
+    </div>
+
+    <!-- VENUE INFO -->
+    <div class="section">
+      <div class="section-title"><i class="fas fa-map-marker-alt" style="color:var(--brand2)"></i> Venue</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+        <div>
+          <div style="font-weight:700;font-size:15px;margin-bottom:4px" id="venueNameFull">—</div>
+          <div style="color:var(--muted);font-size:13px;line-height:1.6" id="venueAddress">—</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px" id="venueTags">
+            <span style="background:rgba(0,245,196,0.1);border:1px solid rgba(0,245,196,0.2);border-radius:6px;padding:3px 10px;font-size:11px;color:var(--brand3)">🚇 Metro Access</span>
+            <span style="background:rgba(108,60,247,0.1);border:1px solid var(--border);border-radius:6px;padding:3px 10px;font-size:11px;color:var(--muted)">🅿️ Parking Available</span>
+            <span style="background:rgba(108,60,247,0.1);border:1px solid var(--border);border-radius:6px;padding:3px 10px;font-size:11px;color:var(--muted)">♿ Accessible</span>
+          </div>
+        </div>
+        <div class="venue-map-box" onclick="openGoogleMaps()">
+          🗺️
+          <div class="venue-map-label"><i class="fas fa-external-link-alt"></i> Open in Maps</div>
+        </div>
+      </div>
+      <div style="background:rgba(255,165,0,0.08);border:1px solid rgba(255,165,0,0.2);border-radius:10px;padding:12px;font-size:12px;color:orange;display:flex;gap:8px">
+        <i class="fas fa-exclamation-circle" style="margin-top:1px"></i>
+        <span>Gates open 1 hour before show time. No re-entry. Outside food & beverages not permitted.</span>
+      </div>
+    </div>
+
+    <!-- T&C / POLICIES -->
+    <div class="section">
+      <div class="section-title"><i class="fas fa-shield-alt" style="color:var(--brand3)"></i> Policies & FAQs</div>
+      <div class="faq-list" id="faqList">
+        <!-- Rendered by JS -->
+      </div>
+      <!-- CHATBOT -->
+      <div style="margin-top:16px;background:var(--dark3);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+        <div style="padding:12px 16px;border-bottom:1px solid var(--border);font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--brand3);display:inline-block;animation:pulse 2s infinite"></span>
+          Ask about this event
+        </div>
+        <div id="chatMessages" style="height:160px;overflow-y:auto;padding:12px;font-size:13px;display:flex;flex-direction:column;gap:8px">
+          <div style="background:rgba(108,60,247,0.15);border-radius:10px;padding:8px 12px;align-self:flex-start;max-width:80%;color:var(--text)">Hi! I'm the INDTIX event bot 🤖 Ask me anything about this event — tickets, venue, lineup, policies!</div>
+        </div>
+        <div style="padding:10px;border-top:1px solid var(--border);display:flex;gap:8px">
+          <input id="chatInput" type="text" placeholder="Ask a question..." style="flex:1;background:var(--dark);border:1px solid var(--border);border-radius:10px;padding:8px 14px;color:var(--text);font-size:13px;outline:none;font-family:'Inter',sans-serif" onkeydown="if(event.key==='Enter')sendEventChat()">
+          <button onclick="sendEventChat()" style="background:var(--grad1);border:none;color:#fff;border-radius:10px;padding:8px 14px;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px"><i class="fas fa-paper-plane"></i></button>
+        </div>
+        <div style="padding:6px 10px 10px;display:flex;gap:6px;flex-wrap:wrap">
+          <button onclick="chatSuggest('What is the ticket refund policy?')" style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:4px 10px;color:var(--muted);font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Refund policy?</button>
+          <button onclick="chatSuggest('What can I bring to the venue?')" style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:4px 10px;color:var(--muted);font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">What to bring?</button>
+          <button onclick="chatSuggest('Is there parking at the venue?')" style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:4px 10px;color:var(--muted);font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Parking?</button>
+          <button onclick="chatSuggest('Who is performing?')" style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:4px 10px;color:var(--muted);font-size:11px;cursor:pointer;font-family:'Inter',sans-serif">Lineup?</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="section">
+      <div class="section-title"><i class="fas fa-star" style="color:gold"></i> Reviews</div>
+      <div style="display:flex;align-items:center;gap:24px;margin-bottom:20px;padding:16px;background:var(--dark3);border-radius:14px">
+        <div style="text-align:center">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:48px;font-weight:700;color:var(--brand3)" id="avgRating">4.8</div>
+          <div style="color:gold;font-size:18px">★★★★★</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px" id="totalReviews">2,140 reviews</div>
+        </div>
+        <div style="flex:1">
+          <div id="ratingBars"></div>
+        </div>
+      </div>
+      <div id="reviewsList"></div>
+      <button onclick="openWriteReview()" class="btn-ghost" style="width:100%;margin-top:8px;padding:12px"><i class="fas fa-pen"></i> Write a Review</button>
+    </div>
+
+    <!-- SIMILAR EVENTS -->
+    <div class="section">
+      <div class="section-title"><i class="fas fa-fire" style="color:var(--brand2)"></i> You Might Also Like</div>
+      <div class="similar-scroll" id="similarEvents">
+        <div style="color:var(--muted);font-size:13px">Loading...</div>
+      </div>
+    </div>
+
+    <!-- INVITE FRIENDS -->
+    <div class="section">
+      <div class="section-title"><i class="fas fa-user-plus" style="color:var(--brand)"></i> Invite Friends</div>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Share with friends and earn ₹50 INDTIX cashback for every friend who books.</p>
+      <div class="invite-row">
+        <input type="text" class="invite-input" id="inviteEmail" placeholder="Friend's email or phone">
+        <button onclick="sendInvite()" class="btn-primary" style="padding:10px 18px;border-radius:10px"><i class="fas fa-paper-plane"></i> Send</button>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button onclick="shareEvent('whatsapp')" class="share-btn"><i class="fab fa-whatsapp" style="color:#25D366"></i> WhatsApp</button>
+        <button onclick="shareEvent('copy')" class="share-btn"><i class="fas fa-copy"></i> Copy Invite Link</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT COLUMN – BOOKING WIDGET -->
+  <div id="bookingWidget">
+    <div class="booking-widget">
+      <!-- STEPS -->
+      <div class="steps" id="bookingSteps">
+        <div class="step active" id="step1"><div class="step-dot">1</div><span>Tickets</span></div>
+        <div class="step-line" id="line12"></div>
+        <div class="step idle" id="step2"><div class="step-dot">2</div><span>Seats</span></div>
+        <div class="step-line" id="line23"></div>
+        <div class="step idle" id="step3"><div class="step-dot">3</div><span>Add-ons</span></div>
+        <div class="step-line" id="line34"></div>
+        <div class="step idle" id="step4"><div class="step-dot">4</div><span>Pay</span></div>
+      </div>
+
+      <!-- STEP 1: TICKET SELECTION -->
+      <div id="widgetStep1">
+        <div class="widget-title">Select Tickets</div>
+        <div class="widget-sub" id="widgetEventMeta">Loading event info…</div>
+
+        <div class="action-row">
+          <button class="action-btn" id="wishlistBtn" onclick="toggleWishlistWidget()"><i class="fas fa-heart"></i> Save</button>
+          <button class="action-btn" onclick="calendarAdd()"><i class="fas fa-calendar-plus"></i> Remind Me</button>
+          <button class="action-btn" onclick="shareEvent('copy')"><i class="fas fa-share"></i> Share</button>
+        </div>
+
+        <div id="tiersList">
+          <!-- Rendered by JS -->
+          <div style="text-align:center;padding:20px;color:var(--muted)"><div class="loading"></div><br>Loading tickets…</div>
+        </div>
+
+        <!-- GROUP BOOKING -->
+        <div class="group-box" id="groupBox" style="display:none">
+          <div style="font-weight:700;font-size:13px;margin-bottom:6px">🎟️ Group Booking (10+ tickets)</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Groups of 10+ get 10% off. Need 50+? <a href="javascript:openGroupRequest()" style="color:var(--brand)">Request quote</a></div>
+          <button onclick="applyGroupDiscount()" class="btn-ghost" style="padding:6px 14px;font-size:12px">Apply Group Discount</button>
+        </div>
+
+        <button onclick="goToSeatMap()" class="btn-primary" id="toSeatsBtn" style="width:100%;padding:13px;font-size:15px;border-radius:12px;margin-top:14px" disabled>
+          Select Seats <i class="fas fa-arrow-right"></i>
+        </button>
+        <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:8px"><i class="fas fa-lock" style="color:var(--brand3)"></i> Secure checkout · Instant ticket delivery</p>
+      </div>
+
+      <!-- STEP 2: SEAT MAP (inline in widget) -->
+      <div id="widgetStep2" style="display:none">
+        <div class="widget-title">Pick Your Seats</div>
+        <div class="seat-timer" id="seatTimerBox"><i class="fas fa-hourglass-half"></i> Seats held for <span id="seatTimerDisp" style="color:#FF3CAC;font-weight:800">10:00</span></div>
+        <div class="zone-tabs" id="zoneTabs"></div>
+        <div style="background:linear-gradient(135deg,rgba(108,60,247,0.2),rgba(255,60,172,0.1));border-radius:10px;padding:8px;text-align:center;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);margin-bottom:12px">🎤 STAGE</div>
+        <div id="widgetSeatGrid" style="overflow:auto;max-height:300px;background:var(--dark3);border-radius:12px;padding:12px">
+          <div id="widgetSeatInner" style="display:grid;gap:4px;justify-content:center"></div>
+        </div>
+        <div style="display:flex;gap:10px;font-size:11px;color:var(--muted);margin:10px 0;flex-wrap:wrap;justify-content:center">
+          <span><span style="width:10px;height:10px;border-radius:2px;background:var(--brand);display:inline-block;margin-right:4px"></span>Available</span>
+          <span><span style="width:10px;height:10px;border-radius:2px;background:var(--brand2);display:inline-block;margin-right:4px"></span>Selected</span>
+          <span><span style="width:10px;height:10px;border-radius:2px;background:var(--dark);border:1px solid var(--border);display:inline-block;margin-right:4px"></span>Taken</span>
+        </div>
+        <div id="seatSelectedList" style="font-size:12px;color:var(--muted);min-height:36px;background:var(--dark3);border-radius:10px;padding:8px 12px;margin-bottom:10px">No seats selected yet.</div>
+        <div style="display:flex;gap:8px">
+          <button onclick="goToStep(1)" class="btn-ghost" style="flex:1;padding:11px"><i class="fas fa-arrow-left"></i> Back</button>
+          <button onclick="goToAddons()" class="btn-primary" id="toAddonsBtn" style="flex:2;padding:11px" disabled>Add-ons <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- STEP 3: ADD-ONS -->
+      <div id="widgetStep3" style="display:none">
+        <div class="widget-title">Add-ons & Extras</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Pre-order to skip queues at the venue 🚀</p>
+        <div id="addonsList"></div>
+        <!-- PROMO CODE -->
+        <div style="margin-top:8px">
+          <div style="font-size:12px;font-weight:600;margin-bottom:6px;color:var(--muted)">PROMO CODE</div>
+          <div class="promo-row">
+            <input type="text" class="promo-input" id="promoCodeInput" placeholder="Enter code (e.g. INDY20)">
+            <button onclick="applyPromoCode()" class="btn-primary" style="padding:10px 14px;border-radius:10px;font-size:13px" id="promoApplyBtn">Apply</button>
+          </div>
+          <div id="promoMsg" style="font-size:12px;margin-top:4px"></div>
+        </div>
+        <!-- LOYALTY POINTS -->
+        <div style="background:rgba(0,245,196,0.06);border:1px solid rgba(0,245,196,0.2);border-radius:10px;padding:12px;margin-top:10px;font-size:13px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span>💎 Loyalty Points: <strong id="loyaltyPoints">1,240 pts</strong></span>
+            <button onclick="redeemPoints()" style="background:var(--brand3);border:none;color:var(--dark);border-radius:6px;padding:4px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif">Redeem</button>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px" id="pointsValue">1,240 pts = ₹124 off</div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button onclick="goToStep(2)" class="btn-ghost" style="flex:1;padding:11px"><i class="fas fa-arrow-left"></i> Back</button>
+          <button onclick="goToPayment()" class="btn-primary" style="flex:2;padding:11px">Review & Pay <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- STEP 4: PAYMENT -->
+      <div id="widgetStep4" style="display:none">
+        <div class="widget-title">Order Summary</div>
+
+        <!-- ORDER SUMMARY -->
+        <div class="order-summary" id="finalOrderSummary">
+          <div class="order-row"><span>Tickets</span><span id="finalTickets">—</span></div>
+          <div class="order-row"><span>Add-ons</span><span id="finalAddons">₹0</span></div>
+          <div class="order-row disc" id="finalPromoRow" style="display:none"><span>Promo discount</span><span id="finalPromo">—</span></div>
+          <div class="order-row disc" id="finalLoyaltyRow" style="display:none"><span>Loyalty redemption</span><span id="finalLoyalty">—</span></div>
+          <div class="order-row"><span style="color:var(--muted)">Platform fee</span><span style="color:var(--muted)">₹20</span></div>
+          <div class="order-row total"><span>Total (incl. GST)</span><span id="finalTotal" style="color:var(--brand3)">—</span></div>
+        </div>
+
+        <!-- GST BREAKUP -->
+        <div class="gst-box" id="gstBreakup">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">GST Invoice Breakup</div>
+          <div class="gst-row"><span>Taxable value</span><span id="gstBase">—</span></div>
+          <div class="gst-row"><span>CGST (9%)</span><span id="gstCGST">—</span></div>
+          <div class="gst-row"><span>SGST (9%)</span><span id="gstSGST">—</span></div>
+          <div class="gst-row total"><span>Total Tax</span><span id="gstTotal">—</span></div>
+          <div style="margin-top:8px;font-size:11px;color:var(--muted)">GSTIN: 27AABCO1234A1Z5 | SAC: 999691</div>
+        </div>
+
+        <!-- CORPORATE GST -->
+        <div style="margin-bottom:12px">
+          <button onclick="toggleCorpGST()" style="background:none;border:none;color:var(--brand);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-building"></i> Add Corporate GSTIN (for business invoice)</button>
+          <div id="corpGSTBox" style="display:none;margin-top:8px">
+            <input type="text" placeholder="Your company GSTIN" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:9px 14px;color:var(--text);font-size:13px;outline:none;font-family:'Inter',sans-serif;margin-bottom:6px">
+            <input type="text" placeholder="Company name" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:9px 14px;color:var(--text);font-size:13px;outline:none;font-family:'Inter',sans-serif">
+          </div>
+        </div>
+
+        <!-- PAYMENT METHODS -->
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">Payment Method</div>
+        <div class="pay-methods">
+          <button class="pay-btn active" onclick="selectPayMethod(this,'upi')" id="pm-upi">📱 UPI</button>
+          <button class="pay-btn" onclick="selectPayMethod(this,'card')" id="pm-card">💳 Card</button>
+          <button class="pay-btn" onclick="selectPayMethod(this,'netbanking')" id="pm-nb">🏦 Net Banking</button>
+          <button class="pay-btn" onclick="selectPayMethod(this,'wallet')" id="pm-wallet">👛 Wallets</button>
+          <button class="pay-btn" onclick="selectPayMethod(this,'emi')" id="pm-emi">📅 EMI</button>
+          <button class="pay-btn" onclick="selectPayMethod(this,'bnpl')" id="pm-bnpl">⚡ Pay Later</button>
+        </div>
+
+        <!-- UPI INPUT -->
+        <div id="upiInput" style="margin-bottom:12px">
+          <input type="text" placeholder="Enter UPI ID (e.g. name@upi)" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;font-family:'Inter',sans-serif">
+        </div>
+
+        <!-- SPLIT PAY -->
+        <div style="margin-bottom:12px">
+          <button onclick="toggleSplitPay()" style="background:none;border:none;color:var(--brand);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif"><i class="fas fa-users"></i> Split payment with friends</button>
+          <div id="splitPayBox" style="display:none;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:12px;margin-top:8px;font-size:13px">
+            <p style="color:var(--muted);font-size:12px;margin-bottom:8px">Split equally with up to 4 friends. Each pays their share via UPI.</p>
+            <div class="invite-row">
+              <input type="text" class="invite-input" placeholder="Friend's phone or email">
+              <button onclick="addSplitFriend()" class="btn-primary" style="padding:8px 14px;border-radius:8px;font-size:12px">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="completePurchase()" class="btn-primary" id="payNowBtn" style="width:100%;padding:14px;font-size:16px;border-radius:12px">
+          <i class="fas fa-lock"></i> Pay & Get Tickets
+        </button>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button onclick="goToStep(3)" class="btn-ghost" style="flex:1;padding:10px;font-size:12px"><i class="fas fa-arrow-left"></i> Back</button>
+        </div>
+        <p style="text-align:center;margin-top:10px;font-size:11px;color:var(--muted)">🔒 256-bit SSL • Tickets via WhatsApp & Email • Auto GST invoice</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════ CONFIRMATION MODAL ══════ -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal" style="max-width:500px">
+    <button class="modal-close" onclick="closeModal('confirmModal')"><i class="fas fa-times"></i></button>
+    <div class="modal-body">
+      <div class="conf-box">
+        <div style="font-size:48px;margin-bottom:12px">🎉</div>
+        <h2 style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;margin-bottom:8px">You're Going!</h2>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:20px">Tickets confirmed. Check your WhatsApp & email.</p>
+        <div class="conf-qr">🎟️</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Booking ID</div>
+        <div class="conf-booking-id" id="confBookingId">BK-XXXXXX</div>
+        <div style="margin-top:20px;background:var(--dark3);border-radius:14px;padding:16px;text-align:left">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px">
+            <div><div style="color:var(--muted);font-size:11px">Event</div><div id="confEventName" style="font-weight:600">—</div></div>
+            <div><div style="color:var(--muted);font-size:11px">Date</div><div id="confDate" style="font-weight:600">—</div></div>
+            <div><div style="color:var(--muted);font-size:11px">Venue</div><div id="confVenue" style="font-weight:600">—</div></div>
+            <div><div style="color:var(--muted);font-size:11px">Seats</div><div id="confSeats" style="font-weight:600">—</div></div>
+            <div><div style="color:var(--muted);font-size:11px">Zone</div><div id="confZone" style="font-weight:600">—</div></div>
+            <div><div style="color:var(--muted);font-size:11px">Amount Paid</div><div id="confAmount" style="font-weight:600;color:var(--brand3)">—</div></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;justify-content:center">
+          <button onclick="downloadTicket()" class="btn-primary" style="padding:10px 20px"><i class="fas fa-download"></i> Download PDF</button>
+          <button onclick="sendWhatsApp()" class="btn-ghost" style="padding:10px 20px"><i class="fab fa-whatsapp" style="color:#25D366"></i> Send to WhatsApp</button>
+          <button onclick="transferTicket()" class="btn-ghost" style="padding:10px 20px"><i class="fas fa-exchange-alt"></i> Transfer</button>
+          <button onclick="viewGSTInvoice()" class="btn-ghost" style="padding:10px 20px"><i class="fas fa-file-invoice"></i> GST Invoice</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ WRITE REVIEW MODAL ══════ -->
+<div class="modal-overlay" id="reviewModal">
+  <div class="modal" style="max-width:500px">
+    <button class="modal-close" onclick="closeModal('reviewModal')"><i class="fas fa-times"></i></button>
+    <div class="modal-body">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin-bottom:20px">Write a Review</h3>
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Your rating</div>
+        <div id="starRatingRow" style="display:flex;gap:8px;justify-content:center;font-size:32px;cursor:pointer">
+          <span onclick="setRating(1)" class="rstar">☆</span>
+          <span onclick="setRating(2)" class="rstar">☆</span>
+          <span onclick="setRating(3)" class="rstar">☆</span>
+          <span onclick="setRating(4)" class="rstar">☆</span>
+          <span onclick="setRating(5)" class="rstar">☆</span>
+        </div>
+      </div>
+      <textarea id="reviewText" placeholder="Share your experience..." style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif;resize:vertical;min-height:100px;margin-bottom:14px"></textarea>
+      <button onclick="submitReview()" class="btn-primary" style="width:100%;padding:12px">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ TRANSFER MODAL ══════ -->
+<div class="modal-overlay" id="transferModal">
+  <div class="modal" style="max-width:440px">
+    <button class="modal-close" onclick="closeModal('transferModal')"><i class="fas fa-times"></i></button>
+    <div class="modal-body">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px">Transfer Ticket</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:20px">Transfer your ticket to a friend. They'll receive it on WhatsApp & email.</p>
+      <input type="text" id="transferPhone" placeholder="Recipient's phone or email" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif;margin-bottom:14px">
+      <button onclick="confirmTransfer()" class="btn-primary" style="width:100%;padding:12px">Transfer Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ REFUND MODAL ══════ -->
+<div class="modal-overlay" id="refundModal">
+  <div class="modal" style="max-width:440px">
+    <button class="modal-close" onclick="closeModal('refundModal')"><i class="fas fa-times"></i></button>
+    <div class="modal-body">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px">Request Refund</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:20px">Refunds processed within 5-7 business days to original payment method.</p>
+      <select id="refundReason" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif;margin-bottom:14px">
+        <option value="">Select reason</option>
+        <option>Can no longer attend</option>
+        <option>Event cancelled</option>
+        <option>Duplicate booking</option>
+        <option>Medical emergency</option>
+        <option>Other</option>
+      </select>
+      <textarea id="refundNote" placeholder="Additional notes (optional)" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:12px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif;resize:vertical;min-height:80px;margin-bottom:14px"></textarea>
+      <button onclick="submitRefundRequest()" class="btn-primary" style="width:100%;padding:12px;background:linear-gradient(135deg,#FF6B6B,#FF3CAC)">Request Refund</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toastMsg"></div>
+
+<script>
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let EVENT = null;
+let selectedTiers = {}; // {tierKey: qty}
+let selectedSeats = [];
+let currentZone = 'GA';
+let ZONE_PRICES = {GA:1499, PREM:2999, VIP:4999, ACCESSIBLE:1499};
+let selectedAddons = {};  // {addonId: {qty, price, name}}
+let promoApplied = false;
+let promoDiscount = 0;
+let pointsRedeemed = 0;
+let selectedPayMethod = 'upi';
+let seatTimer = null;
+let seatSeconds = 600;
+let currentRating = 0;
+let totalSelected = 0;
+
+// Get event ID from URL
+const urlParams = new URLSearchParams(window.location.search);
+const EVENT_ID = urlParams.get('id') || 'e1';
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', async () => {
+  await loadEventDetail();
+  loadReviews();
+  loadSimilarEvents();
+  loadFAQs();
+  loadAddons();
+});
+
+async function loadEventDetail() {
+  try {
+    const res = await fetch(`/api/events/${EVENT_ID}`);
+    const data = await res.json();
+    EVENT = data.event || data;
+    renderHero(EVENT);
+    renderTiers();
+    renderLineup(EVENT.lineup || []);
+    renderSchedule(EVENT.schedule || []);
+  } catch(e) {
+    EVENT = getMockEvent();
+    renderHero(EVENT);
+    renderTiers();
+    renderLineup(EVENT.lineup);
+    renderSchedule(EVENT.schedule);
+  }
+}
+
+function getMockEvent() {
+  return {
+    id:'e1', name:'Diljit Dosanjh – Dil-Luminati Tour 2026',
+    category:'Music', genre:'Punjabi / Pop',
+    date:'Sat, 12 Apr 2026', time:'7:00 PM Onwards', doors_open:'6:00 PM',
+    venue:'DY Patil International Stadium', city:'Mumbai',
+    organiser:'BookMyShow Live', age_restriction:'18+', language:'Hindi / Punjabi',
+    about:`The Dil-Luminati Tour is India's biggest music event of 2026 featuring Diljit Dosanjh's most iconic tracks spanning his 20-year career. This 4-hour spectacular includes state-of-the-art LED production, pyrotechnics, and special guest performances.\n\nThe concert features a massive 360° stage setup with over 1000 lights, lasers, and a 60-foot LED screen. Expect to hear fan favourites like Paagal, G.O.A.T, 5 Taara, Lover, and many more.\n\nFood & beverages available inside the venue. No outside food permitted. Merchandise stalls open from 4 PM.`,
+    tiers:[
+      {id:'GA', name:'General Admission', price:1499, available:1200, total:3000, desc:'Open floor, standing area near stage'},
+      {id:'PREM', name:'Premium Standing', price:2999, available:340, total:800, desc:'Premium floor, barrier section, closer to stage'},
+      {id:'VIP', name:'VIP Lounge', price:5999, available:45, total:100, desc:'Exclusive lounge, complimentary drinks, artist meet & greet'},
+      {id:'ACCESSIBLE', name:'Accessible Zone', price:1499, available:30, total:50, desc:'Wheelchair accessible area with companion seating'},
+    ],
+    lineup:[
+      {name:'Diljit Dosanjh', role:'Headliner', emoji:'🎤'},
+      {name:'Guru Randhawa', role:'Special Guest', emoji:'🎵'},
+      {name:'Badshah', role:'Opening Act', emoji:'🎧'},
+      {name:'Akull', role:'DJ Set', emoji:'🎛️'},
+    ],
+    schedule:[
+      {time:'6:00 PM', act:'Gates Open', sub:''},
+      {time:'7:00 PM', act:'Akull – DJ Set', sub:'Opening'},
+      {time:'8:00 PM', act:'Badshah', sub:'Opening Act'},
+      {time:'9:00 PM', act:'Guru Randhawa', sub:'Special Guest'},
+      {time:'10:00 PM', act:'Diljit Dosanjh', sub:'Headliner · 2 hrs'},
+      {time:'12:00 AM', act:'Show Ends', sub:''},
+    ],
+    going:14820, interested:32440,
+    avg_rating:4.8, total_reviews:3241,
+    venue_address:'Nerul, Navi Mumbai, Maharashtra 400706',
+    lat:19.0330, lng:73.0297,
+    emojis:'🎤🎵🎶'
+  };
+}
+
+function renderHero(e) {
+  document.getElementById('heroTitle').textContent = e.name;
+  document.getElementById('heroBg').textContent = e.emojis || '🎵';
+  document.getElementById('heroCat').textContent = e.category || 'Music';
+  document.getElementById('heroAge').textContent = e.age_restriction || '18+';
+  document.getElementById('heroLang').textContent = e.language || 'Hindi';
+  document.getElementById('heroDate').textContent = e.date;
+  document.getElementById('heroTime').textContent = e.time;
+  document.getElementById('heroVenue').textContent = e.venue;
+  document.getElementById('heroCity').textContent = e.city;
+  document.getElementById('heroOrganiser').textContent = e.organiser || 'INDTIX Presents';
+  document.getElementById('venueNameFull').textContent = e.venue;
+  document.getElementById('venueAddress').textContent = e.venue_address || (e.venue + ', ' + e.city);
+  document.getElementById('goingCount').textContent = (e.going||2480).toLocaleString('en-IN') + ' going';
+  document.getElementById('interestedCount').textContent = (e.interested||5120).toLocaleString('en-IN') + ' interested';
+  document.getElementById('avgRating').textContent = e.avg_rating || 4.8;
+  document.getElementById('totalReviews').textContent = (e.total_reviews||2140).toLocaleString('en-IN') + ' reviews';
+  document.getElementById('widgetEventMeta').textContent = `${e.date} · ${e.venue}, ${e.city}`;
+  document.title = e.name + ' – INDTIX';
+  // About with read-more
+  const aboutEl = document.getElementById('aboutText');
+  const fullText = e.about || '';
+  const truncated = fullText.length > 300;
+  aboutEl.textContent = truncated ? fullText.substring(0,300)+'…' : fullText;
+  aboutEl._full = fullText;
+  aboutEl._truncated = truncated;
+  if(truncated) document.getElementById('readMoreBtn').style.display = 'block';
+  renderRatingBars(e);
+}
+
+function toggleReadMore() {
+  const el = document.getElementById('aboutText');
+  const btn = document.getElementById('readMoreBtn');
+  if(el._expanded) { el.textContent = el._full.substring(0,300)+'…'; btn.textContent='Read more ↓'; el._expanded=false; }
+  else { el.textContent = el._full; btn.textContent='Show less ↑'; el._expanded=true; }
+}
+
+function renderTiers() {
+  if(!EVENT) return;
+  const container = document.getElementById('tiersList');
+  const tiers = EVENT.tiers || [];
+  ZONE_PRICES = {};
+  tiers.forEach(t => { ZONE_PRICES[t.id] = t.price; });
+  container.innerHTML = tiers.map(t => {
+    const lowStock = t.available < 100;
+    return `<div class="ticket-tier" id="tier-${t.id}" onclick="selectTier('${t.id}')">
+      <div class="tier-top">
+        <div class="tier-name">${t.name}</div>
+        <div class="tier-price">₹${t.price.toLocaleString('en-IN')}</div>
+      </div>
+      <div class="tier-desc">${t.desc}</div>
+      <div class="tier-avail ${lowStock?'avail-low':'avail-ok'}">${lowStock?'🔥 Only '+t.available+' left':'✓ '+t.available+' available'}</div>
+      <div class="tier-qty" id="qty-row-${t.id}" style="display:none">
+        <button class="qty-btn" onclick="event.stopPropagation();changeTierQty('${t.id}',-1)">−</button>
+        <span class="qty-num" id="qty-${t.id}">0</span>
+        <button class="qty-btn" onclick="event.stopPropagation();changeTierQty('${t.id}',1)">+</button>
+      </div>
+    </div>`;
+  }).join('');
+  // Zone tabs for seat map
+  const ztabs = document.getElementById('zoneTabs');
+  if(ztabs) ztabs.innerHTML = tiers.map((t,i) => `<button class="ztab ${i===0?'active':''}" onclick="selectZoneWidget('${t.id}',this)">
+    ${t.name} · ₹${t.price.toLocaleString('en-IN')}</button>`).join('');
+}
+
+function selectTier(id) {
+  const row = document.getElementById('qty-row-'+id);
+  if(!row) return;
+  row.style.display = 'flex';
+  document.getElementById('tier-'+id).classList.add('selected');
+  if(!selectedTiers[id]) { changeTierQty(id,1); }
+}
+
+function changeTierQty(id, delta) {
+  if(!selectedTiers[id]) selectedTiers[id]=0;
+  const total = Object.values(selectedTiers).reduce((a,b)=>a+b,0);
+  if(delta>0 && total>=10) { showToast('Max 10 tickets per booking'); return; }
+  selectedTiers[id] = Math.max(0, selectedTiers[id]+delta);
+  document.getElementById('qty-'+id).textContent = selectedTiers[id];
+  if(selectedTiers[id]===0) {
+    document.getElementById('qty-row-'+id).style.display='none';
+    document.getElementById('tier-'+id).classList.remove('selected');
+  }
+  totalSelected = Object.values(selectedTiers).reduce((a,b)=>a+b,0);
+  const btn = document.getElementById('toSeatsBtn');
+  btn.disabled = totalSelected===0;
+  btn.style.opacity = totalSelected>0?1:0.5;
+  // Show group discount option if 10+
+  document.getElementById('groupBox').style.display = totalSelected>=10?'block':'none';
+}
+
+function renderLineup(lineup) {
+  const el = document.getElementById('lineupGrid');
+  if(!lineup || !lineup.length) { el.innerHTML='<div style="color:var(--muted);font-size:13px">Lineup to be announced.</div>'; return; }
+  el.innerHTML = lineup.map(a => `<div class="artist-card">
+    <div class="artist-avatar">${a.emoji||'🎤'}</div>
+    <div class="artist-name">${a.name}</div>
+    <div class="artist-role">${a.role}</div>
+  </div>`).join('');
+}
+
+function renderSchedule(schedule) {
+  const el = document.getElementById('scheduleList');
+  if(!schedule || !schedule.length) { el.innerHTML='<div style="color:var(--muted);font-size:13px">Schedule to be announced.</div>'; return; }
+  el.innerHTML = schedule.map(s => `<div class="schedule-item">
+    <div class="schedule-time">${s.time}</div>
+    <div><div class="schedule-act">${s.act}</div><div class="schedule-sub">${s.sub||''}</div></div>
+  </div>`).join('');
+}
+
+function renderRatingBars(e) {
+  const bars = document.getElementById('ratingBars');
+  const dist = e.rating_dist || [5,10,15,25,45];
+  bars.innerHTML = [5,4,3,2,1].map((star,i) => `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+    <span style="font-size:11px;width:16px">${star}★</span>
+    <div style="flex:1;height:6px;background:var(--dark);border-radius:3px;overflow:hidden">
+      <div style="height:100%;width:${dist[4-i]}%;background:gold;border-radius:3px"></div>
+    </div>
+    <span style="font-size:11px;color:var(--muted);width:28px">${dist[4-i]}%</span>
+  </div>`).join('');
+}
+
+function loadReviews() {
+  const reviews = [
+    {name:'Priya S.', rating:5, text:'Absolutely mind-blowing! Diljit was phenomenal. The production quality was next level — lasers, pyro, everything! Worth every penny.', date:'Dec 2025', initials:'PS'},
+    {name:'Rahul M.', rating:5, text:'Best concert experience of my life. The energy was insane, crowd was amazing. VIP section had great views and the drinks were included!', date:'Nov 2025', initials:'RM'},
+    {name:'Ananya K.', rating:4, text:'Great show overall. Sound system was incredible. Only complaint is parking was a bit chaotic but the show more than made up for it.', date:'Oct 2025', initials:'AK'},
+  ];
+  document.getElementById('reviewsList').innerHTML = reviews.map(r => `
+    <div class="review-card">
+      <div class="review-header">
+        <div class="reviewer-avatar">${r.initials}</div>
+        <div>
+          <div class="reviewer-name">${r.name}</div>
+          <div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+        </div>
+        <div style="margin-left:auto;font-size:11px;color:var(--muted)">${r.date}</div>
+      </div>
+      <div class="review-text">${r.text}</div>
+    </div>`).join('');
+}
+
+function loadFAQs() {
+  const faqs = [
+    {q:'What is the refund policy?', a:'Tickets are non-refundable unless the event is cancelled or rescheduled by the organiser. In case of cancellation, full refund is processed within 5-7 business days.'},
+    {q:'Can I transfer my ticket to someone else?', a:'Yes! You can transfer your ticket to any INDTIX registered user via the Transfer option in your booking confirmation.'},
+    {q:'What ID should I carry?', a:'Please carry a government-issued photo ID (Aadhaar, PAN, Passport, or Driving License) along with your booking confirmation.'},
+    {q:'Is there parking at the venue?', a:'Yes, parking is available at the venue for ₹100–200 per vehicle. We recommend using public transport or ride-sharing apps due to high traffic.'},
+    {q:'What items are not allowed?', a:'Outside food & beverages, professional cameras, drones, laser pointers, and any weapons are strictly prohibited.'},
+    {q:'Is the venue wheelchair accessible?', a:'Yes! DY Patil Stadium has dedicated accessible zones with companion seating. Select "Accessible Zone" during ticket selection.'},
+  ];
+  document.getElementById('faqList').innerHTML = faqs.map((f,i) => `
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(${i})">
+        ${f.q} <i class="fas fa-chevron-down" id="faq-icon-${i}" style="font-size:11px;color:var(--muted);transition:transform 0.3s"></i>
+      </div>
+      <div class="faq-a" id="faq-ans-${i}">${f.a}</div>
+    </div>`).join('');
+}
+
+function toggleFAQ(i) {
+  const ans = document.getElementById('faq-ans-'+i);
+  const icon = document.getElementById('faq-icon-'+i);
+  const isOpen = ans.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(a=>a.classList.remove('open'));
+  document.querySelectorAll('[id^="faq-icon-"]').forEach(ic=>ic.style.transform='rotate(0deg)');
+  if(!isOpen) { ans.classList.add('open'); icon.style.transform='rotate(180deg)'; }
+}
+
+async function loadAddons() {
+  let addons;
+  try {
+    const res = await fetch(`/api/events/${EVENT_ID}/addons`);
+    const data = await res.json();
+    addons = data.addons || [];
+  } catch(e) {
+    addons = [
+      {id:'meal', icon:'🍱', name:'Combo Meal Pack', desc:'Burger + Drink + Fries · Collect at F&B counter', price:499, qty_type:'per_ticket'},
+      {id:'merch_tee', icon:'👕', name:'Official Tour T-Shirt', desc:'Exclusive event tee · Sizes XS–3XL', price:799, has_size:true, sizes:['XS','S','M','L','XL','2XL','3XL']},
+      {id:'fastlane', icon:'⚡', name:'Fast-Track Entry', desc:'Skip the queue, dedicated fast lane', price:149, qty_type:'per_ticket'},
+      {id:'wristband', icon:'🌟', name:'LED Wristband', desc:'Glow with 50,000 other fans during finale!', price:99, qty_type:'per_ticket'},
+      {id:'poster', icon:'🖼️', name:'Signed Poster', desc:'Limited edition poster signed by Diljit (50 only)', price:1499, qty_type:'flat'},
+    ];
+  }
+  document.getElementById('addonsList').innerHTML = addons.map(a => `
+    <div class="addon-item" id="addon-${a.id}" onclick="toggleAddon('${a.id}',${a.price},'${a.name}')">
+      <div class="addon-icon">${a.icon}</div>
+      <div class="addon-info">
+        <div class="addon-name">${a.name}</div>
+        <div class="addon-sub">${a.desc}</div>
+        ${a.has_size ? `<div class="size-row" id="sizes-${a.id}" onclick="event.stopPropagation()">${(a.sizes||['S','M','L','XL']).map(s=>`<span class="size-pill" onclick="selectSize('${a.id}','${s}',this)">${s}</span>`).join('')}</div>` : ''}
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+        <div class="addon-price">₹${a.price.toLocaleString('en-IN')}</div>
+        <div class="addon-check" id="addonCheck-${a.id}"></div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleAddon(id, price, name) {
+  const el = document.getElementById('addon-'+id);
+  const check = document.getElementById('addonCheck-'+id);
+  if(el.classList.contains('selected')) {
+    el.classList.remove('selected');
+    delete selectedAddons[id];
+    check.textContent='';
+  } else {
+    el.classList.add('selected');
+    selectedAddons[id] = {price, name, qty:1};
+    check.textContent='✓';
+  }
+}
+
+function selectSize(addonId, size, el) {
+  document.querySelectorAll(`#sizes-${addonId} .size-pill`).forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  if(selectedAddons[addonId]) selectedAddons[addonId].size = size;
+  else { selectedAddons[addonId]={price:799,name:'T-Shirt',qty:1,size}; document.getElementById('addon-'+addonId).classList.add('selected'); document.getElementById('addonCheck-'+addonId).textContent='✓'; }
+}
+
+function loadSimilarEvents() {
+  const events = [
+    {name:'Sunburn Goa 2026', emoji:'🌊', date:'28–30 Dec', venue:'Goa', price:4999},
+    {name:'NH7 Weekender Pune', emoji:'🎸', date:'7–8 Nov', venue:'Pune', price:2999},
+    {name:'Ritviz: Octet Tour', emoji:'🎵', date:'14 Sep', venue:'Delhi', price:1499},
+    {name:'Coldplay World Tour', emoji:'🌈', date:'10 May', venue:'Mumbai', price:2999},
+    {name:'AP Dhillon Live', emoji:'🎤', date:'22 Jun', venue:'Bangalore', price:3499},
+  ];
+  document.getElementById('similarEvents').innerHTML = events.map(e=>`
+    <div class="similar-card" onclick="showToast('Opening ${e.name}...')">
+      <div class="similar-img">${e.emoji}</div>
+      <div class="similar-body">
+        <div class="similar-name">${e.name}</div>
+        <div class="similar-meta">${e.date} · ${e.venue}</div>
+        <div style="color:var(--brand3);font-weight:700;font-size:13px;margin-top:4px">₹${e.price.toLocaleString('en-IN')}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════════
+// STEP NAVIGATION
+// ═══════════════════════════════════════════════
+function goToStep(n) {
+  [1,2,3,4].forEach(i => {
+    document.getElementById('widgetStep'+i).style.display = i===n ? 'block' : 'none';
+  });
+  // Update step indicators
+  [1,2,3,4].forEach(i => {
+    const s = document.getElementById('step'+i);
+    s.className = 'step ' + (i<n?'done':i===n?'active':'idle');
+  });
+  if(n>1) document.getElementById('line12').className='step-line'+(n>1?' done':'');
+  if(n>2) document.getElementById('line23').className='step-line'+(n>2?' done':'');
+  if(n>3) document.getElementById('line34').className='step-line done';
+}
+
+function goToSeatMap() {
+  totalSelected = Object.values(selectedTiers).reduce((a,b)=>a+b,0);
+  if(!totalSelected) { showToast('Pick at least one ticket first! 🎫'); return; }
+  goToStep(2);
+  currentZone = Object.keys(selectedTiers).find(k=>selectedTiers[k]>0) || 'GA';
+  renderWidgetSeatGrid();
+  startSeatTimer();
+  document.getElementById('seatTimerBox').style.display='flex';
+}
+
+function goToAddons() {
+  if(!selectedSeats.length) { showToast('Select at least one seat! 💺'); return; }
+  clearInterval(seatTimer);
+  document.getElementById('seatTimerBox').style.display='none';
+  goToStep(3);
+}
+
+function goToPayment() {
+  goToStep(4);
+  renderFinalSummary();
+}
+
+// ═══════════════════════════════════════════════
+// SEAT MAP (WIDGET INLINE)
+// ═══════════════════════════════════════════════
+async function renderWidgetSeatGrid() {
+  const inner = document.getElementById('widgetSeatInner');
+  inner.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted);font-size:12px"><div class="loading"></div><br>Loading seats…</div>';
+  let seats=[], rows=8, cols=14;
+  try {
+    const res = await fetch(`/api/events/${EVENT_ID}/seatmap?zone=${currentZone}`);
+    const data = await res.json();
+    seats = data.seats || [];
+    const zi = data.zone_info || {};
+    rows=zi.rows||rows; cols=zi.cols||cols;
+  } catch(e) {
+    for(let r=0;r<rows;r++) for(let c=0;c<cols;c++)
+      seats.push({id:`${currentZone}-R${r+1}S${c+1}`,row:r+1,seat:c+1,status:Math.random()<0.35?'taken':'available'});
+  }
+  inner.style.gridTemplateColumns=`repeat(${cols},1fr)`;
+  inner.innerHTML='';
+  for(const s of seats) {
+    const taken=s.status==='taken';
+    const sel=selectedSeats.includes(s.id);
+    const btn=document.createElement('button');
+    btn.title=`R${s.row} S${s.seat}`;
+    btn.style.cssText=`width:20px;height:20px;border-radius:3px;border:none;cursor:${taken?'not-allowed':'pointer'};background:${taken?'rgba(255,255,255,0.05)':sel?'#FF3CAC':'#6C3CF7'};opacity:${taken?0.25:1};transition:all 0.12s;`;
+    if(!taken) btn.onclick=()=>widgetToggleSeat(s.id,btn);
+    inner.appendChild(btn);
+  }
+}
+
+function widgetToggleSeat(id, btn) {
+  const i=selectedSeats.indexOf(id);
+  if(i>-1) { selectedSeats.splice(i,1); btn.style.background='#6C3CF7'; }
+  else {
+    if(selectedSeats.length>=10) { showToast('Max 10 seats 🎟️'); return; }
+    selectedSeats.push(id); btn.style.background='#FF3CAC';
+  }
+  const listEl=document.getElementById('seatSelectedList');
+  listEl.innerHTML = selectedSeats.length
+    ? selectedSeats.map(s=>`<span style="display:inline-block;background:rgba(108,60,247,0.2);border:1px solid var(--brand);border-radius:4px;padding:2px 8px;margin:2px;font-size:11px;color:var(--text)">${s.replace(/-/g,' ')}</span>`).join('')
+    : 'No seats selected yet.';
+  const toAddonBtn = document.getElementById('toAddonsBtn');
+  toAddonBtn.disabled = selectedSeats.length===0;
+  toAddonBtn.style.opacity = selectedSeats.length>0?1:0.5;
+}
+
+function selectZoneWidget(zone, el) {
+  currentZone = zone;
+  selectedSeats = [];
+  document.querySelectorAll('.ztab').forEach(t=>{t.classList.remove('active')});
+  el.classList.add('active');
+  document.getElementById('seatSelectedList').textContent='No seats selected yet.';
+  document.getElementById('toAddonsBtn').disabled=true;
+  document.getElementById('toAddonsBtn').style.opacity=0.5;
+  renderWidgetSeatGrid();
+}
+
+function startSeatTimer() {
+  clearInterval(seatTimer); seatSeconds=600;
+  seatTimer=setInterval(()=>{
+    seatSeconds--;
+    const m=Math.floor(seatSeconds/60), s=seatSeconds%60;
+    const el=document.getElementById('seatTimerDisp');
+    if(el) el.textContent=`${m}:${s.toString().padStart(2,'0')}`;
+    if(seatSeconds<=0) { clearInterval(seatTimer); showToast('⏱ Seat hold expired. Re-select.'); goToStep(1); }
+  },1000);
+}
+
+// ═══════════════════════════════════════════════
+// PROMO & LOYALTY
+// ═══════════════════════════════════════════════
+async function applyPromoCode() {
+  const code = document.getElementById('promoCodeInput').value.trim().toUpperCase();
+  if(!code) { showToast('Enter a promo code first'); return; }
+  const btn = document.getElementById('promoApplyBtn');
+  btn.disabled=true; btn.textContent='…';
+  try {
+    const sub = calcSubtotal();
+    const res = await fetch('/api/promo/validate', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,event_id:EVENT_ID,amount:sub})});
+    const d = await res.json();
+    if(d.valid) {
+      promoApplied=true;
+      promoDiscount=d.discount_amount||Math.round(sub*(d.discount_pct||20)/100);
+      document.getElementById('promoMsg').innerHTML=`<span style="color:var(--brand3)">🎉 ${d.description||'Promo applied!'} −₹${promoDiscount.toLocaleString('en-IN')}</span>`;
+    } else {
+      document.getElementById('promoMsg').innerHTML=`<span style="color:#FF6B6B">${d.message||'Invalid code'}</span>`;
+    }
+  } catch(err) {
+    if(code==='INDY20'){promoApplied=true;promoDiscount=Math.round(calcSubtotal()*0.2);document.getElementById('promoMsg').innerHTML=`<span style="color:var(--brand3)">🎉 20% off! −₹${promoDiscount.toLocaleString('en-IN')}</span>`;}
+    else if(code==='FIRST50'){promoApplied=true;promoDiscount=50;document.getElementById('promoMsg').innerHTML=`<span style="color:var(--brand3)">🎉 ₹50 off applied!</span>`;}
+    else document.getElementById('promoMsg').innerHTML=`<span style="color:#FF6B6B">Invalid or expired code</span>`;
+  }
+  btn.disabled=false; btn.textContent='Apply';
+}
+
+function redeemPoints() {
+  const pts = 1240;
+  pointsRedeemed = Math.floor(pts/10);
+  document.getElementById('pointsValue').textContent=`✓ ₹${pointsRedeemed} redeemed!`;
+  document.getElementById('pointsValue').style.color='var(--brand3)';
+  showToast(`💎 ₹${pointsRedeemed} loyalty cashback applied!`);
+}
+
+function calcSubtotal() {
+  let sub=0;
+  if(EVENT && EVENT.tiers) EVENT.tiers.forEach(t=>{ sub+=(selectedTiers[t.id]||0)*t.price; });
+  else sub=selectedSeats.length*(ZONE_PRICES[currentZone]||1499);
+  Object.values(selectedAddons).forEach(a=>{ sub+=a.price*(a.qty||1); });
+  return sub;
+}
+
+function renderFinalSummary() {
+  const sub = calcSubtotal();
+  const disc = promoDiscount;
+  const loyal = pointsRedeemed;
+  const taxable = sub-disc-loyal;
+  const cgst = Math.round(taxable*0.09);
+  const sgst = Math.round(taxable*0.09);
+  const total = taxable+cgst+sgst+20;
+  // Ticket breakdown
+  let ticketStr='';
+  if(EVENT && EVENT.tiers) EVENT.tiers.forEach(t=>{if(selectedTiers[t.id])ticketStr+=`${selectedTiers[t.id]}×${t.name} ₹${(selectedTiers[t.id]*t.price).toLocaleString('en-IN')} / `;});
+  else ticketStr=`${selectedSeats.length}×${currentZone} ₹${(selectedSeats.length*(ZONE_PRICES[currentZone]||1499)).toLocaleString('en-IN')}`;
+  document.getElementById('finalTickets').textContent=ticketStr.replace(/ \/ $/,'');
+  const addonTotal=Object.values(selectedAddons).reduce((a,b)=>a+b.price*(b.qty||1),0);
+  document.getElementById('finalAddons').textContent=addonTotal?`₹${addonTotal.toLocaleString('en-IN')}`:'₹0';
+  if(disc){document.getElementById('finalPromoRow').style.display='flex';document.getElementById('finalPromo').textContent=`−₹${disc.toLocaleString('en-IN')}`;}
+  if(loyal){document.getElementById('finalLoyaltyRow').style.display='flex';document.getElementById('finalLoyalty').textContent=`−₹${loyal}`;}
+  document.getElementById('finalTotal').textContent=`₹${total.toLocaleString('en-IN')}`;
+  document.getElementById('gstBase').textContent=`₹${taxable.toLocaleString('en-IN')}`;
+  document.getElementById('gstCGST').textContent=`₹${cgst.toLocaleString('en-IN')}`;
+  document.getElementById('gstSGST').textContent=`₹${sgst.toLocaleString('en-IN')}`;
+  document.getElementById('gstTotal').textContent=`₹${(cgst+sgst).toLocaleString('en-IN')}`;
+}
+
+// ═══════════════════════════════════════════════
+// PAYMENT & CONFIRMATION
+// ═══════════════════════════════════════════════
+function selectPayMethod(btn, method) {
+  document.querySelectorAll('.pay-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedPayMethod = method;
+  const upiBox = document.getElementById('upiInput');
+  upiBox.style.display = method==='upi'?'block':'none';
+}
+
+async function completePurchase() {
+  const btn = document.getElementById('payNowBtn');
+  btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Processing…';
+  const sub=calcSubtotal(); const disc=promoDiscount+pointsRedeemed;
+  const taxable=sub-disc; const cgst=Math.round(taxable*0.09); const sgst=Math.round(taxable*0.09);
+  const total=taxable+cgst+sgst+20;
+  const payload={event_id:EVENT_ID, tickets:selectedTiers, seats:selectedSeats, addons:selectedAddons, payment_method:selectedPayMethod, promo_code:promoApplied?document.getElementById('promoCodeInput').value:'', total_inr:total};
+  try {
+    const res=await fetch('/api/bookings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const data=await res.json();
+    showConfirmation(data.booking||{id:'BK'+Math.random().toString(36).slice(2,8).toUpperCase(), total});
+  } catch(e) {
+    showConfirmation({id:'BK'+Math.random().toString(36).slice(2,8).toUpperCase(), total});
+  }
+  btn.disabled=false; btn.innerHTML='<i class="fas fa-lock"></i> Pay & Get Tickets';
+}
+
+function showConfirmation(booking) {
+  const id = booking.id || booking.booking_id || 'BK'+Math.random().toString(36).slice(2,8).toUpperCase();
+  const total = booking.total || booking.total_inr || 0;
+  document.getElementById('confBookingId').textContent=id;
+  document.getElementById('confEventName').textContent=EVENT?.name||'—';
+  document.getElementById('confDate').textContent=EVENT?.date||'—';
+  document.getElementById('confVenue').textContent=EVENT?.venue||'—';
+  document.getElementById('confSeats').textContent=selectedSeats.length||Object.values(selectedTiers).reduce((a,b)=>a+b,0);
+  document.getElementById('confZone').textContent=currentZone;
+  document.getElementById('confAmount').textContent='₹'+total.toLocaleString('en-IN');
+  window._lastBookingId=id;
+  document.getElementById('confirmModal').classList.add('open');
+  document.body.style.overflow='hidden';
+  showToast('🎟️ Tickets confirmed! Check your WhatsApp & Email');
+}
+
+function downloadTicket() { showToast('📄 Ticket PDF downloading…'); }
+function sendWhatsApp() {
+  const msg=encodeURIComponent(`🎟️ My INDTIX ticket for ${EVENT?.name||'the event'}!\nBooking: ${window._lastBookingId||'—'}\n\nGet yours at https://indtix.pages.dev/fan`);
+  window.open('https://wa.me/?text='+msg,'_blank');
+}
+function transferTicket() { closeModal('confirmModal'); document.getElementById('transferModal').classList.add('open'); }
+function viewGSTInvoice() { showToast('📊 GST invoice downloading…'); }
+
+async function confirmTransfer() {
+  const to=document.getElementById('transferPhone').value.trim();
+  if(!to){showToast('Enter recipient contact');return;}
+  try {
+    await fetch('/api/bookings/transfer',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({booking_id:window._lastBookingId,to_contact:to})});
+    showToast('✅ Ticket transferred successfully!'); closeModal('transferModal');
+  } catch(e) { showToast('✅ Ticket transferred successfully!'); closeModal('transferModal'); }
+}
+
+async function submitRefundRequest() {
+  const reason=document.getElementById('refundReason').value;
+  if(!reason){showToast('Please select a reason');return;}
+  try {
+    await fetch('/api/bookings/refund',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({booking_id:window._lastBookingId,reason,note:document.getElementById('refundNote').value})});
+    showToast('✅ Refund request submitted!'); closeModal('refundModal');
+  } catch(e) { showToast('✅ Refund request submitted!'); closeModal('refundModal'); }
+}
+
+// ═══════════════════════════════════════════════
+// SOCIAL & ACTIONS
+// ═══════════════════════════════════════════════
+async function markGoing() {
+  const btn=document.getElementById('goingBtn');
+  btn.style.opacity='0.6';
+  try { await fetch(`/api/events/${EVENT_ID}/going`,{method:'POST'}); } catch(e){}
+  const el=document.getElementById('goingCount');
+  const n=parseInt(el.textContent)||2480;
+  el.textContent=(n+1).toLocaleString('en-IN')+' going';
+  btn.style.opacity='1'; btn.textContent='✓ Going!'; btn.style.background='var(--brand3)'; btn.style.color='var(--dark)';
+  showToast('🎉 Marked as going! Friends can see you\'re attending.');
+}
+
+async function markInterested() {
+  const btn=document.getElementById('interestedBtn');
+  try { await fetch(`/api/events/${EVENT_ID}/interested`,{method:'POST'}); } catch(e){}
+  const el=document.getElementById('interestedCount');
+  const n=parseInt(el.textContent)||5120;
+  el.textContent=(n+1).toLocaleString('en-IN')+' interested';
+  btn.textContent='★ Interested!'; btn.style.borderColor='var(--brand)'; btn.style.color='var(--brand)';
+  showToast('★ Added to your interested list!');
+}
+
+function toggleWishlistWidget() {
+  const btn=document.getElementById('wishlistBtn');
+  const isActive=btn.classList.contains('active');
+  btn.classList.toggle('active');
+  btn.innerHTML=isActive?'<i class="fas fa-heart"></i> Save':'<i class="fas fa-heart" style="color:var(--brand2)"></i> Saved!';
+  showToast(isActive?'Removed from wishlist':'❤️ Saved to wishlist!');
+}
+
+function shareEvent(method) {
+  const url=window.location.href;
+  const title=EVENT?.name||'Amazing event on INDTIX';
+  if(method==='whatsapp') window.open('https://wa.me/?text='+encodeURIComponent(`Check out ${title}! 🎵\n${url}`),'_blank');
+  else if(method==='twitter') window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent('Just booked tickets for '+title+' via @INDTIX! 🎟️')}&url=${encodeURIComponent(url)}`,'_blank');
+  else if(method==='copy') { navigator.clipboard?.writeText(url).then(()=>showToast('🔗 Link copied!')).catch(()=>showToast('🔗 Link copied!')); }
+}
+
+function calendarAdd() {
+  if(!EVENT) return;
+  const t=EVENT.name.replace(/\s/g,'+');
+  const url=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${t}&details=Event+at+${EVENT.venue}&location=${(EVENT.venue_address||EVENT.venue).replace(/\s/g,'+')}`;
+  window.open(url,'_blank');
+  showToast('📅 Opening Google Calendar…');
+}
+
+function openGoogleMaps() {
+  const q=encodeURIComponent((EVENT?.venue_address||EVENT?.venue||'Mumbai')+'');
+  window.open(`https://www.google.com/maps/search/?api=1&query=${q}`,'_blank');
+}
+
+async function sendInvite() {
+  const contact=document.getElementById('inviteEmail').value.trim();
+  if(!contact){showToast('Enter friend\'s email or phone');return;}
+  try { await fetch('/api/fan/invite',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contact,event_id:EVENT_ID})}); } catch(e){}
+  showToast('📨 Invite sent! You\'ll get ₹50 when they book.');
+  document.getElementById('inviteEmail').value='';
+}
+
+async function sendEventChat() {
+  const input=document.getElementById('chatInput');
+  const msg=input.value.trim();
+  if(!msg) return;
+  input.value='';
+  const msgArea=document.getElementById('chatMessages');
+  msgArea.innerHTML+=`<div style="background:rgba(255,60,172,0.15);border-radius:10px;padding:8px 12px;align-self:flex-end;max-width:80%;color:var(--text)">${msg}</div>`;
+  msgArea.scrollTop=msgArea.scrollHeight;
+  try {
+    const res=await fetch('/api/events/'+EVENT_ID+'/chatbot',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});
+    const d=await res.json();
+    msgArea.innerHTML+=`<div style="background:rgba(108,60,247,0.15);border-radius:10px;padding:8px 12px;align-self:flex-start;max-width:80%;color:var(--text)">${d.reply||d.message||'I\'m looking that up for you...'}</div>`;
+  } catch(e) {
+    const replies={
+      'refund':'Tickets are non-refundable unless the event is cancelled. For rescheduled events, you\'ll get a full refund automatically.',
+      'bring':'Carry your government-issued ID + booking confirmation. No outside food/beverages.',
+      'parking':'Paid parking available on-site (₹100-200). We recommend Ola/Uber due to traffic.',
+      'lineup':'Diljit Dosanjh headlines, with Guru Randhawa, Badshah, and DJ Akull performing!',
+    };
+    const lower=msg.toLowerCase();
+    const reply=Object.entries(replies).find(([k])=>lower.includes(k));
+    msgArea.innerHTML+=`<div style="background:rgba(108,60,247,0.15);border-radius:10px;padding:8px 12px;align-self:flex-start;max-width:80%;color:var(--text)">${reply?reply[1]:'Great question! Please check our FAQ above or contact support at help@indtix.com'}</div>`;
+  }
+  msgArea.scrollTop=msgArea.scrollHeight;
+}
+
+function chatSuggest(msg) { document.getElementById('chatInput').value=msg; sendEventChat(); }
+
+// REVIEWS
+function openWriteReview() { document.getElementById('reviewModal').classList.add('open'); }
+function setRating(n) {
+  currentRating=n;
+  document.querySelectorAll('.rstar').forEach((s,i)=>{ s.textContent=i<n?'★':'☆'; s.style.color=i<n?'gold':'var(--muted)'; });
+}
+async function submitReview() {
+  const text=document.getElementById('reviewText').value.trim();
+  if(!currentRating){showToast('Please select a rating');return;}
+  if(!text){showToast('Please write a review');return;}
+  try { await fetch(`/api/events/${EVENT_ID}/reviews`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({rating:currentRating,text})}); } catch(e){}
+  closeModal('reviewModal');
+  showToast('⭐ Review submitted! Thank you.');
+}
+
+// GROUP BOOKING
+function applyGroupDiscount() { showToast('🎟️ Group discount applied! 10% off for your group.'); }
+function openGroupRequest() { showToast('📧 Group booking request sent to our team!'); }
+
+// MISC UI
+function toggleCorpGST() { const el=document.getElementById('corpGSTBox'); el.style.display=el.style.display==='none'?'block':'none'; }
+function toggleSplitPay() { const el=document.getElementById('splitPayBox'); el.style.display=el.style.display==='none'?'block':'none'; }
+function addSplitFriend() { showToast('📨 Split invitation sent!'); }
+function scrollToWidget() { document.getElementById('bookingWidget').scrollIntoView({behavior:'smooth'}); }
+function closeModal(id) {
+  const m=document.getElementById(id);
+  if(m){ m.classList.remove('open'); document.body.style.overflow='auto'; }
+}
+document.addEventListener('click',e=>{ if(e.target.classList.contains('modal-overlay')) closeModal(e.target.id); });
+
+function showToast(msg, type='success') {
+  const t=document.getElementById('toastMsg');
+  t.textContent=msg;
+  t.style.borderColor=type==='error'?'#FF6B6B':'var(--brand)';
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t=setTimeout(()=>t.classList.remove('show'),3000);
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+</script>
+</body>
+</html>
