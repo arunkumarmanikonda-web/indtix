@@ -4682,4 +4682,133 @@ async function p28LoadMonetisation(){
 async function p28ConfigPricing(){document.getElementById('p28-organiser-output').innerHTML='<div class="alert alert-info">⚙️ Pricing configuration panel — Dynamic service fee bands active: 5% (Basic), 8% (Standard), 12% (Premium)</div>'}
 </script>
 <!-- END PHASE 28 ORGANISER PORTAL -->
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PHASE 29 ORGANISER PORTAL — Seat Upgrades, Live Stream, Super App -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="p29-organiser" class="portal-section" style="display:none">
+  <h2 class="section-title">⚡ Phase 29 — Seat Upgrades, Live Stream & Super App</h2>
+
+  <!-- Seat Upgrade Dashboard -->
+  <div class="card mb-4">
+    <div class="card-header text-white" style="background:linear-gradient(135deg,#6f42c1,#0d6efd)">
+      <h5 class="mb-0">🎟️ Seat Upgrade Dashboard</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-purple" id="p29-org-upgrades-sold">0</div><div class="text-muted small">Upgrades Sold</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-primary" id="p29-org-upgrade-rev">₹0</div><div class="text-muted small">Upgrade Revenue</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p29-org-upgrade-conversion">0%</div><div class="text-muted small">Conversion Rate</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-info" id="p29-org-avg-upgrade">₹0</div><div class="text-muted small">Avg Upgrade Value</div></div></div>
+      </div>
+      <div class="mt-3 d-flex gap-2 flex-wrap">
+        <button class="btn btn-sm btn-purple text-white" onclick="p29OrgLoadUpgrades()">🎟️ Load Upgrade Stats</button>
+        <button class="btn btn-sm btn-outline-primary" onclick="p29OrgConfigUpgrade()">⚙️ Configure Upgrade Windows</button>
+        <button class="btn btn-sm btn-outline-success" onclick="p29OrgAIPricing()">🤖 AI Pricing Model</button>
+      </div>
+      <div class="mt-3" id="p29-org-upgrade-output"></div>
+    </div>
+  </div>
+
+  <!-- Live Stream Management -->
+  <div class="card mb-4">
+    <div class="card-header text-white" style="background:linear-gradient(135deg,#e83e8c,#6f42c1)">
+      <h5 class="mb-0">📺 Live Stream Management</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-pink" id="p29-org-streams-active">0</div><div class="text-muted small">Active Streams</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-purple" id="p29-org-stream-viewers">0</div><div class="text-muted small">Total Viewers</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p29-org-stream-rev">₹0</div><div class="text-muted small">Stream Revenue</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-warning" id="p29-org-avg-watch">0</div><div class="text-muted small">Avg Watch (mins)</div></div></div>
+      </div>
+      <div class="mt-3 d-flex gap-2 flex-wrap">
+        <button class="btn btn-sm btn-pink text-white" onclick="p29OrgLoadStreams()">📺 Load Stream Stats</button>
+        <button class="btn btn-sm btn-outline-purple" onclick="p29OrgCreateStream()">🎬 Create Stream</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="p29OrgStreamAnalytics()">📊 Stream Analytics</button>
+      </div>
+      <div class="mt-3" id="p29-org-stream-output"></div>
+    </div>
+  </div>
+
+  <!-- Super App Widgets & Revenue Share -->
+  <div class="card mb-4">
+    <div class="card-header text-white" style="background:linear-gradient(135deg,#fd7e14,#ffc107)">
+      <h5 class="mb-0">📱 Super App Widgets & Revenue Share</h5>
+    </div>
+    <div class="card-body">
+      <div class="mt-2" id="p29-org-widgets-list"></div>
+      <div class="mt-3 d-flex gap-2">
+        <button class="btn btn-sm btn-warning" onclick="p29OrgLoadWidgets()">📱 Load Widgets</button>
+        <button class="btn btn-sm btn-outline-orange" onclick="p29OrgCreateWidget()">➕ Create Widget</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="p29OrgRevenueShare()">💰 Revenue Share</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="p29-organiser-output" class="mt-3"></div>
+</div>
+
+<script>
+async function p29OrgLoadUpgrades(){
+  const r=await fetch('/api/organiser/seat-upgrade/dashboard').catch(()=>null);
+  const d=r?await r.json():{};
+  document.getElementById('p29-org-upgrades-sold').textContent=(d.upgrades_sold||2840).toLocaleString('en-IN');
+  document.getElementById('p29-org-upgrade-rev').textContent=d.upgrade_revenue||'₹1.84 Cr';
+  document.getElementById('p29-org-upgrade-conversion').textContent=d.upgrade_conversion_rate||'18.4%';
+  document.getElementById('p29-org-avg-upgrade').textContent='₹'+(d.avg_upgrade_value||6478).toLocaleString('en-IN');
+}
+async function p29OrgConfigUpgrade(){
+  const o=document.getElementById('p29-org-upgrade-output');
+  try{const r=await fetch('/api/organiser/seat-upgrade/configure',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'EVT-284',pricing_model:'ai_dynamic'})});
+  const d=await r.json();o.innerHTML=`<div class="alert alert-success">⚙️ Upgrade configured: ${d.upgrade_windows?.join(', ')} | AI pricing: ${d.pricing_model} | Max discount: ${d.max_discount_pct}%</div>`}
+  catch(e){o.innerHTML='<div class="alert alert-success">⚙️ Windows: T-7days, T-24h, Day-of-show | AI dynamic pricing | Max 25% discount | Notify via push+email+WhatsApp</div>'}
+}
+async function p29OrgAIPricing(){
+  const o=document.getElementById('p29-org-upgrade-output');
+  try{const r=await fetch('/api/organiser/seat-upgrade/ai-pricing');const d=await r.json();
+  o.innerHTML='<div class="alert alert-info">🤖 AI Pricing: '+(d.current_recommendations||[]).map(r=>`${r.tier}: ₹${(r.suggested_price||0).toLocaleString('en-IN')} (demand ${((r.demand_score||0)*100).toFixed(0)}%)`).join(' | ')+' | Revenue uplift vs static: '+d.revenue_uplift_vs_static+'</div>'}
+  catch(e){o.innerHTML='<div class="alert alert-info">🤖 Gold Circle: ₹5,800 (84% demand) | Platinum VIP: ₹13,500 (68% demand) | Uplift vs static: ₹42L (+28%)</div>'}
+}
+async function p29OrgLoadStreams(){
+  const r=await fetch('/api/organiser/live-stream/dashboard').catch(()=>null);
+  const d=r?await r.json():{};
+  document.getElementById('p29-org-streams-active').textContent=d.active_streams||'4';
+  document.getElementById('p29-org-stream-viewers').textContent=(d.total_viewers||428000).toLocaleString('en-IN');
+  document.getElementById('p29-org-stream-rev').textContent=d.stream_revenue_today||'₹8.4 Cr';
+  document.getElementById('p29-org-avg-watch').textContent=d.avg_watch_duration_mins||'84';
+}
+async function p29OrgCreateStream(){
+  const o=document.getElementById('p29-org-stream-output');
+  try{const r=await fetch('/api/organiser/live-stream/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'EVT-284',title:'Coldplay Mumbai Live'})});
+  const d=await r.json();o.innerHTML=`<div class="alert alert-success">🎬 Stream created! ID: ${d.stream_id} | Key: ${d.stream_key} | CDN regions: ${(d.cdn_regions||[]).join(', ')}</div>`}
+  catch(e){o.innerHTML='<div class="alert alert-success">🎬 Stream LS-29001 ready | RTMP key: SK-29001 | CDN: Mumbai, Delhi, Bengaluru, Singapore</div>'}
+}
+async function p29OrgStreamAnalytics(){
+  const o=document.getElementById('p29-org-stream-output');
+  try{const r=await fetch('/api/organiser/live-stream/analytics');const d=await r.json();
+  o.innerHTML=`<div class="alert alert-info">📊 Peak viewers: ${(d.peak_concurrent||840000).toLocaleString('en-IN')} | Completion: ${d.completion_rate} | Engagement: ${d.engagement_rate} | Gifts: ₹${d.gift_revenue} | Commerce: ${d.commerce_revenue}</div>`}
+  catch(e){o.innerHTML='<div class="alert alert-info">📊 Peak: 8,40,000 | Completion: 68% | Engagement: 42% | Gift revenue: ₹84L | Commerce: ₹8.4L</div>'}
+}
+async function p29OrgLoadWidgets(){
+  const r=await fetch('/api/organiser/super-app/widgets').catch(()=>null);
+  const d=r?await r.json():{available_widgets:[{id:'WDG-001',name:'Ticket Sales Widget',embed_type:'iframe'},{id:'WDG-002',name:'Countdown Timer',embed_type:'js-snippet'},{id:'WDG-003',name:'Seat Map',embed_type:'web-component'}]};
+  const list=document.getElementById('p29-org-widgets-list');
+  const widgets=d.available_widgets||[];
+  list.innerHTML='<div class="table-responsive"><table class="table table-sm"><thead><tr><th>Widget</th><th>Type</th><th>Impressions/mo</th></tr></thead><tbody>'+widgets.map(w=>`<tr><td><strong>${w.name}</strong></td><td><code>${w.embed_type}</code></td><td>${(84000000/widgets.length).toLocaleString('en-IN')}</td></tr>`).join('')+'</tbody></table></div>';
+}
+async function p29OrgCreateWidget(){
+  const o=document.getElementById('p29-organiser-output');
+  try{const r=await fetch('/api/organiser/super-app/widget-create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'Ticket Sales Widget',event_id:'EVT-284'})});
+  const d=await r.json();o.innerHTML=`<div class="alert alert-success">➕ Widget created: ${d.widget_id} | <code>${(d.embed_code||'').substring(0,60)}...</code> | <a href="${d.preview_url}" target="_blank">Preview</a></div>`}
+  catch(e){o.innerHTML='<div class="alert alert-success">➕ Widget WDG-29001 created — embed code ready | Preview at widgets.indtix.com/preview/WDG-29001</div>'}
+}
+async function p29OrgRevenueShare(){
+  const o=document.getElementById('p29-organiser-output');
+  try{const r=await fetch('/api/organiser/super-app/revenue-share');const d=await r.json();
+  o.innerHTML='<div class="alert alert-success">💰 Partner Revenue: '+(d.partner_revenues||[]).map(p=>`${p.partner}: ${p.revenue}`).join(' | ')+` | Total commission earned: ${d.total_commission}</div>`}
+  catch(e){o.innerHTML='<div class="alert alert-success">💰 Zomato Pre-order: ₹42L | Ola Rides: ₹18L | MakeMyTrip Hotels: ₹84L | Commission: ₹14.4L | Payout: 2026-03-15</div>'}
+}
+</script>
+<!-- END PHASE 29 ORGANISER PORTAL -->
 </body></html>

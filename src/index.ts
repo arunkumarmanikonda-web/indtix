@@ -13127,14 +13127,14 @@ app.get('/api/v21/features', (c) => c.json({
 
 // ── Update Version to 21.0.0 ──
 app.get('/api/health', (c) => c.json({
-  status: 'ok', version: 'v28.0.0', phase: 'Phase 28',
-  new_endpoints: 90, total_endpoints: 1549,
+  status: 'ok', version: 'v29.0.0', phase: 'Phase 29',
+  new_endpoints: 90, total_endpoints: 1639,
   uptime: '99.98%', latency_ms: 12,
   features: [
-    'metaverse_events','ai_concert_companion','hyper_personalisation_v2',
-    'voice_conversational_ticketing','live_experience_commerce',
-    'predictive_ops_ai','creator_economy','smart_venue_iot',
-    'community_social_graph','platform_monetisation_v3'
+    'carbon_sustainability','dynamic_seat_upgrade','insurance_fan_protection',
+    'hyper_local_discovery','multi_currency_crypto','ai_fraud_intelligence_v2',
+    'artist_revenue_analytics','live_broadcast_commerce','enterprise_compliance',
+    'super_app_partner_sdk'
   ],
   timestamp: new Date().toISOString()
 }))
@@ -17647,5 +17647,786 @@ app.get('/api/admin/metaverse/overview', (c) => c.json({ total_metaverse_events:
 app.get('/api/venue/info', (c) => c.json({ venue_id:'VEN-001', name:'MMRDA Grounds', city:'Mumbai', capacity:80000, status:'Active', facilities:['Parking','F&B','Medical','Security','IoT Network'] }))
 app.get('/api/ops/status', (c) => c.json({ status:'Operational', active_events:18, support_tickets_open:42, system_health:'Green', alerts:3, uptime:'99.98%', timestamp:new Date().toISOString() }))
 
-// END PHASE 28 QA FIXES
+// ═══════════════════════════════════════════════════════════════════
+// PHASE 29 — NEXT-GEN REVENUE, SUSTAINABILITY & GLOBAL SCALE (v29.0.0)
+// New endpoints: 90  |  Cumulative total: 1,639
+// ═══════════════════════════════════════════════════════════════════
+
+// ── Phase 29 Health ──
+app.get('/api/v29/health', (c) => c.json({
+  status:'ok', version:'v29.0.0', phase:'Phase 29',
+  new_endpoints:90, total_endpoints:1639,
+  features:['carbon_sustainability','dynamic_seat_upgrade','insurance_fan_protection',
+    'hyper_local_discovery','multi_currency_crypto','ai_fraud_intelligence_v2',
+    'artist_revenue_analytics','live_broadcast_commerce','enterprise_compliance',
+    'super_app_partner_sdk'],
+  timestamp: new Date().toISOString()
+}))
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MODULE 1 — CARBON & SUSTAINABILITY PLATFORM (10 endpoints)
+// Portals: Admin + Ops
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+app.get('/api/admin/sustainability/dashboard', (c) => c.json({
+  total_carbon_tracked_tonnes:28400, offset_tonnes:18400, net_emissions:10000,
+  green_events:284, carbon_neutral_events:84, offset_partners:12,
+  sustainability_score:78, industry_benchmark:62,
+  sdg_goals_aligned:['SDG 13','SDG 11','SDG 7','SDG 12'],
+  ytd_savings:{ energy_kwh:2840000, water_litres:18400000, waste_kg:840000 },
+  certifications:['ISO 14001','Green Globe','LEED Gold'],
+  timestamp: new Date().toISOString()
+}))
+
+app.get('/api/admin/sustainability/events', (c) => c.json({
+  events:[
+    { id:'EVT-284', name:'Coldplay Mumbai', carbon_kg:42000, offset_kg:42000, status:'Carbon Neutral', green_score:94 },
+    { id:'EVT-285', name:'NH7 Weekender', carbon_kg:84000, offset_kg:60000, status:'Partial Offset', green_score:71 },
+    { id:'EVT-286', name:'Sunburn Goa', carbon_kg:120000, offset_kg:84000, status:'In Progress', green_score:70 },
+    { id:'EVT-287', name:'Lollapalooza India', carbon_kg:56000, offset_kg:56000, status:'Carbon Neutral', green_score:91 }
+  ],
+  total_events:284, carbon_neutral_count:84, avg_green_score:78
+}))
+
+app.post('/api/admin/sustainability/offset', (c) => c.json({
+  success:true, offset_id:'OFF-29001', tonnes:42, cost_inr:126000,
+  partner:'Grow-Trees.com', certificate_url:'https://greencert.indtix.com/OFF-29001',
+  trees_planted:1680, co2_sequestered_kg:42000, status:'Confirmed'
+}))
+
+app.get('/api/admin/sustainability/supply-chain', (c) => c.json({
+  suppliers:{ total:284, green_certified:142, under_assessment:84, non_compliant:58 },
+  categories:{ food_beverage:{ green_pct:62 }, merchandise:{ green_pct:48 }, transport:{ green_pct:71 }, infrastructure:{ green_pct:84 } },
+  top_green_suppliers:['EcoStage India','GreenBite Catering','SolarSet Lights','BioPack India']
+}))
+
+app.get('/api/ops/sustainability/carbon-tracker', (c) => c.json({
+  live_events:18, total_carbon_today_kg:28400, offset_today_kg:18400,
+  renewable_energy_pct:68, ev_vehicles_deployed:42, public_transport_pct:58,
+  waste_diverted_pct:72, real_time_feed:[
+    { event:'Coldplay Mumbai', zone:'Stage', kwh:2840, solar_pct:84 },
+    { event:'NH7', zone:'Gates', kwh:420, solar_pct:42 }
+  ]
+}))
+
+app.post('/api/ops/sustainability/green-event', (c) => c.json({
+  success:true, plan_id:'GPLAN-284', event_id:'EVT-284',
+  actions:['Solar power 100%','Zero-plastic F&B','EV shuttle service','Carbon offset 120%','Green merchandise'],
+  estimated_carbon_kg:28000, projected_offset_kg:33600, green_score_projected:94
+}))
+
+app.get('/api/admin/sustainability/reporting', (c) => c.json({
+  annual_report:{ year:2025, total_events:1840, carbon_tonnes:28400, offset_tonnes:18400, net:10000 },
+  frameworks_reported:['GRI','CDP','TCFD','BRSR'],
+  awards:['Best Green Event Platform 2025','FICCI Green Award','CII GreenPro'],
+  stakeholder_reports:{ investors:true, regulators:true, public:true }
+}))
+
+app.get('/api/admin/sustainability/green-tickets', (c) => c.json({
+  green_ticket_premium_pct:8, fans_opted_in:284000, revenue_to_offset:'₹2.84 Cr',
+  trees_planted:28400, impact_per_ticket:{ co2_kg:1.2, trees:0.1, water_saved_l:42 },
+  leaderboard:[
+    { fan:'Priya S.', tickets:28, trees:2.8 },
+    { fan:'Rahul M.', tickets:22, trees:2.2 }
+  ]
+}))
+
+app.get('/api/ops/sustainability/renewable-energy', (c) => c.json({
+  solar_installations:42, total_capacity_kw:8400, generation_today_kwh:28400,
+  venues_on_renewable:84, grid_dependency_pct:32, battery_storage_kwh:4200,
+  savings_inr_monthly:'₹18.4L', carbon_avoided_tonnes_monthly:42
+}))
+
+app.post('/api/admin/sustainability/certification', (c) => c.json({
+  success:true, certification_id:'CERT-284', standard:'ISO 14001',
+  audit_date:'2026-06-01', valid_until:'2029-06-01',
+  scope:'Event production, ticketing operations, supply chain',
+  status:'Submitted for review'
+}))
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MODULE 2 — DYNAMIC SEAT UPGRADE ENGINE (8 endpoints)
+// Portals: Fan + Organiser
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+app.get('/api/fan/seat-upgrade/available', (c) => c.json({
+  booking_ref:'BKG-284001', current_seat:'Block D Row 12 Seat 24',
+  current_tier:'General Admission', upgrades_available:[
+    { upgrade_id:'UPG-001', to_tier:'Silver', to_seat:'Block B Row 6 Seat 12', upgrade_price:2500, saving_vs_original:800, expires_in_mins:15 },
+    { upgrade_id:'UPG-002', to_tier:'Gold', to_seat:'Block A Row 3 Seat 8', upgrade_price:5500, saving_vs_original:1200, expires_in_mins:15 },
+    { upgrade_id:'UPG-003', to_tier:'Platinum VIP', to_seat:'Pit Row 1 Seat 4', upgrade_price:12000, saving_vs_original:3000, expires_in_mins:15 }
+  ],
+  ai_recommendation:'UPG-002', recommendation_reason:'96% fans in Gold report higher satisfaction'
+}))
+
+app.post('/api/fan/seat-upgrade/accept', (c) => c.json({
+  success:true, upgrade_ref:'UPGBKG-29001', from_tier:'General Admission',
+  to_tier:'Gold Circle', new_seat:'Block A Row 3 Seat 8',
+  amount_charged:5500, new_ticket_url:'https://ticket.indtix.com/UPGBKG-29001',
+  upgrade_badge_earned:'Gold Mover 🏅'
+}))
+
+app.get('/api/fan/seat-upgrade/history', (c) => c.json({
+  upgrades:[
+    { event:'Arijit Singh Delhi', from:'General', to:'Silver', price_paid:1800, date:'2025-12-14' },
+    { event:'Coldplay Mumbai', from:'Silver', to:'Gold', price_paid:4200, date:'2026-01-18' }
+  ],
+  total_upgrades:8, total_spent_on_upgrades:'₹28,400', favourite_tier:'Gold Circle'
+}))
+
+app.get('/api/organiser/seat-upgrade/dashboard', (c) => c.json({
+  upgrades_sold:2840, upgrade_revenue:'₹1.84 Cr', avg_upgrade_value:6478,
+  upgrade_conversion_rate:'18.4%', top_upgraded_tier:'Gold Circle (42%)',
+  revenue_by_tier:{ silver:'₹42L', gold:'₹84L', platinum:'₹58L' },
+  ai_pricing_active:true, dynamic_offers_sent:28400
+}))
+
+app.post('/api/organiser/seat-upgrade/configure', (c) => c.json({
+  success:true, config_id:'UPGCFG-29001', event_id:'EVT-284',
+  upgrade_windows:['T-7days','T-24h','Day-of-show'],
+  pricing_model:'ai_dynamic', max_discount_pct:25, notification_channels:['push','email','whatsapp']
+}))
+
+app.get('/api/organiser/seat-upgrade/ai-pricing', (c) => c.json({
+  model:'Upgrade Price Optimizer v2', accuracy:0.91,
+  current_recommendations:[
+    { tier:'Gold Circle', suggested_price:5800, demand_score:0.84, fill_rate_current:'72%' },
+    { tier:'Platinum VIP', suggested_price:13500, demand_score:0.68, fill_rate_current:'58%' }
+  ],
+  revenue_uplift_vs_static:'₹42L (+28%)'
+}))
+
+app.get('/api/fan/seat-upgrade/flash-offers', (c) => c.json({
+  flash_offers:[
+    { offer_id:'FLASH-001', to_tier:'Gold Circle', discount_pct:30, price:4200, seats_left:8, expires_in_mins:8 },
+    { offer_id:'FLASH-002', to_tier:'Silver', discount_pct:20, price:1800, seats_left:24, expires_in_mins:12 }
+  ],
+  message:'🔥 Limited flash upgrades — grab yours before showtime!'
+}))
+
+app.post('/api/fan/seat-upgrade/waitlist', (c) => c.json({
+  success:true, waitlist_id:'WL-29001', desired_tier:'Platinum VIP',
+  position:8, estimated_availability:'2026-04-14 18:00',
+  notification_preference:'whatsapp', auto_upgrade_if_available:true
+}))
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MODULE 3 — INSURANCE & FAN PROTECTION (8 endpoints)
+// Portals: Fan + Admin
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+app.get('/api/fan/insurance/plans', (c) => c.json({
+  plans:[
+    { id:'INS-BASIC', name:'Basic Fan Guard', premium_pct:2, covers:['Event cancellation','Artist no-show'], max_cover:5000 },
+    { id:'INS-PLUS', name:'Fan Plus', premium_pct:4, covers:['Cancellation','No-show','Medical emergency','Travel delay'], max_cover:25000 },
+    { id:'INS-PREMIUM', name:'Fan Premier', premium_pct:7, covers:['All Plus','Theft at venue','Hospitalisation','Missed transport'], max_cover:100000 }
+  ],
+  recommended:'INS-PLUS', powered_by:'HDFC Ergo + Bajaj Allianz'
+}))
+
+app.post('/api/fan/insurance/purchase', (c) => c.json({
+  success:true, policy_id:'POL-29001', plan:'Fan Plus', premium_inr:420,
+  cover_inr:25000, valid_for_event:'Coldplay Mumbai 2026-04-15',
+  certificate_url:'https://insurance.indtix.com/POL-29001',
+  claim_hotline:'1800-INDTIX-INS', insurer:'HDFC Ergo'
+}))
+
+app.get('/api/fan/insurance/my-policies', (c) => c.json({
+  policies:[
+    { policy_id:'POL-28001', event:'Arijit Delhi', plan:'Basic', status:'Active', expires:'2026-03-20' },
+    { policy_id:'POL-29001', event:'Coldplay Mumbai', plan:'Fan Plus', status:'Active', expires:'2026-04-16' }
+  ],
+  total_policies:4, total_cover:'₹1,00,000', claims_filed:0
+}))
+
+app.post('/api/fan/insurance/claim', (c) => c.json({
+  success:true, claim_id:'CLM-29001', policy_id:'POL-29001',
+  claim_type:'Event Cancellation', amount_claimed:8500,
+  status:'Under Review', expected_resolution_days:5,
+  documents_required:['Booking confirmation','Cancellation notice'],
+  claim_tracker_url:'https://claims.indtix.com/CLM-29001'
+}))
+
+app.get('/api/admin/insurance/overview', (c) => c.json({
+  total_policies_sold:284000, total_premium_collected:'₹8.4 Cr',
+  claims_filed:2840, claims_settled:2520, claims_pending:320,
+  claim_ratio:'8.4%', nps:84, top_plan:'Fan Plus (58%)',
+  insurer_partners:['HDFC Ergo','Bajaj Allianz','TATA AIG']
+}))
+
+app.get('/api/admin/insurance/claims', (c) => c.json({
+  claims:[
+    { id:'CLM-001', fan:'Priya S.', event:'Asha Bhosle Concert', type:'Artist Cancellation', amount:12000, status:'Settled' },
+    { id:'CLM-002', fan:'Rahul M.', event:'EDC India', type:'Medical Emergency', amount:28400, status:'Under Review' },
+    { id:'CLM-003', fan:'Anita K.', event:'NH7', type:'Event Postponed', amount:5500, status:'Settled' }
+  ],
+  total_claims:2840, settlement_rate:'88.7%', avg_settlement_days:4.2
+}))
+
+app.get('/api/admin/insurance/risk-models', (c) => c.json({
+  models:[
+    { name:'Event Cancellation Risk', accuracy:0.91, high_risk_events:18, triggers:['Artist health','Weather','Venue issues'] },
+    { name:'Fan Medical Risk', accuracy:0.84, high_density_events:42, avg_incidents_per_1000:2.8 }
+  ],
+  overall_loss_ratio:0.42, combined_ratio:0.84
+}))
+
+app.post('/api/admin/insurance/bulk-offer', (c) => c.json({
+  success:true, campaign_id:'INS-CAMP-001', event_id:'EVT-284',
+  fans_targeted:28400, offer_shown_to:28400, opted_in:8420,
+  conversion_rate:'29.6%', premium_collected:'₹2.1 Cr'
+}))
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MODULE 4 — HYPER-LOCAL DISCOVERY ENGINE (8 endpoints)
+// Portals: Fan + Ops
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+app.get('/api/fan/discovery/nearby', (c) => c.json({
+  location:{ lat:19.076, lng:72.877, city:'Mumbai' },
+  events_nearby:[
+    { id:'EVT-100', name:'Arijit Singh Live', venue:'MMRDA Grounds', distance_km:2.4, date:'2026-04-15', price_from:'₹1,500', genre:'Bollywood' },
+    { id:'EVT-101', name:'When Chai Met Toast', venue:'Antiheroes', distance_km:4.2, date:'2026-04-20', price_from:'₹800', genre:'Indie' },
+    { id:'EVT-102', name:'Nucleya Bass Drop', venue:'Bandra Fort', distance_km:5.8, date:'2026-04-22', price_from:'₹1,200', genre:'Electronic' }
+  ],
+  radius_km:10, total_found:28, ai_top_pick:'EVT-100'
+}))
+
+app.get('/api/fan/discovery/personalised', (c) => c.json({
+  user_id:'USR-284', personalisation_score:0.94,
+  recommendations:[
+    { id:'EVT-200', name:'Prateek Kuhad Unplugged', match_score:0.96, reason:'You loved indie-folk last 3 events', price:'₹1,800' },
+    { id:'EVT-201', name:'Ritviz Electronic Night', match_score:0.91, reason:'Friends attending + genre match', price:'₹2,200' },
+    { id:'EVT-202', name:'NH7 Weekender', match_score:0.88, reason:'Multi-genre festival matches your history', price:'₹3,500' }
+  ],
+  based_on:['booking_history','social_graph','location','time_of_day','weather']
+}))
+
+app.get('/api/fan/discovery/trending', (c) => c.json({
+  trending_in_city:'Mumbai',
+  trending:[
+    { event:'Coldplay India Tour', trending_score:9.8, ticket_velocity:'284/hr', days_to_event:42 },
+    { event:'Arijit Singh Acoustic', trending_score:9.2, ticket_velocity:'140/hr', days_to_event:28 },
+    { event:'EDC India 2026', trending_score:8.8, ticket_velocity:'95/hr', days_to_event:56 }
+  ],
+  viral_on_social:['Coldplay India','NHSeven2026','NucleaBass']
+}))
+
+app.get('/api/fan/discovery/hidden-gems', (c) => c.json({
+  hidden_gems:[
+    { id:'EVT-300', name:'Swarathma Live', venue:'Blue Frog', tickets_left:42, price:'₹600', why:'Critically acclaimed, low mainstream visibility' },
+    { id:'EVT-301', name:'Local Tabla Maestro', venue:'NCPA', tickets_left:18, price:'₹400', why:'Rare classical performance, limited seats' },
+    { id:'EVT-302', name:'Bombay Brass Band', venue:'Kala Ghoda', tickets_left:84, price:'₹300', why:'Heritage street performance, free entry zone' }
+  ],
+  discovery_engine:'INDTIX HyperLocal AI v2'
+}))
+
+app.post('/api/fan/discovery/preferences', (c) => c.json({
+  success:true, preferences_saved:true,
+  genres:['Bollywood','Indie','Electronic'],
+  max_distance_km:15, price_range:{ min:500, max:5000 },
+  preferred_days:['Friday','Saturday'], notification_radius_km:10
+}))
+
+app.get('/api/ops/discovery/geo-heatmap', (c) => c.json({
+  heatmap_data:[
+    { zone:'South Mumbai', event_count:42, avg_ticket_price:3800, demand_score:0.84 },
+    { zone:'Bandra-Kurla', event_count:28, avg_ticket_price:2800, demand_score:0.78 },
+    { zone:'Andheri', event_count:56, avg_ticket_price:2200, demand_score:0.91 },
+    { zone:'Thane', event_count:18, avg_ticket_price:1400, demand_score:0.62 }
+  ],
+  white_space_opportunities:['Navi Mumbai','Pune East','Nashik']
+}))
+
+app.get('/api/ops/discovery/city-expansion', (c) => c.json({
+  expansion_targets:[
+    { city:'Surat', readiness_score:0.84, demand_signals:2840, recommended_genre:'Garba/Navratri' },
+    { city:'Kochi', readiness_score:0.78, demand_signals:1840, recommended_genre:'Music Festivals' },
+    { city:'Indore', readiness_score:0.72, demand_signals:1420, recommended_genre:'Bollywood Nights' }
+  ],
+  current_cities:28, target_cities_q2:42
+}))
+
+app.get('/api/fan/discovery/social-picks', (c) => c.json({
+  friends_attending:[
+    { event:'NH7 Weekender', friends:['Anya','Raj','Priya'], friend_count:3 },
+    { event:'Prateek Kuhad', friends:['Mia','Sam'], friend_count:2 }
+  ],
+  community_picks:[
+    { event:'Nucleya Bass Drop', community:'EDM Underground India', votes:2840 }
+  ],
+  fear_of_missing_out_score:0.84
+}))
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MODULE 5 — MULTI-CURRENCY & CRYPTO PAYMENTS (10 endpoints)
+// Portals: Fan + Admin
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+app.get('/api/fan/payments/methods', (c) => c.json({
+  fiat_methods:['UPI','NetBanking','Credit Card','Debit Card','Wallets','BNPL','EMI'],
+  crypto_methods:['Bitcoin','Ethereum','USDT','Polygon MATIC','Solana','BNB'],
+  bnpl_partners:['Simpl','LazyPay','ZestMoney','Kredivo'],
+  wallets:['Paytm','PhonePe','Amazon Pay','Mobikwik'],
+  international:['Visa','Mastercard','PayPal','Stripe','Apple Pay','Google Pay'],
+  default_currency:'INR', supported_currencies:12
+}))
+
+app.post('/api/fan/payments/crypto', (c) => c.json({
+  success:true, payment_id:'CPAY-29001', amount_inr:8500, amount_crypto:0.142,
+  crypto_currency:'ETH', wallet_address:'0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
+  exchange_rate:{ eth_inr:59859 }, expires_in_mins:15,
+  status:'Awaiting blockchain confirmation', blockchain:'Ethereum'
+}))
+
+app.get('/api/fan/payments/crypto-rates', (c) => c.json({
+  rates:[
+    { currency:'BTC', inr_rate:5840000, change_24h:'+2.4%', market_cap:'$1.2T' },
+    { currency:'ETH', inr_rate:245000, change_24h:'+1.8%', market_cap:'$284B' },
+    { currency:'MATIC', inr_rate:84, change_24h:'-0.8%', market_cap:'₹42B' },
+    { currency:'SOL', inr_rate:12400, change_24h:'+4.2%', market_cap:'$58B' },
+    { currency:'USDT', inr_rate:84, change_24h:'0.0%', market_cap:'$110B' }
+  ],
+  last_updated: new Date().toISOString()
+}))
+
+app.get('/api/fan/payments/wallet', (c) => c.json({
+  wallet_balance_inr:28400, wallet_balance_usdt:338, locked_in_bookings:8500,
+  cashback_earned:'₹2,840', pending_refunds:'₹1,500', payment_history_count:28,
+  linked_upi:'priya@paytm', linked_card_last4:'4242'
+}))
+
+app.post('/api/fan/payments/bnpl', (c) => c.json({
+  success:true, bnpl_id:'BNPL-29001', order_amount:12500, provider:'Simpl',
+  emi_plan:{ months:3, monthly_emi:4167, interest_rate:0, processing_fee:0 },
+  approved:true, credit_limit:25000, status:'Active'
+}))
+
+app.get('/api/admin/payments/multi-currency', (c) => c.json({
+  currencies_active:12, total_transactions:284000, international_pct:'8.4%',
+  top_currencies:['INR (88%)','USD (4.2%)','GBP (2.8%)','AED (2.1%)','SGD (1.4%)'],
+  crypto_volume_inr:'₹4.2 Cr', crypto_transactions:8420,
+  fx_revenue:'₹28L', avg_conversion_rate:0.984
+}))
+
+app.get('/api/admin/payments/crypto-treasury', (c) => c.json({
+  treasury_value_inr:'₹8.4 Cr', holdings:{ BTC:0.42, ETH:8.4, USDT:284000, MATIC:84000 },
+  unrealized_pnl:'₹84L', auto_convert_to_inr:true, conversion_threshold_inr:100000,
+  custody_partner:'CoinDCX Custody', cold_storage_pct:84
+}))
+
+app.post('/api/admin/payments/currency-config', (c) => c.json({
+  success:true, config_id:'CURRCFG-001', currencies_enabled:12,
+  auto_fx_conversion:true, markup_pct:1.5, settlement_currency:'INR',
+  crypto_accept:true, crypto_auto_convert:true
+}))
+
+app.get('/api/fan/payments/split', (c) => c.json({
+  split_options:[
+    { type:'Equal Split', members:4, per_person:3125, total:12500 },
+    { type:'Custom Split', members:4, splits:[{ name:'Priya', amount:5000 },{ name:'Raj', amount:2500 },{ name:'Anita', amount:3000 },{ name:'Sam', amount:2000 }] }
+  ],
+  payment_links_generated:4, group_pay_url:'https://pay.indtix.com/group/GRP-29001'
+}))
+
+app.post('/api/fan/payments/refund-request', (c) => c.json({
+  success:true, refund_id:'REF-29001', booking_ref:'BKG-284001', amount_inr:8500,
+  reason:'Event cancelled', method:'Original payment method',
+  estimated_days:5, status:'Initiated', tracking_url:'https://refunds.indtix.com/REF-29001'
+}))
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MODULE 6 — AI-POWERED FRAUD INTELLIGENCE v2 (8 endpoints)
+// Portals: Admin + Ops
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+app.get('/api/admin/fraud/dashboard', (c) => c.json({
+  total_transactions_today:284000, flagged:2840, blocked:842, false_positives:42,
+  fraud_rate:'0.30%', savings_today:'₹84L', model_accuracy:0.988,
+  threat_level:'Low', active_rules:284, ml_models_running:8,
+  top_threat_types:['Scalping Bots','Card Testing','Account Takeover','Fake Refunds'],
+  timestamp: new Date().toISOString()
+}))
+
+app.get('/api/admin/fraud/alerts', (c) => c.json({
+  alerts:[
+    { id:'FRD-001', type:'Bot Attack', severity:'Critical', transactions:2840, source_ip_range:'103.x.x.x', action:'Blocked', timestamp:'2026-03-09T14:22:00Z' },
+    { id:'FRD-002', type:'Card Testing', severity:'High', transactions:284, bin_range:'4111xxxx', action:'Flagged for review', timestamp:'2026-03-09T13:45:00Z' },
+    { id:'FRD-003', type:'Scalper Account', severity:'Medium', user_id:'USR-99001', tickets_bought:48, action:'Account suspended' }
+  ],
+  unresolved:12, resolved_today:284
+}))
+
+app.post('/api/admin/fraud/investigate', (c) => c.json({
+  investigation_id:'INV-29001', transaction_id:'TXN-284001',
+  risk_score:0.94, risk_factors:['Velocity: 8 tickets in 4 mins','VPN detected','New device','High-value event'],
+  recommended_action:'Manual review + OTP verification',
+  similar_cases:18, status:'Under Investigation'
+}))
+
+app.get('/api/admin/fraud/rules', (c) => c.json({
+  rules:[
+    { id:'RULE-001', name:'Bot Rate Limit', condition:'>5 tickets/min/IP', action:'Block', active:true, triggered_today:2840 },
+    { id:'RULE-002', name:'Card Testing', condition:'3+ failures same BIN', action:'Flag', active:true, triggered_today:284 },
+    { id:'RULE-003', name:'Resale Prevention', condition:'>4 same event same user', action:'Verify OTP', active:true, triggered_today:840 },
+    { id:'RULE-004', name:'VPN Block', condition:'Known VPN IP + high value', action:'Challenge', active:true, triggered_today:420 }
+  ],
+  total_rules:284, active:268, paused:16
+}))
+
+app.post('/api/admin/fraud/rules', (c) => c.json({
+  success:true, rule_id:'RULE-285', name:'Crypto Fraud Pattern',
+  condition:'Crypto payment + new account + VIP ticket',
+  action:'Hold for 24h verification', priority:'High', active:true
+}))
+
+app.get('/api/ops/fraud/live-monitor', (c) => c.json({
+  live_transactions_per_sec:28, current_fraud_rate:'0.28%',
+  blocked_last_minute:4, flagged_last_minute:28,
+  top_threats_now:['Scalping bots on Coldplay inventory','Card testing detected on gateway 2'],
+  system_status:'Protected', response_time_ms:42
+}))
+
+app.get('/api/admin/fraud/ml-models', (c) => c.json({
+  models:[
+    { name:'GradientBoost Fraud Detector', version:'v3.2', accuracy:0.988, false_positive_rate:0.008 },
+    { name:'Graph Neural Network (Account Links)', version:'v2.1', accuracy:0.971, false_positive_rate:0.012 },
+    { name:'NLP Dispute Classifier', version:'v1.8', accuracy:0.944, false_positive_rate:0.022 },
+    { name:'Velocity Anomaly Detector', version:'v4.0', accuracy:0.994, false_positive_rate:0.004 }
+  ],
+  last_retrained:'2026-03-01', next_scheduled:'2026-04-01', training_samples:28400000
+}))
+
+app.get('/api/admin/fraud/chargeback-analytics', (c) => c.json({
+  total_chargebacks:284, chargeback_rate:'0.10%', total_value:'₹42L',
+  won:228, lost:56, win_rate:'80.3%', avg_dispute_days:28,
+  top_reasons:['Item not received (cancelled events)','Unauthorized transaction','Product not as described'],
+  prevention_savings:'₹1.84 Cr YTD'
+}))
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MODULE 7 — ARTIST REVENUE ANALYTICS SUITE (8 endpoints)
+// Portals: Event Manager + Admin
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+app.get('/api/event-manager/artist-revenue/dashboard', (c) => c.json({
+  artist_id:'ART-001', name:'Arijit Singh', total_revenue_ytd:'₹42 Cr',
+  events_this_year:18, avg_per_event:'₹2.33 Cr', ticket_revenue:'₹38 Cr',
+  merchandise_revenue:'₹2.8 Cr', streaming_royalties:'₹84L', brand_deals:'₹42L',
+  fan_base_size:8400000, superfan_count:28400, nps:92,
+  upcoming_events:4, next_event:'Coldplay Collab Mumbai – 2026-04-15'
+}))
+
+app.get('/api/event-manager/artist-revenue/breakdown', (c) => c.json({
+  revenue_streams:[
+    { stream:'Ticket Sales', amount:'₹38 Cr', pct:90.5, trend:'+18%' },
+    { stream:'Merchandise', amount:'₹2.8 Cr', pct:6.7, trend:'+42%' },
+    { stream:'Streaming Royalties', amount:'₹84L', pct:2.0, trend:'+28%' },
+    { stream:'Brand Integrations', amount:'₹42L', pct:1.0, trend:'+84%' }
+  ],
+  total:'₹41.89 Cr', period:'YTD 2026'
+}))
+
+app.get('/api/event-manager/artist-revenue/fan-analytics', (c) => c.json({
+  total_fans:8400000, active_fans_30d:2840000, superfans:28400,
+  avg_spend_per_fan:'₹4,284', top_cities:['Mumbai','Delhi','Bengaluru','Hyderabad'],
+  age_demographics:{ '18-24':28, '25-34':42, '35-44':22, '45+':8 },
+  repeat_purchase_rate:'68%', nps:92, churn_rate:'4.2%'
+}))
+
+app.get('/api/event-manager/artist-revenue/merchandise', (c) => c.json({
+  merch_revenue:'₹2.8 Cr', items_sold:28400, top_items:[
+    { item:'Signature T-Shirt', sold:8400, revenue:'₹84L' },
+    { item:'Exclusive Vinyl LP', sold:2840, revenue:'₹42L' },
+    { item:'Enamel Pin Set', sold:18400, revenue:'₹18.4L' }
+  ],
+  digital_merch_revenue:'₹42L', nft_drops:8, nft_revenue:'₹28L'
+}))
+
+app.get('/api/event-manager/artist-revenue/forecasts', (c) => c.json({
+  next_event_forecast:{ date:'2026-04-15', venue:'MMRDA Grounds', capacity:80000,
+    predicted_fill:'96%', predicted_revenue:'₹4.2 Cr', model_confidence:0.91 },
+  next_12_months:{ total_revenue:'₹84 Cr', events:24, market_growth:'+28%' }
+}))
+
+app.get('/api/event-manager/artist-revenue/royalties', (c) => c.json({
+  streaming_royalties:{ spotify:'₹28L', jio_saavn:'₹18L', apple_music:'₹14L', youtube_music:'₹24L' },
+  total_streaming:'₹84L', sync_licensing:'₹18L', performance_rights:'₹28L',
+  total_royalties:'₹1.3 Cr', pending_payments:'₹18L'
+}))
+
+app.get('/api/admin/artist-revenue/platform-view', (c) => c.json({
+  total_artists:2840, total_platform_revenue_from_artists:'₹284 Cr',
+  avg_revenue_per_artist:'₹1 Cr', top_earning_artists:[
+    { name:'Arijit Singh', revenue:'₹42 Cr' }, { name:'Badshah', revenue:'₹28 Cr' },
+    { name:'Dua Lipa India', revenue:'₹18 Cr' }
+  ],
+  commission_earned:'₹28.4 Cr', contracts_active:2840
+}))
+
+app.post('/api/event-manager/artist-revenue/payout-request', (c) => c.json({
+  success:true, payout_id:'PAY-29001', artist_id:'ART-001',
+  amount_requested:'₹2.33 Cr', payment_method:'NEFT', bank_account:'HDFC xxxx1234',
+  processing_days:3, status:'Initiated', expected_date:'2026-03-12'
+}))
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MODULE 8 — LIVE BROADCAST & STREAMING COMMERCE (10 endpoints)
+// Portals: Fan + Organiser
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+app.get('/api/fan/live-stream/events', (c) => c.json({
+  live_now:[
+    { id:'LS-001', name:'Arijit Singh Live – Mumbai', viewers:284000, quality:'4K HDR', price:'₹299', platform:'INDTIX Live' },
+    { id:'LS-002', name:'NH7 Stage 2 – Live', viewers:84000, quality:'1080p', price:'Free with ticket', platform:'INDTIX Live' }
+  ],
+  upcoming:[
+    { id:'LS-003', name:'Coldplay Mumbai – Full Concert', date:'2026-04-15 20:00', pre_registrations:840000, price:'₹499' }
+  ],
+  my_purchases:2
+}))
+
+app.post('/api/fan/live-stream/purchase', (c) => c.json({
+  success:true, access_id:'LSA-29001', event_id:'LS-001',
+  stream_url:'https://live.indtix.com/watch/LSA-29001',
+  quality_options:['4K HDR','1080p','720p','480p'],
+  valid_until:'2026-04-16 00:00', download_allowed:true,
+  replay_available:true, replay_until:'2026-05-15'
+}))
+
+app.get('/api/fan/live-stream/watch', (c) => c.json({
+  stream_id:'LS-001', title:'Arijit Singh Live', current_viewers:284000,
+  stream_health:'Excellent', latency_ms:800, cdn_node:'Mumbai-1',
+  interactive_features:['Live chat','Emoji reactions','Song requests','AR filters'],
+  current_song:'Tum Hi Ho', set_progress:'42%', time_remaining_mins:84
+}))
+
+app.get('/api/organiser/live-stream/dashboard', (c) => c.json({
+  active_streams:4, total_viewers:428000, peak_viewers_today:840000,
+  stream_revenue_today:'₹8.4 Cr', subscription_revenue:'₹2.8 Cr',
+  pay_per_view_revenue:'₹5.6 Cr', avg_watch_duration_mins:84,
+  ad_revenue:'₹42L', replay_views:28400
+}))
+
+app.post('/api/organiser/live-stream/create', (c) => c.json({
+  success:true, stream_id:'LS-29001', event_id:'EVT-284',
+  rtmp_url:'rtmps://ingest.live.indtix.com/stream/SK-29001',
+  stream_key:'SK-29001-SECURE', backup_rtmp:'rtmps://ingest2.live.indtix.com/stream/SK-29001',
+  cdn_regions:['Mumbai','Delhi','Bengaluru','Singapore'], status:'Ready'
+}))
+
+app.get('/api/fan/live-stream/commerce', (c) => c.json({
+  stream_id:'LS-001', shoppable_moments:[
+    { timestamp_mins:42, product:'Arijit Singh Signature Tee', price:'₹1,200', stock:284, buy_url:'https://merch.indtix.com/AS-TEE' },
+    { timestamp_mins:84, product:'Limited Edition Vinyl', price:'₹2,800', stock:42, buy_url:'https://merch.indtix.com/AS-VINYL' }
+  ],
+  live_deals_active:3, flash_sale_ends_in_mins:8
+}))
+
+app.post('/api/fan/live-stream/gift', (c) => c.json({
+  success:true, gift_id:'GIFT-29001', gift_type:'Super Heart',
+  amount_inr:500, artist_share_pct:70, platform_fee_pct:30,
+  displayed_to_viewers:true, artist_notified:true, message:'Amazing concert!'
+}))
+
+app.get('/api/organiser/live-stream/analytics', (c) => c.json({
+  stream_id:'LS-001', total_viewers:284000, peak_concurrent:840000,
+  avg_watch_mins:84, completion_rate:'68%', engagement_rate:'42%',
+  gifts_received:2840, gift_revenue:'₹84L',
+  commerce_sales:420, commerce_revenue:'₹8.4L',
+  geographic_split:{ India:84, USA:4.2, UK:2.8, Other:9 }
+}))
+
+app.get('/api/fan/live-stream/replay', (c) => c.json({
+  purchased_replays:[
+    { stream:'Arijit Singh Live', purchased:'2026-03-01', available_until:'2026-04-01', quality:'4K HDR' },
+    { stream:'NH7 Weekender Day 2', purchased:'2025-12-20', available_until:'2026-01-20', quality:'1080p' }
+  ],
+  total_replays:8
+}))
+
+app.post('/api/organiser/live-stream/schedule', (c) => c.json({
+  success:true, schedule_id:'LSSCHED-29001', streams:[
+    { start:'2026-04-15 19:00', duration_h:1, title:'Pre-show Coverage' },
+    { start:'2026-04-15 20:00', duration_h:3, title:'Main Concert' },
+    { start:'2026-04-15 23:00', duration_h:0.5, title:'Post-show Fan Interactions' }
+  ],
+  notifications_scheduled:840000, reminder_channels:['push','email','whatsapp']
+}))
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MODULE 9 — ENTERPRISE COMPLIANCE & AUDIT ENGINE (10 endpoints)
+// Portals: Admin + Ops
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+app.get('/api/admin/compliance/dashboard', (c) => c.json({
+  overall_compliance_score:94, frameworks:['DPDP Act 2023','GST','PCI-DSS','ISO 27001','SOC 2 Type II'],
+  open_issues:12, critical_issues:0, resolved_this_month:28,
+  next_audit:'2026-06-01', last_audit:'2025-12-01', audit_result:'Clean',
+  data_residency_compliant:true, data_retention_policy:'7 years',
+  regulatory_filings_current:true
+}))
+
+app.get('/api/admin/compliance/audit-trail', (c) => c.json({
+  audit_logs:[
+    { id:'AUDIT-001', action:'Admin accessed user data', user:'admin@indtix.com', ip:'10.0.0.1', timestamp:'2026-03-09T14:00:00Z', status:'Normal' },
+    { id:'AUDIT-002', action:'Bulk export initiated', user:'ops@indtix.com', ip:'10.0.0.2', timestamp:'2026-03-09T13:30:00Z', status:'Reviewed' },
+    { id:'AUDIT-003', action:'Pricing rule modified', user:'pricing@indtix.com', ip:'10.0.0.3', timestamp:'2026-03-09T12:00:00Z', status:'Approved' }
+  ],
+  total_logs_today:28400, retention_days:2555, export_available:true
+}))
+
+app.get('/api/admin/compliance/gdpr-dpdp', (c) => c.json({
+  dpdp_status:'Compliant', consent_records:28400000, consent_rate:'94.2%',
+  data_requests_pending:42, avg_response_days:2.4, right_to_erasure_requests:284,
+  erasure_completed:268, dpo_contact:'dpo@indtix.com',
+  privacy_policy_version:'v8.0', last_updated:'2026-01-01'
+}))
+
+app.get('/api/admin/compliance/gst-reporting', (c) => c.json({
+  gst_registered:true, gstin:'27AABCO1234A1Z5', tax_collected_ytd:'₹28.4 Cr',
+  gst_filed_upto:'Feb 2026', pending_filing:'March 2026',
+  input_tax_credit:'₹4.2 Cr', net_gst_payable:'₹24.2 Cr',
+  tcs_collected:'₹8.4 Cr', tds_deducted:'₹2.8 Cr',
+  reconciliation_status:'Automated', next_filing_date:'2026-04-20'
+}))
+
+app.post('/api/admin/compliance/data-request', (c) => c.json({
+  success:true, request_id:'DATAREQ-29001', type:'Right to Access',
+  user_id:'USR-284', status:'Processing',
+  estimated_completion_days:3, handler:'privacy@indtix.com'
+}))
+
+app.get('/api/ops/compliance/security-audit', (c) => c.json({
+  last_pentest:'2026-01-15', pentest_result:'3 Medium, 0 Critical, 0 High',
+  vulnerabilities_open:3, vulnerabilities_resolved:28,
+  waf_status:'Active', ddos_protection:'Cloudflare Enterprise',
+  ssl_certificates:{ valid:true, expires:'2027-01-15' },
+  mfa_enforcement:'Mandatory for all staff', secret_scanning:'Enabled'
+}))
+
+app.get('/api/admin/compliance/pci-dss', (c) => c.json({
+  pci_dss_level:'Level 1 Service Provider', last_qsa_audit:'2025-11-01',
+  status:'Compliant', card_data_stored:false, tokenization:'Stripe + Razorpay',
+  controls_met:12, controls_total:12, next_audit:'2026-11-01',
+  scope_reduction_measures:['Tokenization','P2PE','Network segmentation']
+}))
+
+app.get('/api/admin/compliance/regulatory-calendar', (c) => c.json({
+  upcoming_deadlines:[
+    { deadline:'2026-04-20', task:'GST Filing - March 2026', status:'Pending' },
+    { deadline:'2026-05-31', task:'DPDP Annual Report', status:'In Preparation' },
+    { deadline:'2026-06-01', task:'ISO 27001 Surveillance Audit', status:'Scheduled' },
+    { deadline:'2026-07-31', task:'SOC 2 Type II Annual Review', status:'Not Started' }
+  ],
+  compliance_calendar_integrated:true, auto_reminders:true
+}))
+
+app.post('/api/admin/compliance/incident-report', (c) => c.json({
+  success:true, incident_id:'INC-29001', severity:'Medium',
+  description:'Delayed GST reconciliation for Q4 batch',
+  assigned_to:'compliance@indtix.com', sla_hours:24, status:'Open',
+  regulatory_notification_required:false
+}))
+
+app.get('/api/ops/compliance/vendor-compliance', (c) => c.json({
+  vendors:{ total:284, compliant:248, under_review:28, non_compliant:8 },
+  critical_vendors:['AWS','Razorpay','Stripe','Twilio','Sendgrid'],
+  all_critical_compliant:true,
+  top_gaps:['DPDP DPA missing for 8 vendors','PCI attestation expired for 2 vendors'],
+  next_review:'2026-06-01'
+}))
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MODULE 10 — SUPER APP & PARTNER SDK ECOSYSTEM (10 endpoints)
+// Portals: Admin + Organiser
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+app.get('/api/admin/super-app/dashboard', (c) => c.json({
+  super_app_version:'v3.0', monthly_active_users:2840000, daily_active:840000,
+  partner_integrations:284, sdk_downloads:8400, revenue_from_partners:'₹28.4 Cr',
+  modules_in_app:18, app_rating:{ android:4.7, ios:4.8 },
+  retention_d30:'72%', nps:84
+}))
+
+app.get('/api/admin/super-app/partners', (c) => c.json({
+  partners:[
+    { name:'Zomato', type:'F&B', integration:'Deep Link + Pre-order', revenue:'₹4.2 Cr', status:'Active' },
+    { name:'Ola/Uber', type:'Transport', integration:'Ride booking widget', revenue:'₹2.8 Cr', status:'Active' },
+    { name:'MakeMyTrip', type:'Travel', integration:'Hotel + Flight bundle', revenue:'₹8.4 Cr', status:'Active' },
+    { name:'Myntra', type:'Merchandise', integration:'Outfit recommender', revenue:'₹1.8 Cr', status:'Active' },
+    { name:'BookMyShow', type:'Pre/Post Events', integration:'Restaurant + Shows', revenue:'₹3.2 Cr', status:'Active' }
+  ],
+  total_partners:284, active:248, pending_approval:28, revenue_total:'₹28.4 Cr'
+}))
+
+app.post('/api/admin/super-app/partner-onboard', (c) => c.json({
+  success:true, partner_id:'PTRNR-29001', name:'Zomato Gold',
+  api_key:'SDKKEY-29001', webhook_url:'https://partners.indtix.com/zomato/webhook',
+  integration_docs:'https://dev.indtix.com/partners/zomato',
+  go_live_date:'2026-04-01', revenue_share_pct:15
+}))
+
+app.get('/api/admin/super-app/sdk', (c) => c.json({
+  sdk_versions:{ android:'v4.2.0', ios:'v4.2.1', react_native:'v3.8.0', flutter:'v2.4.0', web:'v5.1.0' },
+  total_downloads:8400, active_integrations:284,
+  features:['Ticket Purchase','QR Scanning','Live Stream','NFT Wallet','Voice Booking','Loyalty Points','Push Notifications'],
+  documentation_url:'https://dev.indtix.com/sdk', changelog_url:'https://dev.indtix.com/sdk/changelog'
+}))
+
+app.get('/api/organiser/super-app/widgets', (c) => c.json({
+  available_widgets:[
+    { id:'WDG-001', name:'Ticket Sales Widget', embed_type:'iframe', size:'300x250', events:28400 },
+    { id:'WDG-002', name:'Countdown Timer', embed_type:'js-snippet', size:'400x100', events:18400 },
+    { id:'WDG-003', name:'Seat Map', embed_type:'web-component', size:'600x400', events:8400 }
+  ],
+  total_widgets:18, monthly_widget_impressions:84000000
+}))
+
+app.post('/api/organiser/super-app/widget-create', (c) => c.json({
+  success:true, widget_id:'WDG-29001', type:'Ticket Sales Widget',
+  embed_code:'<script src="https://widgets.indtix.com/ticket-sales.js" data-event="EVT-284"></script>',
+  preview_url:'https://widgets.indtix.com/preview/WDG-29001', ready:true
+}))
+
+app.get('/api/admin/super-app/mini-apps', (c) => c.json({
+  mini_apps:[
+    { name:'Concert Prep Assistant', provider:'INDTIX Native', users:840000, rating:4.7 },
+    { name:'Group Ticket Manager', provider:'INDTIX Native', users:284000, rating:4.6 },
+    { name:'Venue Navigator', provider:'MapmyIndia', users:420000, rating:4.5 },
+    { name:'Event Budget Planner', provider:'ET Money', users:180000, rating:4.4 }
+  ],
+  total_mini_apps:42, total_users:2840000
+}))
+
+app.get('/api/admin/super-app/analytics', (c) => c.json({
+  dau:840000, mau:2840000, session_duration_mins:18.4,
+  modules_used:{ tickets:84, discovery:72, live_stream:48, metaverse:22, voice:18 },
+  partner_clicks:2840000, partner_conversions:284000, partner_revenue:'₹28.4 Cr',
+  top_feature:'Event Discovery (84% DAU usage)'
+}))
+
+app.post('/api/admin/super-app/push-campaign', (c) => c.json({
+  success:true, campaign_id:'PUSH-29001', title:'Coldplay Mumbai — Only 500 tickets left!',
+  audience_size:840000, segments:['Mumbai fans','Coldplay followers','VIP buyers'],
+  send_time:'2026-04-10 18:00', expected_ctr:'18.4%', expected_bookings:8400
+}))
+
+app.get('/api/organiser/super-app/revenue-share', (c) => c.json({
+  partner_revenues:[
+    { partner:'Zomato Pre-order', bookings:2840, revenue:'₹42L', commission:'₹4.2L' },
+    { partner:'Ola Rides', bookings:8400, revenue:'₹18L', commission:'₹1.8L' },
+    { partner:'MakeMyTrip Hotels', bookings:420, revenue:'₹84L', commission:'₹8.4L' }
+  ],
+  total_partner_revenue:'₹1.44 Cr', total_commission:'₹14.4L', next_payout:'2026-03-15'
+}))
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// PHASE 29 — Updated Main Health Endpoint
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 29 — NEXT-GEN REVENUE, SUSTAINABILITY & GLOBAL SCALE
+// ═══════════════════════════════════════════════════════════
+
 export default app

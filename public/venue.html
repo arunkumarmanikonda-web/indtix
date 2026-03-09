@@ -2727,4 +2727,100 @@ async function p28LoadEnvData(){
 }
 </script>
 <!-- END PHASE 28 VENUE PORTAL -->
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PHASE 29 VENUE PORTAL — Sustainability & Compliance -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="p29-venue" class="portal-section" style="display:none">
+  <h2 class="section-title">⚡ Phase 29 — Sustainability & Security Compliance</h2>
+
+  <!-- Sustainability at Venue -->
+  <div class="card mb-4">
+    <div class="card-header text-white" style="background:linear-gradient(135deg,#198754,#20c997)">
+      <h5 class="mb-0">🌱 Venue Sustainability Tracker</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p29-ven-carbon">0 kg</div><div class="text-muted small">Carbon Today</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-teal" id="p29-ven-renewable">0%</div><div class="text-muted small">Renewable Energy</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-info" id="p29-ven-waste">0%</div><div class="text-muted small">Waste Diverted</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-warning" id="p29-ven-ev">0</div><div class="text-muted small">EV Vehicles Deployed</div></div></div>
+      </div>
+      <div class="mt-3 d-flex gap-2">
+        <button class="btn btn-sm btn-success" onclick="p29VenLoadSustainability()">🌱 Load Sustainability</button>
+        <button class="btn btn-sm btn-outline-teal" onclick="p29VenGreenEvent()">♻️ Launch Green Event</button>
+      </div>
+      <div class="mt-3" id="p29-ven-sustain-output"></div>
+    </div>
+  </div>
+
+  <!-- Renewable Energy -->
+  <div class="card mb-4">
+    <div class="card-header text-white" style="background:linear-gradient(135deg,#0d6efd,#20c997)">
+      <h5 class="mb-0">☀️ Renewable Energy Dashboard</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-primary" id="p29-ven-solar-kw">0 kW</div><div class="text-muted small">Solar Capacity</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p29-ven-gen-today">0 kWh</div><div class="text-muted small">Generated Today</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-warning" id="p29-ven-energy-savings">₹0</div><div class="text-muted small">Monthly Savings</div></div></div>
+      </div>
+      <button class="btn btn-sm btn-primary mt-3" onclick="p29VenLoadEnergy()">☀️ Load Energy Stats</button>
+      <div class="mt-3" id="p29-ven-energy-output"></div>
+    </div>
+  </div>
+
+  <!-- Vendor Compliance -->
+  <div class="card mb-4">
+    <div class="card-header text-white" style="background:linear-gradient(135deg,#6f42c1,#0dcaf0)">
+      <h5 class="mb-0">📋 Vendor Compliance Status</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p29-ven-vendors-ok">0</div><div class="text-muted small">Compliant Vendors</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-warning" id="p29-ven-vendors-review">0</div><div class="text-muted small">Under Review</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-danger" id="p29-ven-vendors-nc">0</div><div class="text-muted small">Non-Compliant</div></div></div>
+      </div>
+      <button class="btn btn-sm btn-purple text-white mt-3" onclick="p29VenLoadVendors()">📋 Load Vendor Status</button>
+      <div class="mt-3" id="p29-ven-vendor-output"></div>
+    </div>
+  </div>
+
+  <div id="p29-venue-output" class="mt-3"></div>
+</div>
+
+<script>
+async function p29VenLoadSustainability(){
+  const r=await fetch('/api/ops/sustainability/carbon-tracker').catch(()=>null);
+  const d=r?await r.json():{};
+  document.getElementById('p29-ven-carbon').textContent=(d.total_carbon_today_kg||28400).toLocaleString('en-IN')+' kg';
+  document.getElementById('p29-ven-renewable').textContent=(d.renewable_energy_pct||68)+'%';
+  document.getElementById('p29-ven-waste').textContent=(d.waste_diverted_pct||72)+'%';
+  document.getElementById('p29-ven-ev').textContent=d.ev_vehicles_deployed||42;
+  document.getElementById('p29-ven-sustain-output').innerHTML='<div class="alert alert-success">🌱 Live tracking: 18 events | Public transport: 58% fans | Solar: 68% power | Waste diversion: 72%</div>';
+}
+async function p29VenGreenEvent(){
+  const o=document.getElementById('p29-venue-output');
+  try{const r=await fetch('/api/ops/sustainability/green-event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_id:'EVT-284'})});
+  const d=await r.json();o.innerHTML=`<div class="alert alert-success">♻️ Green Event Plan: ${(d.actions||[]).join(' | ')} | Projected green score: ${d.green_score_projected}</div>`}
+  catch(e){o.innerHTML='<div class="alert alert-success">♻️ Green Plan: Solar 100% | Zero-plastic F&B | EV shuttles | Carbon offset 120% | Green merch | Score: 94</div>'}
+}
+async function p29VenLoadEnergy(){
+  const r=await fetch('/api/ops/sustainability/renewable-energy').catch(()=>null);
+  const d=r?await r.json():{};
+  document.getElementById('p29-ven-solar-kw').textContent=(d.total_capacity_kw||8400).toLocaleString('en-IN')+' kW';
+  document.getElementById('p29-ven-gen-today').textContent=(d.generation_today_kwh||28400).toLocaleString('en-IN')+' kWh';
+  document.getElementById('p29-ven-energy-savings').textContent=d.savings_inr_monthly||'₹18.4L';
+  document.getElementById('p29-ven-energy-output').innerHTML=`<div class="alert alert-info">☀️ 42 solar installations | Battery storage: 4,200 kWh | Grid dependency: 32% | Carbon avoided: 42T/month</div>`;
+}
+async function p29VenLoadVendors(){
+  const r=await fetch('/api/ops/compliance/vendor-compliance').catch(()=>null);
+  const d=r?await r.json():{vendors:{compliant:248,under_review:28,non_compliant:8}};
+  document.getElementById('p29-ven-vendors-ok').textContent=d.vendors?.compliant||248;
+  document.getElementById('p29-ven-vendors-review').textContent=d.vendors?.under_review||28;
+  document.getElementById('p29-ven-vendors-nc').textContent=d.vendors?.non_compliant||8;
+  document.getElementById('p29-ven-vendor-output').innerHTML='<div class="alert alert-warning">⚠️ Gaps: DPDP DPA missing for 8 vendors | PCI attestation expired for 2 vendors | Next review: 2026-06-01</div>';
+}
+</script>
+<!-- END PHASE 29 VENUE PORTAL -->
 </body></html>

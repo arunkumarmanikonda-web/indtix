@@ -5980,5 +5980,225 @@ function p28fLoadFeed() {
 }
 </script>
 <!-- END PHASE 28 FAN PORTAL -->
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PHASE 29 FAN PORTAL — Upgrades, Insurance, Discovery, Crypto, Streaming -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="p29-fan" class="portal-section" style="display:none">
+  <h2 class="section-title">⚡ Phase 29 — Upgrades, Insurance & Live Commerce</h2>
+
+  <!-- Dynamic Seat Upgrade -->
+  <div class="card mb-4">
+    <div class="card-header text-white" style="background:linear-gradient(135deg,#6f42c1,#0d6efd)">
+      <h5 class="mb-0">🎟️ Dynamic Seat Upgrade Engine</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-purple" id="p29-upgrade-current">--</div><div class="text-muted small">Current Seat</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-primary" id="p29-upgrades-available">0</div><div class="text-muted small">Upgrades Available</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p29-ai-rec">--</div><div class="text-muted small">AI Recommendation</div></div></div>
+      </div>
+      <div class="mt-3" id="p29-upgrade-options"></div>
+      <div class="mt-3 d-flex gap-2 flex-wrap">
+        <button class="btn btn-sm btn-purple text-white" onclick="p29LoadUpgrades()">🎟️ Check My Upgrades</button>
+        <button class="btn btn-sm btn-outline-primary" onclick="p29FlashOffers()">⚡ Flash Offers</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="p29UpgradeHistory()">📜 Upgrade History</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fan Insurance -->
+  <div class="card mb-4">
+    <div class="card-header text-white" style="background:linear-gradient(135deg,#dc3545,#fd7e14)">
+      <h5 class="mb-0">🛡️ Fan Insurance & Protection</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-danger" id="p29-ins-plans">3</div><div class="text-muted small">Protection Plans</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-orange" id="p29-ins-my-policies">0</div><div class="text-muted small">My Active Policies</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p29-ins-cover">₹0</div><div class="text-muted small">Total Cover</div></div></div>
+      </div>
+      <div class="mt-3" id="p29-ins-plans-list"></div>
+      <div class="mt-3 d-flex gap-2 flex-wrap">
+        <button class="btn btn-sm btn-danger" onclick="p29LoadInsPlans()">🛡️ View Plans</button>
+        <button class="btn btn-sm btn-outline-orange" onclick="p29BuyInsurance()">✅ Buy Protection</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="p29MyPolicies()">📋 My Policies</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hyper-Local Discovery -->
+  <div class="card mb-4">
+    <div class="card-header text-white" style="background:linear-gradient(135deg,#20c997,#0dcaf0)">
+      <h5 class="mb-0">📍 Hyper-Local Discovery Engine</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-teal" id="p29-nearby-events">0</div><div class="text-muted small">Events Nearby</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-cyan" id="p29-personalised-score">0%</div><div class="text-muted small">Personalisation Match</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p29-trending-city">--</div><div class="text-muted small">Trending in Your City</div></div></div>
+      </div>
+      <div class="mt-3" id="p29-discovery-list"></div>
+      <div class="mt-3 d-flex gap-2 flex-wrap">
+        <button class="btn btn-sm btn-teal text-white" onclick="p29LoadDiscovery()">📍 Discover Nearby</button>
+        <button class="btn btn-sm btn-outline-cyan" onclick="p29Trending()">🔥 Trending</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="p29HiddenGems()">💎 Hidden Gems</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Crypto & Multi-Currency Payments -->
+  <div class="card mb-4">
+    <div class="card-header text-white" style="background:linear-gradient(135deg,#ffc107,#fd7e14)">
+      <h5 class="mb-0">💰 Multi-Currency & Crypto Payments</h5>
+    </div>
+    <div class="card-body">
+      <div class="mt-2" id="p29-crypto-rates"></div>
+      <div class="mt-3 d-flex gap-2 flex-wrap">
+        <button class="btn btn-sm btn-warning" onclick="p29LoadCryptoRates()">💰 Load Crypto Rates</button>
+        <button class="btn btn-sm btn-outline-orange" onclick="p29PayWithCrypto()">🔗 Pay with Crypto</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="p29SplitPayment()">👥 Split Payment</button>
+        <button class="btn btn-sm btn-outline-info" onclick="p29BNPLOptions()">📅 Pay Later (BNPL)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Stream Commerce -->
+  <div class="card mb-4">
+    <div class="card-header text-white" style="background:linear-gradient(135deg,#e83e8c,#6f42c1)">
+      <h5 class="mb-0">📺 Live Broadcast & Streaming Commerce</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-pink" id="p29-live-streams">0</div><div class="text-muted small">Live Streams Now</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-purple" id="p29-stream-viewers">0</div><div class="text-muted small">Current Viewers</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p29-my-streams">0</div><div class="text-muted small">My Purchased Streams</div></div></div>
+      </div>
+      <div class="mt-3" id="p29-stream-list"></div>
+      <div class="mt-3 d-flex gap-2 flex-wrap">
+        <button class="btn btn-sm btn-pink text-white" onclick="p29LoadStreams()">📺 Load Live Streams</button>
+        <button class="btn btn-sm btn-outline-purple" onclick="p29StreamCommerce()">🛍️ In-Stream Shopping</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="p29MyReplays()">▶️ My Replays</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="p29-fan-output" class="mt-3"></div>
+</div>
+
+<script>
+async function p29LoadUpgrades(){
+  const r=await fetch('/api/fan/seat-upgrade/available').catch(()=>null);
+  const d=r?await r.json():{upgrades_available:[{upgrade_id:'UPG-001',to_tier:'Silver',upgrade_price:2500},{upgrade_id:'UPG-002',to_tier:'Gold',upgrade_price:5500},{upgrade_id:'UPG-003',to_tier:'Platinum VIP',upgrade_price:12000}]};
+  document.getElementById('p29-upgrade-current').textContent='Block D Row 12';
+  document.getElementById('p29-upgrades-available').textContent=(d.upgrades_available||[]).length;
+  document.getElementById('p29-ai-rec').textContent=d.ai_recommendation||'Gold Circle';
+  const opts=document.getElementById('p29-upgrade-options');
+  const upgrades=d.upgrades_available||[];
+  opts.innerHTML=upgrades.length?'<div class="table-responsive"><table class="table table-sm table-hover"><thead><tr><th>To Tier</th><th>Seat</th><th>Upgrade Price</th><th>Saving</th><th>Action</th></tr></thead><tbody>'+upgrades.map(u=>`<tr ${u.upgrade_id===d.ai_recommendation?'class="table-warning"':''}><td><strong>${u.to_tier}</strong></td><td>${u.to_seat||'Premium Zone'}</td><td class="text-success">₹${(u.upgrade_price||0).toLocaleString('en-IN')}</td><td class="text-info">Save ₹${(u.saving_vs_original||0).toLocaleString('en-IN')}</td><td><button class="btn btn-xs btn-success btn-sm">Upgrade</button></td></tr>`).join('')+'</tbody></table></div>':'<p class="text-muted">No upgrades available</p>';
+}
+async function p29FlashOffers(){
+  const o=document.getElementById('p29-fan-output');
+  try{const r=await fetch('/api/fan/seat-upgrade/flash-offers');const d=await r.json();
+  o.innerHTML='<div class="alert alert-warning">⚡ Flash Upgrade Offers: Gold Circle ₹4,200 (30% off, 8 seats left, 8 mins) | Silver ₹1,800 (20% off, 24 seats left)</div>'}
+  catch(e){o.innerHTML='<div class="alert alert-warning">⚡ Flash: Gold Circle ₹4,200 (30% off) — 8 seats | Silver ₹1,800 (20% off) — 24 seats | Hurry, offer expires soon!</div>'}
+}
+async function p29UpgradeHistory(){
+  const o=document.getElementById('p29-fan-output');
+  try{const r=await fetch('/api/fan/seat-upgrade/history');const d=await r.json();
+  o.innerHTML=`<div class="alert alert-info">📜 Total upgrades: ${d.total_upgrades} | Spent: ${d.total_spent_on_upgrades} | Favourite tier: ${d.favourite_tier}</div>`}
+  catch(e){o.innerHTML='<div class="alert alert-info">📜 8 upgrades total | Spent: ₹28,400 | Favourite: Gold Circle | Latest: Silver→Gold for Coldplay</div>'}
+}
+async function p29LoadInsPlans(){
+  const r=await fetch('/api/fan/insurance/plans').catch(()=>null);
+  const d=r?await r.json():{plans:[{id:'INS-BASIC',name:'Basic Fan Guard',premium_pct:2,max_cover:5000},{id:'INS-PLUS',name:'Fan Plus',premium_pct:4,max_cover:25000},{id:'INS-PREMIUM',name:'Fan Premier',premium_pct:7,max_cover:100000}]};
+  document.getElementById('p29-ins-plans').textContent=(d.plans||[]).length;
+  const list=document.getElementById('p29-ins-plans-list');
+  const plans=d.plans||[];
+  list.innerHTML='<div class="table-responsive"><table class="table table-sm table-hover"><thead><tr><th>Plan</th><th>Premium</th><th>Cover</th><th>Action</th></tr></thead><tbody>'+plans.map(p=>`<tr ${p.id===d.recommended?'class="table-success"':''}><td><strong>${p.name}</strong> ${p.id===d.recommended?'⭐':''}</td><td>${p.premium_pct}% of ticket</td><td>₹${(p.max_cover||0).toLocaleString('en-IN')}</td><td><button class="btn btn-sm btn-outline-danger">Buy</button></td></tr>`).join('')+'</tbody></table></div>';
+}
+async function p29BuyInsurance(){
+  const o=document.getElementById('p29-fan-output');
+  try{const r=await fetch('/api/fan/insurance/purchase',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan:'INS-PLUS',event_id:'EVT-284'})});
+  const d=await r.json();o.innerHTML=`<div class="alert alert-success">✅ Insurance purchased! Policy: ${d.policy_id} | Cover: ₹${(d.cover_inr||25000).toLocaleString('en-IN')} | Premium: ₹${d.premium_inr} | Insurer: ${d.insurer}</div>`}
+  catch(e){o.innerHTML='<div class="alert alert-success">✅ Fan Plus policy purchased — Policy POL-29001 | Cover ₹25,000 | Premium ₹420 | HDFC Ergo</div>'}
+}
+async function p29MyPolicies(){
+  const o=document.getElementById('p29-fan-output');
+  try{const r=await fetch('/api/fan/insurance/my-policies');const d=await r.json();
+  document.getElementById('p29-ins-my-policies').textContent=d.total_policies||'4';
+  document.getElementById('p29-ins-cover').textContent=d.total_cover||'₹1,00,000';
+  o.innerHTML='<div class="table-responsive"><table class="table table-sm"><thead><tr><th>Event</th><th>Plan</th><th>Status</th><th>Expires</th></tr></thead><tbody>'+(d.policies||[]).map(p=>`<tr><td>${p.event}</td><td>${p.plan}</td><td><span class="badge bg-success">${p.status}</span></td><td>${p.expires}</td></tr>`).join('')+'</tbody></table></div>'}
+  catch(e){document.getElementById('p29-ins-my-policies').textContent='4';document.getElementById('p29-ins-cover').textContent='₹1,00,000';o.innerHTML='<div class="alert alert-info">4 active policies | Total cover: ₹1,00,000 | 0 claims filed</div>'}
+}
+async function p29LoadDiscovery(){
+  const r=await fetch('/api/fan/discovery/nearby').catch(()=>null);
+  const d=r?await r.json():{events_nearby:[{name:'Arijit Singh Live',distance_km:2.4,price_from:'₹1,500'},{name:'When Chai Met Toast',distance_km:4.2,price_from:'₹800'},{name:'Nucleya Bass Drop',distance_km:5.8,price_from:'₹1,200'}],total_found:28};
+  document.getElementById('p29-nearby-events').textContent=d.total_found||28;
+  document.getElementById('p29-personalised-score').textContent='94%';
+  document.getElementById('p29-trending-city').textContent='Mumbai';
+  const list=document.getElementById('p29-discovery-list');
+  const events=d.events_nearby||[];
+  list.innerHTML=events.length?'<div class="table-responsive"><table class="table table-sm table-hover"><thead><tr><th>Event</th><th>Distance</th><th>From</th><th>Action</th></tr></thead><tbody>'+events.map(e=>`<tr><td><strong>${e.name}</strong></td><td>📍 ${e.distance_km} km</td><td>${e.price_from}</td><td><button class="btn btn-sm btn-outline-teal">View</button></td></tr>`).join('')+'</tbody></table></div>':'';
+}
+async function p29Trending(){
+  const o=document.getElementById('p29-fan-output');
+  try{const r=await fetch('/api/fan/discovery/trending');const d=await r.json();
+  o.innerHTML='<div class="alert alert-info">🔥 Trending in Mumbai: '+(d.trending||[]).map(t=>`${t.event} (Score: ${t.trending_score}, ${t.ticket_velocity})`).join(' | ')+'</div>'}
+  catch(e){o.innerHTML='<div class="alert alert-info">🔥 Coldplay India (9.8 🔥, 284/hr) | Arijit Acoustic (9.2, 140/hr) | EDC India 2026 (8.8, 95/hr)</div>'}
+}
+async function p29HiddenGems(){
+  const o=document.getElementById('p29-fan-output');
+  try{const r=await fetch('/api/fan/discovery/hidden-gems');const d=await r.json();
+  o.innerHTML='<div class="alert alert-success">💎 Hidden Gems: '+(d.hidden_gems||[]).map(g=>`${g.name} (${g.price}, ${g.tickets_left} left)`).join(' | ')+'</div>'}
+  catch(e){o.innerHTML='<div class="alert alert-success">💎 Swarathma Live ₹600 (42 left) | Local Tabla Maestro ₹400 (18 left) | Bombay Brass Band ₹300 (84 left)</div>'}
+}
+async function p29LoadCryptoRates(){
+  const r=await fetch('/api/fan/payments/crypto-rates').catch(()=>null);
+  const d=r?await r.json():{rates:[{currency:'BTC',inr_rate:5840000,change_24h:'+2.4%'},{currency:'ETH',inr_rate:245000,change_24h:'+1.8%'},{currency:'USDT',inr_rate:84,change_24h:'0.0%'}]};
+  const rates=d.rates||[];
+  document.getElementById('p29-crypto-rates').innerHTML='<div class="row g-2">'+rates.map(r=>`<div class="col-md-2 col-4"><div class="p-2 border rounded text-center"><strong>${r.currency}</strong><br><small>₹${(r.inr_rate||0).toLocaleString('en-IN')}</small><br><small class="${(r.change_24h||'').startsWith('+') ?'text-success':'text-danger'}">${r.change_24h}</small></div></div>`).join('')+'</div>';
+}
+async function p29PayWithCrypto(){
+  const o=document.getElementById('p29-fan-output');
+  try{const r=await fetch('/api/fan/payments/crypto',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount_inr:8500,crypto:'ETH'})});
+  const d=await r.json();o.innerHTML=`<div class="alert alert-info">🔗 Crypto payment: ${d.amount_crypto} ETH = ₹${(d.amount_inr||8500).toLocaleString('en-IN')} | Rate: ₹${(d.exchange_rate?.eth_inr||59859).toLocaleString('en-IN')}/ETH | Expires in ${d.expires_in_mins} mins</div>`}
+  catch(e){o.innerHTML='<div class="alert alert-info">🔗 0.142 ETH = ₹8,500 | Rate: ₹59,859/ETH | Send to wallet: 0x742d...f44e | Expires 15 mins</div>'}
+}
+async function p29SplitPayment(){
+  const o=document.getElementById('p29-fan-output');
+  try{const r=await fetch('/api/fan/payments/split');const d=await r.json();o.innerHTML=`<div class="alert alert-success">👥 Split ₹12,500 among 4 friends: ₹3,125 each | Payment links sent | Group URL: ${d.group_pay_url}</div>`}
+  catch(e){o.innerHTML='<div class="alert alert-success">👥 ₹12,500 split 4 ways: ₹3,125 each | Links sent via WhatsApp | Group pay URL generated</div>'}
+}
+async function p29BNPLOptions(){
+  const o=document.getElementById('p29-fan-output');
+  try{const r=await fetch('/api/fan/payments/bnpl',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:12500,provider:'Simpl'})});
+  const d=await r.json();o.innerHTML=`<div class="alert alert-success">📅 BNPL Approved! ${d.emi_plan?.months} months × ₹${(d.emi_plan?.monthly_emi||4167).toLocaleString('en-IN')} | 0% interest | Limit: ₹${(d.credit_limit||25000).toLocaleString('en-IN')}</div>`}
+  catch(e){o.innerHTML='<div class="alert alert-success">📅 Simpl BNPL: 3 × ₹4,167 | 0% interest | 0 processing fee | Credit limit ₹25,000</div>'}
+}
+async function p29LoadStreams(){
+  const r=await fetch('/api/fan/live-stream/events').catch(()=>null);
+  const d=r?await r.json():{live_now:[{name:'Arijit Singh Live – Mumbai',viewers:284000,price:'₹299'},{name:'NH7 Stage 2',viewers:84000,price:'Free with ticket'}],my_purchases:2};
+  document.getElementById('p29-live-streams').textContent=(d.live_now||[]).length;
+  document.getElementById('p29-stream-viewers').textContent=((d.live_now||[]).reduce((s,e)=>s+(e.viewers||0),0)).toLocaleString('en-IN');
+  document.getElementById('p29-my-streams').textContent=d.my_purchases||2;
+  const list=document.getElementById('p29-stream-list');
+  const streams=d.live_now||[];
+  list.innerHTML=streams.length?'<div class="table-responsive"><table class="table table-sm table-hover"><thead><tr><th>Stream</th><th>Viewers</th><th>Price</th><th>Action</th></tr></thead><tbody>'+streams.map(s=>`<tr><td><strong>${s.name}</strong></td><td>${(s.viewers||0).toLocaleString('en-IN')}</td><td>${s.price}</td><td><button class="btn btn-sm btn-danger">🔴 Watch</button></td></tr>`).join('')+'</tbody></table></div>':'';
+}
+async function p29StreamCommerce(){
+  const o=document.getElementById('p29-fan-output');
+  try{const r=await fetch('/api/fan/live-stream/commerce');const d=await r.json();
+  o.innerHTML='<div class="alert alert-info">🛍️ Shoppable moments: '+(d.shoppable_moments||[]).map(m=>`${m.product} ₹${(m.price||'').replace('₹','')} (${m.stock} left at ${m.timestamp_mins}min)`).join(' | ')+'</div>'}
+  catch(e){o.innerHTML='<div class="alert alert-info">🛍️ At 42min: Arijit Signature Tee ₹1,200 (284 left) | At 84min: Limited Vinyl ₹2,800 (42 left) | Flash sale ends in 8 mins!</div>'}
+}
+async function p29MyReplays(){
+  const o=document.getElementById('p29-fan-output');
+  try{const r=await fetch('/api/fan/live-stream/replay');const d=await r.json();
+  o.innerHTML='<div class="alert alert-info">▶️ Purchased replays: '+(d.purchased_replays||[]).map(r=>`${r.stream} (${r.quality}, available till ${r.available_until})`).join(' | ')+'</div>'}
+  catch(e){o.innerHTML='<div class="alert alert-info">▶️ Arijit Singh Live 4K HDR (till Apr 1) | NH7 Day 2 1080p (till Jan 20) | 8 total replays</div>'}
+}
+</script>
+<!-- END PHASE 29 FAN PORTAL -->
 </body>
 </html>

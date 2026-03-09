@@ -3009,4 +3009,128 @@ async function p28LoadPersonalisation(){
 }
 </script>
 <!-- END PHASE 28 EVENT MANAGER -->
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PHASE 29 EVENT MANAGER — Artist Revenue Analytics Suite -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="p29-eventmgr" class="portal-section" style="display:none">
+  <h2 class="section-title">⚡ Phase 29 — Artist Revenue Analytics Suite</h2>
+
+  <!-- Artist Revenue Dashboard -->
+  <div class="card mb-4">
+    <div class="card-header text-white" style="background:linear-gradient(135deg,#6f42c1,#e83e8c)">
+      <h5 class="mb-0">🎤 Artist Revenue Dashboard</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-purple" id="p29-art-ytd-rev">₹0</div><div class="text-muted small">Revenue YTD</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-pink" id="p29-art-events">0</div><div class="text-muted small">Events This Year</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p29-art-fans">0</div><div class="text-muted small">Fan Base Size</div></div></div>
+        <div class="col-md-3"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-warning" id="p29-art-nps">0</div><div class="text-muted small">Artist NPS</div></div></div>
+      </div>
+      <div class="mt-3" id="p29-art-breakdown"></div>
+      <div class="mt-3 d-flex gap-2 flex-wrap">
+        <button class="btn btn-sm btn-purple text-white" onclick="p29ArtLoadDashboard()">🎤 Load Revenue</button>
+        <button class="btn btn-sm btn-outline-pink" onclick="p29ArtBreakdown()">📊 Revenue Breakdown</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="p29ArtFanAnalytics()">👥 Fan Analytics</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Merchandise & Royalties -->
+  <div class="card mb-4">
+    <div class="card-header text-white" style="background:linear-gradient(135deg,#fd7e14,#ffc107)">
+      <h5 class="mb-0">👕 Merchandise & Royalties</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-orange" id="p29-art-merch-rev">₹0</div><div class="text-muted small">Merch Revenue</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-warning" id="p29-art-merch-sold">0</div><div class="text-muted small">Items Sold</div></div></div>
+        <div class="col-md-4"><div class="stat-card text-center p-3 border rounded"><div class="fs-3 fw-bold text-success" id="p29-art-royalties">₹0</div><div class="text-muted small">Total Royalties</div></div></div>
+      </div>
+      <div class="mt-3" id="p29-art-merch-list"></div>
+      <div class="mt-3 d-flex gap-2">
+        <button class="btn btn-sm btn-warning" onclick="p29ArtLoadMerch()">👕 Load Merch Stats</button>
+        <button class="btn btn-sm btn-outline-success" onclick="p29ArtRoyalties()">🎵 Streaming Royalties</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="p29ArtPayout()">💳 Request Payout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Revenue Forecast -->
+  <div class="card mb-4">
+    <div class="card-header text-white" style="background:linear-gradient(135deg,#20c997,#0d6efd)">
+      <h5 class="mb-0">🔮 Revenue Forecast & Next Events</h5>
+    </div>
+    <div class="card-body">
+      <div class="mt-2" id="p29-art-forecast"></div>
+      <button class="btn btn-sm btn-teal text-white mt-3" onclick="p29ArtLoadForecast()">🔮 Load Forecast</button>
+    </div>
+  </div>
+
+  <div id="p29-eventmgr-output" class="mt-3"></div>
+</div>
+
+<script>
+async function p29ArtLoadDashboard(){
+  const r=await fetch('/api/event-manager/artist-revenue/dashboard').catch(()=>null);
+  const d=r?await r.json():{};
+  document.getElementById('p29-art-ytd-rev').textContent=d.total_revenue_ytd||'₹42 Cr';
+  document.getElementById('p29-art-events').textContent=d.events_this_year||'18';
+  document.getElementById('p29-art-fans').textContent=(d.fan_base_size||8400000).toLocaleString('en-IN');
+  document.getElementById('p29-art-nps').textContent=d.nps||'92';
+  document.getElementById('p29-art-breakdown').innerHTML=`<div class="alert alert-success mb-0">🎤 Artist: ${d.name||'Arijit Singh'} | Tickets: ${d.ticket_revenue||'₹38 Cr'} | Merch: ${d.merchandise_revenue||'₹2.8 Cr'} | Streaming: ${d.streaming_royalties||'₹84L'} | Next event: ${d.next_event||'Coldplay Collab Mumbai'}</div>`;
+}
+async function p29ArtBreakdown(){
+  const o=document.getElementById('p29-eventmgr-output');
+  try{const r=await fetch('/api/event-manager/artist-revenue/breakdown');const d=await r.json();
+  o.innerHTML='<div class="table-responsive"><table class="table table-sm"><thead><tr><th>Stream</th><th>Amount</th><th>Share</th><th>Trend</th></tr></thead><tbody>'+(d.revenue_streams||[]).map(s=>`<tr><td>${s.stream}</td><td class="text-success fw-bold">${s.amount}</td><td>${s.pct}%</td><td class="text-${s.trend?.startsWith('+')?'success':'danger'}">${s.trend}</td></tr>`).join('')+'</tbody></table></div>'}
+  catch(e){o.innerHTML='<div class="alert alert-info">📊 Ticket Sales: ₹38 Cr (90.5%, +18%) | Merch: ₹2.8 Cr (6.7%, +42%) | Streaming: ₹84L (2.0%, +28%) | Brand: ₹42L (1.0%, +84%)</div>'}
+}
+async function p29ArtFanAnalytics(){
+  const o=document.getElementById('p29-eventmgr-output');
+  try{const r=await fetch('/api/event-manager/artist-revenue/fan-analytics');const d=await r.json();
+  o.innerHTML=`<div class="alert alert-info">👥 Total fans: ${(d.total_fans||8400000).toLocaleString('en-IN')} | Active 30d: ${(d.active_fans_30d||2840000).toLocaleString('en-IN')} | Superfans: ${(d.superfans||28400).toLocaleString('en-IN')} | Avg spend: ${d.avg_spend_per_fan} | Repeat purchase: ${d.repeat_purchase_rate}</div>`}
+  catch(e){o.innerHTML='<div class="alert alert-info">👥 84L fans | 28.4L active 30d | 28,400 superfans | Avg spend: ₹4,284 | Repeat: 68% | NPS: 92</div>'}
+}
+async function p29ArtLoadMerch(){
+  const r=await fetch('/api/event-manager/artist-revenue/merchandise').catch(()=>null);
+  const d=r?await r.json():{};
+  document.getElementById('p29-art-merch-rev').textContent=d.merch_revenue||'₹2.8 Cr';
+  document.getElementById('p29-art-merch-sold').textContent=(d.items_sold||28400).toLocaleString('en-IN');
+  document.getElementById('p29-art-royalties').textContent='₹1.3 Cr';
+  const list=document.getElementById('p29-art-merch-list');
+  const items=d.top_items||[{item:'Signature T-Shirt',sold:8400,revenue:'₹84L'},{item:'Exclusive Vinyl LP',sold:2840,revenue:'₹42L'},{item:'Enamel Pin Set',sold:18400,revenue:'₹18.4L'}];
+  list.innerHTML='<div class="table-responsive"><table class="table table-sm"><thead><tr><th>Item</th><th>Sold</th><th>Revenue</th></tr></thead><tbody>'+items.map(i=>`<tr><td>${i.item}</td><td>${(i.sold||0).toLocaleString('en-IN')}</td><td class="text-success">${i.revenue}</td></tr>`).join('')+'</tbody></table></div>';
+}
+async function p29ArtRoyalties(){
+  const o=document.getElementById('p29-eventmgr-output');
+  try{const r=await fetch('/api/event-manager/artist-revenue/royalties');const d=await r.json();
+  o.innerHTML='<div class="alert alert-success">🎵 Spotify: '+d.streaming_royalties?.spotify+' | JioSaavn: '+d.streaming_royalties?.jio_saavn+' | Apple: '+d.streaming_royalties?.apple_music+' | YouTube: '+d.streaming_royalties?.youtube_music+' | Total: '+d.total_royalties+'</div>'}
+  catch(e){o.innerHTML='<div class="alert alert-success">🎵 Spotify ₹28L | JioSaavn ₹18L | Apple ₹14L | YouTube ₹24L | Total streaming ₹84L | Sync ₹18L | Performance rights ₹28L</div>'}
+}
+async function p29ArtPayout(){
+  const o=document.getElementById('p29-eventmgr-output');
+  try{const r=await fetch('/api/event-manager/artist-revenue/payout-request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({artist_id:'ART-001',amount:'₹2.33 Cr'})});
+  const d=await r.json();o.innerHTML=`<div class="alert alert-success">💳 Payout initiated: ${d.payout_id} | Amount: ${d.amount_requested} | Method: ${d.payment_method} | ETA: ${d.expected_date}</div>`}
+  catch(e){o.innerHTML='<div class="alert alert-success">💳 Payout PAY-29001 initiated | ₹2.33 Cr via NEFT | HDFC Bank xxxx1234 | Arrives 2026-03-12</div>'}
+}
+async function p29ArtLoadForecast(){
+  const r=await fetch('/api/event-manager/artist-revenue/forecasts').catch(()=>null);
+  const d=r?await r.json():{};
+  const nef=d.next_event_forecast||{};
+  document.getElementById('p29-art-forecast').innerHTML=`
+    <div class="row g-3">
+      <div class="col-md-6"><div class="p-3 border rounded"><strong>🎯 Next Event Forecast</strong><br>
+        Date: ${nef.date||'2026-04-15'} | Venue: ${nef.venue||'MMRDA Grounds'}<br>
+        Fill: <span class="text-success">${nef.predicted_fill||'96%'}</span> | Revenue: <span class="text-success fw-bold">${nef.predicted_revenue||'₹4.2 Cr'}</span>
+      </div></div>
+      <div class="col-md-6"><div class="p-3 border rounded"><strong>📅 12-Month Forecast</strong><br>
+        Revenue: <span class="text-success fw-bold">${d.next_12_months?.total_revenue||'₹84 Cr'}</span><br>
+        Events: ${d.next_12_months?.events||24} | Market growth: ${d.next_12_months?.market_growth||'+28%'}
+      </div></div>
+    </div>`;
+}
+</script>
+<!-- END PHASE 29 EVENT MANAGER -->
 </body></html>
