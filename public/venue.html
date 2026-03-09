@@ -2982,4 +2982,38 @@ async function loadP32VenueContracts(){const r=await fetch('/api/venue/intl/netw
 async function loadP32VenueRevenue(){const r=await fetch('/api/venue/intl/network/revenue');const d=await r.json();document.getElementById('p32-venue-revenue-output').innerHTML='💵 Commissions: $'+d.total_venue_commissions_usd_m+'M/mo | Avg: '+d.avg_pct+'%<br>Trend: '+d.monthly_trend+' | Q2 Forecast: $'+d.forecast_q2_usd_m+'M';}
 </script>
 <!-- END PHASE 32 VENUE PORTAL -->
+
+<!-- PHASE 33 VENUE PORTAL — PaaS & SDK -->
+<div class="container mt-4">
+  <h5 class="text-info fw-bold">🔌 Phase 33 — PaaS Integration for Venues</h5>
+  <div class="row g-3">
+    <div class="col-md-6"><div class="card border-info">
+      <div class="card-header bg-info text-dark fw-bold">🔗 Venue SDK Integration</div>
+      <div class="card-body"><div id="p33-venue-sdk-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-info mt-2" onclick="loadP33VenueSDK()">Load SDK Status</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-warning">
+      <div class="card-header bg-warning text-dark fw-bold">🔔 Venue Webhooks</div>
+      <div class="card-body"><div id="p33-venue-wh-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-warning mt-2" onclick="loadP33VenueWH()">Load Webhooks</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-success">
+      <div class="card-header bg-success text-white fw-bold">📡 Real-Time Event Feed</div>
+      <div class="card-body"><div id="p33-venue-stream-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-success mt-2" onclick="loadP33VenueStream()">Load Live Feed</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-primary">
+      <div class="card-header bg-primary text-white fw-bold">🤖 AI Model Status</div>
+      <div class="card-body"><div id="p33-venue-ai-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-primary mt-2" onclick="loadP33VenueAI()">Load AI Gateway</button></div>
+    </div></div>
+  </div>
+</div>
+<script>
+async function loadP33VenueSDK(){const r=await fetch('/api/ops/paas/integration/health');const d=await r.json();document.getElementById('p33-venue-sdk-output').innerHTML='Integrations: '+d.integrations_monitored+' | Healthy: '+d.healthy+'<br>Degraded: '+d.degraded+' | Avg: '+d.avg_response_ms+'ms';}
+async function loadP33VenueWH(){const r=await fetch('/api/admin/paas/webhooks/events');const d=await r.json();document.getElementById('p33-venue-wh-output').innerHTML='Event Types: '+d.total_event_types+' | Schema: '+d.schema_version+'<br>Key: '+d.event_types.slice(0,3).join(', ');}
+async function loadP33VenueStream(){const r=await fetch('/api/admin/paas/streaming/realtime');const d=await r.json();document.getElementById('p33-venue-stream-output').innerHTML='Streams: '+d.active_streams+' | Rate: '+d.events_per_sec+'/s<br>Protocols: '+d.protocols.join(', ');}
+async function loadP33VenueAI(){const r=await fetch('/api/admin/paas/ai/gateway');const d=await r.json();document.getElementById('p33-venue-ai-output').innerHTML='Models: '+d.models_available+' | Inferences/day: '+d.total_inferences_today.toLocaleString()+'<br>Latency: '+d.avg_inference_ms+'ms | SLA: '+d.sla_pct+'%';}
+</script>
+<!-- END PHASE 33 VENUE PORTAL -->
 </body></html>

@@ -3276,4 +3276,38 @@ async function loadP32EMVisa(){const r=await fetch('/api/event-manager/intl/arti
 async function loadP32EMAnalytics(){const r=await fetch('/api/event-manager/intl/artists/analytics');const d=await r.json();document.getElementById('p32-em-analytics-output').innerHTML='📊 Top Genre: '+d.highest_earning_genre+' | ROI: '+d.avg_roi_multiplier+'x<br>Sell-Through: '+d.sell_through_rate_pct+'% | Fan Satisfaction: '+d.fan_satisfaction_pct+'%';}
 </script>
 <!-- END PHASE 32 EVENT MANAGER -->
+
+<!-- PHASE 33 EVENT MANAGER PORTAL — AI & ML Gateway -->
+<div class="container mt-4">
+  <h5 class="text-info fw-bold">🔌 Phase 33 — AI/ML API Gateway for Event Managers</h5>
+  <div class="row g-3">
+    <div class="col-md-6"><div class="card border-info">
+      <div class="card-header bg-info text-dark fw-bold">🤖 AI Models Available</div>
+      <div class="card-body"><div id="p33-em-ai-output" class="small text-muted">Loading models...</div>
+      <button class="btn btn-sm btn-info mt-2" onclick="loadP33EMAi()">Load AI Models</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-warning">
+      <div class="card-header bg-warning text-dark fw-bold">🧪 Custom Model Fine-Tuning</div>
+      <div class="card-body"><div id="p33-em-ft-output" class="small text-muted">Loading fine-tuning...</div>
+      <button class="btn btn-sm btn-warning mt-2" onclick="loadP33EMFT()">Load Fine-Tuning</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-success">
+      <div class="card-header bg-success text-white fw-bold">🏖️ Developer Sandbox</div>
+      <div class="card-body"><div id="p33-em-sandbox-output" class="small text-muted">Loading sandbox...</div>
+      <button class="btn btn-sm btn-success mt-2" onclick="loadP33EMSandbox()">Load Sandbox</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-primary">
+      <div class="card-header bg-primary text-white fw-bold">📋 API Docs & SDK</div>
+      <div class="card-body"><div id="p33-em-docs-output" class="small text-muted">Loading docs...</div>
+      <button class="btn btn-sm btn-primary mt-2" onclick="loadP33EMDocs()">Load Docs</button></div>
+    </div></div>
+  </div>
+</div>
+<script>
+async function loadP33EMAi(){const r=await fetch('/api/admin/paas/ai/models');const d=await r.json();document.getElementById('p33-em-ai-output').innerHTML=d.models.map(m=>'🤖 <b>'+m.name+'</b> — calls/day: '+m.calls_day.toLocaleString()).join('<br>');}
+async function loadP33EMFT(){const r=await fetch('/api/event-manager/paas/ai/fine-tuning');const d=await r.json();document.getElementById('p33-em-ft-output').innerHTML='Min Examples: '+d.min_examples.toLocaleString()+' | Train: '+d.avg_training_hrs+'hrs<br>Cost/Run: ₹'+d.cost_per_run_inr+' | BYOD: '+d.bring_your_own_data;}
+async function loadP33EMSandbox(){const r=await fetch('/api/admin/paas/sandbox/overview');const d=await r.json();document.getElementById('p33-em-sandbox-output').innerHTML='Envs: '+d.sandbox_environments+' | Active: '+d.active+'<br>Coverage: '+d.api_coverage_pct+'% | Reset: '+d.auto_reset_days+'d';}
+async function loadP33EMDocs(){const r=await fetch('/api/admin/paas/developer/docs');const d=await r.json();document.getElementById('p33-em-docs-output').innerHTML='Endpoints Documented: '+d.total_endpoints_documented+' | Coverage: '+d.coverage_pct+'%<br>SDKs: '+d.sdks.slice(0,4).join(', ');}
+</script>
+<!-- END PHASE 33 EVENT MANAGER -->
 </body></html>

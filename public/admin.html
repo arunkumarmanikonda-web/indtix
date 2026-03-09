@@ -5663,4 +5663,53 @@ async function loadP32Compliance(){const r=await fetch('/api/admin/intl/complian
 async function loadP32Marketing(){const r=await fetch('/api/admin/intl/marketing/dashboard');const d=await r.json();document.getElementById('p32-mktg-output').innerHTML='<b>Campaigns:</b> '+d.global_campaigns+' | <b>Spend:</b> $'+d.total_spend_usd_m+'M<br><b>CAC:</b> $'+d.blended_cac_usd+' | <b>LTV:CAC:</b> '+d.ltv_cac_ratio+'x | <b>ROAS:</b> '+d.roas+'x';}
 </script>
 <!-- END PHASE 32 ADMIN PORTAL -->
+
+<!-- PHASE 33 — PaaS & Open APIs — Admin Portal -->
+<div class="container-fluid mt-4">
+  <div class="row mb-3"><div class="col-12">
+    <h4 class="text-info">🔌 Phase 33 — Platform-as-a-Service (PaaS) &amp; Open APIs</h4>
+    <p class="text-muted">Developer Portal · White-Label Engine · Webhooks · SDK Hub · SaaS Billing · Multi-Tenant · DaaS · AI Gateway · Sandbox · App Store | 1,999 total endpoints</p>
+  </div></div>
+  <div class="row g-3">
+    <div class="col-md-6 col-lg-4"><div class="card border-info shadow-sm h-100">
+      <div class="card-header bg-info text-dark fw-bold">🧑‍💻 Developer Portal</div>
+      <div class="card-body"><div id="p33-dev-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-info mt-2" onclick="loadP33Dev()">Load Developer Portal</button></div>
+    </div></div>
+    <div class="col-md-6 col-lg-4"><div class="card border-warning shadow-sm h-100">
+      <div class="card-header bg-warning text-dark fw-bold">🏷️ White-Label Clients</div>
+      <div class="card-body"><div id="p33-wl-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-warning mt-2" onclick="loadP33WL()">Load White-Label</button></div>
+    </div></div>
+    <div class="col-md-6 col-lg-4"><div class="card border-success shadow-sm h-100">
+      <div class="card-header bg-success text-white fw-bold">🔔 Webhooks Dashboard</div>
+      <div class="card-body"><div id="p33-wh-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-success mt-2" onclick="loadP33WH()">Load Webhooks</button></div>
+    </div></div>
+    <div class="col-md-6 col-lg-4"><div class="card border-primary shadow-sm h-100">
+      <div class="card-header bg-primary text-white fw-bold">💰 SaaS Billing</div>
+      <div class="card-body"><div id="p33-bill-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-primary mt-2" onclick="loadP33Bill()">Load Billing</button></div>
+    </div></div>
+    <div class="col-md-6 col-lg-4"><div class="card border-secondary shadow-sm h-100">
+      <div class="card-header bg-secondary text-white fw-bold">🏢 Multi-Tenant</div>
+      <div class="card-body"><div id="p33-mt-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-secondary mt-2" onclick="loadP33MT()">Load Tenants</button></div>
+    </div></div>
+    <div class="col-md-6 col-lg-4"><div class="card border-danger shadow-sm h-100">
+      <div class="card-header bg-danger text-white fw-bold">🛍️ App Store</div>
+      <div class="card-body"><div id="p33-apps-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-danger mt-2" onclick="loadP33Apps()">Load App Store</button></div>
+    </div></div>
+  </div>
+</div>
+<script>
+async function loadP33Dev(){const r=await fetch('/api/admin/paas/developer/portal');const d=await r.json();document.getElementById('p33-dev-output').innerHTML='<b>Devs:</b> '+d.registered_developers.toLocaleString()+' | <b>Apps:</b> '+d.active_apps+'<br><b>API calls/day:</b> '+d.api_calls_today.toLocaleString()+' | <b>Uptime:</b> '+d.uptime_pct+'%';}
+async function loadP33WL(){const r=await fetch('/api/admin/paas/whitelabel/clients');const d=await r.json();document.getElementById('p33-wl-output').innerHTML='<b>Clients:</b> '+d.total_clients+' | <b>Revenue:</b> ₹'+d.revenue_cr_month+'Cr/mo<br><b>Top:</b> '+d.top_client;}
+async function loadP33WH(){const r=await fetch('/api/admin/paas/webhooks/dashboard');const d=await r.json();document.getElementById('p33-wh-output').innerHTML='<b>Webhooks:</b> '+d.active_webhooks.toLocaleString()+' | <b>Delivered:</b> '+d.events_delivered_today.toLocaleString()+'<br><b>Delivery:</b> '+d.delivery_rate_pct+'% | <b>Latency:</b> '+d.avg_latency_ms+'ms';}
+async function loadP33Bill(){const r=await fetch('/api/admin/paas/billing/dashboard');const d=await r.json();document.getElementById('p33-bill-output').innerHTML='<b>MRR:</b> ₹'+d.mrr_cr+'Cr | <b>ARR:</b> ₹'+d.arr_cr+'Cr<br><b>Subs:</b> '+d.active_subscriptions.toLocaleString()+' | <b>NRR:</b> '+d.nrr_pct+'%';}
+async function loadP33MT(){const r=await fetch('/api/admin/paas/tenants/dashboard');const d=await r.json();document.getElementById('p33-mt-output').innerHTML='<b>Tenants:</b> '+d.total_tenants+' | <b>Active:</b> '+d.active+'<br><b>RLS:</b> '+d.row_level_security+' | <b>Data/Tenant:</b> '+d.avg_data_size_gb+'GB';}
+async function loadP33Apps(){const r=await fetch('/api/admin/paas/appstore/overview');const d=await r.json();document.getElementById('p33-apps-output').innerHTML='<b>Apps:</b> '+d.total_apps+' | <b>Installs:</b> '+d.total_installs.toLocaleString()+'<br><b>Rating:</b> '+d.avg_app_rating+' | <b>Dev Cut:</b> '+d.revenue_share_developer_pct+'%';}
+</script>
+<!-- END PHASE 33 ADMIN PORTAL -->
 </body></html>

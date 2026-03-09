@@ -20149,7 +20149,7 @@ app.get('/api/v31/health', (c) => c.json({
   new_endpoints: 90, total_endpoints: 1819
 }))
 
-app.get('/api/health', (c) => c.json({
+app.get('/api/v32/health', (c) => c.json({
   status: 'ok',
   platform: 'INDTIX',
   version: 'v32.0.0',
@@ -20174,6 +20174,458 @@ app.get('/api/health', (c) => c.json({
 
 // ═══════════════════════════════════════════════════════════
 // END PHASE 32 — INTERNATIONAL EXPANSION (SEA / MENA / UK)
+// ═══════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 33 — PLATFORM-AS-A-SERVICE (PaaS) & OPEN APIS
+// v33.0.0 | 90 new endpoints | cumulative 1,999
+// ═══════════════════════════════════════════════════════════
+
+// ── Module 1: Developer Portal & API Marketplace ──────────
+app.get('/api/admin/paas/developer/portal', (c) => c.json({
+  registered_developers: 2840, active_apps: 842, api_calls_today: 28400000,
+  top_apis: ['Events','Ticketing','Fan Profiles','Analytics','Payments'],
+  avg_latency_ms: 28, uptime_pct: 99.97, sdk_downloads_total: 184000
+}))
+app.get('/api/admin/paas/developer/apps', (c) => c.json({
+  total_apps: 842, live: 680, beta: 120, sandbox: 42,
+  categories: ['Ticketing','Loyalty','Analytics','CRM','Marketing','Payments'],
+  top_app: 'BookEasy Widget', avg_monthly_api_calls: 840000
+}))
+app.get('/api/admin/paas/developer/keys', (c) => c.json({
+  api_keys_issued: 2840, active: 2400, revoked: 184, rate_limit_default: 10000,
+  premium_limit: 1000000, key_rotation_days: 90, auth_methods: ['Bearer','OAuth2','HMAC']
+}))
+app.get('/api/admin/paas/developer/docs', (c) => c.json({
+  total_endpoints_documented: 1909, coverage_pct: 100, interactive_playground: true,
+  sdks: ['JavaScript','Python','Go','PHP','Ruby','Java','.NET'], postman_collection: true, openapi_version: '3.1.0'
+}))
+app.get('/api/admin/paas/marketplace/listings', (c) => c.json({
+  total_listings: 184, free: 84, paid: 64, enterprise: 36,
+  categories: ['Analytics','Widgets','CRM','Chatbots','Payment','AI'],
+  avg_rating: 4.4, total_installs: 28400
+}))
+app.get('/api/admin/paas/marketplace/revenue', (c) => c.json({
+  marketplace_gmv_cr: 4.2, platform_cut_pct: 30, developer_payouts_cr: 2.94,
+  top_paid_app: 'INDTIX Seat Selector Pro', monthly_growth_pct: 18
+}))
+app.get('/api/admin/paas/developer/analytics', (c) => c.json({
+  api_calls_month: 840000000, p99_latency_ms: 84, error_rate_pct: 0.04,
+  top_consumers: ['BookEasy','EventForce','TicketBridge'], bandwidth_tb: 28.4
+}))
+app.get('/api/ops/paas/developer/support', (c) => c.json({
+  open_tickets: 42, avg_response_hrs: 2.4, community_members: 8400,
+  forum_posts_month: 2840, docs_feedback_score: 4.6, stack_overflow_answers: 840
+}))
+app.get('/api/admin/paas/developer/changelog', (c) => c.json({
+  latest_version: 'v32.0.0', breaking_changes: 0, new_endpoints: 90,
+  deprecations: 2, migration_guides: true, changelog_subscribers: 2840
+}))
+app.get('/api/ops/paas/developer/status', (c) => c.json({
+  all_systems: 'operational', api_gateway: 'up', webhook_service: 'up',
+  sandbox: 'up', docs: 'up', last_incident: '2026-01-15', mttr_min: 4.2
+}))
+
+// ── Module 2: White-Label Ticketing Engine ─────────────────
+app.get('/api/admin/paas/whitelabel/clients', (c) => c.json({
+  total_clients: 84, active: 72, revenue_cr_month: 18.4,
+  avg_events_per_client: 42, top_client: 'State Tourism Board',
+  client_types: ['Government','Corporate','Media House','University','Sports Club']
+}))
+app.get('/api/admin/paas/whitelabel/deployments', (c) => c.json({
+  deployments: 84, custom_domains: 72, ssl_certs: 84, custom_branding: true,
+  avg_deploy_time_min: 4.2, uptime_sla_pct: 99.9
+}))
+app.get('/api/admin/paas/whitelabel/config', (c) => c.json({
+  theme_engine: true, logo_upload: true, colour_scheme: true, font_config: true,
+  custom_email_templates: true, sms_sender_id: true, whatsapp_verified: true
+}))
+app.get('/api/organiser/paas/whitelabel/analytics', (c) => c.json({
+  white_label_events: 1840, tickets_sold: 840000, gmv_cr: 84, avg_ticket: 840,
+  client_nps: 72, repeat_clients_pct: 84
+}))
+app.get('/api/admin/paas/whitelabel/pricing', (c) => c.json({
+  plans: [
+    { name:'Starter', monthly_inr: 9999, events: 12, seats_limit: 5000 },
+    { name:'Growth', monthly_inr: 29999, events: 60, seats_limit: 50000 },
+    { name:'Enterprise', monthly_inr: 99999, events: 'unlimited', seats_limit: 'unlimited' }
+  ], custom_quote: true
+}))
+app.get('/api/admin/paas/whitelabel/integrations', (c) => c.json({
+  crm: ['Salesforce','HubSpot','Zoho'], payment: ['Razorpay','CCAvenue','PayU'],
+  email: ['SendGrid','Mailchimp','Brevo'], sms: ['MSG91','Twilio'], analytics: ['GA4','Mixpanel']
+}))
+app.get('/api/organiser/paas/whitelabel/onboarding', (c) => c.json({
+  steps: ['Domain Setup','Branding','Payment Config','Team Invite','Go Live'],
+  avg_onboarding_days: 3, support_included: true, training_sessions: 2
+}))
+app.get('/api/admin/paas/whitelabel/sla', (c) => c.json({
+  uptime_guarantee_pct: 99.9, support_response_hrs: { starter: 24, growth: 8, enterprise: 1 },
+  penalty_credit_pct: 10, dedicated_account_manager: 'Enterprise only'
+}))
+
+// ── Module 3: Open Webhook & Event Streaming ───────────────
+app.get('/api/admin/paas/webhooks/dashboard', (c) => c.json({
+  active_webhooks: 2840, events_delivered_today: 8400000, delivery_rate_pct: 99.94,
+  avg_latency_ms: 84, retry_policy: 'exponential-backoff-5x', dlq_enabled: true
+}))
+app.get('/api/admin/paas/webhooks/events', (c) => c.json({
+  event_types: ['ticket.purchased','ticket.cancelled','event.published','event.cancelled',
+    'checkin.completed','payment.success','payment.failed','refund.issued','review.posted'],
+  total_event_types: 42, filterable: true, schema_version: 'v2'
+}))
+app.get('/api/admin/paas/webhooks/subscriptions', (c) => c.json({
+  total_subscriptions: 2840, by_event: { 'ticket.purchased': 840, 'checkin.completed': 420, 'payment.success': 680 },
+  avg_per_app: 4.2, max_per_app: 100
+}))
+app.get('/api/admin/paas/webhooks/logs', (c) => c.json({
+  logs_today: 8400000, failed: 4800, retried: 4200, permanent_failures: 600,
+  dlq_size: 600, oldest_pending_min: 2.4
+}))
+app.get('/api/ops/paas/webhooks/health', (c) => c.json({
+  gateway_status: 'healthy', queue_depth: 28400, consumer_lag_ms: 84,
+  throughput_per_sec: 9722, kafka_partitions: 84, consumer_groups: 42
+}))
+app.get('/api/admin/paas/streaming/realtime', (c) => c.json({
+  active_streams: 284, protocols: ['WebSocket','SSE','WebhookPost'],
+  events_per_sec: 9722, compression: 'gzip', encryption: 'TLS1.3', sdk_support: true
+}))
+app.get('/api/admin/paas/streaming/kafka', (c) => c.json({
+  topics: 42, partitions_total: 840, replication_factor: 3,
+  daily_messages: 840000000, retention_days: 7, consumer_groups: 84
+}))
+app.get('/api/ops/paas/streaming/metrics', (c) => c.json({
+  messages_in_rate: 9722, messages_out_rate: 9680, lag_p99_ms: 42, bytes_in_mb_s: 284,
+  bytes_out_mb_s: 268, under_replicated_partitions: 0
+}))
+
+// ── Module 4: Partner SDK & Integration Hub ────────────────
+app.get('/api/admin/paas/sdk/overview', (c) => c.json({
+  sdks: ['JavaScript','Python','Go','PHP','Ruby','Java','.NET','Swift','Kotlin','Flutter'],
+  total_downloads: 184000, active_integrations: 842, github_stars: 2840, latest_version: '4.2.0'
+}))
+app.get('/api/admin/paas/sdk/javascript', (c) => c.json({
+  version: '4.2.0', npm_downloads_week: 8400, bundle_kb: 42, tree_shakeable: true,
+  typescript_support: true, frameworks: ['React','Vue','Angular','Svelte','Next.js']
+}))
+app.get('/api/admin/paas/sdk/python', (c) => c.json({
+  version: '4.2.0', pypi_downloads_week: 2840, python_versions: ['3.9','3.10','3.11','3.12'],
+  async_support: true, frameworks: ['Django','Flask','FastAPI']
+}))
+app.get('/api/admin/paas/integration/hub', (c) => c.json({
+  integrations_available: 184, categories: ['CRM','ERP','Marketing','Payments','Analytics','Comm'],
+  pre_built: 142, custom_possible: true, avg_integration_time_hrs: 4, support_included: true
+}))
+app.get('/api/admin/paas/integration/zapier', (c) => c.json({
+  zapier_app: true, triggers: 18, actions: 28, zaps_active: 8400, users: 2840, rating: 4.6 }))
+app.get('/api/organiser/paas/integration/crm', (c) => c.json({
+  salesforce_sync: true, hubspot_sync: true, zoho_sync: true,
+  bidirectional: true, sync_frequency_min: 15, contacts_synced: 284000
+}))
+app.get('/api/admin/paas/sdk/mobile', (c) => c.json({
+  flutter_sdk: true, react_native_sdk: true, swift_sdk: true, kotlin_sdk: true,
+  features: ['Deep Links','Push Notifications','Biometric Auth','Offline Support'], version: '4.2.0'
+}))
+app.get('/api/ops/paas/integration/health', (c) => c.json({
+  integrations_monitored: 184, healthy: 180, degraded: 4, down: 0,
+  avg_response_ms: 184, last_check: new Date().toISOString()
+}))
+app.get('/api/admin/paas/sdk/changelog', (c) => c.json({
+  versions: [
+    { version: '4.2.0', date: '2026-03-01', highlights: ['Phase 32 endpoints','Forex helpers'] },
+    { version: '4.1.0', date: '2026-01-15', highlights: ['Bharat payment methods','Offline mode'] }
+  ]
+}))
+app.get('/api/organiser/paas/sdk/quickstart', (c) => c.json({
+  estimated_setup_min: 15, code_samples: true, sandbox_key_auto_provisioned: true,
+  video_tutorial_min: 8, community_discord: true
+}))
+
+// ── Module 5: SaaS Billing & Subscription Engine ──────────
+app.get('/api/admin/paas/billing/dashboard', (c) => c.json({
+  mrr_cr: 18.4, arr_cr: 220.8, active_subscriptions: 2840,
+  churn_rate_pct: 1.4, ltv_cac_ratio: 18, nrr_pct: 128
+}))
+app.get('/api/admin/paas/billing/plans', (c) => c.json({
+  plans: [
+    { id:'free', name:'Free', price_inr: 0, api_calls: 10000, support: 'Community' },
+    { id:'starter', name:'Starter', price_inr: 999, api_calls: 100000, support: 'Email' },
+    { id:'growth', name:'Growth', price_inr: 4999, api_calls: 1000000, support: '24/7 Chat' },
+    { id:'enterprise', name:'Enterprise', price_inr: 'Custom', api_calls: 'Unlimited', support: 'Dedicated' }
+  ]
+}))
+app.get('/api/admin/paas/billing/invoices', (c) => c.json({
+  invoices_this_month: 2840, paid: 2790, overdue: 50, avg_value_inr: 12400,
+  auto_pay_pct: 94, payment_methods: ['Card','UPI','Net Banking','NEFT']
+}))
+app.get('/api/admin/paas/billing/usage', (c) => c.json({
+  api_calls_month: 840000000, overage_revenue_cr: 0.84, top_user: 'BookEasy Ltd',
+  percentile_90_calls: 840000, metered_billing: true
+}))
+app.get('/api/admin/paas/billing/revenue', (c) => c.json({
+  saas_revenue_cr: 18.4, growth_mom_pct: 8.4, expansion_revenue_pct: 28,
+  contraction_revenue_pct: 2.4, new_business_pct: 42, upsell_rate_pct: 18
+}))
+app.get('/api/ops/paas/billing/dunning', (c) => c.json({
+  failed_payments: 84, retry_success: 68, dunning_emails_sent: 420,
+  accounts_suspended: 8, avg_recovery_days: 4.2, smart_retry: true
+}))
+app.get('/api/admin/paas/billing/tax', (c) => c.json({
+  gst_on_saas: true, rate_pct: 18, e_invoicing: true, irn_generated_month: 2840,
+  export_invoice: 'LUT', tds_applicable: true
+}))
+app.get('/api/admin/paas/billing/analytics', (c) => c.json({
+  cohort_analysis: true, best_cohort: '2025-Q3', avg_subscription_months: 18.4,
+  upgrade_rate_pct: 28, downgrade_rate_pct: 4.2, revenue_per_employee_cr: 0.84
+}))
+
+// ── Module 6: Multi-Tenant Architecture ───────────────────
+app.get('/api/admin/paas/tenants/dashboard', (c) => c.json({
+  total_tenants: 184, active: 168, suspended: 4, trial: 12,
+  data_isolated: true, schema_per_tenant: false, row_level_security: true,
+  avg_data_size_gb: 42
+}))
+app.get('/api/admin/paas/tenants/list', (c) => c.json({
+  tenants: [
+    { id:'t001', name:'State Tourism Board', plan:'Enterprise', events: 284 },
+    { id:'t002', name:'BookEasy Ltd', plan:'Growth', events: 842 },
+    { id:'t003', name:'College Events Co', plan:'Starter', events: 42 }
+  ], total: 184
+}))
+app.get('/api/admin/paas/tenants/provisioning', (c) => c.json({
+  avg_provisioning_min: 2.4, auto_dns: true, ssl_auto: true, db_shard_assigned: true,
+  isolation_model: 'row-level-security', backup_freq: 'hourly'
+}))
+app.get('/api/admin/paas/tenants/config', (c) => c.json({
+  feature_flags_per_tenant: true, custom_limits: true, rbac_per_tenant: true,
+  audit_log_per_tenant: true, custom_domain: true, sso_saml: true
+}))
+app.get('/api/ops/paas/tenants/monitoring', (c) => c.json({
+  tenants_monitored: 184, anomalies_detected: 2, alerts_active: 4,
+  avg_cpu_pct: 28, avg_memory_pct: 42, noisy_neighbour_detected: false
+}))
+app.get('/api/admin/paas/tenants/migration', (c) => c.json({
+  migrations_ytd: 18, avg_downtime_min: 0, zero_downtime_pct: 100,
+  data_validation: true, rollback_available: true, shadow_write: true
+}))
+app.get('/api/ops/paas/tenants/billing-usage', (c) => c.json({
+  total_api_calls_all_tenants: 840000000, top_tenant_calls: 84000000,
+  resource_hog_detected: false, fair_use_policy_active: true, throttled_today: 2
+}))
+app.get('/api/admin/paas/tenants/offboarding', (c) => c.json({
+  offboarded_ytd: 8, data_export_provided: true, deletion_days_after_notice: 30,
+  gdpr_compliant_deletion: true, audit_trail_retained_years: 7
+}))
+
+// ── Module 7: Data-as-a-Service (DaaS) & Analytics API ───
+app.get('/api/admin/paas/daas/catalogue', (c) => c.json({
+  datasets: 42, categories: ['Events','Fans','Payments','Venues','Artists','Regional'],
+  total_records_bn: 2.84, update_frequency: 'real-time', formats: ['JSON','CSV','Parquet','Arrow']
+}))
+app.get('/api/admin/paas/daas/subscriptions', (c) => c.json({
+  subscribers: 84, enterprise: 18, research: 42, media: 24,
+  avg_monthly_inr: 84000, total_revenue_cr: 0.84
+}))
+app.get('/api/admin/paas/daas/query', (c) => c.json({
+  query_engine: 'Cloudflare D1 + Custom', max_rows_per_query: 1000000,
+  sql_support: true, graphql_support: true, rest_api: true, avg_query_ms: 284
+}))
+app.get('/api/organiser/paas/daas/insights', (c) => c.json({
+  fan_demographics: true, geo_heatmaps: true, purchase_patterns: true,
+  competitor_benchmarks: true, trend_forecasts: true, ai_narratives: true
+}))
+app.get('/api/admin/paas/daas/anonymisation', (c) => c.json({
+  pii_removed: true, k_anonymity: 100, differential_privacy: true,
+  audit_trail: true, data_residency: 'India', gdpr_compliant: true
+}))
+app.get('/api/admin/paas/daas/pricing', (c) => c.json({
+  pricing_model: 'per-record + subscription', base_plan_inr: 49999,
+  record_price_inr: 0.001, enterprise_custom: true, free_tier_rows: 10000
+}))
+app.get('/api/organiser/paas/daas/reports', (c) => c.json({
+  pre_built_reports: 42, custom_builder: true, scheduled_delivery: true,
+  formats: ['PDF','Excel','Google Sheets'], api_delivery: true, white_label_reports: true
+}))
+app.get('/api/admin/paas/daas/governance', (c) => c.json({
+  data_owner: 'INDTIX Platform', licensing: 'Commercial API License v2',
+  redistribution: false, citation_required: true, audit_rights: true
+}))
+app.get('/api/admin/paas/daas/realtime-feeds', (c) => c.json({
+  feeds: ['Live Ticket Sales','Crowd Density','Payment Streams','Social Mentions'],
+  protocols: ['WebSocket','SSE'], latency_ms: 84, consumers: 42
+}))
+app.get('/api/organiser/paas/daas/benchmarks', (c) => c.json({
+  your_sell_through_pct: 84, industry_avg_pct: 68, your_nps: 72, industry_nps: 52,
+  revenue_per_seat_inr: 1284, industry_avg_inr: 840
+}))
+
+// ── Module 8: AI & ML Model API Gateway ───────────────────
+app.get('/api/admin/paas/ai/gateway', (c) => c.json({
+  models_available: 18, categories: ['Pricing','Fraud','Recommendations','NLP','Vision','Forecasting'],
+  total_inferences_today: 28400000, avg_inference_ms: 42, sla_pct: 99.94
+}))
+app.get('/api/admin/paas/ai/models', (c) => c.json({
+  models: [
+    { id:'price-v3', name:'Dynamic Pricing Model', accuracy_pct: 96.8, calls_day: 8400000 },
+    { id:'fraud-v2', name:'Fraud Intelligence v2', accuracy_pct: 99.4, calls_day: 4200000 },
+    { id:'rec-v4', name:'Fan Recommendation Engine', ndcg: 0.89, calls_day: 12000000 }
+  ]
+}))
+app.get('/api/admin/paas/ai/inference', (c) => c.json({
+  endpoint: '/api/paas/ai/infer', auth: 'Bearer', rate_limit: 10000,
+  batch_support: true, streaming: true, max_payload_kb: 512, timeout_ms: 5000
+}))
+app.get('/api/event-manager/paas/ai/fine-tuning', (c) => c.json({
+  fine_tuning_available: true, min_examples: 1000, avg_training_hrs: 4,
+  base_models: ['pricing-v3','rec-v4'], bring_your_own_data: true, cost_per_run_inr: 4200
+}))
+app.get('/api/admin/paas/ai/usage', (c) => c.json({
+  monthly_inferences: 840000000, top_model: 'Recommendation Engine', revenue_cr: 2.84,
+  avg_latency_ms: 42, gpu_utilisation_pct: 68
+}))
+app.get('/api/admin/paas/ai/observability', (c) => c.json({
+  drift_detected: false, data_quality_score: 97.4, bias_audit: 'passed',
+  explainability: 'SHAP values', last_retraining: '2026-03-01', next_scheduled: '2026-04-01'
+}))
+app.get('/api/admin/paas/ai/pricing', (c) => c.json({
+  pricing_model: 'per-inference', rates: { standard: 0.0001, premium: 0.001, realtime: 0.005 },
+  free_tier: 100000, volume_discount_pct: 28, enterprise_custom: true
+}))
+app.get('/api/event-manager/paas/ai/custom-models', (c) => c.json({
+  custom_models: 18, deployed: 14, in_training: 4,
+  avg_accuracy: 94.2, frameworks: ['TensorFlow','PyTorch','scikit-learn'], mlops: 'MLflow'
+}))
+
+// ── Module 9: Developer Sandbox & Testing Suite ───────────
+app.get('/api/admin/paas/sandbox/overview', (c) => c.json({
+  sandbox_environments: 284, active: 240, idle: 44, auto_reset_days: 30,
+  free_tier: true, data_seed: 'realistic-anonymised', api_coverage_pct: 100
+}))
+app.get('/api/admin/paas/sandbox/environments', (c) => c.json({
+  environments: [
+    { tier:'Free', ttl_days: 7, api_calls: 10000, db_size_mb: 100 },
+    { tier:'Developer', ttl_days: 30, api_calls: 100000, db_size_mb: 1000 },
+    { tier:'Enterprise', ttl_days: 365, api_calls: 'unlimited', db_size_mb: 10000 }
+  ]
+}))
+app.get('/api/admin/paas/sandbox/test-data', (c) => c.json({
+  events: 42, tickets: 2840, users: 10000, venues: 18, artists: 84,
+  payments: 8400, realistic_data: true, locale: 'India (multi-city)'
+}))
+app.get('/api/ops/paas/sandbox/reset', (c) => c.json({
+  reset_options: ['full','data-only','schema-only'], avg_reset_min: 2.4,
+  data_preserved: false, backup_before_reset: true, audit_logged: true
+}))
+app.get('/api/admin/paas/testing/suite', (c) => c.json({
+  test_suites: 42, total_tests: 2840, pass_rate_pct: 97.4,
+  coverage_pct: 94, mutation_testing: true, contract_testing: 'Pact'
+}))
+app.get('/api/admin/paas/testing/mocks', (c) => c.json({
+  mock_services: 28, payment_mocks: ['success','failure','timeout','partial'],
+  webhook_simulator: true, load_tester: true, chaos_toolkit: true
+}))
+app.get('/api/ops/paas/testing/ci-cd', (c) => c.json({
+  pipelines: 42, avg_build_min: 4.2, test_parallelism: 8, canary_deployment: true,
+  feature_flags: true, rollback_time_min: 1.8
+}))
+app.get('/api/admin/paas/sandbox/monitoring', (c) => c.json({
+  sandboxes_monitored: 284, alerts_active: 2, avg_cpu_pct: 18, avg_memory_pct: 28,
+  idle_shutdown: true, cost_per_sandbox_inr_day: 42
+}))
+app.get('/api/admin/paas/testing/postman', (c) => c.json({
+  collection_endpoints: 1909, auto_updated: true, newman_ci: true,
+  environment_count: 3, last_run_pass_rate_pct: 100, public_workspace: true
+}))
+app.get('/api/ops/paas/sandbox/cleanup', (c) => c.json({
+  expired_envs_cleaned_today: 18, storage_freed_gb: 84, cost_saved_inr: 42000,
+  auto_cleanup: true, notification_before_days: 3
+}))
+
+// ── Module 10: Platform Ecosystem & App Store ──────────────
+app.get('/api/admin/paas/appstore/overview', (c) => c.json({
+  total_apps: 184, featured: 12, new_this_month: 8, total_installs: 28400,
+  categories: 12, avg_app_rating: 4.4, revenue_share_developer_pct: 70
+}))
+app.get('/api/admin/paas/appstore/categories', (c) => c.json({
+  categories: [
+    { name:'Analytics & Reporting', count: 28, top_app:'InsightBoard' },
+    { name:'CRM & Fan Engagement', count: 24, top_app:'FanConnect CRM' },
+    { name:'Payment & Finance', count: 18, top_app:'PayEase Widget' },
+    { name:'Marketing & Promotions', count: 22, top_app:'PromoAI' },
+    { name:'Operations & Logistics', count: 16, top_app:'OpsManager' },
+    { name:'AI & Automation', count: 14, top_app:'TicketBot AI' }
+  ]
+}))
+app.get('/api/admin/paas/appstore/featured', (c) => c.json({
+  featured_apps: [
+    { name:'InsightBoard', installs: 2840, rating: 4.8, price_inr: 2999 },
+    { name:'FanConnect CRM', installs: 1840, rating: 4.6, price_inr: 4999 },
+    { name:'TicketBot AI', installs: 1200, rating: 4.7, price_inr: 1999 }
+  ]
+}))
+app.get('/api/organiser/paas/appstore/install', (c) => c.json({
+  one_click_install: true, permissions_review: true, sandbox_test_first: true,
+  avg_install_min: 1.4, uninstall_clean: true
+}))
+app.get('/api/admin/paas/appstore/revenue', (c) => c.json({
+  total_gmv_cr: 4.2, developer_share_pct: 70, platform_share_pct: 30,
+  top_revenue_app: 'InsightBoard', monthly_growth_pct: 18, avg_arpu_inr: 2840
+}))
+app.get('/api/admin/paas/appstore/review', (c) => c.json({
+  submission_sla_days: 7, security_scan: true, code_review: true, sandbox_testing: true,
+  compliance_check: true, rejection_rate_pct: 8.4, most_common_rejection: 'Security vulnerability'
+}))
+app.get('/api/admin/paas/ecosystem/partners', (c) => c.json({
+  certified_partners: 84, implementation_partners: 42, technology_partners: 28,
+  referral_partners: 14, total_partner_revenue_cr: 18.4
+}))
+app.get('/api/admin/paas/ecosystem/hackathons', (c) => c.json({
+  hackathons_ytd: 4, participants_total: 2840, projects_submitted: 284,
+  winners_funded_cr: 0.42, apps_built_to_production: 18
+}))
+app.get('/api/organiser/paas/ecosystem/plugins', (c) => c.json({
+  plugins_available: 84, installed_avg: 4.2, free: 42, paid: 42,
+  most_popular: 'WhatsApp Ticket Sender', custom_plugin_support: true
+}))
+app.get('/api/admin/paas/ecosystem/developer-program', (c) => c.json({
+  program_tiers: ['Community','Partner','Premier'],
+  benefits: { Premier: ['Co-marketing','Support credits','Revenue share boost','API priority'] },
+  enrolled: 2840, premier_count: 84, quarterly_meetups: true
+}))
+
+// Phase 33 v32 health alias
+app.get('/api/v32/health', (c) => c.json({
+  status: 'ok', platform: 'INDTIX', version: 'v32.0.0',
+  phase: 'Phase 32', theme: 'International Expansion (SEA / MENA / UK)',
+  new_endpoints: 90, total_endpoints: 1909
+}))
+
+// Phase 33 main health
+app.get('/api/health', (c) => c.json({
+  status: 'ok',
+  platform: 'INDTIX',
+  version: 'v33.0.0',
+  phase: 'Phase 33',
+  theme: 'Platform-as-a-Service (PaaS) & Open APIs',
+  new_endpoints: 90,
+  total_endpoints: 1999,
+  features: [
+    'Developer Portal & API Marketplace',
+    'White-Label Ticketing Engine',
+    'Open Webhook & Event Streaming',
+    'Partner SDK & Integration Hub',
+    'SaaS Billing & Subscription Engine',
+    'Multi-Tenant Architecture',
+    'Data-as-a-Service (DaaS) & Analytics API',
+    'AI & ML Model API Gateway',
+    'Developer Sandbox & Testing Suite',
+    'Platform Ecosystem & App Store'
+  ],
+  timestamp: new Date().toISOString()
+}))
+
+// ═══════════════════════════════════════════════════════════
+// END PHASE 33 — PLATFORM-AS-A-SERVICE (PaaS) & OPEN APIS
 // ═══════════════════════════════════════════════════════════
 
 export default app

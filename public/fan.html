@@ -6389,5 +6389,39 @@ async function loadP32FanNRI(){const r=await fetch('/api/fan/intl/nri/dashboard'
 async function loadP32FanPay(){const r=await fetch('/api/fan/intl/payments/methods');const d=await r.json();document.getElementById('p32-fan-pay-output').innerHTML='💳 Cards: '+d.cards.join(', ')+'<br>Wallets: '+d.digital_wallets.join(', ')+'<br>Bank: SWIFT, SEPA, FPS, PayNow';}
 </script>
 <!-- END PHASE 32 FAN PORTAL -->
+
+<!-- PHASE 33 FAN PORTAL — PaaS Powered Fan Experience -->
+<div class="container mt-4">
+  <h5 class="text-info fw-bold">🔌 Phase 33 — Powered by INDTIX PaaS</h5>
+  <div class="row g-3">
+    <div class="col-md-6"><div class="card border-info">
+      <div class="card-header bg-info text-dark fw-bold">🛍️ Discover Partner Apps</div>
+      <div class="card-body"><div id="p33-fan-apps-output" class="small text-muted">Loading apps...</div>
+      <button class="btn btn-sm btn-info mt-2" onclick="loadP33FanApps()">Browse Apps</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-warning">
+      <div class="card-header bg-warning text-dark fw-bold">📊 Personalised Insights (DaaS)</div>
+      <div class="card-body"><div id="p33-fan-daas-output" class="small text-muted">Loading insights...</div>
+      <button class="btn btn-sm btn-warning mt-2" onclick="loadP33FanDaaS()">My Insights</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-success">
+      <div class="card-header bg-success text-white fw-bold">🤖 AI Recommendations</div>
+      <div class="card-body"><div id="p33-fan-ai-output" class="small text-muted">Loading AI picks...</div>
+      <button class="btn btn-sm btn-success mt-2" onclick="loadP33FanAI()">Get AI Picks</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-primary">
+      <div class="card-header bg-primary text-white fw-bold">📡 Live Event Streaming</div>
+      <div class="card-body"><div id="p33-fan-stream-output" class="small text-muted">Loading stream info...</div>
+      <button class="btn btn-sm btn-primary mt-2" onclick="loadP33FanStream()">Stream Status</button></div>
+    </div></div>
+  </div>
+</div>
+<script>
+async function loadP33FanApps(){const r=await fetch('/api/admin/paas/appstore/featured');const d=await r.json();document.getElementById('p33-fan-apps-output').innerHTML=d.featured_apps.map(a=>'⭐ <b>'+a.name+'</b> ('+a.rating+') — ₹'+a.price_inr+'/mo').join('<br>');}
+async function loadP33FanDaaS(){const r=await fetch('/api/organiser/paas/daas/insights');const d=await r.json();document.getElementById('p33-fan-daas-output').innerHTML='📊 Fan Demographics: '+d.fan_demographics+'<br>Purchase Patterns: '+d.purchase_patterns+' | AI Narratives: '+d.ai_narratives;}
+async function loadP33FanAI(){const r=await fetch('/api/admin/paas/ai/models');const d=await r.json();document.getElementById('p33-fan-ai-output').innerHTML=d.models.map(m=>'🤖 <b>'+m.name+'</b>: '+(m.accuracy_pct||m.ndcg)+' accuracy').join('<br>');}
+async function loadP33FanStream(){const r=await fetch('/api/admin/paas/streaming/realtime');const d=await r.json();document.getElementById('p33-fan-stream-output').innerHTML='📡 Active Streams: '+d.active_streams+' | Events/sec: '+d.events_per_sec+'<br>Protocol: '+d.protocols.join(', ');}
+</script>
+<!-- END PHASE 33 FAN PORTAL -->
 </body>
 </html>

@@ -3201,5 +3201,39 @@ async function loadP32OpsForex(){const r=await fetch('/api/ops/intl/forex/reconc
 async function loadP32OpsMktg(){const r=await fetch('/api/ops/intl/marketing/attribution');const d=await r.json();document.getElementById('p32-ops-mktg-output').innerHTML='📊 Model: '+d.model+'<br>Channels: '+d.channels_tracked+' | Touchpoints: '+d.avg_touchpoints+' | Cookieless: '+d.cookieless_ready;}
 </script>
 <!-- END PHASE 32 OPS PORTAL -->
+
+<!-- PHASE 33 OPS PORTAL — PaaS Operations -->
+<div class="container mt-4">
+  <h5 class="text-info fw-bold">🔌 Phase 33 — PaaS Operations Dashboard</h5>
+  <div class="row g-3">
+    <div class="col-md-6"><div class="card border-info">
+      <div class="card-header bg-info text-dark fw-bold">🖥️ Platform Status</div>
+      <div class="card-body"><div id="p33-ops-status-output" class="small text-muted">Loading status...</div>
+      <button class="btn btn-sm btn-info mt-2" onclick="loadP33OpsStatus()">Load Status</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-warning">
+      <div class="card-header bg-warning text-dark fw-bold">📊 Kafka Streaming Metrics</div>
+      <div class="card-body"><div id="p33-ops-kafka-output" class="small text-muted">Loading Kafka...</div>
+      <button class="btn btn-sm btn-warning mt-2" onclick="loadP33OpsKafka()">Load Kafka</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-success">
+      <div class="card-header bg-success text-white fw-bold">💳 SaaS Dunning & Billing</div>
+      <div class="card-body"><div id="p33-ops-dunning-output" class="small text-muted">Loading dunning...</div>
+      <button class="btn btn-sm btn-success mt-2" onclick="loadP33OpsDunning()">Load Dunning</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-danger">
+      <div class="card-header bg-danger text-white fw-bold">🏢 Tenant Monitoring</div>
+      <div class="card-body"><div id="p33-ops-tenants-output" class="small text-muted">Loading tenants...</div>
+      <button class="btn btn-sm btn-danger mt-2" onclick="loadP33OpsTenants()">Load Tenants</button></div>
+    </div></div>
+  </div>
+</div>
+<script>
+async function loadP33OpsStatus(){const r=await fetch('/api/ops/paas/developer/status');const d=await r.json();document.getElementById('p33-ops-status-output').innerHTML='All Systems: <b>'+d.all_systems.toUpperCase()+'</b><br>API: '+d.api_gateway+' | Webhooks: '+d.webhook_service+' | Sandbox: '+d.sandbox+'<br>Last Incident: '+d.last_incident;}
+async function loadP33OpsKafka(){const r=await fetch('/api/ops/paas/streaming/metrics');const d=await r.json();document.getElementById('p33-ops-kafka-output').innerHTML='In: '+d.messages_in_rate+'/s | Out: '+d.messages_out_rate+'/s<br>Lag p99: '+d.lag_p99_ms+'ms | Under-replicated: '+d.under_replicated_partitions;}
+async function loadP33OpsDunning(){const r=await fetch('/api/ops/paas/billing/dunning');const d=await r.json();document.getElementById('p33-ops-dunning-output').innerHTML='Failed: '+d.failed_payments+' | Recovered: '+d.retry_success+'<br>Suspended: '+d.accounts_suspended+' | Avg Recovery: '+d.avg_recovery_days+'d';}
+async function loadP33OpsTenants(){const r=await fetch('/api/ops/paas/tenants/monitoring');const d=await r.json();document.getElementById('p33-ops-tenants-output').innerHTML='Monitored: '+d.tenants_monitored+' | Anomalies: '+d.anomalies_detected+'<br>CPU: '+d.avg_cpu_pct+'% | Memory: '+d.avg_memory_pct+'%';}
+</script>
+<!-- END PHASE 33 OPS PORTAL -->
 </body>
 </html>

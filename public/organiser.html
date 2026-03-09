@@ -5003,4 +5003,38 @@ async function loadP32OrgArtist(){const r=await fetch('/api/event-manager/intl/a
 async function loadP32OrgPay(){const r=await fetch('/api/admin/intl/payments/gateway');const d=await r.json();document.getElementById('p32-org-pay-output').innerHTML='💳 Primary: '+d.primary+' | Backup: '+d.secondary+'<br>Uptime: '+d.uptime_pct+'% | Fallback: '+d.fallback;}
 </script>
 <!-- END PHASE 32 ORGANISER PORTAL -->
+
+<!-- PHASE 33 ORGANISER PORTAL — PaaS & White-Label -->
+<div class="container mt-4">
+  <h5 class="text-info fw-bold">🔌 Phase 33 — PaaS Tools for Organisers</h5>
+  <div class="row g-3">
+    <div class="col-md-6"><div class="card border-info">
+      <div class="card-header bg-info text-dark fw-bold">🏷️ White-Label Portal</div>
+      <div class="card-body"><div id="p33-org-wl-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-info mt-2" onclick="loadP33OrgWL()">Load White-Label</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-warning">
+      <div class="card-header bg-warning text-dark fw-bold">🔗 SDK & Integrations</div>
+      <div class="card-body"><div id="p33-org-sdk-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-warning mt-2" onclick="loadP33OrgSDK()">Load SDK Hub</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-success">
+      <div class="card-header bg-success text-white fw-bold">📊 DaaS Reports</div>
+      <div class="card-body"><div id="p33-org-daas-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-success mt-2" onclick="loadP33OrgDaaS()">Load Reports</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-primary">
+      <div class="card-header bg-primary text-white fw-bold">🛍️ Partner Plugins</div>
+      <div class="card-body"><div id="p33-org-plugins-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-primary mt-2" onclick="loadP33OrgPlugins()">Load Plugins</button></div>
+    </div></div>
+  </div>
+</div>
+<script>
+async function loadP33OrgWL(){const r=await fetch('/api/organiser/paas/whitelabel/analytics');const d=await r.json();document.getElementById('p33-org-wl-output').innerHTML='Events: '+d.white_label_events.toLocaleString()+' | Tickets: '+d.tickets_sold.toLocaleString()+'<br>GMV: ₹'+d.gmv_cr+'Cr | NPS: '+d.client_nps;}
+async function loadP33OrgSDK(){const r=await fetch('/api/admin/paas/sdk/overview');const d=await r.json();document.getElementById('p33-org-sdk-output').innerHTML='SDKs: '+d.sdks.slice(0,4).join(', ')+'<br>Downloads: '+d.total_downloads.toLocaleString()+' | Integrations: '+d.active_integrations;}
+async function loadP33OrgDaaS(){const r=await fetch('/api/organiser/paas/daas/benchmarks');const d=await r.json();document.getElementById('p33-org-daas-output').innerHTML='Sell-Through: '+d.your_sell_through_pct+'% (Industry: '+d.industry_avg_pct+'%)<br>NPS: '+d.your_nps+' | Rev/Seat: ₹'+d.revenue_per_seat_inr;}
+async function loadP33OrgPlugins(){const r=await fetch('/api/organiser/paas/ecosystem/plugins');const d=await r.json();document.getElementById('p33-org-plugins-output').innerHTML='Plugins: '+d.plugins_available+' | Avg Installed: '+d.installed_avg+'<br>Most Popular: '+d.most_popular;}
+</script>
+<!-- END PHASE 33 ORGANISER PORTAL -->
 </body></html>
