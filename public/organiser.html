@@ -5037,4 +5037,38 @@ async function loadP33OrgDaaS(){const r=await fetch('/api/organiser/paas/daas/be
 async function loadP33OrgPlugins(){const r=await fetch('/api/organiser/paas/ecosystem/plugins');const d=await r.json();document.getElementById('p33-org-plugins-output').innerHTML='Plugins: '+d.plugins_available+' | Avg Installed: '+d.installed_avg+'<br>Most Popular: '+d.most_popular;}
 </script>
 <!-- END PHASE 33 ORGANISER PORTAL -->
+
+<!-- PHASE 34 ORGANISER PORTAL — AI-Native Ops -->
+<div class="container mt-4">
+  <h5 class="text-danger fw-bold">🤖 Phase 34 — AI-Powered Organiser Intelligence</h5>
+  <div class="row g-3">
+    <div class="col-md-6"><div class="card border-danger">
+      <div class="card-header bg-danger text-white fw-bold">📣 AI Marketing Orchestration</div>
+      <div class="card-body"><div id="p34-org-mktg-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-danger mt-2" onclick="loadP34OrgMktg()">Load Marketing AI</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-warning">
+      <div class="card-header bg-warning text-dark fw-bold">🔮 Churn & Upsell Predictions</div>
+      <div class="card-body"><div id="p34-org-churn-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-warning mt-2" onclick="loadP34OrgChurn()">Load Predictions</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-success">
+      <div class="card-header bg-success text-white fw-bold">📊 AI-Driven A/B Testing</div>
+      <div class="card-body"><div id="p34-org-ab-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-success mt-2" onclick="loadP34OrgAB()">Load Experiments</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-primary">
+      <div class="card-header bg-primary text-white fw-bold">👥 AI Customer 360</div>
+      <div class="card-body"><div id="p34-org-c360-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-primary mt-2" onclick="loadP34OrgC360()">Load Customer 360</button></div>
+    </div></div>
+  </div>
+</div>
+<script>
+async function loadP34OrgMktg(){const r=await fetch('/api/admin/ai-ops/marketing/campaign-ai');const d=await r.json();document.getElementById('p34-org-mktg-output').innerHTML='Campaigns: '+d.campaigns_active+' | Auto-Budget: '+d.auto_budget_allocation+'<br>Creative Rotation: '+d.creative_rotation+' | ROAS: '+d.avg_roas+'x';}
+async function loadP34OrgChurn(){const r=await fetch('/api/admin/ai-ops/revenue/churn-prediction');const d=await r.json();document.getElementById('p34-org-churn-output').innerHTML='At-Risk Organisers: '+d.at_risk_organisers+' | Save Rate: '+d.save_rate_pct+'%<br>Model AUC: '+d.model_auc+' | Interventions: '+d.interventions_triggered;}
+async function loadP34OrgAB(){const r=await fetch('/api/admin/ai-ops/revenue/ab-testing');const d=await r.json();document.getElementById('p34-org-ab-output').innerHTML='Active Experiments: '+d.active_experiments+' | Users in Test: '+d.users_in_test.toLocaleString()+'<br>Best Uplift: +'+d.best_winner_uplift_pct+'% | Auto-deploy winner: '+d.auto_deploy_winner;}
+async function loadP34OrgC360(){const r=await fetch('/api/admin/ai-ops/bi/customer-360');const d=await r.json();document.getElementById('p34-org-c360-output').innerHTML='Profiles: '+d.profiles_unified.toLocaleString()+' | Sources: '+d.data_sources_merged+'<br>Resolution: '+d.identity_resolution_pct+'% | Segments: '+d.segment_count;}
+</script>
+<!-- END PHASE 34 ORGANISER PORTAL -->
 </body></html>

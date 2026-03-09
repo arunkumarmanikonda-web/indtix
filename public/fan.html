@@ -6423,5 +6423,39 @@ async function loadP33FanAI(){const r=await fetch('/api/admin/paas/ai/models');c
 async function loadP33FanStream(){const r=await fetch('/api/admin/paas/streaming/realtime');const d=await r.json();document.getElementById('p33-fan-stream-output').innerHTML='📡 Active Streams: '+d.active_streams+' | Events/sec: '+d.events_per_sec+'<br>Protocol: '+d.protocols.join(', ');}
 </script>
 <!-- END PHASE 33 FAN PORTAL -->
+
+<!-- PHASE 34 FAN PORTAL — AI-Native Fan Experience -->
+<div class="container mt-4">
+  <h5 class="text-danger fw-bold">🤖 Phase 34 — AI-Native Fan Experience</h5>
+  <div class="row g-3">
+    <div class="col-md-6"><div class="card border-danger">
+      <div class="card-header bg-danger text-white fw-bold">💬 AI Customer Support</div>
+      <div class="card-body"><div id="p34-fan-cx-output" class="small text-muted">Loading AI support...</div>
+      <button class="btn btn-sm btn-danger mt-2" onclick="loadP34FanCX()">Chat with AI</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-warning">
+      <div class="card-header bg-warning text-dark fw-bold">🎯 Personalised Recommendations</div>
+      <div class="card-body"><div id="p34-fan-rec-output" class="small text-muted">Loading AI picks...</div>
+      <button class="btn btn-sm btn-warning mt-2" onclick="loadP34FanRec()">Get My AI Picks</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-success">
+      <div class="card-header bg-success text-white fw-bold">💰 AI Smart Pricing</div>
+      <div class="card-body"><div id="p34-fan-price-output" class="small text-muted">Loading pricing...</div>
+      <button class="btn btn-sm btn-success mt-2" onclick="loadP34FanPrice()">See Best Prices</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-primary">
+      <div class="card-header bg-primary text-white fw-bold">🔮 Event Forecasts</div>
+      <div class="card-body"><div id="p34-fan-forecast-output" class="small text-muted">Loading forecasts...</div>
+      <button class="btn btn-sm btn-primary mt-2" onclick="loadP34FanForecast()">Show Forecasts</button></div>
+    </div></div>
+  </div>
+</div>
+<script>
+async function loadP34FanCX(){const r=await fetch('/api/admin/ai-ops/cx/chatbot');const d=await r.json();document.getElementById('p34-fan-cx-output').innerHTML='🤖 Model: '+d.model+'<br>Languages: '+d.languages+' | Containment: '+d.containment_rate_pct+'% | Satisfaction: '+d.avg_satisfaction;}
+async function loadP34FanRec(){const r=await fetch('/api/admin/ai-ops/meta/model-registry');const d=await r.json();document.getElementById('p34-fan-rec-output').innerHTML='📊 Models in production: '+d.production_models+'<br>Champion-Challenger: '+d.champion_challenger+' | Auto-versioned: '+d.auto_versioning;}
+async function loadP34FanPrice(){const r=await fetch('/api/admin/ai-ops/revenue/pricing-engine');const d=await r.json();document.getElementById('p34-fan-price-output').innerHTML='💰 Algorithm: '+d.algorithm+'<br>Price variations live: '+d.price_variations_live.toLocaleString()+' | Uplift: +'+d.avg_uplift_pct+'%';}
+async function loadP34FanForecast(){const r=await fetch('/api/admin/ai-ops/revenue/forecasting');const d=await r.json();document.getElementById('p34-fan-forecast-output').innerHTML='🔮 Next 30d: ₹'+d.revenue_next_30d_cr+'Cr | Next 90d: ₹'+d.revenue_next_90d_cr+'Cr<br>Accuracy: '+d.accuracy_last_quarter_pct+'% | MAPE: '+d.mape_pct+'%';}
+</script>
+<!-- END PHASE 34 FAN PORTAL -->
 </body>
 </html>

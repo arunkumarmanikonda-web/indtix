@@ -3235,5 +3235,39 @@ async function loadP33OpsDunning(){const r=await fetch('/api/ops/paas/billing/du
 async function loadP33OpsTenants(){const r=await fetch('/api/ops/paas/tenants/monitoring');const d=await r.json();document.getElementById('p33-ops-tenants-output').innerHTML='Monitored: '+d.tenants_monitored+' | Anomalies: '+d.anomalies_detected+'<br>CPU: '+d.avg_cpu_pct+'% | Memory: '+d.avg_memory_pct+'%';}
 </script>
 <!-- END PHASE 33 OPS PORTAL -->
+
+<!-- PHASE 34 OPS PORTAL — SRE & AI Ops -->
+<div class="container mt-4">
+  <h5 class="text-danger fw-bold">🤖 Phase 34 — Autonomous SRE &amp; AI Operations</h5>
+  <div class="row g-3">
+    <div class="col-md-6"><div class="card border-danger">
+      <div class="card-header bg-danger text-white fw-bold">🚨 Autonomous SRE Dashboard</div>
+      <div class="card-body"><div id="p34-ops-sre-output" class="small text-muted">Loading SRE...</div>
+      <button class="btn btn-sm btn-danger mt-2" onclick="loadP34OpsSRE()">Load SRE AI</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-warning">
+      <div class="card-header bg-warning text-dark fw-bold">🔧 Auto-Remediation</div>
+      <div class="card-body"><div id="p34-ops-rem-output" class="small text-muted">Loading remediation...</div>
+      <button class="btn btn-sm btn-warning mt-2" onclick="loadP34OpsRem()">Load Remediation</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-success">
+      <div class="card-header bg-success text-white fw-bold">📉 Cost Optimisation AI</div>
+      <div class="card-body"><div id="p34-ops-cost-output" class="small text-muted">Loading cost AI...</div>
+      <button class="btn btn-sm btn-success mt-2" onclick="loadP34OpsCost()">Load Cost AI</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-primary">
+      <div class="card-header bg-primary text-white fw-bold">🔬 Observability & Tracing</div>
+      <div class="card-body"><div id="p34-ops-obs-output" class="small text-muted">Loading observability...</div>
+      <button class="btn btn-sm btn-primary mt-2" onclick="loadP34OpsObs()">Load Observability</button></div>
+    </div></div>
+  </div>
+</div>
+<script>
+async function loadP34OpsSRE(){const r=await fetch('/api/ops/ai-ops/sre/dashboard');const d=await r.json();document.getElementById('p34-ops-sre-output').innerHTML='Incidents: '+d.incidents_today+' | Auto-resolved: '+d.auto_resolved_pct+'%<br>MTTR: '+d.mttr_min+'min | SLO: '+d.slo_compliance_pct+'%';}
+async function loadP34OpsRem(){const r=await fetch('/api/ops/ai-ops/sre/auto-remediation');const d=await r.json();document.getElementById('p34-ops-rem-output').innerHTML='Playbooks: '+d.playbooks+' | Triggered: '+d.auto_triggered_today+'<br>Success: '+d.success_rate_pct+'% | MTTR: '+d.avg_resolution_min+'min';}
+async function loadP34OpsCost(){const r=await fetch('/api/ops/ai-ops/sre/cost-optimisation');const d=await r.json();document.getElementById('p34-ops-cost-output').innerHTML='Cloud Spend: ₹'+d.cloud_spend_cr_month+'Cr/mo | AI Saved: ₹'+d.ai_savings_cr+'Cr<br>Idle Terminated: '+d.idle_resources_terminated+' | Savings: '+d.savings_realised_pct+'%';}
+async function loadP34OpsObs(){const r=await fetch('/api/ops/ai-ops/sre/observability');const d=await r.json();document.getElementById('p34-ops-obs-output').innerHTML='Traces/day: '+d.traces_per_day.toLocaleString()+' | Logs: '+d.logs_per_day_gb+'GB<br>AI Correlation: '+d.ai_correlation+' | Root Cause Acc: '+d.root_cause_accuracy_pct+'%';}
+</script>
+<!-- END PHASE 34 OPS PORTAL -->
 </body>
 </html>

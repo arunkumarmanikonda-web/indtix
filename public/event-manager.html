@@ -3310,4 +3310,38 @@ async function loadP33EMSandbox(){const r=await fetch('/api/admin/paas/sandbox/o
 async function loadP33EMDocs(){const r=await fetch('/api/admin/paas/developer/docs');const d=await r.json();document.getElementById('p33-em-docs-output').innerHTML='Endpoints Documented: '+d.total_endpoints_documented+' | Coverage: '+d.coverage_pct+'%<br>SDKs: '+d.sdks.slice(0,4).join(', ');}
 </script>
 <!-- END PHASE 33 EVENT MANAGER -->
+
+<!-- PHASE 34 EVENT MANAGER PORTAL — AI Ops -->
+<div class="container mt-4">
+  <h5 class="text-danger fw-bold">🤖 Phase 34 — AI Intelligence for Event Managers</h5>
+  <div class="row g-3">
+    <div class="col-md-6"><div class="card border-danger">
+      <div class="card-header bg-danger text-white fw-bold">📊 Demand Sensing AI</div>
+      <div class="card-body"><div id="p34-em-demand-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-danger mt-2" onclick="loadP34EMDemand()">Load Demand AI</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-warning">
+      <div class="card-header bg-warning text-dark fw-bold">🔒 AI Quality Control</div>
+      <div class="card-body"><div id="p34-em-qc-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-warning mt-2" onclick="loadP34EMQC()">Load QC AI</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-success">
+      <div class="card-header bg-success text-white fw-bold">💡 AI Content Generation</div>
+      <div class="card-body"><div id="p34-em-content-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-success mt-2" onclick="loadP34EMContent()">Load Content AI</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-primary">
+      <div class="card-header bg-primary text-white fw-bold">🏆 HR & Talent AI</div>
+      <div class="card-body"><div id="p34-em-hr-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-primary mt-2" onclick="loadP34EMHR()">Load HR AI</button></div>
+    </div></div>
+  </div>
+</div>
+<script>
+async function loadP34EMDemand(){const r=await fetch('/api/admin/ai-ops/operations/demand-sensing');const d=await r.json();document.getElementById('p34-em-demand-output').innerHTML='Events Forecasted: '+d.events_forecasted+' | Accuracy: '+d.demand_accuracy_pct+'%<br>Model: '+d.ai_model+' | Signals: '+d.signals_used.join(', ');}
+async function loadP34EMQC(){const r=await fetch('/api/admin/ai-ops/operations/quality-control');const d=await r.json();document.getElementById('p34-em-qc-output').innerHTML='Checks Today: '+d.checks_automated_today.toLocaleString()+' | Defects: '+d.defects_caught+'<br>Model: '+d.model+' | Auto-Remediation: '+d.auto_remediation_pct+'%';}
+async function loadP34EMContent(){const r=await fetch('/api/admin/ai-ops/marketing/content-generation');const d=await r.json();document.getElementById('p34-em-content-output').innerHTML='Pieces/day: '+d.pieces_generated_today+' | Languages: '+d.languages+'<br>AI CTR: '+d.ctr_ai_vs_human_pct[0]+'% vs Human: '+d.ctr_ai_vs_human_pct[1]+'%';}
+async function loadP34EMHR(){const r=await fetch('/api/admin/ai-ops/hr/dashboard');const d=await r.json();document.getElementById('p34-em-hr-output').innerHTML='Employees: '+d.employees+' | AI Decisions: '+d.ai_hr_decisions_today+'<br>Attrition Risk: '+d.attrition_risk_flagged+' | Engagement: '+d.engagement_score;}
+</script>
+<!-- END PHASE 34 EVENT MANAGER -->
 </body></html>

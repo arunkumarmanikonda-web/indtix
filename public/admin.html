@@ -5712,4 +5712,53 @@ async function loadP33MT(){const r=await fetch('/api/admin/paas/tenants/dashboar
 async function loadP33Apps(){const r=await fetch('/api/admin/paas/appstore/overview');const d=await r.json();document.getElementById('p33-apps-output').innerHTML='<b>Apps:</b> '+d.total_apps+' | <b>Installs:</b> '+d.total_installs.toLocaleString()+'<br><b>Rating:</b> '+d.avg_app_rating+' | <b>Dev Cut:</b> '+d.revenue_share_developer_pct+'%';}
 </script>
 <!-- END PHASE 33 ADMIN PORTAL -->
+
+<!-- PHASE 34 — AI-Native Operations & Autonomous Business — Admin Portal -->
+<div class="container-fluid mt-4">
+  <div class="row mb-3"><div class="col-12">
+    <h4 class="text-danger">🤖 Phase 34 — AI-Native Operations &amp; Autonomous Business</h4>
+    <p class="text-muted">Autonomous Revenue AI · CX Engine · Predictive Ops · CFO Suite · AI HR · Marketing AI · Legal AI · BI · SRE AI · Meta-AI | 2,089 total endpoints</p>
+  </div></div>
+  <div class="row g-3">
+    <div class="col-md-6 col-lg-4"><div class="card border-danger shadow-sm h-100">
+      <div class="card-header bg-danger text-white fw-bold">💰 Autonomous Revenue AI</div>
+      <div class="card-body"><div id="p34-rev-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-danger mt-2" onclick="loadP34Rev()">Load Revenue AI</button></div>
+    </div></div>
+    <div class="col-md-6 col-lg-4"><div class="card border-warning shadow-sm h-100">
+      <div class="card-header bg-warning text-dark fw-bold">📊 Real-Time BI</div>
+      <div class="card-body"><div id="p34-bi-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-warning mt-2" onclick="loadP34BI()">Load BI Dashboard</button></div>
+    </div></div>
+    <div class="col-md-6 col-lg-4"><div class="card border-success shadow-sm h-100">
+      <div class="card-header bg-success text-white fw-bold">💼 Intelligent Finance</div>
+      <div class="card-body"><div id="p34-fin-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-success mt-2" onclick="loadP34Fin()">Load Finance AI</button></div>
+    </div></div>
+    <div class="col-md-6 col-lg-4"><div class="card border-primary shadow-sm h-100">
+      <div class="card-header bg-primary text-white fw-bold">🤖 Meta-AI Platform</div>
+      <div class="card-body"><div id="p34-meta-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-primary mt-2" onclick="loadP34Meta()">Load Meta-AI</button></div>
+    </div></div>
+    <div class="col-md-6 col-lg-4"><div class="card border-info shadow-sm h-100">
+      <div class="card-header bg-info text-dark fw-bold">📣 Autonomous Marketing</div>
+      <div class="card-body"><div id="p34-mktg-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-info mt-2" onclick="loadP34Mktg()">Load Marketing AI</button></div>
+    </div></div>
+    <div class="col-md-6 col-lg-4"><div class="card border-secondary shadow-sm h-100">
+      <div class="card-header bg-secondary text-white fw-bold">⚖️ AI Legal Intelligence</div>
+      <div class="card-body"><div id="p34-legal-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-secondary mt-2" onclick="loadP34Legal()">Load Legal AI</button></div>
+    </div></div>
+  </div>
+</div>
+<script>
+async function loadP34Rev(){const r=await fetch('/api/admin/ai-ops/revenue/dashboard');const d=await r.json();document.getElementById('p34-rev-output').innerHTML='<b>AI Decisions/day:</b> '+d.ai_revenue_decisions_today.toLocaleString()+' | <b>Auto:</b> '+d.auto_approved_pct+'%<br><b>Uplift:</b> ₹'+d.revenue_uplift_cr_month+'Cr/mo | <b>vs Manual:</b> +'+d.vs_manual_pct+'%';}
+async function loadP34BI(){const r=await fetch('/api/admin/ai-ops/bi/dashboard');const d=await r.json();document.getElementById('p34-bi-output').innerHTML='<b>Sources:</b> '+d.data_sources_connected+' | <b>Queries/day:</b> '+d.queries_per_day.toLocaleString()+'<br><b>Freshness:</b> '+d.data_freshness_min+'min | <b>Anomalies:</b> '+d.anomalies_surfaced;}
+async function loadP34Fin(){const r=await fetch('/api/admin/ai-ops/finance/dashboard');const d=await r.json();document.getElementById('p34-fin-output').innerHTML='<b>AI Decisions:</b> '+d.ai_finance_decisions_today+' | <b>Cash Accuracy:</b> '+d.cash_flow_accuracy_pct+'%<br><b>Fraud Prevented:</b> ₹'+d.fraud_prevented_cr+'Cr | <b>Audit Ready:</b> '+d.audit_ready;}
+async function loadP34Meta(){const r=await fetch('/api/admin/ai-ops/meta/dashboard');const d=await r.json();document.getElementById('p34-meta-output').innerHTML='<b>AI Decisions/day:</b> '+d.meta_ai_decisions_today.toLocaleString()+' | <b>Health:</b> '+d.platform_health_score+'%<br><b>Self-healing:</b> '+d.self_healing_events+' | <b>Models retrained:</b> '+d.models_auto_retrained;}
+async function loadP34Mktg(){const r=await fetch('/api/admin/ai-ops/marketing/dashboard');const d=await r.json();document.getElementById('p34-mktg-output').innerHTML='<b>Autonomous campaigns:</b> '+d.campaigns_autonomous+' | <b>ROAS:</b> '+d.roas_ai+'x<br><b>vs Manual:</b> '+d.vs_manual_roas+'x | <b>CAC reduction:</b> '+d.cac_reduction_pct+'%';}
+async function loadP34Legal(){const r=await fetch('/api/admin/ai-ops/legal/dashboard');const d=await r.json();document.getElementById('p34-legal-output').innerHTML='<b>Contracts reviewed:</b> '+d.contracts_ai_reviewed_today+' | <b>Risk flagged:</b> '+d.risk_clauses_flagged+'<br><b>Saved:</b> ₹'+d.legal_spend_saved_cr+'Cr | <b>Accuracy:</b> '+d.accuracy_pct+'%';}
+</script>
+<!-- END PHASE 34 ADMIN PORTAL -->
 </body></html>

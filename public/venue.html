@@ -3016,4 +3016,38 @@ async function loadP33VenueStream(){const r=await fetch('/api/admin/paas/streami
 async function loadP33VenueAI(){const r=await fetch('/api/admin/paas/ai/gateway');const d=await r.json();document.getElementById('p33-venue-ai-output').innerHTML='Models: '+d.models_available+' | Inferences/day: '+d.total_inferences_today.toLocaleString()+'<br>Latency: '+d.avg_inference_ms+'ms | SLA: '+d.sla_pct+'%';}
 </script>
 <!-- END PHASE 33 VENUE PORTAL -->
+
+<!-- PHASE 34 VENUE PORTAL — AI Ops -->
+<div class="container mt-4">
+  <h5 class="text-danger fw-bold">🤖 Phase 34 — AI Operations for Venues</h5>
+  <div class="row g-3">
+    <div class="col-md-6"><div class="card border-danger">
+      <div class="card-header bg-danger text-white fw-bold">📈 Predictive Capacity Planning</div>
+      <div class="card-body"><div id="p34-venue-cap-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-danger mt-2" onclick="loadP34VenueCap()">Load Capacity AI</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-warning">
+      <div class="card-header bg-warning text-dark fw-bold">🚛 AI Logistics Optimisation</div>
+      <div class="card-body"><div id="p34-venue-log-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-warning mt-2" onclick="loadP34VenueLog()">Load Logistics</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-success">
+      <div class="card-header bg-success text-white fw-bold">🌿 Sustainability AI</div>
+      <div class="card-body"><div id="p34-venue-sus-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-success mt-2" onclick="loadP34VenueSus()">Load Green AI</button></div>
+    </div></div>
+    <div class="col-md-6"><div class="card border-primary">
+      <div class="card-header bg-primary text-white fw-bold">👷 AI Staffing Scheduler</div>
+      <div class="card-body"><div id="p34-venue-staff-output" class="small text-muted">Loading...</div>
+      <button class="btn btn-sm btn-primary mt-2" onclick="loadP34VenueStaff()">Load Staffing AI</button></div>
+    </div></div>
+  </div>
+</div>
+<script>
+async function loadP34VenueCap(){const r=await fetch('/api/ops/ai-ops/operations/capacity-planning');const d=await r.json();document.getElementById('p34-venue-cap-output').innerHTML='Venues Modelled: '+d.venues_capacity_modelled+' | Utilisation: '+d.avg_utilisation_pct+'%<br>AI Rec: '+d.ai_recommendation+' | Horizon: '+d.horizon_months+'mo';}
+async function loadP34VenueLog(){const r=await fetch('/api/ops/ai-ops/operations/logistics');const d=await r.json();document.getElementById('p34-venue-log-output').innerHTML='Routes Optimised: '+d.routes_optimised_today+' | On-Time: '+d.on_time_delivery_pct+'%<br>Fuel Saved: '+d.fuel_saved_pct+'% | CO₂ Saved: '+d.co2_saved_kg+'kg';}
+async function loadP34VenueSus(){const r=await fetch('/api/admin/ai-ops/operations/sustainability-ai');const d=await r.json();document.getElementById('p34-venue-sus-output').innerHTML='Events Tracked: '+d.carbon_tracked_events+' | Reduction: '+d.reduction_ytd_pct+'%<br>Green Score: '+d.green_score+' | Target: '+d.certification_target;}
+async function loadP34VenueStaff(){const r=await fetch('/api/admin/ai-ops/operations/staffing-ai');const d=await r.json();document.getElementById('p34-venue-staff-output').innerHTML='Scheduled: '+d.staff_scheduled_today.toLocaleString()+' | AI-Optimised: '+d.ai_optimised_pct+'%<br>Savings: ₹'+d.overstaffing_cost_saved_cr+'Cr | Fairness: '+d.fairness_score+'%';}
+</script>
+<!-- END PHASE 34 VENUE PORTAL -->
 </body></html>
