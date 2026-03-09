@@ -2111,4 +2111,136 @@ function p24vToast(msg){ const t=document.createElement('div'); t.style.cssText=
 </script>
 <!-- END PHASE 24 VENUE PORTAL -->
 </div><!-- end panel-p24-smart-venue -->
+
+<!-- PHASE 25: Smart Venue Intelligence — Venue Portal -->
+<style>
+.p25v-section{background:#0f172a;border:1px solid #1e293b;border-radius:14px;padding:16px;margin:14px 0}
+.p25v-card{background:#1e293b;border-radius:10px;padding:12px;margin-bottom:8px}
+.p25v-btn{background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-weight:700;font-size:.82rem}
+.p25v-btn.out{background:transparent;border:1px solid #3b82f6;color:#3b82f6}
+.p25v-badge{display:inline-block;border-radius:10px;padding:2px 8px;font-size:.7rem;font-weight:700}
+.p25v-badge.green{background:#166534;color:#86efac}
+.p25v-badge.amber{background:#92400e;color:#fde68a}
+.p25v-badge.red{background:#991b1b;color:#fca5a5}
+.p25v-tab{background:transparent;border:none;color:#64748b;padding:6px 12px;cursor:pointer;border-radius:8px;font-size:.78rem;font-weight:600}
+.p25v-tab.active{background:#1e293b;color:#3b82f6}
+</style>
+
+<div class="panel" id="panel-p25-smart-venue-pro" style="padding:20px;overflow-y:auto;height:calc(100vh - 60px);">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+    <div style="background:linear-gradient(135deg,#3b82f6,#2563eb);width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">🏟️</div>
+    <div>
+      <div style="font-size:1.1rem;font-weight:900;color:#f1f5f9;">Phase 25 — Smart Venue Pro</div>
+      <div style="font-size:.78rem;color:#64748b;">HVAC · Maintenance AI · Accessibility · Insurance · Concessions · Staff · Heatmap</div>
+    </div>
+    <span class="p25v-badge green" style="margin-left:auto;">v25.0.0</span>
+  </div>
+
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;">
+    <button class="p25v-tab active" onclick="p25vShow('hvac',this)">🌡️ HVAC</button>
+    <button class="p25v-tab" onclick="p25vShow('maintenance',this)">🔧 Maintenance AI</button>
+    <button class="p25v-tab" onclick="p25vShow('accessibility',this)">♿ Accessibility</button>
+    <button class="p25v-tab" onclick="p25vShow('insurance',this)">🛡️ Insurance</button>
+    <button class="p25v-tab" onclick="p25vShow('concessions',this)">🍕 Concessions</button>
+    <button class="p25v-tab" onclick="p25vShow('heatmap',this)">🔥 Crowd Heatmap</button>
+  </div>
+
+  <!-- HVAC -->
+  <div id="p25v-hvac" class="p25v-section">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🌡️ Climate & HVAC Dashboard</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;text-align:center;">
+      <div class="p25v-card" style="padding:10px;"><div style="font-size:1.3rem;font-weight:900;color:#22c55e;">22.4°C</div><div style="font-size:.7rem;color:#64748b;">Temperature</div></div>
+      <div class="p25v-card" style="padding:10px;"><div style="font-size:1.3rem;font-weight:900;color:#3b82f6;">58%</div><div style="font-size:.7rem;color:#64748b;">Humidity</div></div>
+      <div class="p25v-card" style="padding:10px;"><div style="font-size:1.3rem;font-weight:900;color:#22c55e;">Good</div><div style="font-size:.7rem;color:#64748b;">Air Quality</div></div>
+    </div>
+    <div class="p25v-card" style="font-size:.82rem;">
+      <div style="font-weight:600;color:#f1f5f9;margin-bottom:8px;">Zone Status</div>
+      ${[['Main Hall','22.4°C','58%','ok'],['VIP Lounge','21.8°C','55%','ok'],['Backstage','23.2°C','62%','ok'],['F&B Area','24.1°C','65%','warning']].map(([z,t,h,s])=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #1e293b;"><span style="color:#94a3b8;">${z}</span><span style="color:#f1f5f9;">${t}</span><span style="color:#64748b;">${h}</span><span class="p25v-badge ${s==='ok'?'green':'amber'}">${s==='ok'?'OK':'⚠️'}</span></div>`).join('')}
+    </div>
+    <div style="color:#64748b;font-size:.78rem;margin-top:8px;">Energy today: 2,840 kWh · Savings vs baseline: -18% 🌱</div>
+  </div>
+
+  <!-- Maintenance AI -->
+  <div id="p25v-maintenance" class="p25v-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🔧 Preventive Maintenance AI</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;text-align:center;">
+      <div class="p25v-card" style="padding:10px;"><div style="font-size:1.3rem;font-weight:900;color:#22c55e;">94%</div><div style="font-size:.7rem;color:#64748b;">Equipment Health</div></div>
+      <div class="p25v-card" style="padding:10px;"><div style="font-size:1.3rem;font-weight:900;color:#f59e0b;">3</div><div style="font-size:.7rem;color:#64748b;">Alerts Active</div></div>
+    </div>
+    <div class="p25v-card" style="font-size:.82rem;">
+      ${[['PA System Unit 3','Predicted failure in 14d','amber','Schedule maintenance'],['Stage Lift Motor A','Oil change overdue','amber','Schedule service'],['Emergency Generator 2','Battery at 72%','green','Next service: 30d']].map(([eq,msg,sev,action])=>`<div style="padding:6px 0;border-bottom:1px solid #1e293b;"><div style="font-weight:600;color:#f1f5f9;">${eq}</div><div style="color:#64748b;font-size:.72rem;margin-bottom:4px;">${msg}</div><button class="p25v-btn out" style="padding:2px 8px;font-size:.7rem;" onclick="p25vToast('🔧 ${action} booked for ${eq}')">${action}</button></div>`).join('')}
+    </div>
+  </div>
+
+  <!-- Accessibility -->
+  <div id="p25v-accessibility" class="p25v-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">♿ Accessibility Compliance Tracker</div>
+    <div class="p25v-card" style="text-align:center;padding:16px;margin-bottom:12px;">
+      <div style="font-size:2rem;font-weight:900;color:#22c55e;">96/100</div>
+      <div style="color:#64748b;font-size:.78rem;">Accessibility Score</div>
+    </div>
+    <div class="p25v-card" style="font-size:.82rem;">
+      ${[['Wheelchair ramps all entry gates','✅ Compliant'],['Accessible restrooms (4 of 4)','✅ Compliant'],['Audio description system','✅ Active'],['Braille signage','✅ Installed'],['Accessible parking (20 bays)','✅ Compliant'],['Hearing loop system','⚠️ Zone C offline']].map(([item,status])=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #1e293b;"><span style="color:#94a3b8;font-size:.8rem;">${item}</span><span>${status}</span></div>`).join('')}
+    </div>
+  </div>
+
+  <!-- Insurance -->
+  <div id="p25v-insurance" class="p25v-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🛡️ Event Insurance Manager</div>
+    <div class="p25v-card" style="font-size:.82rem;">
+      <div style="font-weight:700;color:#f1f5f9;margin-bottom:8px;">Current Coverage — Sunburn Arena 2026</div>
+      ${[['Public Liability','₹10Cr','Active ✅'],['Event Cancellation','₹2.1Cr','Active ✅'],['Equipment Cover','₹50L','Active ✅'],['Artist No-Show','₹84L','Active ✅'],['Weather Cancellation','₹1Cr','Active ✅']].map(([type,val,status])=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #1e293b;"><span style="color:#94a3b8;">${type}</span><span style="color:#f1f5f9;font-weight:600;">${val}</span><span style="color:#22c55e;font-size:.72rem;">${status}</span></div>`).join('')}
+    </div>
+    <div style="color:#64748b;font-size:.78rem;margin-top:8px;">Insurer: New India Assurance · Premium: ₹4.2L · Claims: 0</div>
+  </div>
+
+  <!-- Concessions -->
+  <div id="p25v-concessions" class="p25v-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🍕 Concession Revenue Tracker</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;text-align:center;">
+      <div class="p25v-card" style="padding:10px;"><div style="font-size:1.3rem;font-weight:900;color:#22c55e;">₹42L</div><div style="font-size:.7rem;color:#64748b;">F&B Revenue</div></div>
+      <div class="p25v-card" style="padding:10px;"><div style="font-size:1.3rem;font-weight:900;color:#3b82f6;">₹842</div><div style="font-size:.7rem;color:#64748b;">Avg per Attendee</div></div>
+    </div>
+    <div class="p25v-card" style="font-size:.82rem;">
+      ${[['Bar Zone A','₹14.2L','Best seller'],['Food Court','₹12.8L','Normal'],['VIP Catering','₹8.4L','Best margin'],['Quick Bites','₹6.6L','Normal']].map(([zone,rev,note])=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #1e293b;"><span style="color:#94a3b8;">${zone}</span><span style="color:#22c55e;font-weight:700;">${rev}</span><span class="p25v-badge green">${note}</span></div>`).join('')}
+    </div>
+  </div>
+
+  <!-- Crowd Heatmap -->
+  <div id="p25v-heatmap" class="p25v-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🔥 Live Crowd Heatmap</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px;">
+      ${[['Stage Front','98%','#ef4444'],['Center Floor','92%','#f97316'],['Side Left','78%','#f59e0b'],['Side Right','74%','#eab308'],['Rear','58%','#84cc16'],['Exits','12%','#22c55e']].map(([zone,pct,col])=>`<div class="p25v-card" style="text-align:center;padding:8px;border-left:3px solid ${col};"><div style="font-size:.7rem;color:#64748b;">${zone}</div><div style="font-size:1.1rem;font-weight:900;color:${col};">${pct}</div></div>`).join('')}
+    </div>
+    <div class="p25v-card" style="font-size:.8rem;color:#f59e0b;">💡 AI Alert: Stage Front at 98% density — recommend opening overflow channel at Gate B</div>
+    <button class="p25v-btn out" style="width:100%;margin-top:10px;" onclick="p25vToast('🔥 Live heatmap refreshed — 7,284 positions tracked')">Refresh Live Data</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  // Add to sidebar
+  const nav = document.querySelector('nav, .sidebar');
+  if(nav){
+    const btn = document.createElement('div');
+    btn.innerHTML = `<button class="sb-item" onclick="showPanel('p25-smart-venue-pro',this)"><i class="fas fa-building"></i>Smart Venue Pro <span style="background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;border-radius:10px;padding:1px 6px;font-size:9px;margin-left:4px;font-weight:900;">P25</span></button>`;
+    nav.appendChild(btn);
+  }
+});
+function p25vShow(s,btn){
+  document.querySelectorAll('[id^="p25v-"]').forEach(el=>el.style.display='none');
+  const el=document.getElementById('p25v-'+s);
+  if(el)el.style.display='block';
+  document.querySelectorAll('.p25v-tab').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+}
+function p25vToast(msg){
+  const t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:24px;right:24px;background:#3b82f6;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;font-size:.85rem;z-index:9999;max-width:340px;';
+  t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),3500);
+}
+</script>
+<!-- END PHASE 25 VENUE PORTAL -->
 </body></html>

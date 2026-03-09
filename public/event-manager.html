@@ -2355,4 +2355,143 @@ function p24emLogLF(){
 </script>
 <!-- END PHASE 24 EVENT MANAGER -->
 </div><!-- end panel-p24-event-ops -->
+
+<!-- PHASE 25: Live Event Ops Pro — Event Manager Portal -->
+<style>
+.p25em-section{background:#0f172a;border:1px solid #1e293b;border-radius:14px;padding:16px;margin:14px 0}
+.p25em-card{background:#1e293b;border-radius:10px;padding:12px;margin-bottom:8px}
+.p25em-btn{background:linear-gradient(135deg,#ec4899,#db2777);color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-weight:700;font-size:.82rem}
+.p25em-btn.out{background:transparent;border:1px solid #ec4899;color:#ec4899}
+.p25em-badge{display:inline-block;border-radius:10px;padding:2px 8px;font-size:.7rem;font-weight:700}
+.p25em-badge.green{background:#166534;color:#86efac}
+.p25em-badge.amber{background:#92400e;color:#fde68a}
+.p25em-badge.red{background:#991b1b;color:#fca5a5}
+.p25em-tab{background:transparent;border:none;color:#64748b;padding:6px 12px;cursor:pointer;border-radius:8px;font-size:.78rem;font-weight:600}
+.p25em-tab.active{background:#1e293b;color:#ec4899}
+</style>
+
+<div class="panel" id="panel-p25-event-ops-pro" style="padding:20px;overflow-y:auto;height:calc(100vh - 60px);">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+    <div style="background:linear-gradient(135deg,#ec4899,#db2777);width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">🎬</div>
+    <div>
+      <div style="font-size:1.1rem;font-weight:900;color:#f1f5f9;">Phase 25 — Live Event Ops Pro</div>
+      <div style="font-size:.78rem;color:#64748b;">AI Cue Sheet · Broadcast · Merch · Greenroom · Artist Rider · Captions · Sponsor</div>
+    </div>
+    <span class="p25em-badge green" style="margin-left:auto;">v25.0.0</span>
+  </div>
+
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;">
+    <button class="p25em-tab active" onclick="p25emShow('cuesheet',this)">📋 AI Cue Sheet</button>
+    <button class="p25em-tab" onclick="p25emShow('broadcast',this)">📡 Broadcast</button>
+    <button class="p25em-tab" onclick="p25emShow('merch',this)">👕 Merch</button>
+    <button class="p25em-tab" onclick="p25emShow('greenroom',this)">🎤 Greenroom</button>
+    <button class="p25em-tab" onclick="p25emShow('rider',this)">📜 Artist Rider</button>
+    <button class="p25em-tab" onclick="p25emShow('captions',this)">💬 Captions</button>
+  </div>
+
+  <!-- AI Cue Sheet -->
+  <div id="p25em-cuesheet" class="p25em-section">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">📋 AI Cue Sheet Generator</div>
+    <div class="p25em-card" style="font-size:.82rem;">
+      <div style="font-weight:600;color:#ec4899;margin-bottom:8px;">Sunburn Arena — Tonight's Master Cue Sheet</div>
+      ${[['18:00','DOORS OPEN','All gates','completed'],['18:30','Safety Announcement','PA System','completed'],['19:00','Support Act – Nucleya','Stage A','completed'],['20:00','Stage Reset','Technical','in_progress'],['21:00','Main Act – Arijit Singh','Stage A','upcoming'],['23:00','Encore','Stage A','upcoming'],['23:30','Venue Lights Up','All zones','upcoming'],['00:00','Load Out Begins','Backstage','upcoming']].map(([time,item,loc,status])=>`<div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid #0f172a;"><span style="color:#64748b;width:42px;font-size:.72rem;">${time}</span><span style="color:${status==='completed'?'#64748b':status==='in_progress'?'#f59e0b':'#f1f5f9'};flex:1;text-decoration:${status==='completed'?'line-through':'none'};font-size:.8rem;">${item}</span><span style="color:#64748b;font-size:.7rem;width:80px;">${loc}</span><span class="p25em-badge ${status==='completed'?'green':status==='in_progress'?'amber':'red'}" style="${status!=='completed'&&status!=='in_progress'?'background:#1e293b;color:#64748b;':''}">${status==='completed'?'✓':status==='in_progress'?'LIVE':'—'}</span></div>`).join('')}
+    </div>
+    <button class="p25em-btn out" style="width:100%;margin-top:10px;" onclick="p25emToast('📋 Cue sheet shared with all HODs via WhatsApp & Email')">Share with HODs</button>
+  </div>
+
+  <!-- Broadcast -->
+  <div id="p25em-broadcast" class="p25em-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">📡 Broadcast Integration (RTMP)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;text-align:center;">
+      <div class="p25em-card" style="padding:10px;"><div style="font-size:1.3rem;font-weight:900;color:#22c55e;">🔴 LIVE</div><div style="font-size:.7rem;color:#64748b;">Stream Status</div></div>
+      <div class="p25em-card" style="padding:10px;"><div style="font-size:1.3rem;font-weight:900;color:#3b82f6;">76,820</div><div style="font-size:.7rem;color:#64748b;">Live Viewers</div></div>
+    </div>
+    <div class="p25em-card" style="font-size:.82rem;">
+      <div style="font-weight:600;color:#f1f5f9;margin-bottom:6px;">Stream Details</div>
+      <div style="color:#64748b;">RTMP URL: <span style="color:#ec4899;">rtmp://live.indtix.in/EVT-001</span></div>
+      <div style="color:#64748b;margin-top:4px;">Quality: 1080p60 · Latency: 4.2s · CDN: Cloudflare</div>
+      <div style="color:#64748b;margin-top:4px;">Peak viewers: 84,200 · Duration: 2h 22m</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <button class="p25em-btn" style="flex:1;" onclick="p25emToast('📡 Broadcast recording saved to cloud storage')">Save Recording</button>
+      <button class="p25em-btn out" style="flex:1;" onclick="p25emToast('📊 Broadcast analytics report generated')">Analytics</button>
+    </div>
+  </div>
+
+  <!-- Merch Inventory -->
+  <div id="p25em-merch" class="p25em-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">👕 Merchandise Inventory Tracker</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;text-align:center;">
+      <div class="p25em-card" style="padding:10px;"><div style="font-size:1.3rem;font-weight:900;color:#22c55e;">₹18L</div><div style="font-size:.7rem;color:#64748b;">Merch Revenue</div></div>
+      <div class="p25em-card" style="padding:10px;"><div style="font-size:1.3rem;font-weight:900;color:#f59e0b;">3</div><div style="font-size:.7rem;color:#64748b;">Low Stock Alerts</div></div>
+    </div>
+    <div class="p25em-card" style="font-size:.82rem;">
+      ${[['Sunburn Tee (S/M)','284 sold','124 left','ok'],['Sunburn Tee (L/XL)','192 sold','8 left','low'],['Snapback Cap','148 sold','42 left','ok'],['Glow Wristband','642 sold','2 left','critical'],['Poster Pack','84 sold','84 left','ok']].map(([item,sold,left,status])=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #0f172a;align-items:center;"><span style="color:#94a3b8;font-size:.8rem;">${item}</span><span style="color:#64748b;font-size:.72rem;">${sold}</span><span style="color:${status==='critical'?'#ef4444':status==='low'?'#f59e0b':'#22c55e'};font-weight:700;font-size:.8rem;">${left}</span></div>`).join('')}
+    </div>
+    <button class="p25em-btn" style="width:100%;margin-top:10px;" onclick="p25emToast('🚨 Restock request sent to merch coordinator for Glow Wristbands')">Restock Critical Items</button>
+  </div>
+
+  <!-- Greenroom -->
+  <div id="p25em-greenroom" class="p25em-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🎤 Greenroom Manager</div>
+    <div class="p25em-card" style="font-size:.82rem;">
+      <div style="font-weight:700;color:#ec4899;margin-bottom:8px;">Arijit Singh — Main Artist</div>
+      ${[['Status','✅ On-site (since 17:30)'],['Greenroom','Suite GR-1 (2nd floor)'],['Catering','Indian veg · No onion/garlic'],['Crew Size','8 members'],['Sound Check','✅ Done (19:45)'],['Stage Time','21:00'],['Security','2 personal security assigned'],['Transport','Car on standby — Post-show pickup 23:45']].map(([k,v])=>`<div style="display:flex;padding:4px 0;border-bottom:1px solid #0f172a;gap:8px;"><span style="color:#64748b;width:100px;font-size:.78rem;">${k}:</span><span style="color:#f1f5f9;font-size:.78rem;">${v}</span></div>`).join('')}
+    </div>
+    <button class="p25em-btn out" style="width:100%;margin-top:10px;" onclick="p25emToast('📲 Greenroom status update sent to artist manager')">Update Artist Manager</button>
+  </div>
+
+  <!-- Artist Rider -->
+  <div id="p25em-rider" class="p25em-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">📜 Artist Rider Tracker</div>
+    <div class="p25em-card" style="font-size:.82rem;">
+      ${[['PA System (L-Acoustics K2)','✅ Fulfilled'],['Monitor Mix (in-ear)','✅ Fulfilled'],['Stage dimensions ≥ 20m × 15m','✅ Fulfilled'],['Backstage hospitality (10 pax)','✅ Fulfilled'],['Wi-Fi backstage','✅ Fulfilled'],['Private dressing room','✅ Fulfilled'],['Return flight (post-show)','✅ Booked'],['Specific water brand (Evian)','⚠️ Substituted — Bisleri']].map(([req,status])=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #0f172a;"><span style="color:#94a3b8;font-size:.8rem;">${req}</span><span style="font-size:.78rem;">${status}</span></div>`).join('')}
+    </div>
+    <div style="margin-top:8px;padding:8px;background:#1e293b;border-radius:6px;font-size:.78rem;color:#f59e0b;">⚠️ 1 rider requirement not fully met — confirm with artist manager</div>
+  </div>
+
+  <!-- Live Captions -->
+  <div id="p25em-captions" class="p25em-section" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">💬 Live Translation / Caption Feed</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;text-align:center;">
+      <div class="p25em-card" style="padding:10px;"><div style="font-size:1.1rem;font-weight:900;color:#22c55e;">🟢 Active</div><div style="font-size:.7rem;color:#64748b;">Status</div></div>
+      <div class="p25em-card" style="padding:10px;"><div style="font-size:1.1rem;font-weight:900;color:#3b82f6;">94.2%</div><div style="font-size:.7rem;color:#64748b;">Accuracy</div></div>
+      <div class="p25em-card" style="padding:10px;"><div style="font-size:1.1rem;font-weight:900;color:#f59e0b;">840ms</div><div style="font-size:.7rem;color:#64748b;">Latency</div></div>
+    </div>
+    <div class="p25em-card" style="font-size:.82rem;">
+      <div style="font-weight:600;color:#f1f5f9;margin-bottom:6px;">Live Captions Feed</div>
+      <div style="color:#64748b;font-size:.75rem;margin-bottom:4px;">21:14:32 EN</div>
+      <div style="color:#f1f5f9;font-style:italic;margin-bottom:8px;">"Thank you Mumbai — this one's for all of you!"</div>
+      <div style="color:#64748b;font-size:.75rem;margin-bottom:4px;">21:14:28 EN</div>
+      <div style="color:#f1f5f9;font-style:italic;">"Are you ready to go?"</div>
+    </div>
+    <div style="color:#64748b;font-size:.78rem;margin-top:8px;">Languages: EN · HI · MR · Model: Whisper Large v3 · Accessibility: Active ✅</div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  const nav = document.querySelector('nav, .sidebar');
+  if(nav){
+    const btn = document.createElement('div');
+    btn.innerHTML = `<button class="sb-item" onclick="showPanel('p25-event-ops-pro',this)"><i class="fas fa-video"></i>Live Ops Pro <span style="background:linear-gradient(135deg,#ec4899,#db2777);color:#fff;border-radius:10px;padding:1px 6px;font-size:9px;margin-left:4px;font-weight:900;">P25</span></button>`;
+    nav.appendChild(btn);
+  }
+});
+function p25emShow(s,btn){
+  document.querySelectorAll('[id^="p25em-"]').forEach(el=>el.style.display='none');
+  const el=document.getElementById('p25em-'+s);
+  if(el)el.style.display='block';
+  document.querySelectorAll('.p25em-tab').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+}
+function p25emToast(msg){
+  const t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:24px;right:24px;background:#ec4899;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;font-size:.85rem;z-index:9999;max-width:340px;';
+  t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),3500);
+}
+</script>
+<!-- END PHASE 25 EVENT MANAGER -->
 </body></html>

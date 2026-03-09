@@ -2118,5 +2118,166 @@ function opsT24(msg){const t=document.createElement('div');t.style.cssText='posi
 })()
 </script>
 <!-- END PHASE 24 OPS PORTAL -->
+
+<!-- PHASE 25: Platform Ops Intelligence — Ops Portal -->
+<style>
+.p25ops-wrap{background:#0f172a;border:1px solid #1e293b;border-radius:14px;padding:16px;margin:10px 0}
+.p25ops-card{background:#1e293b;border-radius:8px;padding:10px;margin-bottom:8px}
+.p25ops-btn{background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border:none;border-radius:8px;padding:7px 14px;cursor:pointer;font-size:.8rem;font-weight:700}
+.p25ops-btn.out{background:transparent;border:1px solid #7c3aed;color:#a78bfa}
+.p25ops-kpi{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.p25ops-kpi-card{background:#1e293b;border-radius:8px;padding:10px;text-align:center}
+.p25ops-badge{display:inline-block;border-radius:10px;padding:2px 7px;font-size:.68rem;font-weight:700}
+.p25ops-badge.green{background:#166534;color:#86efac}
+.p25ops-badge.amber{background:#78350f;color:#fde68a}
+.p25ops-badge.red{background:#7f1d1d;color:#fca5a5}
+.p25ops-tab{background:transparent;border:none;color:#64748b;padding:5px 12px;cursor:pointer;border-radius:6px;font-size:.78rem;font-weight:600;white-space:nowrap}
+.p25ops-tab.active{background:#1e293b;color:#a78bfa}
+</style>
+
+<div id="p25ops-v2" style="display:none;">
+  <div style="padding:16px 0 8px;display:flex;align-items:center;gap:10px;">
+    <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;">⚙️</div>
+    <div>
+      <div style="font-size:1rem;font-weight:900;color:#f1f5f9;">Phase 25 — Platform Ops Intelligence</div>
+      <div style="font-size:.72rem;color:#64748b;">Chaos · Autoscaler · SLO · Postmortems · Cost/Ticket · Alerts · CDN · DB Health</div>
+    </div>
+    <span class="p25ops-badge green" style="margin-left:auto;">v25.0.0</span>
+  </div>
+
+  <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;overflow-x:auto;">
+    <button class="p25ops-tab active" onclick="p25opsShow('chaos',this)">💥 Chaos</button>
+    <button class="p25ops-tab" onclick="p25opsShow('autoscaler',this)">📈 Autoscaler</button>
+    <button class="p25ops-tab" onclick="p25opsShow('slo',this)">🎯 SLO</button>
+    <button class="p25ops-tab" onclick="p25opsShow('postmortem',this)">📖 Postmortems</button>
+    <button class="p25ops-tab" onclick="p25opsShow('costticket',this)">🎟️ Cost/Ticket</button>
+    <button class="p25ops-tab" onclick="p25opsShow('cdn',this)">🌐 CDN</button>
+    <button class="p25ops-tab" onclick="p25opsShow('dbhealth',this)">🗄️ DB Health</button>
+  </div>
+
+  <!-- Chaos Engineering -->
+  <div id="p25ops-chaos" class="p25ops-wrap">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">💥 Chaos Engineering Dashboard</div>
+    <div class="p25ops-kpi">
+      <div class="p25ops-kpi-card"><div style="font-size:1.3rem;font-weight:900;color:#22c55e;">44/48</div><div style="font-size:.68rem;color:#64748b;">Tests Passed</div></div>
+      <div class="p25ops-kpi-card"><div style="font-size:1.3rem;font-weight:900;color:#ef4444;">4</div><div style="font-size:.68rem;color:#64748b;">Failed</div></div>
+      <div class="p25ops-kpi-card"><div style="font-size:1.3rem;font-weight:900;color:#f59e0b;">8s</div><div style="font-size:.68rem;color:#64748b;">Avg RTO</div></div>
+    </div>
+    <div class="p25ops-card" style="font-size:.8rem;">
+      ${[['CHE-001','Payment gateway failover','pass','RTO 8s (target 30s)'],['CHE-002','D1 DB latency spike','pass','p99 420ms (target 500ms)'],['CHE-003','CDN node failure','fail','Recovery 68s (target 30s)'],['CHE-004','Mass concurrent booking','pass','Peak 1,240 RPS, err 0.02%']].map(([id,name,result,note])=>`<div style="padding:5px 0;border-bottom:1px solid #0f172a;"><div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:#f1f5f9;font-weight:600;font-size:.8rem;">${id}: ${name}</span><span class="p25ops-badge ${result==='pass'?'green':'red'}">${result}</span></div><div style="color:#64748b;font-size:.7rem;margin-top:2px;">${note}</div></div>`).join('')}
+    </div>
+    <button class="p25ops-btn out" style="width:100%;margin-top:8px;" onclick="p25opsToast('💥 Chaos run scheduled for 2026-03-15 02:00 UTC')">Schedule Next Run</button>
+  </div>
+
+  <!-- Autoscaler -->
+  <div id="p25ops-autoscaler" class="p25ops-wrap" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">📈 Capacity Auto-Scaler</div>
+    <div class="p25ops-kpi">
+      <div class="p25ops-kpi-card"><div style="font-size:1.3rem;font-weight:900;color:#22c55e;">180</div><div style="font-size:.68rem;color:#64748b;">Workers Active</div></div>
+      <div class="p25ops-kpi-card"><div style="font-size:1.3rem;font-weight:900;color:#3b82f6;">4,284</div><div style="font-size:.68rem;color:#64748b;">Current RPS</div></div>
+      <div class="p25ops-kpi-card"><div style="font-size:1.3rem;font-weight:900;color:#f59e0b;">8</div><div style="font-size:.68rem;color:#64748b;">Scale Events (24h)</div></div>
+    </div>
+    <div class="p25ops-card" style="font-size:.8rem;">
+      <div style="font-weight:600;color:#f1f5f9;margin-bottom:6px;">Scale Triggers</div>
+      ${[['p99 latency ≥ 500ms','Scale up 10%','3 fires (24h)'],['Error rate ≥ 1%','Scale up 25% + alert','0 fires'],['RPS ≥ 10,000','Scale up 50%','1 fire']].map(([metric,action,fires])=>`<div style="padding:4px 0;border-bottom:1px solid #0f172a;display:flex;justify-content:space-between;gap:8px;"><span style="color:#94a3b8;font-size:.78rem;">${metric}</span><span style="color:#a78bfa;font-size:.72rem;">${action}</span><span class="p25ops-badge ${fires.startsWith('0')?'green':'amber'}" style="font-size:.65rem;">${fires}</span></div>`).join('')}
+    </div>
+  </div>
+
+  <!-- SLO Burn Rate -->
+  <div id="p25ops-slo" class="p25ops-wrap" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🎯 SLO Burn Rate Tracker</div>
+    <div class="p25ops-card" style="font-size:.8rem;">
+      ${[['API Availability','99.9%','99.94%','0.71','healthy'],['p99 Latency ≤500ms','99.0%','98.8%','1.08','warning'],['Payment Success Rate','99.5%','99.8%','0.62','healthy'],['Check-in Scan ≤2s','98.0%','97.4%','1.50','at_risk']].map(([name,target,current,burn,status])=>`<div style="padding:6px 0;border-bottom:1px solid #0f172a;"><div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:#f1f5f9;font-weight:600;font-size:.8rem;">${name}</span><span class="p25ops-badge ${status==='healthy'?'green':status==='warning'?'amber':'red'}">${status}</span></div><div style="display:flex;gap:12px;margin-top:3px;"><span style="color:#64748b;font-size:.7rem;">Target: ${target}</span><span style="color:#64748b;font-size:.7rem;">Current: ${current}</span><span style="color:${parseFloat(burn)>1.2?'#ef4444':parseFloat(burn)>0.9?'#f59e0b':'#22c55e'};font-size:.7rem;">Burn: ${burn}x</span></div></div>`).join('')}
+    </div>
+  </div>
+
+  <!-- Post-mortems -->
+  <div id="p25ops-postmortem" class="p25ops-wrap" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">📖 Incident Post-Mortems DB</div>
+    <div class="p25ops-card" style="font-size:.8rem;">
+      ${[['INC-001','2026-02-14 — Payment outage 8min','P1','Completed'],['INC-002','2026-01-28 — Scan slowdown during IPL launch','P2','Completed'],['INC-003','2026-01-15 — Push notification delay 45min','P3','Completed']].map(([id,title,severity,status])=>`<div style="padding:6px 0;border-bottom:1px solid #0f172a;"><div style="display:flex;justify-content:space-between;"><span style="color:#f1f5f9;font-weight:600;">${id}</span><span class="p25ops-badge ${severity==='P1'?'red':severity==='P2'?'amber':'green'}">${severity}</span></div><div style="color:#64748b;font-size:.72rem;">${title}</div><div style="margin-top:4px;"><button class="p25ops-btn out" style="padding:2px 8px;font-size:.7rem;" onclick="p25opsToast('📖 Post-mortem doc opened: ${id}')">View</button></div></div>`).join('')}
+    </div>
+    <button class="p25ops-btn" style="width:100%;margin-top:8px;" onclick="p25opsToast('📝 New post-mortem template opened')">+ New Post-Mortem</button>
+  </div>
+
+  <!-- Cost Per Ticket -->
+  <div id="p25ops-costticket" class="p25ops-wrap" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🎟️ Cost Per Ticket Metric</div>
+    <div class="p25ops-kpi">
+      <div class="p25ops-kpi-card"><div style="font-size:1.3rem;font-weight:900;color:#22c55e;">₹2.84</div><div style="font-size:.68rem;color:#64748b;">Infra/Ticket</div></div>
+      <div class="p25ops-kpi-card"><div style="font-size:1.3rem;font-weight:900;color:#3b82f6;">₹8.42</div><div style="font-size:.68rem;color:#64748b;">Total Cost/Ticket</div></div>
+      <div class="p25ops-kpi-card"><div style="font-size:1.3rem;font-weight:900;color:#22c55e;">-18%</div><div style="font-size:.68rem;color:#64748b;">vs Last Month</div></div>
+    </div>
+    <div class="p25ops-card" style="font-size:.8rem;">
+      ${[['Infrastructure','₹2.84','33.7%'],['Payment Gateway','₹2.10','24.9%'],['CDN & Storage','₹1.42','16.9%'],['Support (per ticket)','₹1.26','14.9%'],['Compliance & Legal','₹0.80','9.5%']].map(([cat,cost,pct])=>`<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #0f172a;"><span style="color:#94a3b8;font-size:.78rem;">${cat}</span><span style="color:#f1f5f9;">${cost}</span><span style="color:#64748b;">${pct}</span></div>`).join('')}
+    </div>
+  </div>
+
+  <!-- CDN Performance -->
+  <div id="p25ops-cdn" class="p25ops-wrap" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🌐 CDN Performance Panel</div>
+    <div class="p25ops-kpi">
+      <div class="p25ops-kpi-card"><div style="font-size:1.3rem;font-weight:900;color:#22c55e;">94.2%</div><div style="font-size:.68rem;color:#64748b;">Cache Hit Rate</div></div>
+      <div class="p25ops-kpi-card"><div style="font-size:1.3rem;font-weight:900;color:#3b82f6;">28ms</div><div style="font-size:.68rem;color:#64748b;">p50 TTFB</div></div>
+      <div class="p25ops-kpi-card"><div style="font-size:1.3rem;font-weight:900;color:#f59e0b;">2.84TB</div><div style="font-size:.68rem;color:#64748b;">Bandwidth Saved</div></div>
+    </div>
+    <div class="p25ops-card" style="font-size:.8rem;">
+      ${[['Asia South (Mumbai)','96.4% hit','18ms'],['Asia SE (Singapore)','93.2% hit','32ms'],['Europe West','91.8% hit','48ms']].map(([region,hit,ttfb])=>`<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #0f172a;"><span style="color:#94a3b8;font-size:.78rem;">${region}</span><span style="color:#22c55e;">${hit}</span><span style="color:#64748b;">${ttfb}</span></div>`).join('')}
+    </div>
+  </div>
+
+  <!-- DB Health -->
+  <div id="p25ops-dbhealth" class="p25ops-wrap" style="display:none;">
+    <div style="font-weight:700;color:#f1f5f9;margin-bottom:10px;">🗄️ Database Health Monitor</div>
+    <div class="p25ops-kpi">
+      <div class="p25ops-kpi-card"><div style="font-size:1.1rem;font-weight:900;color:#22c55e;">Healthy</div><div style="font-size:.68rem;color:#64748b;">Overall Status</div></div>
+      <div class="p25ops-kpi-card"><div style="font-size:1.3rem;font-weight:900;color:#3b82f6;">42ms</div><div style="font-size:.68rem;color:#64748b;">p99 Query</div></div>
+      <div class="p25ops-kpi-card"><div style="font-size:1.3rem;font-weight:900;color:#f59e0b;">1</div><div style="font-size:.68rem;color:#64748b;">Index Recs</div></div>
+    </div>
+    <div class="p25ops-card" style="font-size:.8rem;">
+      <div style="font-weight:600;color:#f1f5f9;margin-bottom:6px;">Databases</div>
+      <div style="padding:4px 0;border-bottom:1px solid #0f172a;"><span style="color:#22c55e;">D1 SQLite</span><span style="color:#64748b;font-size:.72rem;margin-left:8px;">2,840 MB · 48 tables · 4,284 qps</span></div>
+      <div style="padding:4px 0;"><span style="color:#22c55e;">KV Namespace</span><span style="color:#64748b;font-size:.72rem;margin-left:8px;">1.28M keys · 28,400 r/s · 94.2% hit</span></div>
+      <div style="margin-top:8px;padding:6px;background:#0f172a;border-radius:6px;border-left:3px solid #f59e0b;font-size:.72rem;color:#f59e0b;">💡 Index Recommendation: idx_bookings_user_id (84ms → est. 8ms)</div>
+    </div>
+    <button class="p25ops-btn out" style="width:100%;margin-top:8px;" onclick="p25opsToast('🗄️ Index recommendation applied — query optimized')">Apply Index Rec</button>
+  </div>
+</div>
+
+<script>
+// Add Phase 25 buttons to ops navigation
+document.addEventListener('DOMContentLoaded', function(){
+  const wrap = document.querySelector('.ops-nav, nav');
+  if(wrap){
+    ['💥 Chaos Eng','📈 Autoscaler','🎯 SLO','📖 Post-mortems','🌐 CDN','🗄️ DB Health'].forEach((label,i)=>{
+      const btn = document.createElement('button');
+      btn.className = 'ops-nav-btn';
+      btn.innerHTML = `${label} <span style="background:#7c3aed;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;">P25</span>`;
+      btn.onclick = () => {
+        document.getElementById('p25ops-v2').style.display = 'block';
+        const tabs = ['chaos','autoscaler','slo','postmortem','costticket','cdn','dbhealth'];
+        p25opsShow(tabs[Math.min(i, tabs.length-1)], btn);
+        btn.classList.add('active');
+      };
+      wrap.appendChild(btn);
+    });
+  }
+});
+function p25opsShow(s,btn){
+  document.querySelectorAll('[id^="p25ops-"]').forEach(el=>el.style.display='none');
+  const el=document.getElementById('p25ops-'+s);
+  if(el)el.style.display='block';
+  document.querySelectorAll('.p25ops-tab').forEach(b=>b.classList.remove('active'));
+  if(btn&&btn.classList)btn.classList.add('active');
+}
+function p25opsToast(msg){
+  const t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:24px;right:24px;background:#7c3aed;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;font-size:.85rem;z-index:9999;max-width:340px;';
+  t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),3500);
+}
+</script>
+<!-- END PHASE 25 OPS PORTAL -->
 </body>
 </html>
