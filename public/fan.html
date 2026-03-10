@@ -7875,5 +7875,87 @@ loadAllP52Fan();
   nav.appendChild(btn);
 })();
 </script>
+
+<div id="panel-p69-fan" class="panel" style="display:none">
+  <div style="padding:24px;max-width:1200px;margin:0 auto">
+    <div style="background:linear-gradient(135deg,#0369a1,#0369a1cc);color:#fff;border-radius:16px;padding:28px 32px;margin-bottom:24px">
+      <h1 style="margin:0 0 8px;font-size:1.8rem;font-weight:700">🤖 Phase 69 — AI Fan Personalisation</h1>
+      <p style="margin:0;opacity:.85;font-size:1rem">AI-Powered Personalisation &amp; Predictive Intelligence Platform</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px">
+      <div style="background:#e0f2fe;border:1px solid #bae6fd;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#0369a1">28.4M</div>
+        <div style="font-size:.85rem;color:#0369a1;margin-top:4px">Recommendations/Day</div>
+      </div>
+      <div style="background:#e0f2fe;border:1px solid #bae6fd;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#0369a1">94.2%</div>
+        <div style="font-size:.85rem;color:#0369a1;margin-top:4px">Forecast Accuracy</div>
+      </div>
+      <div style="background:#e0f2fe;border:1px solid #bae6fd;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#0369a1">42</div>
+        <div style="font-size:.85rem;color:#0369a1;margin-top:4px">AI Models Live</div>
+      </div>
+      <div style="background:#e0f2fe;border:1px solid #bae6fd;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#0369a1">₹840Cr</div>
+        <div style="font-size:.85rem;color:#0369a1;margin-top:4px">AI Revenue Impact</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+      <div style="background:#fff;border:1px solid #bae6fd;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 10px;color:#0369a1;font-size:1rem">🎯 Recommendations & Discovery</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>28.4M recommendations/day</li>
+          <li>18.4% click-through rate</li>
+          <li>28.4% conversion lift</li>
+          <li>HybridDeep-v5 (97.8% accuracy)</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #bae6fd;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 10px;color:#0369a1;font-size:1rem">📈 Demand & Pricing</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>28,400 events forecasted</li>
+          <li>8,400 dynamic-priced events</li>
+          <li>18.4% avg revenue uplift</li>
+          <li>284K price updates/day</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #bae6fd;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 10px;color:#0369a1;font-size:1rem">👥 Fan & Crowd Intelligence</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>28.4M fan profiles, 84 segments</li>
+          <li>28,400 cameras (CrowdSafe-v4)</li>
+          <li>284 incidents prevented</li>
+          <li>Churn prediction 94.2%</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #bae6fd;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 10px;color:#0369a1;font-size:1rem">🤖 AI Support & Marketing</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>84.2% AI ticket resolution</li>
+          <li>CSAT 9.2 (2.4 min avg)</li>
+          <li>2,840 active campaigns</li>
+          <li>₹284Cr marketing ROI (8.4×)</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding:16px;background:#e0f2fe;border-radius:10px;border-left:4px solid #0369a1">
+      <strong style="color:#0369a1">Phase 69 APIs:</strong>
+      <span style="color:#0369a1;font-size:.85rem;margin-left:8px">/api/v69/ai-recommendations/* · /api/v69/demand-forecast/* · /api/v69/dynamic-pricing/* · /api/v69/fan-behaviour/* · /api/v69/marketing-automation/* · /api/v69/realtime-intelligence/* · /api/v69/crowd-intelligence/* · /api/v69/ai-support/* · /api/v69/event-discovery/* · /api/v69/ai-platform/*</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  if(document.getElementById('nav-btn-p69-fan')) return;
+  var nav = document.querySelector('nav.sidebar-nav, nav, .sidebar, #sidebar');
+  if(!nav) return;
+  var b = document.createElement('button');
+  b.id = 'nav-btn-p69-fan'; b.className = 'sb-item';
+  b.innerHTML = '<i class="fas fa-magic"></i>AI Personalisation <span style="background:#0369a1;color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:4px">P69</span>';
+  b.onclick = function(){ if(typeof showPanel==='function') showPanel('p69-fan',this); };
+  nav.appendChild(b);
+})();
+</script>
 </body>
 </html>

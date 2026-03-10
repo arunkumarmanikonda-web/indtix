@@ -65,6 +65,7 @@
     'p66-admin':'Phase 66 — Creator Economy Admin',
     'p67-admin':'Phase 67 — Green Events Admin',
     'p68-admin':'Phase 68 — Accessibility Admin',
+    'p69-admin':'Phase 69 — AI Intelligence Admin',
     // Organiser panels
     create:'Create Event', tickets:'Ticket Builder', seatmap:'Seat Map Config',
     addons:'Add-Ons & Merch', revenue:'Revenue Dashboard', invoices:'GST Invoices',
@@ -85,6 +86,7 @@
     'p66-organiser':'Phase 66 — Creator Economy Organiser',
     'p67-organiser':'Phase 67 — Green Events Organiser',
     'p68-organiser':'Phase 68 — Accessibility Organiser',
+    'p69-organiser':'Phase 69 — AI Demand & Pricing',
     'kyc-business':'Business KYC (Advanced)',
     // Venue panels
     profile:'Venue Profile', bookings:'Bookings', calendar:'Calendar',
@@ -103,6 +105,7 @@
     'p66-venue':'Phase 66 — Creator Economy Venue',
     'p67-venue':'Phase 67 — Green Venue',
     'p68-venue':'Phase 68 — Accessible Venue',
+    'p69-venue':'Phase 69 — AI Crowd & Safety',
     // Event Manager panels
     runsheet:'Run Sheet', timeline:'Timeline', ops:'Ops Dashboard',
     wristbands:'Wristbands', pos:'Point of Sale', announce:'Announcements',
@@ -117,6 +120,7 @@
     'p66-em':'Phase 66 — Creator Economy EM',
     'p67-em':'Phase 67 — Green EM',
     'p68-em':'Phase 68 — Accessible EM',
+    'p69-em':'Phase 69 — Real-Time AI Ops',
     'team-v2':'Extended Team', 'tasks-v2':'Extended Tasks',
     'incidents-v2':'Extended Incidents',
     // Ops panels
@@ -128,13 +132,15 @@
     'p66-ops-new':'Phase 66 — Creator Ops',
     'p67-ops':'Phase 67 — Green Ops',
     'p68-ops':'Phase 68 — Accessible Ops',
+    'p69-ops':'Phase 69 — AI Operations Platform',
     // Fan panels
     'p26-fan':'Phase 26 — Social Commerce Fan',
     'p27-fan':'Phase 27 — Fan Experience',
     'p28-fan':'Phase 28 — Fan Intelligence',
     'p66-fan':'Phase 66 — Creator Fan',
     'p67-fan':'Phase 67 — Green Fan',
-    'p68-fan':'Phase 68 — Inclusive Fan'
+    'p68-fan':'Phase 68 — Inclusive Fan',
+    'p69-fan':'Phase 69 — AI Fan Personalisation'
   };
 
   /* ─────────────────────────────────────────────────────────────────
@@ -386,7 +392,7 @@
     var icons = {
       'p25': '🧠', 'p26': '🛒', 'p27': '⚡', 'p28': '🤖',
       'p62': '🎯', 'p63': '🛡️', 'p64': '📊', 'p65': '🌟',
-      'p66': '🎨', 'p67': '🌿', 'p68': '♿',
+      'p66': '🎨', 'p67': '🌿', 'p68': '♿', 'p69': '🤖',
       'kyc': '🪪', 'analytics': '📈', 'finance': '💰',
       'creator': '🎨', 'green': '🌿', 'access': '♿'
     };
@@ -658,7 +664,8 @@
     var phases = [
       { key: 'p66', label: 'Creator Economy', icon: '🎨', suffix: isOps ? '-ops-new' : panelSuffix },
       { key: 'p67', label: 'Green Events', icon: '🌿', suffix: panelSuffix },
-      { key: 'p68', label: 'Accessibility', icon: '♿', suffix: panelSuffix }
+      { key: 'p68', label: 'Accessibility', icon: '♿', suffix: panelSuffix },
+      { key: 'p69', label: 'AI Intelligence', icon: '🤖', suffix: panelSuffix }
     ];
 
     phases.forEach(function (ph) {
