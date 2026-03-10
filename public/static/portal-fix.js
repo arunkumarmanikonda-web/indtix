@@ -72,6 +72,7 @@
     'p73-admin':'Phase 73 — F&B & Hospitality Admin',
     'p74-admin':'Phase 74 — Travel & Logistics Admin',
     'p75-admin':'Phase 75 — Ticketing Technology Admin',
+    'p76-admin':'Phase 76 — CX & CRM Admin',
     // Organiser panels
     create:'Create Event', tickets:'Ticket Builder', seatmap:'Seat Map Config',
     addons:'Add-Ons & Merch', revenue:'Revenue Dashboard', invoices:'GST Invoices',
@@ -99,6 +100,7 @@
     'p73-organiser':'Phase 73 — F&B Event Organiser',
     'p74-organiser':'Phase 74 — Travel Packages Organiser',
     'p75-organiser':'Phase 75 — Secondary Market Organiser',
+    'p76-organiser':'Phase 76 — Fan Personalisation Organiser',
     'kyc-business':'Business KYC (Advanced)',
     // Venue panels
     profile:'Venue Profile', bookings:'Bookings', calendar:'Calendar',
@@ -124,6 +126,7 @@
     'p73-venue':'Phase 73 — Concessions Venue',
     'p74-venue':'Phase 74 — Transport & Parking Venue',
     'p75-venue':'Phase 75 — Dynamic Pricing Venue',
+    'p76-venue':'Phase 76 — CX Engagement Venue',
     // Event Manager panels
     runsheet:'Run Sheet', timeline:'Timeline', ops:'Ops Dashboard',
     wristbands:'Wristbands', pos:'Point of Sale', announce:'Announcements',
@@ -145,6 +148,7 @@
     'p73-em':'Phase 73 — F&B Event Manager',
     'p74-em':'Phase 74 — Travel Event Manager',
     'p75-em':'Phase 75 — Ticketing Event Manager',
+    'p76-em':'Phase 76 — Fan Support Event Manager',
     'team-v2':'Extended Team', 'tasks-v2':'Extended Tasks',
     'incidents-v2':'Extended Incidents',
     // Ops panels
@@ -163,6 +167,7 @@
     'p73-ops':'Phase 73 — F&B Ops',
     'p74-ops':'Phase 74 — Travel & Logistics Ops',
     'p75-ops':'Phase 75 — Ticketing & Waitlist Ops',
+    'p76-ops':'Phase 76 — CRM & Loyalty Ops',
     // Fan panels
     'p26-fan':'Phase 26 — Social Commerce Fan',
     'p27-fan':'Phase 27 — Fan Experience',
@@ -176,7 +181,8 @@
     'p72-fan':'Phase 72 — Sports Fan & Fantasy',
     'p73-fan':'Phase 73 — Food & Beverage Fan',
     'p74-fan':'Phase 74 — Travel & Journey Fan',
-    'p75-fan':'Phase 75 — Ticket Marketplace Fan'
+    'p75-fan':'Phase 75 — Ticket Marketplace Fan',
+    'p76-fan':'Phase 76 — Fan Loyalty & Community'
   };
 
   /* ─────────────────────────────────────────────────────────────────
@@ -428,7 +434,7 @@
     var icons = {
       'p25': '🧠', 'p26': '🛒', 'p27': '⚡', 'p28': '🤖',
       'p62': '🎯', 'p63': '🛡️', 'p64': '📊', 'p65': '🌟',
-      'p66': '🎨', 'p67': '🌿', 'p68': '♿', 'p69': '🤖', 'p70': '⛓️', 'p71': '📡', 'p72': '🏙️', 'p73': '🍽️', 'p74': '✈️', 'p75': '🎟️',
+      'p66': '🎨', 'p67': '🌿', 'p68': '♿', 'p69': '🤖', 'p70': '⛓️', 'p71': '📡', 'p72': '🏙️', 'p73': '🍽️', 'p74': '✈️', 'p75': '🎟️', 'p76': '💎',
       'kyc': '🪪', 'analytics': '📈', 'finance': '💰',
       'creator': '🎨', 'green': '🌿', 'access': '♿'
     };
@@ -707,7 +713,8 @@
       { key: 'p72', label: 'Sports & Stadium', icon: '🏙️', suffix: panelSuffix },
       { key: 'p73', label: 'Food & Beverage', icon: '🍽️', suffix: panelSuffix },
       { key: 'p74', label: 'Travel & Logistics', icon: '✈️', suffix: panelSuffix },
-      { key: 'p75', label: 'Ticketing & Marketplace', icon: '🎟️', suffix: panelSuffix }
+      { key: 'p75', label: 'Ticketing & Marketplace', icon: '🎟️', suffix: panelSuffix },
+      { key: 'p76', label: 'CX & Fan Loyalty', icon: '💎', suffix: panelSuffix }
     ];
 
     phases.forEach(function (ph) {
