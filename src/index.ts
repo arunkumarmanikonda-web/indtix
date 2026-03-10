@@ -26935,10 +26935,10 @@ app.get('/api/v50/maturity/benchmarks', (c) => c.json({
     platform_nps: 72, industry_avg_nps: 42,
     api_latency_p99_ms: 84, industry_avg_ms: 284,
     uptime_pct: 99.99, industry_avg_pct: 99.9,
-    deploy_freq_per_day: 84, industry_avg: 2,
-    security_score: 9.8, industry_avg: 7.2,
+    deploy_freq_per_day: 84, industry_avg_deploy: 2,
+    security_score: 9.8, industry_avg_security: 7.2,
     mttr_min: 18.4, industry_avg_min: 240,
-    developer_satisfaction: 9.2, industry_avg: 7.4
+    developer_satisfaction: 9.2, industry_avg_devsat: 7.4
   }
 }))
 
