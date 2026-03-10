@@ -3004,15 +3004,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (content && !document.getElementById('panel-platformhealth')) {
       const panels = document.createElement('div');
       panels.innerHTML = `
-        <div class="panel" id="panel-platformhealth" style="display:none">
+        <div class="panel" id="panel-platformhealth" >
           <div class="panel-header">🏥 Platform Health Monitor</div>
           <div id="platformHealthDetails"><div style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin fa-2x"></i><p>Loading health data...</p></div></div>
         </div>
-        <div class="panel" id="panel-aiforecast" style="display:none">
+        <div class="panel" id="panel-aiforecast" >
           <div class="panel-header">🤖 AI Revenue Forecast</div>
           <div id="forecastPanel"><div style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin fa-2x"></i><p>Loading forecast...</p></div></div>
         </div>
-        <div class="panel" id="panel-reports" style="display:none">
+        <div class="panel" id="panel-reports" >
           <div class="panel-header">📋 Consolidated Platform Reports</div>
           <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px">
             ${[{label:'March GMV',val:'₹4.2Cr',icon:'💰',color:'var(--brand3)'},{label:'Total Tickets',val:'1,24,500',icon:'🎫',color:'var(--brand)'},{label:'GST Collected',val:'₹75.6L',icon:'📋',color:'#FFB300'},{label:'Net Revenue',val:'₹98.5L',icon:'📈',color:'var(--brand2)'}].map(s=>`
@@ -3029,7 +3029,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
         </div>
-        <div class="panel" id="panel-search_admin" style="display:none">
+        <div class="panel" id="panel-search_admin" >
           <div class="panel-header">🔍 Platform-Wide Search</div>
           <div class="card">
             <div style="display:flex;gap:10px;margin-bottom:16px">
@@ -3453,7 +3453,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const p22div = document.createElement('div');
   p22div.innerHTML = `
     <!-- P22: AI CONTENT MODERATION -->
-    <div class="panel" id="panel-p22-moderation" style="display:none">
+    <div class="panel" id="panel-p22-moderation" >
       <div class="card-title">🤖 AI Content Moderation Queue</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
         <div class="stat-box"><div class="stat-box-val" style="color:#ef4444">14</div><div class="stat-box-label">Flagged Today</div></div>
@@ -3492,7 +3492,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <!-- P22: DPDP COMPLIANCE CENTRE -->
-    <div class="panel" id="panel-p22-dpdp" style="display:none">
+    <div class="panel" id="panel-p22-dpdp" >
       <div class="card-title">🛡️ DPDP Compliance Centre</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
         <div class="stat-box"><div class="stat-box-val" style="color:#34d399">99.1%</div><div class="stat-box-label">Consent Coverage</div></div>
@@ -3523,7 +3523,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <!-- P22: ORGANISER PAYOUT LEDGER -->
-    <div class="panel" id="panel-p22-payout-ledger" style="display:none">
+    <div class="panel" id="panel-p22-payout-ledger" >
       <div class="card-title">💰 Organiser Payout Ledger</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
         <div class="stat-box"><div class="stat-box-val">₹4.2Cr</div><div class="stat-box-label">Total Settled</div></div>
@@ -3548,7 +3548,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <!-- P22: BULK REFUND PROCESSOR -->
-    <div class="panel" id="panel-p22-bulkrefund" style="display:none">
+    <div class="panel" id="panel-p22-bulkrefund" >
       <div class="card-title">🔄 Bulk Refund Processor</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
         <div class="stat-box"><div class="stat-box-val" style="color:#ef4444">₹4.8L</div><div class="stat-box-label">Refunds Processed Today</div></div>
@@ -3578,7 +3578,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <!-- P22: A/B TEST MANAGER -->
-    <div class="panel" id="panel-p22-abtest" style="display:none">
+    <div class="panel" id="panel-p22-abtest" >
       <div class="card-title">🧪 Platform A/B Test Manager</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
         <div class="stat-box"><div class="stat-box-val">8</div><div class="stat-box-label">Active Tests</div></div>
@@ -3611,7 +3611,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <!-- P22: DARK-PATTERN AUDIT PANEL -->
-    <div class="panel" id="panel-p22-darkpattern" style="display:none">
+    <div class="panel" id="panel-p22-darkpattern" >
       <div class="card-title">🔍 Dark-Pattern Audit Panel</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
         <div class="stat-box"><div class="stat-box-val" style="color:#34d399">92</div><div class="stat-box-label">Compliance Score /100</div></div>
@@ -3638,7 +3638,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <!-- P22: API RATE-LIMIT MANAGER -->
-    <div class="panel" id="panel-p22-ratelimit" style="display:none">
+    <div class="panel" id="panel-p22-ratelimit" >
       <div class="card-title">⚡ API Rate-limit Manager</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
         <div class="stat-box"><div class="stat-box-val">42</div><div class="stat-box-label">API Keys Active</div></div>
@@ -3660,7 +3660,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <!-- P22: SLA DASHBOARD -->
-    <div class="panel" id="panel-p22-sla-admin" style="display:none">
+    <div class="panel" id="panel-p22-sla-admin" >
       <div class="card-title">📋 Admin SLA Dashboard</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
         <div class="stat-box"><div class="stat-box-val" style="color:#34d399">99.94%</div><div class="stat-box-label">Platform Uptime (30d)</div></div>
@@ -4393,7 +4393,7 @@ async function loadP25Anomalies(){
 .p26a-section.visible{display:block}
 </style>
 
-<div id="panel-p26-admin" class="panel" style="display:none">
+<div id="panel-p26-admin" class="panel">
   <h2 style="font-size:22px;font-weight:800;color:#1e293b;margin-bottom:4px">
     🚀 Phase 26 — Real-Time Social Commerce
     <span class="p26a-badge p26a-purple" style="font-size:12px;vertical-align:middle;margin-left:8px">v26.0.0 LIVE</span>
@@ -4684,7 +4684,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- END PHASE 26 ADMIN PORTAL -->
 
 <!-- PHASE 27 ADMIN: Enterprise B2B, White-Label & Marketplace -->
-<div id="panel-p27-admin" class="panel" style="display:none">
+<div id="panel-p27-admin" class="panel">
   <div style="padding:24px;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:#fff;border-radius:12px;margin-bottom:24px">
     <h2 style="margin:0 0 8px;font-size:24px">⚡ Phase 27 — Enterprise B2B & Marketplace</h2>
     <p style="margin:0;opacity:.8">White-Label Resellers · B2B Corporate · API Marketplace · NFT · Global Expansion</p>
@@ -4935,7 +4935,7 @@ function p27aLoadContracts() {
 <!-- END PHASE 27 ADMIN PORTAL -->
 
 <!-- PHASE 28 ADMIN: Metaverse, AI-First & Platform Monetisation v3 -->
-<div id="panel-p28-admin" class="panel" style="display:none">
+<div id="panel-p28-admin" class="panel">
   <div style="padding:24px;background:linear-gradient(135deg,#0a0a1a,#1a0533,#2d1b69);color:#fff;border-radius:12px;margin-bottom:24px">
     <h2 style="margin:0 0 8px;font-size:24px">🌌 Phase 28 — Immersive & AI-First</h2>
     <p style="margin:0;opacity:.8">Metaverse · AI Concert Companion · Hyper-Personalisation · Creator Economy · Monetisation v3</p>
@@ -7701,7 +7701,7 @@ loadP52Admin();
 
 
 <!-- PHASE 66 ADMIN PORTAL: Creator Economy & Social Commerce -->
-<div class="panel" id="panel-p66-admin" style="display:none;padding:20px;overflow-y:auto;height:calc(100vh - 60px)">
+<div class="panel" id="panel-p66-admin" style="padding:20px;overflow-y:auto;height:calc(100vh - 60px)">
   <div style="background:linear-gradient(135deg,#1a0533,#2d0a4e,#4a0e6e);color:#fff;border-radius:14px;padding:28px;margin-bottom:24px">
     <h2 style="margin:0 0 8px;font-size:22px;font-weight:800">🎨 Phase 66 — Creator Economy & Social Commerce</h2>
     <p style="margin:0;opacity:.8;font-size:14px">Creator Marketplace · Social Commerce · UGC Studio · Affiliate Engine · Live Commerce</p>
@@ -7841,7 +7841,7 @@ loadP52Admin();
 
 
 <!-- PHASE P67 -->
-<div id="panel-p67-admin" class="panel" style="display:none">
+<div id="panel-p67-admin" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🌿 Phase 67 &mdash; Sustainability &amp; ESG</h2>
@@ -7883,7 +7883,7 @@ loadP52Admin();
 </div>
 
 <!-- PHASE P68 -->
-<div id="panel-p68-admin" class="panel" style="display:none">
+<div id="panel-p68-admin" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#0891b2,#0e7490);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">♿ Phase 68 &mdash; Accessibility &amp; Inclusion</h2>
@@ -7925,7 +7925,7 @@ loadP52Admin();
 </div>
 
 <!-- PHASE P69 -->
-<div id="panel-p69-admin" class="panel" style="display:none">
+<div id="panel-p69-admin" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🤖 Phase 69 &mdash; AI Intelligence Suite</h2>
@@ -7967,7 +7967,7 @@ loadP52Admin();
 </div>
 
 <!-- PHASE P70 -->
-<div id="panel-p70-admin" class="panel" style="display:none">
+<div id="panel-p70-admin" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#d97706,#b45309);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">⛓️ Phase 70 &mdash; Blockchain &amp; Web3</h2>
@@ -8009,7 +8009,7 @@ loadP52Admin();
 </div>
 
 <!-- PHASE P71 -->
-<div id="panel-p71-admin" class="panel" style="display:none">
+<div id="panel-p71-admin" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">📡 Phase 71 &mdash; Live Streaming &amp; Virtual</h2>
@@ -8051,7 +8051,7 @@ loadP52Admin();
 </div>
 
 <!-- PHASE P72 -->
-<div id="panel-p72-admin" class="panel" style="display:none">
+<div id="panel-p72-admin" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🏟️ Phase 72 &mdash; Sports &amp; Stadium Tech</h2>
@@ -8093,7 +8093,7 @@ loadP52Admin();
 </div>
 
 <!-- PHASE P73 -->
-<div id="panel-p73-admin" class="panel" style="display:none">
+<div id="panel-p73-admin" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🍽️ Phase 73 &mdash; Food, Bev &amp; Hospitality</h2>
@@ -8135,7 +8135,7 @@ loadP52Admin();
 </div>
 
 <!-- PHASE P74 -->
-<div id="panel-p74-admin" class="panel" style="display:none">
+<div id="panel-p74-admin" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#1d4ed8,#1e40af);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">✈️ Phase 74 &mdash; Travel &amp; Logistics</h2>
@@ -8177,7 +8177,7 @@ loadP52Admin();
 </div>
 
 <!-- PHASE P75 -->
-<div id="panel-p75-admin" class="panel" style="display:none">
+<div id="panel-p75-admin" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🎫 Phase 75 &mdash; Ticketing Technology</h2>

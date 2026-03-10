@@ -373,8 +373,8 @@
     // Run lazy-loaders
     var loaders = {
       'p26-admin': window.p26aLoadRec,
-      'p27-admin': window.p27aInit,
-      'p28-admin': window.p28aInit,
+      'p27-admin': window.p27aLoadB2B || window.p27aInit,
+      'p28-admin': window.p28aInit || window.p28aLoadImmersive,
       'bi': window.loadBIPanel,
       'aiforecast': window.loadForecast,
       'platformhealth': window.loadPlatformHealth
@@ -980,6 +980,7 @@
     fixCrossPortalLinks();
     wireFanNav();
     buildPhaseModulesFAB();
+    injectSidebarSearch();
 
     // Ensure default panel is active
     var activePanels = document.querySelectorAll('.panel.active');
@@ -1002,24 +1003,120 @@
     });
 
     var panelCount = document.querySelectorAll('[id^="panel-"]').length;
-    console.log('[INDTIX Portal Fix v6.0] ✅ Loaded — panels:', panelCount,
+    console.log('[INDTIX Portal Fix v6.1] ✅ Loaded — panels:', panelCount,
       '| portal:', window.location.pathname.split('/').pop());
   }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () {
       init();
-      setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); addLatestPhaseNavButtons(); }, 500);
-      setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); addLatestPhaseNavButtons(); buildPhaseModulesFAB(); }, 2000);
+      setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); addLatestPhaseNavButtons(); injectSidebarSearch(); }, 500);
+      setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); addLatestPhaseNavButtons(); buildPhaseModulesFAB(); injectSidebarSearch(); }, 2000);
     });
   } else {
     init();
-    setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); addLatestPhaseNavButtons(); }, 500);
-    setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); addLatestPhaseNavButtons(); buildPhaseModulesFAB(); }, 2000);
+    setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); addLatestPhaseNavButtons(); injectSidebarSearch(); }, 500);
+    setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); addLatestPhaseNavButtons(); buildPhaseModulesFAB(); injectSidebarSearch(); }, 2000);
   }
 
   /* ─────────────────────────────────────────────────────────────────
-     25. GLOBAL SAFE ELEMENT HELPER — prevents null.innerHTML errors
+     25. SIDEBAR SEARCH — quick-find any panel
+  ───────────────────────────────────────────────────────────────── */
+  function injectSidebarSearch() {
+    var sidebar = document.querySelector('.sidebar, #sidebar');
+    if (!sidebar) return;
+    if (document.getElementById('_ix_sb_search')) return; // already injected
+
+    // Add search styles
+    var style = document.getElementById('_ix_sb_search_style');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = '_ix_sb_search_style';
+      style.textContent = [
+        '#_ix_sb_search_wrap{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.07);position:sticky;top:0;background:var(--dark3,#161b2e);z-index:10}',
+        '#_ix_sb_search{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:7px 12px 7px 32px;color:var(--text,#e8eaff);font-size:12px;font-family:inherit;outline:none;transition:border .2s}',
+        '#_ix_sb_search:focus{border-color:rgba(108,60,247,.6);background:rgba(108,60,247,.08)}',
+        '#_ix_sb_search::placeholder{color:rgba(200,200,220,.4)}',
+        '#_ix_sb_search_wrap .sbs-icon{position:absolute;left:20px;top:50%;transform:translateY(-50%);color:rgba(200,200,220,.4);font-size:12px;pointer-events:none}',
+        '#_ix_sb_search_wrap{position:relative}',
+        '.sb-item._ix_hidden{display:none!important}',
+        '.sb-section._ix_hidden{display:none!important}'
+      ].join('\n');
+      document.head.appendChild(style);
+    }
+
+    var wrap = document.createElement('div');
+    wrap.id = '_ix_sb_search_wrap';
+    wrap.innerHTML = '<i class="fas fa-search sbs-icon"></i><input id="_ix_sb_search" type="text" placeholder="Search panels… (Esc to clear)" autocomplete="off" spellcheck="false">';
+
+    // Insert as first child of sidebar nav, or after the user block
+    var sbNav = sidebar.querySelector('.sb-nav') || sidebar;
+    sbNav.insertBefore(wrap, sbNav.firstChild);
+
+    var searchInput = document.getElementById('_ix_sb_search');
+    if (!searchInput) return;
+
+    var debounceTimer;
+    searchInput.addEventListener('input', function() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(function() {
+        var q = searchInput.value.trim().toLowerCase();
+        var sbItems = sidebar.querySelectorAll('.sb-item');
+        var sbSections = sidebar.querySelectorAll('.sb-section');
+
+        if (!q) {
+          sbItems.forEach(function(b) { b.classList.remove('_ix_hidden'); });
+          sbSections.forEach(function(s) { s.classList.remove('_ix_hidden'); });
+          return;
+        }
+
+        // Show only matching items
+        sbItems.forEach(function(b) {
+          var text = (b.textContent || '').toLowerCase();
+          var onclick = (b.getAttribute('onclick') || '').toLowerCase();
+          var match = text.indexOf(q) !== -1 || onclick.indexOf(q) !== -1;
+          b.classList.toggle('_ix_hidden', !match);
+        });
+
+        // Hide empty sections
+        sbSections.forEach(function(s) {
+          // Find next siblings until next section
+          var next = s.nextElementSibling;
+          var hasVisible = false;
+          while (next && !next.classList.contains('sb-section')) {
+            if (next.classList.contains('sb-item') && !next.classList.contains('_ix_hidden')) {
+              hasVisible = true;
+            }
+            next = next.nextElementSibling;
+          }
+          s.classList.toggle('_ix_hidden', !hasVisible);
+        });
+      }, 150);
+    });
+
+    // Clear on Escape
+    searchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input'));
+        searchInput.blur();
+      }
+    });
+
+    // Global keyboard shortcut: / to focus sidebar search
+    document.addEventListener('keydown', function(e) {
+      if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey &&
+          document.activeElement && document.activeElement.tagName !== 'INPUT' &&
+          document.activeElement.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      }
+    });
+  }
+
+  /* ─────────────────────────────────────────────────────────────────
+     26. GLOBAL SAFE ELEMENT HELPER — prevents null.innerHTML errors
   ───────────────────────────────────────────────────────────────── */
   // Expose a safe getter that returns a stub if element not found
   window.$el = function(id) {
@@ -1042,7 +1139,9 @@
       e.message.indexOf("Cannot set properties of null") !== -1 ||
       e.message.indexOf("Cannot set properties of undefined") !== -1 ||
       e.message.indexOf("null is not an object") !== -1 ||
-      e.message.indexOf("undefined is not an object") !== -1
+      e.message.indexOf("undefined is not an object") !== -1 ||
+      e.message.indexOf("missing ) after argument list") !== -1 ||
+      e.message.indexOf("SyntaxError") !== -1
     ) && e.filename && (
       e.filename.indexOf('venue') !== -1 ||
       e.filename.indexOf('event-manager') !== -1 ||

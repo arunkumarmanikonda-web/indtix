@@ -1775,7 +1775,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 </script>
 
 <!-- PHASE 22 VENUE PANELS (injected into DOM) -->
-<div id="panel-p22-iot" class="panel" style="display:none">
+<div id="panel-p22-iot" class="panel">
   <div style="font-size:17px;font-weight:700;font-family:'Space Grotesk',sans-serif;margin-bottom:16px">📡 IoT Sensor Dashboard</div>
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
     <div class="v-stat"><div class="v-stat-val">28</div><div class="v-stat-lbl">Active Sensors</div></div>
@@ -1789,7 +1789,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   <button onclick="loadIoTSensors()" style="margin-top:14px;background:var(--dark3);border:1px solid var(--brand);border-radius:8px;padding:9px 20px;color:var(--brand);font-size:13px;cursor:pointer">🔄 Refresh Sensors</button>
 </div>
 
-<div id="panel-p22-energy" class="panel" style="display:none">
+<div id="panel-p22-energy" class="panel">
   <div style="font-size:17px;font-weight:700;font-family:'Space Grotesk',sans-serif;margin-bottom:16px">⚡ Energy Usage Monitor</div>
   <div id="energy-data" style="margin-bottom:16px"><div style="text-align:center;padding:20px;color:var(--muted)">Loading energy data…</div></div>
   <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px">
@@ -1805,7 +1805,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   </div>
 </div>
 
-<div id="panel-p22-catering" class="panel" style="display:none">
+<div id="panel-p22-catering" class="panel">
   <div style="font-size:17px;font-weight:700;font-family:'Space Grotesk',sans-serif;margin-bottom:16px">🍽️ Catering Forecast AI</div>
   <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px">
     <div style="font-size:14px;font-weight:600;margin-bottom:12px">Generate Forecast</div>
@@ -1818,7 +1818,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   </div>
 </div>
 
-<div id="panel-p22-zonecontrol" class="panel" style="display:none">
+<div id="panel-p22-zonecontrol" class="panel">
   <div style="font-size:17px;font-weight:700;font-family:'Space Grotesk',sans-serif;margin-bottom:16px">💡 Multi-zone Sound/Lighting Control</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
     <div style="background:var(--dark3);border:1px solid var(--border);border-radius:14px;padding:16px">
@@ -1841,7 +1841,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   <button onclick="saveZoneControl()" style="margin-top:14px;background:var(--grad1);border:none;border-radius:10px;padding:12px;color:#fff;font-weight:600;font-size:14px;cursor:pointer;width:100%">💾 Save Zone Settings</button>
 </div>
 
-<div id="panel-p22-maintenance" class="panel" style="display:none">
+<div id="panel-p22-maintenance" class="panel">
   <div style="font-size:17px;font-weight:700;font-family:'Space Grotesk',sans-serif;margin-bottom:16px">🔧 Maintenance Ticket System</div>
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
     <div class="v-stat"><div class="v-stat-val" style="color:#ef4444">1</div><div class="v-stat-lbl">Critical Open</div></div>
@@ -2284,7 +2284,7 @@ function p25vToast(msg){
 .p26v-zone{border-radius:8px;padding:10px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;border-left:4px solid}
 </style>
 
-<div id="panel-p26-venue" class="panel" style="display:none">
+<div id="panel-p26-venue" class="panel">
   <h2 style="font-size:22px;font-weight:800;color:#1e293b;margin-bottom:4px">
     🚀 Phase 26 — Smart Venue Intelligence
     <span class="p26v-badge p26v-green" style="font-size:12px;vertical-align:middle;margin-left:8px">v26.0.0</span>
@@ -2491,7 +2491,7 @@ async function p26vLoadConcessions() {
 <!-- END PHASE 26 VENUE PORTAL -->
 
 <!-- PHASE 27 VENUE: Multi-Tenant Network & Shared Inventory -->
-<div id="panel-p27-venue" class="panel" style="display:none">
+<div id="panel-p27-venue" class="panel">
   <div style="padding:22px;background:linear-gradient(135deg,#1e3a5f,#1e40af,#2563eb);color:#fff;border-radius:12px;margin-bottom:20px">
     <h2 style="margin:0 0 6px;font-size:20px">🏟️ Venue Network</h2>
     <p style="margin:0;opacity:.8">Multi-Tenant Networks · Shared Inventory · Benchmarks</p>
@@ -4022,7 +4022,7 @@ loadAllP52Venue();
 
 <!-- PHASE 66 VENUE PORTAL: Creator Economy & Social Commerce -->
 
-<div class="panel" id="panel-p66-venue" style="display:none;padding:20px;overflow-y:auto;height:calc(100vh - 60px)">
+<div class="panel" id="panel-p66-venue" style="padding:20px;overflow-y:auto;height:calc(100vh - 60px)">
   <div style="background:linear-gradient(135deg,#1a0533,#2d0a4e);color:#fff;border-radius:14px;padding:24px;margin-bottom:20px">
     <h2 style="margin:0 0 6px;font-size:20px;font-weight:800">🎨 Creator Economy — Phase 66</h2>
     <p style="margin:0;opacity:.8;font-size:13px">Monetise your venue through creator content, live shopping & brand partnerships</p>
@@ -4156,7 +4156,7 @@ loadAllP52Venue();
 
 
 <!-- PHASE P67 -->
-<div id="panel-p67-venue" class="panel" style="display:none">
+<div id="panel-p67-venue" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🌿 Phase 67 &mdash; Sustainability &amp; ESG</h2>
@@ -4198,7 +4198,7 @@ loadAllP52Venue();
 </div>
 
 <!-- PHASE P68 -->
-<div id="panel-p68-venue" class="panel" style="display:none">
+<div id="panel-p68-venue" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#0891b2,#0e7490);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">♿ Phase 68 &mdash; Accessibility &amp; Inclusion</h2>
@@ -4240,7 +4240,7 @@ loadAllP52Venue();
 </div>
 
 <!-- PHASE P69 -->
-<div id="panel-p69-venue" class="panel" style="display:none">
+<div id="panel-p69-venue" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🤖 Phase 69 &mdash; AI Intelligence Suite</h2>
@@ -4282,7 +4282,7 @@ loadAllP52Venue();
 </div>
 
 <!-- PHASE P70 -->
-<div id="panel-p70-venue" class="panel" style="display:none">
+<div id="panel-p70-venue" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#d97706,#b45309);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">⛓️ Phase 70 &mdash; Blockchain &amp; Web3</h2>
@@ -4324,7 +4324,7 @@ loadAllP52Venue();
 </div>
 
 <!-- PHASE P71 -->
-<div id="panel-p71-venue" class="panel" style="display:none">
+<div id="panel-p71-venue" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">📡 Phase 71 &mdash; Live Streaming &amp; Virtual</h2>
@@ -4366,7 +4366,7 @@ loadAllP52Venue();
 </div>
 
 <!-- PHASE P72 -->
-<div id="panel-p72-venue" class="panel" style="display:none">
+<div id="panel-p72-venue" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🏟️ Phase 72 &mdash; Sports &amp; Stadium Tech</h2>
@@ -4408,7 +4408,7 @@ loadAllP52Venue();
 </div>
 
 <!-- PHASE P73 -->
-<div id="panel-p73-venue" class="panel" style="display:none">
+<div id="panel-p73-venue" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🍽️ Phase 73 &mdash; Food, Bev &amp; Hospitality</h2>
@@ -4450,7 +4450,7 @@ loadAllP52Venue();
 </div>
 
 <!-- PHASE P74 -->
-<div id="panel-p74-venue" class="panel" style="display:none">
+<div id="panel-p74-venue" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#1d4ed8,#1e40af);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">✈️ Phase 74 &mdash; Travel &amp; Logistics</h2>
@@ -4492,7 +4492,7 @@ loadAllP52Venue();
 </div>
 
 <!-- PHASE P75 -->
-<div id="panel-p75-venue" class="panel" style="display:none">
+<div id="panel-p75-venue" class="panel">
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🎫 Phase 75 &mdash; Ticketing Technology</h2>
