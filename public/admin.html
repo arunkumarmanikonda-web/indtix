@@ -4285,7 +4285,7 @@ function p24aAssign(ticketId){ p24aToast('🎫 '+ticketId+' assigned to agent �
 <script>
 // Phase 25 Admin — add sidebar nav button
 document.addEventListener('DOMContentLoaded',function(){
-  const nav = document.querySelector('nav');
+  const nav = document.querySelector('.sb-nav') || document.querySelector('nav') || document.querySelector('.sidebar');
   if(nav){
     const p25Btn = document.createElement('div');
     p25Btn.innerHTML = '<div class="sb-section">Phase 25 Intelligence</div><button class="sb-item" onclick="showPanel(\'p25-intelligence\',this)"><i class="fas fa-microchip"></i>P25 Intelligence Suite <span style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#0f172a;border-radius:10px;padding:1px 6px;font-size:9px;margin-left:4px;font-weight:900;">NEW</span></button>';

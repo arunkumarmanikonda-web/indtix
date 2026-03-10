@@ -4000,6 +4000,23 @@ loadAllP52Venue();
 <script src="/static/portal-fix.js"></script>
 
 <!-- PHASE 66 VENUE PORTAL: Creator Economy & Social Commerce -->
+
+<script>
+(function(){
+  if(document.getElementById('nav-btn-p66-venue')) return;
+  var nav = document.querySelector('.sidebar, #sidebar');
+  if(!nav) return;
+  var sec = document.createElement('div');
+  sec.innerHTML = '<div class="sb-section">Phase 66</div>';
+  var btn = document.createElement('button');
+  btn.id = 'nav-btn-p66-venue';
+  btn.className = 'sb-item';
+  btn.innerHTML = '🎨 Creator Economy P66 <span style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#0f172a;border-radius:8px;padding:1px 6px;font-size:9px;margin-left:4px;font-weight:900;">NEW</span>';
+  btn.onclick = function(){ if(typeof showPanel==='function') showPanel('p66-venue',btn); };
+  sec.appendChild(btn);
+  nav.appendChild(sec);
+})();
+</script>
 <div class="panel" id="panel-p66-venue" style="display:none;padding:20px;overflow-y:auto;height:calc(100vh - 60px)">
   <div style="background:linear-gradient(135deg,#1a0533,#2d0a4e);color:#fff;border-radius:14px;padding:24px;margin-bottom:20px">
     <h2 style="margin:0 0 6px;font-size:20px;font-weight:800">🎨 Creator Economy — Phase 66</h2>

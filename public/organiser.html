@@ -1058,7 +1058,7 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
     </div>
 
     <!-- BUSINESS KYC PANEL -->
-    <div class="panel" id="panel-kyc">
+    <div class="panel" id="panel-kyc-business">
       <div class="card" style="margin-bottom:20px">
         <div class="card-title">📋 KYC Verification Status
           <span style="background:rgba(255,179,0,0.15);color:#FFB300;border:1px solid rgba(255,179,0,0.3);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600">⚠️ Pending Review</span>
@@ -6175,6 +6175,23 @@ loadAllP52Org();
 <script src="/static/portal-fix.js"></script>
 
 <!-- PHASE 66 ORGANISER PORTAL: Creator Economy & Social Commerce -->
+
+<script>
+(function(){
+  if(document.getElementById('nav-btn-p66-organiser')) return;
+  var nav = document.querySelector('.sidebar, #sidebar');
+  if(!nav) return;
+  var sec = document.createElement('div');
+  sec.innerHTML = '<div class="sb-section">Phase 66</div>';
+  var btn = document.createElement('button');
+  btn.id = 'nav-btn-p66-organiser';
+  btn.className = 'sb-item';
+  btn.innerHTML = '🎨 Creator Economy P66 <span style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#0f172a;border-radius:8px;padding:1px 6px;font-size:9px;margin-left:4px;font-weight:900;">NEW</span>';
+  btn.onclick = function(){ if(typeof showPanel==='function') showPanel('p66-organiser',btn); };
+  sec.appendChild(btn);
+  nav.appendChild(sec);
+})();
+</script>
 <div class="panel" id="panel-p66-organiser" style="display:none;padding:20px;overflow-y:auto;height:calc(100vh - 60px)">
   <div style="background:linear-gradient(135deg,#1a0533,#2d0a4e);color:#fff;border-radius:14px;padding:24px;margin-bottom:20px">
     <h2 style="margin:0 0 6px;font-size:20px;font-weight:800">🎨 Creator Economy Tools — Phase 66</h2>
