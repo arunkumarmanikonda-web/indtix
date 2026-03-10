@@ -4851,5 +4851,65 @@ loadAllP52Ops();
       </div>
     </div>
   </div>
+
+  <!-- PHASE 72 PANEL -->
+  <div id="panel-p72-ops" class="panel" style="display:none">
+    <div class="panel-header" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:24px;border-radius:12px;margin-bottom:24px">
+      <h2 style="margin:0;font-size:1.6rem">🏟️ Sports Events, Stadium Tech & Fantasy Gaming</h2>
+      <p style="margin:8px 0 0;opacity:.9">Phase 72 — 2,840 sports events · 28.4M fantasy users · 142 smart stadiums · ₹840Cr revenue</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+      <div class="card" style="padding:20px;border-left:4px solid #f59e0b">
+        <h3>🏏 Sports Events</h3>
+        <p>2,840 events ytd · IPL/ISL/PKL/BWF · 28.4M attendance · 84.2% sellout · 284 partner stadiums</p>
+        <button onclick="fetch('/api/v72/sports-events/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Events</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #d97706">
+        <h3>🏟️ Stadium Tech</h3>
+        <p>142 smart stadiums · 284K IoT sensors · 4K security · 99.2% face recognition · cashless payments</p>
+        <button onclick="fetch('/api/v72/stadium-tech/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Stadium</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #b45309">
+        <h3>🎟️ Sports Ticketing</h3>
+        <p>28.4M tickets sold · Dynamic pricing +28.4% uplift · Resale platform · Season passes · ₹840Cr revenue</p>
+        <button onclick="fetch('/api/v72/sports-ticketing/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Tickets</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #92400e">
+        <h3>🎮 Fantasy Sports</h3>
+        <p>28.4M fantasy users · 28,400 daily contests · ₹28.4Cr daily prize pool · AI team builder · TDS compliant</p>
+        <button onclick="fetch('/api/v72/fantasy-sports/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Fantasy</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #f59e0b">
+        <h3>🏃 Athlete Management</h3>
+        <p>28,400 athletes · 2,840 teams · ₹2,840Cr contracts · AI performance · 84.2% injury prediction</p>
+        <button onclick="fetch('/api/v72/athlete-management/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Athletes</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #d97706">
+        <h3>📺 Sports Broadcast</h3>
+        <p>28.4M concurrent peak · JioCinema/Star Sports · 22 language commentary · AI highlights · 284M social shares</p>
+        <button onclick="fetch('/api/v72/sports-media/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Broadcast</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #b45309">
+        <h3>🤝 Sponsorship</h3>
+        <p>2,840 brand partners · ₹840Cr sponsorship · 8.4× ROI · 84.2% digital activations · AR activations</p>
+        <button onclick="fetch('/api/v72/sports-sponsorship/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Sponsorship</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #92400e">
+        <h3>❤️ Fan Loyalty</h3>
+        <p>28.4M fans · 2,840 fan clubs · Fantasy linked · NPS 88 · 284B cheer points · Sports NFTs 284K</p>
+        <button onclick="fetch('/api/v72/sports-fan/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Fans</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #f59e0b">
+        <h3>👕 Merchandise</h3>
+        <p>28,400 licensed products · ₹284Cr revenue · Adidas/Nike partnerships · Blockchain cert · 42% repeat buyers</p>
+        <button onclick="fetch('/api/v72/sports-merch/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Merch</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #d97706">
+        <h3>📊 Sports Analytics</h3>
+        <p>₹2,840Cr total revenue · 42% YoY growth · NPS 88 · 28.4M broadcast viewers · 97.8% digital checkin</p>
+        <button onclick="fetch('/api/v72/sports-analytics/dashboard').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Analytics</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
