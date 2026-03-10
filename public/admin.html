@@ -1007,13 +1007,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Add missing nav items to sidebar
   const navSec = document.querySelector('.sb-nav');
   if (navSec) {
-    const extra = document.createElement('div');
-    extra.innerHTML = `
-      <!-- ERP Extended nav injected dynamically via JS -->
-      <div class="sb-section">Phase 24 Intelligence</div>
-      <button class="sb-item" onclick="showPanel('p24-intelligence',this)"><i class="fas fa-brain"></i>Intelligence Suite <span style="background:#8b5cf6;color:#fff;border-radius:10px;padding:1px 6px;font-size:10px;margin-left:4px">NEW</span></button>
-    `;
-    navSec.appendChild(extra);
   }
 
   // Inject panels HTML
@@ -2986,18 +2979,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Inject Phase 7 sidebar items
     const navSec = document.querySelector('.sb-nav');
-    if (navSec && !document.getElementById('p7-nav-injected')) {
-      const extra = document.createElement('div');
-      extra.id = 'p7-nav-injected';
-      extra.innerHTML = `
-        <div class="sb-section">Phase 7 Intelligence</div>
-        <button class="sb-item" onclick="showPanel('platformhealth',this)"><i class="fas fa-heartbeat"></i>Platform Health<span class="sb-dot" style="background:var(--brand3);margin-left:auto"></span></button>
-        <button class="sb-item" onclick="showPanel('aiforecast',this)"><i class="fas fa-chart-line"></i>AI Revenue Forecast</button>
-        <button class="sb-item" onclick="showPanel('reports',this)"><i class="fas fa-file-chart-column"></i>Consolidated Reports</button>
-        <button class="sb-item" onclick="showPanel('search_admin',this)"><i class="fas fa-search"></i>Platform Search</button>
-      `;
-      navSec.appendChild(extra);
-    }
+    
 
     // Inject Phase 7 panel content
     const content = document.querySelector('.content');
@@ -3684,30 +3666,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Phase 22 sidebar buttons for admin
   const nav22 = document.querySelector('.sb-nav');
   if (nav22) {
-    const p22btns = document.createElement('div');
-    p22btns.innerHTML = `
-      <div class="sb-section" style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#6366f1;padding:8px 8px 4px;margin-top:4px">Phase 22 Compliance</div>
-      <button class="sb-item" onclick="showPanel('p22-moderation',this)"><i class="fas fa-shield-alt"></i>AI Moderation 🆕</button>
-      <button class="sb-item" onclick="showPanel('p22-dpdp',this)"><i class="fas fa-user-shield"></i>DPDP Compliance 🆕</button>
-      <button class="sb-item" onclick="showPanel('p22-payout-ledger',this)"><i class="fas fa-wallet"></i>Payout Ledger 🆕</button>
-      <button class="sb-item" onclick="showPanel('p22-bulkrefund',this)"><i class="fas fa-undo-alt"></i>Bulk Refunds 🆕</button>
-      <button class="sb-item" onclick="showPanel('p22-abtest',this)"><i class="fas fa-flask"></i>A/B Tests 🆕</button>
-      <button class="sb-item" onclick="showPanel('p22-darkpattern',this)"><i class="fas fa-eye"></i>Dark Pattern Audit 🆕</button>
-      <button class="sb-item" onclick="showPanel('p22-ratelimit',this)"><i class="fas fa-tachometer-alt"></i>Rate Limits 🆕</button>
-      <button class="sb-item" onclick="showPanel('p22-sla-admin',this)"><i class="fas fa-chart-bar"></i>SLA Dashboard 🆕</button>
-    <div class="sb-section" style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#6366f1;padding:8px 8px 4px;margin-top:4px">Phases 66–76</div>
-    <button class="sb-item" onclick="showPanel('p66-admin',this)"><i class="fas fa-palette"></i>🎨 Creator Economy</button>
-    <button class="sb-item" onclick="showPanel('p67-admin',this)"><i class="fas fa-leaf"></i>🌿 Green Events</button>
-    <button class="sb-item" onclick="showPanel('p68-admin',this)"><i class="fas fa-universal-access"></i>♿ Accessibility</button>
-    <button class="sb-item" onclick="showPanel('p69-admin',this)"><i class="fas fa-brain"></i>🤖 AI Intelligence</button>
-    <button class="sb-item" onclick="showPanel('p70-admin',this)"><i class="fas fa-link"></i>⛓️ Blockchain & Web3</button>
-    <button class="sb-item" onclick="showPanel('p71-admin',this)"><i class="fas fa-broadcast-tower"></i>📡 Live & Virtual</button>
-    <button class="sb-item" onclick="showPanel('p72-admin',this)"><i class="fas fa-futbol"></i>🏟️ Sports & Stadium</button>
-    <button class="sb-item" onclick="showPanel('p73-admin',this)"><i class="fas fa-utensils"></i>🍽️ Food & Beverage</button>
-    <button class="sb-item" onclick="showPanel('p74-admin',this)"><i class="fas fa-plane"></i>✈️ Travel & Logistics</button>
-    <button class="sb-item" onclick="showPanel('p75-admin',this)"><i class="fas fa-ticket-alt"></i>🎫 Ticketing Tech</button>
-    <button class="sb-item" onclick="showPanel('p76-admin',this)"><i class="fas fa-heart"></i>💎 CX & Loyalty</button>`;
-    nav22.appendChild(p22btns);
   }
 
   // Phase 22 admin JS handlers
@@ -4320,15 +4278,6 @@ function p24aAssign(ticketId){ p24aToast('🎫 '+ticketId+' assigned to agent �
 // Phase 25 Admin — add sidebar nav button
 document.addEventListener('DOMContentLoaded',function(){
   const nav = document.querySelector('.sb-nav') || document.querySelector('nav') || document.querySelector('.sidebar');
-  if(nav){
-    const p25Btn = document.createElement('div');
-    p25Btn.innerHTML = '<div class="sb-section">Phase 25 Intelligence</div><button class="sb-item" onclick="showPanel(\'p25-intelligence\',this)"><i class="fas fa-microchip"></i>P25 Intelligence Suite <span style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#0f172a;border-radius:10px;padding:1px 6px;font-size:9px;margin-left:4px;font-weight:900;">NEW</span></button>';
-    nav.appendChild(p25Btn);
-    // Phase 26 nav
-    const p26Btn = document.createElement('div');
-    p26Btn.innerHTML = '<div class="sb-section">Phase 26 Commerce</div><button class="sb-item" onclick="showPanel(\'p26-admin\',this)"><i class="fas fa-rocket"></i>P26 Social Commerce <span style="background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:10px;padding:1px 6px;font-size:9px;margin-left:4px;font-weight:900;">NEW</span></button>';
-    nav.appendChild(p26Btn);
-  }
   // Add to showPanel title map
   if(window.showPanel){
     const orig = window.showPanel;

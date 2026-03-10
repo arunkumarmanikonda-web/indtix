@@ -976,7 +976,6 @@
     rewireBodyAppended();
     buildApiModal();
     injectOrphanNav();
-    addLatestPhaseNavButtons();
     fixCrossPortalLinks();
     wireFanNav();
     buildPhaseModulesFAB();
@@ -1003,20 +1002,20 @@
     });
 
     var panelCount = document.querySelectorAll('[id^="panel-"]').length;
-    console.log('[INDTIX Portal Fix v6.1] ✅ Loaded — panels:', panelCount,
+    console.log('[INDTIX Portal Fix v6.2] ✅ Loaded — panels:', panelCount,
       '| portal:', window.location.pathname.split('/').pop());
   }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () {
       init();
-      setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); addLatestPhaseNavButtons(); injectSidebarSearch(); }, 500);
-      setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); addLatestPhaseNavButtons(); buildPhaseModulesFAB(); injectSidebarSearch(); }, 2000);
+      setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); injectSidebarSearch(); }, 500);
+      setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); buildPhaseModulesFAB(); injectSidebarSearch(); }, 2000);
     });
   } else {
     init();
-    setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); addLatestPhaseNavButtons(); injectSidebarSearch(); }, 500);
-    setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); addLatestPhaseNavButtons(); buildPhaseModulesFAB(); injectSidebarSearch(); }, 2000);
+    setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); injectSidebarSearch(); }, 500);
+    setTimeout(function () { rewireBodyAppended(); injectOrphanNav(); buildPhaseModulesFAB(); injectSidebarSearch(); }, 2000);
   }
 
   /* ─────────────────────────────────────────────────────────────────
