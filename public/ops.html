@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style id="_ix_fouc_base">
+/* INDTIX Anti-FOUC — panels hidden until JS activates them */
+.panel{display:none!important}
+.panel.active{display:block!important}
+/* Ops specific panels */
+.ops-panel{display:none!important}
+.ops-panel.active{display:block!important}
+#ops-scanner,.ops-content>.active{display:block!important}
+</style>
 <style id="_ix_af">.panel{display:none!important}.panel.active{display:block!important}</style>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 <title>On-Ground Ops / POS – INDTIX</title>
@@ -17,7 +26,7 @@
   <meta name="twitter:title" content="INDTIX On-Ground Ops – Scanner & POS Terminal">
   <meta name="twitter:description" content="On-ground operations tool for event staff — QR ticket scanning, POS sales, wristband issuance and live check-in stats.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
 :root{--brand:#6C3CF7;--brand2:#FF3CAC;--brand3:#00F5C4;--dark:#080B14;--dark2:#0F1320;--dark3:#161B2E;--card:#1A2035;--border:rgba(108,60,247,0.2);--text:#E8EAFF;--muted:#8B93B8;--grad1:linear-gradient(135deg,#6C3CF7,#FF3CAC);--green:#00F5C4;--red:#FF4444;--gold:#FFB300}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -4978,5 +4987,33 @@ loadAllP52Ops();
     </div>
   </div>
 </div>
+
+<script>
+// INDTIX Ops Portal — showOpsPanel bridge (hard fix)
+(function() {
+  var _origShowOps = window.showOpsPanel;
+  window.showOpsPanel = function(id, btn) {
+    // Core ops panels use ids like "ops-scanner"
+    var corePanel = document.getElementById('ops-' + id);
+    if (corePanel) {
+      // Hide all core ops panels and phase panels
+      ['ops-scanner','ops-pos','ops-wristbands','ops-stats','ops-log'].forEach(function(pid) {
+        var p = document.getElementById(pid);
+        if (p) p.classList.remove('active');
+      });
+      document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+      document.querySelectorAll('.ops-nav-btn').forEach(function(b) { b.classList.remove('active'); });
+      corePanel.classList.add('active');
+      if (btn) btn.classList.add('active');
+      var title = document.getElementById('ops-title') || document.querySelector('.ops-badge');
+      if (title && id !== 'scanner') title.textContent = id.toUpperCase();
+    } else {
+      // Phase panel — delegate to showPanel
+      if (window.showPanel) window.showPanel(id, btn);
+    }
+  };
+})();
+</script>
+
 </body>
 </html>

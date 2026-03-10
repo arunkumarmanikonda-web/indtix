@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style id="_ix_fouc_base">
+/* INDTIX Anti-FOUC — panels hidden until JS activates them */
+.panel{display:none!important}
+.panel.active{display:block!important}
+/* Ops specific panels */
+.ops-panel{display:none!important}
+.ops-panel.active{display:block!important}
+#ops-scanner,.ops-content>.active{display:block!important}
+</style>
 <style id="_ix_af">.panel{display:none!important}.panel.active{display:block!important}</style>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Super Admin / ERP – INDTIX</title>
@@ -17,7 +26,7 @@
   <meta name="twitter:title" content="INDTIX Super Admin – Platform ERP & Command Centre">
   <meta name="twitter:description" content="INDTIX Super Admin dashboard for platform-wide GMV, user management, KYC approvals, fraud detection, GST compliance and BI analytics.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root{--brand:#6C3CF7;--brand2:#FF3CAC;--brand3:#00F5C4;--dark:#080B14;--dark2:#0F1320;--dark3:#161B2E;--card:#1A2035;--border:rgba(108,60,247,0.2);--text:#E8EAFF;--muted:#8B93B8;--grad1:linear-gradient(135deg,#6C3CF7,#FF3CAC);--red:#FF4444;--green:#00F5C4;--gold:#FFB300}
@@ -2060,10 +2069,12 @@ async function viewKYCDoc(type){
   if(d.url)window.open(d.url,'_blank');
   showAdminToast('📄 Opening '+type+' document — '+(d.verified?'verified ✓':'pending review'));}
   catch(e){showAdminToast('📄 Opening '+type+' document in secure viewer...'); }
+}
 async function requestMoreDocs(name){
   try{const r=await fetch('/api/admin/kyc/request-docs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,docs:['aadhaar','pan','bank_statement']})});
   const d=await r.json();showAdminToast('📧 Document request sent to '+name);}
   catch(e){showAdminToast('📧 Request for additional documents sent to '+name+' via WhatsApp & Email.'); logAdminAudit('Docs Requested',name); }
+}
 
 /* ─── Event Moderation ─── */
 async function approveEventSimple(eventId, name) {
@@ -2237,6 +2248,7 @@ async function editUser(id){
   try{const r=await fetch('/api/admin/users/'+id);const d=await r.json();
   showAdminToast('✏️ Edit mode: '+(d.name||id)+' — '+(d.tier||'standard')+' tier');}
   catch(e){showAdminToast('✏️ Edit mode for user: '+id+'. 2FA confirmation required for sensitive changes.'); }
+}
 async function deleteUser(id){
   if(!confirm('Permanently delete user '+id+'? All data will be anonymised per DPDP Act.')) return;
   try{await fetch('/api/admin/users/'+id,{method:'DELETE'});}
@@ -2294,8 +2306,8 @@ async function loadAdminOrganiserQueue(){
           <td>${o.events_planned||1}</td>
           <td><span class="badge badge-warning">${o.status||'pending'}</span></td>
           <td>
-            <button class="ab ab-approve" onclick="approveOrg('${(o.name||o.organiser_name||'Org').replace(/'/g,'\\'')}')">✓ Approve</button>
-            <button class="ab ab-reject" onclick="rejectOrg('${(o.name||o.organiser_name||'Org').replace(/'/g,'\\'')}')" style="margin-left:4px">✗ Reject</button>
+            <button class="ab ab-approve" data-org-name="${(o.name||o.organiser_name||'Org')}" onclick="approveOrg(this.dataset.orgName)">✓ Approve</button>
+            <button class="ab ab-reject" data-org-name="${(o.name||o.organiser_name||'Org')}" onclick="rejectOrg(this.dataset.orgName)" style="margin-left:4px">✗ Reject</button>
           </td>
         </tr>`).join('');
     }
@@ -3670,10 +3682,11 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('.content').appendChild(p22div);
 
   // Phase 22 sidebar buttons for admin
-  const nav = document.querySelector('.sb-nav');
-  if (nav) {
+  const nav22 = document.querySelector('.sb-nav');
+  if (nav22) {
     const p22btns = document.createElement('div');
     p22btns.innerHTML = `
+      <div class="sb-section" style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#6366f1;padding:8px 8px 4px;margin-top:4px">Phase 22 Compliance</div>
       <button class="sb-item" onclick="showPanel('p22-moderation',this)"><i class="fas fa-shield-alt"></i>AI Moderation 🆕</button>
       <button class="sb-item" onclick="showPanel('p22-dpdp',this)"><i class="fas fa-user-shield"></i>DPDP Compliance 🆕</button>
       <button class="sb-item" onclick="showPanel('p22-payout-ledger',this)"><i class="fas fa-wallet"></i>Payout Ledger 🆕</button>
@@ -3694,7 +3707,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <button class="sb-item" onclick="showPanel('p74-admin',this)"><i class="fas fa-plane"></i>✈️ Travel & Logistics</button>
     <button class="sb-item" onclick="showPanel('p75-admin',this)"><i class="fas fa-ticket-alt"></i>🎫 Ticketing Tech</button>
     <button class="sb-item" onclick="showPanel('p76-admin',this)"><i class="fas fa-heart"></i>💎 CX & Loyalty</button>`;
-    nav.appendChild(p22btns);
+    nav22.appendChild(p22btns);
   }
 
   // Phase 22 admin JS handlers
@@ -4868,13 +4881,17 @@ document.addEventListener('DOMContentLoaded', () => {
     nav.appendChild(d);
   }
   const orig = window.showPanel;
-  window.showPanel = (id) => {
+  window.showPanel = function(id, btn) {
     if (id === 'p27-admin') {
-      document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.sb-item, .ops-nav-btn').forEach(b => b.classList.remove('active'));
       const panel = document.getElementById('panel-p27-admin');
-      if (panel) panel.style.display = 'block';
+      if (panel) panel.classList.add('active');
+      if (btn) btn.classList.add('active');
+      const tb = document.getElementById('topbarTitle');
+      if (tb) tb.textContent = 'Phase 27 — Enterprise B2B & Marketplace';
       p27aLoadB2B();
-    } else if (orig) orig(id);
+    } else if (orig) orig(id, btn);
   };
 });
 function p27aShow(tab) {
@@ -5093,12 +5110,16 @@ document.addEventListener('DOMContentLoaded', () => {
     nav.appendChild(d);
   }
   const orig = window.showPanel;
-  window.showPanel = (id) => {
+  window.showPanel = function(id, btn) {
     if (id === 'p28-admin') {
-      document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.sb-item, .ops-nav-btn').forEach(b => b.classList.remove('active'));
       const panel = document.getElementById('panel-p28-admin');
-      if (panel) panel.style.display = 'block';
-    } else if (orig) orig(id);
+      if (panel) panel.classList.add('active');
+      if (btn) btn.classList.add('active');
+      const tb = document.getElementById('topbarTitle');
+      if (tb) tb.textContent = 'Phase 28 — Immersive & AI Experiences';
+    } else if (orig) orig(id, btn);
   };
 });
 function p28aShow(tab) {

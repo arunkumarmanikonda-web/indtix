@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style id="_ix_fouc_base">
+/* INDTIX Anti-FOUC — panels hidden until JS activates them */
+.panel{display:none!important}
+.panel.active{display:block!important}
+/* Ops specific panels */
+.ops-panel{display:none!important}
+.ops-panel.active{display:block!important}
+#ops-scanner,.ops-content>.active{display:block!important}
+</style>
 <style id="_ix_af">.panel{display:none!important}.panel.active{display:block!important}</style>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Organiser Portal – INDTIX</title>
@@ -17,7 +26,7 @@
   <meta name="twitter:title" content="INDTIX Organiser Portal – Event Management Dashboard">
   <meta name="twitter:description" content="Create events, manage tickets, track revenue and settle payments on INDTIX. KYC-verified organisers get priority support and marketing tools.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root{--brand:#6C3CF7;--brand2:#FF3CAC;--brand3:#00F5C4;--dark:#080B14;--dark2:#0F1320;--dark3:#161B2E;--card:#1A2035;--border:rgba(108,60,247,0.2);--text:#E8EAFF;--muted:#8B93B8;--grad1:linear-gradient(135deg,#6C3CF7,#FF3CAC);--grad2:linear-gradient(135deg,#00F5C4,#6C3CF7)}
@@ -2472,7 +2481,6 @@ async function notifyWaitlist(eventId, count, btn) {
   } catch(e) { showOrgToast('✅ Waitlist notifications sent!'); }
   btn.textContent = '✅ Sent';
 }
-}
 
 /* ─── Add-ons ─── */
 function addAddon(){
@@ -2542,7 +2550,16 @@ async function downloadCheckinReport(){
   } catch(e) { setTimeout(()=>showOrgToast('✅ Check-in report PDF ready! Downloading...'),2000); }
 }
 
-async function withdrawEventSubmission(eventId){\n  if(!confirm('Withdraw this event submission? It will return to Draft status for editing.')) return;\n  try {\n    const r = await fetch(`/api/organiser/events/${eventId}/withdraw`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({organiser_id:'ORG-001'})});\n    const d = await r.json();\n    showOrgToast(d.success ? `\u2190 Event withdrawn. Status: ${d.status.toUpperCase()}. ${d.message}` : '\u26a0\ufe0f Withdrawal failed');\n    logOrgAction(`Event ${eventId} withdrawn to draft`);\n  } catch(e) { showOrgToast('\u2190 Event withdrawn. You can re-edit and re-submit.'); }\n}\nasync function checkKYCStatus(kycId){
+async function withdrawEventSubmission(eventId){
+  if(!confirm('Withdraw this event submission? It will return to Draft status for editing.')) return;
+  try {
+    const r = await fetch(`/api/organiser/events/${eventId}/withdraw`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({organiser_id:'ORG-001'})});
+    const d = await r.json();
+    showOrgToast(d.success ? `← Event withdrawn. Status: ${d.status.toUpperCase()}. ${d.message}` : '⚠️ Withdrawal failed');
+    logOrgAction(`Event ${eventId} withdrawn to draft`);
+  } catch(e) { showOrgToast('← Event withdrawn. You can re-edit and re-submit.'); }
+}
+async function checkKYCStatus(kycId){
   const id=kycId||'KYC-ORG-001';
   try{
     const res=await fetch(`/api/kyc/${id}`);

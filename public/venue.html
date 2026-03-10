@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style id="_ix_fouc_base">
+/* INDTIX Anti-FOUC — panels hidden until JS activates them */
+.panel{display:none!important}
+.panel.active{display:block!important}
+/* Ops specific panels */
+.ops-panel{display:none!important}
+.ops-panel.active{display:block!important}
+#ops-scanner,.ops-content>.active{display:block!important}
+</style>
 <style id="_ix_af">.panel{display:none!important}.panel.active{display:block!important}</style>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Venue Portal – INDTIX</title>
@@ -17,7 +26,7 @@
   <meta name="twitter:title" content="INDTIX Venue Portal – Venue Management Dashboard">
   <meta name="twitter:description" content="List your venue on INDTIX and get booked by top event organisers. Manage bookings, revenue and availability with powerful tools.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
 :root{--brand:#6C3CF7;--brand2:#FF3CAC;--brand3:#00F5C4;--dark:#080B14;--dark2:#0F1320;--dark3:#161B2E;--card:#1A2035;--border:rgba(108,60,247,0.2);--text:#E8EAFF;--muted:#8B93B8;--grad1:linear-gradient(135deg,#6C3CF7,#FF3CAC);--grad2:linear-gradient(135deg,#00F5C4,#6C3CF7)}
 *{margin:0;padding:0;box-sizing:border-box}body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;display:flex;min-height:100vh}

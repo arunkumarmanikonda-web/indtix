@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style id="_ix_fouc_base">
+/* INDTIX Anti-FOUC — panels hidden until JS activates them */
+.panel{display:none!important}
+.panel.active{display:block!important}
+/* Ops specific panels */
+.ops-panel{display:none!important}
+.ops-panel.active{display:block!important}
+#ops-scanner,.ops-content>.active{display:block!important}
+</style>
 <style id="_ix_af">.panel{display:none!important}.panel.active{display:block!important}</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +31,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
 :root {
   --brand: #6C3CF7;
@@ -5172,7 +5181,7 @@ document.addEventListener('DOMContentLoaded', async function(){
 .p26f-tier-card.current{border-color:#6366f1;background:#f5f3ff}
 </style>
 
-<div id="panel-p26-fan" style="display:none;padding:16px">
+<div id="panel-p26-fan" class="panel active" style="padding:16px">
   <div class="p26f-hero">
     <h2 style="margin:0 0 6px;font-size:22px;font-weight:800">🚀 Phase 26 Features</h2>
     <p style="margin:0;opacity:.9;font-size:14px">Fan Clubs · Social Gifting · Flash Sales · Crypto Tickets · AR Preview · Loyalty v2</p>
@@ -5484,7 +5493,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 <!-- PHASE 27 FAN: NFT Collectibles, Affiliate/Referral & Digital Ownership -->
-<div id="panel-p27-fan" class="panel" style="display:none">
+<div id="panel-p27-fan" class="panel" >
   <div style="padding:24px;background:linear-gradient(135deg,#1a0533,#3b0764,#6d28d9);color:#fff;border-radius:12px;margin-bottom:24px">
     <h2 style="margin:0 0 8px;font-size:22px">🖼️ NFT Collectibles & Referral Hub</h2>
     <p style="margin:0;opacity:.8">Own, Trade & Earn — Your Digital Ticket Legacy</p>
@@ -5683,7 +5692,7 @@ function p27fRegisterDrop(id) { fetch('/api/fan/nft/drops/upcoming').then(()=>al
 </script>
 
 <!-- PHASE 28 FAN: Metaverse, AI Companion, Experience Commerce, Social -->
-<div id="panel-p28-fan" class="panel" style="display:none">
+<div id="panel-p28-fan" class="panel" >
   <div style="padding:24px;background:linear-gradient(135deg,#0a0a1a,#1a0533,#4c1d95);color:#fff;border-radius:12px;margin-bottom:24px">
     <h2 style="margin:0 0 8px;font-size:22px">🌌 Immersive Fan Experience</h2>
     <p style="margin:0;opacity:.8">Metaverse Concerts · AI Companion · Experience Packages · Social Graph</p>
@@ -7589,7 +7598,7 @@ loadAllP52Fan();
 
 
 
-<div id="panel-p66-fan" class="panel" style="display:none">
+<div id="panel-p66-fan" class="panel" >
   <section style="padding:40px 24px;max-width:1200px;margin:0 auto">
     <h2 style="font-size:28px;font-weight:800;color:#e2e8f0;margin-bottom:8px">🎨 Creator & Social Commerce</h2>
     <p style="color:#94a3b8;margin-bottom:32px">Discover top creators, join group buys, watch live shopping streams</p>
@@ -7706,7 +7715,7 @@ loadAllP52Fan();
 
 
 <!-- PHASE P67 -->
-<div id="panel-p67-fan" class="panel" style="display:none">
+<div id="panel-p67-fan" class="panel" >
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🌿 Phase 67 &mdash; Sustainability &amp; ESG</h2>
@@ -7748,7 +7757,7 @@ loadAllP52Fan();
 </div>
 
 <!-- PHASE P68 -->
-<div id="panel-p68-fan" class="panel" style="display:none">
+<div id="panel-p68-fan" class="panel" >
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#0891b2,#0e7490);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">♿ Phase 68 &mdash; Accessibility &amp; Inclusion</h2>
@@ -7790,7 +7799,7 @@ loadAllP52Fan();
 </div>
 
 <!-- PHASE P69 -->
-<div id="panel-p69-fan" class="panel" style="display:none">
+<div id="panel-p69-fan" class="panel" >
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🤖 Phase 69 &mdash; AI Intelligence Suite</h2>
@@ -7832,7 +7841,7 @@ loadAllP52Fan();
 </div>
 
 <!-- PHASE P70 -->
-<div id="panel-p70-fan" class="panel" style="display:none">
+<div id="panel-p70-fan" class="panel" >
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#d97706,#b45309);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">⛓️ Phase 70 &mdash; Blockchain &amp; Web3</h2>
@@ -7874,7 +7883,7 @@ loadAllP52Fan();
 </div>
 
 <!-- PHASE P71 -->
-<div id="panel-p71-fan" class="panel" style="display:none">
+<div id="panel-p71-fan" class="panel" >
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">📡 Phase 71 &mdash; Live Streaming &amp; Virtual</h2>
@@ -7916,7 +7925,7 @@ loadAllP52Fan();
 </div>
 
 <!-- PHASE P72 -->
-<div id="panel-p72-fan" class="panel" style="display:none">
+<div id="panel-p72-fan" class="panel" >
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🏟️ Phase 72 &mdash; Sports &amp; Stadium Tech</h2>
@@ -7958,7 +7967,7 @@ loadAllP52Fan();
 </div>
 
 <!-- PHASE P73 -->
-<div id="panel-p73-fan" class="panel" style="display:none">
+<div id="panel-p73-fan" class="panel" >
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🍽️ Phase 73 &mdash; Food, Bev &amp; Hospitality</h2>
@@ -8000,7 +8009,7 @@ loadAllP52Fan();
 </div>
 
 <!-- PHASE P74 -->
-<div id="panel-p74-fan" class="panel" style="display:none">
+<div id="panel-p74-fan" class="panel" >
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#1d4ed8,#1e40af);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">✈️ Phase 74 &mdash; Travel &amp; Logistics</h2>
@@ -8042,7 +8051,7 @@ loadAllP52Fan();
 </div>
 
 <!-- PHASE P75 -->
-<div id="panel-p75-fan" class="panel" style="display:none">
+<div id="panel-p75-fan" class="panel" >
   <div style="padding:24px">
     <div style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
       <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🎫 Phase 75 &mdash; Ticketing Technology</h2>
