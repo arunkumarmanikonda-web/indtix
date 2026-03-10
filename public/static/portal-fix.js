@@ -66,6 +66,7 @@
     'p67-admin':'Phase 67 — Green Events Admin',
     'p68-admin':'Phase 68 — Accessibility Admin',
     'p69-admin':'Phase 69 — AI Intelligence Admin',
+    'p70-admin':'Phase 70 — Blockchain & Web3 Admin',
     // Organiser panels
     create:'Create Event', tickets:'Ticket Builder', seatmap:'Seat Map Config',
     addons:'Add-Ons & Merch', revenue:'Revenue Dashboard', invoices:'GST Invoices',
@@ -87,6 +88,7 @@
     'p67-organiser':'Phase 67 — Green Events Organiser',
     'p68-organiser':'Phase 68 — Accessibility Organiser',
     'p69-organiser':'Phase 69 — AI Demand & Pricing',
+    'p70-organiser':'Phase 70 — Web3 Creator Tools',
     'kyc-business':'Business KYC (Advanced)',
     // Venue panels
     profile:'Venue Profile', bookings:'Bookings', calendar:'Calendar',
@@ -106,6 +108,7 @@
     'p67-venue':'Phase 67 — Green Venue',
     'p68-venue':'Phase 68 — Accessible Venue',
     'p69-venue':'Phase 69 — AI Crowd & Safety',
+    'p70-venue':'Phase 70 — Blockchain Venue',
     // Event Manager panels
     runsheet:'Run Sheet', timeline:'Timeline', ops:'Ops Dashboard',
     wristbands:'Wristbands', pos:'Point of Sale', announce:'Announcements',
@@ -121,6 +124,7 @@
     'p67-em':'Phase 67 — Green EM',
     'p68-em':'Phase 68 — Accessible EM',
     'p69-em':'Phase 69 — Real-Time AI Ops',
+    'p70-em':'Phase 70 — Web3 Event Manager',
     'team-v2':'Extended Team', 'tasks-v2':'Extended Tasks',
     'incidents-v2':'Extended Incidents',
     // Ops panels
@@ -133,6 +137,7 @@
     'p67-ops':'Phase 67 — Green Ops',
     'p68-ops':'Phase 68 — Accessible Ops',
     'p69-ops':'Phase 69 — AI Operations Platform',
+    'p70-ops':'Phase 70 — Web3 Ops',
     // Fan panels
     'p26-fan':'Phase 26 — Social Commerce Fan',
     'p27-fan':'Phase 27 — Fan Experience',
@@ -140,7 +145,8 @@
     'p66-fan':'Phase 66 — Creator Fan',
     'p67-fan':'Phase 67 — Green Fan',
     'p68-fan':'Phase 68 — Inclusive Fan',
-    'p69-fan':'Phase 69 — AI Fan Personalisation'
+    'p69-fan':'Phase 69 — AI Fan Personalisation',
+    'p70-fan':'Phase 70 — Web3 Fan & NFT'
   };
 
   /* ─────────────────────────────────────────────────────────────────
@@ -392,7 +398,7 @@
     var icons = {
       'p25': '🧠', 'p26': '🛒', 'p27': '⚡', 'p28': '🤖',
       'p62': '🎯', 'p63': '🛡️', 'p64': '📊', 'p65': '🌟',
-      'p66': '🎨', 'p67': '🌿', 'p68': '♿', 'p69': '🤖',
+      'p66': '🎨', 'p67': '🌿', 'p68': '♿', 'p69': '🤖', 'p70': '⛓️',
       'kyc': '🪪', 'analytics': '📈', 'finance': '💰',
       'creator': '🎨', 'green': '🌿', 'access': '♿'
     };
@@ -665,7 +671,8 @@
       { key: 'p66', label: 'Creator Economy', icon: '🎨', suffix: isOps ? '-ops-new' : panelSuffix },
       { key: 'p67', label: 'Green Events', icon: '🌿', suffix: panelSuffix },
       { key: 'p68', label: 'Accessibility', icon: '♿', suffix: panelSuffix },
-      { key: 'p69', label: 'AI Intelligence', icon: '🤖', suffix: panelSuffix }
+      { key: 'p69', label: 'AI Intelligence', icon: '🤖', suffix: panelSuffix },
+      { key: 'p70', label: 'Blockchain & Web3', icon: '⛓️', suffix: panelSuffix }
     ];
 
     phases.forEach(function (ph) {

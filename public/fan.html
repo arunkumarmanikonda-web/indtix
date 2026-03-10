@@ -7957,5 +7957,87 @@ loadAllP52Fan();
   nav.appendChild(b);
 })();
 </script>
+
+<div id="panel-p70-fan" class="panel" style="display:none">
+  <div style="padding:24px;max-width:1200px;margin:0 auto">
+    <div style="background:linear-gradient(135deg,#d97706,#b45309);color:#fff;border-radius:16px;padding:28px 32px;margin-bottom:24px">
+      <h1 style="margin:0 0 8px;font-size:1.8rem;font-weight:700">⛓️ Phase 70 — Web3 Fan Experience</h1>
+      <p style="margin:0;opacity:.85;font-size:1rem">Blockchain, Web3 &amp; Decentralised Ticketing Platform</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px">
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#d97706">2.84M</div>
+        <div style="font-size:.85rem;color:#d97706;margin-top:4px">NFT Tickets Minted</div>
+      </div>
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#d97706">₹284Cr</div>
+        <div style="font-size:.85rem;color:#d97706;margin-top:4px">TVL (Smart Contracts)</div>
+      </div>
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#d97706">84K</div>
+        <div style="font-size:.85rem;color:#d97706;margin-top:4px">DAO Members (IXTIX)</div>
+      </div>
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#d97706">100%</div>
+        <div style="font-size:.85rem;color:#d97706;margin-top:4px">Counterfeit-Free</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+      <div style="background:#fff;border:1px solid #fde68a;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 10px;color:#d97706;font-size:1rem">🎫 NFT & Smart Contract Ticketing</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>2.84M NFT tickets minted</li>
+          <li>5 chains: Polygon, ETH, Solana, BNB, AVAX</li>
+          <li>2,840 smart contracts (CertiK audited)</li>
+          <li>Auto revenue splits & escrow</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #fde68a;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 10px;color:#d97706;font-size:1rem">🔐 Identity & Token Gating</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>284K wallets, W3C DID, ZK proofs</li>
+          <li>840 token-gated events</li>
+          <li>284 NFT collections integrated</li>
+          <li>Gasless onboarding (2.4 min)</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #fde68a;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 10px;color:#d97706;font-size:1rem">💰 Crypto & DeFi</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>8 crypto currencies accepted</li>
+          <li>₹8.4Cr DeFi yield (Aave/Curve)</li>
+          <li>FANX token: 2.84M holders, 8.4% APY</li>
+          <li>DAO treasury: ₹84Cr, 42% participation</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #fde68a;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 10px;color:#d97706;font-size:1rem">🛡️ Fraud & Creator Tools</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>284K fraud cases blocked</li>
+          <li>99.98% on-chain scan accuracy</li>
+          <li>840 artist fan clubs on-chain</li>
+          <li>₹28.4Cr crowdfunding raised</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding:16px;background:#fffbeb;border-radius:10px;border-left:4px solid #d97706">
+      <strong style="color:#d97706">Phase 70 APIs:</strong>
+      <span style="color:#92400e;font-size:.85rem;margin-left:8px">/api/v70/nft-tickets/* · /api/v70/smart-contracts/* · /api/v70/web3-identity/* · /api/v70/token-gating/* · /api/v70/crypto-payments/* · /api/v70/dao-governance/* · /api/v70/blockchain-fraud/* · /api/v70/blockchain-loyalty/* · /api/v70/web3-creator/* · /api/v70/web3-analytics/*</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  if(document.getElementById('nav-btn-p70-fan')) return;
+  var nav = document.querySelector('nav.sidebar-nav, nav, .sidebar, #sidebar');
+  if(!nav) return;
+  var b = document.createElement('button');
+  b.id = 'nav-btn-p70-fan'; b.className = 'sb-item';
+  b.innerHTML = '<i class="fas fa-gem"></i>Web3 & NFT <span style="background:#d97706;color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:4px">P70</span>';
+  b.onclick = function(){ if(typeof showPanel==='function') showPanel('p70-fan',this); };
+  nav.appendChild(b);
+})();
+</script>
 </body>
 </html>
