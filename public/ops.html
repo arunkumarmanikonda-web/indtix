@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style id="_ix_af">.panel{display:none!important}.panel.active{display:block!important}</style>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 <title>On-Ground Ops / POS – INDTIX</title>
   <meta name="description" content="On-ground operations tool for event staff — QR ticket scanning, POS sales, wristband issuance and live check-in stats.">
@@ -1695,7 +1696,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 .p22ops h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;margin-bottom:14px}
 </style>
 
-<div id="p22-anomaly" class="p22ops" style="display:none">
+<div id="p22-anomaly-dup1" class="p22ops" style="display:none">
   <h3>🔍 Global Anomaly Detector</h3>
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
     <div class="ops-stat" style="background:var(--dark3,#1a1530);border:1px solid var(--border);border-radius:12px;padding:14px"><div class="ops-stat-val" style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#34d399">99.1%</div><div class="ops-stat-lbl" style="font-size:11px;color:var(--muted,#888);margin-top:4px">Anomaly-free (7d)</div></div>
@@ -1707,12 +1708,12 @@ document.addEventListener('DOMContentLoaded',()=>{
   <button onclick="loadAnomalyDetector()" style="margin-top:10px;background:rgba(108,60,247,.2);border:1px solid #6c3cf7;border-radius:8px;padding:9px 20px;color:#a78bfa;font-size:13px;cursor:pointer">🔄 Refresh Detector</button>
 </div>
 
-<div id="p22-forecast" class="p22ops" style="display:none">
+<div id="p22-forecast-dup1" class="p22ops" style="display:none">
   <h3>📈 Revenue Forecasting Panel (7-day)</h3>
   <div id="p22-rev-forecast"><div style="text-align:center;padding:20px;color:#888">Loading forecast…</div></div>
 </div>
 
-<div id="p22-redundancy-panel" class="p22ops" style="display:none">
+<div id="p22-redundancy-panel-dup1" class="p22ops" style="display:none">
   <h3>🔀 Carrier & Gateway Redundancy Matrix</h3>
   <div id="p22-redundancy"><div style="text-align:center;padding:20px;color:#888">Loading matrix…</div></div>
 </div>
@@ -3636,7 +3637,7 @@ loadAllP41Ops();
 <!-- END PHASE 41 OPS PORTAL -->
 
 <!-- PHASE 41 OPS PORTAL -->
-<div class="phase-section" id="phase41-ops">
+<div class="phase-section" id="phase41-ops-dup1">
   <h2 class="phase-title">Phase 41 — B2B Operations, Compliance & API Platform</h2>
   <div class="metrics-grid">
     <div class="metric-card"><div class="metric-label">API Calls/Day</div><div class="metric-value" id="p41ops-api">—</div></div>
@@ -4425,7 +4426,7 @@ loadAllP52Ops();
 
     
 
-<script src="/static/portal-fix.js"></script>
+
 
 <!-- PHASE 66 OPS PORTAL: Creator Economy & Social Commerce -->
 <div id="panel-p66-ops-new" class="panel" style="display:none;padding:20px">
@@ -4529,21 +4530,6 @@ loadAllP52Ops();
   </div>
 </div>
 
-<script>
-(function(){
-  var existing = document.getElementById('nav-btn-p67-ops');
-  if (existing) return;
-  // Try to find main nav or sidebar
-  var nav = document.querySelector('nav.sidebar-nav, nav, .sidebar, #sidebar');
-  if (!nav) return;
-  var btn = document.createElement('button');
-  btn.id = 'nav-btn-p67-ops';
-  btn.className = 'sb-item';
-  btn.innerHTML = '<i class="fas fa-wind"></i>Sustainability <span style="background:#16a34a;color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:4px">P67</span>';
-  btn.onclick = function(){ if(typeof showPanel==='function') showPanel('p67-ops',this); };
-  nav.appendChild(btn);
-})();
-</script>
 
 <div id="panel-p68-ops" class="panel" style="display:none">
   <div style="padding:24px;max-width:1200px;margin:0 auto">
@@ -4614,19 +4600,6 @@ loadAllP52Ops();
   </div>
 </div>
 
-<script>
-(function(){
-  if(document.getElementById('nav-btn-p68-ops')) return;
-  var nav = document.querySelector('nav.sidebar-nav, nav, .sidebar, #sidebar');
-  if(!nav) return;
-  var btn = document.createElement('button');
-  btn.id = 'nav-btn-p68-ops';
-  btn.className = 'sb-item';
-  btn.innerHTML = '<i class="fas fa-wheelchair"></i>Accessibility <span style="background:#7c3aed;color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:4px">P68</span>';
-  btn.onclick = function(){ if(typeof showPanel==='function') showPanel('p68-ops',this); };
-  nav.appendChild(btn);
-})();
-</script>
 
 <div id="panel-p69-ops" class="panel" style="display:none">
   <div style="padding:24px;max-width:1200px;margin:0 auto">
@@ -4697,18 +4670,6 @@ loadAllP52Ops();
   </div>
 </div>
 
-<script>
-(function(){
-  if(document.getElementById('nav-btn-p69-ops')) return;
-  var nav = document.querySelector('nav.sidebar-nav, nav, .sidebar, #sidebar');
-  if(!nav) return;
-  var b = document.createElement('button');
-  b.id = 'nav-btn-p69-ops'; b.className = 'sb-item';
-  b.innerHTML = '<i class="fas fa-microchip"></i>AI Platform <span style="background:#0369a1;color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:4px">P69</span>';
-  b.onclick = function(){ if(typeof showPanel==='function') showPanel('p69-ops',this); };
-  nav.appendChild(b);
-})();
-</script>
 
 <div id="panel-p70-ops" class="panel" style="display:none">
   <div style="padding:24px;max-width:1200px;margin:0 auto">
@@ -4779,18 +4740,6 @@ loadAllP52Ops();
   </div>
 </div>
 
-<script>
-(function(){
-  if(document.getElementById('nav-btn-p70-ops')) return;
-  var nav = document.querySelector('nav.sidebar-nav, nav, .sidebar, #sidebar');
-  if(!nav) return;
-  var b = document.createElement('button');
-  b.id = 'nav-btn-p70-ops'; b.className = 'sb-item';
-  b.innerHTML = '<i class="fas fa-cubes"></i>Blockchain Ops <span style="background:#d97706;color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:4px">P70</span>';
-  b.onclick = function(){ if(typeof showPanel==='function') showPanel('p70-ops',this); };
-  nav.appendChild(b);
-})();
-</script>
 
   <!-- PHASE 71 PANEL -->
   <div id="panel-p71-ops" class="panel" style="display:none">
@@ -4802,52 +4751,52 @@ loadAllP52Ops();
       <div class="card" style="padding:20px;border-left:4px solid #0ea5e9">
         <h3>📺 Live Streaming</h3>
         <p>2,840 concurrent streams · 840K peak viewers · 4K/1080p adaptive · 284 CDN nodes · 800ms latency</p>
-        <button onclick="fetch('/api/v71/live-streaming/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Streams</button>
+        <button onclick="fetch('/api/v71/live-streaming/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Streams</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #06b6d4">
         <h3>🌐 Virtual Events</h3>
         <p>2,840 virtual events · 284K max attendees · VR/AR mode · Avatar support · 84.2% engagement rate</p>
-        <button onclick="fetch('/api/v71/virtual-events/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Virtual</button>
+        <button onclick="fetch('/api/v71/virtual-events/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Virtual</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #0284c7">
         <h3>🔀 Hybrid Events</h3>
         <p>840 hybrid events · 36.8M combined reach · 3.38× virtual multiplier · 42% revenue uplift</p>
-        <button onclick="fetch('/api/v71/hybrid-events/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Hybrid</button>
+        <button onclick="fetch('/api/v71/hybrid-events/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Hybrid</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #0369a1">
         <h3>🎮 Audience Tools</h3>
         <p>Live polls · Gamification · Q&A · 2.84M game players · 84.2% engagement lift · 284K responses/min</p>
-        <button onclick="fetch('/api/v71/audience-tools/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Tools</button>
+        <button onclick="fetch('/api/v71/audience-tools/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Tools</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #0ea5e9">
         <h3>🎟️ Virtual Ticketing</h3>
         <p>28.4M virtual tickets · PPV + Subscription + Bundle · ₹284Cr revenue · 284K subscribers · MRR ₹8.4Cr</p>
-        <button onclick="fetch('/api/v71/virtual-ticketing/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Tickets</button>
+        <button onclick="fetch('/api/v71/virtual-ticketing/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Tickets</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #06b6d4">
         <h3>📼 VOD Library</h3>
         <p>28,400 events archived · 284K hours content · 284M total views · AI chapters · 28-language subs</p>
-        <button onclick="fetch('/api/v71/content-vod/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View VOD</button>
+        <button onclick="fetch('/api/v71/content-vod/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View VOD</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #0284c7">
         <h3>♿ Stream Accessibility</h3>
         <p>28 languages · 97.8% caption accuracy · Sign language · BharatTrans-v2 · WCAG 2.2 AA compliant</p>
-        <button onclick="fetch('/api/v71/stream-accessibility/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Access</button>
+        <button onclick="fetch('/api/v71/stream-accessibility/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Access</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #0369a1">
         <h3>💰 Creator Revenue</h3>
         <p>28,400 earning creators · ₹284Cr paid · Tips/SuperChat · ₹28.4Cr tips · 70% creator cut · 2.4hr payout</p>
-        <button onclick="fetch('/api/v71/creator-revenue/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Revenue</button>
+        <button onclick="fetch('/api/v71/creator-revenue/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Revenue</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #0ea5e9">
         <h3>🎬 Production Tools</h3>
         <p>AI director · 28 camera feeds · AR overlays · 2,840 graphics templates · Sponsor banners · OBS/vMix</p>
-        <button onclick="fetch('/api/v71/production-tools/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Production</button>
+        <button onclick="fetch('/api/v71/production-tools/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Production</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #06b6d4">
         <h3>📊 Stream Analytics</h3>
         <p>840K peak concurrent · ₹284Cr revenue · 84.2% YoY growth · NPS 88 · Real-time + predictive AI</p>
-        <button onclick="fetch('/api/v71/stream-analytics/dashboard').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Analytics</button>
+        <button onclick="fetch('/api/v71/stream-analytics/dashboard').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Analytics</button>
       </div>
     </div>
   </div>
@@ -4862,52 +4811,52 @@ loadAllP52Ops();
       <div class="card" style="padding:20px;border-left:4px solid #f59e0b">
         <h3>🏏 Sports Events</h3>
         <p>2,840 events ytd · IPL/ISL/PKL/BWF · 28.4M attendance · 84.2% sellout · 284 partner stadiums</p>
-        <button onclick="fetch('/api/v72/sports-events/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Events</button>
+        <button onclick="fetch('/api/v72/sports-events/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Events</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #d97706">
         <h3>🏟️ Stadium Tech</h3>
         <p>142 smart stadiums · 284K IoT sensors · 4K security · 99.2% face recognition · cashless payments</p>
-        <button onclick="fetch('/api/v72/stadium-tech/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Stadium</button>
+        <button onclick="fetch('/api/v72/stadium-tech/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Stadium</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #b45309">
         <h3>🎟️ Sports Ticketing</h3>
         <p>28.4M tickets sold · Dynamic pricing +28.4% uplift · Resale platform · Season passes · ₹840Cr revenue</p>
-        <button onclick="fetch('/api/v72/sports-ticketing/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Tickets</button>
+        <button onclick="fetch('/api/v72/sports-ticketing/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Tickets</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #92400e">
         <h3>🎮 Fantasy Sports</h3>
         <p>28.4M fantasy users · 28,400 daily contests · ₹28.4Cr daily prize pool · AI team builder · TDS compliant</p>
-        <button onclick="fetch('/api/v72/fantasy-sports/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Fantasy</button>
+        <button onclick="fetch('/api/v72/fantasy-sports/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Fantasy</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #f59e0b">
         <h3>🏃 Athlete Management</h3>
         <p>28,400 athletes · 2,840 teams · ₹2,840Cr contracts · AI performance · 84.2% injury prediction</p>
-        <button onclick="fetch('/api/v72/athlete-management/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Athletes</button>
+        <button onclick="fetch('/api/v72/athlete-management/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Athletes</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #d97706">
         <h3>📺 Sports Broadcast</h3>
         <p>28.4M concurrent peak · JioCinema/Star Sports · 22 language commentary · AI highlights · 284M social shares</p>
-        <button onclick="fetch('/api/v72/sports-media/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Broadcast</button>
+        <button onclick="fetch('/api/v72/sports-media/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Broadcast</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #b45309">
         <h3>🤝 Sponsorship</h3>
         <p>2,840 brand partners · ₹840Cr sponsorship · 8.4× ROI · 84.2% digital activations · AR activations</p>
-        <button onclick="fetch('/api/v72/sports-sponsorship/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Sponsorship</button>
+        <button onclick="fetch('/api/v72/sports-sponsorship/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Sponsorship</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #92400e">
         <h3>❤️ Fan Loyalty</h3>
         <p>28.4M fans · 2,840 fan clubs · Fantasy linked · NPS 88 · 284B cheer points · Sports NFTs 284K</p>
-        <button onclick="fetch('/api/v72/sports-fan/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Fans</button>
+        <button onclick="fetch('/api/v72/sports-fan/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Fans</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #f59e0b">
         <h3>👕 Merchandise</h3>
         <p>28,400 licensed products · ₹284Cr revenue · Adidas/Nike partnerships · Blockchain cert · 42% repeat buyers</p>
-        <button onclick="fetch('/api/v72/sports-merch/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Merch</button>
+        <button onclick="fetch('/api/v72/sports-merch/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Merch</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #d97706">
         <h3>📊 Sports Analytics</h3>
         <p>₹2,840Cr total revenue · 42% YoY growth · NPS 88 · 28.4M broadcast viewers · 97.8% digital checkin</p>
-        <button onclick="fetch('/api/v72/sports-analytics/dashboard').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Analytics</button>
+        <button onclick="fetch('/api/v72/sports-analytics/dashboard').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Analytics</button>
       </div>
     </div>
   </div>
@@ -4922,52 +4871,52 @@ loadAllP52Ops();
       <div class="card" style="padding:20px;border-left:4px solid #ef4444">
         <h3>🏪 Concessions</h3>
         <p>2,840 stands · 28,400 menu items · 284K orders/event · ₹840 avg spend · 42% pre-orders · 2.4 min wait</p>
-        <button onclick="fetch('/api/v73/fnb-concessions/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Concessions</button>
+        <button onclick="fetch('/api/v73/fnb-concessions/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Concessions</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #dc2626">
         <h3>📱 Digital Ordering</h3>
         <p>97.8% digital orders · 1.4 min avg order · 84.2% queue eliminated · AI upsell ₹28.4Cr · NPS 88</p>
-        <button onclick="fetch('/api/v73/digital-ordering/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Digital</button>
+        <button onclick="fetch('/api/v73/digital-ordering/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Digital</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #b91c1c">
         <h3>🥂 VIP Hospitality</h3>
         <p>2,840 VIP lounges · 28 Michelin partners · ₹28,400 avg spend · 8 celebrity chefs · NPS 96</p>
-        <button onclick="fetch('/api/v73/vip-hospitality/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View VIP</button>
+        <button onclick="fetch('/api/v73/vip-hospitality/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View VIP</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #991b1b">
         <h3>📦 Smart Inventory</h3>
         <p>28,400 SKUs · 2,840 suppliers · AI forecast 97.8% accuracy · 0.28% stockout · blockchain traceability</p>
-        <button onclick="fetch('/api/v73/fnb-inventory/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Inventory</button>
+        <button onclick="fetch('/api/v73/fnb-inventory/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Inventory</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #ef4444">
         <h3>🥗 Dietary & Allergen</h3>
         <p>14 allergens tracked · 10 dietary filters · FSSAI compliant · 100% allergen labelled · Zero incidents</p>
-        <button onclick="fetch('/api/v73/dietary-mgmt/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Dietary</button>
+        <button onclick="fetch('/api/v73/dietary-mgmt/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Dietary</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #dc2626">
         <h3>🍺 Bar Management</h3>
         <p>2,840 bars · 84 craft beer brands · 284 cocktails · 99.8% age verification · RFID tracking</p>
-        <button onclick="fetch('/api/v73/bar-management/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Bar</button>
+        <button onclick="fetch('/api/v73/bar-management/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Bar</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #b91c1c">
         <h3>🔬 Food Safety</h3>
         <p>28,400 IoT sensors · HACCP certified · FSSAI A+ · 0 incidents · 99.98% IoT uptime · Zero cold chain breaks</p>
-        <button onclick="fetch('/api/v73/food-safety/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Safety</button>
+        <button onclick="fetch('/api/v73/food-safety/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Safety</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #991b1b">
         <h3>🎤 Artist Catering</h3>
         <p>28,400 artists catered · 99.2% rider fulfilment · 8,400 crew meals · 28 cuisines · 24/7 service</p>
-        <button onclick="fetch('/api/v73/artist-catering/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Catering</button>
+        <button onclick="fetch('/api/v73/artist-catering/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Catering</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #ef4444">
         <h3>♻️ Sustainability</h3>
         <p>97.8% biodegradable packaging · 284K kg food donated · 840K reusable cups · Zero landfill · 42% carbon saved</p>
-        <button onclick="fetch('/api/v73/fnb-sustainability/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Sustainability</button>
+        <button onclick="fetch('/api/v73/fnb-sustainability/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Sustainability</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #dc2626">
         <h3>📊 F&B Analytics</h3>
         <p>₹840Cr total revenue · 42% YoY growth · NPS 88 · 97.8% digital · 9.2 satisfaction · 8.4 sustainability</p>
-        <button onclick="fetch('/api/v73/fnb-analytics/dashboard').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Analytics</button>
+        <button onclick="fetch('/api/v73/fnb-analytics/dashboard').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Analytics</button>
       </div>
     </div>
   </div>
@@ -5091,5 +5040,6 @@ loadAllP52Ops();
       </div>
     </div>
   </div>
+<script src="/static/portal-fix.js"></script>
 </body>
 </html>

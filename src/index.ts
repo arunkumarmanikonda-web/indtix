@@ -94,25 +94,6 @@ Disallow: /api/
 Sitemap: https://indtix.pages.dev/sitemap.xml`)
 })
 
-// ─── API: Health ──────────────────────────────────────────
-// [DUP] app.get('/api/health', (c) => {
-// [DUP]   return c.json({
-// [DUP]     status: 'ok',
-// [DUP]     platform: 'INDTIX',
-// [DUP]     version: 'v24.0.0',
-// [DUP]     ts: new Date().toISOString(),
-// [DUP]     portals: ['fan','organiser','venue','event-manager','admin','ops','brand','architecture-spec','developer'],
-// [DUP]     api_version: 'v24',
-// [DUP]     total_endpoints: 1189,
-// [DUP]     uptime: 'operational',
-// [DUP]     region: 'edge-global',
-// [DUP]     built_with: 'Hono + Cloudflare Workers + TypeScript',
-// [DUP]     gstin: '27AABCO1234A1Z5',
-// [DUP]     company: 'Oye Imagine Private Limited',
-// [DUP]     phase: 24,
-// [DUP]     qa_score: '100%',
-// [DUP]   })
-// [DUP] })
 
 // ─── API: Events ──────────────────────────────────────────
 const EVENTS_DATA = [
@@ -496,38 +477,6 @@ app.get('/api/admin/stats', (c) => {
 })
 
 // ─── API: AI Chat (INDY) ─────────────────────────────────
-// [DUP] app.post('/api/ai/chat', async (c) => {
-// [DUP]   const { message, session_id } = await c.req.json().catch(() => ({} as any))
-// [DUP]   if (!message) return c.json({ error: 'message required' }, 400)
-// [DUP] 
-// [DUP]   const msg = message.toLowerCase()
-// [DUP]   let reply = ''
-// [DUP] 
-// [DUP]   if (msg.includes('weekend') || msg.includes('this week')) {
-// [DUP]     reply = "This weekend in Mumbai: 🎵 **Sunburn Arena** (₹1,499) on Apr 12, and **TEDx Mumbai** (₹2,000) on Apr 25. Both selling fast! Want me to check availability?"
-// [DUP]   } else if (msg.includes('cancel') || msg.includes('refund')) {
-// [DUP]     reply = "To cancel a booking: Go to **My Account → Bookings → Cancel**. Refunds are processed within 5-7 working days. Full refund if cancelled 48+ hours before the event. Need help with a specific booking?"
-// [DUP]   } else if (msg.includes('cheap') || msg.includes('free') || msg.includes('budget') || msg.includes('₹') || msg.includes('under')) {
-// [DUP]     reply = "Budget picks right now: 🎭 **BITS Pilani Oasis** at ₹299, 😂 **Comedy Central Live** at ₹799. Want me to filter by city or category too?"
-// [DUP]   } else if (msg.includes('music') || msg.includes('concert')) {
-// [DUP]     reply = "Top music events: 🎵 **Sunburn Arena Mumbai** (₹1,499 · Apr 12), **NH7 Weekender Pune** (₹2,499 · May 3), **Diljit Dosanjh Bangalore** (₹3,499 · May 10). Which city are you in?"
-// [DUP]   } else if (msg.includes('about') || msg.includes('indtix') || msg.includes('what is')) {
-// [DUP]     reply = "INDTIX is India's next-gen live event platform by **Oye Imagine Pvt Ltd**. We cover music, comedy, sports, theatre, festivals & more across 10+ cities. Book tickets in under 60 seconds. 🎟️"
-// [DUP]   } else if (msg.includes('sports') || msg.includes('cricket') || msg.includes('ipl')) {
-// [DUP]     reply = "Sports on INDTIX: ⚽ **IPL MI vs CSK** at Wankhede Stadium (₹1,200 · Apr 18) — 95% sold, grab them fast! More sports events being added weekly."
-// [DUP]   } else {
-// [DUP]     reply = `I found some great events matching "${message}"! Checking our database... 🔍 Try searching on the events page for more results, or ask me: "music this weekend", "cheap events in Pune", or "how do I cancel my booking"?`
-// [DUP]   }
-// [DUP] 
-// [DUP]   return c.json({
-// [DUP]     response: reply,
-// [DUP]     reply,
-// [DUP]     message: reply,
-// [DUP]     session_id: session_id || 'sess_' + Math.random().toString(36).substring(2, 8),
-// [DUP]     model: 'indy-v1',
-// [DUP]     ts: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── API: Promo Codes ────────────────────────────────────
 app.post('/api/promo/validate', async (c) => {
@@ -559,103 +508,12 @@ app.post('/api/promo/validate', async (c) => {
 })
 
 // ─── API: GST Invoice ────────────────────────────────────
-// [DUP] app.get('/api/gst/invoice/:booking_id', (c) => {
-// [DUP]   const booking_id = c.req.param('booking_id')
-// [DUP]   const inv_no = `INV-2026-${booking_id}`
-// [DUP]   return c.json({
-// [DUP]     invoice_id: inv_no,
-// [DUP]     invoice_number: inv_no,
-// [DUP]     invoice_no: inv_no,
-// [DUP]     total_amount: 3538,
-// [DUP]     download_url: `https://r2.indtix.com/gst/INV-2026-${booking_id}.pdf`,
-// [DUP]     pdf_url: `https://r2.indtix.com/gst/INV-2026-${booking_id}.pdf`,
-// [DUP]     invoice: {
-// [DUP]       invoice_no: `INV-2026-${booking_id}`,
-// [DUP]       booking_id,
-// [DUP]       supplier: { name: 'Oye Imagine Private Limited', gstin: '27AABCO1234A1Z5', address: 'Mumbai, Maharashtra 400001' },
-// [DUP]       buyer: { name: 'Customer Name', gstin: null, address: 'Customer Address' },
-// [DUP]       line_items: [
-// [DUP]         { description: 'Event Ticket – General Admission x2', hsn: '9996', qty: 2, rate: 1499, amount: 2998 },
-// [DUP]         { description: 'Platform Convenience Fee', hsn: '9984', qty: 2, rate: 20, amount: 40 },
-// [DUP]       ],
-// [DUP]       taxable_value: 3038,
-// [DUP]       cgst: 273.42,
-// [DUP]       sgst: 273.42,
-// [DUP]       igst: 0,
-// [DUP]       total: 3584.84,
-// [DUP]       pdf_url: `https://r2.indtix.com/gst/INV-2026-${booking_id}.pdf`,
-// [DUP]       issued_at: new Date().toISOString()
-// [DUP]     }
-// [DUP]   })
-// [DUP] })
 
 // ─── API: Notifications (send) ───────────────────────────
-// [DUP] app.post('/api/notifications/send', async (c) => {
-// [DUP]   const { user_id, channel, template, payload } = await c.req.json().catch(() => ({} as any))
-// [DUP]   // In production: queue to Cloudflare Queue → dispatch to WhatsApp/email/push
-// [DUP]   const notification_id = 'notif_' + Math.random().toString(36).substring(2, 9)
-// [DUP]   return c.json({
-// [DUP]     queued: true, success: true,
-// [DUP]     notification_id,
-// [DUP]     status: 'queued',
-// [DUP]     channel: channel || 'whatsapp',
-// [DUP]     template,
-// [DUP]     estimated_delivery: '< 30 seconds',
-// [DUP]     ts: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── API: Refund / Cancellation ──────────────────────────
-// [DUP] app.post('/api/bookings/:id/cancel', async (c) => {
-// [DUP]   const booking_id = c.req.param('id')
-// [DUP]   const { reason, requested_by } = await c.req.json().catch(() => ({}))
-// [DUP] 
-// [DUP]   const booking = { id: booking_id, total: 3584, event_name: 'Sample Event', status: 'confirmed' }
-// [DUP]   const hoursBeforeEvent = 72 // Simulate 72h before event
-// [DUP]   let refund_pct = 0
-// [DUP]   let refund_policy = ''
-// [DUP] 
-// [DUP]   if (hoursBeforeEvent >= 48) { refund_pct = 100; refund_policy = 'Full refund (>48h before event)' }
-// [DUP]   else if (hoursBeforeEvent >= 24) { refund_pct = 50; refund_policy = '50% refund (24-48h before event)' }
-// [DUP]   else { refund_pct = 0; refund_policy = 'No refund (<24h before event)' }
-// [DUP] 
-// [DUP]   const refund_amount = Math.round(booking.total * refund_pct / 100)
-// [DUP] 
-// [DUP]   const cancellationObj = {
-// [DUP]     booking_id, reason: reason || 'User requested', refund_pct, refund_amount,
-// [DUP]     refunded_amount: refund_amount,
-// [DUP]     refund_policy, refund_to: 'original_payment_method', refund_eta: '5-7 business days',
-// [DUP]     cancellation_id: 'CAN-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
-// [DUP]     whatsapp_sent: true, email_sent: true, cancelled_at: new Date().toISOString()
-// [DUP]   }
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     refund_pct,
-// [DUP]     refund_amount,
-// [DUP]     refunded_amount: refund_amount,
-// [DUP]     cancellation: cancellationObj
-// [DUP]   })
-// [DUP] })
 
 // ─── API: Wristband / LED Ops ────────────────────────────
-// [DUP] app.post('/api/wristbands/issue', async (c) => {
-// [DUP]   const { booking_id, zone, led_enabled } = await c.req.json().catch(() => ({}))
-// [DUP]   const wristband_id = 'WB-' + Math.random().toString(36).substring(2, 9).toUpperCase()
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     issued: 1,
-// [DUP]     wristband_id,
-// [DUP]     wristband: {
-// [DUP]       id: wristband_id,
-// [DUP]       booking_id,
-// [DUP]       zone: zone || 'GA',
-// [DUP]       led_enabled: led_enabled ?? false,
-// [DUP]       color: zone === 'VIP' ? 'gold' : zone === 'PREM' ? 'purple' : 'white',
-// [DUP]       nfc_id: 'NFC-' + Math.random().toString(36).substring(2, 9).toUpperCase(),
-// [DUP]       activated_at: new Date().toISOString()
-// [DUP]     }
-// [DUP]   })
-// [DUP] })
 
 app.post('/api/wristbands/led/command', async (c) => {
   const { event_id, command, color, effect, zones, zone } = await c.req.json().catch(() => ({}))
@@ -709,39 +567,6 @@ app.post('/api/kyc/submit', async (c) => {
   })
 })
 
-// [DUP] app.get('/api/kyc/:id', (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({
-// [DUP]     status: 'approved',
-// [DUP]     user_id: id,
-// [DUP]     kyc: {
-// [DUP]       id,
-// [DUP]       user_id: id,
-// [DUP]       status: 'approved',
-// [DUP]       verified_at: new Date().toISOString(),
-// [DUP]       gstin_valid: true,
-// [DUP]       pan_valid: true,
-// [DUP]       reviewer: 'KYC Team',
-// [DUP]       notes: 'All documents verified. GSTIN active on GST portal.'
-// [DUP]     }
-// [DUP]   })
-// [DUP] })
-
-// [DUP] app.post('/api/settlements/:id/process', async (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     settlement: {
-// [DUP]       id,
-// [DUP]       status: 'processed',
-// [DUP]       utr: 'UTR' + Date.now(),
-// [DUP]       processed_at: new Date().toISOString(),
-// [DUP]       bank: 'HDFC Bank',
-// [DUP]       mode: 'NEFT',
-// [DUP]       eta: '2-4 hours'
-// [DUP]     }
-// [DUP]   })
-// [DUP] })
 
 // ─── API: Seat Map ────────────────────────────────────────
 app.get('/api/events/:id/seatmap', (c) => {
@@ -784,42 +609,8 @@ app.get('/api/events/:id/seatmap', (c) => {
 })
 
 // ─── API: Ticket Tiers Availability ─────────────────────
-// [DUP] app.get('/api/events/:id/tiers', (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   const event = EVENTS_DATA.find(e => e.id === id)
-// [DUP]   if (!event) return c.json({ error: 'Event not found' }, 404)
-// [DUP] 
-// [DUP]   return c.json({
-// [DUP]     event_id: id,
-// [DUP]     tiers: [
-// [DUP]       { id: 'ga', name: 'General Admission', price: event.price, available: Math.floor(5000 * (1 - event.sold_pct/100)), total: 5000, description: 'Standing floor area', benefits: [] },
-// [DUP]       { id: 'premium', name: 'Premium', price: event.price * 2, available: Math.floor(2000 * (1 - event.sold_pct/100)), total: 2000, description: 'Premium standing zone', benefits: ['Dedicated entry', 'Better view'] },
-// [DUP]       { id: 'vip', name: 'VIP Gold', price: event.price * 4, available: Math.floor(500 * (1 - event.sold_pct/100)), total: 500, description: 'VIP lounge with seating', benefits: ['Lounge access', 'Complimentary drinks', 'Meet & greet entry', 'Merchandise'] },
-// [DUP]       { id: 'accessible', name: 'Accessible', price: event.price, available: 50, total: 50, description: 'Accessible viewing area', benefits: ['Accessible facilities', 'Companion seat'] },
-// [DUP]     ],
-// [DUP]     booking_limits: { max_per_booking: 10, business_booking_cap: 50, group_booking_available: true },
-// [DUP]     max_per_booking: 10,
-// [DUP]     business_booking_cap: 50,
-// [DUP]     group_booking_available: true,
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── API: Add-ons ────────────────────────────────────────
-// [DUP] app.get('/api/events/:id/addons', (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({
-// [DUP]     event_id: id,
-// [DUP]     addons: [
-// [DUP]       { id: 'meal', name: '🍔 Combo Meal Voucher', price: 350, category: 'food', available: true, per_ticket: true },
-// [DUP]       { id: 'merch', name: '👕 Event T-Shirt', price: 899, category: 'merchandise', available: true, per_ticket: false, sizes: ['S','M','L','XL','XXL'] },
-// [DUP]       { id: 'parking', name: '🚗 Parking Pass', price: 200, category: 'transport', available: true, per_ticket: false },
-// [DUP]       { id: 'camping', name: '⛺ Camping Pass', price: 1500, category: 'accommodation', available: false, per_ticket: true },
-// [DUP]       { id: 'afterparty', name: '🎉 After Party Access', price: 1200, category: 'experience', available: true, per_ticket: true },
-// [DUP]       { id: 'fastlane', name: '⚡ Fast Lane Entry', price: 149, category: 'upgrade', available: true, per_ticket: true },
-// [DUP]     ]
-// [DUP]   })
-// [DUP] })
 
 // ─── API: Business / Bulk Booking ────────────────────────
 app.post('/api/bookings/bulk', async (c) => {
@@ -898,44 +689,6 @@ app.post('/api/events/:id/faq', async (c) => {
 })
 
 // ─── API: Organiser Analytics ────────────────────────────
-// [DUP] app.get('/api/organiser/analytics', (c) => {
-// [DUP]   const analytics = {
-// [DUP]     total_events: 12, tickets_sold_total: 42840, gmv_total: 124000000,
-// [DUP]     avg_occupancy: 78, pending_settlement: 1840000
-// [DUP]   }
-// [DUP]   return c.json({
-// [DUP]     analytics,
-// [DUP]     overview: {
-// [DUP]       total_events: 12, tickets_sold: 42840, gmv_total: 124000000,
-// [DUP]       avg_occupancy: 78, pending_settlement: 1840000
-// [DUP]     },
-// [DUP]     summary: analytics,
-// [DUP]     revenue: 124000000,
-// [DUP]     total_revenue: 124000000,
-// [DUP]     total_events: 12,
-// [DUP]     tickets_sold_total: 42840,
-// [DUP]     revenue_by_tier: [
-// [DUP]       { tier: 'General Admission', amount: 48000000, pct: 39 },
-// [DUP]       { tier: 'Premium', amount: 42000000, pct: 34 },
-// [DUP]       { tier: 'VIP Gold', amount: 34000000, pct: 27 },
-// [DUP]     ],
-// [DUP]     revenue_by_month: [
-// [DUP]       { month: 'Oct 2025', amount: 8200000 },
-// [DUP]       { month: 'Nov 2025', amount: 11400000 },
-// [DUP]       { month: 'Dec 2025', amount: 18600000 },
-// [DUP]       { month: 'Jan 2026', amount: 22400000 },
-// [DUP]       { month: 'Feb 2026', amount: 28200000 },
-// [DUP]       { month: 'Mar 2026', amount: 35200000 },
-// [DUP]     ],
-// [DUP]     top_cities: [
-// [DUP]       { city: 'Mumbai', tickets: 18420, revenue: 52000000 },
-// [DUP]       { city: 'Bangalore', tickets: 12840, revenue: 38000000 },
-// [DUP]       { city: 'Delhi', tickets: 8240, revenue: 22000000 },
-// [DUP]       { city: 'Pune', tickets: 3340, revenue: 12000000 },
-// [DUP]     ],
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── API: Check-in / Scan Stats ──────────────────────────
 app.get('/api/events/:id/checkin-stats', (c) => { // total_sold = alias
@@ -1006,39 +759,6 @@ app.get('/api/admin/gst/monthly', (c) => {
 })
 
 // ─── API: Platform BI / Intelligence ────────────────────
-// [DUP] app.get('/api/admin/bi/dashboard', (c) => {
-// [DUP]   return c.json({
-// [DUP]     // Top-level kpis alias
-// [DUP]     revenue: 184500000, gmv: 184500000,
-// [DUP]     kpis: {
-// [DUP]       dau: 84200, gmv_today: 8420000, tickets_sold_today: 4280, live_events: 12,
-// [DUP]       avg_session_duration_min: 7.4, conversion_rate_pct: 12.8
-// [DUP]     },
-// [DUP]     // Top-level aliases for quick access
-// [DUP]     dau: 84200, gmv_today: 8420000, tickets_sold_today: 4280, live_events: 12,
-// [DUP]     metrics: {
-// [DUP]       dau: 84200, live_events: 12, tickets_sold_today: 4280, gmv_today: 8420000,
-// [DUP]       avg_session_duration_min: 7.4, conversion_rate_pct: 12.8
-// [DUP]     },
-// [DUP]     realtime: {
-// [DUP]       dau: 84200, live_events: 12, tickets_sold_today: 4280,
-// [DUP]       gmv_today: 8420000, avg_session_duration_min: 7.4, conversion_rate_pct: 12.8
-// [DUP]     },
-// [DUP]     ai_insights: [
-// [DUP]       { insight: 'Sunburn Arena Mumbai is trending — 3.2x normal search volume. Consider pushing notification to 45K interest users.', type: 'opportunity', priority: 'high' },
-// [DUP]       { insight: 'Refund rate for Comedy category is 4.1% vs platform average 2.1%. Investigate organiser "Canvas Laugh Club".', type: 'alert', priority: 'medium' },
-// [DUP]       { insight: 'Mumbai users who bought Music tickets also buy Comedy tickets 68% of the time. Cross-sell opportunity.', type: 'insight', priority: 'low' },
-// [DUP]     ],
-// [DUP]     demand_forecast: {
-// [DUP]       this_weekend: { predicted_tickets: 18400, confidence: 0.87 },
-// [DUP]       next_weekend: { predicted_tickets: 22100, confidence: 0.79 },
-// [DUP]     },
-// [DUP]     cohort_retention: {
-// [DUP]       day1: 82, day7: 61, day30: 44, day90: 31
-// [DUP]     },
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── API: Organiser Onboarding ────────────────────────────
 app.post('/api/organiser/register', async (c) => {
@@ -1113,64 +833,8 @@ app.post('/api/admin/config', async (c) => {
 })
 
 // ─── API: POS (On-ground Sales) ──────────────────────────
-// [DUP] app.post('/api/pos/sale', async (c) => {
-// [DUP]   const { event_id, items, payment_method, gate_id, operator_id } = await c.req.json().catch(() => ({}))
-// [DUP]   if (!items || !items.length) return c.json({ error: 'items required' }, 400)
-// [DUP] 
-// [DUP]   const subtotal = items.reduce((s: number, i: any) => s + (i.price * i.qty), 0)
-// [DUP]   const gst = Math.round(subtotal * 0.18)
-// [DUP]   const total = subtotal + gst
-// [DUP]   const order_id = 'POS-' + Math.random().toString(36).substring(2, 9).toUpperCase()
-// [DUP] 
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     receipt_id: order_id,
-// [DUP]     order_id,
-// [DUP]     total,
-// [DUP]     transaction_id: order_id,
-// [DUP]     sale: {
-// [DUP]       order_id,
-// [DUP]       event_id,
-// [DUP]       items,
-// [DUP]       subtotal,
-// [DUP]       gst,
-// [DUP]       total,
-// [DUP]       payment_method: payment_method || 'upi',
-// [DUP]       gate_id: gate_id || 'Gate 1',
-// [DUP]       operator_id,
-// [DUP]       receipt_url: `https://r2.indtix.com/receipts/${order_id}.pdf`,
-// [DUP]       created_at: new Date().toISOString()
-// [DUP]     }
-// [DUP]   })
-// [DUP] })
 
 // ─── API: Waitlist ───────────────────────────────────────
-// [DUP] app.post('/api/events/:id/waitlist', async (c) => {
-// [DUP]   const event_id = c.req.param('id')
-// [DUP]   const body = await c.req.json().catch(() => ({}) as any) as any
-// [DUP]   const { name, email, mobile, tier_id, user_id, tier } = body
-// [DUP]   const waitlist_id = 'WL-' + Math.random().toString(36).substring(2, 9).toUpperCase()
-// [DUP]   const position = Math.floor(Math.random() * 50) + 1
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     waitlist_id,
-// [DUP]     event_id,
-// [DUP]     user_id: user_id || 'USR-001',
-// [DUP]     position,
-// [DUP]     tier: tier || tier_id || 'GA',
-// [DUP]     estimated_wait: position < 10 ? '< 1 hour' : position < 30 ? '1-3 hours' : '3+ hours',
-// [DUP]     notification_channels: ['whatsapp', 'email', 'push'],
-// [DUP]     expires_at: new Date(Date.now() + 24 * 3600000).toISOString(),
-// [DUP]     waitlist: {
-// [DUP]       id: waitlist_id, event_id, tier_id: tier || tier_id || 'ga',
-// [DUP]       name, email, mobile, position,
-// [DUP]       estimated_availability: '24-48 hours if tickets become available',
-// [DUP]       whatsapp_alert: true, email_alert: true,
-// [DUP]       added_at: new Date().toISOString()
-// [DUP]     },
-// [DUP]     joined_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 app.post('/api/wallet/redeem', async (c) => {
   const { user_id, amount, booking_id } = await c.req.json().catch(() => ({}))
@@ -1190,22 +854,6 @@ app.post('/api/wallet/redeem', async (c) => {
 })
 
 // ─── API: Referral ───────────────────────────────────────
-// [DUP] app.post('/api/referral/validate', async (c) => {
-// [DUP]   const { referral_code, code, user_id } = await c.req.json().catch(() => ({}))
-// [DUP]   const ref = referral_code || code
-// [DUP]   if (!ref) return c.json({ error: 'referral_code required' }, 400)
-// [DUP]   const valid = ref.startsWith('IND') || ref.startsWith('INDY-REF-') || ref.length === 8
-// [DUP]   return c.json({
-// [DUP]     valid,
-// [DUP]     referral_code: ref,
-// [DUP]     reward_for_referrer: valid ? 100 : 0,
-// [DUP]     reward_for_referee: valid ? 50 : 0,
-// [DUP]     reward_for_new_user: valid ? 50 : 0,
-// [DUP]     currency: 'INDY Credits',
-// [DUP]     expires: '2026-12-31',
-// [DUP]     message: valid ? `Valid referral! ₹50 credit added to your wallet. Your friend gets ₹100.` : 'Invalid or expired referral code.'
-// [DUP]   })
-// [DUP] })
 
 // ─── API: Ticket Transfer ────────────────────────────────
 app.post('/api/tickets/:id/transfer', async (c) => {
@@ -1340,32 +988,6 @@ app.get('/api/event-manager/dashboard', (c) => {
 })
 
 // ─── API: Platform Search ─────────────────────────────────
-// [DUP] app.get('/api/search', (c) => {
-// [DUP]   const q = c.req.query('q') || ''
-// [DUP]   const type = c.req.query('type') || 'all'
-// [DUP]   const query = q.toLowerCase()
-// [DUP] 
-// [DUP]   if (!q) return c.json({ query: '', results: { events: [], venues: [], organisers: [] }, total: 0, suggestions: ['Sunburn Arena', 'NH7 Weekender', 'Lollapalooza India'], ts: new Date().toISOString() })
-// [DUP] 
-// [DUP]   const events = EVENTS_DATA.filter(e =>
-// [DUP]     e.name.toLowerCase().includes(query) ||
-// [DUP]     e.city.toLowerCase().includes(query) ||
-// [DUP]     e.venue.toLowerCase().includes(query) ||
-// [DUP]     e.category.toLowerCase().includes(query)
-// [DUP]   )
-// [DUP] 
-// [DUP]   return c.json({
-// [DUP]     query: q,
-// [DUP]     results: {
-// [DUP]       events: events.slice(0, 5),
-// [DUP]       venues: [{ id: 'v1', name: 'MMRDA Grounds', city: 'Mumbai', capacity: 50000 }],
-// [DUP]       organisers: [{ id: 'o1', name: 'Percept Live', events: 12 }],
-// [DUP]     },
-// [DUP]     total: events.length,
-// [DUP]     suggestions: ['Sunburn Arena', 'NH7 Weekender', 'Lollapalooza India', 'IPL 2026'],
-// [DUP]     ts: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── API: Wristband Status ───────────────────────────────
 app.get('/api/wristbands/status', (c) => {
@@ -1457,15 +1079,6 @@ app.post('/api/auth/login', async (c) => {
 })
 
 // AUTH: Signup
-// [DUP] app.post('/api/auth/signup', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({}))
-// [DUP]   const { name, email, password } = body
-// [DUP]   const phone = body.phone || body.mobile || '9999999999'
-// [DUP]   // Accept phone-only signups too
-// [DUP]   const userId = 'USR-' + Math.random().toString(36).slice(2,9).toUpperCase()
-// [DUP]   const otp = Math.floor(100000 + Math.random() * 900000)
-// [DUP]   return c.json({ success: true, token: `tok_${Date.now()}`, user_id: userId, otp_sent: true, message: `OTP ${otp} sent to ${phone}`, verify_required: false, user: { id: userId, name: name || 'New User', email: email || `${phone}@indtix.com`, avatar: avatarUrl(name || 'User'), wallet_balance: 500 } })
-// [DUP] })
 
 // AUTH: Register (alias for signup)
 app.post('/api/auth/register', async (c) => {
@@ -1476,10 +1089,6 @@ app.post('/api/auth/register', async (c) => {
 })
 
 // AUTH: OTP Verify
-// [DUP] app.post('/api/auth/verify-otp', async (c) => {
-// [DUP]   const { user_id, otp } = await c.req.json().catch(() => ({} as any))
-// [DUP]   return c.json({ success: true, valid: true, token: `tok_${Date.now()}`, message: 'Account verified! Welcome to INDTIX 🎉' })
-// [DUP] })
 
 // EVENTS: Create (Organiser)
 app.post('/api/events', async (c) => {
@@ -1499,20 +1108,6 @@ app.put('/api/events/:id', async (c) => {
 })
 
 // ORGANISER FORECAST: GET alias (AI-based demand prediction)
-// [DUP] app.get('/api/organiser/forecast', (c) => {
-// [DUP]   return c.json({
-// [DUP]     forecasts: [
-// [DUP]       { event_id:'e1', title:'Sunburn Arena', predicted_sellout_pct:94, predicted_revenue:7450000, confidence:'high', days_to_sellout:5 },
-// [DUP]       { event_id:'e2', title:'NH7 Weekender', predicted_sellout_pct:78, predicted_revenue:5200000, confidence:'medium', days_to_sellout:18 },
-// [DUP]     ],
-// [DUP]     forecast: [
-// [DUP]       { event_id:'e1', title:'Sunburn Arena', predicted_sellout_pct:94, predicted_revenue:7450000, confidence:'high', days_to_sellout:5 },
-// [DUP]       { event_id:'e2', title:'NH7 Weekender', predicted_sellout_pct:78, predicted_revenue:5200000, confidence:'medium', days_to_sellout:18 },
-// [DUP]     ],
-// [DUP]     model_version: 'INDY-ML-v2.1',
-// [DUP]     generated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // PROMOS: List all
 app.get('/api/promos', (c) => {
@@ -1552,20 +1147,6 @@ app.delete('/api/promos/:code', (c) => {
 // ─── PHASE 5: NEW ENDPOINTS ───────────────────────────────────────────────────
 
 // BOOKINGS: Get user booking history (NEW)
-// [DUP] app.get('/api/bookings/user/:user_id', (c) => {
-// [DUP]   const user_id = c.req.param('user_id')
-// [DUP]   return c.json({
-// [DUP]     user_id,
-// [DUP]     bookings: [
-// [DUP]       { id: 'BK7X9Q2A', event: 'Sunburn Arena Mumbai', date: '2026-04-15', venue: 'NSCI Dome', tickets: 2, tier: 'VIP Gold', amount: 11800, status: 'confirmed', qr_code: 'QR-BK7X9Q2A', booking_date: '2026-03-01', checkin_status: 'not_checked_in' },
-// [DUP]       { id: 'BK2K8M4N', event: 'Lollapalooza India', date: '2026-03-22', venue: 'Mahalaxmi Race Course', tickets: 1, tier: 'General Admission', amount: 3499, status: 'confirmed', qr_code: 'QR-BK2K8M4N', booking_date: '2026-02-15', checkin_status: 'not_checked_in' },
-// [DUP]       { id: 'BK9P3F7Z', event: 'Comedy Night Out', date: '2026-05-03', venue: 'Habitat Centre', tickets: 2, tier: 'Premium', amount: 5600, status: 'confirmed', qr_code: 'QR-BK9P3F7Z', booking_date: '2026-02-28', checkin_status: 'not_checked_in' },
-// [DUP]       { id: 'BK1R4T2E', event: 'NH7 Weekender', date: '2026-01-18', venue: 'Aamby Valley', tickets: 3, tier: 'GA', amount: 7497, status: 'completed', booking_date: '2025-12-20', checkin_status: 'checked_in' },
-// [DUP]     ],
-// [DUP]     total: 4,
-// [DUP]     stats: { total_spent: 28396, events_attended: 1, upcoming_events: 3, cancelled: 0 }
-// [DUP]   })
-// [DUP] })
 
 // ORGANISER: Get team members (NEW)
 app.get('/api/organiser/team', (c) => {
@@ -1581,13 +1162,6 @@ app.post('/api/organiser/team', async (c) => {
 })
 
 // INCIDENTS: Get incidents for a specific event
-// [DUP] app.get('/api/events/:id/incidents', (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({ incidents: [
-// [DUP]     { id: 'INC-001', type: 'Technical Failure', location: 'Gate 4', description: 'Gate 4 scanner down', priority: 'high', status: 'in_progress', event_id: id, logged_at: new Date(Date.now()-7200000).toISOString() },
-// [DUP]     { id: 'INC-002', type: 'Medical', location: 'Main Floor', description: 'Minor heat exhaustion — fan assisted', priority: 'medium', status: 'resolved', event_id: id, logged_at: new Date(Date.now()-3600000).toISOString() },
-// [DUP]   ], total: 2, open: 1, active: 1, resolved: 1 })
-// [DUP] })
 
 // ─── PHASE 5: Missing Routes ──────────────────────────────────────────────────
 
@@ -1650,12 +1224,6 @@ app.post('/api/fanclubs/join', async (c) => {
 })
 
 // FAN CLUBS: Join / Subscribe
-// [DUP] app.post('/api/fanclubs/:id/join', async (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   const { user_id, tier, payment_method } = await c.req.json().catch(() => ({}))
-// [DUP]   const membershipId = 'MEM-' + Math.random().toString(36).slice(2,8).toUpperCase()
-// [DUP]   return c.json({ success: true, membership_id: membershipId, membership: { id: membershipId, fanclub_id: id, user_id: user_id || 'USR-001', tier: tier || 'standard', status: 'active', valid_until: new Date(Date.now() + 365*24*3600000).toISOString(), perks_unlocked: ['Early access tickets', 'Exclusive content', 'Member badge'], payment_method: payment_method || 'upi' }, message: `Fan club membership activated! Your member ID is ${membershipId}. Perks are now live in your account.` })
-// [DUP] })
 
 // LIVESTREAM: List live/upcoming streams
 app.get('/api/livestreams', (c) => {
@@ -1670,12 +1238,6 @@ app.get('/api/livestreams', (c) => {
 })
 
 // LIVESTREAM: Purchase access
-// [DUP] app.post('/api/livestreams/:id/purchase', async (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   const { user_id, payment_method } = await c.req.json().catch(() => ({}))
-// [DUP]   const accessId = 'LSA-' + Math.random().toString(36).slice(2,8).toUpperCase()
-// [DUP]   return c.json({ success: true, access_id: accessId, stream_url: `https://stream.indtix.com/${id}?token=${accessId}`, access: { id: accessId, stream_id: id, user_id: user_id || 'USR-001', status: 'active', access_url: `https://stream.indtix.com/${id}?token=${accessId}`, expires_at: new Date(Date.now() + 48*3600000).toISOString(), payment_method: payment_method || 'upi' }, message: `Access granted! Watch the stream at your link. Valid for 48 hours.` })
-// [DUP] })
 
 // MERCH STORE: List products
 app.get('/api/merch', /* merch alias */ (c) => {
@@ -1709,19 +1271,7 @@ app.post('/api/merch/order', async (c) => {
 })
 
 // SPONSORS: List sponsors for an event
-// [DUP] app.get('/api/events/:id/sponsors', (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({ event_id: id, sponsors: [
-// [DUP]     { id: 'SP-001', name: 'Bacardi', tier: 'Title Sponsor', logo: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200', activation_types: ['Bar activation', 'LED branding', 'Merch giveaway'], budget: 2500000, impressions_target: 80000, impressions_actual: 72400, status: 'active' },
-// [DUP]     { id: 'SP-002', name: 'Jio', tier: 'Digital Partner', logo: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=200', activation_types: ['5G zone', 'Free SIM offer', 'Digital screen'], budget: 1200000, impressions_target: 50000, impressions_actual: 48200, status: 'active' },
-// [DUP]     { id: 'SP-003', name: 'Swiggy Instamart', tier: 'Food Partner', logo: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=200', activation_types: ['Food court', 'App promo'], budget: 800000, impressions_target: 30000, impressions_actual: 28900, status: 'active' },
-// [DUP]   ], total: 3, total_sponsorship_value: 4500000, updated_at: new Date().toISOString() })
-// [DUP] })
 
-// [DUP] app.get('/api/sponsors/:id/metrics', (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({ sponsor_id: id, metrics: { impressions: 72400, clicks: 8420, conversions: 284, roi: 3.8, spend: 2500000, earned_media_value: 9500000, brand_lift: 12.4, top_events: ['e1','e2'] }, impressions: 72400, clicks: 8420, conversions: 284, roi: 3.8, spend: 2500000, earned_media_value: 9500000, brand_lift: 12.4, top_events: ['e1','e2'], updated_at: new Date().toISOString() })
-// [DUP] })
 
 app.put('/api/sponsors/:id/metrics', async (c) => {
   const id = c.req.param('id')
@@ -2111,22 +1661,6 @@ app.get('/api/events/:id/checkin-live', (c) => {
 })
 
 // PHASE 4: Event Social Feed
-// [DUP] app.get('/api/events/:id/social', (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({
-// [DUP]     event_id: id,
-// [DUP]     hashtag: '#SunburnArena2026',
-// [DUP]     mentions_today: 4280,
-// [DUP]     sentiment: { positive: 82, neutral: 14, negative: 4 },
-// [DUP]     top_posts: [
-// [DUP]       { platform: 'Instagram', user: '@priya_music', content: 'Can\'t believe how amazing the lineup is! See you at #SunburnArena2026 🎵', likes: 4200, shares: 840, url: '#' },
-// [DUP]       { platform: 'Twitter/X', user: '@rahul_events', content: 'Just grabbed VIP tickets for Sunburn! #SunburnArena2026 going to be epic', likes: 1800, retweets: 420, url: '#' },
-// [DUP]       { platform: 'YouTube', user: 'MumbaiEventVlogs', content: 'Sunburn Arena Preview — What to expect', views: 84000, url: '#' },
-// [DUP]     ],
-// [DUP]     trending_topics: ['#SunburnArena2026', 'Mumbai Music', 'EDM India', 'MMRDA Grounds', 'Percept Live'],
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // PHASE 4: A/B Testing & Experiments
 app.get('/api/admin/experiments', (c) => {
@@ -2243,25 +1777,7 @@ app.post('/api/payments/refund', async (c) => {
 })
 
 // ─── NOTIFICATIONS HUB ──────────────────────────────────────
-// [DUP] app.get('/api/notifications', async (c) => {
-// [DUP]   const { user_id = 'USR-001', unread_only } = c.req.query()
-// [DUP]   const notifications = [
-// [DUP]     { id: 'N001', user_id, type: 'booking_confirmed', title: 'Booking Confirmed! 🎉', body: 'Your tickets for Diljit Dosanjh Tour are confirmed. Check your email.', read: false, created_at: new Date(Date.now() - 3600000).toISOString(), action_url: '/fan#my-bookings', icon: '🎟️' },
-// [DUP]     { id: 'N002', user_id, type: 'promo_alert', title: 'Flash Sale: 20% off!', body: 'Use code FLASH20 – expires in 2 hours!', read: false, created_at: new Date(Date.now() - 7200000).toISOString(), action_url: '/fan#events', icon: '🔥' },
-// [DUP]     { id: 'N003', user_id, type: 'event_reminder', title: 'Event Tomorrow!', body: 'Sunburn Arena is tomorrow at 6 PM. Gates open at 4 PM.', read: true, created_at: new Date(Date.now() - 86400000).toISOString(), action_url: '/fan#my-bookings', icon: '📅' },
-// [DUP]     { id: 'N004', user_id, type: 'wallet_credit', title: 'Wallet Credited ₹500', body: 'Referral bonus added to your INDTIX wallet.', read: true, created_at: new Date(Date.now() - 172800000).toISOString(), action_url: '/fan#wallet', icon: '💰' },
-// [DUP]     { id: 'N005', user_id, type: 'kyc_approved', title: 'KYC Verified ✅', body: 'Your KYC is approved. You can now book up to 50 tickets.', read: false, created_at: new Date(Date.now() - 259200000).toISOString(), action_url: '/fan#profile', icon: '✅' },
-// [DUP]     { id: 'N006', user_id, type: 'refund_processed', title: 'Refund ₹2,998 Processed', body: 'Refund for booking BK-2026-001 has been credited to your account.', read: true, created_at: new Date(Date.now() - 345600000).toISOString(), action_url: '/fan#my-bookings', icon: '↩️' }
-// [DUP]   ]
-// [DUP]   const result = unread_only === 'true' ? notifications.filter(n => !n.read) : notifications
-// [DUP]   return c.json({ notifications: result, unread_count: notifications.filter(n => !n.read).length, total: result.length })
-// [DUP] })
 
-// [DUP] app.post('/api/notifications/mark-read', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({}))
-// [DUP]   const { notification_ids, user_id = 'USR-001' } = body
-// [DUP]   return c.json({ success: true, marked_read: notification_ids || 'all', user_id, updated_at: new Date().toISOString() })
-// [DUP] })
 
 app.put('/api/notifications/preferences', async (c) => {
   const body = await c.req.json().catch(() => ({}))
@@ -2441,80 +1957,6 @@ app.get('/api/promos/analytics', async (c) => {
 })
 
 // ─── ORGANISER ANALYTICS v2 (Phase 4) ───────────────────────
-// [DUP] app.get('/api/organiser/analytics/v2', async (c) => {
-// [DUP]   const { organiser_id = 'ORG-001', event_id } = c.req.query()
-// [DUP]   const now = Date.now()
-// [DUP]   const hourly = Array.from({ length: 24 }, (_, h) => ({
-// [DUP]     hour: `${String(h).padStart(2, '0')}:00`,
-// [DUP]     sales: Math.floor(Math.random() * 150 + 10),
-// [DUP]     revenue: Math.floor(Math.random() * 450000 + 30000)
-// [DUP]   }))
-// [DUP]   const weekly = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(day => ({
-// [DUP]     day,
-// [DUP]     sales: Math.floor(Math.random() * 800 + 100),
-// [DUP]     revenue: Math.floor(Math.random() * 2400000 + 300000)
-// [DUP]   }))
-// [DUP]   return c.json({
-// [DUP]     analytics: { tickets_sold_today: 847, revenue_today: 2540000, conversion_rate: 4.2, total_events: 5, period: c.req.query('period') || '30d' },
-// [DUP]     summary: { tickets_sold_today: 847, revenue_today: 2540000, conversion_rate: 4.2, total_events: 5 },
-// [DUP]     organiser_id,
-// [DUP]     event_id: event_id || 'all',
-// [DUP]     metrics: {
-// [DUP]       tickets_sold_today: 847,
-// [DUP]       revenue_today: 2540000,
-// [DUP]       conversion_rate: 4.2
-// [DUP]     },
-// [DUP]     realtime: {
-// [DUP]       tickets_sold_today: 847,
-// [DUP]       revenue_today: 2540000,
-// [DUP]       active_sessions: 1240,
-// [DUP]       conversion_rate: 4.2,
-// [DUP]       cart_abandonment_rate: 62.4,
-// [DUP]       avg_session_duration_sec: 184
-// [DUP]     },
-// [DUP]     real_time: {
-// [DUP]       tickets_sold_today: 847,
-// [DUP]       revenue_today: 2540000,
-// [DUP]       active_sessions: 1240,
-// [DUP]       conversion_rate: 4.2,
-// [DUP]       cart_abandonment_rate: 62.4,
-// [DUP]       avg_session_duration_sec: 184
-// [DUP]     },
-// [DUP]     audience: {
-// [DUP]       total_buyers: 8420,
-// [DUP]       new_vs_returning: { new: 62, returning: 38 },
-// [DUP]       age_groups: [
-// [DUP]         { group: '18-24', pct: 28 }, { group: '25-34', pct: 42 },
-// [DUP]         { group: '35-44', pct: 18 }, { group: '45+', pct: 12 }
-// [DUP]       ],
-// [DUP]       cities: [
-// [DUP]         { city: 'Mumbai', pct: 34 }, { city: 'Delhi', pct: 22 },
-// [DUP]         { city: 'Bangalore', pct: 18 }, { city: 'Pune', pct: 11 },
-// [DUP]         { city: 'Hyderabad', pct: 8 }, { city: 'Others', pct: 7 }
-// [DUP]       ],
-// [DUP]       devices: { mobile: 74, desktop: 20, tablet: 6 },
-// [DUP]       sources: { organic: 42, social: 28, paid: 18, referral: 12 }
-// [DUP]     },
-// [DUP]     sales: { hourly, weekly },
-// [DUP]     capacity: {
-// [DUP]       total: 5000,
-// [DUP]       sold: 3210,
-// [DUP]       pct_sold: 64.2,
-// [DUP]       zones: [
-// [DUP]         { zone: 'GA', total: 3000, sold: 2400, pct: 80, revenue: 7200000 },
-// [DUP]         { zone: 'PREM', total: 1500, sold: 680, pct: 45.3, revenue: 4080000 },
-// [DUP]         { zone: 'VIP', total: 500, sold: 130, pct: 26, revenue: 1950000 }
-// [DUP]       ]
-// [DUP]     },
-// [DUP]     forecasting: {
-// [DUP]       predicted_sellout_date: new Date(now + 8 * 86400000).toISOString().slice(0, 10),
-// [DUP]       confidence: 0.84,
-// [DUP]       recommendation: 'Consider flash sale for PREM zone – 55% capacity available',
-// [DUP]       revenue_forecast_7d: 4800000
-// [DUP]     },
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── EVENT APPROVAL WORKFLOW ──────────────────────────────────
 app.get('/api/admin/events/pending', async (c) => {
@@ -2529,48 +1971,8 @@ app.get('/api/admin/events/pending', async (c) => {
   })
 })
 
-// [DUP] app.post('/api/admin/events/:id/reject', async (c) => {
-// [DUP]   const { id } = c.req.param()
-// [DUP]   const body = await c.req.json().catch(() => ({}))
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     event_id: id,
-// [DUP]     status: 'rejected',
-// [DUP]     reason: body.reason || 'Does not meet platform guidelines',
-// [DUP]     rejected_by: body.admin_id || 'ADMIN-001',
-// [DUP]     notification_sent: true,
-// [DUP]     message: `Event ${id} rejected. Organiser notified via email and WhatsApp.`
-// [DUP]   })
-// [DUP] })
 
 // ─── SCAN / GATE ANALYTICS ──────────────────────────────────
-// [DUP] app.get('/api/scan/stats/:event_id', async (c) => {
-// [DUP]   const { event_id } = c.req.param()
-// [DUP]   const checkedIn = Math.floor(Math.random() * 2000 + 1200)
-// [DUP]   return c.json({
-// [DUP]     event_id,
-// [DUP]     total_scans: checkedIn,
-// [DUP]     total_tickets_sold: 4200,
-// [DUP]     total_scanned: checkedIn,
-// [DUP]     scan_stats: {
-// [DUP]       total_tickets: 4200,
-// [DUP]       checked_in: checkedIn,
-// [DUP]       not_arrived: 4200 - checkedIn,
-// [DUP]       check_in_rate: +((checkedIn / 4200) * 100).toFixed(1),
-// [DUP]       peak_entry_time: '18:30',
-// [DUP]       scans_per_minute: 42,
-// [DUP]       invalid_scans: 3,
-// [DUP]       duplicate_attempts: 1
-// [DUP]     },
-// [DUP]     gates: [
-// [DUP]       { gate: 'Gate 1 (Main)', scanned: Math.floor(checkedIn * 0.45), operators: 4, status: 'operational' },
-// [DUP]       { gate: 'Gate 2 (VIP)', scanned: Math.floor(checkedIn * 0.12), operators: 2, status: 'operational' },
-// [DUP]       { gate: 'Gate 3 (North)', scanned: Math.floor(checkedIn * 0.28), operators: 3, status: 'operational' },
-// [DUP]       { gate: 'Gate 4 (South)', scanned: Math.floor(checkedIn * 0.15), operators: 2, status: 'slow' }
-// [DUP]     ],
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── AI FORECASTING ─────────────────────────────────────────
 app.post('/api/ai/forecast', async (c) => {
@@ -2668,15 +2070,6 @@ app.get('/api/developer/usage', async (c) => {
 // ═══════════════════════════════════════════════════════════════════
 
 // ─── Organiser: Events list ──────────────────────────────────────
-// [DUP] app.get('/api/organiser/events', async (c) => {
-// [DUP]   return c.json({
-// [DUP]     events: EVENTS_DATA.slice(0, 4).map(e => ({
-// [DUP]       ...e, revenue: Math.round(e.price * e.sold_pct * 10),
-// [DUP]       tickets_sold: e.sold_pct * 100, status: e.status
-// [DUP]     })),
-// [DUP]     total: 4, updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── Organiser: Settlements ──────────────────────────────────────
 app.get('/api/organiser/settlements', async (c) => {
@@ -2729,27 +2122,6 @@ app.get('/api/payments/gst-report', async (c) => {
 })
 
 // ─── Events: Waitlist ────────────────────────────────────────────
-// [DUP] app.get('/api/events/:id/waitlist', (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({
-// [DUP]     event_id: id,
-// [DUP]     waitlisted: true,
-// [DUP]     position: 3,
-// [DUP]     total_waiting: 127,
-// [DUP]     tiers: [
-// [DUP]       { tier: 'GA', waiting: 84, estimated_availability: '2 hours' },
-// [DUP]       { tier: 'PREM', waiting: 28, estimated_availability: '30 mins' },
-// [DUP]       { tier: 'VIP', waiting: 15, estimated_availability: 'Tomorrow' }
-// [DUP]     ],
-// [DUP]     my_position: 3,
-// [DUP]     waitlist: [
-// [DUP]       { id: 'WL-001', email: 'user1@example.com', tier: 'VIP', position: 1, joined_at: new Date(Date.now()-86400000).toISOString() },
-// [DUP]       { id: 'WL-002', email: 'user2@example.com', tier: 'PREM', position: 2, joined_at: new Date(Date.now()-43200000).toISOString() }
-// [DUP]     ],
-// [DUP]     total: 2, updated_at: new Date().toISOString(),
-// [DUP]     joined_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── Promos: Get by code ─────────────────────────────────────────
 // ─── Promos: Catalog (unified view) — MUST be before :code ─────────
@@ -2767,25 +2139,6 @@ app.get('/api/promos/catalog', (c) => {
   })
 })
 
-// [DUP] app.get('/api/promos/:code', (c) => {
-// [DUP]   const code = c.req.param('code').toUpperCase()
-// [DUP]   const CATALOG: Record<string, any> = {
-// [DUP]     'FEST20':    { code:'FEST20',    type:'percent', value:20, max_discount:500,  valid:true, expiry:'2026-12-31', usage_count:842,  max_usage:5000  },
-// [DUP]     'MUSIC10':   { code:'MUSIC10',   type:'percent', value:10, max_discount:300,  valid:true, expiry:'2026-09-30', usage_count:1240, max_usage:10000 },
-// [DUP]     'FIRST100':  { code:'FIRST100',  type:'flat',    value:100,max_discount:100,  valid:true, expiry:'2026-06-30', usage_count:284,  max_usage:1000  },
-// [DUP]     'EARLY20':   { code:'EARLY20',   type:'percent', value:20, max_discount:400,  valid:true, expiry:'2026-05-31', usage_count:128,  max_usage:2000  },
-// [DUP]     'SUNBURN30': { code:'SUNBURN30', type:'percent', value:30, max_discount:600,  valid:true, expiry:'2026-04-30', usage_count:420,  max_usage:3000  },
-// [DUP]     'MONSOON20': { code:'MONSOON20', type:'percent', value:20, max_discount:400,  valid:true, expiry:'2026-09-30', usage_count:84,   max_usage:2000  },
-// [DUP]     'STUDENT10': { code:'STUDENT10', type:'percent', value:10, max_discount:200,  valid:true, expiry:'2026-12-31', usage_count:320,  max_usage:5000  },
-// [DUP]     'FIRST50':   { code:'FIRST50',   type:'flat',    value:50, max_discount:50,   valid:true, expiry:'2026-12-31', usage_count:2100, max_usage:5000  },
-// [DUP]     'WEEKEND15': { code:'WEEKEND15', type:'percent', value:15, max_discount:300,  valid:true, expiry:'2026-12-31', usage_count:640,  max_usage:4000  },
-// [DUP]     'INDY20':    { code:'INDY20',    type:'percent', value:20, max_discount:400,  valid:true, expiry:'2026-05-15', usage_count:1200, max_usage:3000  },
-// [DUP]   }
-// [DUP]   if (!CATALOG[code]) return c.json({ error: 'Promo code not found', promo: null }, 404)
-// [DUP]   const p = CATALOG[code]
-// [DUP]   const discount_pct = p.type === 'percent' ? p.value : null
-// [DUP]   return c.json({ ...p, code: p.code, type: p.type, value: p.value, discount_pct, max_discount: p.max_discount, promo: p, found: true })
-// [DUP] })
 
 // ─── Sponsors: list all ──────────────────────────────────────────
 app.get('/api/sponsors', async (c) => {
@@ -2978,57 +2331,10 @@ app.get('/api/gst/report', async (c) => {
 })
 
 // ─── Developer: Webhooks ─────────────────────────────────────────
-// [DUP] app.get('/api/developer/webhooks', async (c) => {
-// [DUP]   return c.json({
-// [DUP]     webhooks: [
-// [DUP]       { id:'WH-001', url:'https://myapp.com/hooks/booking',  events:['booking.created','booking.cancelled'],          active:true, secret:'whsec_***', created_at:'2026-01-15T00:00:00Z', last_triggered: new Date(Date.now()-3600000).toISOString(),  success_rate:99.2 },
-// [DUP]       { id:'WH-002', url:'https://myapp.com/hooks/payment',  events:['payment.success','payment.failed','refund.initiated'], active:true, secret:'whsec_***', created_at:'2026-02-01T00:00:00Z', last_triggered: new Date(Date.now()-7200000).toISOString(),  success_rate:98.8 }
-// [DUP]     ],
-// [DUP]     total: 2, available_events: ['booking.created','booking.cancelled','payment.success','payment.failed','refund.initiated','event.published','checkin.completed'],
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── Developer: Create Webhook ───────────────────────────────────
-// [DUP] app.post('/api/developer/webhooks', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({} as any))
-// [DUP]   const { url, events } = body
-// [DUP]   if (!url || !events) return c.json({ error: 'url and events required' }, 400)
-// [DUP]   const whId = 'WH-' + Math.random().toString(36).slice(2,5).toUpperCase()
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     webhook_id: whId,
-// [DUP]     webhook: {
-// [DUP]       id: whId,
-// [DUP]       url, events, active: true,
-// [DUP]       secret: 'whsec_' + Math.random().toString(36).slice(2,18),
-// [DUP]       created_at: new Date().toISOString()
-// [DUP]     }
-// [DUP]   })
-// [DUP] })
 
 // ─── Ops: Dashboard (canonical with both metrics + live_metrics) ──
-// [DUP] app.get('/api/ops/dashboard', async (c) => {
-// [DUP]   const event_id = c.req.query('event_id') || 'e1'
-// [DUP]   const metrics = {
-// [DUP]     attendees_in_venue: 3210, capacity_pct: 64.2, gates_open: 4, food_stalls_active: 18,
-// [DUP]     merch_counters_active: 6, medical_stations: 3, security_personnel: 120, pos_terminals: 24,
-// [DUP]     total_checkins: 14284, pending_checkins: 2716, total_capacity: 17000, occupancy_pct: 84,
-// [DUP]     gates_closed: 1, active_staff: 48, incidents_open: 2,
-// [DUP]     revenue_today: { cash: 284000, upi: 1240000, card: 420000, total: 1944000 }
-// [DUP]   }
-// [DUP]   return c.json({ event: { id: event_id, name: 'Sunburn Festival 2026', status: 'live' },
-// [DUP]     event_id, metrics, live_metrics: metrics,
-// [DUP]     active_events: 3, events: 1, incidents: 2, wristbands_issued: 3210,
-// [DUP]     alerts: [
-// [DUP]       { id:'ALT-001', type:'capacity', message:'VIP zone at 94% capacity',    severity:'warning', ts: new Date(Date.now()-900000).toISOString()  },
-// [DUP]       { id:'ALT-002', type:'queue',    message:'Gate 1 queue > 10 min wait',  severity:'warning', ts: new Date(Date.now()-300000).toISOString()  },
-// [DUP]       { id:'ALT-003', type:'stock',    message:'Water bottles low in Zone B', severity:'info',    ts: new Date(Date.now()-600000).toISOString()  }
-// [DUP]     ],
-// [DUP]     revenue_today: { cash: 284000, upi: 1240000, card: 420000, total: 1944000 },
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── Merch: Order by ID ──────────────────────────────────────────
 app.get('/api/merch/order/:id', (c) => {
@@ -3072,30 +2378,6 @@ app.get('/api/brand/roi-report', (c) => c.json({
   generated_at: new Date().toISOString()
 }))
 
-// [DUP] app.get('/api/brand/dashboard', async (c) => {
-// [DUP]   const brand_id = c.req.query('brand_id') || 'BR-001'
-// [DUP]   return c.json({
-// [DUP]     brand_id,
-// [DUP]     brand_name: 'Coca-Cola India',
-// [DUP]     brand: { id: brand_id, name: 'Brand Partner', status: 'active' },
-// [DUP]     total_impressions: 214800,
-// [DUP]     stats: { total_campaigns: 3, active_campaigns: 2, total_impressions: 214800, total_clicks: 23470, total_conversions: 883, avg_roi: 3.63, budget_utilisation_pct: 86 },
-// [DUP]     impressions: 214800,
-// [DUP]     campaigns: [
-// [DUP]       { id:'CAM-001', event:'Sunburn Arena Mumbai', type:'Title Sponsor',   budget:2500000, spent:2100000, impressions:72400,  clicks:8420, conversions:284, roi:3.8, status:'active'    },
-// [DUP]       { id:'CAM-002', event:'NH7 Weekender',        type:'Co-Sponsor',      budget:1200000, spent:980000,  impressions:48200,  clicks:5210, conversions:187, roi:2.9, status:'active'    },
-// [DUP]       { id:'CAM-003', event:'Lollapalooza India',   type:'Digital Partner', budget:800000,  spent:800000,  impressions:94200,  clicks:9840, conversions:412, roi:4.2, status:'completed' },
-// [DUP]     ],
-// [DUP]     totals: { budget:4500000, spent:3880000, impressions:214800, clicks:23470, conversions:883, avg_roi:3.63 },
-// [DUP]     audience_insights: {
-// [DUP]       age_groups: [{ range:'18-24', pct:32 }, { range:'25-34', pct:41 }, { range:'35-44', pct:18 }, { range:'45+', pct:9 }],
-// [DUP]       top_cities:  [{ city:'Mumbai', pct:38 }, { city:'Bangalore', pct:26 }, { city:'Delhi', pct:20 }, { city:'Pune', pct:16 }],
-// [DUP]       gender: { male:58, female:38, other:4 },
-// [DUP]       interests: ['Music Festivals','Live Sports','Comedy Shows','Food & Beverages']
-// [DUP]     },
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── Brand: Campaigns list ───────────────────────────────────────
 app.get('/api/brand/campaigns', async (c) => {
@@ -3128,40 +2410,6 @@ app.post('/api/brand/campaigns', async (c) => {
 })
 
 // ─── Brand: Analytics ────────────────────────────────────────────
-// [DUP] app.get('/api/brand/analytics', async (c) => {
-// [DUP]   const period = c.req.query('period') || '30d'
-// [DUP]   const days = period === '7d' ? 7 : period === '90d' ? 90 : 30
-// [DUP]   return c.json({
-// [DUP]     period,
-// [DUP]     summary: { period, total_impressions: 214800, roi: 3.63, total_clicks: 23470, conversion_rate: 3.77 },
-// [DUP]     analytics: { period, total_impressions: 214800, roi: 3.63 },
-// [DUP]     impressions: 214800,
-// [DUP]     total_impressions: 214800,
-// [DUP]     roi: 3.63,
-// [DUP]     daily_reach: Array.from({length: days}, (_, i) => ({
-// [DUP]       date: new Date(Date.now()-(days-1-i)*86400000).toISOString().split('T')[0],
-// [DUP]       impressions: Math.round(2000 + Math.random()*3000),
-// [DUP]       clicks: Math.round(200 + Math.random()*400),
-// [DUP]       conversions: Math.round(8 + Math.random()*20)
-// [DUP]     })),
-// [DUP]     channels: [
-// [DUP]       { name:'LED Wristbands',       impressions:94200,  engagement_pct:8.4  },
-// [DUP]       { name:'Digital Screens',      impressions:72400,  engagement_pct:5.2  },
-// [DUP]       { name:'Social Amplification', impressions:48200,  engagement_pct:12.8 },
-// [DUP]       { name:'Email/WhatsApp',       impressions:28400,  engagement_pct:18.4 },
-// [DUP]     ],
-// [DUP]     channel_breakdown: [
-// [DUP]       { channel:'LED Wristbands',         impressions:94200,  engagement:8.4  },
-// [DUP]       { channel:'Digital Screens',        impressions:72400,  engagement:5.2  },
-// [DUP]       { channel:'Social Amplification',   impressions:48200,  engagement:12.8 },
-// [DUP]       { channel:'Email/WhatsApp',         impressions:28400,  engagement:18.4 }
-// [DUP]     ],
-// [DUP]     funnel: { awareness: 214800, consideration: 48200, intent: 23470, conversion: 883, conversion_rate_pct: 3.77 },
-// [DUP]     reach: { total: 214800, unique_users: 162000, frequency: 1.33 },
-// [DUP]     engagement: { total_clicks: 23470, click_through_rate: 10.93, avg_time_on_brand: 42 },
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── Auth: Refresh token ─────────────────────────────────────────
 app.post('/api/auth/refresh', async (c) => {
@@ -3182,18 +2430,6 @@ app.post('/api/auth/logout', async (c) => {
 })
 
 // ─── Fanclub: Memberships by user ───────────────────────────────
-// [DUP] app.get('/api/fanclubs/memberships/:user_id', (c) => {
-// [DUP]   const user_id = c.req.param('user_id')
-// [DUP]   return c.json({
-// [DUP]     user_id,
-// [DUP]     clubs: [],
-// [DUP]     memberships: [
-// [DUP]       { club_id:'FC-001', club_name:'Sunburn Tribe',    artist:'Sunburn',         tier:'gold',   since:'2025-06-01', benefits:['Early access','Merch discount','Meet & Greet'], status:'active', renewal:'2026-06-01' },
-// [DUP]       { club_id:'FC-002', club_name:'Diljit Fanatics',  artist:'Diljit Dosanjh',  tier:'silver', since:'2025-09-15', benefits:['Early access','Newsletter'],                    status:'active', renewal:'2026-09-15' },
-// [DUP]     ],
-// [DUP]     total: 2, updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── Notifications: Preferences (canonical) ─────────────────────
 app.get('/api/notifications/preferences', async (c) => {
@@ -3304,14 +2540,6 @@ app.get('/api/admin/config', (c) => {
 })
 
 // ─── Admin events: approve (canonical) ──────────────────────────
-// [DUP] app.post('/api/admin/events/:id/approve', async (c) => {
-// [DUP]   const { id } = c.req.param()
-// [DUP]   return c.json({
-// [DUP]     success: true, event_id: id, status: 'approved',
-// [DUP]     approved_by: 'admin@indtix.com', approved_at: new Date().toISOString(),
-// [DUP]     notification_sent: true, message: `Event ${id} approved and published`
-// [DUP]   }, 200)
-// [DUP] })
 
 // ─── Incidents: POST canonical ───────────────────────────────────
 app.post('/api/incidents', async (c) => {
@@ -3329,53 +2557,8 @@ app.post('/api/incidents', async (c) => {
 })
 
 // ─── Announcements: POST canonical ──────────────────────────────
-// [DUP] app.post('/api/announcements', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({} as any))
-// [DUP]   const { event_id, message, audience, channels } = body
-// [DUP]   if (!message && !body.message) return c.json({ error: 'message required' }, 400)
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     announcement_id: 'ANN-' + Math.random().toString(36).slice(2,6).toUpperCase(),
-// [DUP]     message, audience: audience || 'all',
-// [DUP]     recipients: audience === 'vip' ? 342 : 4200,
-// [DUP]     channels: channels || ['whatsapp','push'],
-// [DUP]     status: 'sent', sent_at: new Date().toISOString(),
-// [DUP]     delivered_estimate: new Date(Date.now()+300000).toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── Payments: Analytics (canonical) ─────────────────────────────
-// [DUP] app.get('/api/payments/analytics', async (c) => {
-// [DUP]   const period = c.req.query('period') || '30d'
-// [DUP]   const days = period === '7d' ? 7 : period === '90d' ? 90 : 30
-// [DUP]   const totalRevenue = 420000000
-// [DUP]   const totalTransactions = 48420
-// [DUP]   return c.json({
-// [DUP]     period,
-// [DUP]     total_revenue: totalRevenue, total_transactions: totalTransactions,
-// [DUP]     summary: { total_revenue: totalRevenue, transactions: totalTransactions, avg_order: 8673, refund_rate: 2.1, success_rate: 98.4 },
-// [DUP]     gateway_health: [
-// [DUP]       { gateway:'Razorpay', status:'operational', success_rate:99.2, latency_ms:180 },
-// [DUP]       { gateway:'PayU',     status:'operational', success_rate:98.8, latency_ms:210 },
-// [DUP]       { gateway:'Stripe',   status:'degraded',    success_rate:94.2, latency_ms:340 },
-// [DUP]     ],
-// [DUP]     volume: { total: totalTransactions, upi: Math.round(totalTransactions*0.55), card: Math.round(totalTransactions*0.23), net_banking: Math.round(totalTransactions*0.10), wallet: Math.round(totalTransactions*0.12) },
-// [DUP]     by_method: [
-// [DUP]       { method:'UPI',         share_pct:55, volume: Math.round(totalTransactions*0.55), revenue: Math.round(totalRevenue*0.55) },
-// [DUP]       { method:'Card',        share_pct:23, volume: Math.round(totalTransactions*0.23), revenue: Math.round(totalRevenue*0.23) },
-// [DUP]       { method:'Net Banking', share_pct:10, volume: Math.round(totalTransactions*0.10), revenue: Math.round(totalRevenue*0.10) },
-// [DUP]       { method:'Wallet',      share_pct:12, volume: Math.round(totalTransactions*0.12), revenue: Math.round(totalRevenue*0.12) },
-// [DUP]     ],
-// [DUP]     daily_breakdown: Array.from({length: days}, (_, i) => ({
-// [DUP]       date: new Date(Date.now()-(days-1-i)*86400000).toISOString().split('T')[0],
-// [DUP]       revenue:      Math.round(800000 + Math.random()*800000),
-// [DUP]       transactions: Math.round(400 + Math.random()*600),
-// [DUP]       refunds:      Math.round(5 + Math.random()*15),
-// [DUP]       net:          Math.round(780000 + Math.random()*790000)
-// [DUP]     })),
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── Incidents: GET list (canonical) ────────────────────────────
 app.get('/api/incidents', async (c) => {
@@ -3473,18 +2656,6 @@ app.get('/api/dashboard/summary', async (c) => {
 })
 
 // ─── Events: Related events ──────────────────────────────────────
-// [DUP] app.get('/api/events/:id/related', async (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   const limit = parseInt(c.req.query('limit') || '4')
-// [DUP]   const related = [
-// [DUP]     { id:'e2', name:'Diljit Dosanjh – Dil-Luminati Tour', category:'music', city:'Delhi', date:'2026-04-18', price:1999, image:'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400', sold_pct:92, reason:'Same category' },
-// [DUP]     { id:'e4', name:'NH7 Weekender Meghalaya',             category:'festival',city:'Shillong',date:'2026-05-10', price:3499, image:'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400', sold_pct:55, reason:'Similar audience' },
-// [DUP]     { id:'e3', name:'Zakir Khan – Haq Se Single',          category:'comedy', city:'Bangalore',date:'2026-04-25', price:799, image:'https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=400', sold_pct:65, reason:'Popular in your city' },
-// [DUP]     { id:'e5', name:'Mumbai Marathon 2026',                 category:'sports', city:'Mumbai',  date:'2026-04-20', price:500, image:'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=400', sold_pct:88, reason:'Trending nearby' },
-// [DUP]   ].filter(e => e.id !== id).slice(0, limit)
-// [DUP] 
-// [DUP]   return c.json({ event_id: id, events: related, related, total: related.length })
-// [DUP] })
 
 // ─── Notifications: Unread count ────────────────────────────────
 app.get('/api/notifications/count', async (c) => {
@@ -3498,43 +2669,7 @@ app.get('/api/notifications/count', async (c) => {
 })
 
 // ─── Events: Reviews ────────────────────────────────────────────
-// [DUP] app.get('/api/events/:id/reviews', async (c) => {
-// [DUP]   const event_id = c.req.param('id')
-// [DUP]   const page = parseInt(c.req.query('page') || '1')
-// [DUP]   return c.json({
-// [DUP]     event_id, page,
-// [DUP]     avg_rating: 4.7, total_reviews: 842,
-// [DUP]     rating_distribution: { 5: 540, 4: 210, 3: 62, 2: 18, 1: 12 },
-// [DUP]     reviews: [
-// [DUP]       { id:'R-001', user:'Priya S.', avatar:avatarUrl('Priya S','6C3CF7'), rating:5, comment:'Absolutely incredible! Best festival I\'ve ever attended. Sound quality was phenomenal.', date:'2026-03-01', helpful:84, verified_buyer:true },
-// [DUP]       { id:'R-002', user:'Rahul M.', avatar:avatarUrl('Rahul M','FF3CAC'), rating:5, comment:'World-class production. The LED wristbands were a game changer. Already booked next year!', date:'2026-02-28', helpful:62, verified_buyer:true },
-// [DUP]       { id:'R-003', user:'Ananya K.', avatar:avatarUrl('Ananya K','00F5C4','111'), rating:4, comment:'Great lineup but food stalls were a bit overpriced. Overall still a 10/10 experience.', date:'2026-02-27', helpful:45, verified_buyer:true },
-// [DUP]       { id:'R-004', user:'Vikram P.', avatar:avatarUrl('Vikram P','FFB300','111'), rating:5, comment:'The INDUCTIX app made everything seamless. Booked, arrived, scanned and in — under 2 minutes!', date:'2026-02-26', helpful:38, verified_buyer:true },
-// [DUP]     ],
-// [DUP]     total: 842, updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
-// [DUP] app.post('/api/events/:id/reviews', async (c) => {
-// [DUP]   const event_id = c.req.param('id')
-// [DUP]   const body = await c.req.json().catch(() => ({} as any))
-// [DUP]   const { rating, comment, user_id } = body
-// [DUP]   if (!rating || !comment) return c.json({ error: 'rating and comment required' }, 400)
-// [DUP]   if (rating < 1 || rating > 5) return c.json({ error: 'rating must be 1-5' }, 400)
-// [DUP]   const reviewId = 'R-' + Math.random().toString(36).slice(2,6).toUpperCase()
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     review_id: reviewId,
-// [DUP]     review: {
-// [DUP]       id: reviewId,
-// [DUP]       event_id, user_id: user_id || 'USR-001',
-// [DUP]       rating: parseInt(rating), comment,
-// [DUP]       date: new Date().toISOString().split('T')[0],
-// [DUP]       status: 'published', helpful: 0, verified_buyer: true
-// [DUP]     },
-// [DUP]     message: 'Review posted successfully'
-// [DUP]   })
-// [DUP] })
 
 // ─── Events: Price history & demand trends ───────────────────────
 app.get('/api/events/:id/price-history', async (c) => {
@@ -3695,58 +2830,8 @@ app.get('/api/organiser/revenue/chart', async (c) => {
 })
 
 // ─── Admin: Platform health detailed ────────────────────────────
-// [DUP] app.get('/api/admin/platform/health', async (c) => {
-// [DUP]   return c.json({
-// [DUP]     overall: 'healthy', status: 'operational',
-// [DUP]     services: [
-// [DUP]       { name:'API Gateway',        status:'healthy',  latency_ms:45,   uptime_24h:99.99, requests_pm:8420 },
-// [DUP]       { name:'Booking Engine',     status:'healthy',  latency_ms:120,  uptime_24h:99.95, requests_pm:2840 },
-// [DUP]       { name:'Payment Gateway',    status:'healthy',  latency_ms:180,  uptime_24h:99.97, requests_pm:1240 },
-// [DUP]       { name:'Notification Service',status:'healthy', latency_ms:85,   uptime_24h:99.90, requests_pm:42000 },
-// [DUP]       { name:'Scanner API',        status:'healthy',  latency_ms:32,   uptime_24h:99.99, requests_pm:5600 },
-// [DUP]       { name:'AI/ML Service',      status:'degraded', latency_ms:850,  uptime_24h:98.20, requests_pm:320 },
-// [DUP]       { name:'CDN',                status:'healthy',  latency_ms:12,   uptime_24h:100.00, requests_pm:180000 },
-// [DUP]       { name:'Database',           status:'healthy',  latency_ms:8,    uptime_24h:99.99, requests_pm:42000 },
-// [DUP]     ],
-// [DUP]     infrastructure: {
-// [DUP]       cpu_pct: 42, memory_pct: 68, storage_pct: 34, edge_nodes: 312,
-// [DUP]       active_connections: 8420, cache_hit_rate_pct: 94.2
-// [DUP]     },
-// [DUP]     alerts: [
-// [DUP]       { id:'ALT-001', type:'performance', service:'AI/ML Service', message:'Response time elevated', severity:'warning', since: new Date(Date.now()-3600000).toISOString() }
-// [DUP]     ],
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── Admin: Revenue forecast (AI-powered) ───────────────────────
-// [DUP] app.get('/api/admin/forecast', async (c) => {
-// [DUP]   const horizon = c.req.query('horizon') || '30d'
-// [DUP]   const days = horizon === '7d' ? 7 : horizon === '90d' ? 90 : 30
-// [DUP] 
-// [DUP]   return c.json({
-// [DUP]     horizon, currency: 'INR', model: 'ARIMA + ML ensemble', confidence: 0.87,
-// [DUP]     forecasts: Array.from({ length: days }, (_, i) => ({
-// [DUP]       date: new Date(Date.now()+(i+1)*86400000).toISOString().split('T')[0],
-// [DUP]       predicted_revenue: Math.round(1200000 + Math.random()*800000),
-// [DUP]       predicted_tickets: Math.round(800 + Math.random()*600),
-// [DUP]       lower_bound: Math.round(900000 + Math.random()*400000),
-// [DUP]       upper_bound: Math.round(1600000 + Math.random()*1000000)
-// [DUP]     })),
-// [DUP]     forecast: Array.from({ length: days }, (_, i) => ({
-// [DUP]       date: new Date(Date.now()+(i+1)*86400000).toISOString().split('T')[0],
-// [DUP]       predicted_revenue: Math.round(1200000 + Math.random()*800000),
-// [DUP]       predicted_tickets: Math.round(800 + Math.random()*600)
-// [DUP]     })),
-// [DUP]     summary: {
-// [DUP]       total_predicted_revenue: Math.round(days * 1600000),
-// [DUP]       total_predicted_tickets: Math.round(days * 1100),
-// [DUP]       key_drivers: ['Sunburn Arena (Apr 12)', 'Diljit Tour (Apr 18)', 'NH7 Weekender (May 10)'],
-// [DUP]       risk_factors: ['Weather uncertainty in Apr', 'Competition from streaming events']
-// [DUP]     },
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // ─── Venue: Enquiry / RFQ submission ────────────────────────────
 app.post('/api/venues/:id/enquiry', async (c) => {
@@ -4052,52 +3137,10 @@ app.get('/api/events/:id/heatmap', async (c) => {
 })
 
 // Platform analytics (public)
-// [DUP] app.get('/api/platform/stats', (c) => {
-// [DUP]   return c.json({
-// [DUP]     total_users: 2400000,
-// [DUP]     total_events: 1842,
-// [DUP]     total_bookings: 18200000,
-// [DUP]     total_gmv_inr: 9200000000,
-// [DUP]     cities_covered: 52,
-// [DUP]     venue_partners: 528,
-// [DUP]     organiser_partners: 1240,
-// [DUP]     avg_rating: 4.6,
-// [DUP]     nps: 71,
-// [DUP]     uptime_pct: 99.97,
-// [DUP]     ts: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // Loyalty tiers
-// [DUP] app.get('/api/loyalty/tiers', (c) => {
-// [DUP]   return c.json({
-// [DUP]     tiers: [
-// [DUP]       { tier: 'Bronze', min_points: 0, max_points: 999, benefits: ['Early access 24h', '2% cashback', 'Birthday bonus 50pts'] },
-// [DUP]       { tier: 'Silver', min_points: 1000, max_points: 4999, benefits: ['Early access 48h', '5% cashback', 'Free seat upgrade (1/yr)', 'Exclusive merch discount 10%'] },
-// [DUP]       { tier: 'Gold', min_points: 5000, max_points: 19999, benefits: ['Early access 72h', '8% cashback', 'Backstage pass lottery', 'Free parking (2/yr)', 'Priority support'] },
-// [DUP]       { tier: 'Platinum', min_points: 20000, max_points: null, benefits: ['First access to all events', '12% cashback', 'Guaranteed backstage access', 'Artist meet & greet', 'Dedicated concierge', 'Airport lounge access'] },
-// [DUP]     ],
-// [DUP]     user_tier: { tier: 'Silver', points: 1250, next_tier: 'Gold', points_needed: 3750 },
-// [DUP]     ts: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // Event calendar view
-// [DUP] app.get('/api/events/calendar', (c) => {
-// [DUP]   const month = c.req.query('month') || '2026-04'
-// [DUP]   return c.json({
-// [DUP]     month,
-// [DUP]     events_by_date: {
-// [DUP]       '2026-04-12': [{ id: 'e1', name: 'Sunburn Arena – Mumbai', city: 'Mumbai', price: 1499 }],
-// [DUP]       '2026-04-18': [{ id: 'e4', name: 'IPL: MI vs CSK', city: 'Mumbai', price: 1200 }],
-// [DUP]       '2026-04-20': [{ id: 'e3', name: 'Zakir Hussain Live', city: 'Delhi', price: 999 }],
-// [DUP]       '2026-04-25': [{ id: 'e6', name: 'TEDx Mumbai 2026', city: 'Mumbai', price: 2000 }],
-// [DUP]       '2026-04-30': [{ id: 'e7', name: 'Comedy Central Live', city: 'Chennai', price: 799 }],
-// [DUP]     },
-// [DUP]     total_events: 5,
-// [DUP]     ts: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // Organiser bulk ticket allocation
 app.post('/api/organiser/tickets/allocate', async (c) => {
@@ -4170,26 +3213,6 @@ app.post('/api/admin/revenue-split', async (c) => {
 })
 
 // Brand: audience insights
-// [DUP] app.get('/api/brand/audience', async (c) => {
-// [DUP]   const brandId = c.req.query('brand_id') || 'BR-001'
-// [DUP]   return c.json({
-// [DUP]     brand_id: brandId,
-// [DUP]     total_audience: 840000,
-// [DUP]     total_reach: 840000,
-// [DUP]     segments: [
-// [DUP]       { segment: 'Music Lovers', size: 320000, affinity_score: 0.92, avg_age: 26, top_city: 'Mumbai' },
-// [DUP]       { segment: 'Sports Fans', size: 180000, affinity_score: 0.84, avg_age: 28, top_city: 'Delhi' },
-// [DUP]       { segment: 'Comedy/Entertainment', size: 140000, affinity_score: 0.78, avg_age: 24, top_city: 'Bangalore' },
-// [DUP]       { segment: 'Premium Concert Goers', size: 120000, affinity_score: 0.88, avg_age: 31, top_city: 'Mumbai' },
-// [DUP]       { segment: 'Frequent Travellers', size: 80000, affinity_score: 0.71, avg_age: 34, top_city: 'Delhi' },
-// [DUP]     ],
-// [DUP]     age_breakdown: { '18-24': 28, '25-34': 42, '35-44': 18, '45+': 12 },
-// [DUP]     age_groups: { '18-24': 28, '25-34': 42, '35-44': 18, '45+': 12 },
-// [DUP]     gender: { male: 58, female: 38, other: 4 },
-// [DUP]     top_cities: ['Mumbai', 'Delhi', 'Bangalore', 'Pune', 'Chennai'],
-// [DUP]     ts: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // Brand: reach & channels
 app.get('/api/brand/reach', async (c) => {
@@ -4212,33 +3235,6 @@ app.get('/api/brand/reach', async (c) => {
 })
 
 // Brand: ROI tracker
-// [DUP] app.get('/api/brand/roi', async (c) => {
-// [DUP]   const brandId = c.req.query('brand_id') || 'BR-001'
-// [DUP]   return c.json({
-// [DUP]     brand_id: brandId,
-// [DUP]     period: '30d',
-// [DUP]     roi: 5.0,
-// [DUP]     total_spend_inr: 544000,
-// [DUP]     total_invested: 544000,
-// [DUP]     roi_multiple: 5.0,
-// [DUP]     roi_pct: 400,
-// [DUP]     metrics: {
-// [DUP]       new_customers: 8420,
-// [DUP]       repeat_customers: 3180,
-// [DUP]       avg_order_value: 2420,
-// [DUP]       customer_acquisition_cost: 64.6,
-// [DUP]       ltv_estimate: 8400,
-// [DUP]     },
-// [DUP]     top_converting_event: 'Sunburn Arena – Mumbai',
-// [DUP]     top_converting_channel: 'WhatsApp Campaigns',
-// [DUP]     recommendations: [
-// [DUP]       'Increase WhatsApp budget by 20% — highest CTR channel',
-// [DUP]       'Add retargeting to users who viewed but didn\'t book',
-// [DUP]       'A/B test banner creatives for Comedy segment',
-// [DUP]     ],
-// [DUP]     ts: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // Brand: active sponsors summary
 app.get('/api/brand/sponsors-summary', async (c) => {
@@ -4257,43 +3253,6 @@ app.get('/api/brand/sponsors-summary', async (c) => {
 })
 
 // Event manager: run sheet export
-// [DUP] app.get('/api/event-manager/runsheet/:event_id', async (c) => {
-// [DUP]   const eventId = c.req.param('event_id')
-// [DUP]   const format = c.req.query('format') || 'json'
-// [DUP]   return c.json({
-// [DUP]     event_id: eventId,
-// [DUP]     event_name: 'Sunburn Arena – Mumbai',
-// [DUP]     date: '2026-04-12',
-// [DUP]     export_format: format,
-// [DUP]     download_url: `https://r2.indtix.com/runsheets/runsheet-${eventId}.${format}`,
-// [DUP]     runsheet: [
-// [DUP]       { time: '14:00', activity: 'Venue open — crew setup', owner: 'Venue Manager', status: 'done' },
-// [DUP]       { time: '15:30', activity: 'Sound check — Stage A', owner: 'Sound Engineer', status: 'done' },
-// [DUP]       { time: '16:00', activity: 'Artist green room briefing', owner: 'Event Manager', status: 'done' },
-// [DUP]       { time: '17:00', activity: 'Gates open to public', owner: 'Security Head', status: 'in_progress' },
-// [DUP]       { time: '19:00', activity: 'Opening act begins', owner: 'Stage Manager', status: 'pending' },
-// [DUP]       { time: '21:00', activity: 'Main act — Sunburn', owner: 'Stage Manager', status: 'pending' },
-// [DUP]       { time: '23:30', activity: 'Curfew / wrap-up', owner: 'Event Manager', status: 'pending' },
-// [DUP]     ],
-// [DUP]     run_sheet: [
-// [DUP]       { time: '14:00', activity: 'Venue open — crew setup', owner: 'Venue Manager', status: 'done' },
-// [DUP]       { time: '15:30', activity: 'Sound check — Stage A', owner: 'Sound Engineer', status: 'done' },
-// [DUP]       { time: '16:00', activity: 'Artist green room briefing', owner: 'Event Manager', status: 'done' },
-// [DUP]       { time: '17:00', activity: 'Gates open to public', owner: 'Security Head', status: 'in_progress' },
-// [DUP]       { time: '19:00', activity: 'Opening act begins', owner: 'Stage Manager', status: 'pending' },
-// [DUP]       { time: '21:00', activity: 'Main act — Sunburn', owner: 'Stage Manager', status: 'pending' },
-// [DUP]       { time: '23:30', activity: 'Curfew / wrap-up', owner: 'Event Manager', status: 'pending' },
-// [DUP]     ],
-// [DUP]     items: [
-// [DUP]       { id: 'RS-001', time: '14:00', task: 'Venue open — crew setup', status: 'done', owner: 'Venue Manager' },
-// [DUP]       { id: 'RS-002', time: '15:30', task: 'Sound Check', status: 'done', owner: 'Sound Engineer' },
-// [DUP]       { id: 'RS-003', time: '17:00', task: 'Gates Open', status: 'in_progress', owner: 'Security' },
-// [DUP]       { id: 'RS-004', time: '19:00', task: 'Opening Act', status: 'pending', owner: 'Stage Manager' },
-// [DUP]       { id: 'RS-005', time: '21:00', task: 'Main Show', status: 'pending', owner: 'Stage Manager' },
-// [DUP]     ],
-// [DUP]     generated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // Venue: floor plan zones
 app.get('/api/venue/:id/floorplan', async (c) => {
@@ -4393,21 +3352,6 @@ app.put('/api/organiser/team/:member_id', async (c) => {
 })
 
 // Fan: event reminders
-// [DUP] app.post('/api/events/:id/remind', async (c) => {
-// [DUP]   const eventId = c.req.param('id')
-// [DUP]   const body = await c.req.json().catch(() => ({})) as any
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     reminder_id: 'REM-' + Math.random().toString(36).substring(2,8).toUpperCase(),
-// [DUP]     reminder_set: true,
-// [DUP]     event_id: eventId,
-// [DUP]     user_id: body.user_id || 'u1',
-// [DUP]     channels: body.channels || ['push', 'email', 'whatsapp'],
-// [DUP]     remind_before_hours: body.hours_before || 24,
-// [DUP]     message: 'Reminder set successfully',
-// [DUP]     ts: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // Fan: group booking
 app.post('/api/bookings/group', async (c) => {
@@ -4443,29 +3387,6 @@ app.post('/api/bookings/group', async (c) => {
 })
 
 // Developer: rate limit status
-// [DUP] app.get('/api/developer/rate-limit', async (c) => {
-// [DUP]   const apiKey = c.req.header('X-API-Key') || c.req.query('api_key') || 'KEY-001'
-// [DUP]   return c.json({
-// [DUP]     api_key: apiKey,
-// [DUP]     tier: 'pro',
-// [DUP]     limits: {
-// [DUP]       per_minute: 1000,
-// [DUP]       per_day: 1000000,
-// [DUP]       per_month: 30000000,
-// [DUP]     },
-// [DUP]     current_usage: {
-// [DUP]       this_minute: 42,
-// [DUP]       today: 18420,
-// [DUP]       this_month: 284000,
-// [DUP]     },
-// [DUP]     remaining: {
-// [DUP]       this_minute: 958,
-// [DUP]       today: 981580,
-// [DUP]     },
-// [DUP]     reset_at: new Date(Date.now() + 60000).toISOString(),
-// [DUP]     ts: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // Developer: error logs
 app.get('/api/developer/logs', async (c) => {
@@ -4754,21 +3675,6 @@ app.get('/api/events/:id/tiers', (c) => {
 })
 
 // 2. GET /api/events/:id/reviews — event reviews
-// [DUP] app.get('/api/events/:id/reviews', (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({
-// [DUP]     event_id: id, avg_rating: 4.6, total_reviews: 128,
-// [DUP]     reviews: [
-// [DUP]       { id: 'r1', user: 'Priya M.', avatar: avatarUrl('Priya M.'), rating: 5, comment: 'Absolutely electric atmosphere! Best event of the year.', date: '2026-01-15', helpful: 42 },
-// [DUP]       { id: 'r2', user: 'Rahul K.', avatar: avatarUrl('Rahul K.'), rating: 4, comment: 'Great sound quality and organization. Slight crowd management issue at entry.', date: '2026-01-14', helpful: 28 },
-// [DUP]       { id: 'r3', user: 'Sneha L.', avatar: avatarUrl('Sneha L.'), rating: 5, comment: 'The LED wristband experience was magical. INDTIX made booking seamless!', date: '2026-01-13', helpful: 35 },
-// [DUP]       { id: 'r4', user: 'Arjun T.', avatar: avatarUrl('Arjun T.'), rating: 4, comment: 'Good venue, excellent lineup. Food stalls could be better.', date: '2026-01-12', helpful: 19 },
-// [DUP]       { id: 'r5', user: 'Divya R.', avatar: avatarUrl('Divya R.'), rating: 5, comment: 'Flawless from booking to entry. Will definitely attend next year!', date: '2026-01-11', helpful: 31 }
-// [DUP]     ],
-// [DUP]     rating_breakdown: { 5: 74, 4: 38, 3: 11, 2: 3, 1: 2 },
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // 3. GET /api/events/:id/related — related events
 app.get('/api/events/:id/related', (c) => {
@@ -4779,43 +3685,9 @@ app.get('/api/events/:id/related', (c) => {
 })
 
 // 4. GET /api/events/:id/carbon — carbon footprint calculator
-// [DUP] app.get('/api/events/:id/carbon', (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({
-// [DUP]     event_id: id,
-// [DUP]     carbon_kg: 4200,
-// [DUP]     carbon_kg_per_attendee: 2.4,
-// [DUP]     total_carbon_tonnes: 12.8,
-// [DUP]     offset_cost_inr: 320,
-// [DUP]     breakdown: { travel: 68, venue_energy: 18, food_beverage: 8, merchandise: 4, waste: 2 },
-// [DUP]     offset_provider: 'GreenJourney India',
-// [DUP]     trees_equivalent: 584,
-// [DUP]     certification: 'Carbon Neutral Event — Gold Standard',
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // 5. GET /api/events/:id/addons — upsell add-ons for event
-// [DUP] app.get('/api/events/:id/addons', (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({
-// [DUP]     event_id: id,
-// [DUP]     addons: [
-// [DUP]       { id: 'a1', name: 'Parking Pass', price: 299, category: 'transport', available: true, icon: '🚗' },
-// [DUP]       { id: 'a2', name: 'Merchandise Bundle', price: 799, category: 'merch', available: true, icon: '👕' },
-// [DUP]       { id: 'a3', name: 'F&B Voucher ₹500', price: 450, category: 'food', available: true, icon: '🍕' },
-// [DUP]       { id: 'a4', name: 'LED Wristband Upgrade', price: 199, category: 'experience', available: true, icon: '💡' },
-// [DUP]       { id: 'a5', name: 'Photo Package', price: 599, category: 'experience', available: true, icon: '📸' },
-// [DUP]       { id: 'a6', name: 'Locker Rental', price: 149, category: 'facility', available: true, icon: '🔒' }
-// [DUP]     ],
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
-// [DUP] app.post('/api/events/:id/remind', (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({ success: true, event_id: id, reminder_set: true, channels: ['push', 'email', 'whatsapp'], message: 'Reminder set! We\'ll notify you 24h and 1h before the event.', updated_at: new Date().toISOString() })
-// [DUP] })
 
 // 7. GET /api/events/:id/checkin-stats (alias — real scan/stats route added in patch section)
 // app.get('/api/scan/stats/:event_id', (c) => {
@@ -5160,19 +4032,6 @@ app.post('/api/admin/organiser-queue/:id/reject', async (c) => {
 })
 
 // 10. GET /api/venue/dashboard — venue dashboard summary
-// [DUP] app.get('/api/venue/dashboard', (c) => {
-// [DUP]   return c.json({
-// [DUP]     venue_id: 'VEN-001', venue_name: 'MMRDA Grounds', city: 'Mumbai',
-// [DUP]     stats: { upcoming_events: 4, total_revenue_mtd: 1850000, avg_occupancy: 78, pending_enquiries: 3, active_staff: 12 },
-// [DUP]     upcoming: [
-// [DUP]       { id: 'e1', name: 'Sunburn Arena – Mumbai', date: '2026-04-12', organiser: 'Percept Live', capacity: 5000, booked_pct: 72 },
-// [DUP]       { id: 'e4', name: 'IPL: MI vs CSK', date: '2026-04-18', organiser: 'BCCI', capacity: 33000, booked_pct: 95 },
-// [DUP]     ],
-// [DUP]     revenue_trend: [820000, 940000, 1100000, 980000, 1250000, 1450000, 1850000],
-// [DUP]     months: ['Sep','Oct','Nov','Dec','Jan','Feb','Mar'],
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // 11. GET /api/venue/revenue — venue revenue breakdown
 app.get('/api/venue/revenue', (c) => {
@@ -5195,17 +4054,6 @@ app.get('/api/venue/revenue', (c) => {
 })
 
 // 12. GET /api/venue/bookings — full venue bookings list
-// [DUP] app.get('/api/venue/bookings', (c) => {
-// [DUP]   return c.json({
-// [DUP]     bookings: [
-// [DUP]       { id: 'VB-001', event: 'Sunburn Arena', organiser: 'Percept Live', date: '2026-04-12', duration: '14h', hire_fee: 850000, status: 'confirmed', attendees_expected: 5000 },
-// [DUP]       { id: 'VB-002', event: 'IPL: MI vs CSK', organiser: 'BCCI', date: '2026-04-18', duration: '8h', hire_fee: 1200000, status: 'confirmed', attendees_expected: 33000 },
-// [DUP]       { id: 'VB-003', event: 'NH7 Weekender', organiser: 'OML', date: '2026-05-03', duration: '18h', hire_fee: 920000, status: 'pending', attendees_expected: 8000 },
-// [DUP]       { id: 'VB-004', event: 'TEDx Mumbai', organiser: 'TEDx', date: '2026-04-25', duration: '10h', hire_fee: 280000, status: 'confirmed', attendees_expected: 1200 },
-// [DUP]     ],
-// [DUP]     total: 4, confirmed: 3, pending: 1, total_value: 3250000, updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // 13. GET /api/organiser/events/:id — get single organiser event detail
 app.get('/api/organiser/events/:id', (c) => {
@@ -5284,17 +4132,6 @@ app.get('/api/admin/platform/health', (c) => {
 })
 
 // 18. GET /api/admin/fraud/alerts — fraud alerts queue
-// [DUP] app.get('/api/admin/fraud/alerts', (c) => {
-// [DUP]   return c.json({
-// [DUP]     alerts: [
-// [DUP]       { id: 'FRD-001', type: 'duplicate_booking', user_id: 'USR-009', event_id: 'e1', risk_score: 84, details: '12 bookings from same device in 2 hours', status: 'open', created_at: new Date(Date.now()-3600000).toISOString() },
-// [DUP]       { id: 'FRD-002', type: 'bulk_resale', user_id: 'USR-042', event_id: 'e5', risk_score: 91, details: '48 tickets purchased for resale platform listing', status: 'investigating', created_at: new Date(Date.now()-7200000).toISOString() },
-// [DUP]       { id: 'FRD-003', type: 'payment_anomaly', user_id: 'USR-118', event_id: 'e4', risk_score: 72, details: 'Card used from 3 different countries in 24h', status: 'open', created_at: new Date(Date.now()-10800000).toISOString() },
-// [DUP]     ],
-// [DUP]     total: 3, open: 2, investigating: 1, blocked_today: 8,
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // 19. GET /api/admin/forecast — platform demand forecast
 app.get('/api/admin/forecast', (c) => {
@@ -5507,27 +4344,10 @@ app.post('/api/ops/gate/switch', async (c) => {
 })
 
 // POST /api/ops/scanning/pause — pause gate scanning
-// [DUP] app.post('/api/ops/scanning/pause', async (c) => {
-// [DUP]   return c.json({ success: true, status: 'paused', paused_at: new Date().toISOString() })
-// [DUP] })
 
 // POST /api/ops/scanning/resume — resume gate scanning
-// [DUP] app.post('/api/ops/scanning/resume', async (c) => {
-// [DUP]   return c.json({ success: true, status: 'active', resumed_at: new Date().toISOString() })
-// [DUP] })
 
 // POST /api/ops/supervisor/call — call supervisor
-// [DUP] app.post('/api/ops/supervisor/call', async (c) => {
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     call_id: `CALL-${Date.now()}`,
-// [DUP]     supervisor: 'Sanjay Verma',
-// [DUP]     channel: 'Radio Ch-3',
-// [DUP]     eta_minutes: 2,
-// [DUP]     notified_via: ['radio', 'whatsapp'],
-// [DUP]     called_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // POST /api/ops/emergency/alert — broadcast emergency alert
 app.post('/api/ops/emergency/alert', async (c) => {
@@ -5544,17 +4364,6 @@ app.post('/api/ops/emergency/alert', async (c) => {
 })
 
 // POST /api/ops/announcement — broadcast ops announcement
-// [DUP] app.post('/api/ops/announcement', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({})) as any
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     announcement_id: `ANN-OPS-${Date.now()}`,
-// [DUP]     message: body.message || 'General announcement',
-// [DUP]     channels: body.channels || ['pa_system', 'radio'],
-// [DUP]     recipients: body.recipients || 48,
-// [DUP]     broadcast_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // POST /api/wristbands/issue — issue single wristband
 app.post('/api/wristbands/issue', async (c) => {
@@ -5834,16 +4643,6 @@ app.get('/api/organiser/checkin/:event_id', async (c) => {
 })
 
 // POST /api/organiser/tickets/save — save ticket configuration
-// [DUP] app.post('/api/organiser/tickets/save', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({})) as any
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     config_id: `TKTCFG-${Date.now()}`,
-// [DUP]     tiers_saved: (body.tiers || []).length || 3,
-// [DUP]     live_in_minutes: 2,
-// [DUP]     saved_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // POST /api/organiser/addons/save — save add-ons
 app.post('/api/organiser/addons/save', async (c) => {
@@ -5858,66 +4657,12 @@ app.post('/api/organiser/addons/save', async (c) => {
 
 // --- BRAND PORTAL (new unique routes) ---
 // GET /api/brand/campaigns/:id — campaign detail
-// [DUP] app.get('/api/brand/campaigns/:id', async (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({
-// [DUP]     campaign: {
-// [DUP]       id,
-// [DUP]       name: 'Campaign Detail',
-// [DUP]       status: 'active',
-// [DUP]       type: 'display',
-// [DUP]       impressions: 2840000,
-// [DUP]       clicks: 42000,
-// [DUP]       ctr: '1.48%',
-// [DUP]       spend: 840000,
-// [DUP]       roi: '4.1x',
-// [DUP]       daily_data: Array.from({ length: 7 }, (_, i) => ({
-// [DUP]         date: new Date(Date.now() - (6-i)*86400000).toISOString().slice(0,10),
-// [DUP]         impressions: Math.floor(Math.random()*100000 + 50000),
-// [DUP]         clicks: Math.floor(Math.random()*1500 + 500)
-// [DUP]       })),
-// [DUP]       updated_at: new Date().toISOString()
-// [DUP]     }  })
-// [DUP] })
 
 // GET /api/brand/sponsor/:id/analytics — sponsor analytics
-// [DUP] app.get('/api/brand/sponsor/:id/analytics', async (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({
-// [DUP]     sponsor_id: id,
-// [DUP]     impressions: 4200000,
-// [DUP]     sponsor: { id, name: 'Sponsor', category: 'Brand Partner' },
-// [DUP]     period: 'MTD',
-// [DUP]     total_impressions: 4200000,
-// [DUP]     brand_recall: '68%',
-// [DUP]     sentiment: 'Positive',
-// [DUP]     nps: 72,
-// [DUP]     events_activated: 8,
-// [DUP]     social_mentions: 12400,
-// [DUP]     estimated_media_value: 8400000,
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // --- FAN PORTAL ADDITIONAL ---
 
 // POST /api/promo/apply — apply promo code (alias for validate)
-// [DUP] app.post('/api/promo/apply', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({})) as any
-// [DUP]   const code = (body.code || '').toUpperCase()
-// [DUP]   const promoMap: Record<string,{discount:number,type:string,description:string}> = {
-// [DUP]     'INDY20': { discount: 20, type: 'percent', description: '20% off' },
-// [DUP]     'FIRSTTIX': { discount: 50, type: 'flat', description: '₹50 off' },
-// [DUP]     'INDTIX20': { discount: 20, type: 'percent', description: '20% off' },
-// [DUP]     'SUMMER25': { discount: 25, type: 'percent', description: '25% off' },
-// [DUP]     'INDY50': { discount: 50, type: 'flat', description: '₹50 off' },
-// [DUP]     'FEST20': { discount: 20, type: 'percent', description: '20% off' },
-// [DUP]     'FLAT100': { discount: 100, type: 'flat', description: '₹100 off' },
-// [DUP]     'NEWUSER': { discount: 15, type: 'percent', description: '15% off' }
-// [DUP]   }
-// [DUP]   const promo = promoMap[code] || { discount: 10, type: 'percent', description: '10% off' }
-// [DUP]   return c.json({ valid: true, code, discount: promo.discount, ...promo, applied_at: new Date().toISOString() })
-// [DUP] })
 
 // GET /api/wallet/balance — get wallet balance
 app.get('/api/wallet/balance', (c) => {
@@ -5936,19 +4681,6 @@ app.get('/api/wallet/balance', (c) => {
 })
 
 // POST /api/wallet/add — add money to wallet
-// [DUP] app.post('/api/wallet/add', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({})) as any
-// [DUP]   const amount = body.amount || 0
-// [DUP]   if (amount < 10) return c.json({ error: 'Minimum add amount is ₹10' }, 400)
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     transaction_id: `WT-ADD-${Date.now()}`,
-// [DUP]     amount_added: amount,
-// [DUP]     new_balance: 1240 + amount,
-// [DUP]     payment_method: body.payment_method || 'upi',
-// [DUP]     added_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // PUT /api/users/:id/notifications — update notification preferences
 app.put('/api/users/:id/notifications', async (c) => {
@@ -5964,15 +4696,6 @@ app.put('/api/users/:id/notifications', async (c) => {
 })
 
 // POST /api/notifications/mark-read — mark all notifications as read
-// [DUP] app.post('/api/notifications/mark-read', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({})) as any
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     user_id: body.user_id || 'USR-001',
-// [DUP]     marked_read: body.ids?.length || 12,
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // POST /api/auth/verify-otp — verify OTP for password reset
 app.post('/api/auth/verify-otp', async (c) => {
@@ -6029,14 +4752,6 @@ app.get('/api/organiser/kyc/status', (c) => {
 // ─────────────────────────────────────────────────────────────
 
 // Auth fixes
-// [DUP] app.post('/api/auth/signup', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({}))
-// [DUP]   const { phone, name } = body
-// [DUP]   if (!phone) return c.json({ error: 'phone required' }, 400)
-// [DUP]   const uid = 'USR-' + Math.random().toString(36).substring(2,8).toUpperCase()
-// [DUP]   const token = 'tok_' + Math.random().toString(36).substring(2,18)
-// [DUP]   return c.json({ success: true, user_id: uid, token, name: name || 'New User', message: `OTP sent to ${phone}` })
-// [DUP] })
 app.get('/api/auth/me', (c) => {
   return c.json({ user: { user_id: 'USR-001', name: 'Priya Sharma', email: 'priya@example.com', phone: '9876543210', tier: 'premium', joined: '2024-01-15', total_bookings: 12 } })
 })
@@ -6062,10 +4777,6 @@ app.get('/api/bookings/:id/calendar', (c) => {
 })
 
 // Referral fix
-// [DUP] app.get('/api/referral/link', (c) => {
-// [DUP]   const code = 'REF' + Math.random().toString(36).substring(2,8).toUpperCase()
-// [DUP]   return c.json({ referral_link: `https://indtix.com/r/${code}`, referral_url: `https://indtix.com/r/${code}`, code, reward_inr: 200, earnings_total: 1400, clicks: 42, conversions: 7, generated_at: new Date().toISOString() })
-// [DUP] })
 
 // Fan Portal fixes
 app.get('/api/fan/profile', (c) => {
@@ -6074,9 +4785,6 @@ app.get('/api/fan/profile', (c) => {
 app.get('/api/fan/tickets', (c) => {
   return c.json({ tickets: [{ id: 'TKT-001', event: 'Sunburn Arena', date: '2026-04-12', venue: 'MMRDA Grounds', tier: 'VIP', seat: 'A-12', status: 'confirmed', qr: 'data:image/png;base64,abc' }, { id: 'TKT-002', event: 'NH7 Weekender', date: '2026-05-20', venue: 'Shilparamam', tier: 'GA', seat: null, status: 'confirmed', qr: 'data:image/png;base64,def' }], total: 2 })
 })
-// [DUP] app.get('/api/fan/wishlist', (c) => {
-// [DUP]   return c.json({ wishlist: [{ event_id: 'e3', name: 'Lollapalooza India', date: '2026-03-08', venue: 'Mahalaxmi Racecourse', price_from: 2999, status: 'on_sale' }], items: [{ event_id: 'e3', name: 'Lollapalooza India', date: '2026-03-08', venue: 'Mahalaxmi Racecourse', price_from: 2999, status: 'on_sale' }, { event_id: 'e4', name: 'EDC India', date: '2026-07-15', venue: 'DLF Grounds', price_from: 3499, status: 'upcoming' }], total: 2 })
-// [DUP] })
 app.post('/api/fan/wishlist/add', async (c) => {
   const body = await c.req.json().catch(() => ({}))
   return c.json({ success: true, event_id: body.event_id, message: 'Added to wishlist', wishlist_count: 3 })
@@ -6108,11 +4816,6 @@ app.post('/api/organiser/events/create', async (c) => {
   const event_id = 'EVT-' + Date.now()
   return c.json({ success: true, event_id, name, date: date || '2026-06-01', venue: venue || 'TBD', status: 'draft', created_at: new Date().toISOString(), message: 'Event created successfully — submit for approval to go live' })
 })
-// [DUP] app.post('/api/organiser/events/:id/duplicate', async (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   const new_event_id = 'EVT-' + Date.now()
-// [DUP]   return c.json({ success: true, original_id: id, new_event_id, message: `Event duplicated as ${new_event_id}`, status: 'draft' })
-// [DUP] })
 app.post('/api/organiser/events/:id/archive', async (c) => {
   const id = c.req.param('id')
   return c.json({ success: true, event_id: id, status: 'archived', message: 'Event archived successfully', archived_at: new Date().toISOString() })
@@ -6176,14 +4879,6 @@ app.get('/api/event-manager/tasks', (c) => {
 })
 
 // POS fixes
-// [DUP] app.post('/api/pos/payment', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({}))
-// [DUP]   const { booking_id, amount, method, items } = body
-// [DUP]   if (!amount && !items) return c.json({ error: 'amount or items required' }, 400)
-// [DUP]   const total = amount || (items||[]).reduce((s: number, i: {price?: number}) => s + (i.price||0), 0)
-// [DUP]   const transaction_id = 'TXN-' + Date.now()
-// [DUP]   return c.json({ success: true, transaction_id, booking_id: booking_id||null, amount: total, method: method || 'upi', status: 'completed', receipt_url: `https://r2.indtix.com/receipts/${transaction_id}.pdf`, completed_at: new Date().toISOString() })
-// [DUP] })
 app.get('/api/pos/shift/report', (c) => {
   const shift_id = 'SHF-' + new Date().toISOString().slice(0,10).replace(/-/g,'')
   return c.json({ shift_id, date: new Date().toISOString().slice(0,10), gate: 'Gate A', operator: 'Operator 1', scans: 1842, valid_scans: 1829, invalid_scans: 13, cash_collected: 45200, upi_collected: 284500, card_collected: 128400, total_revenue: 458100, started_at: new Date(Date.now() - 21600000).toISOString(), updated_at: new Date().toISOString() })
@@ -6191,13 +4886,6 @@ app.get('/api/pos/shift/report', (c) => {
 app.get('/api/ops/realtime', (c) => {
   return c.json({ attendance: Math.floor(Math.random() * 500 + 12400), bookings_today: Math.floor(Math.random() * 500 + 2400), scans_today: Math.floor(Math.random() * 300 + 1800), gmv_today: Math.floor(Math.random() * 100000 + 4200000), active_events: 3, online_users: Math.floor(Math.random() * 500 + 12400), gates_open: 8, alerts: 1, updated_at: new Date().toISOString() })
 })
-// [DUP] app.post('/api/pos/cart/clear', async (c) => {
-// [DUP]   return c.json({ success: true, message: 'Cart cleared', items_removed: 0, cleared_at: new Date().toISOString() })
-// [DUP] })
-// [DUP] app.post('/api/pos/payment/method', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({}))
-// [DUP]   return c.json({ success: true, method: body.method || 'upi', selected: true, message: `Payment method set to ${body.method || 'upi'}` })
-// [DUP] })
 
 // Admin fixes
 app.get('/api/admin/pending-approvals', (c) => {
@@ -6212,9 +4900,6 @@ app.get('/api/admin/disputes', (c) => {
 })
 
 // GST report fix
-// [DUP] app.get('/api/admin/gst/report', (c) => {
-// [DUP]   return c.json({ status: 'Filed', invoices: 18420, total_gst_inr: 4946400, gst_collected: 4946400, period: '2026-Q1', download_url: 'https://r2.indtix.com/reports/gst-q1-2026.pdf', updated_at: new Date().toISOString() })
-// [DUP] })
 
 // Brand fix
 app.get('/api/brand/roi/export', (c) => {
@@ -6222,19 +4907,9 @@ app.get('/api/brand/roi/export', (c) => {
 })
 
 // Developer fixes
-// [DUP] app.get('/api/developer/dashboard', (c) => {
-// [DUP]   return c.json({ api_calls: 284200, api_calls_today: 12840, total_calls_today: 12840, quota_remaining: 87160, endpoints_used: 48, plan: 'Pro', tier: 'pro', rate_limit: '1000/min', uptime: 99.97, latency_p50_ms: 42, latency_p99_ms: 184, api_key: 'ik_live_••••••••••••••••', docs_url: 'https://docs.indtix.com', updated_at: new Date().toISOString() })
-// [DUP] })
 app.get('/api/developer/api-keys', (c) => {
   return c.json({ keys: [{ id: 'KEY-001', name: 'Production Key', key: 'ik_live_••••••••••••••••', scope: 'full', status: 'active', created: '2026-01-01', last_used: new Date().toISOString(), requests_today: 12840 }, { id: 'KEY-002', name: 'Test Key', key: 'ik_test_••••••••••••••••', scope: 'read', status: 'active', created: '2026-02-01', last_used: new Date(Date.now() - 3600000).toISOString(), requests_today: 248 }], total: 2 })
 })
-// [DUP] app.post('/api/developer/docs/view', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({}))
-// [DUP]   const urls: Record<string, string> = { nodejs: 'https://docs.indtix.com/sdk/nodejs', python: 'https://docs.indtix.com/sdk/python', react: 'https://docs.indtix.com/sdk/react', curl: 'https://docs.indtix.com/api/rest' }
-// [DUP]   const lang = body.lang || 'nodejs'
-// [DUP]   const url = urls[lang] || urls.nodejs
-// [DUP]   return c.json({ success: true, lang, url, opened: true })
-// [DUP] })
 
 // Reports fixes
 app.get('/api/reports/download/:id', (c) => {
@@ -6266,30 +4941,8 @@ app.get('/api/realtime/counters', (c) => {
 })
 
 // Notifications & Search
-// [DUP] app.get('/api/notifications', (c) => {
-// [DUP]   return c.json({ notifications: [{ id: 'N001', type: 'booking', title: 'Booking Confirmed', message: 'Your tickets are confirmed!', read: false, created_at: new Date(Date.now() - 3600000).toISOString() }, { id: 'N002', type: 'promo', title: 'Flash Sale', message: 'Use FLASH30 for 30% off', read: true, created_at: new Date(Date.now() - 86400000).toISOString() }], total: 2, unread: 1 })
-// [DUP] })
-// [DUP] app.post('/api/notifications/mark-read', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({}))
-// [DUP]   return c.json({ success: true, id: body.id, read: true, updated_at: new Date().toISOString() })
-// [DUP] })
-// [DUP] app.post('/api/notifications/mark-all-read', async (c) => {
-// [DUP]   return c.json({ success: true, updated: 2, message: 'All notifications marked as read', updated_at: new Date().toISOString() })
-// [DUP] })
-// [DUP] app.get('/api/search', (c) => {
-// [DUP]   const q = c.req.query('q') || ''
-// [DUP]   const type = c.req.query('type') || 'all'
-// [DUP]   const page = parseInt(c.req.query('page') || '1')
-// [DUP]   const limit = parseInt(c.req.query('limit') || '10')
-// [DUP]   const results = [{ id: 'e1', type: 'event', name: `Sunburn Arena — ${q}`, date: '2026-04-12', venue: 'MMRDA Grounds', price_from: 1499, relevance: 0.98 }, { id: 'e2', type: 'event', name: `NH7 Weekender — ${q}`, date: '2026-05-20', venue: 'Shilparamam', price_from: 1999, relevance: 0.92 }]
-// [DUP]   return c.json({ query: q, type, results, total: 2, page, limit, has_more: false })
-// [DUP] })
 
 // Developer snippets
-// [DUP] app.post('/api/developer/snippets/copy', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({}))
-// [DUP]   return c.json({ success: true, lang: body.lang || 'nodejs', endpoint: body.endpoint || '/api/events', copied: true, message: 'Code snippet copied to clipboard' })
-// [DUP] })
 
 // Group booking fix — ensure booking_id and discount_pct are returned
 app.post('/api/bookings/group/v2', async (c) => {
@@ -6305,7 +4958,6 @@ app.post('/api/bookings/group/v2', async (c) => {
   const booking_id = 'GBK-' + Date.now()
   return c.json({ success: true, booking_id, event_id, group_size, discount_pct, discount, subtotal, gst, total: subtotal - discount + gst, status: 'confirmed', created_at: new Date().toISOString() })
 })
-
 
 
 // 1. GET /api/admin/venues/queue — venue approval queue
@@ -6449,12 +5101,6 @@ app.get('/api/event-manager/tasks/:event_id', (c) => {
 })
 
 // 16. GET /api/reports/:type/download — report download URL
-// [DUP] app.get('/api/reports/:type/download', (c) => {
-// [DUP]   const type = c.req.param('type')
-// [DUP]   const formats: Record<string,string> = { attendees: 'Attendee List', revenue: 'Revenue Report', gst: 'GST Report', financial: 'Financial Summary', incidents: 'Incident Log', sales: 'Sales Report' }
-// [DUP]   const dlUrl = `https://r2.indtix.com/reports/${type}-${new Date().toISOString().slice(0,10)}.pdf`
-// [DUP]   return c.json({ type, title: formats[type] || `${type} Report`, rows: Math.floor(Math.random() * 5000) + 500, format: 'pdf', url: dlUrl, download_url: dlUrl, csv_url: `https://r2.indtix.com/reports/${type}-${new Date().toISOString().slice(0,10)}.csv`, generated_at: new Date().toISOString(), expires_at: new Date(Date.now() + 86400000 * 7).toISOString() })
-// [DUP] })
 
 // 17. POST /api/developer/sdk/download — SDK download
 app.post('/api/developer/sdk/download', async (c) => {
@@ -6564,16 +5210,6 @@ app.get('/api/developer/webhooks', (c) => {
 })
 
 // 21. GET /api/admin/whitelabel — whitelabel configs list
-// [DUP] app.get('/api/admin/whitelabel', (c) => {
-// [DUP]   return c.json({
-// [DUP]     instances: [
-// [DUP]       { id: 'WL-001', name: 'BookMyShow Clone', brand_color: '#E91E63', domain: 'events.client1.com', status: 'active', events: 142, revenue: 8400000 },
-// [DUP]       { id: 'WL-002', name: 'Paytm Events Sub', brand_color: '#00B9F1', domain: 'events.paytm-demo.in', status: 'active', events: 84, revenue: 4200000 },
-// [DUP]       { id: 'WL-003', name: 'StagePass Beta', brand_color: '#6C3CF7', domain: 'stagepass.in', status: 'setup', events: 0, revenue: 0 },
-// [DUP]     ],
-// [DUP]     total: 3, active: 2, setup: 1, updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // 22. POST /api/notifications/email — send email notification
 app.post('/api/notifications/email', async (c) => {
@@ -6590,17 +5226,6 @@ app.get('/api/organiser/events', (c) => {
 })
 
 // 24. GET /api/venue/calendar — venue availability calendar
-// [DUP] app.get('/api/venue/calendar', (c) => {
-// [DUP]   const now = new Date()
-// [DUP]   const slots = Array.from({ length: 30 }, (_, i) => {
-// [DUP]     const d = new Date(now)
-// [DUP]     d.setDate(d.getDate() + i + 1)
-// [DUP]     const ds = d.toISOString().slice(0, 10)
-// [DUP]     const status = i % 7 === 0 ? 'booked' : i % 11 === 0 ? 'blocked' : 'available'
-// [DUP]     return { date: ds, status, event: status === 'booked' ? 'Sunburn Arena' : null }
-// [DUP]   })
-// [DUP]   return c.json({ venue_id: 'VEN-001', slots, available: slots.filter(s => s.status === 'available').length, booked: slots.filter(s => s.status === 'booked').length, blocked: slots.filter(s => s.status === 'blocked').length, updated_at: new Date().toISOString() })
-// [DUP] })
 
 // 25. POST /api/venue/calendar/block — block dates
 app.post('/api/venue/calendar/block', async (c) => {
@@ -6630,24 +5255,6 @@ app.get('/api/users/:id/bookings', async (c) => {
 })
 
 // POST /api/bookings/bulk — bulk seat booking with better validation
-// [DUP] app.post('/api/bookings/bulk', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({})) as any
-// [DUP]   const { event_id, user_id, seats } = body
-// [DUP]   const seatList = seats || ['A1', 'A2']
-// [DUP]   const bookingId = 'BKG-' + Math.random().toString(36).slice(2, 9).toUpperCase()
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     booking_id: bookingId,
-// [DUP]     event_id: event_id || 'e1',
-// [DUP]     user_id: user_id || 'USR-001',
-// [DUP]     seats: seatList,
-// [DUP]     tickets: seatList.length,
-// [DUP]     total_amount: seatList.length * 1499,
-// [DUP]     status: 'confirmed',
-// [DUP]     qr_codes: seatList.map((_: string, i: number) => `QR-${bookingId}-${i + 1}`),
-// [DUP]     booked_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // POST /api/promo/apply — apply promo code (more permissive)
 app.post('/api/promo/apply', async (c) => {
@@ -6795,21 +5402,6 @@ app.post('/api/ops/shift/report', async (c) => {
 })
 
 // POST /api/ops/emergency/broadcast — emergency broadcast (alias)
-// [DUP] app.post('/api/ops/emergency/broadcast', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({})) as any
-// [DUP]   const broadcastId = 'EM-BCAST-' + Date.now()
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     sent: true,
-// [DUP]     broadcast_id: broadcastId,
-// [DUP]     event_id: body.event_id || 'e1',
-// [DUP]     message: body.message || 'Emergency alert',
-// [DUP]     staff_notified: 48,
-// [DUP]     channels: ['push', 'pa_system', 'wristband_led'],
-// [DUP]     led_color: '#FF0000',
-// [DUP]     sent_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // POST /api/admin/events/queue/:id/approve — approve event (alias)
 app.post('/api/admin/events/queue/:id/approve', async (c) => {
@@ -6913,28 +5505,6 @@ app.get('/api/organiser/analytics', (c) => {
 })
 
 // Override /api/venue/revenue to add 'revenue' field
-// [DUP] app.get('/api/venue/revenue', (c) => {
-// [DUP]   const revenue = 12840000
-// [DUP]   return c.json({
-// [DUP]     venue_id: 'VEN-001',
-// [DUP]     revenue,
-// [DUP]     total_revenue: revenue,
-// [DUP]     hire_fees: 8400000,
-// [DUP]     food_bev_share: 2840000,
-// [DUP]     parking: 980000,
-// [DUP]     misc: 620000,
-// [DUP]     by_month: [
-// [DUP]       { month: 'Jan', revenue: 3200000 },
-// [DUP]       { month: 'Feb', revenue: 4100000 },
-// [DUP]       { month: 'Mar', revenue: 5540000 }
-// [DUP]     ],
-// [DUP]     top_organisers: [
-// [DUP]       { organiser: 'Sunburn Events', revenue: 4200000 },
-// [DUP]       { organiser: 'Wild City', revenue: 3100000 }
-// [DUP]     ],
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // Override /api/pos/sale to add 'receipt_id' field
 app.post('/api/pos/sale', async (c) => {
@@ -7050,22 +5620,6 @@ app.get('/api/brand/roi', (c) => {
 })
 
 // Override /api/brand/sponsor/:id/analytics to add 'sponsor' field
-// [DUP] app.get('/api/brand/sponsor/:id/analytics', (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({
-// [DUP]     sponsor_id: id,
-// [DUP]     sponsor: { id, name: 'Paytm', category: 'Fintech' },
-// [DUP]     period: 'Q1-2026',
-// [DUP]     total_impressions: 2840000,
-// [DUP]     brand_recall: 67,
-// [DUP]     sentiment: 'positive',
-// [DUP]     nps: 72,
-// [DUP]     events_activated: 4,
-// [DUP]     social_mentions: 18420,
-// [DUP]     roi: 3.8,
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // Override /api/event-manager/runsheet/:id to add 'runsheet' field
 app.get('/api/event-manager/runsheet/:event_id', (c) => {
@@ -7261,10 +5815,6 @@ app.get('/api/admin/sponsors', (c) => {
 })
 
 // POST /api/admin/sponsors/:id/report — generate sponsor performance report
-// [DUP] app.post('/api/admin/sponsors/:id/report', async (c) => {
-// [DUP]   const id = c.req.param('id')
-// [DUP]   return c.json({ success: true, sponsor_id: id, report_id: 'SRPT-' + Date.now(), download_url: `https://r2.indtix.com/reports/sponsor-${id}-${Date.now()}.pdf`, emailed: true, generated_at: new Date().toISOString() })
-// [DUP] })
 
 // POST /api/admin/sponsors/renewal-reminders — send renewal reminders
 app.post('/api/admin/sponsors/renewal-reminders', async (c) => {
@@ -7279,17 +5829,6 @@ app.get('/api/admin/sponsors/roi', (c) => {
 // ── ADMIN: API Key Management ───────────────────────────────
 
 // GET /api/admin/api-keys — list platform API keys
-// [DUP] app.get('/api/admin/api-keys', (c) => {
-// [DUP]   return c.json({
-// [DUP]     keys: [
-// [DUP]       { id: 'KEY-001', name: 'Production SDK', key: 'ik_live_' + 'x'.repeat(32), scope: 'read,write', created_at: '2026-01-01', last_used: new Date(Date.now()-3600000).toISOString(), status: 'active', requests_today: 4820 },
-// [DUP]       { id: 'KEY-002', name: 'Analytics Dashboard', key: 'ik_live_' + 'y'.repeat(32), scope: 'read', created_at: '2026-02-01', last_used: new Date(Date.now()-86400000).toISOString(), status: 'active', requests_today: 1240 },
-// [DUP]       { id: 'KEY-003', name: 'Webhook Receiver', key: 'ik_live_' + 'z'.repeat(32), scope: 'webhooks', created_at: '2026-01-15', last_used: new Date(Date.now()-7200000).toISOString(), status: 'active', requests_today: 892 },
-// [DUP]     ],
-// [DUP]     api_keys: [],
-// [DUP]     total: 3, updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // POST /api/admin/api-keys — issue new API key
 app.post('/api/admin/api-keys', async (c) => {
@@ -7453,18 +5992,8 @@ app.delete('/api/users/:id/wishlist/:event_id', (c) => {
 })
 
 // POST /api/wallet/redeem — redeem wallet credits
-// [DUP] app.post('/api/wallet/redeem', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({})) as any
-// [DUP]   const amount = body.amount || 100
-// [DUP]   return c.json({ success: true, user_id: body.user_id || 'USR-001', redeemed: amount, new_balance: Math.max(0, 1240 - amount), transaction_id: 'TXN-' + Date.now(), redeemed_at: new Date().toISOString() })
-// [DUP] })
 
 // POST /api/referral/generate — generate referral link
-// [DUP] app.post('/api/referral/generate', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({})) as any
-// [DUP]   const code = 'IND-' + (body.user_id || 'USR001').slice(-3).toUpperCase() + '-' + Math.random().toString(36).slice(2,6).toUpperCase()
-// [DUP]   return c.json({ success: true, user_id: body.user_id || 'USR-001', referral_code: code, referral_url: `https://indtix.pages.dev/fan?ref=${code}`, reward_inr: 50, generated_at: new Date().toISOString() })
-// [DUP] })
 
 // ── OPS/POS: Additional endpoints ──────────────────────────
 
@@ -7524,17 +6053,6 @@ app.post('/api/venue/gst-invoices/:id/download', async (c) => {
 })
 
 // GET /api/venue/staff — list venue staff
-// [DUP] app.get('/api/venue/staff', (c) => {
-// [DUP]   return c.json({
-// [DUP]     staff: [
-// [DUP]       { id: 'STF-001', name: 'Amit Kumar', role: 'Security Head', gate: 'Gate A', shift: 'Morning', status: 'on_duty' },
-// [DUP]       { id: 'STF-002', name: 'Sanjay Patil', role: 'Floor Manager', zone: 'VIP', shift: 'All Day', status: 'on_duty' },
-// [DUP]       { id: 'STF-003', name: 'Neha Sharma', role: 'Medical', station: 'First Aid', shift: 'All Day', status: 'on_duty' },
-// [DUP]       { id: 'STF-004', name: 'Ravi Singh', role: 'Parking', area: 'P1', shift: 'Morning', status: 'break' },
-// [DUP]     ],
-// [DUP]     total: 4, on_duty: 3, on_break: 1, updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // POST /api/venue/staff — add staff member
 app.post('/api/venue/staff', async (c) => {
@@ -7578,21 +6096,6 @@ app.get('/api/developer/endpoints/health', (c) => {
 })
 
 // GET /api/developer/changelog — API changelog
-// [DUP] app.get('/api/developer/changelog', (c) => {
-// [DUP]   return c.json({
-// [DUP]     versions: [
-// [DUP]       { version: '20.0.0', date: '2026-03-08', type: 'major', highlights: ['Advanced Analytics', 'AI Recommendations', 'Loyalty/Gamification', 'Webhooks', 'i18n'] },
-// [DUP]       { version: '17.0.0', date: '2026-02-15', type: 'major', highlights: ['500 endpoints', 'Notifications Centre', 'Global Search'] },
-// [DUP]       { version: '14.0.0', date: '2026-01-20', type: 'major', highlights: ['LED Control API', 'POS Terminal', 'Brand/Sponsor Portal'] }
-// [DUP]     ],
-// [DUP]     changelog: [
-// [DUP]       { version: '14.0.0', date: '2026-03-08', changes: ['Added LED wristband control APIs', 'Added organiser comms endpoints', 'Added brand sponsor analytics', 'Added FAQ endpoint', '+45 new endpoints total'] },
-// [DUP]       { version: '13.0.0', date: '2026-02-15', changes: ['Venue calendar API', 'Admin KYC queue wiring', 'Developer SDK download', 'OpenAPI 3.0 spec'] },
-// [DUP]       { version: '12.0.0', date: '2026-01-20', changes: ['Fan portal clipboard', 'Ticket resend via notifications', 'KYC submit integration'] },
-// [DUP]     ],
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // POST /api/developer/test-webhook — test webhook delivery
 app.post('/api/developer/test-webhook', async (c) => {
@@ -7629,26 +6132,8 @@ app.post('/api/events/:id/remind', async (c) => {
 })
 
 // GET /api/events/:id/reviews — event reviews
-// [DUP] app.get('/api/events/:id/reviews', (c) => {
-// [DUP]   const eventId = c.req.param('id')
-// [DUP]   return c.json({
-// [DUP]     event_id: eventId,
-// [DUP]     reviews: [
-// [DUP]       { id: 'REV-001', user: 'Rohan M.', rating: 5, comment: 'Absolutely electric! Best festival of 2026.', date: '2026-02-20', helpful: 142, verified: true },
-// [DUP]       { id: 'REV-002', user: 'Priya N.', rating: 4, comment: 'Great lineup, could improve queue management.', date: '2026-02-21', helpful: 89, verified: true },
-// [DUP]       { id: 'REV-003', user: 'Arjun S.', rating: 5, comment: 'LED wristbands were a game changer!', date: '2026-02-22', helpful: 64, verified: true },
-// [DUP]     ],
-// [DUP]     avg_rating: 4.7, total_reviews: 1842, rating_distribution: { 5: 68, 4: 22, 3: 7, 2: 2, 1: 1 },
-// [DUP]     updated_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 // POST /api/events/:id/reviews — submit review
-// [DUP] app.post('/api/events/:id/reviews', async (c) => {
-// [DUP]   const eventId = c.req.param('id')
-// [DUP]   const body = await c.req.json().catch(() => ({})) as any
-// [DUP]   return c.json({ success: true, review_id: 'REV-' + Date.now(), event_id: eventId, rating: body.rating || 5, comment: body.comment || '', submitted_at: new Date().toISOString() })
-// [DUP] })
 
 
 // ── PHASE 15: Additional backend endpoints for admin portal wiring ──────────
@@ -7729,14 +6214,6 @@ app.get('/api/stats', (c) => c.json({
 }))
 
 // Events categories + search
-// [DUP] app.get('/api/events/categories', (c) => c.json({
-// [DUP]   categories: ['Music','Sports','Comedy','Theatre','Festival','Dance','Art','Food'],
-// [DUP]   total: 8
-// [DUP] }))
-// [DUP] app.get('/api/events/search', (c) => {
-// [DUP]   const q = c.req.query('q') || ''
-// [DUP]   return c.json({ results: [], query: q, total: 0, updated_at: new Date().toISOString() })
-// [DUP] })
 
 // Booking calendar + referral
 app.post('/api/bookings/:id/calendar', async (c) => c.json({ success: true, booking_id: c.req.param('id'), calendar_url: 'https://calendar.google.com/calendar/event?eid=sample', added_at: new Date().toISOString() }))
@@ -7751,11 +6228,6 @@ app.post('/api/wishlist', async (c) => {
 app.delete('/api/wishlist/:id', (c) => c.json({ success: true, event_id: c.req.param('id'), removed_at: new Date().toISOString() }))
 
 // Fan club join fix (member_id alias)
-// [DUP] app.post('/api/fanclubs/join', async (c) => {
-// [DUP]   const b = await c.req.json().catch(() => ({})) as any
-// [DUP]   const mid = 'MEM-' + Math.random().toString(36).slice(2,8).toUpperCase()
-// [DUP]   return c.json({ success: true, member_id: mid, membership_id: mid, fanclub_id: b.fanclub_id, joined_at: new Date().toISOString() })
-// [DUP] })
 
 // Livestream purchase
 app.post('/api/livestreams/purchase', async (c) => {
@@ -7764,22 +6236,11 @@ app.post('/api/livestreams/purchase', async (c) => {
 })
 
 // Group booking
-// [DUP] app.post('/api/bookings/group', async (c) => {
-// [DUP]   const b = await c.req.json().catch(() => ({})) as any
-// [DUP]   if (!b.event_id) return c.json({ error: 'event_id required' }, 400)
-// [DUP]   return c.json({ success: true, request_id: 'GRP-' + Date.now(), event_id: b.event_id, group_size: b.size || 10, status: 'pending', message: '📋 Group booking request received! Team will contact you within 2 hours.', created_at: new Date().toISOString() })
-// [DUP] })
 
 // Push notification register
 app.post('/api/notifications/push/register', async (c) => c.json({ success: true, token_registered: true, registered_at: new Date().toISOString() }))
 
 // Carbon footprint key fix
-// [DUP] app.get('/api/events/:id/carbon', (c) => c.json({
-// [DUP]   event_id: c.req.param('id'), carbon_kg: 4200, carbon_kg_per_attendee: 1.5,
-// [DUP]   total_carbon_tonnes: 4.2, offset_cost_inr: 8400, trees_equivalent: 21,
-// [DUP]   offset_provider: 'GreenIndia', certification: 'Gold Standard',
-// [DUP]   breakdown: { transport: '60%', venue: '25%', production: '15%' }
-// [DUP] }))
 
 // Organiser create event + analytics
 app.post('/api/organiser/events', async (c) => {
@@ -7811,11 +6272,6 @@ app.get('/api/organiser/led/:id/status', (c) => c.json({
 }))
 
 // Venue profile + floor plan
-// [DUP] app.get('/api/venue/profile', (c) => c.json({
-// [DUP]   id: 'V-001', name: 'Jawaharlal Nehru Stadium', city: 'Delhi',
-// [DUP]   capacity: 75000, rating: 4.8, amenities: ['Parking','WiFi','Bar','CCTV'],
-// [DUP]   gst_number: '07AAACJ1478G1ZG', contact: 'venue@jns.in', updated_at: new Date().toISOString()
-// [DUP] }))
 app.get('/api/gst/invoices', (c) => c.json({
   invoices: [
     { id: 'INV-001', invoice_no: 'GST/2026/001', amount: 88200, status: 'paid', date: '2026-01-15' },
@@ -7924,7 +6380,6 @@ app.post('/api/admin/venues/:id/reject', async (c) => {
   const b = await c.req.json().catch(() => ({})) as any
   return c.json({ success: true, venue_id: c.req.param('id'), status: 'rejected', reason: b.reason, rejected_at: new Date().toISOString() })
 })
-// [DUP] app.post('/api/admin/settlements/:id/release', async (c) => c.json({ success: true, settlement_id: c.req.param('id'), status: 'released', released_at: new Date().toISOString() }))
 
 // RBAC roles
 app.get('/api/admin/roles', (c) => c.json({
@@ -7954,10 +6409,6 @@ app.get('/api/admin/api-keys', (c) => c.json({
 }))
 
 // Bulk notification fix (queued alias)
-// [DUP] app.post('/api/admin/notifications/bulk', async (c) => {
-// [DUP]   const b = await c.req.json().catch(() => ({})) as any
-// [DUP]   return c.json({ success: true, notification_id: 'NOTIF-' + Date.now(), queued: true, users_notified: 84200, message: b.message, channels: ['whatsapp','push','email'], sent_at: new Date().toISOString() })
-// [DUP] })
 
 // Organiser approve
 app.post('/api/admin/organiser/:id/approve', async (c) => c.json({ success: true, organiser_id: c.req.param('id'), status: 'approved', approved_at: new Date().toISOString() }))
@@ -8110,11 +6561,6 @@ app.post('/api/event-manager/announcements/preview', async (c) => {
 })
 
 // Event Manager: tasks
-// [DUP] app.post('/api/event-manager/tasks', async (c) => {
-// [DUP]   const b = await c.req.json().catch(() => ({})) as any
-// [DUP]   const tid = 'TASK-' + Date.now()
-// [DUP]   return c.json({ success: true, task_id: tid, title: b.title, assignee: b.assignee || 'Operations Team', priority: b.priority || 'medium', created_at: new Date().toISOString() })
-// [DUP] })
 
 // Ops/POS: cart clear, payment method
 app.post('/api/pos/cart/clear', async (c) => {
@@ -8145,10 +6591,6 @@ app.get('/api/notifications', (c) => c.json({
     { id: 'N-004', type: 'kyc', title: 'KYC approved', message: 'Your KYC verification is complete', read: true, created_at: new Date(Date.now()-172800000).toISOString() }
   ], unread_count: 2, total: 4, updated_at: new Date().toISOString()
 }))
-// [DUP] app.post('/api/notifications/mark-read', async (c) => {
-// [DUP]   const b = await c.req.json().catch(() => ({})) as any
-// [DUP]   return c.json({ success: true, marked_count: b.ids ? b.ids.length : 1, updated_at: new Date().toISOString() })
-// [DUP] })
 app.post('/api/notifications/mark-all-read', async (c) => {
   return c.json({ success: true, marked_count: 4, updated_at: new Date().toISOString() })
 })
@@ -8223,29 +6665,6 @@ app.get('/api/analytics/overview', (c) => c.json({
   demographics: { '18-24': 32, '25-34': 41, '35-44': 18, '45+': 9 }
 }))
 
-// [DUP] app.get('/api/analytics/funnel', (c) => c.json({
-// [DUP]   steps: [
-// [DUP]     { name: 'Page View', count: 85000, pct: 100 },
-// [DUP]     { name: 'Event Click', count: 38250, pct: 45 },
-// [DUP]     { name: 'Ticket Selection', count: 17000, pct: 20 },
-// [DUP]     { name: 'Checkout Start', count: 9350, pct: 11 },
-// [DUP]     { name: 'Payment Page', count: 6800, pct: 8 },
-// [DUP]     { name: 'Booking Complete', count: 5100, pct: 6 }
-// [DUP]   ],
-// [DUP]   funnel: [
-// [DUP]     { stage: 'Page View', count: 85000, pct: 100 },
-// [DUP]     { stage: 'Event Click', count: 38250, pct: 45 },
-// [DUP]     { stage: 'Ticket Selection', count: 17000, pct: 20 },
-// [DUP]     { stage: 'Checkout Start', count: 9350, pct: 11 },
-// [DUP]     { stage: 'Payment Page', count: 6800, pct: 8 },
-// [DUP]     { stage: 'Booking Complete', count: 5100, pct: 6 }
-// [DUP]   ],
-// [DUP]   drop_off_insights: [
-// [DUP]     { stage: 'Checkout Start → Payment', drop_pct: 27, reason: 'Price sensitivity' },
-// [DUP]     { stage: 'Ticket Selection → Checkout', drop_pct: 45, reason: 'Seat unavailability' }
-// [DUP]   ],
-// [DUP]   period: '7d', generated_at: new Date().toISOString()
-// [DUP] }))
 
 app.get('/api/analytics/revenue/breakdown', (c) => c.json({
   period: 'MTD',
@@ -8303,17 +6722,6 @@ app.get('/api/analytics/geo', (c) => c.json({
 
 // ── AI / ML RECOMMENDATIONS ───────────────────────────────────────────────────
 
-// [DUP] app.get('/api/ai/recommendations/events', (c) => c.json({
-// [DUP]   user_id: 'USR-' + Math.random().toString(36).slice(2,8).toUpperCase(),
-// [DUP]   algorithm: 'collaborative_filtering_v2',
-// [DUP]   recommendations: [
-// [DUP]     { event_id: 'EVT-AI-001', name: 'Sunburn Goa 2026', match_score: 97, reason: 'Based on your Diljit booking + EDM preference', category: 'Music Festival', price_inr: 4999, date: '2026-12-28' },
-// [DUP]     { event_id: 'EVT-AI-002', name: 'NH7 Weekender Pune', match_score: 94, reason: 'Trending in your city — 8 friends going', category: 'Multi-genre Festival', price_inr: 2999, date: '2026-11-07' },
-// [DUP]     { event_id: 'EVT-AI-003', name: 'Ritviz: Octet Tour', match_score: 89, reason: 'You viewed this event 3 times', category: 'Concert', price_inr: 1499, date: '2026-09-14' },
-// [DUP]     { event_id: 'EVT-AI-004', name: 'Comic Con Mumbai', match_score: 82, reason: 'Popular among similar users', category: 'Convention', price_inr: 799, date: '2026-08-22' }
-// [DUP]   ],
-// [DUP]   model_version: '2.4.1', generated_at: new Date().toISOString()
-// [DUP] }))
 
 app.post('/api/ai/recommendations/personalise', async (c) => {
   const body = await c.req.json()
@@ -8422,31 +6830,6 @@ app.get('/api/loyalty/profile/:user_id', (c) => {
   })
 })
 
-// [DUP] app.post('/api/loyalty/redeem', async (c) => {
-// [DUP]   const { user_id, points, reward_type } = await c.req.json()
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     user_id, points_redeemed: points,
-// [DUP]     reward_type: reward_type || 'discount',
-// [DUP]     coupon_code: 'LOYALTY' + Math.random().toString(36).slice(2,8).toUpperCase(),
-// [DUP]     discount_inr: Math.floor((points || 100) * 0.5),
-// [DUP]     valid_until: new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0],
-// [DUP]     remaining_points: 8420 - (points || 100)
-// [DUP]   })
-// [DUP] })
-
-// [DUP] app.get('/api/loyalty/leaderboard', (c) => c.json({
-// [DUP]   period: 'monthly',
-// [DUP]   leaderboard: Array.from({length: 10}, (_, i) => ({
-// [DUP]     rank: i + 1,
-// [DUP]     user_id: 'USR-' + Math.random().toString(36).slice(2,8).toUpperCase(),
-// [DUP]     display_name: ['Priya S', 'Rahul M', 'Aisha K', 'Dev P', 'Sneha R', 'Arjun V', 'Kavya N', 'Rohan D', 'Meera J', 'Vikram S'][i],
-// [DUP]     points: Math.floor(15000 - i * 1200 + Math.random() * 300),
-// [DUP]     tier: i < 3 ? 'Platinum' : i < 6 ? 'Gold' : 'Silver',
-// [DUP]     badge: i === 0 ? '👑' : i < 3 ? '⭐' : '🎫'
-// [DUP]   })),
-// [DUP]   generated_at: new Date().toISOString()
-// [DUP] }))
 
 app.post('/api/loyalty/points/earn', async (c) => {
   const { user_id, action, reference_id } = await c.req.json()
@@ -8465,14 +6848,6 @@ app.post('/api/loyalty/points/earn', async (c) => {
   })
 })
 
-// [DUP] app.get('/api/loyalty/challenges', (c) => c.json({
-// [DUP]   active_challenges: [
-// [DUP]     { id: 'CH-001', name: 'Summer Fest Fanatic', description: 'Attend 3 festivals this summer', progress: 2, target: 3, reward_points: 500, deadline: '2026-08-31', category: 'attendance' },
-// [DUP]     { id: 'CH-002', name: 'Refer 5 Friends', description: 'Get 5 friends to book their first event', progress: 3, target: 5, reward_points: 750, deadline: '2026-06-30', category: 'referral' },
-// [DUP]     { id: 'CH-003', name: 'Review Writer', description: 'Write 3 event reviews', progress: 1, target: 3, reward_points: 200, deadline: '2026-12-31', category: 'engagement' }
-// [DUP]   ],
-// [DUP]   completed_challenges: 8, total_bonus_earned: 3200
-// [DUP] }))
 
 // ── PWA / MOBILE ENHANCEMENTS ─────────────────────────────────────────────────
 
@@ -8994,15 +7369,6 @@ app.post('/api/reports/schedule', async (c) => {
   })
 })
 
-// [DUP] app.get('/api/reports/library', (c) => c.json({
-// [DUP]   reports: [
-// [DUP]     { id: 'RPT-001', name: 'Revenue Summary', type: 'finance', last_generated: new Date(Date.now()-3600000).toISOString(), formats: ['pdf','csv','xlsx'] },
-// [DUP]     { id: 'RPT-002', name: 'Attendee Demographics', type: 'analytics', last_generated: new Date(Date.now()-7200000).toISOString(), formats: ['pdf','csv'] },
-// [DUP]     { id: 'RPT-003', name: 'GST Filing Report', type: 'compliance', last_generated: new Date(Date.now()-86400000).toISOString(), formats: ['pdf','xlsx'] },
-// [DUP]     { id: 'RPT-004', name: 'Fraud Risk Report', type: 'security', last_generated: new Date(Date.now()-2*86400000).toISOString(), formats: ['pdf'] }
-// [DUP]   ],
-// [DUP]   total: 4
-// [DUP] }))
 
 app.post('/api/reports/generate', async (c) => {
   const { report_id, date_from, date_to, format } = await c.req.json()
@@ -9520,10 +7886,6 @@ app.get('/api/rbac/permissions/:role', (c) => {
   return c.json({ role: c.req.param('role'), permissions: rolePerms[c.req.param('role')] || ['events.browse'], updated_at: new Date().toISOString() })
 })
 
-// [DUP] app.post('/api/rbac/check', async (c) => {
-// [DUP]   const { user_id, role, resource, action } = await c.req.json()
-// [DUP]   return c.json({ allowed: true, user_id, role, resource, action, reason: 'Permission granted', checked_at: new Date().toISOString() })
-// [DUP] })
 
 app.post('/api/rbac/assign', async (c) => {
   const { user_id, role, assigned_by } = await c.req.json()
@@ -9592,60 +7954,8 @@ app.post('/api/fan/invite', async (c) => {
   })
 })
 
-// [DUP] app.get('/api/fan/referrals', (c) => c.json({
-// [DUP]   referral_code: 'INDY-REF-XYZ123',
-// [DUP]   referral_url: 'https://indtix.pages.dev/fan?ref=XYZ123',
-// [DUP]   total_invites: 12,
-// [DUP]   successful_bookings: 8,
-// [DUP]   total_cashback_earned: 400,
-// [DUP]   pending_cashback: 50,
-// [DUP]   updated_at: new Date().toISOString()
-// [DUP] }))
 
 // ── BRAND ASSETS & STYLE GUIDE ────────────────────────────────────────────────
-// [DUP] app.get('/api/brand/assets', (c) => c.json({
-// [DUP]   assets: { logo_svg: '/static/logo.svg', logo_png: '/static/logo.png', favicon: '/static/favicon.ico', og_image: '/static/og.png' },
-// [DUP]   brand_name: 'INDTIX',
-// [DUP]   taglines: [
-// [DUP]     'Experience More.',
-// [DUP]     'Your Ticket to Unforgettable.',
-// [DUP]     'Because FOMO is Real.',
-// [DUP]     'Skip the Queue. Not the Vibe.',
-// [DUP]     'Where Vibes Live.',
-// [DUP]     'India\'s Biggest Night Out, Starts Here.',
-// [DUP]     'Less Planning. More Dancing.',
-// [DUP]   ],
-// [DUP]   voice_and_tone: {
-// [DUP]     personality: ['Cheeky', 'Youthful', 'Bold', 'Witty', 'Inclusive'],
-// [DUP]     do: ['Use casual language', 'Add relevant emojis sparingly', 'Be direct and punchy', 'Celebrate the fan', 'Use Indian cultural references'],
-// [DUP]     dont: ['Corporate jargon', 'Passive voice', 'Over-promise', 'Be cringe', 'Ignore regional context'],
-// [DUP]   },
-// [DUP]   microcopy_examples: {
-// [DUP]     cta_book: ['Book Now. Thank Us Later.', 'Grab Your Spot 🎟️', 'Don\'t Miss This One', 'Your Future Self Will Thank You'],
-// [DUP]     empty_state: ['Nothing here yet. But the night is young 🌙', 'Come back when the vibe hits 🎵'],
-// [DUP]     error_state: ['Oops. Something broke. We\'re on it (promise) 🔧', 'That didn\'t work. Try again? 👀'],
-// [DUP]     success: ['You\'re in! 🎉', 'Sorted! Check your WhatsApp.', 'Done & dusted. You\'re all set! ✅'],
-// [DUP]     loading: ['Finding your next obsession...', 'Loading the good stuff...', 'Hang tight, magic incoming ✨'],
-// [DUP]     sold_out: ['Gone in 60 seconds. Literally. 🔥', 'Sold out. FOMO loading...', 'Next time, be faster 😅'],
-// [DUP]   },
-// [DUP]   colors: {
-// [DUP]     primary: '#6C3CF7',
-// [DUP]     secondary: '#FF3CAC',
-// [DUP]     accent: '#00F5C4',
-// [DUP]     dark: '#080B14',
-// [DUP]     text: '#E8EAFF',
-// [DUP]   },
-// [DUP]   fonts: {
-// [DUP]     heading: 'Space Grotesk',
-// [DUP]     body: 'Inter',
-// [DUP]   },
-// [DUP]   logo_concepts: [
-// [DUP]     { concept:'Monogram', description:'Bold "IX" lettermark in gradient on dark background', usage:'App icon, favicon, embossed merch' },
-// [DUP]     { concept:'Wordmark', description:'INDTI in white + X in gradient, Space Grotesk Bold', usage:'Header, receipts, emails' },
-// [DUP]     { concept:'Symbol', description:'Ticket-shape icon with cut corners and gradient fill', usage:'Watermarks, patterns, backgrounds' },
-// [DUP]   ],
-// [DUP]   updated_at: new Date().toISOString()
-// [DUP] }))
 
 // ── ARCHITECTURE / TECH STACK ─────────────────────────────────────────────────
 app.get('/api/architecture/tech-stack', (c) => c.json({
@@ -9743,10 +8053,6 @@ app.get('/api/fan/wallet', (c) => c.json({
 }))
 
 // Post review fix (duplicate was returning under_review)  
-// [DUP] app.post('/api/events/:id/review', async (c) => {
-// [DUP]   const { rating, text } = await c.req.json()
-// [DUP]   return c.json({ success: true, review_id: 'REV-'+Date.now().toString(36).toUpperCase(), rating, text, message: 'Review submitted!', points_earned: 50 })
-// [DUP] })
 
 // AI fraud score
 app.post('/api/ai/fraud/score', async (c) => {
@@ -10196,13 +8502,6 @@ app.get('/api/ops/alerts', (c) => c.json({
   ]
 }))
 
-// [DUP] app.get('/api/ops/vendors', (c) => c.json({
-// [DUP]   vendors: [
-// [DUP]     { id: 'v1', name: 'FoodPark Stall A', type: 'F&B', status: 'active', sales_today: 45000, location: 'Zone A' },
-// [DUP]     { id: 'v2', name: 'Merch Counter 1', type: 'Merchandise', status: 'active', sales_today: 28000, location: 'Entry' },
-// [DUP]     { id: 'v3', name: 'Bar Zone Premium', type: 'Beverages', status: 'active', sales_today: 87000, location: 'VIP Area' }
-// [DUP]   ]
-// [DUP] }))
 
 // ── Analytics endpoints ───────────────────────────────────────
 app.get('/api/analytics/revenue', (c) => c.json({
@@ -10340,16 +8639,6 @@ app.get('/api/admin/audit/log', (c) => c.json({
 }))
 
 // ── Reports generate fix ──────────────────────────────────────
-// [DUP] app.post('/api/reports/generate', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({})) as any
-// [DUP]   return c.json({
-// [DUP]     success: true, report_id: 'RPT-' + Date.now(),
-// [DUP]     type: body.type || 'sales', period: body.period || 'monthly',
-// [DUP]     status: 'generating',
-// [DUP]     estimated_ready: new Date(Date.now() + 30000).toISOString(),
-// [DUP]     download_url: `https://cdn.indtix.com/reports/RPT-${Date.now()}.pdf`
-// [DUP]   })
-// [DUP] })
 
 // ── Export data ───────────────────────────────────────────────
 app.post('/api/admin/export', async (c) => {
@@ -10497,34 +8786,6 @@ app.get('/api/analytics/funnel/v2', (c) => c.json({
 // ═══════════════════════════════════════════════════════════════════
 
 // ── Group Booking ─────────────────────────────────────────────────
-// [DUP] app.post('/api/bookings/group', async (c) => {
-// [DUP]   const body = await c.req.json().catch(() => ({})) as any
-// [DUP]   const group_id = 'GRP-' + Math.random().toString(36).substring(2, 9).toUpperCase()
-// [DUP]   const members = body.members || []
-// [DUP]   const member_count = members.length || body.member_count || 5
-// [DUP]   const base_price = body.price_per_person || 1499
-// [DUP]   const group_discount_pct = member_count >= 10 ? 15 : member_count >= 5 ? 10 : 5
-// [DUP]   const subtotal = base_price * member_count
-// [DUP]   const discount_amount = Math.floor(subtotal * group_discount_pct / 100)
-// [DUP]   const total = subtotal - discount_amount + Math.floor(subtotal * 0.18)
-// [DUP]   return c.json({
-// [DUP]     success: true,
-// [DUP]     group_booking_id: group_id,
-// [DUP]     event_id: body.event_id || 'e1',
-// [DUP]     event_name: body.event_name || 'Sunburn Festival 2026',
-// [DUP]     organiser_user: body.user_id || 'USR-001',
-// [DUP]     member_count,
-// [DUP]     members: members.length ? members : Array.from({ length: member_count }, (_, i) => ({
-// [DUP]       seat: `GA-${100 + i}`, status: 'confirmed', ticket_id: 'TKT-' + Math.random().toString(36).substring(2, 8).toUpperCase()
-// [DUP]     })),
-// [DUP]     pricing: { base_price, subtotal, group_discount_pct, discount_amount, gst: Math.floor(subtotal * 0.18), total },
-// [DUP]     invite_link: `https://indtix.pages.dev/fan?group=${group_id}`,
-// [DUP]     payment_url: `https://pay.indtix.com/checkout/${group_id}`,
-// [DUP]     qr_codes_generated: member_count,
-// [DUP]     status: 'confirmed',
-// [DUP]     created_at: new Date().toISOString()
-// [DUP]   })
-// [DUP] })
 
 app.get('/api/bookings/group/:id', async (c) => {
   const id = c.req.param('id')
@@ -11448,28 +9709,7 @@ app.post('/api/events/:id/carbon/offset', async (c) => {
 })
 
 // ── Search & Discovery ─────────────────────────────────────────────
-// [DUP] app.get('/api/events/trending', (c) => c.json({
-// [DUP]   trending: [
-// [DUP]     { rank: 1, event_id: 'e1', name: 'Sunburn Arena Mumbai', velocity: '+24%', searches_today: 8420, tickets_left: 120 },
-// [DUP]     { rank: 2, event_id: 'e2', name: 'NH7 Weekender Pune', velocity: '+18%', searches_today: 6280, tickets_left: 340 },
-// [DUP]     { rank: 3, event_id: 'e3', name: 'Diljit Dosanjh Dil-Luminati', velocity: '+35%', searches_today: 12400, tickets_left: 0 }
-// [DUP]   ],
-// [DUP]   updated_at: new Date().toISOString()
-// [DUP] }))
 
-// [DUP] app.get('/api/events/nearby', async (c) => {
-// [DUP]   const lat = c.req.query('lat') || '19.0760'
-// [DUP]   const lng = c.req.query('lng') || '72.8777'
-// [DUP]   const radius_km = Number(c.req.query('radius') || 10)
-// [DUP]   return c.json({
-// [DUP]     lat, lng, radius_km,
-// [DUP]     events: [
-// [DUP]       { event_id: 'e1', name: 'Sunburn Arena', venue: 'NSCI Dome', distance_km: 4.2, price_from: 1499, date: '2026-03-15' },
-// [DUP]       { event_id: 'e5', name: 'Comedy Night Mumbai', venue: 'Canvas Laugh Club', distance_km: 2.8, price_from: 599, date: '2026-03-12' }
-// [DUP]     ],
-// [DUP]     total: 2
-// [DUP]   })
-// [DUP] })
 
 // ── Version 20 Health Check ────────────────────────────────────────
 app.get('/api/v20/health', (c) => c.json({
@@ -12466,29 +10706,6 @@ app.get('/api/loyalty/profile', (c) => {
   })
 })
 
-// [DUP] app.post('/api/loyalty/redeem', async (c) => {
-// [DUP]   const { user_id = 'USR-001', reward_id, points_cost = 500 } = await c.req.json()
-// [DUP]   const rewardNames: Record<string, string> = { r1: '₹100 Off', r2: 'Priority Entry', r3: 'Backstage Pass', r4: 'VIP Upgrade', r5: 'Free Ticket' }
-// [DUP]   const rewardName = rewardNames[reward_id] || 'Reward'
-// [DUP]   return c.json({
-// [DUP]     success: true, user_id, reward_id, reward_name: rewardName,
-// [DUP]     points_spent: points_cost, points_remaining: Math.max(0, 2450 - points_cost),
-// [DUP]     coupon_code: 'LOYAL' + Math.random().toString(36).slice(2,8).toUpperCase(),
-// [DUP]     message: rewardName + ' redeemed! Check your email for details.',
-// [DUP]     expires_at: new Date(Date.now() + 30*24*3600000).toISOString()
-// [DUP]   })
-// [DUP] })
-
-// [DUP] app.get('/api/loyalty/leaderboard', (c) => c.json({
-// [DUP]   leaderboard: [
-// [DUP]     {rank:1,user:'Arjun K.',points:12450,tier:'platinum',badges:8},
-// [DUP]     {rank:2,user:'Priya S.',points:9820,tier:'platinum',badges:6},
-// [DUP]     {rank:3,user:'Vikram R.',points:7650,tier:'gold',badges:5},
-// [DUP]     {rank:4,user:'Anita M.',points:5420,tier:'gold',badges:4},
-// [DUP]     {rank:5,user:'You',points:2450,tier:'gold',badges:4},
-// [DUP]   ],
-// [DUP]   total_participants: 48200, period: 'all_time'
-// [DUP] }))
 
 // ── Notifications ──
 app.get('/api/notifications/list', (c) => {
@@ -12742,23 +10959,7 @@ app.post('/api/admin/whitelabel', async (c) => {
 })
 
 // ── Venue Floor Plan ──
-// [DUP] app.get('/api/venue/floorplan', (c) => c.json({
-// [DUP]   venue_id: c.req.query('venue_id') || 'V-001',
-// [DUP]   plan_id: 'FP-001',
-// [DUP]   zones: [
-// [DUP]     {id:'z1',name:'Main Stage',x:30,y:20,w:40,h:30,type:'stage',capacity:0},
-// [DUP]     {id:'z2',name:'GA Floor',x:10,y:50,w:80,h:25,type:'ga',capacity:8000},
-// [DUP]     {id:'z3',name:'VIP Left',x:5,y:20,w:20,h:28,type:'vip',capacity:500},
-// [DUP]     {id:'z4',name:'VIP Right',x:75,y:20,w:20,h:28,type:'vip',capacity:500},
-// [DUP]     {id:'z5',name:'F&B Zone',x:10,y:76,w:30,h:18,type:'fnb',capacity:0},
-// [DUP]   ],
-// [DUP]   last_updated: new Date().toISOString()
-// [DUP] }))
 
-// [DUP] app.post('/api/venue/floorplan', async (c) => {
-// [DUP]   const { venue_id = 'V-001', zones = [] } = await c.req.json()
-// [DUP]   return c.json({ success: true, plan_id: 'FP-' + Date.now().toString(36).toUpperCase(), venue_id, zones_count: zones.length, saved_at: new Date().toISOString() })
-// [DUP] })
 
 // ── Footfall Heatmap ──
 app.get('/api/venue/footfall-heatmap', (c) => c.json({
@@ -13018,18 +11219,6 @@ app.get('/api/search/autocomplete', (c) => {
   return c.json({ query: q, suggestions: ['Sunburn Festival', 'Lollapalooza India', 'NH7 Weekender', 'Arijit Singh Live'].filter(s => s.toLowerCase().includes(q.toLowerCase())).slice(0, 5) })
 })
 
-// [DUP] app.get('/api/events/recommendations', (c) => c.json({
-// [DUP]   user_id: c.req.query('user_id') || 'USR-001',
-// [DUP]   recommendations: [
-// [DUP]     {event_id:'e1',name:'Sunburn Festival 2026',category:'Electronic',city:'Pune',price_from:3999,match_score:95},
-// [DUP]     {event_id:'e5',name:'NH7 Weekender',category:'Multi-genre',city:'Pune',price_from:2499,match_score:90},
-// [DUP]     {event_id:'e2',name:'Lollapalooza India',category:'Rock',city:'Mumbai',price_from:4999,match_score:87},
-// [DUP]     {event_id:'e3',name:'Arijit Singh Live',category:'Bollywood',city:'Delhi',price_from:1999,match_score:85},
-// [DUP]     {event_id:'e4',name:'Comedy Factory',category:'Comedy',city:'Bengaluru',price_from:699,match_score:82},
-// [DUP]     {event_id:'e6',name:'Pro Kabaddi Final',category:'Sports',city:'Hyderabad',price_from:299,match_score:78},
-// [DUP]   ],
-// [DUP]   algorithm: 'collaborative_filtering_v2'
-// [DUP] }))
 
 app.get('/api/pricing/multi-currency', (c) => c.json({
   base_currency: 'INR',
@@ -13559,18 +11748,6 @@ app.post('/api/admin/content-calendar', async (c) => {
 })
 
 // Platform Changelog
-// [DUP] app.get('/api/admin/changelog', (c) => {
-// [DUP]   return c.json({
-// [DUP]     versions: [
-// [DUP]       { version: 'v24.0.0', released: '2026-03-09', type: 'major', summary: 'Monetisation, Personalisation & Operational Excellence', endpoints_added: 90, breaking_changes: 0 },
-// [DUP]       { version: 'v23.0.0', released: '2026-03-09', type: 'major', summary: 'Community, Discovery & Platform Intelligence', endpoints_added: 90, breaking_changes: 0 },
-// [DUP]       { version: 'v22.0.0', released: '2026-03-08', type: 'major', summary: 'Fan Experience & Compliance', endpoints_added: 85, breaking_changes: 0 },
-// [DUP]       { version: 'v21.0.0', released: '2026-03-07', type: 'major', summary: 'Loyalty, Ops & Venue Intelligence', endpoints_added: 82, breaking_changes: 0 }
-// [DUP]     ],
-// [DUP]     total_versions: 24,
-// [DUP]     total_endpoints: 1189
-// [DUP]   })
-// [DUP] })
 
 // Audit Log Explorer
 app.get('/api/admin/audit-logs', (c) => {
@@ -32184,25 +30361,6 @@ app.get('/api/v58/control-tower/analytics', (c) => c.json({ success: true, suppl
 // ║  Version: v59.0.0  |  Endpoints: +90  |  Total: 4,339   ║
 // ╚═══════════════════════════════════════════════════════════╝
 
-// ── Health endpoint update ──
-app.get('/api/health', (c) => c.json({
-  status: 'ok', platform: 'INDTIX', version: 'v59.0.0',
-  phase: 'Phase 59', theme: 'Creator Economy & Content Monetisation',
-  new_endpoints: 90, total_endpoints: 4339,
-  features: [
-    'Creator Discovery & Onboarding Platform',
-    'Content Studio & Production Tools',
-    'Multi-Channel Distribution Engine',
-    'Monetisation & Revenue Management',
-    'Creator Analytics & Intelligence',
-    'Brand Collaboration Marketplace',
-    'Fan Subscription & Membership',
-    'Live Streaming Commerce',
-    'Creator Fund & Financial Services',
-    'Creator Community & Talent Development'
-  ],
-  timestamp: new Date().toISOString()
-}))
 
 // ── MODULE 1: Creator Discovery & Onboarding Platform ──
 app.get('/api/v59/creator-discovery/overview', (c) => c.json({ success: true, module: 'Creator Discovery', total_creators: 2840000, verified_creators: 284000, new_this_month: 28400, avg_followers: 84000, top_categories: ['Music', 'Comedy', 'Dance', 'Food', 'Travel'], ai_matched: 284000, discovery_reach: '28.4M fans', onboarding_time_hrs: 2.8, creator_nps: 84, platform_exclusives: 2840 }))
@@ -32320,25 +30478,6 @@ app.get('/api/v59/creator-community/analytics', (c) => c.json({ success: true, a
 // ║  Version: v60.0.0  |  Endpoints: +90  |  Total: 4,429   ║
 // ╚═══════════════════════════════════════════════════════════╝
 
-// ── Health endpoint ──
-app.get('/api/health', (c) => c.json({
-  status: 'ok', platform: 'INDTIX', version: 'v60.0.0',
-  phase: 'Phase 60', theme: 'Smart Cities & Urban Event Infrastructure',
-  new_endpoints: 90, total_endpoints: 4429,
-  features: [
-    'Smart Venue & IoT Infrastructure',
-    'Urban Mobility & Transit Integration',
-    'City-Wide Event Coordination Platform',
-    'Smart Crowd Management & Safety',
-    'Environmental Monitoring & Sustainability',
-    'Digital Twin City Events',
-    'Smart Parking & Traffic Orchestration',
-    'Public Services Integration',
-    'Urban Data Analytics & Intelligence',
-    'Smart City Commerce & Tourism'
-  ],
-  timestamp: new Date().toISOString()
-}))
 
 // ── MODULE 1: Smart Venue & IoT Infrastructure ──
 app.get('/api/v60/smart-venue/overview', (c) => c.json({ success: true, module: 'Smart Venue IoT', venues_connected: 8400, iot_sensors: 2840000, data_points_sec: 28400000, automation_rate: 84, energy_savings_pct: 42, predictive_maintenance_alerts: 284, avg_response_time_ms: 28, uptime: 99.94, smart_zones: 28400, ai_decisions_day: 284000 }))
@@ -32454,25 +30593,6 @@ app.get('/api/v60/city-commerce/analytics', (c) => c.json({ success: true, touri
 // ║  Version: v61.0.0  |  Endpoints: +90  |  Total: 4,519   ║
 // ╚═══════════════════════════════════════════════════════════╝
 
-// ── Health endpoint ──
-app.get('/api/health', (c) => c.json({
-  status: 'ok', platform: 'INDTIX', version: 'v61.0.0',
-  phase: 'Phase 61', theme: 'Global Expansion & Localisation Engine',
-  new_endpoints: 90, total_endpoints: 4519,
-  features: [
-    'Multi-Country Market Entry Platform',
-    'Language & Cultural Localisation',
-    'Global Payment & Currency Engine',
-    'International Regulatory Compliance',
-    'Cross-Border Artist & Talent Management',
-    'Regional Content & Media Hub',
-    'Global Distribution & Logistics',
-    'International Partnership Network',
-    'Global Analytics & Market Intelligence',
-    'Diaspora & Cultural Events Platform'
-  ],
-  timestamp: new Date().toISOString()
-}))
 
 // ── MODULE 1: Multi-Country Market Entry Platform ──
 app.get('/api/v61/market-entry/overview', (c) => c.json({ success: true, module: 'Market Entry', countries_active: 42, countries_pipeline: 28, total_markets: 70, gmv_international_cr: 2840, international_revenue_pct: 28.4, fastest_entry_days: 28, market_leaders: ['UAE', 'Singapore', 'UK', 'USA', 'Australia'], new_markets_yr: 14, partner_ecosystems: 284, entry_success_rate: 94.2 }))
@@ -33203,7 +31323,6 @@ app.get('/api/v65/fan-safety/analytics', (c) => c.json({ success: true, safety_s
 // ═══════════════════════════════════════════════════════════
 
 
-
 // ═══════════════════════════════════════════════════════════
 // PHASE 66 — CREATOR ECONOMY, INFLUENCER & SOCIAL COMMERCE PLATFORM (v66.0.0)
 // 90 new endpoints | Total: 4,969
@@ -33875,8 +31994,6 @@ app.on(['GET','POST'], '/api/v74/parking/book', (c) => c.json({ success: true, b
 // END PHASE 74 — TRAVEL, TRANSPORT, ACCOMMODATION & LOGISTICS
 // ═══════════════════════════════════════════════════════════
 
-export default app
-
 // ╔═══════════════════════════════════════════════════════════╗
 // ║  PHASE 75 — TICKETING TECHNOLOGY, MARKETPLACE &          ║
 // ║             SECONDARY MARKET PLATFORM (v75.0.0)          ║
@@ -34030,3 +32147,5 @@ app.get('/api/v76/cx-analytics/dashboard', (c) => c.json({ success: true, nps: 8
 // ═══════════════════════════════════════════════════════════
 // END PHASE 76 — CUSTOMER EXPERIENCE, CRM & FAN LOYALTY
 // ═══════════════════════════════════════════════════════════
+
+export default app

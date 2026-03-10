@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style id="_ix_af">.panel{display:none!important}.panel.active{display:block!important}</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>INDTIX – Experience More</title>
@@ -3946,7 +3947,7 @@ window.renderInteractiveSeatMap = renderInteractiveSeatMap;
       <button class="p22-tab" onclick="filterMerch('accessories',this)">Accessories</button>
       <button class="p22-tab" onclick="filterMerch('digital',this)">Digital</button>
     </div>
-    <div class="merch-grid" id="merch-grid">
+    <div class="merch-grid" id="merch-grid-dup1">
       <div class="merch-card" data-cat="tee"><div class="merch-img">👕</div><div class="merch-info"><div class="merch-name">Sunburn 2026 Tee</div><div class="merch-price">₹799</div><button onclick="addMerchToCart('Sunburn 2026 Tee',799)" style="width:100%;margin-top:8px;background:var(--grad1);border:none;border-radius:8px;padding:6px;color:#fff;font-size:12px;cursor:pointer">Add to Cart</button></div></div>
       <div class="merch-card" data-cat="accessories"><div class="merch-img">🧢</div><div class="merch-info"><div class="merch-name">INDTIX Cap</div><div class="merch-price">₹499</div><button onclick="addMerchToCart('INDTIX Cap',499)" style="width:100%;margin-top:8px;background:var(--grad1);border:none;border-radius:8px;padding:6px;color:#fff;font-size:12px;cursor:pointer">Add to Cart</button></div></div>
       <div class="merch-card" data-cat="accessories"><div class="merch-img">📿</div><div class="merch-info"><div class="merch-name">Festival Lanyard</div><div class="merch-price">₹199</div><button onclick="addMerchToCart('Festival Lanyard',199)" style="width:100%;margin-top:8px;background:var(--grad1);border:none;border-radius:8px;padding:6px;color:#fff;font-size:12px;cursor:pointer">Add to Cart</button></div></div>
@@ -4616,7 +4617,6 @@ function p23JoinWaitlist(){
   closeP23('waitlist-plus');
 }
 </script>
-<!-- END PHASE 23 FAN PORTAL -->
 
 <!-- ═══════════════════════════════════════════════════════════
      PHASE 24 — Fan Portal: Monetisation & Personalisation
@@ -4981,7 +4981,6 @@ function p24SaveAccess(){
     .then(()=>p24Toast('✅ Accessibility preferences saved!')).catch(()=>p24Toast('✅ Preferences saved!'));
 }
 </script>
-<!-- END PHASE 24 FAN PORTAL -->
 
 <!-- PHASE 25 FAN FEATURES: Hype Meter, AI Summary, Split Payment, Travel Bundles, Leaderboard, Memory Book, Virtual Fanmeet -->
 <style>
@@ -5004,19 +5003,6 @@ function p24SaveAccess(){
 </div>
 
 <!-- Phase 25 Bottom Nav Button -->
-<script>
-(function(){
-  const nav = document.querySelector('.bottom-nav, nav.bottom-nav');
-  if(nav){
-    const btn = document.createElement('button');
-    btn.className = 'nav-btn';
-    btn.style.cssText = 'flex:1;padding:6px 4px;background:transparent;border:none;color:#64748b;font-size:.65rem;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;';
-    btn.innerHTML = '<span style="font-size:1.2rem;">✨</span><span>P25</span>';
-    btn.onclick = () => { const hub = document.getElementById('p25-hub'); if(hub) hub.scrollIntoView({behavior:'smooth'}); };
-    nav.appendChild(btn);
-  }
-})();
-</script>
 
 <!-- Phase 25 Hub -->
 <div id="p25-hub" style="background:#0f172a;border-top:2px solid #f43f5e;padding:20px;margin-top:20px;">
@@ -5163,7 +5149,6 @@ document.addEventListener('DOMContentLoaded', async function(){
   }catch(e){}
 });
 </script>
-<!-- END PHASE 25 FAN PORTAL -->
 
 <!-- ════════════════════════════════════ PHASE 26 FAN ══════════ -->
 <style>
@@ -5497,24 +5482,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<script>
-// Phase 26 nav injection
-(function() {
-  document.addEventListener('DOMContentLoaded', function() {
-    // Try multiple nav selectors
-    const nav = document.querySelector('nav, .sidebar, #sidebar, [role="navigation"]');
-    if (nav) {
-      const btn = document.createElement('button');
-      btn.className = 'nav-btn p26-nav-btn';
-      btn.setAttribute('onclick', "showPanel('p26-fan',this)");
-      btn.innerHTML = '<i class="fas fa-rocket" style="margin-right:6px"></i>P26 Social Commerce <span style="background:#ec4899;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;margin-left:3px;font-weight:800">NEW</span>';
-      btn.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 12px;border:none;background:transparent;cursor:pointer;font-size:13px;color:#cbd5e1;border-radius:6px;transition:background .2s;';
-      nav.appendChild(btn);
-    }
-  });
-})();
-</script>
-<!-- END PHASE 26 FAN PORTAL -->
 
 <!-- PHASE 27 FAN: NFT Collectibles, Affiliate/Referral & Digital Ownership -->
 <div id="panel-p27-fan" class="panel" style="display:none">
@@ -5714,7 +5681,6 @@ function p27fListNFT(id) { if(confirm(`List NFT ${id} for sale on marketplace?\n
 function p27fBuyNFT(id) { if(confirm(`Purchase NFT from marketplace?\nPlatform fee: 2.5% + Gas ~₹28`)) alert('Purchase initiated! NFT will appear in your collection after blockchain confirmation.'); }
 function p27fRegisterDrop(id) { fetch('/api/fan/nft/drops/upcoming').then(()=>alert('Registered! You will be notified when the drop goes live.')).catch(()=>alert('Registered for drop!')); }
 </script>
-<!-- END PHASE 27 FAN PORTAL -->
 
 <!-- PHASE 28 FAN: Metaverse, AI Companion, Experience Commerce, Social -->
 <div id="panel-p28-fan" class="panel" style="display:none">
@@ -5979,7 +5945,6 @@ function p28fLoadFeed() {
   }).catch(()=>{});
 }
 </script>
-<!-- END PHASE 28 FAN PORTAL -->
 
 <!-- ═══════════════════════════════════════════════════════════ -->
 <!-- PHASE 29 FAN PORTAL — Upgrades, Insurance, Discovery, Crypto, Streaming -->
@@ -6199,7 +6164,6 @@ async function p29MyReplays(){
   catch(e){o.innerHTML='<div class="alert alert-info">▶️ Arijit Singh Live 4K HDR (till Apr 1) | NH7 Day 2 1080p (till Jan 20) | 8 total replays</div>'}
 }
 </script>
-<!-- END PHASE 29 FAN PORTAL -->
 
 <!-- ═══════════════════════════════════════════════════════════
      PHASE 30 — Fan Portal Panels
@@ -6285,7 +6249,6 @@ async function loadP30FanNFTTickets(){const r=await fetch('/api/fan/decentralise
 async function loadP30FanCredentials(){const r=await fetch('/api/fan/decentralised-id/credentials');const d=await r.json();document.getElementById('p30-fan-did-output').innerHTML='<div class="alert alert-success">📋 ZK Proofs: '+d.zero_knowledge_proofs_available+' | Credentials: '+d.verifiable_credentials?.map(c=>c.type+' ('+c.status+')').join(', ')+'</div>';}
 async function loadP30SecondaryMarket(){const r=await fetch('/api/fan/decentralised-id/secondary-market');const d=await r.json();document.getElementById('p30-fan-market-output').innerHTML='<div class="alert alert-warning">🛒 Listings: '+d.total_listings?.toLocaleString()+' | Platform Fee: '+d.platform_fee+' | Max Markup: '+d.max_markup_policy+'<br>'+d.listings?.map(l=>'🎟️ '+l.event+' | '+l.seat+' | ₹'+l.asking_price+' (Face: '+l.face_value+') | Seller Rep: '+l.seller_reputation).join('<br>')+'</div>';}
 </script>
-<!-- END PHASE 30 FAN PORTAL -->
 
 <!-- ═══ PHASE 31 — Fan Portal ═══ -->
 <div class="card mt-4 border-success">
@@ -6338,7 +6301,6 @@ async function loadP31FanSocialPlan(){const r=await fetch('/api/fan/bharat/micro
 async function loadP31FanPayMethods(){const r=await fetch('/api/fan/bharat/payments/methods');const d=await r.json();document.getElementById('p31-fan-micro-output').innerHTML='<div class="alert alert-warning">💳 Recommended: '+d.recommended+'<br>Offers: '+d.offers?.map(o=>o.method+': '+o.cashback).join(' | ')+'</div>';}
 async function loadP31FanLangPref(){const r=await fetch('/api/fan/bharat/language/preferences');const d=await r.json();document.getElementById('p31-fan-micro-output').innerHTML='<div class="alert alert-secondary">🌐 Language: '+d.ui_language+' | Script: '+d.detected_language+' | Voice Search: '+d.voice_search_language+'</div>';}
 </script>
-<!-- END PHASE 31 FAN PORTAL -->
 
 <!-- PHASE 32 FAN PORTAL — International Expansion -->
 <div class="container mt-4">
@@ -6388,7 +6350,6 @@ async function loadP32FanForex(){const r=await fetch('/api/fan/intl/forex/rates'
 async function loadP32FanNRI(){const r=await fetch('/api/fan/intl/nri/dashboard');const d=await r.json();document.getElementById('p32-fan-nri-output').innerHTML='👨‍👩‍👧 NRI Fans: '+d.nri_fans_registered.toLocaleString()+' | Avg Spend: $'+d.avg_spend_usd+'<br>Markets: '+d.active_markets.join(', ');}
 async function loadP32FanPay(){const r=await fetch('/api/fan/intl/payments/methods');const d=await r.json();document.getElementById('p32-fan-pay-output').innerHTML='💳 Cards: '+d.cards.join(', ')+'<br>Wallets: '+d.digital_wallets.join(', ')+'<br>Bank: SWIFT, SEPA, FPS, PayNow';}
 </script>
-<!-- END PHASE 32 FAN PORTAL -->
 
 <!-- PHASE 33 FAN PORTAL — PaaS Powered Fan Experience -->
 <div class="container mt-4">
@@ -6422,7 +6383,6 @@ async function loadP33FanDaaS(){const r=await fetch('/api/organiser/paas/daas/in
 async function loadP33FanAI(){const r=await fetch('/api/admin/paas/ai/models');const d=await r.json();document.getElementById('p33-fan-ai-output').innerHTML=d.models.map(m=>'🤖 <b>'+m.name+'</b>: '+(m.accuracy_pct||m.ndcg)+' accuracy').join('<br>');}
 async function loadP33FanStream(){const r=await fetch('/api/admin/paas/streaming/realtime');const d=await r.json();document.getElementById('p33-fan-stream-output').innerHTML='📡 Active Streams: '+d.active_streams+' | Events/sec: '+d.events_per_sec+'<br>Protocol: '+d.protocols.join(', ');}
 </script>
-<!-- END PHASE 33 FAN PORTAL -->
 
 <!-- PHASE 34 FAN PORTAL — AI-Native Fan Experience -->
 <div class="container mt-4">
@@ -6456,9 +6416,7 @@ async function loadP34FanRec(){const r=await fetch('/api/admin/ai-ops/meta/model
 async function loadP34FanPrice(){const r=await fetch('/api/admin/ai-ops/revenue/pricing-engine');const d=await r.json();document.getElementById('p34-fan-price-output').innerHTML='💰 Algorithm: '+d.algorithm+'<br>Price variations live: '+d.price_variations_live.toLocaleString()+' | Uplift: +'+d.avg_uplift_pct+'%';}
 async function loadP34FanForecast(){const r=await fetch('/api/admin/ai-ops/revenue/forecasting');const d=await r.json();document.getElementById('p34-fan-forecast-output').innerHTML='🔮 Next 30d: ₹'+d.revenue_next_30d_cr+'Cr | Next 90d: ₹'+d.revenue_next_90d_cr+'Cr<br>Accuracy: '+d.accuracy_last_quarter_pct+'% | MAPE: '+d.mape_pct+'%';}
 </script>
-<!-- END PHASE 34 FAN PORTAL -->
 
-<!-- PHASE 35 FAN PORTAL: IPO Readiness -->
 <div class="phase-section" id="p35-fan-section">
   <h3>⚖️ Phase 35 — Platform Governance & Investor Info</h3>
   <div class="btn-row">
@@ -6481,9 +6439,7 @@ async function loadP35FanESG() {
     `<div class="success-alert">🌿 CSR Spend: ₹${(d.spent_inr/1e5).toFixed(1)}L | Projects: ${d.projects.join(', ')} | Beneficiaries: ${d.beneficiaries.toLocaleString()}</div>`;
 }
 </script>
-<!-- END PHASE 35 FAN PORTAL -->
 
-<!-- PHASE 36 FAN PORTAL: Web3 & NFT -->
 <div class="phase-section" id="p36-fan-section">
   <h3>⛓️ Phase 36 — My NFT Tickets & Web3 Wallet</h3>
   <div class="btn-row">
@@ -6527,9 +6483,7 @@ async function loadP36FanDeFi() {
     `<div class="success-alert">🌱 Staked INDT: ${d.staked_indt.toLocaleString()} | USDC: $${d.staked_usdc} | Claimable: $${d.rewards_claimable_usdc} | APY: ${d.apy_pct}% | Unlock: ${d.lock_expiry}</div>`;
 }
 </script>
-<!-- END PHASE 36 FAN PORTAL -->
 
-<!-- PHASE 37 FAN PORTAL: Immersive Fan Experiences -->
 <div class="phase-section" id="p37-fan-section">
   <h3>🥽 Phase 37 — AR Venue, Metaverse & Live Stream</h3>
   <div class="btn-row">
@@ -6573,9 +6527,7 @@ async function loadP37FanInteractive() {
     `<div class="success-alert">🎮 Active Polls: ${d.active_polls} | Quizzes: ${d.active_quizzes} | Reactions/min: ${d.reactions_pm.toLocaleString()} | Super Chat/min: ${d.super_chat_pm} | Fan Cams: ${d.fan_cam_submissions}</div>`;
 }
 </script>
-<!-- END PHASE 37 FAN PORTAL -->
 
-<!-- PHASE 38 FAN PORTAL: Super-App, Lifestyle & Fan Commerce -->
 <div id="phase38-fan" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
   <h2 style="color:#f59e0b;font-size:1.3rem;margin-bottom:4px;">⚡ Phase 38 — Super-App & Lifestyle Commerce</h2>
   <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Your all-in-one fan super-app: food, travel, gaming, shopping, BNPL & lifestyle rewards</p>
@@ -6660,9 +6612,7 @@ async function loadFanSubs() {
 }
 loadFanFnB(); loadFanTravel(); loadFanGaming(); loadFanBNPL();
 </script>
-<!-- END PHASE 38 FAN PORTAL -->
 
-<!-- PHASE 39 FAN PORTAL: Advanced Data Platform & AI/ML Intelligence -->
 <div id="phase39-fan" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
   <h2 style="color:#06b6d4;font-size:1.3rem;margin-bottom:4px;">🧠 Phase 39 — AI-Powered Fan Intelligence</h2>
   <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Personalised recommendations · Smart chatbot · Voice AI · Privacy-first data management</p>
@@ -6726,9 +6676,7 @@ async function loadFanSentiment() {
 }
 loadFanChat(); loadFanPrivacy();
 </script>
-<!-- END PHASE 39 FAN PORTAL -->
 
-<!-- PHASE 40 FAN PORTAL: Global Payments & Embedded Finance -->
 <div id="phase40-fan" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
   <h2 style="color:#10b981;font-size:1.3rem;margin-bottom:4px;">💳 Phase 40 — Your Payments & Wallet</h2>
   <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">UPI · Cards · BNPL · Fan Wallet · Prepaid Cards · Event Insurance · Instant Refunds</p>
@@ -6798,7 +6746,6 @@ async function loadFanCard() {
 async function loadAllP40Fan() { await Promise.all([loadFanWallet(), loadFanUPI(), loadFanInsurance(), loadFanCard()]); }
 loadAllP40Fan();
 </script>
-<!-- END PHASE 40 FAN PORTAL -->
 
 <!-- PHASE 41 FAN PORTAL -->
 <div class="phase-section" id="phase41-fan">
@@ -6832,10 +6779,9 @@ async function loadFanMICE() {
 async function loadAllP41Fan() { await loadFanMICE(); }
 loadAllP41Fan();
 </script>
-<!-- END PHASE 41 FAN PORTAL -->
 
 <!-- PHASE 41 FAN PORTAL -->
-<div class="phase-section" id="phase41-fan">
+<div class="phase-section" id="phase41-fan-dup1">
   <h2 class="phase-title">Phase 41 — Enterprise B2B & Partner Offers for Fans</h2>
   <div class="metrics-grid">
     <div class="metric-card"><div class="metric-label">Bulk Group Offers</div><div class="metric-value" id="p41f-groups">—</div></div>
@@ -6861,7 +6807,6 @@ async function loadFanWLEvents() {
 async function loadAllP40Fan() { await Promise.all([loadFanGroups(), loadFanWLEvents()]); }
 loadAllP40Fan();
 </script>
-<!-- END PHASE 41 FAN PORTAL -->
 
 <!-- PHASE 42 FAN PORTAL -->
 <div class="phase-section" id="phase42-fan">
@@ -6891,7 +6836,6 @@ async function loadP42Fan() {
 async function loadAllP42Fan() { await loadP42Fan(); }
 loadAllP42Fan();
 </script>
-<!-- END PHASE 42 FAN PORTAL -->
 
 <!-- PHASE 43 FAN PORTAL -->
 <div class="phase-section" id="phase43-fan">
@@ -6911,7 +6855,6 @@ async function loadP43Fan() {
 async function loadAllP43Fan() { await loadP43Fan(); }
 loadAllP43Fan();
 </script>
-<!-- END PHASE 43 FAN PORTAL -->
 
 <script>
 // ── PHASE 44: Sustainability – Fan Portal ──
@@ -6950,7 +6893,6 @@ async function loadP44Fan() {
 async function loadAllP44Fan() { await loadP44Fan(); }
 loadAllP44Fan();
 </script>
-<!-- END PHASE 44 FAN PORTAL -->
 
 <script>
 // ── PHASE 45: International Expansion – Fan Portal ──
@@ -6989,7 +6931,6 @@ async function loadP45Fan() {
 async function loadAllP45Fan() { await loadP45Fan(); }
 loadAllP45Fan();
 </script>
-<!-- END PHASE 45 FAN PORTAL -->
 
 <script>
 // ── PHASE 46: Safety & Security – Fan Portal ──
@@ -7028,7 +6969,6 @@ async function loadP46Fan() {
 async function loadAllP46Fan() { await loadP46Fan(); }
 loadAllP46Fan();
 </script>
-<!-- END PHASE 46 FAN PORTAL -->
 
 <script>
 // ── PHASE 47: Accessibility – Fan Portal ──
@@ -7067,7 +7007,6 @@ async function loadP47Fan() {
 async function loadAllP47Fan() { await loadP47Fan(); }
 loadAllP47Fan();
 </script>
-<!-- END PHASE 47 FAN PORTAL -->
 
 <script>
 // ── PHASE 48: Ecosystem – Fan Portal ──
@@ -7101,7 +7040,6 @@ async function loadP48Fan() {
 async function loadAllP48Fan() { await loadP48Fan(); }
 loadAllP48Fan();
 </script>
-<!-- END PHASE 48 FAN PORTAL -->
 
 <!-- PHASE 49 FAN PORTAL — Growth, Virality & Acquisition Engine -->
 <script>
@@ -7147,7 +7085,6 @@ async function loadP49Fan() {
 async function loadAllP49Fan() { await loadP49Fan(); }
 loadAllP49Fan();
 </script>
-<!-- END PHASE 49 FAN PORTAL -->
 
 <!-- PHASE 50 FAN PORTAL — Platform Maturity & Self-Healing Infrastructure -->
 <script>
@@ -7186,7 +7123,6 @@ async function loadP50Fan() {
 async function loadAllP50Fan() { await loadP50Fan(); }
 loadAllP50Fan();
 </script>
-<!-- END PHASE 50 FAN PORTAL -->
 
 <!-- PHASE 51 FAN PORTAL — Immersive Experiences & Extended Reality -->
 <script>
@@ -7233,7 +7169,6 @@ async function loadP51Fan() {
 async function loadAllP51Fan() { await loadP51Fan(); }
 loadAllP51Fan();
 </script>
-<!-- END PHASE 51 FAN PORTAL -->
 
 <!-- PHASE 52 FAN PORTAL — Web3, NFT & Blockchain Ticketing -->
 <script>
@@ -7280,7 +7215,6 @@ async function loadP52Fan() {
 async function loadAllP52Fan() { await loadP52Fan(); }
 loadAllP52Fan();
 </script>
-<!-- END PHASE 52 FAN PORTAL -->
 
 <!-- ========== PHASE 53: AI & GENERATIVE INTELLIGENCE (FAN) ========== -->
 <div class="phase-section" id="phase53-fan">
@@ -7317,7 +7251,6 @@ loadAllP52Fan();
     </div>
   </div>
 </div>
-<!-- END PHASE 53 FAN PORTAL -->
 
 <!-- ========== PHASE 54: QUANTUM SECURITY (FAN) ========== -->
 <div class="phase-section" id="phase54-fan">
@@ -7349,7 +7282,6 @@ loadAllP52Fan();
     </div>
   </div>
 </div>
-<!-- END PHASE 54 FAN PORTAL -->
 
 <!-- ========== PHASE 55: VISION 2030 — FINAL (FAN) ========== -->
 <div class="phase-section" id="phase55-fan">
@@ -7397,7 +7329,6 @@ loadAllP52Fan();
     </div>
   </div>
 </div>
-<!-- END PHASE 55 FAN PORTAL — FINAL -->
 
 <!-- ========== PHASE 56: AUTONOMOUS ECONOMY (FAN) ========== -->
 <div class="phase-section" id="phase56-fan">
@@ -7441,7 +7372,6 @@ loadAllP52Fan();
     </div>
   </div>
 </div>
-<!-- END PHASE 56 FAN PORTAL -->
 
         <!-- PHASE 57 FAN -->
         <div class="portal-section" id="phase57-fan">
@@ -7530,7 +7460,6 @@ loadAllP52Fan();
   <div class="module-card"><h3>Personalisation Analytics</h3><p>840 experiments | 18.4% avg lift | 284 models in prod | Rs.840 Cr revenue</p></div>
 </div>
 </section>
-<!-- END PHASE 62 FAN PORTAL -->
 
 <!-- ===== PHASE 63 — CYBERSECURITY, FRAUD PREVENTION & TRUST PLATFORM (v63.0.0) ===== -->
 <section class="phase-section" id="phase63">
@@ -7556,7 +7485,6 @@ loadAllP52Fan();
   <div class="module-card"><h3>Compliance &amp; Audit</h3><p>28 frameworks | 14 certifications | 0 violations | Rs.840 Cr fines avoided</p></div>
 </div>
 </section>
-<!-- END PHASE 63 FAN PORTAL -->
 
 <!-- ===== PHASE 64 — ADVANCED ANALYTICS, BI & DATA PLATFORM (v64.0.0) ===== -->
 <section class="phase-section" id="phase64">
@@ -7582,7 +7510,6 @@ loadAllP52Fan();
   <div class="module-card"><h3>Data Governance &amp; Quality</h3><p>28,400 datasets | 97.8% quality | 94.2% lineage coverage | 98.4% SLA</p></div>
 </div>
 </section>
-<!-- END PHASE 64 FAN PORTAL -->
 
     <!-- PHASE 65 — IMMERSIVE FAN EXPERIENCE & NEXT-GEN ENTERTAINMENT (v65.0.0) -->
     <div class="phase-section" id="phase65">
@@ -7659,26 +7586,9 @@ loadAllP52Fan();
 
     
 
-<script src="/static/portal-fix.js"></script>
 
-<!-- PHASE 66 FAN PORTAL: Creator Economy & Social Commerce -->
 
-<script>
-(function(){
-  if(document.getElementById('nav-btn-p66-fan')) return;
-  var nav = document.querySelector('nav');
-  if(!nav) return;
-  var sec = document.createElement('div');
-  sec.innerHTML = '<div class="sb-section">Phase 66</div>';
-  var btn = document.createElement('button');
-  btn.id = 'nav-btn-p66-fan';
-  btn.className = 'sb-item';
-  btn.innerHTML = '🎨 Creator Economy <span style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#0f172a;border-radius:8px;padding:1px 6px;font-size:9px;margin-left:4px;font-weight:900;">NEW</span>';
-  btn.onclick = function(){ if(typeof showPanel==='function') showPanel('p66-fan',btn); };
-  sec.appendChild(btn);
-  nav.appendChild(sec);
-})();
-</script>
+
 <div id="panel-p66-fan" class="panel" style="display:none">
   <section style="padding:40px 24px;max-width:1200px;margin:0 auto">
     <h2 style="font-size:28px;font-weight:800;color:#e2e8f0;margin-bottom:8px">🎨 Creator & Social Commerce</h2>
@@ -7705,7 +7615,6 @@ loadAllP52Fan();
     </div>
   </section>
 </div>
-<!-- END PHASE 66 FAN PORTAL -->
 
 
 <div id="panel-p67-fan" class="panel" style="display:none">
@@ -7777,21 +7686,6 @@ loadAllP52Fan();
   </div>
 </div>
 
-<script>
-(function(){
-  var existing = document.getElementById('nav-btn-p67-fan');
-  if (existing) return;
-  // Try to find main nav or sidebar
-  var nav = document.querySelector('nav.sidebar-nav, nav, .sidebar, #sidebar');
-  if (!nav) return;
-  var btn = document.createElement('button');
-  btn.id = 'nav-btn-p67-fan';
-  btn.className = 'sb-item';
-  btn.innerHTML = '<i class="fas fa-seedling"></i>Green Experience <span style="background:#16a34a;color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:4px">P67</span>';
-  btn.onclick = function(){ if(typeof showPanel==='function') showPanel('p67-fan',this); };
-  nav.appendChild(btn);
-})();
-</script>
 
 <div id="panel-p68-fan" class="panel" style="display:none">
   <div style="padding:24px;max-width:1200px;margin:0 auto">
@@ -7862,19 +7756,6 @@ loadAllP52Fan();
   </div>
 </div>
 
-<script>
-(function(){
-  if(document.getElementById('nav-btn-p68-fan')) return;
-  var nav = document.querySelector('nav.sidebar-nav, nav, .sidebar, #sidebar');
-  if(!nav) return;
-  var btn = document.createElement('button');
-  btn.id = 'nav-btn-p68-fan';
-  btn.className = 'sb-item';
-  btn.innerHTML = '<i class="fas fa-hands-helping"></i>Inclusive Experience <span style="background:#7c3aed;color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:4px">P68</span>';
-  btn.onclick = function(){ if(typeof showPanel==='function') showPanel('p68-fan',this); };
-  nav.appendChild(btn);
-})();
-</script>
 
 <div id="panel-p69-fan" class="panel" style="display:none">
   <div style="padding:24px;max-width:1200px;margin:0 auto">
@@ -7945,18 +7826,6 @@ loadAllP52Fan();
   </div>
 </div>
 
-<script>
-(function(){
-  if(document.getElementById('nav-btn-p69-fan')) return;
-  var nav = document.querySelector('nav.sidebar-nav, nav, .sidebar, #sidebar');
-  if(!nav) return;
-  var b = document.createElement('button');
-  b.id = 'nav-btn-p69-fan'; b.className = 'sb-item';
-  b.innerHTML = '<i class="fas fa-magic"></i>AI Personalisation <span style="background:#0369a1;color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:4px">P69</span>';
-  b.onclick = function(){ if(typeof showPanel==='function') showPanel('p69-fan',this); };
-  nav.appendChild(b);
-})();
-</script>
 
 <div id="panel-p70-fan" class="panel" style="display:none">
   <div style="padding:24px;max-width:1200px;margin:0 auto">
@@ -8027,18 +7896,6 @@ loadAllP52Fan();
   </div>
 </div>
 
-<script>
-(function(){
-  if(document.getElementById('nav-btn-p70-fan')) return;
-  var nav = document.querySelector('nav.sidebar-nav, nav, .sidebar, #sidebar');
-  if(!nav) return;
-  var b = document.createElement('button');
-  b.id = 'nav-btn-p70-fan'; b.className = 'sb-item';
-  b.innerHTML = '<i class="fas fa-gem"></i>Web3 & NFT <span style="background:#d97706;color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:4px">P70</span>';
-  b.onclick = function(){ if(typeof showPanel==='function') showPanel('p70-fan',this); };
-  nav.appendChild(b);
-})();
-</script>
 
   <!-- PHASE 71 PANEL -->
   <div id="panel-p71-fan" class="panel" style="display:none">
@@ -8050,52 +7907,52 @@ loadAllP52Fan();
       <div class="card" style="padding:20px;border-left:4px solid #0ea5e9">
         <h3>📺 Live Streaming</h3>
         <p>2,840 concurrent streams · 840K peak viewers · 4K/1080p adaptive · 284 CDN nodes · 800ms latency</p>
-        <button onclick="fetch('/api/v71/live-streaming/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Streams</button>
+        <button onclick="fetch('/api/v71/live-streaming/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Streams</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #06b6d4">
         <h3>🌐 Virtual Events</h3>
         <p>2,840 virtual events · 284K max attendees · VR/AR mode · Avatar support · 84.2% engagement rate</p>
-        <button onclick="fetch('/api/v71/virtual-events/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Virtual</button>
+        <button onclick="fetch('/api/v71/virtual-events/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Virtual</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #0284c7">
         <h3>🔀 Hybrid Events</h3>
         <p>840 hybrid events · 36.8M combined reach · 3.38× virtual multiplier · 42% revenue uplift</p>
-        <button onclick="fetch('/api/v71/hybrid-events/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Hybrid</button>
+        <button onclick="fetch('/api/v71/hybrid-events/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Hybrid</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #0369a1">
         <h3>🎮 Audience Tools</h3>
         <p>Live polls · Gamification · Q&A · 2.84M game players · 84.2% engagement lift · 284K responses/min</p>
-        <button onclick="fetch('/api/v71/audience-tools/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Tools</button>
+        <button onclick="fetch('/api/v71/audience-tools/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Tools</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #0ea5e9">
         <h3>🎟️ Virtual Ticketing</h3>
         <p>28.4M virtual tickets · PPV + Subscription + Bundle · ₹284Cr revenue · 284K subscribers · MRR ₹8.4Cr</p>
-        <button onclick="fetch('/api/v71/virtual-ticketing/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Tickets</button>
+        <button onclick="fetch('/api/v71/virtual-ticketing/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Tickets</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #06b6d4">
         <h3>📼 VOD Library</h3>
         <p>28,400 events archived · 284K hours content · 284M total views · AI chapters · 28-language subs</p>
-        <button onclick="fetch('/api/v71/content-vod/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View VOD</button>
+        <button onclick="fetch('/api/v71/content-vod/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View VOD</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #0284c7">
         <h3>♿ Stream Accessibility</h3>
         <p>28 languages · 97.8% caption accuracy · Sign language · BharatTrans-v2 · WCAG 2.2 AA compliant</p>
-        <button onclick="fetch('/api/v71/stream-accessibility/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Access</button>
+        <button onclick="fetch('/api/v71/stream-accessibility/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Access</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #0369a1">
         <h3>💰 Creator Revenue</h3>
         <p>28,400 earning creators · ₹284Cr paid · Tips/SuperChat · ₹28.4Cr tips · 70% creator cut · 2.4hr payout</p>
-        <button onclick="fetch('/api/v71/creator-revenue/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Revenue</button>
+        <button onclick="fetch('/api/v71/creator-revenue/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Revenue</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #0ea5e9">
         <h3>🎬 Production Tools</h3>
         <p>AI director · 28 camera feeds · AR overlays · 2,840 graphics templates · Sponsor banners · OBS/vMix</p>
-        <button onclick="fetch('/api/v71/production-tools/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Production</button>
+        <button onclick="fetch('/api/v71/production-tools/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Production</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #06b6d4">
         <h3>📊 Stream Analytics</h3>
         <p>840K peak concurrent · ₹284Cr revenue · 84.2% YoY growth · NPS 88 · Real-time + predictive AI</p>
-        <button onclick="fetch('/api/v71/stream-analytics/dashboard').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Analytics</button>
+        <button onclick="fetch('/api/v71/stream-analytics/dashboard').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Analytics</button>
       </div>
     </div>
   </div>
@@ -8110,52 +7967,52 @@ loadAllP52Fan();
       <div class="card" style="padding:20px;border-left:4px solid #f59e0b">
         <h3>🏏 Sports Events</h3>
         <p>2,840 events ytd · IPL/ISL/PKL/BWF · 28.4M attendance · 84.2% sellout · 284 partner stadiums</p>
-        <button onclick="fetch('/api/v72/sports-events/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Events</button>
+        <button onclick="fetch('/api/v72/sports-events/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Events</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #d97706">
         <h3>🏟️ Stadium Tech</h3>
         <p>142 smart stadiums · 284K IoT sensors · 4K security · 99.2% face recognition · cashless payments</p>
-        <button onclick="fetch('/api/v72/stadium-tech/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Stadium</button>
+        <button onclick="fetch('/api/v72/stadium-tech/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Stadium</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #b45309">
         <h3>🎟️ Sports Ticketing</h3>
         <p>28.4M tickets sold · Dynamic pricing +28.4% uplift · Resale platform · Season passes · ₹840Cr revenue</p>
-        <button onclick="fetch('/api/v72/sports-ticketing/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Tickets</button>
+        <button onclick="fetch('/api/v72/sports-ticketing/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Tickets</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #92400e">
         <h3>🎮 Fantasy Sports</h3>
         <p>28.4M fantasy users · 28,400 daily contests · ₹28.4Cr daily prize pool · AI team builder · TDS compliant</p>
-        <button onclick="fetch('/api/v72/fantasy-sports/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Fantasy</button>
+        <button onclick="fetch('/api/v72/fantasy-sports/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Fantasy</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #f59e0b">
         <h3>🏃 Athlete Management</h3>
         <p>28,400 athletes · 2,840 teams · ₹2,840Cr contracts · AI performance · 84.2% injury prediction</p>
-        <button onclick="fetch('/api/v72/athlete-management/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Athletes</button>
+        <button onclick="fetch('/api/v72/athlete-management/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Athletes</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #d97706">
         <h3>📺 Sports Broadcast</h3>
         <p>28.4M concurrent peak · JioCinema/Star Sports · 22 language commentary · AI highlights · 284M social shares</p>
-        <button onclick="fetch('/api/v72/sports-media/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Broadcast</button>
+        <button onclick="fetch('/api/v72/sports-media/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Broadcast</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #b45309">
         <h3>🤝 Sponsorship</h3>
         <p>2,840 brand partners · ₹840Cr sponsorship · 8.4× ROI · 84.2% digital activations · AR activations</p>
-        <button onclick="fetch('/api/v72/sports-sponsorship/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Sponsorship</button>
+        <button onclick="fetch('/api/v72/sports-sponsorship/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Sponsorship</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #92400e">
         <h3>❤️ Fan Loyalty</h3>
         <p>28.4M fans · 2,840 fan clubs · Fantasy linked · NPS 88 · 284B cheer points · Sports NFTs 284K</p>
-        <button onclick="fetch('/api/v72/sports-fan/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Fans</button>
+        <button onclick="fetch('/api/v72/sports-fan/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Fans</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #f59e0b">
         <h3>👕 Merchandise</h3>
         <p>28,400 licensed products · ₹284Cr revenue · Adidas/Nike partnerships · Blockchain cert · 42% repeat buyers</p>
-        <button onclick="fetch('/api/v72/sports-merch/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Merch</button>
+        <button onclick="fetch('/api/v72/sports-merch/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Merch</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #d97706">
         <h3>📊 Sports Analytics</h3>
         <p>₹2,840Cr total revenue · 42% YoY growth · NPS 88 · 28.4M broadcast viewers · 97.8% digital checkin</p>
-        <button onclick="fetch('/api/v72/sports-analytics/dashboard').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Analytics</button>
+        <button onclick="fetch('/api/v72/sports-analytics/dashboard').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Analytics</button>
       </div>
     </div>
   </div>
@@ -8170,52 +8027,52 @@ loadAllP52Fan();
       <div class="card" style="padding:20px;border-left:4px solid #ef4444">
         <h3>🏪 Concessions</h3>
         <p>2,840 stands · 28,400 menu items · 284K orders/event · ₹840 avg spend · 42% pre-orders · 2.4 min wait</p>
-        <button onclick="fetch('/api/v73/fnb-concessions/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Concessions</button>
+        <button onclick="fetch('/api/v73/fnb-concessions/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Concessions</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #dc2626">
         <h3>📱 Digital Ordering</h3>
         <p>97.8% digital orders · 1.4 min avg order · 84.2% queue eliminated · AI upsell ₹28.4Cr · NPS 88</p>
-        <button onclick="fetch('/api/v73/digital-ordering/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Digital</button>
+        <button onclick="fetch('/api/v73/digital-ordering/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Digital</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #b91c1c">
         <h3>🥂 VIP Hospitality</h3>
         <p>2,840 VIP lounges · 28 Michelin partners · ₹28,400 avg spend · 8 celebrity chefs · NPS 96</p>
-        <button onclick="fetch('/api/v73/vip-hospitality/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View VIP</button>
+        <button onclick="fetch('/api/v73/vip-hospitality/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View VIP</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #991b1b">
         <h3>📦 Smart Inventory</h3>
         <p>28,400 SKUs · 2,840 suppliers · AI forecast 97.8% accuracy · 0.28% stockout · blockchain traceability</p>
-        <button onclick="fetch('/api/v73/fnb-inventory/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Inventory</button>
+        <button onclick="fetch('/api/v73/fnb-inventory/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Inventory</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #ef4444">
         <h3>🥗 Dietary & Allergen</h3>
         <p>14 allergens tracked · 10 dietary filters · FSSAI compliant · 100% allergen labelled · Zero incidents</p>
-        <button onclick="fetch('/api/v73/dietary-mgmt/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Dietary</button>
+        <button onclick="fetch('/api/v73/dietary-mgmt/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Dietary</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #dc2626">
         <h3>🍺 Bar Management</h3>
         <p>2,840 bars · 84 craft beer brands · 284 cocktails · 99.8% age verification · RFID tracking</p>
-        <button onclick="fetch('/api/v73/bar-management/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Bar</button>
+        <button onclick="fetch('/api/v73/bar-management/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Bar</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #b91c1c">
         <h3>🔬 Food Safety</h3>
         <p>28,400 IoT sensors · HACCP certified · FSSAI A+ · 0 incidents · 99.98% IoT uptime · Zero cold chain breaks</p>
-        <button onclick="fetch('/api/v73/food-safety/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Safety</button>
+        <button onclick="fetch('/api/v73/food-safety/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Safety</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #991b1b">
         <h3>🎤 Artist Catering</h3>
         <p>28,400 artists catered · 99.2% rider fulfilment · 8,400 crew meals · 28 cuisines · 24/7 service</p>
-        <button onclick="fetch('/api/v73/artist-catering/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Catering</button>
+        <button onclick="fetch('/api/v73/artist-catering/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Catering</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #ef4444">
         <h3>♻️ Sustainability</h3>
         <p>97.8% biodegradable packaging · 284K kg food donated · 840K reusable cups · Zero landfill · 42% carbon saved</p>
-        <button onclick="fetch('/api/v73/fnb-sustainability/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Sustainability</button>
+        <button onclick="fetch('/api/v73/fnb-sustainability/overview').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Sustainability</button>
       </div>
       <div class="card" style="padding:20px;border-left:4px solid #dc2626">
         <h3>📊 F&B Analytics</h3>
         <p>₹840Cr total revenue · 42% YoY growth · NPS 88 · 97.8% digital · 9.2 satisfaction · 8.4 sustainability</p>
-        <button onclick="fetch('/api/v73/fnb-analytics/dashboard').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Analytics</button>
+        <button onclick="fetch('/api/v73/fnb-analytics/dashboard').then(r=>r.json()).then(d=>_fanApiResult(d)).catch(e=>_toast('API call failed','error'))" class="btn-primary">View Analytics</button>
       </div>
     </div>
   </div>
@@ -8339,5 +8196,6 @@ loadAllP52Fan();
       </div>
     </div>
   </div>
+<script src="/static/portal-fix.js"></script>
 </body>
 </html>
