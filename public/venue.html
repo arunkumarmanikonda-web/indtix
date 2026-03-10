@@ -4110,4 +4110,87 @@ loadAllP52Venue();
   nav.appendChild(btn);
 })();
 </script>
+
+<div id="panel-p68-venue" class="panel" style="display:none">
+  <div style="padding:24px;max-width:1200px;margin:0 auto">
+    <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border-radius:16px;padding:28px 32px;margin-bottom:24px">
+      <h1 style="margin:0 0 8px;font-size:1.8rem;font-weight:700">♿ Phase 68 — Inclusive Venue Platform</h1>
+      <p style="margin:0;opacity:.85;font-size:1rem">Accessibility, Inclusion &amp; Universal Design Platform</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px">
+      <div style="background:#f5f3ff;border:1px solid #ddd6fe;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#7c3aed">8,400</div>
+        <div style="font-size:.85rem;color:#5b21b6;margin-top:4px">Accessible Events</div>
+      </div>
+      <div style="background:#f5f3ff;border:1px solid #ddd6fe;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#7c3aed">28</div>
+        <div style="font-size:.85rem;color:#5b21b6;margin-top:4px">Languages Supported</div>
+      </div>
+      <div style="background:#f5f3ff;border:1px solid #ddd6fe;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#7c3aed">284K</div>
+        <div style="font-size:.85rem;color:#5b21b6;margin-top:4px">Inclusive Tickets</div>
+      </div>
+      <div style="background:#f5f3ff;border:1px solid #ddd6fe;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#7c3aed">97.8%</div>
+        <div style="font-size:.85rem;color:#5b21b6;margin-top:4px">WCAG Compliance</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+      <div style="background:#fff;border:1px solid #ede9fe;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 10px;color:#6d28d9;font-size:1rem">♿ Physical Accessibility</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>284 wheelchair-accessible venues</li>
+          <li>2,840 sign-language interpreters</li>
+          <li>840 sensory-friendly events</li>
+          <li>RPWD Act 2016 compliant</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #ede9fe;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 10px;color:#6d28d9;font-size:1rem">🌍 Language & Culture</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>22 Indian official languages</li>
+          <li>BharatTrans-v2 AI (97.8% accuracy)</li>
+          <li>2.84M translations/day</li>
+          <li>14 IVR language channels</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #ede9fe;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 10px;color:#6d28d9;font-size:1rem">🏳️‍🌈 Social Inclusion</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>840 safe-space certified events</li>
+          <li>284 Pride events, 2.84M attendees</li>
+          <li>8,400 campus ambassadors</li>
+          <li>2,840 senior-friendly events</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #ede9fe;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 10px;color:#6d28d9;font-size:1rem">📊 Impact & Revenue</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>2.84M users empowered</li>
+          <li>₹84Cr revenue unlocked</li>
+          <li>NPS 92 (accessible users)</li>
+          <li>ROI 8.4× on accessibility spend</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding:16px;background:#f5f3ff;border-radius:10px;border-left:4px solid #7c3aed">
+      <strong style="color:#4c1d95">Phase 68 APIs:</strong>
+      <span style="color:#6d28d9;font-size:.85rem;margin-left:8px">/api/v68/accessibility/* · /api/v68/sign-language/* · /api/v68/sensory-friendly/* · /api/v68/inclusive-ticketing/* · /api/v68/multilingual/* · /api/v68/senior-experience/* · /api/v68/inclusion-lgbtq/* · /api/v68/youth-engagement/* · /api/v68/accessibility-audit/* · /api/v68/universal-design/*</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  if(document.getElementById('nav-btn-p68-venue')) return;
+  var nav = document.querySelector('nav.sidebar-nav, nav, .sidebar, #sidebar');
+  if(!nav) return;
+  var btn = document.createElement('button');
+  btn.id = 'nav-btn-p68-venue';
+  btn.className = 'sb-item';
+  btn.innerHTML = '<i class="fas fa-universal-access"></i>Accessibility <span style="background:#7c3aed;color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:4px">P68</span>';
+  btn.onclick = function(){ if(typeof showPanel==='function') showPanel('p68-venue',this); };
+  nav.appendChild(btn);
+})();
+</script>
 </body></html>
