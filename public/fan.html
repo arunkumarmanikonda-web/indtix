@@ -5506,7 +5506,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (nav) {
       const btn = document.createElement('button');
       btn.className = 'nav-btn p26-nav-btn';
-      btn.setAttribute('onclick', "document.querySelectorAll('.panel,[class*=panel]').forEach(p=>p.style.display='none'); const el=document.getElementById('p26-fan'); if(el)el.style.display='block'; this.closest('nav,div').querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');");
+      btn.setAttribute('onclick', "showPanel('p26-fan',this)");
       btn.innerHTML = '<i class="fas fa-rocket" style="margin-right:6px"></i>P26 Social Commerce <span style="background:#ec4899;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;margin-left:3px;font-weight:800">NEW</span>';
       btn.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 12px;border:none;background:transparent;cursor:pointer;font-size:13px;color:#cbd5e1;border-radius:6px;transition:background .2s;';
       nav.appendChild(btn);
@@ -7660,5 +7660,35 @@ loadAllP52Fan();
     
 
 <script src="/static/portal-fix.js"></script>
+
+<!-- PHASE 66 FAN PORTAL: Creator Economy & Social Commerce -->
+<div id="panel-p66-fan" class="panel" style="display:none">
+  <section style="padding:40px 24px;max-width:1200px;margin:0 auto">
+    <h2 style="font-size:28px;font-weight:800;color:#e2e8f0;margin-bottom:8px">🎨 Creator & Social Commerce</h2>
+    <p style="color:#94a3b8;margin-bottom:32px">Discover top creators, join group buys, watch live shopping streams</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px">
+      <div style="background:linear-gradient(135deg,#1a0533,#2d0a4e);border-radius:16px;padding:24px;border:1px solid rgba(108,60,247,.3)">
+        <div style="font-size:32px;margin-bottom:8px">🎯</div>
+        <h3 style="color:#e2e8f0;margin:0 0 8px">Top Creators</h3>
+        <p style="color:#94a3b8;font-size:13px;margin:0 0 16px">284K creators, exclusive content & ticket drops</p>
+        <button onclick="_toast('Opening Creator Marketplace…','info')" style="padding:10px 20px;background:#6c3cf7;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:600">Explore</button>
+      </div>
+      <div style="background:linear-gradient(135deg,#1a2744,#1e3a5f);border-radius:16px;padding:24px;border:1px solid rgba(59,130,246,.3)">
+        <div style="font-size:32px;margin-bottom:8px">👥</div>
+        <h3 style="color:#e2e8f0;margin:0 0 8px">Group Buy</h3>
+        <p style="color:#94a3b8;font-size:13px;margin:0 0 16px">Join groups for up to 18.4% discount on tickets</p>
+        <button onclick="_toast('Finding group buys near you…','info')" style="padding:10px 20px;background:#3b82f6;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:600">Join Group</button>
+      </div>
+      <div style="background:linear-gradient(135deg,#1a3320,#1e4d2e);border-radius:16px;padding:24px;border:1px solid rgba(34,197,94,.3)">
+        <div style="font-size:32px;margin-bottom:8px">🛍️</div>
+        <h3 style="color:#e2e8f0;margin:0 0 8px">Live Shopping</h3>
+        <p style="color:#94a3b8;font-size:13px;margin:0 0 16px">2,840 live streams daily with exclusive deals</p>
+        <button onclick="_toast('Loading live streams…','info')" style="padding:10px 20px;background:#22c55e;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:600">Watch Live</button>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- END PHASE 66 FAN PORTAL -->
+
 </body>
 </html>

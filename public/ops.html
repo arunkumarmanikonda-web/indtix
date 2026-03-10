@@ -448,9 +448,14 @@ function payPOS(method){
 function filterPOS(btn,cat){document.querySelectorAll('.pos-cat-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
 
 function showOpsPanel(name,btn){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.ops-nav-btn').forEach(b=>b.classList.remove('active'));
-  const p=document.getElementById('ops-'+name);if(p)p.classList.add('active');if(btn)btn.classList.add('active');
+  document.querySelectorAll('.panel,.ops-panel').forEach(p=>{p.classList.remove('active');p.style.display='none';});
+  document.querySelectorAll('.ops-nav-btn,.sb-item').forEach(b=>b.classList.remove('active'));
+  // Try ops-{name} first, then ops-panel-{name}, then panel-{name}
+  const p = document.getElementById('ops-'+name) ||
+            document.getElementById('ops-panel-'+name) ||
+            document.getElementById('panel-'+name);
+  if(p){p.classList.add('active');p.style.display='block';}
+  if(btn)btn.classList.add('active');
 }
 
 const scanNames=['Arjun Sharma','Priya Nair','Rohan Mehta','Sneha Kapoor','Vikram Iyer','Anjali Singh','Dev Patel','Meera Rao','Kabir Khan','Ishaan Tiwari'];
@@ -2577,7 +2582,7 @@ async function p26opsLoadDR() {
     if (nav) {
       const btn = document.createElement('button');
       btn.className = 'nav-btn p26-nav-btn';
-      btn.setAttribute('onclick', "document.querySelectorAll('.panel,[class*=panel]').forEach(p=>p.style.display='none'); const el=document.getElementById('p26-ops'); if(el)el.style.display='block'; this.closest('nav,div').querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');");
+      btn.setAttribute('onclick', "showPanel('p26-ops',this)");
       btn.innerHTML = '<i class="fas fa-rocket" style="margin-right:6px"></i>P26 Platform Ops <span style="background:#8b5cf6;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;margin-left:3px;font-weight:800">NEW</span>';
       btn.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 12px;border:none;background:transparent;cursor:pointer;font-size:13px;color:#cbd5e1;border-radius:6px;transition:background .2s;';
       nav.appendChild(btn);
@@ -4416,5 +4421,38 @@ loadAllP52Ops();
     
 
 <script src="/static/portal-fix.js"></script>
+
+<!-- PHASE 66 OPS PORTAL: Creator Economy & Social Commerce -->
+<div id="panel-p66-ops-new" class="panel" style="display:none;padding:20px">
+  <div style="background:linear-gradient(135deg,#1a0533,#2d0a4e);color:#fff;border-radius:12px;padding:20px;margin-bottom:16px">
+    <h2 style="margin:0 0 6px;font-size:18px;font-weight:800">🎨 Creator Economy Ops — Phase 66</h2>
+    <p style="margin:0;opacity:.8;font-size:12px">Monitor creator platform health: UGC moderation, affiliate fraud, live streams</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
+    <div style="background:#1e293b;border-radius:10px;padding:14px;border:1px solid #334155">
+      <div style="color:#94a3b8;font-size:11px;margin-bottom:4px">UGC MODERATION QUEUE</div>
+      <div style="color:#e2e8f0;font-size:22px;font-weight:800">2,840</div>
+      <div style="color:#10b981;font-size:11px">99.2% auto-approved</div>
+    </div>
+    <div style="background:#1e293b;border-radius:10px;padding:14px;border:1px solid #334155">
+      <div style="color:#94a3b8;font-size:11px;margin-bottom:4px">LIVE STREAMS ACTIVE</div>
+      <div style="color:#e2e8f0;font-size:22px;font-weight:800">284</div>
+      <div style="color:#f59e0b;font-size:11px">8.4M peak viewers</div>
+    </div>
+    <div style="background:#1e293b;border-radius:10px;padding:14px;border:1px solid #334155">
+      <div style="color:#94a3b8;font-size:11px;margin-bottom:4px">AFFILIATE FRAUD BLOCKED</div>
+      <div style="color:#e2e8f0;font-size:22px;font-weight:800">840</div>
+      <div style="color:#ef4444;font-size:11px">Today · ₹8.4L saved</div>
+    </div>
+    <div style="background:#1e293b;border-radius:10px;padding:14px;border:1px solid #334155">
+      <div style="color:#94a3b8;font-size:11px;margin-bottom:4px">CREATOR PAYOUTS PENDING</div>
+      <div style="color:#e2e8f0;font-size:22px;font-weight:800">₹28Cr</div>
+      <div style="color:#6c3cf7;font-size:11px">2.4 hr avg payout</div>
+    </div>
+  </div>
+  <button onclick="fetch('/api/v66/ugc-studio/moderation').then(r=>r.json()).then(d=>_toast('Queue: '+d.queue_size+' items, '+d.ai_auto_approved+'% auto-approved','info'))" style="margin-top:16px;padding:10px 20px;background:#6c3cf7;color:#fff;border:none;border-radius:8px;cursor:pointer">Check Moderation Queue</button>
+</div>
+<!-- END PHASE 66 OPS PORTAL -->
+
 </body>
 </html>

@@ -1753,11 +1753,11 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(nav){
     const btns=document.createElement('div');
     btns.innerHTML=`
-      <button class="sb-btn${typeof showVenuePanel!=='undefined'?'':' v-nav'}" onclick="document.getElementById('panel-p22-iot').style.display='block';venueToast22('IoT Dashboard loaded')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">📡 IoT Sensors 🆕</button>
-      <button onclick="document.getElementById('panel-p22-energy').style.display='block';loadEnergyMonitor()" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">⚡ Energy Monitor 🆕</button>
-      <button onclick="document.getElementById('panel-p22-catering').style.display='block'" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">🍽️ Catering AI 🆕</button>
-      <button onclick="document.getElementById('panel-p22-zonecontrol').style.display='block'" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">💡 Zone Control 🆕</button>
-      <button onclick="document.getElementById('panel-p22-maintenance').style.display='block';loadMaintenanceTickets()" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">🔧 Maintenance 🆕</button>`;
+      <button class="sb-btn" onclick="showPanel('p22-iot',this);loadIoTSensors()" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">📡 IoT Sensors 🆕</button>
+      <button onclick="showPanel('p22-energy',this);loadEnergyMonitor()" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">⚡ Energy Monitor 🆕</button>
+      <button onclick="showPanel('p22-catering',this)" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">🍽️ Catering AI 🆕</button>
+      <button onclick="showPanel('p22-zonecontrol',this)" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">💡 Zone Control 🆕</button>
+      <button onclick="showPanel('p22-maintenance',this);loadMaintenanceTickets()" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">🔧 Maintenance 🆕</button>`;
     nav.appendChild(btns);
   }
   setTimeout(()=>loadIoTSensors(),600);
@@ -2459,7 +2459,7 @@ async function p26vLoadConcessions() {
     if (nav) {
       const btn = document.createElement('button');
       btn.className = 'nav-btn p26-nav-btn';
-      btn.setAttribute('onclick', "document.querySelectorAll('.panel,[class*=panel]').forEach(p=>p.style.display='none'); const el=document.getElementById('p26-venue'); if(el)el.style.display='block'; this.closest('nav,div').querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');");
+      btn.setAttribute('onclick', "showPanel('p26-venue',this)");
       btn.innerHTML = '<i class="fas fa-rocket" style="margin-right:6px"></i>P26 Smart Venue <span style="background:#10b981;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;margin-left:3px;font-weight:800">NEW</span>';
       btn.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 12px;border:none;background:transparent;cursor:pointer;font-size:13px;color:#cbd5e1;border-radius:6px;transition:background .2s;';
       nav.appendChild(btn);
@@ -3998,4 +3998,31 @@ loadAllP52Venue();
     
 
 <script src="/static/portal-fix.js"></script>
+
+<!-- PHASE 66 VENUE PORTAL: Creator Economy & Social Commerce -->
+<div class="panel" id="panel-p66-venue" style="display:none;padding:20px;overflow-y:auto;height:calc(100vh - 60px)">
+  <div style="background:linear-gradient(135deg,#1a0533,#2d0a4e);color:#fff;border-radius:14px;padding:24px;margin-bottom:20px">
+    <h2 style="margin:0 0 6px;font-size:20px;font-weight:800">🎨 Creator Economy — Phase 66</h2>
+    <p style="margin:0;opacity:.8;font-size:13px">Monetise your venue through creator content, live shopping & brand partnerships</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
+    <div style="background:#1e293b;border-radius:12px;padding:18px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 10px;font-size:14px">📸 Venue UGC</h3>
+      <p style="color:#94a3b8;font-size:12px;margin:0 0 12px">Fans create 284K pieces/day about events at your venue. License UGC for marketing.</p>
+      <button onclick="fetch('/api/v66/ugc-studio/analytics').then(r=>r.json()).then(d=>_toast('UGC GMV lift: '+d.gmv_lift_pct+'%','success'))" style="padding:8px 14px;background:#6c3cf7;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">View UGC Analytics</button>
+    </div>
+    <div style="background:#1e293b;border-radius:12px;padding:18px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 10px;font-size:14px">🤝 Brand Partnerships</h3>
+      <p style="color:#94a3b8;font-size:12px;margin:0 0 12px">2,840 brands seeking venue sponsorships. Avg deal ₹28.4L.</p>
+      <button onclick="fetch('/api/v66/brand-marketplace/overview').then(r=>r.json()).then(d=>_toast(d.brands_registered+' brands available','info'))" style="padding:8px 14px;background:#10b981;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">Find Sponsors</button>
+    </div>
+    <div style="background:#1e293b;border-radius:12px;padding:18px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 10px;font-size:14px">🛍️ Live Commerce</h3>
+      <p style="color:#94a3b8;font-size:12px;margin:0 0 12px">Enable live shopping streams from your venue. 12.4% conversion rate.</p>
+      <button onclick="fetch('/api/v66/live-commerce/analytics').then(r=>r.json()).then(d=>_toast('Live commerce GMV: ₹'+d.gmv_cr+'Cr','success'))" style="padding:8px 14px;background:#f59e0b;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">Enable Live Commerce</button>
+    </div>
+  </div>
+</div>
+<!-- END PHASE 66 VENUE PORTAL -->
+
 </body></html>

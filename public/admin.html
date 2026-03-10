@@ -138,6 +138,17 @@ tr:hover td{background:rgba(108,60,247,0.04)}
     <button class="sb-item" onclick="showPanel('audit',this)"><i class="fas fa-scroll"></i>Audit Logs</button>
     <button class="sb-item" onclick="showPanel('config',this)"><i class="fas fa-sliders"></i>Platform Config</button>
     <button class="sb-item" onclick="showPanel('rbac',this)"><i class="fas fa-user-lock"></i>RBAC / Permissions</button>
+    <button class="sb-item" onclick="showPanel('support',this)"><i class="fas fa-headset"></i>Support Desk</button>
+    <button class="sb-item" onclick="showPanel('risk',this)"><i class="fas fa-exclamation-triangle"></i>Risk & Fraud Queue</button>
+    <button class="sb-item" onclick="showPanel('compliance',this)"><i class="fas fa-balance-scale"></i>Legal & Compliance</button>
+    <button class="sb-item" onclick="showPanel('cities',this)"><i class="fas fa-city"></i>City & Category Mgr</button>
+    <button class="sb-item" onclick="showPanel('affiliate',this)"><i class="fas fa-link"></i>Affiliate Programme</button>
+    <button class="sb-item" onclick="showPanel('partnercrm',this)"><i class="fas fa-handshake"></i>Partner CRM</button>
+    <button class="sb-item" onclick="showPanel('hrteam',this)"><i class="fas fa-users-cog"></i>HR & Team Mgmt</button>
+    <button class="sb-item" onclick="showPanel('sponsors_admin',this)"><i class="fas fa-star"></i>Sponsor Platform</button>
+    <button class="sb-item" onclick="showPanel('whitelabel_admin',this)"><i class="fas fa-paint-brush"></i>White-Label SaaS</button>
+    <button class="sb-item" onclick="showPanel('developer_admin',this)"><i class="fas fa-code"></i>Developer API Portal</button>
+    <button class="sb-item" onclick="showPanel('p66-admin',this)"><i class="fas fa-paint-brush"></i>🎨 Creator Economy P66</button>
   </nav>
   <div class="sb-footer"><a href="/"><i class="fas fa-arrow-left"></i>Back to Fan Portal</a></div>
 </div>
@@ -7646,4 +7657,60 @@ loadP52Admin();
     
 
 <script src="/static/portal-fix.js"></script>
+
+<!-- PHASE 66 ADMIN PORTAL: Creator Economy & Social Commerce -->
+<div class="panel" id="panel-p66-admin" style="display:none;padding:20px;overflow-y:auto;height:calc(100vh - 60px)">
+  <div style="background:linear-gradient(135deg,#1a0533,#2d0a4e,#4a0e6e);color:#fff;border-radius:14px;padding:28px;margin-bottom:24px">
+    <h2 style="margin:0 0 8px;font-size:22px;font-weight:800">🎨 Phase 66 — Creator Economy & Social Commerce</h2>
+    <p style="margin:0;opacity:.8;font-size:14px">Creator Marketplace · Social Commerce · UGC Studio · Affiliate Engine · Live Commerce</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:20px">
+      <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-size:24px;font-weight:900">284K</div><div style="font-size:11px;opacity:.8">Creators</div>
+      </div>
+      <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-size:24px;font-weight:900">₹840Cr</div><div style="font-size:11px;opacity:.8">Creator GMV</div>
+      </div>
+      <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-size:24px;font-weight:900">2.84</div><div style="font-size:11px;opacity:.8">Viral Coeff</div>
+      </div>
+      <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-size:24px;font-weight:900">+90</div><div style="font-size:11px;opacity:.8">New Endpoints</div>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
+    <div style="background:#1e293b;border-radius:12px;padding:20px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 12px;font-size:15px">🎯 Creator Marketplace</h3>
+      <div style="color:#94a3b8;font-size:13px;line-height:1.6">284K creators · 84K verified · ₹840Cr GMV · 2,840 brands · Avg ROI 8.4x</div>
+      <button onclick="fetch('/api/v66/creator-marketplace/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" style="margin-top:12px;padding:8px 16px;background:#6c3cf7;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">View Data</button>
+    </div>
+    <div style="background:#1e293b;border-radius:12px;padding:20px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 12px;font-size:15px">📱 Social Commerce</h3>
+      <div style="color:#94a3b8;font-size:13px;line-height:1.6">840K referrals/day · Viral k=2.84 · 18.4% share-to-buy · ₹284Cr GMV</div>
+      <button onclick="fetch('/api/v66/social-commerce/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" style="margin-top:12px;padding:8px 16px;background:#6c3cf7;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">View Data</button>
+    </div>
+    <div style="background:#1e293b;border-radius:12px;padding:20px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 12px;font-size:15px">🎬 UGC Studio</h3>
+      <div style="color:#94a3b8;font-size:13px;line-height:1.6">284K pieces/day · 99.2% moderation · 28.4M library · Brand usage 2,840/day</div>
+      <button onclick="fetch('/api/v66/ugc-studio/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" style="margin-top:12px;padding:8px 16px;background:#6c3cf7;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">View Data</button>
+    </div>
+    <div style="background:#1e293b;border-radius:12px;padding:20px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 12px;font-size:15px">🔗 Affiliate Engine</h3>
+      <div style="color:#94a3b8;font-size:13px;line-height:1.6">84K affiliates · 8.4% avg commission · ₹284Cr GMV · Fraud detection active</div>
+      <button onclick="fetch('/api/v66/affiliate/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" style="margin-top:12px;padding:8px 16px;background:#6c3cf7;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">View Data</button>
+    </div>
+    <div style="background:#1e293b;border-radius:12px;padding:20px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 12px;font-size:15px">🛍️ Live Commerce</h3>
+      <div style="color:#94a3b8;font-size:13px;line-height:1.6">2,840 streams/day · 8.4M peak viewers · 12.4% conversion · ₹284Cr GMV</div>
+      <button onclick="fetch('/api/v66/live-commerce/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" style="margin-top:12px;padding:8px 16px;background:#6c3cf7;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">View Data</button>
+    </div>
+    <div style="background:#1e293b;border-radius:12px;padding:20px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 12px;font-size:15px">🎙️ Audio Commerce</h3>
+      <div style="color:#94a3b8;font-size:13px;line-height:1.6">8.4M listeners/month · 2,840 shows · 28.4% ticket sales · ₹8.4Cr host earnings</div>
+      <button onclick="fetch('/api/v66/audio-commerce/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" style="margin-top:12px;padding:8px 16px;background:#6c3cf7;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">View Data</button>
+    </div>
+  </div>
+</div>
+<!-- END PHASE 66 ADMIN PORTAL -->
+
 </body></html>

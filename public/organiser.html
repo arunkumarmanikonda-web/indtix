@@ -4362,8 +4362,8 @@ async function p26oLoadSponsor() {
     const nav = document.querySelector('nav, .sidebar, #sidebar, [role="navigation"]');
     if (nav) {
       const btn = document.createElement('button');
-      btn.className = 'nav-btn p26-nav-btn';
-      btn.setAttribute('onclick', "document.querySelectorAll('.panel,[class*=panel]').forEach(p=>p.style.display='none'); const el=document.getElementById('p26-organiser'); if(el)el.style.display='block'; this.closest('nav,div').querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');");
+      btn.className = 'sb-item p26-nav-btn';
+      btn.setAttribute('onclick', "showPanel('p26-organiser',this)");
       btn.innerHTML = '<i class="fas fa-rocket" style="margin-right:6px"></i>P26 Growth Engine <span style="background:#0ea5e9;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;margin-left:3px;font-weight:800">NEW</span>';
       btn.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 12px;border:none;background:transparent;cursor:pointer;font-size:13px;color:#cbd5e1;border-radius:6px;transition:background .2s;';
       nav.appendChild(btn);
@@ -6173,4 +6173,50 @@ loadAllP52Org();
     
 
 <script src="/static/portal-fix.js"></script>
+
+<!-- PHASE 66 ORGANISER PORTAL: Creator Economy & Social Commerce -->
+<div class="panel" id="panel-p66-organiser" style="display:none;padding:20px;overflow-y:auto;height:calc(100vh - 60px)">
+  <div style="background:linear-gradient(135deg,#1a0533,#2d0a4e);color:#fff;border-radius:14px;padding:24px;margin-bottom:20px">
+    <h2 style="margin:0 0 6px;font-size:20px;font-weight:800">🎨 Creator Economy Tools — Phase 66</h2>
+    <p style="margin:0;opacity:.8;font-size:13px">Manage creator campaigns, UGC, affiliates & live commerce for your events</p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px">
+      <div style="background:rgba(255,255,255,.12);border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:20px;font-weight:900">284K</div><div style="font-size:10px;opacity:.8">Creators Available</div>
+      </div>
+      <div style="background:rgba(255,255,255,.12);border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:20px;font-weight:900">8.4x</div><div style="font-size:10px;opacity:.8">Avg Campaign ROI</div>
+      </div>
+      <div style="background:rgba(255,255,255,.12);border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:20px;font-weight:900">18.4%</div><div style="font-size:10px;opacity:.8">Share-to-Buy Rate</div>
+      </div>
+      <div style="background:rgba(255,255,255,.12);border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:20px;font-weight:900">₹840Cr</div><div style="font-size:10px;opacity:.8">Creator GMV</div>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div style="background:#1e293b;border-radius:12px;padding:18px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 10px;font-size:14px">🎯 Hire Creators</h3>
+      <p style="color:#94a3b8;font-size:12px;margin:0 0 12px">Browse 84K verified creators by niche, reach & rate</p>
+      <button onclick="fetch('/api/v66/creator-marketplace/creators').then(r=>r.json()).then(d=>alert('Found '+d.creators.length+' featured creators'))" style="padding:8px 14px;background:#6c3cf7;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">Browse Creators</button>
+    </div>
+    <div style="background:#1e293b;border-radius:12px;padding:18px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 10px;font-size:14px">📱 Social Campaigns</h3>
+      <p style="color:#94a3b8;font-size:12px;margin:0 0 12px">Launch viral campaigns with 2.84 viral coefficient</p>
+      <button onclick="fetch('/api/v66/social-commerce/viral-campaigns').then(r=>r.json()).then(d=>_toast(''+d.campaigns_live+' live campaigns','success'))" style="padding:8px 14px;background:#10b981;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">Launch Campaign</button>
+    </div>
+    <div style="background:#1e293b;border-radius:12px;padding:18px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 10px;font-size:14px">🔗 Affiliate Programme</h3>
+      <p style="color:#94a3b8;font-size:12px;margin:0 0 12px">84K active affiliates earning 8.4% commission avg</p>
+      <button onclick="fetch('/api/v66/affiliate/leaderboard').then(r=>r.json()).then(d=>_toast('Top affiliate: '+d.leaderboard[0].name,'info'))" style="padding:8px 14px;background:#f59e0b;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">View Leaderboard</button>
+    </div>
+    <div style="background:#1e293b;border-radius:12px;padding:18px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 10px;font-size:14px">🎙️ Podcast Sponsorship</h3>
+      <p style="color:#94a3b8;font-size:12px;margin:0 0 12px">8.4M monthly listeners, 28.4% ticket sales conversion</p>
+      <button onclick="fetch('/api/v66/audio-commerce/shows').then(r=>r.json()).then(d=>_toast(''+d.top_shows.length+' top shows available','success'))" style="padding:8px 14px;background:#8b5cf6;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">Explore Shows</button>
+    </div>
+  </div>
+</div>
+<!-- END PHASE 66 ORGANISER PORTAL -->
+
 </body></html>

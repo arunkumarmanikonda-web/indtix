@@ -1941,13 +1941,13 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(nav){
     const btns=document.createElement('div');
     btns.innerHTML=`
-      <button onclick="document.getElementById('panel-p22-nfc').style.display='block';loadNFCScanLog()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">📲 NFC Scan Log 🆕</button>
-      <button onclick="document.getElementById('panel-p22-gates').style.display='block';loadGateThroughput()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">🚪 Gate Throughput 🆕</button>
-      <button onclick="document.getElementById('panel-p22-vip').style.display='block';loadVIPConcierge()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">👑 VIP Concierge 🆕</button>
-      <button onclick="document.getElementById('panel-p22-sentiment').style.display='block';loadSentimentWall()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">📢 Social Sentiment 🆕</button>
-      <button onclick="document.getElementById('panel-p22-merch-live').style.display='block';loadMerchSales()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">🛍️ Live Merch Sales 🆕</button>
-      <button onclick="document.getElementById('panel-p22-rider').style.display='block';loadArtistRider()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">🎸 Artist Rider 🆕</button>
-      <button onclick="document.getElementById('panel-p22-press').style.display='block';loadPressCredentials()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">📸 Press Credentials 🆕</button>`;
+      <button onclick="showPanel('p22-nfc',this);loadNFCScanLog()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">📲 NFC Scan Log 🆕</button>
+      <button onclick="showPanel('p22-gates',this);loadGateThroughput()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">🚪 Gate Throughput 🆕</button>
+      <button onclick="showPanel('p22-vip',this);loadVIPConcierge()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">👑 VIP Concierge 🆕</button>
+      <button onclick="showPanel('p22-sentiment',this);loadSentimentWall()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">📢 Social Sentiment 🆕</button>
+      <button onclick="showPanel('p22-merch-live',this);loadMerchSales()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">🛍️ Live Merch Sales 🆕</button>
+      <button onclick="showPanel('p22-rider',this);loadArtistRider()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">🎸 Artist Rider 🆕</button>
+      <button onclick="showPanel('p22-press',this);loadPressCredentials()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">📸 Press Credentials 🆕</button>`;
     nav.appendChild(btns);
   }
 });
@@ -2708,7 +2708,7 @@ async function p26eLoadMerch() {
     if (nav) {
       const btn = document.createElement('button');
       btn.className = 'nav-btn p26-nav-btn';
-      btn.setAttribute('onclick', "document.querySelectorAll('.panel,[class*=panel]').forEach(p=>p.style.display='none'); const el=document.getElementById('p26-event-manager'); if(el)el.style.display='block'; this.closest('nav,div').querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');");
+      btn.setAttribute('onclick', "showPanel('p26-event-manager',this)");
       btn.innerHTML = '<i class="fas fa-rocket" style="margin-right:6px"></i>P26 Live Show <span style="background:#f59e0b;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;margin-left:3px;font-weight:800">NEW</span>';
       btn.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 12px;border:none;background:transparent;cursor:pointer;font-size:13px;color:#cbd5e1;border-radius:6px;transition:background .2s;';
       nav.appendChild(btn);
@@ -4395,4 +4395,31 @@ loadAllP52EM();
     
 
 <script src="/static/portal-fix.js"></script>
+
+<!-- PHASE 66 EVENT MANAGER PORTAL: Creator Economy & Social Commerce -->
+<div class="panel" id="panel-p66-em" style="display:none;padding:20px;overflow-y:auto;height:calc(100vh - 60px)">
+  <div style="background:linear-gradient(135deg,#1a0533,#2d0a4e);color:#fff;border-radius:14px;padding:24px;margin-bottom:20px">
+    <h2 style="margin:0 0 6px;font-size:20px;font-weight:800">🎨 Creator Economy — Phase 66</h2>
+    <p style="margin:0;opacity:.8;font-size:13px">Amplify your event reach through creators, UGC & social commerce</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
+    <div style="background:#1e293b;border-radius:12px;padding:18px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 10px;font-size:14px">🎯 Creator Amplification</h3>
+      <p style="color:#94a3b8;font-size:12px;margin:0 0 12px">Assign creators to cover your event. 28.4M reach per campaign.</p>
+      <button onclick="fetch('/api/v66/creator-marketplace/analytics').then(r=>r.json()).then(d=>_toast('Avg ROI: '+d.avg_roi+'x','success'))" style="padding:8px 14px;background:#6c3cf7;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">Assign Creators</button>
+    </div>
+    <div style="background:#1e293b;border-radius:12px;padding:18px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 10px;font-size:14px">📱 Viral Campaign</h3>
+      <p style="color:#94a3b8;font-size:12px;margin:0 0 12px">Launch social sharing with 2.84 viral coefficient & group buys.</p>
+      <button onclick="fetch('/api/v66/social-commerce/viral-campaigns').then(r=>r.json()).then(d=>_toast(d.campaigns_live+' campaigns live','info'))" style="padding:8px 14px;background:#10b981;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">Launch Campaign</button>
+    </div>
+    <div style="background:#1e293b;border-radius:12px;padding:18px;border:1px solid #334155">
+      <h3 style="color:#e2e8f0;margin:0 0 10px;font-size:14px">📊 Attribution Analytics</h3>
+      <p style="color:#94a3b8;font-size:12px;margin:0 0 12px">97.8% attribution accuracy. Know exactly which creator drove each sale.</p>
+      <button onclick="fetch('/api/v66/creator-analytics/overview').then(r=>r.json()).then(d=>_toast('Accuracy: '+d.attribution_accuracy+'%','success'))" style="padding:8px 14px;background:#f59e0b;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px">View Attribution</button>
+    </div>
+  </div>
+</div>
+<!-- END PHASE 66 EM PORTAL -->
+
 </body></html>
