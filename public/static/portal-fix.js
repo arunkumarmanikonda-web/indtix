@@ -225,6 +225,12 @@
     'p73-fan':'Phase 73 — Food & Beverage Fan',
     'p74-fan':'Phase 74 — Travel & Journey Fan',
     'p75-fan':'Phase 75 — Ticket Marketplace Fan',
+    'p76-admin':'Phase 76 — CX, CRM & Fan Loyalty Admin',
+    'p76-organiser':'Phase 76 — CX & Loyalty Organiser',
+    'p76-venue':'Phase 76 — CX & Loyalty Venue',
+    'p76-em':'Phase 76 — CX Event Manager',
+    'p76-ops':'Phase 76 — CX & Loyalty Ops',
+    'p76-fan':'Phase 76 — Your Fan Experience',
     'p76-fan':'Phase 76 — Fan Loyalty & Community'
   };
 
@@ -437,7 +443,7 @@
       'p56':'🍽️', 'p57':'✈️', 'p58':'🎫', 'p59':'🎨', 'p60':'🌆',
       'p61':'🌍', 'p62':'🎯', 'p63':'🛡️', 'p64':'📊', 'p65':'🌟',
       'p66':'🎨', 'p67':'🌿', 'p68':'♿', 'p69':'🤖', 'p70':'⛓️',
-      'p71':'📡', 'p72':'🏟️', 'p73':'🍽️', 'p74':'✈️', 'p75':'🎟️',
+      'p71':'📡', 'p72':'🏟️', 'p73':'🍽️', 'p74':'✈️', 'p75':'🎫', 'p76':'💎',
       'p76':'💎',
       'kyc':'🪪', 'analytics':'📈', 'finance':'💰',
       'creator':'🎨', 'green':'🌿', 'access':'♿', 'dashboard':'🏠'
@@ -538,7 +544,7 @@
     { key: 'p72', label: 'Sports & Stadium',       icon: '🏟️' },
     { key: 'p73', label: 'Food & Beverage',        icon: '🍽️' },
     { key: 'p74', label: 'Travel & Logistics',     icon: '✈️' },
-    { key: 'p75', label: 'Ticketing & Market',     icon: '🎟️' },
+    { key: 'p75', label: 'Ticketing & Market',     icon: '🎫' },
     { key: 'p76', label: 'CX & Fan Loyalty',       icon: '💎' }
   ];
 

@@ -161,9 +161,17 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;min
   <button class="ops-nav-btn" onclick="showOpsPanel('log',this)"><i class="fas fa-list"></i>Scan Log</button>
   <button class="ops-nav-btn" onclick="showPanel('p26-ops',this)"><i class="fas fa-rocket"></i>P26 Suite</button>
   <button class="ops-nav-btn" onclick="showPanel('p27-ops',this)"><i class="fas fa-star"></i>P27 Suite</button>
-  <button class="ops-nav-btn" onclick="showPanel('p66-ops-new',this)"><i class="fas fa-video"></i>Creator</button>
-  <button class="ops-nav-btn" onclick="showPanel('p67-ops',this)"><i class="fas fa-globe"></i>Ecosystem</button>
-  <button class="ops-nav-btn" onclick="showPanel('p68-ops',this)"><i class="fas fa-universal-access"></i>Accessibility</button>
+  <button class="ops-nav-btn" onclick="showPanel('p66-ops-new',this)"><i class="fas fa-palette"></i>🎨 Creator Economy</button>
+  <button class="ops-nav-btn" onclick="showPanel('p67-ops',this)"><i class="fas fa-leaf"></i>🌿 Green Events</button>
+  <button class="ops-nav-btn" onclick="showPanel('p68-ops',this)"><i class="fas fa-universal-access"></i>♿ Accessibility</button>
+  <button class="ops-nav-btn" onclick="showPanel('p69-ops',this)"><i class="fas fa-brain"></i>🤖 AI Intelligence</button>
+  <button class="ops-nav-btn" onclick="showPanel('p70-ops',this)"><i class="fas fa-link"></i>⛓️ Blockchain & Web3</button>
+  <button class="ops-nav-btn" onclick="showPanel('p71-ops',this)"><i class="fas fa-broadcast-tower"></i>📡 Live & Virtual</button>
+  <button class="ops-nav-btn" onclick="showPanel('p72-ops',this)"><i class="fas fa-futbol"></i>🏟️ Sports & Stadium</button>
+  <button class="ops-nav-btn" onclick="showPanel('p73-ops',this)"><i class="fas fa-utensils"></i>🍽️ Food & Beverage</button>
+  <button class="ops-nav-btn" onclick="showPanel('p74-ops',this)"><i class="fas fa-plane"></i>✈️ Travel & Logistics</button>
+  <button class="ops-nav-btn" onclick="showPanel('p75-ops',this)"><i class="fas fa-ticket-alt"></i>🎫 Ticketing Tech</button>
+    <button class="ops-nav-btn" onclick="showPanel('p76-ops',this)"><i class="fas fa-heart"></i>💎 CX & Loyalty</button>
 </div>
 
 <div class="ops-content">
@@ -4458,588 +4466,515 @@ loadAllP52Ops();
   </div>
   <button onclick="fetch('/api/v66/ugc-studio/moderation').then(r=>r.json()).then(d=>_toast('Queue: '+d.queue_size+' items, '+d.ai_auto_approved+'% auto-approved','info'))" style="margin-top:16px;padding:10px 20px;background:#6c3cf7;color:#fff;border:none;border-radius:8px;cursor:pointer">Check Moderation Queue</button>
 </div>
-<!-- END PHASE 66 OPS PORTAL -->
 
 
-<div id="panel-p67-ops" class="panel" style="display:none">
-  <div style="padding:24px;max-width:1200px;margin:0 auto">
-    <div style="background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border-radius:16px;padding:28px 32px;margin-bottom:24px">
-      <h1 style="margin:0 0 8px;font-size:1.8rem;font-weight:700">🌱 Phase 67 — Green Ops Dashboard</h1>
-      <p style="margin:0;opacity:.85;font-size:1rem">Sustainability, Green Events &amp; ESG Compliance Platform</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px">
-      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#16a34a">284K t</div>
-        <div style="font-size:.85rem;color:#166534;margin-top:4px">CO₂ Tracked</div>
-      </div>
-      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#16a34a">84%</div>
-        <div style="font-size:.85rem;color:#166534;margin-top:4px">Waste Diverted</div>
-      </div>
-      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#16a34a">284M kWh</div>
-        <div style="font-size:.85rem;color:#166534;margin-top:4px">Renewable Energy</div>
-      </div>
-      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#16a34a">8.4</div>
-        <div style="font-size:.85rem;color:#166534;margin-top:4px">ESG Score</div>
-      </div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
-      <div style="background:#fff;border:1px solid #dcfce7;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 12px;color:#15803d;font-size:1rem">🌿 Carbon & Emissions</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>28,400 events tracked</li>
-          <li>142,000 t CO₂ offset</li>
-          <li>₹8.4Cr offset revenue</li>
-          <li>Gold Standard certified</li>
-        </ul>
-      </div>
-      <div style="background:#fff;border:1px solid #dcfce7;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 12px;color:#15803d;font-size:1rem">♻️ Zero Waste</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>840 zero-waste events</li>
-          <li>284K kg food donated</li>
-          <li>97.8% biodegradable packaging</li>
-          <li>284 composting partners</li>
-        </ul>
-      </div>
-      <div style="background:#fff;border:1px solid #dcfce7;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 12px;color:#15803d;font-size:1rem">🚌 Green Transport</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>284 EV shuttles</li>
-          <li>2,840 charging points</li>
-          <li>284K carpooling matches</li>
-          <li>28,400 t CO₂ saved</li>
-        </ul>
-      </div>
-      <div style="background:#fff;border:1px solid #dcfce7;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 12px;color:#15803d;font-size:1rem">📊 ESG Reporting</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>ESG score 8.4/10</li>
-          <li>2,840 reports/year</li>
-          <li>GRI, SASB, TCFD, SDG</li>
-          <li>11 SDG goals aligned</li>
-        </ul>
-      </div>
-    </div>
-    <div style="margin-top:20px;padding:16px;background:#ecfdf5;border-radius:10px;border-left:4px solid #16a34a">
-      <strong style="color:#14532d">Phase 67 APIs:</strong>
-      <span style="color:#166534;font-size:.85rem;margin-left:8px">/api/v67/carbon/* · /api/v67/green-venue/* · /api/v67/zero-waste/* · /api/v67/green-transport/* · /api/v67/renewable-energy/* · /api/v67/sustainable-tickets/* · /api/v67/esg/* · /api/v67/climate-pledge/* · /api/v67/green-supply-chain/* · /api/v67/sustainability-dashboard/*</span>
-    </div>
-  </div>
-</div>
 
 
-<div id="panel-p68-ops" class="panel" style="display:none">
-  <div style="padding:24px;max-width:1200px;margin:0 auto">
-    <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border-radius:16px;padding:28px 32px;margin-bottom:24px">
-      <h1 style="margin:0 0 8px;font-size:1.8rem;font-weight:700">♿ Phase 68 — Accessibility Ops Dashboard</h1>
-      <p style="margin:0;opacity:.85;font-size:1rem">Accessibility, Inclusion &amp; Universal Design Platform</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px">
-      <div style="background:#f5f3ff;border:1px solid #ddd6fe;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#7c3aed">8,400</div>
-        <div style="font-size:.85rem;color:#5b21b6;margin-top:4px">Accessible Events</div>
-      </div>
-      <div style="background:#f5f3ff;border:1px solid #ddd6fe;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#7c3aed">28</div>
-        <div style="font-size:.85rem;color:#5b21b6;margin-top:4px">Languages Supported</div>
-      </div>
-      <div style="background:#f5f3ff;border:1px solid #ddd6fe;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#7c3aed">284K</div>
-        <div style="font-size:.85rem;color:#5b21b6;margin-top:4px">Inclusive Tickets</div>
-      </div>
-      <div style="background:#f5f3ff;border:1px solid #ddd6fe;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#7c3aed">97.8%</div>
-        <div style="font-size:.85rem;color:#5b21b6;margin-top:4px">WCAG Compliance</div>
-      </div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
-      <div style="background:#fff;border:1px solid #ede9fe;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 10px;color:#6d28d9;font-size:1rem">♿ Physical Accessibility</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>284 wheelchair-accessible venues</li>
-          <li>2,840 sign-language interpreters</li>
-          <li>840 sensory-friendly events</li>
-          <li>RPWD Act 2016 compliant</li>
-        </ul>
-      </div>
-      <div style="background:#fff;border:1px solid #ede9fe;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 10px;color:#6d28d9;font-size:1rem">🌍 Language & Culture</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>22 Indian official languages</li>
-          <li>BharatTrans-v2 AI (97.8% accuracy)</li>
-          <li>2.84M translations/day</li>
-          <li>14 IVR language channels</li>
-        </ul>
-      </div>
-      <div style="background:#fff;border:1px solid #ede9fe;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 10px;color:#6d28d9;font-size:1rem">🏳️‍🌈 Social Inclusion</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>840 safe-space certified events</li>
-          <li>284 Pride events, 2.84M attendees</li>
-          <li>8,400 campus ambassadors</li>
-          <li>2,840 senior-friendly events</li>
-        </ul>
-      </div>
-      <div style="background:#fff;border:1px solid #ede9fe;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 10px;color:#6d28d9;font-size:1rem">📊 Impact & Revenue</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>2.84M users empowered</li>
-          <li>₹84Cr revenue unlocked</li>
-          <li>NPS 92 (accessible users)</li>
-          <li>ROI 8.4× on accessibility spend</li>
-        </ul>
-      </div>
-    </div>
-    <div style="margin-top:20px;padding:16px;background:#f5f3ff;border-radius:10px;border-left:4px solid #7c3aed">
-      <strong style="color:#4c1d95">Phase 68 APIs:</strong>
-      <span style="color:#6d28d9;font-size:.85rem;margin-left:8px">/api/v68/accessibility/* · /api/v68/sign-language/* · /api/v68/sensory-friendly/* · /api/v68/inclusive-ticketing/* · /api/v68/multilingual/* · /api/v68/senior-experience/* · /api/v68/inclusion-lgbtq/* · /api/v68/youth-engagement/* · /api/v68/accessibility-audit/* · /api/v68/universal-design/*</span>
-    </div>
-  </div>
-</div>
 
 
-<div id="panel-p69-ops" class="panel" style="display:none">
-  <div style="padding:24px;max-width:1200px;margin:0 auto">
-    <div style="background:linear-gradient(135deg,#0369a1,#0369a1cc);color:#fff;border-radius:16px;padding:28px 32px;margin-bottom:24px">
-      <h1 style="margin:0 0 8px;font-size:1.8rem;font-weight:700">🤖 Phase 69 — AI Operations Platform</h1>
-      <p style="margin:0;opacity:.85;font-size:1rem">AI-Powered Personalisation &amp; Predictive Intelligence Platform</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px">
-      <div style="background:#e0f2fe;border:1px solid #bae6fd;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#0369a1">28.4M</div>
-        <div style="font-size:.85rem;color:#0369a1;margin-top:4px">Recommendations/Day</div>
-      </div>
-      <div style="background:#e0f2fe;border:1px solid #bae6fd;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#0369a1">94.2%</div>
-        <div style="font-size:.85rem;color:#0369a1;margin-top:4px">Forecast Accuracy</div>
-      </div>
-      <div style="background:#e0f2fe;border:1px solid #bae6fd;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#0369a1">42</div>
-        <div style="font-size:.85rem;color:#0369a1;margin-top:4px">AI Models Live</div>
-      </div>
-      <div style="background:#e0f2fe;border:1px solid #bae6fd;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#0369a1">₹840Cr</div>
-        <div style="font-size:.85rem;color:#0369a1;margin-top:4px">AI Revenue Impact</div>
-      </div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
-      <div style="background:#fff;border:1px solid #bae6fd;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 10px;color:#0369a1;font-size:1rem">🎯 Recommendations & Discovery</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>28.4M recommendations/day</li>
-          <li>18.4% click-through rate</li>
-          <li>28.4% conversion lift</li>
-          <li>HybridDeep-v5 (97.8% accuracy)</li>
-        </ul>
-      </div>
-      <div style="background:#fff;border:1px solid #bae6fd;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 10px;color:#0369a1;font-size:1rem">📈 Demand & Pricing</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>28,400 events forecasted</li>
-          <li>8,400 dynamic-priced events</li>
-          <li>18.4% avg revenue uplift</li>
-          <li>284K price updates/day</li>
-        </ul>
-      </div>
-      <div style="background:#fff;border:1px solid #bae6fd;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 10px;color:#0369a1;font-size:1rem">👥 Fan & Crowd Intelligence</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>28.4M fan profiles, 84 segments</li>
-          <li>28,400 cameras (CrowdSafe-v4)</li>
-          <li>284 incidents prevented</li>
-          <li>Churn prediction 94.2%</li>
-        </ul>
-      </div>
-      <div style="background:#fff;border:1px solid #bae6fd;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 10px;color:#0369a1;font-size:1rem">🤖 AI Support & Marketing</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>84.2% AI ticket resolution</li>
-          <li>CSAT 9.2 (2.4 min avg)</li>
-          <li>2,840 active campaigns</li>
-          <li>₹284Cr marketing ROI (8.4×)</li>
-        </ul>
-      </div>
-    </div>
-    <div style="margin-top:20px;padding:16px;background:#e0f2fe;border-radius:10px;border-left:4px solid #0369a1">
-      <strong style="color:#0369a1">Phase 69 APIs:</strong>
-      <span style="color:#0369a1;font-size:.85rem;margin-left:8px">/api/v69/ai-recommendations/* · /api/v69/demand-forecast/* · /api/v69/dynamic-pricing/* · /api/v69/fan-behaviour/* · /api/v69/marketing-automation/* · /api/v69/realtime-intelligence/* · /api/v69/crowd-intelligence/* · /api/v69/ai-support/* · /api/v69/event-discovery/* · /api/v69/ai-platform/*</span>
-    </div>
-  </div>
-</div>
 
 
-<div id="panel-p70-ops" class="panel" style="display:none">
-  <div style="padding:24px;max-width:1200px;margin:0 auto">
-    <div style="background:linear-gradient(135deg,#d97706,#b45309);color:#fff;border-radius:16px;padding:28px 32px;margin-bottom:24px">
-      <h1 style="margin:0 0 8px;font-size:1.8rem;font-weight:700">⛓️ Phase 70 — Blockchain Ops Platform</h1>
-      <p style="margin:0;opacity:.85;font-size:1rem">Blockchain, Web3 &amp; Decentralised Ticketing Platform</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px">
-      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#d97706">2.84M</div>
-        <div style="font-size:.85rem;color:#d97706;margin-top:4px">NFT Tickets Minted</div>
-      </div>
-      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#d97706">₹284Cr</div>
-        <div style="font-size:.85rem;color:#d97706;margin-top:4px">TVL (Smart Contracts)</div>
-      </div>
-      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#d97706">84K</div>
-        <div style="font-size:.85rem;color:#d97706;margin-top:4px">DAO Members (IXTIX)</div>
-      </div>
-      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;text-align:center">
-        <div style="font-size:2rem;font-weight:700;color:#d97706">100%</div>
-        <div style="font-size:.85rem;color:#d97706;margin-top:4px">Counterfeit-Free</div>
-      </div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
-      <div style="background:#fff;border:1px solid #fde68a;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 10px;color:#d97706;font-size:1rem">🎫 NFT & Smart Contract Ticketing</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>2.84M NFT tickets minted</li>
-          <li>5 chains: Polygon, ETH, Solana, BNB, AVAX</li>
-          <li>2,840 smart contracts (CertiK audited)</li>
-          <li>Auto revenue splits & escrow</li>
-        </ul>
-      </div>
-      <div style="background:#fff;border:1px solid #fde68a;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 10px;color:#d97706;font-size:1rem">🔐 Identity & Token Gating</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>284K wallets, W3C DID, ZK proofs</li>
-          <li>840 token-gated events</li>
-          <li>284 NFT collections integrated</li>
-          <li>Gasless onboarding (2.4 min)</li>
-        </ul>
-      </div>
-      <div style="background:#fff;border:1px solid #fde68a;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 10px;color:#d97706;font-size:1rem">💰 Crypto & DeFi</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>8 crypto currencies accepted</li>
-          <li>₹8.4Cr DeFi yield (Aave/Curve)</li>
-          <li>FANX token: 2.84M holders, 8.4% APY</li>
-          <li>DAO treasury: ₹84Cr, 42% participation</li>
-        </ul>
-      </div>
-      <div style="background:#fff;border:1px solid #fde68a;border-radius:12px;padding:20px">
-        <h3 style="margin:0 0 10px;color:#d97706;font-size:1rem">🛡️ Fraud & Creator Tools</h3>
-        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
-          <li>284K fraud cases blocked</li>
-          <li>99.98% on-chain scan accuracy</li>
-          <li>840 artist fan clubs on-chain</li>
-          <li>₹28.4Cr crowdfunding raised</li>
-        </ul>
-      </div>
-    </div>
-    <div style="margin-top:20px;padding:16px;background:#fffbeb;border-radius:10px;border-left:4px solid #d97706">
-      <strong style="color:#d97706">Phase 70 APIs:</strong>
-      <span style="color:#92400e;font-size:.85rem;margin-left:8px">/api/v70/nft-tickets/* · /api/v70/smart-contracts/* · /api/v70/web3-identity/* · /api/v70/token-gating/* · /api/v70/crypto-payments/* · /api/v70/dao-governance/* · /api/v70/blockchain-fraud/* · /api/v70/blockchain-loyalty/* · /api/v70/web3-creator/* · /api/v70/web3-analytics/*</span>
-    </div>
-  </div>
-</div>
+
 
 
   <!-- PHASE 71 PANEL -->
-  <div id="panel-p71-ops" class="panel" style="display:none">
-    <div class="panel-header" style="background:linear-gradient(135deg,#0ea5e9,#06b6d4);color:#fff;padding:24px;border-radius:12px;margin-bottom:24px">
-      <h2 style="margin:0;font-size:1.6rem">📡 Live Streaming, Virtual & Hybrid Events</h2>
-      <p style="margin:8px 0 0;opacity:.9">Phase 71 — 2,840 concurrent streams · 28.4M viewers · ₹284Cr revenue · 99.98% uptime</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
-      <div class="card" style="padding:20px;border-left:4px solid #0ea5e9">
-        <h3>📺 Live Streaming</h3>
-        <p>2,840 concurrent streams · 840K peak viewers · 4K/1080p adaptive · 284 CDN nodes · 800ms latency</p>
-        <button onclick="fetch('/api/v71/live-streaming/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Streams</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #06b6d4">
-        <h3>🌐 Virtual Events</h3>
-        <p>2,840 virtual events · 284K max attendees · VR/AR mode · Avatar support · 84.2% engagement rate</p>
-        <button onclick="fetch('/api/v71/virtual-events/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Virtual</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #0284c7">
-        <h3>🔀 Hybrid Events</h3>
-        <p>840 hybrid events · 36.8M combined reach · 3.38× virtual multiplier · 42% revenue uplift</p>
-        <button onclick="fetch('/api/v71/hybrid-events/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Hybrid</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #0369a1">
-        <h3>🎮 Audience Tools</h3>
-        <p>Live polls · Gamification · Q&A · 2.84M game players · 84.2% engagement lift · 284K responses/min</p>
-        <button onclick="fetch('/api/v71/audience-tools/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Tools</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #0ea5e9">
-        <h3>🎟️ Virtual Ticketing</h3>
-        <p>28.4M virtual tickets · PPV + Subscription + Bundle · ₹284Cr revenue · 284K subscribers · MRR ₹8.4Cr</p>
-        <button onclick="fetch('/api/v71/virtual-ticketing/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Tickets</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #06b6d4">
-        <h3>📼 VOD Library</h3>
-        <p>28,400 events archived · 284K hours content · 284M total views · AI chapters · 28-language subs</p>
-        <button onclick="fetch('/api/v71/content-vod/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View VOD</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #0284c7">
-        <h3>♿ Stream Accessibility</h3>
-        <p>28 languages · 97.8% caption accuracy · Sign language · BharatTrans-v2 · WCAG 2.2 AA compliant</p>
-        <button onclick="fetch('/api/v71/stream-accessibility/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Access</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #0369a1">
-        <h3>💰 Creator Revenue</h3>
-        <p>28,400 earning creators · ₹284Cr paid · Tips/SuperChat · ₹28.4Cr tips · 70% creator cut · 2.4hr payout</p>
-        <button onclick="fetch('/api/v71/creator-revenue/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Revenue</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #0ea5e9">
-        <h3>🎬 Production Tools</h3>
-        <p>AI director · 28 camera feeds · AR overlays · 2,840 graphics templates · Sponsor banners · OBS/vMix</p>
-        <button onclick="fetch('/api/v71/production-tools/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Production</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #06b6d4">
-        <h3>📊 Stream Analytics</h3>
-        <p>840K peak concurrent · ₹284Cr revenue · 84.2% YoY growth · NPS 88 · Real-time + predictive AI</p>
-        <button onclick="fetch('/api/v71/stream-analytics/dashboard').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Analytics</button>
-      </div>
-    </div>
-  </div>
+  
 
   <!-- PHASE 72 PANEL -->
-  <div id="panel-p72-ops" class="panel" style="display:none">
-    <div class="panel-header" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:24px;border-radius:12px;margin-bottom:24px">
-      <h2 style="margin:0;font-size:1.6rem">🏟️ Sports Events, Stadium Tech & Fantasy Gaming</h2>
-      <p style="margin:8px 0 0;opacity:.9">Phase 72 — 2,840 sports events · 28.4M fantasy users · 142 smart stadiums · ₹840Cr revenue</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
-      <div class="card" style="padding:20px;border-left:4px solid #f59e0b">
-        <h3>🏏 Sports Events</h3>
-        <p>2,840 events ytd · IPL/ISL/PKL/BWF · 28.4M attendance · 84.2% sellout · 284 partner stadiums</p>
-        <button onclick="fetch('/api/v72/sports-events/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Events</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #d97706">
-        <h3>🏟️ Stadium Tech</h3>
-        <p>142 smart stadiums · 284K IoT sensors · 4K security · 99.2% face recognition · cashless payments</p>
-        <button onclick="fetch('/api/v72/stadium-tech/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Stadium</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #b45309">
-        <h3>🎟️ Sports Ticketing</h3>
-        <p>28.4M tickets sold · Dynamic pricing +28.4% uplift · Resale platform · Season passes · ₹840Cr revenue</p>
-        <button onclick="fetch('/api/v72/sports-ticketing/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Tickets</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #92400e">
-        <h3>🎮 Fantasy Sports</h3>
-        <p>28.4M fantasy users · 28,400 daily contests · ₹28.4Cr daily prize pool · AI team builder · TDS compliant</p>
-        <button onclick="fetch('/api/v72/fantasy-sports/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Fantasy</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #f59e0b">
-        <h3>🏃 Athlete Management</h3>
-        <p>28,400 athletes · 2,840 teams · ₹2,840Cr contracts · AI performance · 84.2% injury prediction</p>
-        <button onclick="fetch('/api/v72/athlete-management/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Athletes</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #d97706">
-        <h3>📺 Sports Broadcast</h3>
-        <p>28.4M concurrent peak · JioCinema/Star Sports · 22 language commentary · AI highlights · 284M social shares</p>
-        <button onclick="fetch('/api/v72/sports-media/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Broadcast</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #b45309">
-        <h3>🤝 Sponsorship</h3>
-        <p>2,840 brand partners · ₹840Cr sponsorship · 8.4× ROI · 84.2% digital activations · AR activations</p>
-        <button onclick="fetch('/api/v72/sports-sponsorship/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Sponsorship</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #92400e">
-        <h3>❤️ Fan Loyalty</h3>
-        <p>28.4M fans · 2,840 fan clubs · Fantasy linked · NPS 88 · 284B cheer points · Sports NFTs 284K</p>
-        <button onclick="fetch('/api/v72/sports-fan/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Fans</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #f59e0b">
-        <h3>👕 Merchandise</h3>
-        <p>28,400 licensed products · ₹284Cr revenue · Adidas/Nike partnerships · Blockchain cert · 42% repeat buyers</p>
-        <button onclick="fetch('/api/v72/sports-merch/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Merch</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #d97706">
-        <h3>📊 Sports Analytics</h3>
-        <p>₹2,840Cr total revenue · 42% YoY growth · NPS 88 · 28.4M broadcast viewers · 97.8% digital checkin</p>
-        <button onclick="fetch('/api/v72/sports-analytics/dashboard').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Analytics</button>
-      </div>
-    </div>
-  </div>
+  
 
   <!-- PHASE 73 PANEL -->
-  <div id="panel-p73-ops" class="panel" style="display:none">
-    <div class="panel-header" style="background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;padding:24px;border-radius:12px;margin-bottom:24px">
-      <h2 style="margin:0;font-size:1.6rem">🍽️ Food, Beverage, Hospitality & Concessions</h2>
-      <p style="margin:8px 0 0;opacity:.9">Phase 73 — 2,840 concession stands · ₹840Cr revenue · 97.8% digital orders · FSSAI A+ · Zero incidents</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
-      <div class="card" style="padding:20px;border-left:4px solid #ef4444">
-        <h3>🏪 Concessions</h3>
-        <p>2,840 stands · 28,400 menu items · 284K orders/event · ₹840 avg spend · 42% pre-orders · 2.4 min wait</p>
-        <button onclick="fetch('/api/v73/fnb-concessions/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Concessions</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #dc2626">
-        <h3>📱 Digital Ordering</h3>
-        <p>97.8% digital orders · 1.4 min avg order · 84.2% queue eliminated · AI upsell ₹28.4Cr · NPS 88</p>
-        <button onclick="fetch('/api/v73/digital-ordering/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Digital</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #b91c1c">
-        <h3>🥂 VIP Hospitality</h3>
-        <p>2,840 VIP lounges · 28 Michelin partners · ₹28,400 avg spend · 8 celebrity chefs · NPS 96</p>
-        <button onclick="fetch('/api/v73/vip-hospitality/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View VIP</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #991b1b">
-        <h3>📦 Smart Inventory</h3>
-        <p>28,400 SKUs · 2,840 suppliers · AI forecast 97.8% accuracy · 0.28% stockout · blockchain traceability</p>
-        <button onclick="fetch('/api/v73/fnb-inventory/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Inventory</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #ef4444">
-        <h3>🥗 Dietary & Allergen</h3>
-        <p>14 allergens tracked · 10 dietary filters · FSSAI compliant · 100% allergen labelled · Zero incidents</p>
-        <button onclick="fetch('/api/v73/dietary-mgmt/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Dietary</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #dc2626">
-        <h3>🍺 Bar Management</h3>
-        <p>2,840 bars · 84 craft beer brands · 284 cocktails · 99.8% age verification · RFID tracking</p>
-        <button onclick="fetch('/api/v73/bar-management/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Bar</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #b91c1c">
-        <h3>🔬 Food Safety</h3>
-        <p>28,400 IoT sensors · HACCP certified · FSSAI A+ · 0 incidents · 99.98% IoT uptime · Zero cold chain breaks</p>
-        <button onclick="fetch('/api/v73/food-safety/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Safety</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #991b1b">
-        <h3>🎤 Artist Catering</h3>
-        <p>28,400 artists catered · 99.2% rider fulfilment · 8,400 crew meals · 28 cuisines · 24/7 service</p>
-        <button onclick="fetch('/api/v73/artist-catering/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Catering</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #ef4444">
-        <h3>♻️ Sustainability</h3>
-        <p>97.8% biodegradable packaging · 284K kg food donated · 840K reusable cups · Zero landfill · 42% carbon saved</p>
-        <button onclick="fetch('/api/v73/fnb-sustainability/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Sustainability</button>
-      </div>
-      <div class="card" style="padding:20px;border-left:4px solid #dc2626">
-        <h3>📊 F&B Analytics</h3>
-        <p>₹840Cr total revenue · 42% YoY growth · NPS 88 · 97.8% digital · 9.2 satisfaction · 8.4 sustainability</p>
-        <button onclick="fetch('/api/v73/fnb-analytics/dashboard').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" class="btn-primary">View Analytics</button>
-      </div>
-    </div>
-  </div>
+  
 
   <!-- PHASE 74 — TRAVEL, TRANSPORT & LOGISTICS -->
-  <div id="panel-p74-ops" class="panel-section" style="display:none">
-    <div class="panel-header" style="background:linear-gradient(135deg,#1a237e,#283593);color:#fff;padding:24px;border-radius:12px;margin-bottom:24px">
-      <h2 style="margin:0;font-size:1.6rem">✈️ Travel & Logistics Ops</h2>
-      <p style="margin:8px 0 0;opacity:.85">Travel, Transport, Accommodation & Logistics Platform — v74.0.0</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#1a237e">✈️ Event Travel</h3>
-        <p>Travel bookings: <strong>2.84 M</strong> | Destinations: <strong>284</strong></p>
-        <p>Revenue: <strong>₹284 Cr</strong> | Partners: MakeMyTrip, IRCTC, Yatra</p>
-      </div>
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#283593">🚌 Transport & Shuttles</h3>
-        <p>Shuttle routes: <strong>2,840</strong> | Fleet: <strong>28,400</strong></p>
-        <p>On-time: <strong>97.8%</strong> | EV fleet: <strong>42%</strong></p>
-      </div>
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#1565c0">🏨 Accommodation</h3>
-        <p>Partner hotels: <strong>28,400</strong> | Cities: <strong>284</strong></p>
-        <p>Bookings: <strong>2.84 M</strong> | Revenue: <strong>₹284 Cr</strong></p>
-      </div>
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#0d47a1">🅿️ Parking & Valet</h3>
-        <p>Zones: <strong>2,840</strong> | Spaces: <strong>840 K</strong></p>
-        <p>EV charging: <strong>8,400</strong> | Pre-book: <strong>84.2%</strong></p>
-      </div>
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#1a237e">🌍 International Travel</h3>
-        <p>Intl events: <strong>840</strong> | Countries: <strong>84</strong></p>
-        <p>Visa success: <strong>99.2%</strong> | Packages: <strong>840</strong></p>
-      </div>
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#283593">📊 Travel Analytics</h3>
-        <p>Total revenue: <strong>₹840 Cr</strong> | NPS: <strong>88</strong></p>
-        <p>CO₂ saved: <strong>28,400 t</strong> | Satisfaction: <strong>9.2/10</strong></p>
-      </div>
-    </div>
-  </div>
+  
 
   <!-- PHASE 75 — TICKETING TECHNOLOGY, MARKETPLACE & SECONDARY MARKET -->
-  <div id="panel-p75-ops" class="panel-section" style="display:none">
-    <div class="panel-header" style="background:linear-gradient(135deg,#4a148c,#7b1fa2);color:#fff;padding:24px;border-radius:12px;margin-bottom:24px">
-      <h2 style="margin:0;font-size:1.6rem">🎫 Ticketing & Waitlist Ops</h2>
-      <p style="margin:8px 0 0;opacity:.85">Ticketing Technology, Marketplace &amp; Secondary Market Platform — v75.0.0</p>
+  
+
+  <!-- PHASE 76 — CUSTOMER EXPERIENCE, CRM & FAN LOYALTY -->
+  
+<script>
+// Phase 66-75 showPanel title map
+(function() {
+  var _origSP = window.showPanel;
+  var _p6675titles = {'p66-ops-new':'Phase 66 — Creator Economy & UGC',
+    'p67-ops':'Phase 67 — Green Events & Sustainability',
+    'p68-ops':'Phase 68 — Accessibility & Inclusion',
+    'p69-ops':'Phase 69 — AI Intelligence & Automation',
+    'p70-ops':'Phase 70 — Blockchain & Web3',
+    'p71-ops':'Phase 71 — Live & Virtual Hybrid Events',
+    'p72-ops':'Phase 72 — Sports & Stadium Management',
+    'p73-ops':'Phase 73 — Food & Beverage',
+    'p74-ops':'Phase 74 — Travel, Transport & Logistics',
+    'p75-ops':'Phase 75 — Ticketing Technology & Marketplace'};
+  window.showPanel = function(id, btn) {
+    if (_origSP) _origSP(id, btn);
+    if (_p6675titles[id]) {
+      var tb = document.querySelector('.topbar-title, #topbarTitle, .tb-title');
+      if (tb) tb.textContent = _p6675titles[id];
+    }
+  };
+})();
+</script>
+<script>
+// Phase 66-75 showPanel title map for ops
+(function() {
+  var _origSP = window.showPanel;
+  var _titles = {'p66-ops-new':'Phase 66 — Creator Economy & UGC',
+    'p67-ops':'Phase 67 — Green Events & Sustainability',
+    'p68-ops':'Phase 68 — Accessibility & Inclusion',
+    'p69-ops':'Phase 69 — AI Intelligence & Automation',
+    'p70-ops':'Phase 70 — Blockchain & Web3',
+    'p71-ops':'Phase 71 — Live & Virtual Hybrid Events',
+    'p72-ops':'Phase 72 — Sports & Stadium Management',
+    'p73-ops':'Phase 73 — Food & Beverage',
+    'p74-ops':'Phase 74 — Travel, Transport & Logistics',
+    'p75-ops':'Phase 75 — Ticketing Technology & Marketplace'};
+  window.showPanel = function(id, btn) {
+    if (_origSP) _origSP(id, btn);
+    if (_titles[id]) {
+      var tb = document.querySelector('.topbar-title, #topbarTitle, .tb-title, .ops-title');
+      if (tb) tb.textContent = _titles[id];
+    }
+  };
+})();
+</script>
+  <!-- PHASE 76 — CUSTOMER EXPERIENCE, CRM & FAN LOYALTY -->
+  <div id="panel-p76-ops" class="panel">
+    <div class="panel-header" style="background:linear-gradient(135deg,#4a148c,#6a1b9a);color:#fff;padding:24px;border-radius:12px;margin-bottom:24px">
+      <h2 style="margin:0;font-size:1.6rem">💎 CX Ops</h2>
+      <p style="margin:8px 0 0;opacity:.85">CX Operations & Real-Time Support — v76.0.0</p>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#4a148c">🎟️ Ticketing Engine</h3>
-        <p>Tickets issued: <strong>28.4 M</strong> | Types: QR/NFC/Biometric/NFT</p>
-        <p>Fraud rate: <strong>0.004%</strong> | Instant delivery: <strong>99.8%</strong></p>
+      <div class="card" style="padding:20px;background:rgba(255,255,255,0.07);border-radius:10px;border:1px solid rgba(255,255,255,0.1)">
+        <h3 style="color:#6a1b9a;margin:0 0 12px">👤 Fan CRM</h3>
+        <p style="color:#cbd5e1">Fans: <strong style="color:#f1f5f9">28.4 M</strong> | LTV: <strong style="color:#f1f5f9">₹28,400</strong></p>
+        <p style="color:#cbd5e1">Segments: <strong style="color:#f1f5f9">284</strong> | Churn: <strong style="color:#f1f5f9">4.2%</strong></p>
+        <button onclick="fetch('/api/v76/fan-crm/overview').then(r=>r.json()).then(d=>showApiResult(d))" style="margin-top:8px;padding:6px 12px;background:#4a148c;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">View CRM →</button>
       </div>
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#7b1fa2">🏪 Ticket Marketplace</h3>
-        <p>Listings: <strong>284 K</strong> | Buyers: <strong>2.84 M</strong></p>
-        <p>GMV: <strong>₹840 Cr</strong> | Take rate: <strong>8.4%</strong></p>
+      <div class="card" style="padding:20px;background:rgba(255,255,255,0.07);border-radius:10px;border:1px solid rgba(255,255,255,0.1)">
+        <h3 style="color:#6a1b9a;margin:0 0 12px">🏆 Loyalty Programme</h3>
+        <p style="color:#cbd5e1">Members: <strong style="color:#f1f5f9">14.2 M</strong> | Redemption: <strong style="color:#f1f5f9">42%</strong></p>
+        <p style="color:#cbd5e1">Revenue: <strong style="color:#f1f5f9">₹284 Cr</strong> | Tiers: <strong style="color:#f1f5f9">5</strong></p>
+        <button onclick="fetch('/api/v76/loyalty/overview').then(r=>r.json()).then(d=>showApiResult(d))" style="margin-top:8px;padding:6px 12px;background:#6a1b9a;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">View Loyalty →</button>
       </div>
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#6a1b9a">🔄 Secondary Market</h3>
-        <p>Volume: <strong>₹284 Cr</strong> | Transactions: <strong>2.84 M</strong></p>
-        <p>Price cap: <strong>+50%</strong> | Touting blocked: <strong>28,400</strong></p>
+      <div class="card" style="padding:20px;background:rgba(255,255,255,0.07);border-radius:10px;border:1px solid rgba(255,255,255,0.1)">
+        <h3 style="color:#7b1fa2;margin:0 0 12px">🤖 AI Personalisation</h3>
+        <p style="color:#cbd5e1">Personalised: <strong style="color:#f1f5f9">18.4 M</strong> | CTR: <strong style="color:#f1f5f9">28.4%</strong></p>
+        <p style="color:#cbd5e1">Uplift: <strong style="color:#f1f5f9">₹284 Cr</strong> | Accuracy: <strong style="color:#f1f5f9">94.2%</strong></p>
+        <button onclick="fetch('/api/v76/personalisation/overview').then(r=>r.json()).then(d=>showApiResult(d))" style="margin-top:8px;padding:6px 12px;background:#7b1fa2;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">View AI →</button>
       </div>
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#4a148c">💡 Dynamic Pricing</h3>
-        <p>Events: <strong>2,840</strong> | Yield lift: <strong>+28.4%</strong></p>
-        <p>Revenue uplift: <strong>₹284 Cr</strong> | Accuracy: <strong>94.2%</strong></p>
+      <div class="card" style="padding:20px;background:rgba(255,255,255,0.07);border-radius:10px;border:1px solid rgba(255,255,255,0.1)">
+        <h3 style="color:#4a148c;margin:0 0 12px">💬 Omnichannel Comms</h3>
+        <p style="color:#cbd5e1">Messages: <strong style="color:#f1f5f9">28.4 M/day</strong> | Open: <strong style="color:#f1f5f9">42%</strong></p>
+        <p style="color:#cbd5e1">WhatsApp: <strong style="color:#f1f5f9">18.4 M subs</strong> | 97.8% delivery</p>
+        <button onclick="fetch('/api/v76/omnichannel/overview').then(r=>r.json()).then(d=>showApiResult(d))" style="margin-top:8px;padding:6px 12px;background:#4a148c;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">View Comms →</button>
       </div>
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#7b1fa2">🔔 Waitlist Management</h3>
-        <p>Waitlisted: <strong>2.84 M</strong> | Conversion: <strong>28.4%</strong></p>
-        <p>Revenue recovered: <strong>₹84 Cr</strong> | Events: <strong>2,840</strong></p>
+      <div class="card" style="padding:20px;background:rgba(255,255,255,0.07);border-radius:10px;border:1px solid rgba(255,255,255,0.1)">
+        <h3 style="color:#6a1b9a;margin:0 0 12px">⭐ VIP Experience</h3>
+        <p style="color:#cbd5e1">VIP members: <strong style="color:#f1f5f9">142 K</strong> | Avg spend: <strong style="color:#f1f5f9">₹28,400</strong></p>
+        <p style="color:#cbd5e1">NPS: <strong style="color:#f1f5f9">98</strong> | Retention: <strong style="color:#f1f5f9">94.2%</strong></p>
+        <button onclick="fetch('/api/v76/vip-experience/overview').then(r=>r.json()).then(d=>showApiResult(d))" style="margin-top:8px;padding:6px 12px;background:#6a1b9a;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">View VIP →</button>
       </div>
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#6a1b9a">📊 Ticketing Analytics</h3>
-        <p>Revenue: <strong>₹840 Cr</strong> | NPS: <strong>88</strong></p>
-        <p>Checkout: <strong>67.4%</strong> | YoY growth: <strong>42%</strong></p>
+      <div class="card" style="padding:20px;background:rgba(255,255,255,0.07);border-radius:10px;border:1px solid rgba(255,255,255,0.1)">
+        <h3 style="color:#7b1fa2;margin:0 0 12px">📊 CX Analytics</h3>
+        <p style="color:#cbd5e1">NPS: <strong style="color:#f1f5f9">88</strong> (industry: 42) | CSAT: <strong style="color:#f1f5f9">9.2</strong></p>
+        <p style="color:#cbd5e1">Revenue: <strong style="color:#f1f5f9">₹840 Cr</strong> | Top 1% globally</p>
+        <button onclick="fetch('/api/v76/cx-analytics/overview').then(r=>r.json()).then(d=>showApiResult(d))" style="margin-top:8px;padding:6px 12px;background:#7b1fa2;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">View Analytics →</button>
       </div>
     </div>
   </div>
 
-  <!-- PHASE 76 — CUSTOMER EXPERIENCE, CRM & FAN LOYALTY -->
-  <div id="panel-p76-ops" class="panel-section" style="display:none">
-    <div class="panel-header" style="background:linear-gradient(135deg,#b71c1c,#c62828);color:#fff;padding:24px;border-radius:12px;margin-bottom:24px">
-      <h2 style="margin:0;font-size:1.6rem">💎 CRM & Loyalty Ops</h2>
-      <p style="margin:8px 0 0;opacity:.85">Customer Experience, CRM &amp; Fan Loyalty Platform — v76.0.0</p>
+<script src="/static/portal-fix.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- PHASE P67 -->
+<div id="panel-p67-ops" class="panel" style="display:none">
+  <div style="padding:24px">
+    <div style="background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
+      <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🌿 Phase 67 &mdash; Sustainability &amp; ESG</h2>
+      <p style="margin:0;opacity:.85">INDTIX &mdash; v67.0.0 &mdash; 6 modules</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#b71c1c">👤 Fan CRM</h3>
-        <p>Fans: <strong>28.4 M</strong> | LTV: <strong>₹28,400</strong></p>
-        <p>Segments: <strong>284</strong> | Churn: <strong>4.2%</strong></p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+      <div class="card" style="padding:18px;border-left:4px solid #16a34a">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🌍 Carbon Tracking</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">284K t CO2 tracked · 97.8% accuracy · real-time offsetting</div>
+        <button onclick="fetch('/api/v67/carbon/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#16a34a;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
       </div>
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#c62828">🏆 Loyalty Programme</h3>
-        <p>Members: <strong>14.2 M</strong> | Redemption: <strong>42%</strong></p>
-        <p>Revenue: <strong>₹284 Cr</strong> | Tiers: <strong>5</strong></p>
+      <div class="card" style="padding:18px;border-left:4px solid #16a34a">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">☀️ Renewable Energy</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">284 solar/wind installations · Rs284Cr saved · 84% green power</div>
+        <button onclick="fetch('/api/v67/energy/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#16a34a;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
       </div>
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#d32f2f">🤖 AI Personalisation</h3>
-        <p>Personalised: <strong>18.4 M</strong> | CTR: <strong>28.4%</strong></p>
-        <p>Uplift: <strong>₹284 Cr</strong> | Accuracy: <strong>94.2%</strong></p>
+      <div class="card" style="padding:18px;border-left:4px solid #16a34a">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">♻️ Waste Management</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">840 zero-waste events · 97.8% diversion rate · 284K kg recycled</div>
+        <button onclick="fetch('/api/v67/waste/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#16a34a;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
       </div>
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#b71c1c">💬 Omnichannel Comms</h3>
-        <p>Messages: <strong>28.4 M/day</strong> | Open: <strong>42%</strong></p>
-        <p>WhatsApp: <strong>18.4 M subs</strong> | 97.8% delivery</p>
+      <div class="card" style="padding:18px;border-left:4px solid #16a34a">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🌱 Green Transport</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">42% EV fleet · 28,400t CO2 saved · carpooling 284K rides</div>
+        <button onclick="fetch('/api/v67/transport/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#16a34a;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
       </div>
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#c62828">⭐ VIP Experience</h3>
-        <p>VIP members: <strong>142 K</strong> | Avg spend: <strong>₹28,400</strong></p>
-        <p>NPS: <strong>98</strong> | Retention: <strong>94.2%</strong></p>
+      <div class="card" style="padding:18px;border-left:4px solid #16a34a">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">📋 ESG Reporting</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">GRI/SASB/TCFD compliant · automated reports · SDG aligned</div>
+        <button onclick="fetch('/api/v67/esg/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#16a34a;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
       </div>
-      <div class="card" style="padding:20px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-        <h3 style="color:#d32f2f">📊 CX Analytics</h3>
-        <p>NPS: <strong>88</strong> (industry: 42) | CSAT: <strong>9.2</strong></p>
-        <p>Revenue: <strong>₹840 Cr</strong> | Top 1% globally</p>
+      <div class="card" style="padding:18px;border-left:4px solid #16a34a">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🏆 Green Certification</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">840 certified events · LEED Gold · ISO 20121 · B-Corp 88.4</div>
+        <button onclick="fetch('/api/v67/certification/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#16a34a;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
       </div>
     </div>
   </div>
-<script src="/static/portal-fix.js"></script>
+</div>
+
+<!-- PHASE P68 -->
+<div id="panel-p68-ops" class="panel" style="display:none">
+  <div style="padding:24px">
+    <div style="background:linear-gradient(135deg,#0891b2,#0e7490);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
+      <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">♿ Phase 68 &mdash; Accessibility &amp; Inclusion</h2>
+      <p style="margin:0;opacity:.85">INDTIX &mdash; v68.0.0 &mdash; 6 modules</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+      <div class="card" style="padding:18px;border-left:4px solid #0891b2">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">♿ Physical Access</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">2,840 accessible venues · ramps/lifts/tactile · companion tickets</div>
+        <button onclick="fetch('/api/v68/physical/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#0891b2;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #0891b2">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">👂 Sensory Support</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">BSL interpreters 284 events · hearing loops · captioning 97.8%</div>
+        <button onclick="fetch('/api/v68/sensory/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#0891b2;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #0891b2">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🧠 Cognitive Aids</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">Easy-read guides · social stories · quiet spaces · autism-friendly</div>
+        <button onclick="fetch('/api/v68/cognitive/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#0891b2;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #0891b2">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">📱 Digital A11y</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">WCAG 2.2 AA · screen-reader tested · 28 languages · voice nav</div>
+        <button onclick="fetch('/api/v68/digital/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#0891b2;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #0891b2">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🎗️ Inclusion Score</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">94.2% satisfaction · CRPD compliance · 2,840 volunteers trained</div>
+        <button onclick="fetch('/api/v68/inclusion/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#0891b2;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #0891b2">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">📊 A11y Analytics</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">284K accessible tickets · Rs28.4Cr revenue · NPS 94</div>
+        <button onclick="fetch('/api/v68/analytics/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#0891b2;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE P69 -->
+<div id="panel-p69-ops" class="panel" style="display:none">
+  <div style="padding:24px">
+    <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
+      <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🤖 Phase 69 &mdash; AI Intelligence Suite</h2>
+      <p style="margin:0;opacity:.85">INDTIX &mdash; v69.0.0 &mdash; 6 modules</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+      <div class="card" style="padding:18px;border-left:4px solid #7c3aed">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🧠 Demand Forecasting</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">97.8% accuracy · LSTM+XGBoost · 28 signals · 30-day horizon</div>
+        <button onclick="fetch('/api/v69/demand/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #7c3aed">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">💰 Dynamic Pricing AI</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">+28.4% yield lift · Rs284Cr uplift · 8 price tiers</div>
+        <button onclick="fetch('/api/v69/pricing/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #7c3aed">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">👁️ Computer Vision</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">99.2% facial recognition · crowd density maps · 2,840 cameras</div>
+        <button onclick="fetch('/api/v69/vision/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #7c3aed">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🎯 Recommendation Engine</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">42% CTR uplift · 28.4M personalised suggestions/day</div>
+        <button onclick="fetch('/api/v69/recommendations/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #7c3aed">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">💬 NLP &amp; Chatbot</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">28.4M conversations/month · 94.2% resolution · 28 languages</div>
+        <button onclick="fetch('/api/v69/nlp/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #7c3aed">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">📊 AI Analytics</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">284K AI decisions/day · Rs840Cr AI-driven revenue · 99.98% uptime</div>
+        <button onclick="fetch('/api/v69/analytics/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE P70 -->
+<div id="panel-p70-ops" class="panel" style="display:none">
+  <div style="padding:24px">
+    <div style="background:linear-gradient(135deg,#d97706,#b45309);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
+      <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">⛓️ Phase 70 &mdash; Blockchain &amp; Web3</h2>
+      <p style="margin:0;opacity:.85">INDTIX &mdash; v70.0.0 &mdash; 6 modules</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+      <div class="card" style="padding:18px;border-left:4px solid #d97706">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🎨 NFT Ticketing</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">2.84M NFTs · 5 chains · Rs284Cr volume · 100% counterfeit-free</div>
+        <button onclick="fetch('/api/v70/nft-tickets/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#d97706;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #d97706">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">📜 Smart Contracts</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">2,840 contracts · TVL Rs284Cr · CertiK audited · auto-refunds</div>
+        <button onclick="fetch('/api/v70/smart-contracts/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#d97706;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #d97706">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🪪 Web3 Identity</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">284K wallets · W3C DID · ZK proofs · gasless onboarding</div>
+        <button onclick="fetch('/api/v70/web3-identity/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#d97706;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #d97706">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🔑 Token Gating</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">840 gated events · 284 NFT collections · +42% secondary lift</div>
+        <button onclick="fetch('/api/v70/token-gating/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#d97706;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #d97706">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">₿ Crypto Payments</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">28,400 txs/day · 8 currencies · Rs8.4Cr DeFi yield</div>
+        <button onclick="fetch('/api/v70/crypto-payments/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#d97706;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #d97706">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">📊 Blockchain Analytics</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">5 chains · 28.4M txs/day · Rs284Cr on-chain revenue</div>
+        <button onclick="fetch('/api/v70/web3-analytics/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#d97706;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE P71 -->
+<div id="panel-p71-ops" class="panel" style="display:none">
+  <div style="padding:24px">
+    <div style="background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
+      <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">📡 Phase 71 &mdash; Live Streaming &amp; Virtual</h2>
+      <p style="margin:0;opacity:.85">INDTIX &mdash; v71.0.0 &mdash; 6 modules</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+      <div class="card" style="padding:18px;border-left:4px solid #0ea5e9">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">📺 Live Streaming</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">2,840 concurrent streams · 840K peak viewers · 99.98% uptime</div>
+        <button onclick="fetch('/api/v71/live-streaming/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#0ea5e9;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #0ea5e9">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🌐 Virtual Events</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">2,840 virtual events · 284K attendees · 84.2% engagement</div>
+        <button onclick="fetch('/api/v71/virtual-events/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#0ea5e9;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #0ea5e9">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🔀 Hybrid Events</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">840 hybrid events · 28.4M tickets · Rs284Cr revenue</div>
+        <button onclick="fetch('/api/v71/hybrid-events/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#0ea5e9;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #0ea5e9">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🎬 Content &amp; VOD</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">28.4M VOD views · AI highlights · Rs84Cr VOD revenue</div>
+        <button onclick="fetch('/api/v71/content-vod/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#0ea5e9;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #0ea5e9">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">💬 Audience Tools</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">Live polls · Q&amp;A · reactions · gamification · NPS 92</div>
+        <button onclick="fetch('/api/v71/audience-tools/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#0ea5e9;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #0ea5e9">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">📊 Streaming Analytics</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">28.4M peak · Rs284Cr revenue · 22 languages · 97.8% captions</div>
+        <button onclick="fetch('/api/v71/streaming-analytics/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#0ea5e9;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE P72 -->
+<div id="panel-p72-ops" class="panel" style="display:none">
+  <div style="padding:24px">
+    <div style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
+      <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🏟️ Phase 72 &mdash; Sports &amp; Stadium Tech</h2>
+      <p style="margin:0;opacity:.85">INDTIX &mdash; v72.0.0 &mdash; 6 modules</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+      <div class="card" style="padding:18px;border-left:4px solid #f59e0b">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🏏 Sports Events</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">2,840 events · 28.4M attendance · 84.2% sellout · 284 stadiums</div>
+        <button onclick="fetch('/api/v72/sports-events/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#f59e0b;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #f59e0b">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🏟️ Stadium Tech</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">142 smart stadiums · 284K IoT sensors · 4K cameras · 5G</div>
+        <button onclick="fetch('/api/v72/stadium-tech/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#f59e0b;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #f59e0b">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🎟️ Sports Ticketing</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">28.4M tickets · +28.4% dynamic pricing uplift · Rs840Cr revenue</div>
+        <button onclick="fetch('/api/v72/sports-ticketing/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#f59e0b;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #f59e0b">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🎮 Fantasy Sports</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">28.4M users · 28,400 daily contests · Rs28.4Cr daily prizes</div>
+        <button onclick="fetch('/api/v72/fantasy-sports/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#f59e0b;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #f59e0b">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🏃 Athlete Management</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">28,400 athletes · 2,840 teams · AI performance analytics</div>
+        <button onclick="fetch('/api/v72/athlete-management/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#f59e0b;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #f59e0b">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">📊 Sports Analytics</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">Rs2,840Cr revenue · 42% YoY growth · NPS 88</div>
+        <button onclick="fetch('/api/v72/sports-analytics/dashboard').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#f59e0b;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE P73 -->
+<div id="panel-p73-ops" class="panel" style="display:none">
+  <div style="padding:24px">
+    <div style="background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
+      <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🍽️ Phase 73 &mdash; Food, Bev &amp; Hospitality</h2>
+      <p style="margin:0;opacity:.85">INDTIX &mdash; v73.0.0 &mdash; 6 modules</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+      <div class="card" style="padding:18px;border-left:4px solid #ef4444">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🏪 F&amp;B Concessions</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">2,840 stands · 284K orders/event · Rs840 avg spend · 2.4 min wait</div>
+        <button onclick="fetch('/api/v73/fnb-concessions/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#ef4444;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #ef4444">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">📱 Digital Ordering</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">97.8% digital orders · 1.4 min avg · 84.2% queue eliminated</div>
+        <button onclick="fetch('/api/v73/digital-ordering/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#ef4444;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #ef4444">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🥂 VIP Hospitality</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">2,840 lounges · 28 Michelin partners · Rs28,400 avg spend · NPS 96</div>
+        <button onclick="fetch('/api/v73/vip-hospitality/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#ef4444;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #ef4444">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🧊 Smart Inventory</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">28,400 SKUs · 2,840 suppliers · 97.8% AI forecast accuracy</div>
+        <button onclick="fetch('/api/v73/smart-inventory/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#ef4444;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #ef4444">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🥗 Food Safety &amp; ESG</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">28,400 IoT sensors · HACCP · FSSAI A+ · zero incidents</div>
+        <button onclick="fetch('/api/v73/food-safety/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#ef4444;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #ef4444">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">📊 F&amp;B Analytics</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">Rs840Cr revenue · 42% YoY · NPS 88 · sustainability 8.4</div>
+        <button onclick="fetch('/api/v73/fnb-analytics/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#ef4444;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE P74 -->
+<div id="panel-p74-ops" class="panel" style="display:none">
+  <div style="padding:24px">
+    <div style="background:linear-gradient(135deg,#1d4ed8,#1e40af);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
+      <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">✈️ Phase 74 &mdash; Travel &amp; Logistics</h2>
+      <p style="margin:0;opacity:.85">INDTIX &mdash; v74.0.0 &mdash; 6 modules</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+      <div class="card" style="padding:18px;border-left:4px solid #1d4ed8">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">✈️ Event Travel</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">2.84M bookings · 284 destinations · Rs284Cr revenue</div>
+        <button onclick="fetch('/api/v74/event-travel/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#1d4ed8;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #1d4ed8">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🚌 Transport &amp; Shuttles</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">2,840 routes · 28,400 fleet (42% EV) · 97.8% on-time</div>
+        <button onclick="fetch('/api/v74/transport/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#1d4ed8;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #1d4ed8">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🏨 Accommodation</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">28,400 partner hotels · 284 cities · Rs284Cr revenue</div>
+        <button onclick="fetch('/api/v74/accommodation/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#1d4ed8;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #1d4ed8">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🅿️ Parking &amp; Valet</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">2,840 zones · 840K spaces · 8,400 EV chargers</div>
+        <button onclick="fetch('/api/v74/parking/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#1d4ed8;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #1d4ed8">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🌍 International Travel</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">840 intl events · 84 countries · 99.2% visa success</div>
+        <button onclick="fetch('/api/v74/international-travel/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#1d4ed8;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #1d4ed8">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">📊 Travel Analytics</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">Rs840Cr revenue · NPS 88 · 28,400t CO2 saved · 42% YoY</div>
+        <button onclick="fetch('/api/v74/travel-analytics/dashboard').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#1d4ed8;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE P75 -->
+<div id="panel-p75-ops" class="panel" style="display:none">
+  <div style="padding:24px">
+    <div style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:20px">
+      <h2 style="margin:0 0 6px;font-size:1.6rem;font-weight:700">🎫 Phase 75 &mdash; Ticketing Technology</h2>
+      <p style="margin:0;opacity:.85">INDTIX &mdash; v75.0.0 &mdash; 6 modules</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+      <div class="card" style="padding:18px;border-left:4px solid #7c3aed">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🎟️ Ticketing Engine</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">28.4M tickets · QR/NFC/Biometric/NFT · 1.4s delivery · 99.98% fraud-free</div>
+        <button onclick="fetch('/api/v75/ticketing-engine/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #7c3aed">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🏪 Ticket Marketplace</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">284K listings · 2.84M buyers · Rs840Cr GMV · 8.4% take rate</div>
+        <button onclick="fetch('/api/v75/ticket-marketplace/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #7c3aed">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🔄 Secondary Market</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">Rs284Cr volume · 50% price cap · touting blocked 28,400</div>
+        <button onclick="fetch('/api/v75/secondary-market/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #7c3aed">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">💡 Dynamic Pricing AI</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">2,840 events · +28.4% yield lift · Rs284Cr uplift · 94.2% accuracy</div>
+        <button onclick="fetch('/api/v75/dynamic-pricing/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #7c3aed">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">🔔 Waitlist Management</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">2.84M waitlisted · 28.4% conversion · Rs84Cr recovered</div>
+        <button onclick="fetch('/api/v75/waitlist/overview').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+      <div class="card" style="padding:18px;border-left:4px solid #7c3aed">
+        <div style="font-weight:700;font-size:13px;margin-bottom:5px">📊 Ticketing Analytics</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">Rs840Cr revenue · NPS 88 · 67.4% checkout · 42% YoY growth</div>
+        <button onclick="fetch('/api/v75/ticketing-analytics/dashboard').then(r=>r.json()).then(d=>window.showApiResult?window.showApiResult(d):console.log(d)).catch(e=>console.error(e))" style="padding:5px 12px;background:#7c3aed;color:#fff;border:none;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600">View Data</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
