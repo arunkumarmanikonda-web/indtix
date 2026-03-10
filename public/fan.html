@@ -4655,7 +4655,7 @@ function p23JoinWaitlist(){
 function scrollToP24(){ document.getElementById('p24-hub') && document.getElementById('p24-hub').scrollIntoView({behavior:'smooth'}); }
 </script>
 
-<div id="p24-hub" style="padding:16px;max-width:480px;margin:0 auto;">
+<div id="p24-hub" style="display:none;padding:16px;max-width:480px;margin:0 auto;">
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
     <div style="background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:12px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">✨</div>
     <div>
@@ -4996,7 +4996,7 @@ function p24SaveAccess(){
 <!-- Phase 25 Bottom Nav Button -->
 
 <!-- Phase 25 Hub -->
-<div id="p25-hub" style="background:#0f172a;border-top:2px solid #f43f5e;padding:20px;margin-top:20px;">
+<div id="p25-hub" style="display:none;background:#0f172a;border-top:2px solid #f43f5e;padding:20px;margin-top:20px;">
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
     <div style="background:linear-gradient(135deg,#f43f5e,#e11d48);width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;">✨</div>
     <div>
@@ -6396,7 +6396,7 @@ async function loadP35FanESG() {
 }
 </script>
 
-<div class="phase-section" id="p36-fan-section">
+<div class="phase-section" id="p36-fan-section" style="display:none">
   <h3>⛓️ Phase 36 — My NFT Tickets & Web3 Wallet</h3>
   <div class="btn-row">
     <button onclick="loadP36FanTickets()">My NFT Tickets</button>
@@ -6440,7 +6440,7 @@ async function loadP36FanDeFi() {
 }
 </script>
 
-<div class="phase-section" id="p37-fan-section">
+<div class="phase-section" id="p37-fan-section" style="display:none">
   <h3>🥽 Phase 37 — AR Venue, Metaverse & Live Stream</h3>
   <div class="btn-row">
     <button onclick="loadP37FanAR()">AR Venue Map</button>
@@ -6704,7 +6704,7 @@ loadAllP40Fan();
 </script>
 
 <!-- PHASE 41 FAN PORTAL -->
-<div class="phase-section" id="phase41-fan">
+<div class="phase-section" id="phase41-fan" style="display:none">
   <h2 class="phase-title">Phase 41 — B2B & Corporate Event Discovery</h2>
   <div class="module-card">
     <h3>🏢 Corporate & MICE Events Near You</h3>
@@ -6737,7 +6737,7 @@ loadAllP41Fan();
 </script>
 
 <!-- PHASE 41 FAN PORTAL -->
-<div class="phase-section" id="phase41-fan-dup1">
+<div class="phase-section" id="phase41-fan-dup1" style="display:none">
   <h2 class="phase-title">Phase 41 — Enterprise B2B & Partner Offers for Fans</h2>
   <div class="metrics-grid">
     <div class="metric-card"><div class="metric-label">Bulk Group Offers</div><div class="metric-value" id="p41f-groups">—</div></div>
@@ -6765,7 +6765,7 @@ loadAllP40Fan();
 </script>
 
 <!-- PHASE 42 FAN PORTAL -->
-<div class="phase-section" id="phase42-fan">
+<div class="phase-section" id="phase42-fan" style="display:none">
   <h2 class="phase-title">Phase 42 — Creator Economy & Fan Monetisation</h2>
   <div class="module-card"><h3>🎨 Discover Creators</h3><div id="p42-fan-creators" class="stats-grid"></div></div>
   <div class="module-card"><h3>⭐ Fan Subscriptions</h3><div id="p42-fan-subs" class="stats-grid"></div></div>
@@ -6794,7 +6794,7 @@ loadAllP42Fan();
 </script>
 
 <!-- PHASE 43 FAN PORTAL -->
-<div class="phase-section" id="phase43-fan">
+<div class="phase-section" id="phase43-fan" style="display:none">
   <h2 class="phase-title">Phase 43 — Support, Loyalty & Notifications</h2>
   <div class="module-card"><h3>🏆 Your Loyalty Rewards</h3><div id="p43-fan-loy" class="stats-grid"></div></div>
   <div class="module-card"><h3>📩 Notification Preferences</h3><div id="p43-fan-notif" class="info-alert"></div></div>
@@ -7001,7 +7001,7 @@ loadAllP48Fan();
 <script>
 async function loadP49Fan() {
   const base = '/api/v49';
-  let html = '<div class="phase-section"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Grow with INDTIX!</h2><div class="fan-cards">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Grow with INDTIX!</h2><div class="fan-cards">';
   try {
     const [ref, viral, com, plg] = await Promise.all([
       fetch(`${base}/referral/overview`).then(r=>r.json()),
@@ -7046,7 +7046,7 @@ loadAllP49Fan();
 <script>
 async function loadP50Fan() {
   const base = '/api/v50';
-  let html = '<div class="phase-section"><h2 style="color:#e94560;border-bottom:3px solid #e94560;padding-bottom:8px;">🏆 INDTIX is now v50.0.0 — The Ultimate Event Platform!</h2><div class="fan-cards">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#e94560;border-bottom:3px solid #e94560;padding-bottom:8px;">🏆 INDTIX is now v50.0.0 — The Ultimate Event Platform!</h2><div class="fan-cards">';
   try {
     const [obs, sre, mat] = await Promise.all([
       fetch(`${base}/observability/overview`).then(r=>r.json()),
@@ -7084,7 +7084,7 @@ loadAllP50Fan();
 <script>
 async function loadP51Fan() {
   const base = '/api/v51';
-  let html = '<div class="phase-section"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — Experience Events Like Never Before!</h2><div class="fan-cards">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — Experience Events Like Never Before!</h2><div class="fan-cards">';
   try {
     const [ar, vr, haptics, xrc] = await Promise.all([
       fetch(`${base}/ar/overview`).then(r=>r.json()),
@@ -7130,7 +7130,7 @@ loadAllP51Fan();
 <script>
 async function loadP52Fan() {
   const base = '/api/v52';
-  let html = '<div class="phase-section"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Own Your Event Experience with Web3!</h2><div class="fan-cards">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Own Your Event Experience with Web3!</h2><div class="fan-cards">';
   try {
     const [nft, mkt, tok, id] = await Promise.all([
       fetch(`${base}/nft-tickets/overview`).then(r=>r.json()),
@@ -7173,7 +7173,7 @@ loadAllP52Fan();
 </script>
 
 <!-- ========== PHASE 53: AI & GENERATIVE INTELLIGENCE (FAN) ========== -->
-<div class="phase-section" id="phase53-fan">
+<div class="phase-section" id="phase53-fan" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#6c3483,#8e44ad)">
     <h2>🤖 AI &amp; Personalised Discovery <span class="badge">v53.0.0</span></h2>
     <p>Hyper-personalised event discovery · AI chatbot support · Smart recommendations · Predictive alerts</p>
@@ -7209,7 +7209,7 @@ loadAllP52Fan();
 </div>
 
 <!-- ========== PHASE 54: QUANTUM SECURITY (FAN) ========== -->
-<div class="phase-section" id="phase54-fan">
+<div class="phase-section" id="phase54-fan" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
     <h2>⚛️ Your Security — Quantum-Grade Protection <span class="badge">v54.0.0</span></h2>
     <p>Post-quantum encryption · Zero-trust access · Privacy-first · 100% data sovereignty</p>
@@ -7240,7 +7240,7 @@ loadAllP52Fan();
 </div>
 
 <!-- ========== PHASE 55: VISION 2030 — FINAL (FAN) ========== -->
-<div class="phase-section" id="phase55-fan">
+<div class="phase-section" id="phase55-fan" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e)">
     <h2>🚀 The Future of Live — Vision 2030 <span class="badge">v55.0.0 · FINAL</span></h2>
     <p>Neural concerts · Space events · Health-aware venues · AI-personalised · Climate-positive · Truly for everyone</p>
@@ -7287,7 +7287,7 @@ loadAllP52Fan();
 </div>
 
 <!-- ========== PHASE 56: AUTONOMOUS ECONOMY (FAN) ========== -->
-<div class="phase-section" id="phase56-fan">
+<div class="phase-section" id="phase56-fan" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#1a0533,#3d0f6e,#6a1fa0)">
     <h2>🪙 Own Your Events — Tokenised Fan Economy <span class="badge">v56.0.0</span></h2>
     <p>Co-own events · Vote on lineups · Invest in festivals · Trade collectible tickets · Earn creator royalties</p>
@@ -7330,7 +7330,7 @@ loadAllP52Fan();
 </div>
 
         <!-- PHASE 57 FAN -->
-        <div class="portal-section" id="phase57-fan">
+        <div class="portal-section" id="phase57-fan" style="display:none">
           <h2 class="section-title">Phase 57 — Hyper-Local &amp; Community Commerce (v57.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Nearby Events</span><span class="metric-value">8,400/day</span></div>
@@ -7344,7 +7344,7 @@ loadAllP52Fan();
         <!-- END PHASE 57 FAN PORTAL -->
 
         <!-- PHASE 58 FAN -->
-        <div class="portal-section" id="phase58-fan">
+        <div class="portal-section" id="phase58-fan" style="display:none">
           <h2 class="section-title">Phase 58 — Supply Chain Intelligence (v58.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Vendors Verified</span><span class="metric-value">28.4K</span></div>
@@ -7358,7 +7358,7 @@ loadAllP52Fan();
         <!-- END PHASE 58 FAN PORTAL -->
 
         <!-- PHASE 59 FAN -->
-        <div class="portal-section" id="phase59-fan">
+        <div class="portal-section" id="phase59-fan" style="display:none">
           <h2 class="section-title">Phase 59 — Creator Economy (v59.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Creators to Follow</span><span class="metric-value">2.84M</span></div>
@@ -7372,7 +7372,7 @@ loadAllP52Fan();
         <!-- END PHASE 59 FAN PORTAL -->
 
         <!-- PHASE 60 FAN -->
-        <div class="portal-section" id="phase60-fan">
+        <div class="portal-section" id="phase60-fan" style="display:none">
           <h2 class="section-title">Phase 60 — Smart Cities (v60.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Transit Options</span><span class="metric-value">12 modes</span></div>
@@ -7386,7 +7386,7 @@ loadAllP52Fan();
         <!-- END PHASE 60 FAN PORTAL -->
 
         <!-- PHASE 61 FAN -->
-        <div class="portal-section" id="phase61-">
+        <div class="portal-section" id="phase61-" style="display:none">
           <h2 class="section-title">Phase 61 — Global Expansion &amp; Localisation (v61.0.0)</h2>
           <div class="metrics-grid"><div class="metric-card"><span class="metric-label">Countries Available</span><span class="metric-value">42</span></div><div class="metric-card"><span class="metric-label">Languages</span><span class="metric-value">84</span></div><div class="metric-card"><span class="metric-label">Local Payment Methods</span><span class="metric-value">284</span></div><div class="metric-card"><span class="metric-label">Diaspora Events/Yr</span><span class="metric-value">28,400</span></div><div class="metric-card"><span class="metric-label">Cultural Events</span><span class="metric-value">840</span></div><div class="metric-card"><span class="metric-label">Fan NPS Intl</span><span class="metric-value">78</span></div></div>
         </div>
@@ -7468,7 +7468,7 @@ loadAllP52Fan();
 </section>
 
     <!-- PHASE 65 — IMMERSIVE FAN EXPERIENCE & NEXT-GEN ENTERTAINMENT (v65.0.0) -->
-    <div class="phase-section" id="phase65">
+    <div class="phase-section" id="phase65" style="display:none">
       <div class="phase-header" style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%);">
         <h2>🎭 Phase 65 — Immersive Fan Experience & Next-Gen Entertainment <span class="badge">v65.0.0</span></h2>
         <div class="phase-meta">

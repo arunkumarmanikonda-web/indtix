@@ -5776,7 +5776,7 @@ async function loadP35Capital() {
 <!-- END PHASE 35 ADMIN PORTAL -->
 
 <!-- PHASE 36 ADMIN PORTAL: Web3, NFT & Blockchain -->
-<div class="phase-section" id="p36-admin-section">
+<div class="phase-section" id="p36-admin-section" style="display:none">
   <h3>⛓️ Phase 36 — Web3, NFT Ticketing & Blockchain</h3>
   <div class="btn-row">
     <button onclick="loadP36NFT()">NFT Dashboard</button>
@@ -5829,7 +5829,7 @@ async function loadP36ChainAnalytics() {
 <!-- END PHASE 36 ADMIN PORTAL -->
 
 <!-- PHASE 37 ADMIN PORTAL: AR/VR, Metaverse & Live Streaming -->
-<div class="phase-section" id="p37-admin-section">
+<div class="phase-section" id="p37-admin-section" style="display:none">
   <h3>🥽 Phase 37 — Immersive Experiences: AR/VR, Metaverse & Streaming</h3>
   <div class="btn-row">
     <button onclick="loadP37VirtualEvents()">Virtual Events</button>
@@ -6256,7 +6256,7 @@ loadAllP40Admin();
 <!-- ═══════════════════════════════════════════════════════
      PHASE 41 — ENTERPRISE B2B, CORPORATE EVENTS & GOVT/MICE
      ═══════════════════════════════════════════════════════ -->
-<div class="phase-section" id="phase41-admin">
+<div class="phase-section" id="phase41-admin" style="display:none">
   <h2 class="phase-title">Phase 41 — Enterprise B2B, Corporate Events & Government/MICE Platform</h2>
 
   <!-- Corporate RFP & Events -->
@@ -6418,7 +6418,7 @@ loadAllP41Admin();
      PHASE 41 — ENTERPRISE B2B, CORPORATE EVENTS & MICE
      Admin Portal Panel
      ═══════════════════════════════════════════════════════════ -->
-<div class="phase-section" id="phase41-admin-dup1">
+<div class="phase-section" id="phase41-admin-dup1" style="display:none">
   <h2 class="phase-title">Phase 41 — Enterprise B2B, Corporate Events & Government/MICE Platform</h2>
 
   <div class="metrics-grid">
@@ -6534,7 +6534,7 @@ loadAllP41Admin();
 <!-- END PHASE 41 ADMIN PORTAL -->
 
 <!-- PHASE 42 ADMIN PORTAL -->
-<div class="phase-section" id="phase42-admin">
+<div class="phase-section" id="phase42-admin" style="display:none">
   <h2 class="phase-title">Phase 42 — Creator Economy, Influencer & Fan Monetisation Platform</h2>
   <div class="module-card"><h3>🎨 Creator Marketplace</h3><div id="p42-creators" class="stats-grid"></div></div>
   <div class="module-card"><h3>📣 Influencer Campaigns</h3><div id="p42-influencer" class="stats-grid"></div></div>
@@ -6574,7 +6574,7 @@ loadP42Admin();
 <!-- END PHASE 42 ADMIN PORTAL -->
 
 <!-- PHASE 43 ADMIN PORTAL -->
-<div class="phase-section" id="phase43-admin">
+<div class="phase-section" id="phase43-admin" style="display:none">
   <h2 class="phase-title">Phase 43 — Customer Support, CRM & Engagement Automation</h2>
   <div class="module-card"><h3>🎧 Omni-Channel Support</h3><div id="p43-support" class="stats-grid"></div></div>
   <div class="module-card"><h3>👥 CRM & Customer 360</h3><div id="p43-crm" class="stats-grid"></div></div>
@@ -6942,7 +6942,7 @@ async function loadP49Admin() {
     { id: 'p49-plg', title: '🌱 Product-Led Growth', endpoint: `${base}/plg/overview` },
     { id: 'p49-growth', title: '📊 Growth Analytics', endpoint: `${base}/growth/overview` },
   ];
-  let html = '<div class="phase-section"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Growth, Virality & Acquisition Engine</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Growth, Virality & Acquisition Engine</h2><div class="metrics-grid">';
   for (const s of sections) {
     try {
       const res = await fetch(s.endpoint);
@@ -6978,7 +6978,7 @@ async function loadP50Admin() {
     { id: 'p50-data', title: '📦 Data & ML Platform', endpoint: `${base}/data-platform/overview` },
     { id: 'p50-mat', title: '🏆 Platform Maturity', endpoint: `${base}/maturity/overview` },
   ];
-  let html = '<div class="phase-section"><h2 style="color:#1a1a2e;border-bottom:3px solid #e94560;padding-bottom:8px;">🚀 Phase 50 — Platform Maturity & Self-Healing Infrastructure (FINAL)</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#1a1a2e;border-bottom:3px solid #e94560;padding-bottom:8px;">🚀 Phase 50 — Platform Maturity & Self-Healing Infrastructure (FINAL)</h2><div class="metrics-grid">';
   for (const s of sections) {
     try {
       const res = await fetch(s.endpoint);
@@ -7014,7 +7014,7 @@ async function loadP51Admin() {
     { title: '📊 Immersive Analytics', endpoint: `${base}/immersive-analytics/overview` },
     { title: '🎨 XR Creator Studio', endpoint: `${base}/xr-studio/overview` },
   ];
-  let html = '<div class="phase-section"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — Immersive Experiences & Extended Reality</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — Immersive Experiences & Extended Reality</h2><div class="metrics-grid">';
   for (const s of sections) {
     try {
       const data = await fetch(s.endpoint).then(r => r.json());
@@ -7046,7 +7046,7 @@ async function loadP52Admin() {
     { title: '📊 On-Chain Analytics', endpoint: `${base}/on-chain/overview` },
     { title: '🪪 Web3 Identity', endpoint: `${base}/web3-identity/overview` },
   ];
-  let html = '<div class="phase-section"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Web3, NFT & Blockchain Ticketing</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Web3, NFT & Blockchain Ticketing</h2><div class="metrics-grid">';
   for (const s of sections) {
     try {
       const data = await fetch(s.endpoint).then(r => r.json());
@@ -7063,7 +7063,7 @@ loadP52Admin();
 <!-- END PHASE 52 ADMIN PORTAL -->
 
 <!-- ========== PHASE 53: AI & GENERATIVE INTELLIGENCE PLATFORM (ADMIN) ========== -->
-<div class="phase-section" id="phase53-admin">
+<div class="phase-section" id="phase53-admin" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#6c3483,#8e44ad)">
     <h2>🤖 Phase 53 — AI &amp; Generative Intelligence Platform <span class="badge">v53.0.0</span></h2>
     <p>GenAI Content · AI Agents · Predictive Engine · NLP · Computer Vision · AI Pricing · Personalisation AI · MLOps · Responsible AI · AI Marketplace</p>
@@ -7144,7 +7144,7 @@ loadP52Admin();
 <!-- END PHASE 53 ADMIN PORTAL -->
 
 <!-- ========== PHASE 54: QUANTUM COMPUTING & NEXT-GEN SECURITY (ADMIN) ========== -->
-<div class="phase-section" id="phase54-admin">
+<div class="phase-section" id="phase54-admin" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
     <h2>⚛️ Phase 54 — Quantum Computing &amp; Next-Gen Security <span class="badge">v54.0.0</span></h2>
     <p>Quantum Cryptography · Post-Quantum Security · Quantum Computing · Zero-Trust · Threat Intel · Cyber Resilience · Privacy-Enhancing Tech · Quantum Networking · SOAR · Quantum Analytics</p>
@@ -7225,7 +7225,7 @@ loadP52Admin();
 <!-- END PHASE 54 ADMIN PORTAL -->
 
 <!-- ========== PHASE 55: FUTURE ROADMAP & VISION 2030 — FINAL PHASE (ADMIN) ========== -->
-<div class="phase-section" id="phase55-admin">
+<div class="phase-section" id="phase55-admin" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e)">
     <h2>🚀 Phase 55 — Future Roadmap &amp; Vision 2030 <span class="badge">v55.0.0 · FINAL</span></h2>
     <p>Vision 2030 · Neural Interface · Space Events · BioTech · Autonomous Ops · Climate-Positive · Universal Inclusion · Neuro-UX · Interplanetary Ticketing · INDTIX OS</p>
@@ -7308,7 +7308,7 @@ loadP52Admin();
 <!-- END PHASE 55 ADMIN PORTAL — FINAL -->
 
 <!-- ========== PHASE 56: AUTONOMOUS ECONOMY & TOKENISED EVENTS (ADMIN) ========== -->
-<div class="phase-section" id="phase56-admin">
+<div class="phase-section" id="phase56-admin" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#1a0533,#3d0f6e,#6a1fa0)">
     <h2>🪙 Phase 56 — Autonomous Economy &amp; Tokenised Events <span class="badge">v56.0.0</span></h2>
     <p>Token Economy · Event DAO 2.0 · Creator Economy · Micro-Economy · Royalty Engine · Fan Investment · Token Sponsorship · AI Escrow · DID 2.0 · Auto Revenue Distribution</p>
@@ -7389,7 +7389,7 @@ loadP52Admin();
 <!-- END PHASE 56 ADMIN PORTAL -->
 
         <!-- ==================== PHASE 57 – HYPER-LOCAL &amp; COMMUNITY COMMERCE ==================== -->
-        <div class="portal-section" id="phase57-admin">
+        <div class="portal-section" id="phase57-admin" style="display:none">
           <h2 class="section-title">Phase 57 — Hyper-Local &amp; Community Commerce (v57.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Local Merchants</span><span class="metric-value">284K</span></div>
@@ -7403,7 +7403,7 @@ loadP52Admin();
         <!-- END PHASE 57 ADMIN PORTAL -->
 
         <!-- PHASE 58 ADMIN -->
-        <div class="portal-section" id="phase58-admin">
+        <div class="portal-section" id="phase58-admin" style="display:none">
           <h2 class="section-title">Phase 58 — Intelligent Supply Chain &amp; Vendor Ecosystem (v58.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Suppliers Managed</span><span class="metric-value">28.4K</span></div>
@@ -7417,7 +7417,7 @@ loadP52Admin();
         <!-- END PHASE 58 ADMIN PORTAL -->
 
         <!-- PHASE 59 ADMIN -->
-        <div class="portal-section" id="phase59-admin">
+        <div class="portal-section" id="phase59-admin" style="display:none">
           <h2 class="section-title">Phase 59 — Creator Economy &amp; Content Monetisation (v59.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Total Creators</span><span class="metric-value">2.84M</span></div>
@@ -7431,7 +7431,7 @@ loadP52Admin();
         <!-- END PHASE 59 ADMIN PORTAL -->
 
         <!-- PHASE 60 ADMIN -->
-        <div class="portal-section" id="phase60-admin">
+        <div class="portal-section" id="phase60-admin" style="display:none">
           <h2 class="section-title">Phase 60 — Smart Cities &amp; Urban Event Infrastructure (v60.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">IoT Sensors</span><span class="metric-value">2.84M</span></div>
@@ -7445,7 +7445,7 @@ loadP52Admin();
         <!-- END PHASE 60 ADMIN PORTAL -->
 
         <!-- PHASE 61 ADMIN -->
-        <div class="portal-section" id="phase61-">
+        <div class="portal-section" id="phase61-" style="display:none">
           <h2 class="section-title">Phase 61 — Global Expansion &amp; Localisation (v61.0.0)</h2>
           <div class="metrics-grid"><div class="metric-card"><span class="metric-label">Active Countries</span><span class="metric-value">42</span></div><div class="metric-card"><span class="metric-label">Intl GMV</span><span class="metric-value">Rs.2,840 Cr</span></div><div class="metric-card"><span class="metric-label">Languages</span><span class="metric-value">84</span></div><div class="metric-card"><span class="metric-label">Global Partners</span><span class="metric-value">2,840</span></div><div class="metric-card"><span class="metric-label">Currencies</span><span class="metric-value">84</span></div><div class="metric-card"><span class="metric-label">Intl Revenue Growth</span><span class="metric-value">84%</span></div></div>
         </div>
@@ -7530,7 +7530,7 @@ loadP52Admin();
 <!-- END PHASE 64 ADMIN PORTAL -->
 
     <!-- PHASE 65 — IMMERSIVE FAN EXPERIENCE & NEXT-GEN ENTERTAINMENT (v65.0.0) -->
-    <div class="phase-section" id="phase65">
+    <div class="phase-section" id="phase65" style="display:none">
       <div class="phase-header" style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%);">
         <h2>🎭 Phase 65 — Immersive Fan Experience & Next-Gen Entertainment <span class="badge">v65.0.0</span></h2>
         <div class="phase-meta">

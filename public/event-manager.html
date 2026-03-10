@@ -3340,7 +3340,7 @@ async function loadP35EMCompliance() {
 <!-- END PHASE 35 EVENT MANAGER -->
 
 <!-- PHASE 36 EVENT MANAGER: NFT Collectibles & Drops -->
-<div class="phase-section" id="p36-em-section">
+<div class="phase-section" id="p36-em-section" style="display:none">
   <h3>⛓️ Phase 36 — NFT Collectibles & Digital Drops</h3>
   <div class="btn-row">
     <button onclick="loadP36EMDrops()">Drop Planner</button>
@@ -3372,7 +3372,7 @@ async function loadP36EMRedemption() {
 <!-- END PHASE 36 EVENT MANAGER -->
 
 <!-- PHASE 37 EVENT MANAGER: Streaming, Audio & XR Studio -->
-<div class="phase-section" id="p37-em-section">
+<div class="phase-section" id="p37-em-section" style="display:none">
   <h3>🥽 Phase 37 — Streaming Encoder, Spatial Audio & XR Tools</h3>
   <div class="btn-row">
     <button onclick="loadP37EMEncoder()">Encoder Settings</button>
@@ -3579,7 +3579,7 @@ loadAllP40EM();
 <!-- END PHASE 40 EVENT MANAGER -->
 
 <!-- PHASE 41 EVENT MANAGER PORTAL -->
-<div class="phase-section" id="phase41-em">
+<div class="phase-section" id="phase41-em" style="display:none">
   <h2 class="phase-title">Phase 41 — Corporate & Bulk Event Operations</h2>
   <div class="module-card">
     <h3>🎟️ Bulk Ticketing Operations</h3>
@@ -3628,7 +3628,7 @@ loadAllP41EM();
 <!-- END PHASE 41 EVENT MANAGER -->
 
 <!-- PHASE 41 EVENT MANAGER PORTAL -->
-<div class="phase-section" id="phase41-em-dup1">
+<div class="phase-section" id="phase41-em-dup1" style="display:none">
   <h2 class="phase-title">Phase 41 — Corporate & Bulk Event Management</h2>
   <div class="metrics-grid">
     <div class="metric-card"><div class="metric-label">Bulk Orders (YTD)</div><div class="metric-value" id="p41em-bulk">—</div></div>
@@ -3661,7 +3661,7 @@ loadAllP41EM();
 <!-- END PHASE 41 EVENT MANAGER -->
 
 <!-- PHASE 42 EVENT MANAGER PORTAL -->
-<div class="phase-section" id="phase42-em">
+<div class="phase-section" id="phase42-em" style="display:none">
   <h2 class="phase-title">Phase 42 — Creator Event & Campaign Tools</h2>
   <div class="module-card"><h3>📣 Influencer Campaign Ops</h3><div id="p42-em-campaigns" class="stats-grid"></div></div>
   <div class="module-card"><h3>🎟️ Fan Subscription Status</h3><div id="p42-em-subs" class="stats-grid"></div><div id="p42-em-warning" class="warning-alert"></div></div>
@@ -3685,7 +3685,7 @@ loadAllP42EM();
 <!-- END PHASE 42 EVENT MANAGER -->
 
 <!-- PHASE 43 EVENT MANAGER PORTAL -->
-<div class="phase-section" id="phase43-em">
+<div class="phase-section" id="phase43-em" style="display:none">
   <h2 class="phase-title">Phase 43 — Attendee Engagement & Notifications</h2>
   <div class="module-card"><h3>📩 Notification Ops</h3><div id="p43-em-notif" class="stats-grid"></div></div>
   <div class="module-card"><h3>🔄 Retention Alerts</h3><div id="p43-em-ret" class="warning-alert"></div></div>
@@ -3878,7 +3878,7 @@ loadAllP48EM();
 <script>
 async function loadP49EM() {
   const base = '/api/v49';
-  let html = '<div class="phase-section"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Event Growth & Acquisition</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Event Growth & Acquisition</h2><div class="metrics-grid">';
   const sections = [
     ['🔗 Referral', `${base}/referral/overview`, ['active_referrers','revenue_from_referrals_cr','viral_coefficient']],
     ['⭐ Influencer', `${base}/influencer/overview`, ['total_influencers','influencer_revenue_cr','roas_influencer']],
@@ -3906,7 +3906,7 @@ loadAllP49EM();
 <script>
 async function loadP50EM() {
   const base = '/api/v50';
-  let html = '<div class="phase-section"><h2 style="color:#e94560;border-bottom:3px solid #e94560;padding-bottom:8px;">🏆 Phase 50 — Event Manager: Enterprise-Grade Platform</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#e94560;border-bottom:3px solid #e94560;padding-bottom:8px;">🏆 Phase 50 — Event Manager: Enterprise-Grade Platform</h2><div class="metrics-grid">';
   const sections = [
     ['🔭 Observability', `${base}/observability/overview`, ['services_monitored','uptime_pct','mttr_minutes']],
     ['⚖️ Governance', `${base}/governance/overview`, ['policies_enforced','compliance_frameworks','auto_remediation_pct']],
@@ -3940,7 +3940,7 @@ async function loadP51EM() {
     ['🛒 XR Commerce', `${base}/xr-commerce/overview`, ['xr_gmv_cr','virtual_try_on_sessions','try_on_conversion_pct']],
     ['📊 XR Analytics', `${base}/immersive-analytics/overview`, ['xr_events_instrumented','attention_score_avg','xr_engagement_index']],
   ];
-  let html = '<div class="phase-section"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — XR & Immersive Event Management</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — XR & Immersive Event Management</h2><div class="metrics-grid">';
   for (const [title, url, keys] of sections) {
     try {
       const data = await fetch(url).then(r=>r.json()); const m = data.metrics||{};
@@ -3967,7 +3967,7 @@ async function loadP52EM() {
     ['🏛️ DAO', `${base}/dao/overview`, ['dao_members','proposals_passed','treasury_value_cr']],
     ['🌾 DeFi', `${base}/defi/overview`, ['total_value_staked_cr','staking_apy_pct','unique_stakers']],
   ];
-  let html = '<div class="phase-section"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Web3 Event Management</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Web3 Event Management</h2><div class="metrics-grid">';
   for (const [title, url, keys] of sections) {
     try {
       const data = await fetch(url).then(r=>r.json()); const m = data.metrics||{};
@@ -3984,7 +3984,7 @@ loadAllP52EM();
 <!-- END PHASE 52 EVENT MANAGER -->
 
 <!-- ========== PHASE 53: AI & GENERATIVE INTELLIGENCE (EVENT MANAGER) ========== -->
-<div class="phase-section" id="phase53-eventmgr">
+<div class="phase-section" id="phase53-eventmgr" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#6c3483,#8e44ad)">
     <h2>🤖 AI Intelligence for Event Managers <span class="badge">v53.0.0</span></h2>
     <p>GenAI content · Demand forecasting · AI pricing · NLP support · Responsible AI</p>
@@ -4025,7 +4025,7 @@ loadAllP52EM();
 <!-- END PHASE 53 EVENT MANAGER -->
 
 <!-- ========== PHASE 54: QUANTUM SECURITY (EVENT MANAGER) ========== -->
-<div class="phase-section" id="phase54-eventmgr">
+<div class="phase-section" id="phase54-eventmgr" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
     <h2>⚛️ Event Security — Quantum-Grade <span class="badge">v54.0.0</span></h2>
     <p>Quantum-safe tickets · Threat intel · Privacy-enhancing tech · Security compliance</p>
@@ -4066,7 +4066,7 @@ loadAllP52EM();
 <!-- END PHASE 54 EVENT MANAGER -->
 
 <!-- ========== PHASE 55: VISION 2030 — FINAL (EVENT MANAGER) ========== -->
-<div class="phase-section" id="phase55-eventmgr">
+<div class="phase-section" id="phase55-eventmgr" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e)">
     <h2>🚀 Event Manager Vision 2030 <span class="badge">v55.0.0 · FINAL</span></h2>
     <p>Autonomous events · Neuro-UX · Universal inclusion · Climate certification · Platform IQ 9.9</p>
@@ -4107,7 +4107,7 @@ loadAllP52EM();
 <!-- END PHASE 55 EVENT MANAGER — FINAL -->
 
 <!-- ========== PHASE 56: AUTONOMOUS ECONOMY (EVENT MANAGER) ========== -->
-<div class="phase-section" id="phase56-eventmgr">
+<div class="phase-section" id="phase56-eventmgr" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#1a0533,#3d0f6e,#6a1fa0)">
     <h2>🪙 Tokenised Event Finance <span class="badge">v56.0.0</span></h2>
     <p>Token fundraising · DAO governance · Royalty automation · AI escrow · Creator monetisation</p>
@@ -4148,7 +4148,7 @@ loadAllP52EM();
 <!-- END PHASE 56 EVENT MANAGER -->
 
         <!-- PHASE 57 EVENT MANAGER -->
-        <div class="portal-section" id="phase57-em">
+        <div class="portal-section" id="phase57-em" style="display:none">
           <h2 class="section-title">Phase 57 — Hyper-Local &amp; Community Commerce (v57.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Local Events Managed</span><span class="metric-value">8,400/day</span></div>
@@ -4162,7 +4162,7 @@ loadAllP52EM();
         <!-- END PHASE 57 EVENT MANAGER -->
 
         <!-- PHASE 58 EVENT MANAGER -->
-        <div class="portal-section" id="phase58-em">
+        <div class="portal-section" id="phase58-em" style="display:none">
           <h2 class="section-title">Phase 58 — Supply Chain (v58.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Sourced Vendors</span><span class="metric-value">28.4K</span></div>
@@ -4176,7 +4176,7 @@ loadAllP52EM();
         <!-- END PHASE 58 EVENT MANAGER -->
 
         <!-- PHASE 59 EVENT MANAGER -->
-        <div class="portal-section" id="phase59-em">
+        <div class="portal-section" id="phase59-em" style="display:none">
           <h2 class="section-title">Phase 59 — Creator Economy (v59.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Creator Campaigns</span><span class="metric-value">8,400</span></div>
@@ -4190,7 +4190,7 @@ loadAllP52EM();
         <!-- END PHASE 59 EVENT MANAGER -->
 
         <!-- PHASE 60 EVENT MANAGER -->
-        <div class="portal-section" id="phase60-em">
+        <div class="portal-section" id="phase60-em" style="display:none">
           <h2 class="section-title">Phase 60 — Smart Cities (v60.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Twin Simulations</span><span class="metric-value">2,840/day</span></div>
@@ -4204,7 +4204,7 @@ loadAllP52EM();
         <!-- END PHASE 60 EVENT MANAGER -->
 
         <!-- PHASE 61 EVENT MANAGER -->
-        <div class="portal-section" id="phase61-">
+        <div class="portal-section" id="phase61-" style="display:none">
           <h2 class="section-title">Phase 61 — Global Expansion &amp; Localisation (v61.0.0)</h2>
           <div class="metrics-grid"><div class="metric-card"><span class="metric-label">Global Talent</span><span class="metric-value">284K</span></div><div class="metric-card"><span class="metric-label">Visa Approvals</span><span class="metric-value">98.4%</span></div><div class="metric-card"><span class="metric-label">Compliance Rate</span><span class="metric-value">100%</span></div><div class="metric-card"><span class="metric-label">Media Studios</span><span class="metric-value">42</span></div><div class="metric-card"><span class="metric-label">Broadcast Reach</span><span class="metric-value">840M</span></div><div class="metric-card"><span class="metric-label">Content Languages</span><span class="metric-value">84</span></div></div>
         </div>
@@ -4289,7 +4289,7 @@ loadAllP52EM();
 <!-- END PHASE 64 EVENT MANAGER -->
 
     <!-- PHASE 65 — IMMERSIVE FAN EXPERIENCE & NEXT-GEN ENTERTAINMENT (v65.0.0) -->
-    <div class="phase-section" id="phase65">
+    <div class="phase-section" id="phase65" style="display:none">
       <div class="phase-header" style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%);">
         <h2>🎭 Phase 65 — Immersive Fan Experience & Next-Gen Entertainment <span class="badge">v65.0.0</span></h2>
         <div class="phase-meta">

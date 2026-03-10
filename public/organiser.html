@@ -5109,7 +5109,7 @@ async function loadP35OrgMA() {
 <!-- END PHASE 35 ORGANISER PORTAL -->
 
 <!-- PHASE 36 ORGANISER PORTAL: Smart Contracts & Royalties -->
-<div class="phase-section" id="p36-org-section">
+<div class="phase-section" id="p36-org-section" style="display:none">
   <h3>⛓️ Phase 36 — Smart Contracts, Royalties & NFT Events</h3>
   <div class="btn-row">
     <button onclick="loadP36OrgContract()">Event Contract</button>
@@ -5141,7 +5141,7 @@ async function loadP36OrgSettlement() {
 <!-- END PHASE 36 ORGANISER PORTAL -->
 
 <!-- PHASE 37 ORGANISER PORTAL: Virtual Events & Meet-Greet -->
-<div class="phase-section" id="p37-org-section">
+<div class="phase-section" id="p37-org-section" style="display:none">
   <h3>🥽 Phase 37 — Virtual Events Control & Meet-Greet</h3>
   <div class="btn-row">
     <button onclick="loadP37OrgControl()">Control Room</button>
@@ -5349,7 +5349,7 @@ loadAllP40Org();
 <!-- END PHASE 40 ORGANISER PORTAL -->
 
 <!-- PHASE 41 ORGANISER PORTAL -->
-<div class="phase-section" id="phase41-organiser">
+<div class="phase-section" id="phase41-organiser" style="display:none">
   <h2 class="phase-title">Phase 41 — Corporate & B2B Event Tools</h2>
   <div class="module-card">
     <h3>🏢 Corporate Accounts & RFP</h3>
@@ -5402,7 +5402,7 @@ loadAllP41Org();
 <!-- END PHASE 41 ORGANISER PORTAL -->
 
 <!-- PHASE 41 ORGANISER PORTAL -->
-<div class="phase-section" id="phase41-org">
+<div class="phase-section" id="phase41-org" style="display:none">
   <h2 class="phase-title">Phase 41 — B2B & Corporate Event Tools</h2>
   <div class="metrics-grid">
     <div class="metric-card"><div class="metric-label">Active RFPs</div><div class="metric-value" id="p41o-rfps">—</div></div>
@@ -5441,7 +5441,7 @@ loadAllP41Org();
 <!-- END PHASE 41 ORGANISER PORTAL -->
 
 <!-- PHASE 42 ORGANISER PORTAL -->
-<div class="phase-section" id="phase42-organiser">
+<div class="phase-section" id="phase42-organiser" style="display:none">
   <h2 class="phase-title">Phase 42 — Influencer & Creator Partnerships</h2>
   <div class="module-card"><h3>📣 Influencer Campaigns</h3><div id="p42-org-inf" class="stats-grid"></div></div>
   <div class="module-card"><h3>🏷️ Brand Deal Marketplace</h3><div id="p42-org-brands" class="stats-grid"></div><div id="p42-org-forecast" class="success-alert"></div></div>
@@ -5466,7 +5466,7 @@ loadAllP42Org();
 <!-- END PHASE 42 ORGANISER PORTAL -->
 
 <!-- PHASE 43 ORGANISER PORTAL -->
-<div class="phase-section" id="phase43-organiser">
+<div class="phase-section" id="phase43-organiser" style="display:none">
   <h2 class="phase-title">Phase 43 — Marketing Automation & VOC</h2>
   <div class="module-card"><h3>📧 Campaign Performance</h3><div id="p43-org-mkt" class="stats-grid"></div></div>
   <div class="module-card"><h3>🗣️ Voice of Customer</h3><div id="p43-org-voc" class="stats-grid"></div><div id="p43-org-nps" class="success-alert"></div></div>
@@ -5686,7 +5686,7 @@ loadAllP48Org();
 <script>
 async function loadP49Org() {
   const base = '/api/v49';
-  let html = '<div class="phase-section"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Grow Your Events</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Grow Your Events</h2><div class="metrics-grid">';
   const endpoints = [
     ['🔗 Referral Engine', `${base}/referral/overview`, ['active_referrers','referrals_converted_mtd','revenue_from_referrals_cr','viral_coefficient']],
     ['⭐ Influencer Marketing', `${base}/influencer/overview`, ['total_influencers','active_campaigns','influencer_revenue_cr','roas_influencer']],
@@ -5715,7 +5715,7 @@ loadAllP49Org();
 <script>
 async function loadP50Org() {
   const base = '/api/v50';
-  let html = '<div class="phase-section"><h2 style="color:#e94560;border-bottom:3px solid #e94560;padding-bottom:8px;">🏆 Phase 50 — World-Class Infrastructure for Organisers</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#e94560;border-bottom:3px solid #e94560;padding-bottom:8px;">🏆 Phase 50 — World-Class Infrastructure for Organisers</h2><div class="metrics-grid">';
   const endpoints = [
     ['🔭 Observability', `${base}/observability/overview`, ['services_monitored','avg_latency_p99_ms','error_rate_pct','uptime_pct']],
     ['🛡️ SRE & SLOs', `${base}/sre/overview`, ['slos_defined','slos_meeting_target_pct','error_budget_remaining_pct','mean_time_to_resolve_min']],
@@ -5752,7 +5752,7 @@ async function loadP51Org() {
     ['🛒 XR Commerce', `${base}/xr-commerce/overview`, ['xr_storefronts','xr_gmv_cr','try_on_conversion_pct','xr_return_rate_pct']],
     ['🎨 XR Studio', `${base}/xr-studio/overview`, ['registered_creators','xr_content_pieces','content_revenue_cr','avg_creator_earnings_inr']],
   ];
-  let html = '<div class="phase-section"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — Immersive Tools for Organisers</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — Immersive Tools for Organisers</h2><div class="metrics-grid">';
   for (const [title, url, keys] of sections) {
     try {
       const data = await fetch(url).then(r=>r.json()); const m = data.metrics||{};
@@ -5780,7 +5780,7 @@ async function loadP52Org() {
     ['🛒 NFT Marketplace', `${base}/nft-marketplace/overview`, ['total_volume_cr','volume_24h_cr','unique_traders','platform_fee_pct']],
     ['📊 On-Chain', `${base}/on-chain/overview`, ['transactions_indexed','addresses_tracked','whale_alerts_today','api_calls_per_day']],
   ];
-  let html = '<div class="phase-section"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Web3 Event Tools for Organisers</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Web3 Event Tools for Organisers</h2><div class="metrics-grid">';
   for (const [title, url, keys] of sections) {
     try {
       const data = await fetch(url).then(r=>r.json()); const m = data.metrics||{};
@@ -5797,7 +5797,7 @@ loadAllP52Org();
 <!-- END PHASE 52 ORGANISER PORTAL -->
 
 <!-- ========== PHASE 53: AI & GENERATIVE INTELLIGENCE (ORGANISER) ========== -->
-<div class="phase-section" id="phase53-organiser">
+<div class="phase-section" id="phase53-organiser" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#6c3483,#8e44ad)">
     <h2>🤖 AI Intelligence for Organisers <span class="badge">v53.0.0</span></h2>
     <p>GenAI marketing · AI pricing · Demand forecasting · Personalised campaigns · Vision analytics</p>
@@ -5838,7 +5838,7 @@ loadAllP52Org();
 <!-- END PHASE 53 ORGANISER PORTAL -->
 
 <!-- ========== PHASE 54: QUANTUM SECURITY (ORGANISER) ========== -->
-<div class="phase-section" id="phase54-organiser">
+<div class="phase-section" id="phase54-organiser" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
     <h2>⚛️ Quantum Security for Organisers <span class="badge">v54.0.0</span></h2>
     <p>Quantum-safe ticket signing · Threat intelligence · SOAR · Zero-trust partner access</p>
@@ -5879,7 +5879,7 @@ loadAllP52Org();
 <!-- END PHASE 54 ORGANISER PORTAL -->
 
 <!-- ========== PHASE 55: VISION 2030 — FINAL (ORGANISER) ========== -->
-<div class="phase-section" id="phase55-organiser">
+<div class="phase-section" id="phase55-organiser" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e)">
     <h2>🚀 Organiser Vision 2030 <span class="badge">v55.0.0 · FINAL</span></h2>
     <p>Autonomous events · Space venue partnerships · Climate certification · Biotech health ops · ₹1,40,000 Cr GMV opportunity</p>
@@ -5920,7 +5920,7 @@ loadAllP52Org();
 <!-- END PHASE 55 ORGANISER PORTAL — FINAL -->
 
 <!-- ========== PHASE 56: AUTONOMOUS ECONOMY (ORGANISER) ========== -->
-<div class="phase-section" id="phase56-organiser">
+<div class="phase-section" id="phase56-organiser" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#1a0533,#3d0f6e,#6a1fa0)">
     <h2>🪙 Tokenised Event Finance for Organisers <span class="badge">v56.0.0</span></h2>
     <p>Token fundraising · DAO community · AI escrow · Dynamic royalties · Autonomous revenue distribution</p>
@@ -5961,7 +5961,7 @@ loadAllP52Org();
 <!-- END PHASE 56 ORGANISER PORTAL -->
 
         <!-- PHASE 57 ORGANISER -->
-        <div class="portal-section" id="phase57-organiser">
+        <div class="portal-section" id="phase57-organiser" style="display:none">
           <h2 class="section-title">Phase 57 — Hyper-Local &amp; Community Commerce (v57.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Local Partner Merchants</span><span class="metric-value">284K</span></div>
@@ -5975,7 +5975,7 @@ loadAllP52Org();
         <!-- END PHASE 57 ORGANISER PORTAL -->
 
         <!-- PHASE 58 ORGANISER -->
-        <div class="portal-section" id="phase58-organiser">
+        <div class="portal-section" id="phase58-organiser" style="display:none">
           <h2 class="section-title">Phase 58 — Supply Chain &amp; Vendor (v58.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Event Supply Plans</span><span class="metric-value">2,840</span></div>
@@ -5989,7 +5989,7 @@ loadAllP52Org();
         <!-- END PHASE 58 ORGANISER PORTAL -->
 
         <!-- PHASE 59 ORGANISER -->
-        <div class="portal-section" id="phase59-organiser">
+        <div class="portal-section" id="phase59-organiser" style="display:none">
           <h2 class="section-title">Phase 59 — Creator Economy (v59.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Creator Partners</span><span class="metric-value">284K</span></div>
@@ -6003,7 +6003,7 @@ loadAllP52Org();
         <!-- END PHASE 59 ORGANISER PORTAL -->
 
         <!-- PHASE 60 ORGANISER -->
-        <div class="portal-section" id="phase60-organiser">
+        <div class="portal-section" id="phase60-organiser" style="display:none">
           <h2 class="section-title">Phase 60 — Smart Cities (v60.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">City Partners</span><span class="metric-value">284</span></div>
@@ -6017,7 +6017,7 @@ loadAllP52Org();
         <!-- END PHASE 60 ORGANISER PORTAL -->
 
         <!-- PHASE 61 ORGANISER -->
-        <div class="portal-section" id="phase61-">
+        <div class="portal-section" id="phase61-" style="display:none">
           <h2 class="section-title">Phase 61 — Global Expansion &amp; Localisation (v61.0.0)</h2>
           <div class="metrics-grid"><div class="metric-card"><span class="metric-label">Markets Available</span><span class="metric-value">42</span></div><div class="metric-card"><span class="metric-label">Intl Artist Pool</span><span class="metric-value">284K</span></div><div class="metric-card"><span class="metric-label">Regulatory Jurisdictions</span><span class="metric-value">42</span></div><div class="metric-card"><span class="metric-label">Permit Time</span><span class="metric-value">28 days</span></div><div class="metric-card"><span class="metric-label">Shipping Routes</span><span class="metric-value">284</span></div><div class="metric-card"><span class="metric-label">Partner Network</span><span class="metric-value">2,840</span></div></div>
         </div>
@@ -6102,7 +6102,7 @@ loadAllP52Org();
 <!-- END PHASE 64 ORGANISER PORTAL -->
 
     <!-- PHASE 65 — IMMERSIVE FAN EXPERIENCE & NEXT-GEN ENTERTAINMENT (v65.0.0) -->
-    <div class="phase-section" id="phase65">
+    <div class="phase-section" id="phase65" style="display:none">
       <div class="phase-header" style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%);">
         <h2>🎭 Phase 65 — Immersive Fan Experience & Next-Gen Entertainment <span class="badge">v65.0.0</span></h2>
         <div class="phase-meta">

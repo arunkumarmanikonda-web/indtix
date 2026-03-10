@@ -3286,7 +3286,7 @@ async function loadP35OpsInsurance() {
 <!-- END PHASE 35 OPS PORTAL -->
 
 <!-- PHASE 36 OPS PORTAL: Chain Ops & AML -->
-<div class="phase-section" id="p36-ops-section">
+<div class="phase-section" id="p36-ops-section" style="display:none">
   <h3>⛓️ Phase 36 — Blockchain Ops, AML & Gas Optimisation</h3>
   <div class="btn-row">
     <button onclick="loadP36OpsAML()">AML Dashboard</button>
@@ -3318,7 +3318,7 @@ async function loadP36OpsTreasury() {
 <!-- END PHASE 36 OPS PORTAL -->
 
 <!-- PHASE 37 OPS PORTAL: Streaming Infra & Device Ops -->
-<div class="phase-section" id="p37-ops-section">
+<div class="phase-section" id="p37-ops-section" style="display:none">
   <h3>🥽 Phase 37 — Streaming Infrastructure & Device Ops</h3>
   <div class="btn-row">
     <button onclick="loadP37OpsInfra()">Infra Health</button>
@@ -3558,7 +3558,7 @@ loadAllP40Ops();
 <!-- END PHASE 40 OPS PORTAL -->
 
 <!-- PHASE 41 OPS PORTAL -->
-<div class="phase-section" id="phase41-ops">
+<div class="phase-section" id="phase41-ops" style="display:none">
   <h2 class="phase-title">Phase 41 — B2B Operations & Platform Health</h2>
   <div class="module-card">
     <h3>🔧 API & White-Label Platform Ops</h3>
@@ -3608,7 +3608,7 @@ loadAllP41Ops();
 <!-- END PHASE 41 OPS PORTAL -->
 
 <!-- PHASE 41 OPS PORTAL -->
-<div class="phase-section" id="phase41-ops-dup1">
+<div class="phase-section" id="phase41-ops-dup1" style="display:none">
   <h2 class="phase-title">Phase 41 — B2B Operations, Compliance & API Platform</h2>
   <div class="metrics-grid">
     <div class="metric-card"><div class="metric-label">API Calls/Day</div><div class="metric-value" id="p41ops-api">—</div></div>
@@ -3650,7 +3650,7 @@ loadAllP41Ops();
 <!-- END PHASE 41 OPS PORTAL -->
 
 <!-- PHASE 42 OPS PORTAL -->
-<div class="phase-section" id="phase42-ops">
+<div class="phase-section" id="phase42-ops" style="display:none">
   <h2 class="phase-title">Phase 42 — Creator Economy Platform Operations</h2>
   <div class="module-card"><h3>💳 Tipping & NFT Ops</h3><div id="p42-ops-tips" class="stats-grid"></div></div>
   <div class="module-card"><h3>💰 Creator Payouts</h3><div id="p42-ops-payouts" class="stats-grid"></div><div id="p42-ops-info" class="info-alert"></div></div>
@@ -3675,7 +3675,7 @@ loadAllP42Ops();
 <!-- END PHASE 42 OPS PORTAL -->
 
 <!-- PHASE 43 OPS PORTAL -->
-<div class="phase-section" id="phase43-ops">
+<div class="phase-section" id="phase43-ops" style="display:none">
   <h2 class="phase-title">Phase 43 — Support Ops & Chatbot Intelligence</h2>
   <div class="module-card"><h3>🤖 Chatbot & IVR Ops</h3><div id="p43-ops-bot" class="stats-grid"></div></div>
   <div class="module-card"><h3>📞 Agent Performance</h3><div id="p43-ops-agents" class="stats-grid"></div><div id="p43-ops-info" class="info-alert"></div></div>
@@ -3870,7 +3870,7 @@ loadAllP48Ops();
 <script>
 async function loadP49Ops() {
   const base = '/api/v49';
-  let html = '<div class="phase-section"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Growth Operations Dashboard</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Growth Operations Dashboard</h2><div class="metrics-grid">';
   const sections = [
     ['🔗 Referral', `${base}/referral/overview`, ['total_referral_programs','active_referrers','referrals_converted_mtd','revenue_from_referrals_cr','referral_fraud_blocked_pct']],
     ['💰 Paid Acquisition', `${base}/paid/overview`, ['total_ad_spend_cr','total_ad_revenue_cr','blended_roas','campaigns_active','conversions_mtd']],
@@ -3897,7 +3897,7 @@ loadAllP49Ops();
 <script>
 async function loadP50Ops() {
   const base = '/api/v50';
-  let html = '<div class="phase-section"><h2 style="color:#e94560;border-bottom:3px solid #e94560;padding-bottom:8px;">🏆 Phase 50 — Ops: Elite Infrastructure Command Centre</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#e94560;border-bottom:3px solid #e94560;padding-bottom:8px;">🏆 Phase 50 — Ops: Elite Infrastructure Command Centre</h2><div class="metrics-grid">';
   const sections = [
     ['🔭 Observability', `${base}/observability/overview`, ['services_monitored','traces_per_second','avg_latency_p99_ms','error_rate_pct','uptime_pct','mttr_minutes']],
     ['💥 Chaos Engineering', `${base}/chaos/overview`, ['experiments_run_ytd','services_tested','failure_modes_discovered','auto_rollback_success_pct','mean_time_to_recover_min','resilience_score']],
@@ -3933,7 +3933,7 @@ async function loadP51Ops() {
     ['📳 Haptics Ops', `${base}/haptics/overview`, ['wearable_devices_connected','haptic_wristbands_issued','crowd_sync_pct','nfc_tap_checkins','biometric_alerts_today']],
     ['📊 XR Analytics', `${base}/immersive-analytics/overview`, ['xr_events_instrumented','data_points_per_session','gaze_heatmaps_generated','emotion_detection_accuracy_pct','xr_engagement_index']],
   ];
-  let html = '<div class="phase-section"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — XR Operations Dashboard</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — XR Operations Dashboard</h2><div class="metrics-grid">';
   for (const [title, url, keys] of sections) {
     try {
       const data = await fetch(url).then(r=>r.json()); const m = data.metrics||{};
@@ -3960,7 +3960,7 @@ async function loadP52Ops() {
     ['📊 On-Chain Analytics', `${base}/on-chain/overview`, ['transactions_indexed','addresses_tracked','smart_contracts_monitored','suspicious_tx_flagged','whale_alerts_today']],
     ['🏛️ DAO Treasury', `${base}/dao/overview`, ['dao_members','governance_tokens_issued','proposals_passed','voter_participation_pct','treasury_value_cr']],
   ];
-  let html = '<div class="phase-section"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Web3 Ops & Blockchain Intelligence</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Web3 Ops & Blockchain Intelligence</h2><div class="metrics-grid">';
   for (const [title, url, keys] of sections) {
     try {
       const data = await fetch(url).then(r=>r.json()); const m = data.metrics||{};
@@ -3977,7 +3977,7 @@ loadAllP52Ops();
 <!-- END PHASE 52 OPS PORTAL -->
 
 <!-- ========== PHASE 53: AI & GENERATIVE INTELLIGENCE (OPS) ========== -->
-<div class="phase-section" id="phase53-ops">
+<div class="phase-section" id="phase53-ops" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#6c3483,#8e44ad)">
     <h2>🤖 AI Ops &amp; MLOps Control Centre <span class="badge">v53.0.0</span></h2>
     <p>MLOps platform · AI Agents · Computer Vision · Responsible AI · AI Marketplace</p>
@@ -4028,7 +4028,7 @@ loadAllP52Ops();
 <!-- END PHASE 53 OPS PORTAL -->
 
 <!-- ========== PHASE 54: QUANTUM COMPUTING & SECURITY (OPS) ========== -->
-<div class="phase-section" id="phase54-ops">
+<div class="phase-section" id="phase54-ops" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
     <h2>⚛️ Quantum Ops &amp; Security Control Centre <span class="badge">v54.0.0</span></h2>
     <p>SOAR · Threat Intel · Quantum Compute · Zero-Trust · Cyber Resilience · Quantum Analytics</p>
@@ -4081,7 +4081,7 @@ loadAllP52Ops();
 <!-- END PHASE 54 OPS PORTAL -->
 
 <!-- ========== PHASE 55: VISION 2030 — FINAL (OPS) ========== -->
-<div class="phase-section" id="phase55-ops">
+<div class="phase-section" id="phase55-ops" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e)">
     <h2>🚀 INDTIX OS — Operations Command Centre <span class="badge">v55.0.0 · FINAL</span></h2>
     <p>The self-evolving living platform · 55 phases · 3,979 endpoints · 99.999% uptime · Platform IQ 9.9</p>
@@ -4132,7 +4132,7 @@ loadAllP52Ops();
 <!-- END PHASE 55 OPS PORTAL — FINAL -->
 
 <!-- ========== PHASE 56: AUTONOMOUS ECONOMY (OPS) ========== -->
-<div class="phase-section" id="phase56-ops">
+<div class="phase-section" id="phase56-ops" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#1a0533,#3d0f6e,#6a1fa0)">
     <h2>🪙 Tokenised Economy Ops Control <span class="badge">v56.0.0</span></h2>
     <p>AI Escrow · Royalty Engine · Auto Revenue Distribution · DID 2.0 · DAO Governance · Micro-Economy</p>
@@ -4182,7 +4182,7 @@ loadAllP52Ops();
 <!-- END PHASE 56 OPS PORTAL -->
 
         <!-- PHASE 57 OPS -->
-        <div class="portal-section" id="phase57-ops">
+        <div class="portal-section" id="phase57-ops" style="display:none">
           <h2 class="section-title">Phase 57 — Hyper-Local &amp; Community Commerce (v57.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Hyperlocal Zones</span><span class="metric-value">2,840</span></div>
@@ -4196,7 +4196,7 @@ loadAllP52Ops();
         <!-- END PHASE 57 OPS PORTAL -->
 
         <!-- PHASE 58 OPS -->
-        <div class="portal-section" id="phase58-ops">
+        <div class="portal-section" id="phase58-ops" style="display:none">
           <h2 class="section-title">Phase 58 — Supply Chain Control Tower (v58.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Data Sources</span><span class="metric-value">2,840</span></div>
@@ -4210,7 +4210,7 @@ loadAllP52Ops();
         <!-- END PHASE 58 OPS PORTAL -->
 
         <!-- PHASE 59 OPS -->
-        <div class="portal-section" id="phase59-ops">
+        <div class="portal-section" id="phase59-ops" style="display:none">
           <h2 class="section-title">Phase 59 — Creator Economy (v59.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Creator Fund Size</span><span class="metric-value">Rs.284 Cr</span></div>
@@ -4224,7 +4224,7 @@ loadAllP52Ops();
         <!-- END PHASE 59 OPS PORTAL -->
 
         <!-- PHASE 60 OPS -->
-        <div class="portal-section" id="phase60-ops">
+        <div class="portal-section" id="phase60-ops" style="display:none">
           <h2 class="section-title">Phase 60 — Urban Analytics (v60.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Urban Data Sources</span><span class="metric-value">28,400</span></div>
@@ -4238,7 +4238,7 @@ loadAllP52Ops();
         <!-- END PHASE 60 OPS PORTAL -->
 
         <!-- PHASE 61 OPS -->
-        <div class="portal-section" id="phase61-">
+        <div class="portal-section" id="phase61-" style="display:none">
           <h2 class="section-title">Phase 61 — Global Expansion &amp; Localisation (v61.0.0)</h2>
           <div class="metrics-grid"><div class="metric-card"><span class="metric-label">Markets Tracked</span><span class="metric-value">70</span></div><div class="metric-card"><span class="metric-label">Intel Data Sources</span><span class="metric-value">8,400</span></div><div class="metric-card"><span class="metric-label">Forecast Accuracy</span><span class="metric-value">94.2%</span></div><div class="metric-card"><span class="metric-label">Fines Avoided</span><span class="metric-value">Rs.84 Cr</span></div><div class="metric-card"><span class="metric-label">Total TAM</span><span class="metric-value">Rs.2,84,000 Cr</span></div><div class="metric-card"><span class="metric-label">Intelligence NPS</span><span class="metric-value">92</span></div></div>
         </div>
@@ -4323,7 +4323,7 @@ loadAllP52Ops();
 <!-- END PHASE 64 OPS PORTAL -->
 
     <!-- PHASE 65 — IMMERSIVE FAN EXPERIENCE & NEXT-GEN ENTERTAINMENT (v65.0.0) -->
-    <div class="phase-section" id="phase65">
+    <div class="phase-section" id="phase65" style="display:none">
       <div class="phase-header" style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%);">
         <h2>🎭 Phase 65 — Immersive Fan Experience & Next-Gen Entertainment <span class="badge">v65.0.0</span></h2>
         <div class="phase-meta">

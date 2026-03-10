@@ -3047,7 +3047,7 @@ async function loadP35VenueBCP() {
 <!-- END PHASE 35 VENUE PORTAL -->
 
 <!-- PHASE 36 VENUE PORTAL: Crypto Payments -->
-<div class="phase-section" id="p36-venue-section">
+<div class="phase-section" id="p36-venue-section" style="display:none">
   <h3>⛓️ Phase 36 — Crypto Payments at Venue</h3>
   <div class="btn-row">
     <button onclick="loadP36VenueCrypto()">Crypto Dashboard</button>
@@ -3072,7 +3072,7 @@ async function loadP36VenueFX() {
 <!-- END PHASE 36 VENUE PORTAL -->
 
 <!-- PHASE 37 VENUE PORTAL: AR Wayfinding & Accessibility -->
-<div class="phase-section" id="p37-venue-section">
+<div class="phase-section" id="p37-venue-section" style="display:none">
   <h3>🥽 Phase 37 — AR Wayfinding & Accessibility</h3>
   <div class="btn-row">
     <button onclick="loadP37VenueWayfinding()">Wayfinding Analytics</button>
@@ -3240,7 +3240,7 @@ loadVenuePayments();
 <!-- END PHASE 40 VENUE PORTAL -->
 
 <!-- PHASE 41 VENUE PORTAL -->
-<div class="phase-section" id="phase41-venue">
+<div class="phase-section" id="phase41-venue" style="display:none">
   <h2 class="phase-title">Phase 41 — MICE & Corporate Venue Intelligence</h2>
   <div class="module-card">
     <h3>🏛️ MICE Venue Directory</h3>
@@ -3270,7 +3270,7 @@ loadAllP41Venue();
 <!-- END PHASE 41 VENUE PORTAL -->
 
 <!-- PHASE 41 VENUE PORTAL -->
-<div class="phase-section" id="phase41-venue-dup1">
+<div class="phase-section" id="phase41-venue-dup1" style="display:none">
   <h2 class="phase-title">Phase 41 — MICE & Corporate Venue Operations</h2>
   <div class="metrics-grid">
     <div class="metric-card"><div class="metric-label">Partner Venues</div><div class="metric-value" id="p41v-venues">—</div></div>
@@ -3299,7 +3299,7 @@ loadAllP41Venue();
 <!-- END PHASE 41 VENUE PORTAL -->
 
 <!-- PHASE 42 VENUE PORTAL -->
-<div class="phase-section" id="phase42-venue">
+<div class="phase-section" id="phase42-venue" style="display:none">
   <h2 class="phase-title">Phase 42 — Creator Events at Venue</h2>
   <div class="module-card"><h3>🎤 Creator & Fan Club Events</h3><div id="p42-venue-creator" class="stats-grid"></div><div id="p42-venue-merch" class="info-alert"></div></div>
 </div>
@@ -3320,7 +3320,7 @@ loadAllP42Venue();
 <!-- END PHASE 42 VENUE PORTAL -->
 
 <!-- PHASE 43 VENUE PORTAL -->
-<div class="phase-section" id="phase43-venue">
+<div class="phase-section" id="phase43-venue" style="display:none">
   <h2 class="phase-title">Phase 43 — Support & Feedback at Venue</h2>
   <div class="module-card"><h3>🎧 On-Site Support</h3><div id="p43-venue-sup" class="stats-grid"></div><div id="p43-venue-sla" class="info-alert"></div></div>
 </div>
@@ -3512,7 +3512,7 @@ loadAllP48Venue();
 <script>
 async function loadP49Venue() {
   const base = '/api/v49';
-  let html = '<div class="phase-section"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Venue Growth Tools</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#6f42c1;border-bottom:3px solid #6f42c1;padding-bottom:8px;">⚡ Phase 49 — Venue Growth Tools</h2><div class="metrics-grid">';
   const sections = [
     ['🔗 Referral', `${base}/referral/overview`, ['active_referrers','referrals_converted_mtd','revenue_from_referrals_cr']],
     ['🛍️ Social Commerce', `${base}/social-commerce/overview`, ['social_gmv_cr','social_orders_mtd','live_shopping_gmv_cr']],
@@ -3539,7 +3539,7 @@ loadAllP49Venue();
 <script>
 async function loadP50Venue() {
   const base = '/api/v50';
-  let html = '<div class="phase-section"><h2 style="color:#e94560;border-bottom:3px solid #e94560;padding-bottom:8px;">🏆 Phase 50 — Venue Platform Excellence</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#e94560;border-bottom:3px solid #e94560;padding-bottom:8px;">🏆 Phase 50 — Venue Platform Excellence</h2><div class="metrics-grid">';
   const sections = [
     ['🔭 Platform Health', `${base}/observability/overview`, ['services_monitored','uptime_pct','avg_latency_p99_ms']],
     ['🌍 Global Coverage', `${base}/multiregion/overview`, ['active_regions','geo_distributed_users_pct','rto_minutes']],
@@ -3571,7 +3571,7 @@ async function loadP51Venue() {
     ['📊 Immersive Analytics', `${base}/immersive-analytics/overview`, ['gaze_heatmaps_generated','attention_score_avg','sponsor_visibility_score']],
     ['🔊 Spatial Audio', `${base}/spatial-audio/overview`, ['spatial_audio_events','active_listeners','avg_audio_satisfaction']],
   ];
-  let html = '<div class="phase-section"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — Venue XR & Immersive Tools</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#7b2ff7;border-bottom:3px solid #7b2ff7;padding-bottom:8px;">🥽 Phase 51 — Venue XR & Immersive Tools</h2><div class="metrics-grid">';
   for (const [title, url, keys] of sections) {
     try {
       const data = await fetch(url).then(r=>r.json()); const m = data.metrics||{};
@@ -3596,7 +3596,7 @@ async function loadP52Venue() {
     ['⛓️ Blockchain', `${base}/blockchain/overview`, ['chains_integrated','transactions_per_day','uptime_pct']],
     ['🪪 Web3 Identity', `${base}/web3-identity/overview`, ['web3_wallets_connected','identity_verifications','privacy_score_avg']],
   ];
-  let html = '<div class="phase-section"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Venue Web3 & NFT Tools</h2><div class="metrics-grid">';
+  let html = '<div class="phase-section" style="display:none"><h2 style="color:#f7931a;border-bottom:3px solid #f7931a;padding-bottom:8px;">⛓️ Phase 52 — Venue Web3 & NFT Tools</h2><div class="metrics-grid">';
   for (const [title, url, keys] of sections) {
     try {
       const data = await fetch(url).then(r=>r.json()); const m = data.metrics||{};
@@ -3613,7 +3613,7 @@ loadAllP52Venue();
 <!-- END PHASE 52 VENUE PORTAL -->
 
 <!-- ========== PHASE 53: AI & GENERATIVE INTELLIGENCE (VENUE) ========== -->
-<div class="phase-section" id="phase53-venue">
+<div class="phase-section" id="phase53-venue" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#6c3483,#8e44ad)">
     <h2>🤖 AI Operations &amp; Vision for Venues <span class="badge">v53.0.0</span></h2>
     <p>Computer vision · Crowd safety AI · Predictive ops · AI agents · MLOps</p>
@@ -3648,7 +3648,7 @@ loadAllP52Venue();
 <!-- END PHASE 53 VENUE PORTAL -->
 
 <!-- ========== PHASE 54: QUANTUM SECURITY (VENUE) ========== -->
-<div class="phase-section" id="phase54-venue">
+<div class="phase-section" id="phase54-venue" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
     <h2>⚛️ Venue Security — Quantum-Grade <span class="badge">v54.0.0</span></h2>
     <p>Zero-trust access · SOAR · Cyber resilience · Quantum-safe communications</p>
@@ -3683,7 +3683,7 @@ loadAllP52Venue();
 <!-- END PHASE 54 VENUE PORTAL -->
 
 <!-- ========== PHASE 55: VISION 2030 — FINAL (VENUE) ========== -->
-<div class="phase-section" id="phase55-venue">
+<div class="phase-section" id="phase55-venue" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e)">
     <h2>🚀 Venue Vision 2030 <span class="badge">v55.0.0 · FINAL</span></h2>
     <p>Autonomous operations · Biotech health monitoring · Climate-positive · Neuro-adaptive visitor experience</p>
@@ -3717,7 +3717,7 @@ loadAllP52Venue();
 <!-- END PHASE 55 VENUE PORTAL — FINAL -->
 
 <!-- ========== PHASE 56: AUTONOMOUS ECONOMY (VENUE) ========== -->
-<div class="phase-section" id="phase56-venue">
+<div class="phase-section" id="phase56-venue" style="display:none">
   <div class="phase-header" style="background:linear-gradient(135deg,#1a0533,#3d0f6e,#6a1fa0)">
     <h2>🪙 Tokenised Venue Economy <span class="badge">v56.0.0</span></h2>
     <p>Automated revenue splits · AI escrow · Token sponsorship · Micro-economy · DID check-in</p>
@@ -3752,7 +3752,7 @@ loadAllP52Venue();
 <!-- END PHASE 56 VENUE PORTAL -->
 
         <!-- PHASE 57 VENUE -->
-        <div class="portal-section" id="phase57-venue">
+        <div class="portal-section" id="phase57-venue" style="display:none">
           <h2 class="section-title">Phase 57 — Hyper-Local &amp; Community Commerce (v57.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Venue Merchant Partners</span><span class="metric-value">84K</span></div>
@@ -3766,7 +3766,7 @@ loadAllP52Venue();
         <!-- END PHASE 57 VENUE PORTAL -->
 
         <!-- PHASE 58 VENUE -->
-        <div class="portal-section" id="phase58-venue">
+        <div class="portal-section" id="phase58-venue" style="display:none">
           <h2 class="section-title">Phase 58 — Supply Chain (v58.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">Venue Suppliers</span><span class="metric-value">8.4K</span></div>
@@ -3780,7 +3780,7 @@ loadAllP52Venue();
         <!-- END PHASE 58 VENUE PORTAL -->
 
         <!-- PHASE 59 VENUE -->
-        <div class="portal-section" id="phase59-venue">
+        <div class="portal-section" id="phase59-venue" style="display:none">
           <h2 class="section-title">Phase 59 — Creator Economy (v59.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">In-Venue Streams</span><span class="metric-value">2,840</span></div>
@@ -3794,7 +3794,7 @@ loadAllP52Venue();
         <!-- END PHASE 59 VENUE PORTAL -->
 
         <!-- PHASE 60 VENUE -->
-        <div class="portal-section" id="phase60-venue">
+        <div class="portal-section" id="phase60-venue" style="display:none">
           <h2 class="section-title">Phase 60 — Smart Venue IoT (v60.0.0)</h2>
           <div class="metrics-grid">
             <div class="metric-card"><span class="metric-label">IoT Sensors</span><span class="metric-value">2.84M</span></div>
@@ -3808,7 +3808,7 @@ loadAllP52Venue();
         <!-- END PHASE 60 VENUE PORTAL -->
 
         <!-- PHASE 61 VENUE -->
-        <div class="portal-section" id="phase61-">
+        <div class="portal-section" id="phase61-" style="display:none">
           <h2 class="section-title">Phase 61 — Global Expansion &amp; Localisation (v61.0.0)</h2>
           <div class="metrics-grid"><div class="metric-card"><span class="metric-label">Intl Venue Network</span><span class="metric-value">8,400</span></div><div class="metric-card"><span class="metric-label">Countries</span><span class="metric-value">42</span></div><div class="metric-card"><span class="metric-label">Freight Partners</span><span class="metric-value">84</span></div><div class="metric-card"><span class="metric-label">On-Time Delivery</span><span class="metric-value">97.8%</span></div><div class="metric-card"><span class="metric-label">Customs Auto-Clear</span><span class="metric-value">84%</span></div><div class="metric-card"><span class="metric-label">Logistics Revenue</span><span class="metric-value">Rs.284 Cr</span></div></div>
         </div>
@@ -3893,7 +3893,7 @@ loadAllP52Venue();
 <!-- END PHASE 64 VENUE PORTAL -->
 
     <!-- PHASE 65 — IMMERSIVE FAN EXPERIENCE & NEXT-GEN ENTERTAINMENT (v65.0.0) -->
-    <div class="phase-section" id="phase65">
+    <div class="phase-section" id="phase65" style="display:none">
       <div class="phase-header" style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%);">
         <h2>🎭 Phase 65 — Immersive Fan Experience & Next-Gen Entertainment <span class="badge">v65.0.0</span></h2>
         <div class="phase-meta">
