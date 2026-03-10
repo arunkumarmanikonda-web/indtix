@@ -4380,21 +4380,7 @@ async function p26oLoadSponsor() {
 </script>
 
 <script>
-// Phase 26 nav injection
-(function() {
-  document.addEventListener('DOMContentLoaded', function() {
-    // Try multiple nav selectors
-    const nav = document.querySelector('nav, .sidebar, #sidebar, [role="navigation"]');
-    if (nav) {
-      const btn = document.createElement('button');
-      btn.className = 'sb-item p26-nav-btn';
-      btn.setAttribute('onclick', "showPanel('p26-organiser',this)");
-      btn.innerHTML = '<i class="fas fa-rocket" style="margin-right:6px"></i>P26 Growth Engine <span style="background:#0ea5e9;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;margin-left:3px;font-weight:800">NEW</span>';
-      btn.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 12px;border:none;background:transparent;cursor:pointer;font-size:13px;color:#cbd5e1;border-radius:6px;transition:background .2s;';
-      nav.appendChild(btn);
-    }
-  });
-})();
+
 </script>
 <!-- END PHASE 26 ORGANISER PORTAL -->
 
@@ -4522,13 +4508,6 @@ async function p26oLoadSponsor() {
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const nav = document.querySelector('nav') || document.querySelector('.sidebar') || document.querySelector('[id*="nav"]');
-  if (nav) {
-    const d = document.createElement('div');
-    d.innerHTML = `<button onclick="showPanel('p27-organiser')" style="width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:13px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'">
-      🏢 B2B &amp; Marketplace <span style="background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px">NEW</span>
-    </button>`;
-    nav.appendChild(d);
-  }
   const orig = window.showPanel;
   window.showPanel = (id) => {
     if (id === 'p27-organiser') {

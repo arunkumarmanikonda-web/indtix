@@ -1,5 +1,5 @@
 /**
- * INDTIX Universal Portal Fix — v6.0
+ * INDTIX Universal Portal Fix — v6.3
  * CRITICAL SUPER AUDIT FIX — Complete repair for all 6 portals, phases 1–76.
  *
  * KEY FIXES in v6.0:
@@ -475,10 +475,14 @@
     });
 
     // Find orphaned panels (no nav item pointing to them)
+    // Skip panels for phases 26+ — those are accessed via the FAB (📋 Phase Modules button)
     var orphans = [];
     document.querySelectorAll('[id^="panel-"]').forEach(function (el) {
       var pid = el.id.replace('panel-', '');
       if (pid.startsWith('_ph_') || pid.startsWith('_placeholder_')) return;
+      // Skip phase 26 and above — use FAB for navigation
+      var phaseMatch = pid.match(/^p(\d+)/);
+      if (phaseMatch && parseInt(phaseMatch[1], 10) >= 26) return;
       if (!navTargets.has(pid) && !document.getElementById('_ix_nav_' + pid)) {
         orphans.push(pid);
       }
@@ -535,6 +539,9 @@
      9. ADD LATEST PHASE NAV BUTTONS (p66–p76) to portals
   ───────────────────────────────────────────────────────────────── */
   var LATEST_PHASES = [
+    { key: 'p26', label: 'Social Commerce & Fan',  icon: '🛒' },
+    { key: 'p27', label: 'B2B & Marketplace',      icon: '🏢' },
+    { key: 'p28', label: 'Immersive & AI-First',   icon: '🌌' },
     { key: 'p66', label: 'Creator Economy',       icon: '🎨' },
     { key: 'p67', label: 'Green Events',           icon: '🌿' },
     { key: 'p68', label: 'Accessibility',          icon: '♿' },
@@ -627,7 +634,7 @@
 
     var fab = document.createElement('button');
     fab.id = '_ix_phase_fab';
-    fab.title = 'Phase Modules';
+    fab.title = 'Phase Modules (26–76)';
     fab.textContent = '📋';
     document.body.appendChild(fab);
 
@@ -645,7 +652,7 @@
 
     var hdr = document.createElement('div');
     hdr.className = 'pd-header';
-    hdr.textContent = '📋 Phase Modules';
+    hdr.textContent = '📋 Phase Modules (26–76)';
     drawer.appendChild(hdr);
 
     LATEST_PHASES.forEach(function (ph) {
@@ -1002,7 +1009,7 @@
     });
 
     var panelCount = document.querySelectorAll('[id^="panel-"]').length;
-    console.log('[INDTIX Portal Fix v6.2] ✅ Loaded — panels:', panelCount,
+    console.log('[INDTIX Portal Fix v6.3] ✅ Loaded — panels:', panelCount,
       '| portal:', window.location.pathname.split('/').pop());
   }
 

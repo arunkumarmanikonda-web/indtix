@@ -1947,18 +1947,6 @@ async function loadPressCredentials(){
 // Add sidebar items for P22
 document.addEventListener('DOMContentLoaded',()=>{
   const nav=document.querySelector('.em-nav, .sb-nav, nav');
-  if(nav){
-    const btns=document.createElement('div');
-    btns.innerHTML=`
-      <button onclick="showPanel('p22-nfc',this);loadNFCScanLog()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">📲 NFC Scan Log 🆕</button>
-      <button onclick="showPanel('p22-gates',this);loadGateThroughput()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">🚪 Gate Throughput 🆕</button>
-      <button onclick="showPanel('p22-vip',this);loadVIPConcierge()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">👑 VIP Concierge 🆕</button>
-      <button onclick="showPanel('p22-sentiment',this);loadSentimentWall()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">📢 Social Sentiment 🆕</button>
-      <button onclick="showPanel('p22-merch-live',this);loadMerchSales()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">🛍️ Live Merch Sales 🆕</button>
-      <button onclick="showPanel('p22-rider',this);loadArtistRider()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">🎸 Artist Rider 🆕</button>
-      <button onclick="showPanel('p22-press',this);loadPressCredentials()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:transparent;border:none;color:#ccc;font-size:12px;cursor:pointer;border-radius:6px;width:100%;text-align:left">📸 Press Credentials 🆕</button>`;
-    nav.appendChild(btns);
-  }
 });
 
 </script>
@@ -2479,15 +2467,7 @@ function p24emLogLF(){
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded',function(){
-  const nav = document.querySelector('nav, .sidebar');
-  if(nav){
-    const btn = document.createElement('div');
-    btn.innerHTML = `<button class="sb-item" onclick="showPanel('p25-event-ops-pro',this)"><i class="fas fa-video"></i>Live Ops Pro <span style="background:linear-gradient(135deg,#ec4899,#db2777);color:#fff;border-radius:10px;padding:1px 6px;font-size:9px;margin-left:4px;font-weight:900;">P25</span></button>
-    `;
-    nav.appendChild(btn);
-  }
-});
+;
 function p25emShow(s,btn){
   document.querySelectorAll('[id^="p25em-"]').forEach(el=>el.style.display='none');
   const el=document.getElementById('p25em-'+s);
@@ -2710,21 +2690,7 @@ async function p26eLoadMerch() {
 </script>
 
 <script>
-// Phase 26 nav injection
-(function() {
-  document.addEventListener('DOMContentLoaded', function() {
-    // Try multiple nav selectors
-    const nav = document.querySelector('nav, .sidebar, #sidebar, [role="navigation"]');
-    if (nav) {
-      const btn = document.createElement('button');
-      btn.className = 'nav-btn p26-nav-btn';
-      btn.setAttribute('onclick', "showPanel('p26-event-manager',this)");
-      btn.innerHTML = '<i class="fas fa-rocket" style="margin-right:6px"></i>P26 Live Show <span style="background:#f59e0b;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;margin-left:3px;font-weight:800">NEW</span>';
-      btn.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 12px;border:none;background:transparent;cursor:pointer;font-size:13px;color:#cbd5e1;border-radius:6px;transition:background .2s;';
-      nav.appendChild(btn);
-    }
-  });
-})();
+
 </script>
 <!-- END PHASE 26 EVENT MANAGER -->
 
@@ -2847,13 +2813,6 @@ async function p26eLoadMerch() {
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const nav = document.querySelector('nav') || document.querySelector('.sidebar') || document.querySelector('[id*="nav"]');
-  if (nav) {
-    const d = document.createElement('div');
-    d.innerHTML = `<button onclick="showPanel('p27-em')" style="width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:13px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'">
-      🎤 Talent Agency <span style="background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px">NEW</span>
-    </button>`;
-    nav.appendChild(d);
-  }
   const orig = window.showPanel;
   window.showPanel = (id) => {
     if (id === 'p27-em') {

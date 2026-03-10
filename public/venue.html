@@ -1759,16 +1759,6 @@ function saveZoneControl(){
 // Add Phase 22 sidebar items
 document.addEventListener('DOMContentLoaded',()=>{
   const nav=document.querySelector('.sb-nav');
-  if(nav){
-    const btns=document.createElement('div');
-    btns.innerHTML=`
-      <button class="sb-btn" onclick="showPanel('p22-iot',this);loadIoTSensors()" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">📡 IoT Sensors 🆕</button>
-      <button onclick="showPanel('p22-energy',this);loadEnergyMonitor()" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">⚡ Energy Monitor 🆕</button>
-      <button onclick="showPanel('p22-catering',this)" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">🍽️ Catering AI 🆕</button>
-      <button onclick="showPanel('p22-zonecontrol',this)" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">💡 Zone Control 🆕</button>
-      <button onclick="showPanel('p22-maintenance',this);loadMaintenanceTickets()" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:transparent;border:none;color:var(--text);font-size:13px;cursor:pointer;border-radius:8px;width:100%;text-align:left">🔧 Maintenance 🆕</button>`;
-    nav.appendChild(btns);
-  }
   setTimeout(()=>loadIoTSensors(),600);
 });
 
@@ -2227,16 +2217,7 @@ function p24vToast(msg){ const t=document.createElement('div'); t.style.cssText=
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded',function(){
-  // Add to sidebar
-  const nav = document.querySelector('nav, .sidebar');
-  if(nav){
-    const btn = document.createElement('div');
-    btn.innerHTML = `<button class="sb-item" onclick="showPanel('p25-smart-venue-pro',this)"><i class="fas fa-building"></i>Smart Venue Pro <span style="background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;border-radius:10px;padding:1px 6px;font-size:9px;margin-left:4px;font-weight:900;">P25</span></button>
-    `;
-    nav.appendChild(btn);
-  }
-});
+;
 function p25vShow(s,btn){
   document.querySelectorAll('[id^="p25v-"]').forEach(el=>el.style.display='none');
   const el=document.getElementById('p25v-'+s);
@@ -2461,21 +2442,7 @@ async function p26vLoadConcessions() {
 </script>
 
 <script>
-// Phase 26 nav injection
-(function() {
-  document.addEventListener('DOMContentLoaded', function() {
-    // Try multiple nav selectors
-    const nav = document.querySelector('nav, .sidebar, #sidebar, [role="navigation"]');
-    if (nav) {
-      const btn = document.createElement('button');
-      btn.className = 'nav-btn p26-nav-btn';
-      btn.setAttribute('onclick', "showPanel('p26-venue',this)");
-      btn.innerHTML = '<i class="fas fa-rocket" style="margin-right:6px"></i>P26 Smart Venue <span style="background:#10b981;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;margin-left:3px;font-weight:800">NEW</span>';
-      btn.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 12px;border:none;background:transparent;cursor:pointer;font-size:13px;color:#cbd5e1;border-radius:6px;transition:background .2s;';
-      nav.appendChild(btn);
-    }
-  });
-})();
+
 </script>
 <!-- END PHASE 26 VENUE PORTAL -->
 
@@ -2579,13 +2546,6 @@ async function p26vLoadConcessions() {
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const nav = document.querySelector('nav') || document.querySelector('.sidebar') || document.querySelector('[id*="nav"]');
-  if (nav) {
-    const d = document.createElement('div');
-    d.innerHTML = `<button onclick="showPanel('p27-venue')" style="width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:13px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'">
-      🏟️ Venue Network <span style="background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px">NEW</span>
-    </button>`;
-    nav.appendChild(d);
-  }
   const orig = window.showPanel;
   window.showPanel = (id) => {
     if (id === 'p27-venue') {

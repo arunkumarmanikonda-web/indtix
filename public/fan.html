@@ -4651,25 +4651,7 @@ function p23JoinWaitlist(){
 
 <!-- Phase 24 Bottom Nav Tab -->
 <script>
-(function(){
-  // Add Phase 24 hub button to bottom nav (mobile) or as floating button
-  document.addEventListener('DOMContentLoaded', function(){
-    const nav = document.querySelector('.bottom-nav');
-    if(nav){
-      const btn = document.createElement('button');
-      btn.className='bn-item'; btn.id='nav-p24';
-      btn.style.cssText='position:relative;';
-      btn.innerHTML='<i class="fas fa-magic" style="font-size:18px"></i><span style="font-size:10px;display:block">P24</span>';
-      btn.onclick=()=>scrollToP24();
-      nav.appendChild(btn);
-    }
-    // Also ensure P24 hub is visible by default on desktop
-    const hub = document.getElementById('p24-hub');
-    if(hub && window.innerWidth > 768) {
-      hub.style.maxWidth = '100%';
-    }
-  });
-})();
+
 function scrollToP24(){ document.getElementById('p24-hub') && document.getElementById('p24-hub').scrollIntoView({behavior:'smooth'}); }
 </script>
 
@@ -5630,25 +5612,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const nav = document.querySelector('nav') || document.querySelector('.sidebar') || document.querySelector('[id*="nav"]');
-  if (nav) {
-    const d = document.createElement('div');
-    d.innerHTML = `<button onclick="showPanel('p27-fan')" style="width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:13px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'">
-      🖼️ NFT & Referrals <span style="background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px">NEW</span>
-    </button>`;
-    nav.appendChild(d);
-  }
-  const orig = window.showPanel;
-  window.showPanel = (id) => {
-    if (id === 'p27-fan') {
-      document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
-      const panel = document.getElementById('panel-p27-fan');
-      if (panel) panel.style.display = 'block';
-      p27fLoadDrops();
-    } else if (orig) orig(id);
-  };
-});
+;
 function p27fShow(tab) {
   document.querySelectorAll('.p27f-pane').forEach(p => p.style.display = 'none');
   document.getElementById('p27f-' + tab).style.display = 'block';
@@ -5848,24 +5812,7 @@ function p27fRegisterDrop(id) { fetch('/api/fan/nft/drops/upcoming').then(()=>al
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const nav = document.querySelector('nav') || document.querySelector('.sidebar') || document.querySelector('[id*="nav"]');
-  if (nav) {
-    const d = document.createElement('div');
-    d.innerHTML = `<button onclick="showPanel('p28-fan')" style="width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:13px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'">
-      🌌 Immersive Experience <span style="background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px">NEW</span>
-    </button>`;
-    nav.appendChild(d);
-  }
-  const orig = window.showPanel;
-  window.showPanel = (id) => {
-    if (id === 'p28-fan') {
-      document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
-      const panel = document.getElementById('panel-p28-fan');
-      if (panel) panel.style.display = 'block';
-    } else if (orig) orig(id);
-  };
-});
+;
 function p28fShow(tab) {
   document.querySelectorAll('.p28f-pane').forEach(p => p.style.display = 'none');
   document.getElementById('p28f-' + tab).style.display = 'block';

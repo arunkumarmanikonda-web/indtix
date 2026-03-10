@@ -4820,29 +4820,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const nav = document.querySelector('nav') || document.querySelector('.sidebar') || document.querySelector('[id*="sidebar"]') || document.querySelector('[id*="nav"]');
-  if (nav) {
-    const d = document.createElement('div');
-    d.innerHTML = `<button onclick="showPanel('p27-admin')" style="width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:13px;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">
-      <span>⚡</span><span>Phase 27 B2B & Marketplace</span><span style="background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:auto">NEW</span>
-    </button>`;
-    nav.appendChild(d);
-  }
-  const orig = window.showPanel;
-  window.showPanel = function(id, btn) {
-    if (id === 'p27-admin') {
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.sb-item, .ops-nav-btn').forEach(b => b.classList.remove('active'));
-      const panel = document.getElementById('panel-p27-admin');
-      if (panel) panel.classList.add('active');
-      if (btn) btn.classList.add('active');
-      const tb = document.getElementById('topbarTitle');
-      if (tb) tb.textContent = 'Phase 27 — Enterprise B2B & Marketplace';
-      p27aLoadB2B();
-    } else if (orig) orig(id, btn);
-  };
-});
+
 function p27aShow(tab) {
   document.querySelectorAll('.p27a-pane').forEach(p => p.style.display = 'none');
   document.getElementById('p27a-' + tab).style.display = 'block';
@@ -5049,28 +5027,7 @@ function p27aLoadContracts() {
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const nav = document.querySelector('nav') || document.querySelector('.sidebar') || document.querySelector('[id*="sidebar"]') || document.querySelector('[id*="nav"]');
-  if (nav) {
-    const d = document.createElement('div');
-    d.innerHTML = `<button onclick="showPanel('p28-admin')" style="width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-size:13px;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">
-      <span>🌌</span><span>Phase 28 Immersive &amp; AI</span><span style="background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;margin-left:auto">NEW</span>
-    </button>`;
-    nav.appendChild(d);
-  }
-  const orig = window.showPanel;
-  window.showPanel = function(id, btn) {
-    if (id === 'p28-admin') {
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.sb-item, .ops-nav-btn').forEach(b => b.classList.remove('active'));
-      const panel = document.getElementById('panel-p28-admin');
-      if (panel) panel.classList.add('active');
-      if (btn) btn.classList.add('active');
-      const tb = document.getElementById('topbarTitle');
-      if (tb) tb.textContent = 'Phase 28 — Immersive & AI Experiences';
-    } else if (orig) orig(id, btn);
-  };
-});
+
 function p28aShow(tab) {
   document.querySelectorAll('.p28a-pane').forEach(p => p.style.display = 'none');
   document.getElementById('p28a-' + tab).style.display = 'block';
