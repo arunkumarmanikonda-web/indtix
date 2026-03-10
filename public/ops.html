@@ -4454,5 +4454,90 @@ loadAllP52Ops();
 </div>
 <!-- END PHASE 66 OPS PORTAL -->
 
+
+<div id="panel-p67-ops" class="panel" style="display:none">
+  <div style="padding:24px;max-width:1200px;margin:0 auto">
+    <div style="background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border-radius:16px;padding:28px 32px;margin-bottom:24px">
+      <h1 style="margin:0 0 8px;font-size:1.8rem;font-weight:700">🌱 Phase 67 — Green Ops Dashboard</h1>
+      <p style="margin:0;opacity:.85;font-size:1rem">Sustainability, Green Events &amp; ESG Compliance Platform</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px">
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#16a34a">284K t</div>
+        <div style="font-size:.85rem;color:#166534;margin-top:4px">CO₂ Tracked</div>
+      </div>
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#16a34a">84%</div>
+        <div style="font-size:.85rem;color:#166534;margin-top:4px">Waste Diverted</div>
+      </div>
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#16a34a">284M kWh</div>
+        <div style="font-size:.85rem;color:#166534;margin-top:4px">Renewable Energy</div>
+      </div>
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#16a34a">8.4</div>
+        <div style="font-size:.85rem;color:#166534;margin-top:4px">ESG Score</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+      <div style="background:#fff;border:1px solid #dcfce7;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 12px;color:#15803d;font-size:1rem">🌿 Carbon & Emissions</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>28,400 events tracked</li>
+          <li>142,000 t CO₂ offset</li>
+          <li>₹8.4Cr offset revenue</li>
+          <li>Gold Standard certified</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #dcfce7;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 12px;color:#15803d;font-size:1rem">♻️ Zero Waste</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>840 zero-waste events</li>
+          <li>284K kg food donated</li>
+          <li>97.8% biodegradable packaging</li>
+          <li>284 composting partners</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #dcfce7;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 12px;color:#15803d;font-size:1rem">🚌 Green Transport</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>284 EV shuttles</li>
+          <li>2,840 charging points</li>
+          <li>284K carpooling matches</li>
+          <li>28,400 t CO₂ saved</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #dcfce7;border-radius:12px;padding:20px">
+        <h3 style="margin:0 0 12px;color:#15803d;font-size:1rem">📊 ESG Reporting</h3>
+        <ul style="margin:0;padding:0 0 0 16px;color:#374151;font-size:.9rem;line-height:1.8">
+          <li>ESG score 8.4/10</li>
+          <li>2,840 reports/year</li>
+          <li>GRI, SASB, TCFD, SDG</li>
+          <li>11 SDG goals aligned</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding:16px;background:#ecfdf5;border-radius:10px;border-left:4px solid #16a34a">
+      <strong style="color:#14532d">Phase 67 APIs:</strong>
+      <span style="color:#166534;font-size:.85rem;margin-left:8px">/api/v67/carbon/* · /api/v67/green-venue/* · /api/v67/zero-waste/* · /api/v67/green-transport/* · /api/v67/renewable-energy/* · /api/v67/sustainable-tickets/* · /api/v67/esg/* · /api/v67/climate-pledge/* · /api/v67/green-supply-chain/* · /api/v67/sustainability-dashboard/*</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var existing = document.getElementById('nav-btn-p67-ops');
+  if (existing) return;
+  // Try to find main nav or sidebar
+  var nav = document.querySelector('nav.sidebar-nav, nav, .sidebar, #sidebar');
+  if (!nav) return;
+  var btn = document.createElement('button');
+  btn.id = 'nav-btn-p67-ops';
+  btn.className = 'sb-item';
+  btn.innerHTML = '<i class="fas fa-wind"></i>Sustainability <span style="background:#16a34a;color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:4px">P67</span>';
+  btn.onclick = function(){ if(typeof showPanel==='function') showPanel('p67-ops',this); };
+  nav.appendChild(btn);
+})();
+</script>
 </body>
 </html>

@@ -108,7 +108,14 @@
     'p66-venue':'Creator Economy & Venue',
     'p66-em':'Creator Economy — Event Manager',
     'p66-ops':'Creator Economy Ops',
-    'p66-ops-new':'Creator Economy Ops'
+    'p66-ops-new':'Creator Economy Ops',
+    // Phase 67 panels
+    'p67-admin':'Sustainability & ESG Platform',
+    'p67-fan':'Green Fan Experience',
+    'p67-organiser':'Sustainable Events',
+    'p67-venue':'Green Venue Platform',
+    'p67-em':'Sustainable Event Ops',
+    'p67-ops':'Green Ops Dashboard'
   };
 
   /* ─────────────────────────────────────────────────────────────────
@@ -289,12 +296,12 @@
       admin: [
         'affiliate', 'cities', 'compliance', 'developer_admin', 'hrteam',
         'p25-intelligence', 'p26-admin', 'partnercrm', 'risk',
-        'sponsors_admin', 'support', 'whitelabel_admin', 'p66-admin'
+        'sponsors_admin', 'support', 'whitelabel_admin', 'p66-admin', 'p67-admin'
       ],
-      organiser: ['p25-growth-pro', 'p26-organiser', 'p66-organiser'],
-      venue: ['p22-catering', 'p22-energy', 'p22-iot', 'p22-maintenance', 'p22-zonecontrol', 'p26-venue', 'p66-venue'],
-      'event-manager': ['p22-gates', 'p22-merch-live', 'p22-nfc', 'p22-press', 'p22-rider', 'p22-sentiment', 'p22-vip', 'p26-event-manager', 'p66-em'],
-      ops: ['p26-ops', 'p66-ops-new']
+      organiser: ['p25-growth-pro', 'p26-organiser', 'p66-organiser', 'p67-organiser'],
+      venue: ['p22-catering', 'p22-energy', 'p22-iot', 'p22-maintenance', 'p22-zonecontrol', 'p26-venue', 'p66-venue', 'p67-venue'],
+      'event-manager': ['p22-gates', 'p22-merch-live', 'p22-nfc', 'p22-press', 'p22-rider', 'p22-sentiment', 'p22-vip', 'p26-event-manager', 'p66-em', 'p67-em'],
+      ops: ['p26-ops', 'p66-ops-new', 'p67-ops']
     };
 
     // Detect which portal we're in
