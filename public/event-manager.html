@@ -1802,7 +1802,7 @@ function showEMPanel(id) {
 }
 
 // ── PHASE 22 EVENT MANAGER: Day-of Ops ──────────────────────
-function emToast22(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#6c3cf7;color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+function emToast22(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#6c3cf7;color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999'; t.textContent=msg; (document.querySelector(".content") || document.body).appendChild(t); setTimeout(()=>t.remove(),3000); }
 
 // NFC Wristband scan log
 let nfcScans=[];
@@ -2053,7 +2053,7 @@ function addPressCredential(){ fetch('/api/events/e1/press-credentials',{method:
 </style>
 
 <script>
-function emT23(msg){let t=document.getElementById('em23-toast');if(!t){t=document.createElement('div');t.id='em23-toast';t.style.cssText='position:fixed;bottom:80px;right:20px;background:#f97316;color:#fff;padding:9px 18px;border-radius:10px;font-size:.82rem;z-index:9999;display:none;';document.body.appendChild(t);}t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
+function emT23(msg){let t=document.getElementById('em23-toast');if(!t){t=document.createElement('div');t.id='em23-toast';t.style.cssText='position:fixed;bottom:80px;right:20px;background:#f97316;color:#fff;padding:9px 18px;border-radius:10px;font-size:.82rem;z-index:9999;display:none;';(document.querySelector(".content") || document.body).appendChild(t);}t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
 function openEM23(id){document.querySelectorAll('.p23em').forEach(e=>e.classList.remove('show'));const el=document.getElementById('p23em-'+id);if(el){el.classList.add('show');em23Load(id);}}
 function em23Load(id){
   if(id==='crowd-safety') em23CrowdSafety();
@@ -2337,7 +2337,7 @@ function em23ExitFlow(){
 </div>
 <script>
 function p24emShow(s,btn){ ['polls','setlist','photos','vols','lf','weather'].forEach(x=>{const el=document.getElementById('p24em-'+x);if(el)el.style.display='none';}); const el=document.getElementById('p24em-'+s);if(el)el.style.display='block'; document.querySelectorAll('.p24em-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
-function p24emToast(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:10px 20px;border-radius:10px;z-index:9999;font-size:.85rem;border:1px solid #f97316;max-width:320px;text-align:center;'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+function p24emToast(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:10px 20px;border-radius:10px;z-index:9999;font-size:.85rem;border:1px solid #f97316;max-width:320px;text-align:center;'; t.textContent=msg; (document.querySelector(".content") || document.body).appendChild(t); setTimeout(()=>t.remove(),3000); }
 function p24emLaunchPoll(){
   const q=prompt('Poll question:','Which song next?'); if(!q) return;
   fetch('/api/events/EVT-001/live-polls',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q,options:['Option A','Option B'],duration_sec:300})})
@@ -2489,7 +2489,7 @@ function p25emToast(msg){
   const t=document.createElement('div');
   t.style.cssText='position:fixed;bottom:24px;right:24px;background:#ec4899;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;font-size:.85rem;z-index:9999;max-width:340px;';
   t.textContent=msg;
-  document.body.appendChild(t);
+  (document.querySelector(".content") || document.body).appendChild(t);
   setTimeout(()=>t.remove(),3500);
 }
 </script>
@@ -3762,7 +3762,7 @@ async function loadP44EM() {
         <div class="text-xs text-gray-500">Social Programs Active</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP44EM() { await loadP44EM(); }
 loadAllP44EM();
@@ -3796,7 +3796,7 @@ async function loadP45EM() {
         <div class="text-xs text-gray-500">Payment Methods</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP45EM() { await loadP45EM(); }
 loadAllP45EM();
@@ -3830,7 +3830,7 @@ async function loadP46EM() {
         <div class="text-xs text-gray-500">Platform Safety Score</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP46EM() { await loadP46EM(); }
 loadAllP46EM();
@@ -3864,7 +3864,7 @@ async function loadP47EM() {
         <div class="text-xs text-gray-500">Inclusive Satisfaction Score</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP47EM() { await loadP47EM(); }
 loadAllP47EM();
@@ -3898,7 +3898,7 @@ async function loadP48EM() {
         <div class="text-xs text-gray-500">Live Integrations</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP48EM() { await loadP48EM(); }
 loadAllP48EM();
@@ -4392,5 +4392,7 @@ loadAllP52EM();
     </div>
     <!-- END PHASE 65 EVENT MANAGER -->
 
-    <!-- END PHASE 65 EVENT MANAGER -->
+    
+
+<script src="/static/portal-fix.js"></script>
 </body></html>

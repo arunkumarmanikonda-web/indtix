@@ -1670,7 +1670,7 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 // ── PHASE 22 VENUE: Smart Infra ────────────────────────────
-function venueToast22(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#6c3cf7;color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+function venueToast22(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#6c3cf7;color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999'; t.textContent=msg; (document.querySelector(".content") || document.body).appendChild(t); setTimeout(()=>t.remove(),3000); }
 
 async function loadIoTSensors(){
   const r=await fetch('/api/venue/V-001/iot-sensors').catch(()=>null);
@@ -1864,7 +1864,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 </style>
 
 <script>
-function vToast(msg){let t=document.getElementById('v23-toast');if(!t){t=document.createElement('div');t.id='v23-toast';t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#0ea5e9;color:#fff;padding:9px 20px;border-radius:25px;font-size:.83rem;z-index:9999;display:none;';document.body.appendChild(t);}t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
+function vToast(msg){let t=document.getElementById('v23-toast');if(!t){t=document.createElement('div');t.id='v23-toast';t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#0ea5e9;color:#fff;padding:9px 20px;border-radius:25px;font-size:.83rem;z-index:9999;display:none;';(document.querySelector(".content") || document.body).appendChild(t);}t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
 function openV23(id){document.querySelectorAll('.p23v').forEach(e=>e.classList.remove('show'));const el=document.getElementById('p23v-'+id);if(el){el.classList.add('show');v23Load(id);}}
 function v23Load(id){
   if(id==='crowd-flow') v23CrowdFlow();
@@ -2107,7 +2107,7 @@ function v23SpaceUtil(){
 </div>
 <script>
 function p24vShow(s,btn){ ['twin','parking','cal','drill','suppliers'].forEach(x=>{const el=document.getElementById('p24v-'+x);if(el)el.style.display='none';}); const el=document.getElementById('p24v-'+s);if(el)el.style.display='block'; document.querySelectorAll('.p24v-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
-function p24vToast(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:10px 20px;border-radius:10px;z-index:9999;font-size:.85rem;border:1px solid #10b981;max-width:320px;text-align:center;'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+function p24vToast(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:10px 20px;border-radius:10px;z-index:9999;font-size:.85rem;border:1px solid #10b981;max-width:320px;text-align:center;'; t.textContent=msg; (document.querySelector(".content") || document.body).appendChild(t); setTimeout(()=>t.remove(),3000); }
 </script>
 <!-- END PHASE 24 VENUE PORTAL -->
 </div><!-- end panel-p24-smart-venue -->
@@ -2238,7 +2238,7 @@ function p25vToast(msg){
   const t=document.createElement('div');
   t.style.cssText='position:fixed;bottom:24px;right:24px;background:#3b82f6;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;font-size:.85rem;z-index:9999;max-width:340px;';
   t.textContent=msg;
-  document.body.appendChild(t);
+  (document.querySelector(".content") || document.body).appendChild(t);
   setTimeout(()=>t.remove(),3500);
 }
 </script>
@@ -3395,7 +3395,7 @@ async function loadP44Venue() {
         <div class="text-xs text-gray-500">Waste Diverted</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP44Venue() { await loadP44Venue(); }
 loadAllP44Venue();
@@ -3429,7 +3429,7 @@ async function loadP45Venue() {
         <div class="text-xs text-gray-500">Partner Countries</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP45Venue() { await loadP45Venue(); }
 loadAllP45Venue();
@@ -3463,7 +3463,7 @@ async function loadP46Venue() {
         <div class="text-xs text-gray-500">AEDs On-Site</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP46Venue() { await loadP46Venue(); }
 loadAllP46Venue();
@@ -3497,7 +3497,7 @@ async function loadP47Venue() {
         <div class="text-xs text-gray-500">A11y Score</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP47Venue() { await loadP47Venue(); }
 loadAllP47Venue();
@@ -3531,7 +3531,7 @@ async function loadP48Venue() {
         <div class="text-xs text-gray-500">Events Streamed/Day</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP48Venue() { await loadP48Venue(); }
 loadAllP48Venue();
@@ -3995,5 +3995,7 @@ loadAllP52Venue();
     </div>
     <!-- END PHASE 65 VENUE PORTAL -->
 
-    <!-- END PHASE 65 VENUE PORTAL -->
+    
+
+<script src="/static/portal-fix.js"></script>
 </body></html>

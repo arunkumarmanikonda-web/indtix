@@ -1977,7 +1977,7 @@ input:checked+.slider:before{transform:translateX(20px);background:#fff}
 
 <script>
 // ── PHASE 22 ORGANISER JS ──
-function orgToast(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#6c3cf7;color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.4)'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+function orgToast(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#6c3cf7;color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.4)'; t.textContent=msg; (document.querySelector(".content") || document.body).appendChild(t); setTimeout(()=>t.remove(),3000); }
 
 function generateAffiliateLink(){
   const name=(document.getElementById('af-name').value||'partner').replace(/\s+/g,'-').toLowerCase();
@@ -3285,7 +3285,7 @@ function showOrgToast(msg, type) {
   const t = document.createElement('div');
   t.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 20px;font-size:13px;font-weight:500;color:var(--text);box-shadow:0 8px 32px rgba(0,0,0,0.4);animation:slideUp 0.3s ease;max-width:340px';
   t.textContent = msg;
-  document.body.appendChild(t);
+  (document.querySelector(".content") || document.body).appendChild(t);
   setTimeout(()=>t.remove(),3500);
 }
 
@@ -3837,7 +3837,7 @@ function p24oShow(s,btn){
 function p24oToast(msg){
   const t=document.createElement('div');
   t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:10px 20px;border-radius:10px;z-index:9999;font-size:.85rem;border:1px solid #0ea5e9;max-width:320px;text-align:center;';
-  t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000);
+  t.textContent=msg; (document.querySelector(".content") || document.body).appendChild(t); setTimeout(()=>t.remove(),3000);
 }
 function p24oCreateBundle(){
   const name=document.getElementById('p24o-bnd-name').value;
@@ -4061,7 +4061,7 @@ function p25oToast(msg){
   const t=document.createElement('div');
   t.style.cssText='position:fixed;bottom:24px;right:24px;background:#22c55e;color:#0f172a;padding:12px 18px;border-radius:10px;font-weight:700;font-size:.85rem;z-index:9999;max-width:340px;';
   t.textContent=msg;
-  document.body.appendChild(t);
+  (document.querySelector(".content") || document.body).appendChild(t);
   setTimeout(()=>t.remove(),3500);
 }
 async function loadP25OForecast(){
@@ -5515,7 +5515,7 @@ async function loadP44Org() {
         <div class="text-xs text-gray-500">Waste Diversion Rate</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP44Org() { await loadP44Org(); }
 loadAllP44Org();
@@ -5554,7 +5554,7 @@ async function loadP45Org() {
         <div class="text-xs text-gray-500">Merch Shipping Countries</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP45Org() { await loadP45Org(); }
 loadAllP45Org();
@@ -5593,7 +5593,7 @@ async function loadP46Org() {
         <div class="text-xs text-gray-500">Emergency Protocols</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP46Org() { await loadP46Org(); }
 loadAllP46Org();
@@ -5632,7 +5632,7 @@ async function loadP47Org() {
         <div class="text-xs text-gray-500">Inclusive Events YTD</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP47Org() { await loadP47Org(); }
 loadAllP47Org();
@@ -5671,7 +5671,7 @@ async function loadP48Org() {
         <div class="text-xs text-gray-500">Certified ISV Partners</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP48Org() { await loadP48Org(); }
 loadAllP48Org();
@@ -6170,5 +6170,7 @@ loadAllP52Org();
     </div>
     <!-- END PHASE 65 ORGANISER PORTAL -->
 
-    <!-- END PHASE 65 ORGANISER PORTAL -->
+    
+
+<script src="/static/portal-fix.js"></script>
 </body></html>

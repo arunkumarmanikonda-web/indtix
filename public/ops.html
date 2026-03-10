@@ -1495,7 +1495,7 @@ function showOpsPanel(id) {
 // ═══════════════════════════════════════════════
 //  PHASE 22 — OPS NERVE CENTRE
 // ═══════════════════════════════════════════════
-function opsToast22(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#6c3cf7;color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+function opsToast22(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#6c3cf7;color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999'; t.textContent=msg; (document.querySelector(".content") || document.body).appendChild(t); setTimeout(()=>t.remove(),3000); }
 
 // Global Anomaly Detector
 async function loadAnomalyDetector(){
@@ -1749,7 +1749,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 </style>
 
 <script>
-function opsT23(msg){let t=document.getElementById('ops23-toast');if(!t){t=document.createElement('div');t.id='ops23-toast';t.style.cssText='position:fixed;top:20px;right:20px;background:#22c55e;color:#fff;padding:9px 18px;border-radius:10px;font-size:.82rem;z-index:9999;display:none;';document.body.appendChild(t);}t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
+function opsT23(msg){let t=document.getElementById('ops23-toast');if(!t){t=document.createElement('div');t.id='ops23-toast';t.style.cssText='position:fixed;top:20px;right:20px;background:#22c55e;color:#fff;padding:9px 18px;border-radius:10px;font-size:.82rem;z-index:9999;display:none;';(document.querySelector(".content") || document.body).appendChild(t);}t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
 function openOPS23(id){document.querySelectorAll('.p23ops').forEach(e=>e.classList.remove('show'));const el=document.getElementById('p23ops-'+id);if(el){el.classList.add('show');ops23Load(id);}}
 function ops23Load(id){
   const map={'unit-economics':ops23UnitEcon,'infra-spend':ops23InfraSpend,'tax-dashboard':ops23TaxDash,'partner-health':ops23PartnerHealth,'release-tracker':ops23ReleaseTkr,'capacity-plan':ops23CapacityPlan,'security-ops':ops23SecurityOps};
@@ -2110,7 +2110,7 @@ async function loadOps24Billing(){
     <div class="p24ops-row"><span style="font-size:12px">${li.service}</span><span class="p24ops-val" style="color:${li.delta>0?'#fcd34d':'#6ee7b7'}">Δ $${li.delta}</span></div>
   `).join('')
 }
-function opsT24(msg){const t=document.createElement('div');t.style.cssText='position:fixed;bottom:24px;right:24px;background:#7c3aed;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.4)';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000)}
+function opsT24(msg){const t=document.createElement('div');t.style.cssText='position:fixed;bottom:24px;right:24px;background:#7c3aed;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.4)';t.textContent=msg;(document.querySelector(".content") || document.body).appendChild(t);setTimeout(()=>t.remove(),3000)}
 
 // Auto-load
 (async()=>{
@@ -2274,7 +2274,7 @@ function p25opsToast(msg){
   const t=document.createElement('div');
   t.style.cssText='position:fixed;bottom:24px;right:24px;background:#7c3aed;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;font-size:.85rem;z-index:9999;max-width:340px;';
   t.textContent=msg;
-  document.body.appendChild(t);
+  (document.querySelector(".content") || document.body).appendChild(t);
   setTimeout(()=>t.remove(),3500);
 }
 </script>
@@ -3741,7 +3741,7 @@ async function loadP44Ops() {
         <div class="text-xs text-gray-500">Carbon Credits Available</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP44Ops() { await loadP44Ops(); }
 loadAllP44Ops();
@@ -3775,7 +3775,7 @@ async function loadP45Ops() {
         <div class="text-xs text-gray-500">Markets Monitored</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP45Ops() { await loadP45Ops(); }
 loadAllP45Ops();
@@ -3809,7 +3809,7 @@ async function loadP46Ops() {
         <div class="text-xs text-gray-500">Safety Compliance Score</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP46Ops() { await loadP46Ops(); }
 loadAllP46Ops();
@@ -3843,7 +3843,7 @@ async function loadP47Ops() {
         <div class="text-xs text-gray-500">Social Value Generated</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP47Ops() { await loadP47Ops(); }
 loadAllP47Ops();
@@ -3877,7 +3877,7 @@ async function loadP48Ops() {
         <div class="text-xs text-gray-500">Ecosystem GMV</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP48Ops() { await loadP48Ops(); }
 loadAllP48Ops();
@@ -4413,6 +4413,8 @@ loadAllP52Ops();
     </div>
     <!-- END PHASE 65 OPS PORTAL -->
 
-    <!-- END PHASE 65 OPS PORTAL -->
+    
+
+<script src="/static/portal-fix.js"></script>
 </body>
 </html>

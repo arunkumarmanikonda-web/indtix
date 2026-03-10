@@ -3262,7 +3262,7 @@ function showAdminToastP21(msg) {
   const t = document.createElement('div');
   t.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;background:#1A2035;border:1px solid rgba(108,60,247,0.3);border-radius:12px;padding:12px 20px;font-size:13px;color:#E8EAFF;box-shadow:0 8px 32px rgba(0,0,0,0.4);max-width:360px';
   t.textContent = msg;
-  document.body.appendChild(t);
+  (document.querySelector(".content") || document.body).appendChild(t);
   setTimeout(()=>t.remove(), 3500);
 }
 
@@ -4117,7 +4117,7 @@ function p24aShow(s,btn){
   document.querySelectorAll('.p24a-tab').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
 }
-function p24aToast(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:10px 20px;border-radius:10px;z-index:9999;font-size:.85rem;border:1px solid #8b5cf6;max-width:320px;text-align:center;'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+function p24aToast(msg){ const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:10px 20px;border-radius:10px;z-index:9999;font-size:.85rem;border:1px solid #8b5cf6;max-width:320px;text-align:center;'; t.textContent=msg; (document.querySelector(".content") || document.body).appendChild(t); setTimeout(()=>t.remove(),3000); }
 function p24aRunCompliance(){
   fetch('/api/admin/compliance-autopilot/run',{method:'POST'}).then(r=>r.json()).then(d=>p24aToast('✅ Scan complete: '+(d.passed||23)+' passed, '+(d.warned||1)+' warnings, '+(d.auto_fixed||2)+' auto-fixed')).catch(()=>p24aToast('✅ Compliance scan complete: 23/24 passed'));
 }
@@ -4313,7 +4313,7 @@ function p25aToast(msg){
   const t=document.createElement('div');
   t.style.cssText='position:fixed;bottom:24px;right:24px;background:#f59e0b;color:#0f172a;padding:12px 18px;border-radius:10px;font-weight:700;font-size:.85rem;z-index:9999;animation:fadeIn .3s;max-width:340px;';
   t.textContent=msg;
-  document.body.appendChild(t);
+  (document.querySelector(".content") || document.body).appendChild(t);
   setTimeout(()=>t.remove(),3500);
 }
 async function loadP25Anomalies(){
@@ -6701,7 +6701,7 @@ async function loadP44Admin() {
         <div class="text-xs text-gray-500">Social Impact Beneficiaries</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP44Admin() { await loadP44Admin(); }
 loadAllP44Admin();
@@ -6762,7 +6762,7 @@ async function loadP45Admin() {
         <div class="text-xs text-gray-500">Global Revenue</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP45Admin() { await loadP45Admin(); }
 loadAllP45Admin();
@@ -6833,7 +6833,7 @@ async function loadP46Admin() {
         <div class="text-xs text-gray-500">Incidents Prevented YTD</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP46Admin() { await loadP46Admin(); }
 loadAllP46Admin();
@@ -6899,7 +6899,7 @@ async function loadP47Admin() {
         <div class="text-xs text-gray-500">DEI Index</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP47Admin() { await loadP47Admin(); }
 loadAllP47Admin();
@@ -6960,7 +6960,7 @@ async function loadP48Admin() {
         <div class="text-xs text-gray-500">Platform Trust Score</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP48Admin() { await loadP48Admin(); }
 loadAllP48Admin();
@@ -7643,5 +7643,7 @@ loadP52Admin();
     </div>
     <!-- END PHASE 65 ADMIN PORTAL -->
 
-    <!-- END PHASE 65 ADMIN PORTAL -->
+    
+
+<script src="/static/portal-fix.js"></script>
 </body></html>

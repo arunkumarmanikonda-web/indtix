@@ -4069,7 +4069,7 @@ window.renderInteractiveSeatMap = renderInteractiveSeatMap;
 const p22Toast = (msg,type='success') => {
   const t = document.createElement('div');
   t.style.cssText='position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:'+(type==='error'?'#ef4444':'#6c3cf7')+';color:#fff;padding:10px 20px;border-radius:20px;font-size:14px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.4)';
-  t.textContent=msg; document.body.appendChild(t);
+  t.textContent=msg; (document.querySelector(".content") || document.body).appendChild(t);
   setTimeout(()=>t.remove(),3000);
 };
 
@@ -4954,7 +4954,7 @@ function p24Show(section, btn){
 function p24Toast(msg){
   const t=document.createElement('div');
   t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;padding:10px 20px;border-radius:10px;z-index:9999;font-size:.85rem;border:1px solid #f59e0b;max-width:320px;text-align:center;';
-  t.textContent=msg; document.body.appendChild(t);
+  t.textContent=msg; (document.querySelector(".content") || document.body).appendChild(t);
   setTimeout(()=>t.remove(),3000);
 }
 function p24Bid(id, pts){
@@ -5142,7 +5142,7 @@ function p25fToast(msg){
   const t=document.createElement('div');
   t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#f43f5e,#e11d48);color:#fff;padding:12px 20px;border-radius:10px;font-weight:700;font-size:.85rem;z-index:9999;max-width:320px;text-align:center;white-space:nowrap;';
   t.textContent=msg;
-  document.body.appendChild(t);
+  (document.querySelector(".content") || document.body).appendChild(t);
   setTimeout(()=>t.remove(),3000);
 }
 function openP25(tab){
@@ -6945,7 +6945,7 @@ async function loadP44Fan() {
         <div class="text-xs text-gray-500">Carbon Credit Price / Tonne</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP44Fan() { await loadP44Fan(); }
 loadAllP44Fan();
@@ -6984,7 +6984,7 @@ async function loadP45Fan() {
         <div class="text-xs text-gray-500">Countries with Events</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP45Fan() { await loadP45Fan(); }
 loadAllP45Fan();
@@ -7023,7 +7023,7 @@ async function loadP46Fan() {
         <div class="text-xs text-gray-500">Trained Safety Staff</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP46Fan() { await loadP46Fan(); }
 loadAllP46Fan();
@@ -7062,7 +7062,7 @@ async function loadP47Fan() {
         <div class="text-xs text-gray-500">App Accessibility Score</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP47Fan() { await loadP47Fan(); }
 loadAllP47Fan();
@@ -7096,7 +7096,7 @@ async function loadP48Fan() {
         <div class="text-xs text-gray-500">Active Installs</div>
       </div>
     </div>`;
-  document.body.appendChild(panel);
+  (document.querySelector(".content") || document.body).appendChild(panel);
 }
 async function loadAllP48Fan() { await loadP48Fan(); }
 loadAllP48Fan();
@@ -7657,6 +7657,8 @@ loadAllP52Fan();
     </div>
     <!-- END PHASE 65 FAN PORTAL -->
 
-    <!-- END PHASE 65 FAN PORTAL -->
+    
+
+<script src="/static/portal-fix.js"></script>
 </body>
 </html>
