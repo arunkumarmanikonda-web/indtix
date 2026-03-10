@@ -6688,4 +6688,64 @@ loadAllP52Org();
       </div>
     </div>
   </div>
+
+  <!-- PHASE 73 PANEL -->
+  <div id="panel-p73-organiser" class="panel" style="display:none">
+    <div class="panel-header" style="background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;padding:24px;border-radius:12px;margin-bottom:24px">
+      <h2 style="margin:0;font-size:1.6rem">🍽️ Food, Beverage, Hospitality & Concessions</h2>
+      <p style="margin:8px 0 0;opacity:.9">Phase 73 — 2,840 concession stands · ₹840Cr revenue · 97.8% digital orders · FSSAI A+ · Zero incidents</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+      <div class="card" style="padding:20px;border-left:4px solid #ef4444">
+        <h3>🏪 Concessions</h3>
+        <p>2,840 stands · 28,400 menu items · 284K orders/event · ₹840 avg spend · 42% pre-orders · 2.4 min wait</p>
+        <button onclick="fetch('/api/v73/fnb-concessions/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Concessions</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #dc2626">
+        <h3>📱 Digital Ordering</h3>
+        <p>97.8% digital orders · 1.4 min avg order · 84.2% queue eliminated · AI upsell ₹28.4Cr · NPS 88</p>
+        <button onclick="fetch('/api/v73/digital-ordering/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Digital</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #b91c1c">
+        <h3>🥂 VIP Hospitality</h3>
+        <p>2,840 VIP lounges · 28 Michelin partners · ₹28,400 avg spend · 8 celebrity chefs · NPS 96</p>
+        <button onclick="fetch('/api/v73/vip-hospitality/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View VIP</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #991b1b">
+        <h3>📦 Smart Inventory</h3>
+        <p>28,400 SKUs · 2,840 suppliers · AI forecast 97.8% accuracy · 0.28% stockout · blockchain traceability</p>
+        <button onclick="fetch('/api/v73/fnb-inventory/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Inventory</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #ef4444">
+        <h3>🥗 Dietary & Allergen</h3>
+        <p>14 allergens tracked · 10 dietary filters · FSSAI compliant · 100% allergen labelled · Zero incidents</p>
+        <button onclick="fetch('/api/v73/dietary-mgmt/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Dietary</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #dc2626">
+        <h3>🍺 Bar Management</h3>
+        <p>2,840 bars · 84 craft beer brands · 284 cocktails · 99.8% age verification · RFID tracking</p>
+        <button onclick="fetch('/api/v73/bar-management/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Bar</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #b91c1c">
+        <h3>🔬 Food Safety</h3>
+        <p>28,400 IoT sensors · HACCP certified · FSSAI A+ · 0 incidents · 99.98% IoT uptime · Zero cold chain breaks</p>
+        <button onclick="fetch('/api/v73/food-safety/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Safety</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #991b1b">
+        <h3>🎤 Artist Catering</h3>
+        <p>28,400 artists catered · 99.2% rider fulfilment · 8,400 crew meals · 28 cuisines · 24/7 service</p>
+        <button onclick="fetch('/api/v73/artist-catering/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Catering</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #ef4444">
+        <h3>♻️ Sustainability</h3>
+        <p>97.8% biodegradable packaging · 284K kg food donated · 840K reusable cups · Zero landfill · 42% carbon saved</p>
+        <button onclick="fetch('/api/v73/fnb-sustainability/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Sustainability</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #dc2626">
+        <h3>📊 F&B Analytics</h3>
+        <p>₹840Cr total revenue · 42% YoY growth · NPS 88 · 97.8% digital · 9.2 satisfaction · 8.4 sustainability</p>
+        <button onclick="fetch('/api/v73/fnb-analytics/dashboard').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Analytics</button>
+      </div>
+    </div>
+  </div>
 </body></html>

@@ -69,6 +69,7 @@
     'p70-admin':'Phase 70 — Blockchain & Web3 Admin',
     'p71-admin':'Phase 71 — Live Streaming & Virtual Admin',
     'p72-admin':'Phase 72 — Sports Events & Stadium Admin',
+    'p73-admin':'Phase 73 — F&B & Hospitality Admin',
     // Organiser panels
     create:'Create Event', tickets:'Ticket Builder', seatmap:'Seat Map Config',
     addons:'Add-Ons & Merch', revenue:'Revenue Dashboard', invoices:'GST Invoices',
@@ -93,6 +94,7 @@
     'p70-organiser':'Phase 70 — Web3 Creator Tools',
     'p71-organiser':'Phase 71 — Hybrid Event Organiser',
     'p72-organiser':'Phase 72 — Sports Event Organiser',
+    'p73-organiser':'Phase 73 — F&B Event Organiser',
     'kyc-business':'Business KYC (Advanced)',
     // Venue panels
     profile:'Venue Profile', bookings:'Bookings', calendar:'Calendar',
@@ -115,6 +117,7 @@
     'p70-venue':'Phase 70 — Blockchain Venue',
     'p71-venue':'Phase 71 — Streaming Venue',
     'p72-venue':'Phase 72 — Smart Stadium Venue',
+    'p73-venue':'Phase 73 — Concessions Venue',
     // Event Manager panels
     runsheet:'Run Sheet', timeline:'Timeline', ops:'Ops Dashboard',
     wristbands:'Wristbands', pos:'Point of Sale', announce:'Announcements',
@@ -133,6 +136,7 @@
     'p70-em':'Phase 70 — Web3 Event Manager',
     'p71-em':'Phase 71 — Live Event Manager',
     'p72-em':'Phase 72 — Sports Event Manager',
+    'p73-em':'Phase 73 — F&B Event Manager',
     'team-v2':'Extended Team', 'tasks-v2':'Extended Tasks',
     'incidents-v2':'Extended Incidents',
     // Ops panels
@@ -148,6 +152,7 @@
     'p70-ops':'Phase 70 — Web3 Ops',
     'p71-ops':'Phase 71 — Stream Ops',
     'p72-ops':'Phase 72 — Stadium Ops',
+    'p73-ops':'Phase 73 — F&B Ops',
     // Fan panels
     'p26-fan':'Phase 26 — Social Commerce Fan',
     'p27-fan':'Phase 27 — Fan Experience',
@@ -158,7 +163,8 @@
     'p69-fan':'Phase 69 — AI Fan Personalisation',
     'p70-fan':'Phase 70 — Web3 Fan & NFT',
     'p71-fan':'Phase 71 — Live Streaming Fan',
-    'p72-fan':'Phase 72 — Sports Fan & Fantasy'
+    'p72-fan':'Phase 72 — Sports Fan & Fantasy',
+    'p73-fan':'Phase 73 — Food & Beverage Fan'
   };
 
   /* ─────────────────────────────────────────────────────────────────
@@ -410,7 +416,7 @@
     var icons = {
       'p25': '🧠', 'p26': '🛒', 'p27': '⚡', 'p28': '🤖',
       'p62': '🎯', 'p63': '🛡️', 'p64': '📊', 'p65': '🌟',
-      'p66': '🎨', 'p67': '🌿', 'p68': '♿', 'p69': '🤖', 'p70': '⛓️', 'p71': '📡', 'p72': '🏙️',
+      'p66': '🎨', 'p67': '🌿', 'p68': '♿', 'p69': '🤖', 'p70': '⛓️', 'p71': '📡', 'p72': '🏙️', 'p73': '🍽️',
       'kyc': '🪪', 'analytics': '📈', 'finance': '💰',
       'creator': '🎨', 'green': '🌿', 'access': '♿'
     };
@@ -686,7 +692,8 @@
       { key: 'p69', label: 'AI Intelligence', icon: '🤖', suffix: panelSuffix },
       { key: 'p70', label: 'Blockchain & Web3', icon: '⛓️', suffix: panelSuffix },
       { key: 'p71', label: 'Live & Virtual', icon: '📡', suffix: panelSuffix },
-      { key: 'p72', label: 'Sports & Stadium', icon: '🏙️', suffix: panelSuffix }
+      { key: 'p72', label: 'Sports & Stadium', icon: '🏙️', suffix: panelSuffix },
+      { key: 'p73', label: 'Food & Beverage', icon: '🍽️', suffix: panelSuffix }
     ];
 
     phases.forEach(function (ph) {
