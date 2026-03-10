@@ -4771,4 +4771,64 @@ loadAllP52EM();
   nav.appendChild(b);
 })();
 </script>
+
+  <!-- PHASE 71 PANEL -->
+  <div id="panel-p71-em" class="panel" style="display:none">
+    <div class="panel-header" style="background:linear-gradient(135deg,#0ea5e9,#06b6d4);color:#fff;padding:24px;border-radius:12px;margin-bottom:24px">
+      <h2 style="margin:0;font-size:1.6rem">📡 Live Streaming, Virtual & Hybrid Events</h2>
+      <p style="margin:8px 0 0;opacity:.9">Phase 71 — 2,840 concurrent streams · 28.4M viewers · ₹284Cr revenue · 99.98% uptime</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+      <div class="card" style="padding:20px;border-left:4px solid #0ea5e9">
+        <h3>📺 Live Streaming</h3>
+        <p>2,840 concurrent streams · 840K peak viewers · 4K/1080p adaptive · 284 CDN nodes · 800ms latency</p>
+        <button onclick="fetch('/api/v71/live-streaming/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Streams</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #06b6d4">
+        <h3>🌐 Virtual Events</h3>
+        <p>2,840 virtual events · 284K max attendees · VR/AR mode · Avatar support · 84.2% engagement rate</p>
+        <button onclick="fetch('/api/v71/virtual-events/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Virtual</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #0284c7">
+        <h3>🔀 Hybrid Events</h3>
+        <p>840 hybrid events · 36.8M combined reach · 3.38× virtual multiplier · 42% revenue uplift</p>
+        <button onclick="fetch('/api/v71/hybrid-events/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Hybrid</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #0369a1">
+        <h3>🎮 Audience Tools</h3>
+        <p>Live polls · Gamification · Q&A · 2.84M game players · 84.2% engagement lift · 284K responses/min</p>
+        <button onclick="fetch('/api/v71/audience-tools/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Tools</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #0ea5e9">
+        <h3>🎟️ Virtual Ticketing</h3>
+        <p>28.4M virtual tickets · PPV + Subscription + Bundle · ₹284Cr revenue · 284K subscribers · MRR ₹8.4Cr</p>
+        <button onclick="fetch('/api/v71/virtual-ticketing/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Tickets</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #06b6d4">
+        <h3>📼 VOD Library</h3>
+        <p>28,400 events archived · 284K hours content · 284M total views · AI chapters · 28-language subs</p>
+        <button onclick="fetch('/api/v71/content-vod/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View VOD</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #0284c7">
+        <h3>♿ Stream Accessibility</h3>
+        <p>28 languages · 97.8% caption accuracy · Sign language · BharatTrans-v2 · WCAG 2.2 AA compliant</p>
+        <button onclick="fetch('/api/v71/stream-accessibility/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Access</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #0369a1">
+        <h3>💰 Creator Revenue</h3>
+        <p>28,400 earning creators · ₹284Cr paid · Tips/SuperChat · ₹28.4Cr tips · 70% creator cut · 2.4hr payout</p>
+        <button onclick="fetch('/api/v71/creator-revenue/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Revenue</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #0ea5e9">
+        <h3>🎬 Production Tools</h3>
+        <p>AI director · 28 camera feeds · AR overlays · 2,840 graphics templates · Sponsor banners · OBS/vMix</p>
+        <button onclick="fetch('/api/v71/production-tools/overview').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Production</button>
+      </div>
+      <div class="card" style="padding:20px;border-left:4px solid #06b6d4">
+        <h3>📊 Stream Analytics</h3>
+        <p>840K peak concurrent · ₹284Cr revenue · 84.2% YoY growth · NPS 88 · Real-time + predictive AI</p>
+        <button onclick="fetch('/api/v71/stream-analytics/dashboard').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))" class="btn-primary">View Analytics</button>
+      </div>
+    </div>
+  </div>
 </body></html>
