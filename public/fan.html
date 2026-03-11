@@ -6373,13 +6373,13 @@ async function loadP34FanPrice(){try{const r=await fetch('/api/admin/ai-ops/reve
 async function loadP34FanForecast(){try{const r=await fetch('/api/admin/ai-ops/revenue/forecasting');const d=await r.json();document.getElementById('p34-fan-forecast-output').innerHTML='🔮 Next 30d: ₹'+d.revenue_next_30d_cr+'Cr | Next 90d: ₹'+d.revenue_next_90d_cr+'Cr<br>Accuracy: '+d.accuracy_last_quarter_pct+'% | MAPE: '+d.mape_pct+'%';}catch(e){document.getElementById('p34-fan-forecast-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
 </script>
 
-<div class="phase-section" id="p35-fan-section">
+<div style="display:none" class="phase-section" id="p35-fan-section">
   <h3>⚖️ Phase 35 — Platform Governance & Investor Info</h3>
   <div class="btn-row">
     <button onclick="loadP35FanIR()">Investor Relations</button>
     <button onclick="loadP35FanESG()">ESG & Sustainability</button>
   </div>
-  <div id="p35-fan-output" class="output-box"></div>
+  <div style="display:none" id="p35-fan-output" class="output-box"></div>
 </div>
 <script>
 async function loadP35FanIR() {
@@ -6484,7 +6484,7 @@ async function loadP37FanInteractive() {
 }
 </script>
 
-<div id="phase38-fan" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+<div id="phase38-fan" style="display:none;background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
   <h2 style="color:#f59e0b;font-size:1.3rem;margin-bottom:4px;">⚡ Phase 38 — Super-App & Lifestyle Commerce</h2>
   <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Your all-in-one fan super-app: food, travel, gaming, shopping, BNPL & lifestyle rewards</p>
 
@@ -6569,7 +6569,7 @@ async function loadFanSubs() {
 loadFanFnB(); loadFanTravel(); loadFanGaming(); loadFanBNPL();
 </script>
 
-<div id="phase39-fan" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+<div id="phase39-fan" style="display:none;background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
   <h2 style="color:#06b6d4;font-size:1.3rem;margin-bottom:4px;">🧠 Phase 39 — AI-Powered Fan Intelligence</h2>
   <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Personalised recommendations · Smart chatbot · Voice AI · Privacy-first data management</p>
 
@@ -6633,7 +6633,7 @@ async function loadFanSentiment() {
 loadFanChat(); loadFanPrivacy();
 </script>
 
-<div id="phase40-fan" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+<div id="phase40-fan" style="display:none;background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
   <h2 style="color:#10b981;font-size:1.3rem;margin-bottom:4px;">💳 Phase 40 — Your Payments & Wallet</h2>
   <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">UPI · Cards · BNPL · Fan Wallet · Prepaid Cards · Event Insurance · Instant Refunds</p>
 

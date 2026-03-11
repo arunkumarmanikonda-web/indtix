@@ -3253,14 +3253,14 @@ async function loadP34OpsObs(){const r=await fetch('/api/ops/ai-ops/sre/observab
 <!-- END PHASE 34 OPS PORTAL -->
 
 <!-- PHASE 35 OPS PORTAL: IPO & Governance Ops -->
-<div class="phase-section" id="p35-ops-section">
+<div style="display:none" class="phase-section" id="p35-ops-section">
   <h3>⚖️ Phase 35 — IPO Ops, Regulatory Calendar & SOX Controls</h3>
   <div class="btn-row">
     <button onclick="loadP35OpsRegCalendar()">Regulatory Calendar</button>
     <button onclick="loadP35OpsSOX()">SOX Controls</button>
     <button onclick="loadP35OpsInsurance()">Insurance Coverage</button>
   </div>
-  <div id="p35-ops-output" class="output-box"></div>
+  <div style="display:none" id="p35-ops-output" class="output-box"></div>
 </div>
 <script>
 async function loadP35OpsRegCalendar() {
@@ -3350,7 +3350,7 @@ async function loadP37OpsTelemetry() {
 <!-- END PHASE 37 OPS PORTAL -->
 
 <!-- PHASE 38 OPS PORTAL: Super-App, Lifestyle & Fan Commerce -->
-<div id="phase38-ops" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+<div id="phase38-ops" style="display:none;background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
   <h2 style="color:#f59e0b;font-size:1.3rem;margin-bottom:4px;">⚡ Phase 38 — Operations: Commerce & Subscriptions</h2>
   <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Subscription ops · BNPL risk monitoring · Lifestyle partner network · F&B logistics · Commerce SLA</p>
 
@@ -3406,7 +3406,7 @@ loadAllP38Ops();
 <!-- END PHASE 38 OPS PORTAL -->
 
 <!-- PHASE 39 OPS PORTAL: AIOps, Data Streaming & Graph Intelligence -->
-<div id="phase39-ops" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+<div id="phase39-ops" style="display:none;background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
   <h2 style="color:#06b6d4;font-size:1.3rem;margin-bottom:4px;">🧠 Phase 39 — Ops: AIOps, Streaming & Graph Intel</h2>
   <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Real-time pipeline health · Observability & incident management · Fraud graph · Capacity forecasting</p>
 
@@ -3482,7 +3482,7 @@ loadAllP39Ops();
 <!-- END PHASE 39 OPS PORTAL -->
 
 <!-- PHASE 40 OPS PORTAL: Payments Operations & Financial Risk -->
-<div id="phase40-ops" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+<div id="phase40-ops" style="display:none;background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
   <h2 style="color:#10b981;font-size:1.3rem;margin-bottom:4px;">💳 Phase 40 — Ops: Payments, Risk & Treasury</h2>
   <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Gateway health · Fraud monitoring · AML · Reconciliation · Treasury operations · Settlement ops</p>
 

@@ -3315,13 +3315,13 @@ async function loadP34EMHR(){try{const r=await fetch('/api/admin/ai-ops/hr/dashb
 <!-- END PHASE 34 EVENT MANAGER -->
 
 <!-- PHASE 35 EVENT MANAGER: Audit & Compliance -->
-<div class="phase-section" id="p35-em-section">
+<div style="display:none" class="phase-section" id="p35-em-section">
   <h3>⚖️ Phase 35 — Financial Audit & Compliance</h3>
   <div class="btn-row">
     <button onclick="loadP35EMAudit()">Audit Dashboard</button>
     <button onclick="loadP35EMCompliance()">Compliance Status</button>
   </div>
-  <div id="p35-em-output" class="output-box"></div>
+  <div style="display:none" id="p35-em-output" class="output-box"></div>
 </div>
 <script>
 async function loadP35EMAudit() {
@@ -3411,7 +3411,7 @@ async function loadP37EMChat() {
 <!-- END PHASE 37 EVENT MANAGER -->
 
 <!-- PHASE 38 EVENT MANAGER PORTAL: Super-App, Lifestyle & Fan Commerce -->
-<div id="phase38-em" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+<div id="phase38-em" style="display:none;background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
   <h2 style="color:#f59e0b;font-size:1.3rem;margin-bottom:4px;">⚡ Phase 38 — Event Commerce Management</h2>
   <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Manage F&B vendors · NFT merchandise · Esports integrations · Fan subscriptions for your events</p>
 
@@ -3467,7 +3467,7 @@ loadAllP38EM();
 <!-- END PHASE 38 EVENT MANAGER -->
 
 <!-- PHASE 39 EVENT MANAGER PORTAL: Predictive Intelligence & CV -->
-<div id="phase39-em" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+<div id="phase39-em" style="display:none;background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
   <h2 style="color:#06b6d4;font-size:1.3rem;margin-bottom:4px;">🧠 Phase 39 — Event AI: Demand, CV & Experiments</h2>
   <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Real-time demand signals · CV ticket validation · Pricing recommendations · A/B test results</p>
 
@@ -3523,7 +3523,7 @@ loadAllP39EM();
 <!-- END PHASE 39 EVENT MANAGER -->
 
 <!-- PHASE 40 EVENT MANAGER PORTAL: Financial & Tax Tools -->
-<div id="phase40-em" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+<div id="phase40-em" style="display:none;background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
   <h2 style="color:#10b981;font-size:1.3rem;margin-bottom:4px;">💳 Phase 40 — Event Finance & Tax Management</h2>
   <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">GST invoicing · Payment settlement · Revenue P&L · Vendor payouts · Artist royalties</p>
 

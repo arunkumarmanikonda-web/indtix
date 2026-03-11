@@ -3022,13 +3022,13 @@ async function loadP34VenueStaff(){try{const r=await fetch('/api/admin/ai-ops/op
 <!-- END PHASE 34 VENUE PORTAL -->
 
 <!-- PHASE 35 VENUE PORTAL: Risk & Compliance -->
-<div class="phase-section" id="p35-venue-section">
+<div style="display:none" class="phase-section" id="p35-venue-section">
   <h3>⚖️ Phase 35 — Risk & Regulatory Compliance</h3>
   <div class="btn-row">
     <button onclick="loadP35VenueRisk()">Risk Dashboard</button>
     <button onclick="loadP35VenueBCP()">BCP/DRP Status</button>
   </div>
-  <div id="p35-venue-output" class="output-box"></div>
+  <div style="display:none" id="p35-venue-output" class="output-box"></div>
 </div>
 <script>
 async function loadP35VenueRisk() {
@@ -3097,7 +3097,7 @@ async function loadP37VenueAccessibility() {
 <!-- END PHASE 37 VENUE PORTAL -->
 
 <!-- PHASE 38 VENUE PORTAL: Super-App, Lifestyle & Fan Commerce -->
-<div id="phase38-venue" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+<div id="phase38-venue" style="display:none;background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
   <h2 style="color:#f59e0b;font-size:1.3rem;margin-bottom:4px;">⚡ Phase 38 — Venue Commerce & F&B</h2>
   <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">In-venue food & beverage · Merchandise stalls · Fan BNPL · Wellness amenities</p>
 
@@ -3149,7 +3149,7 @@ loadAllP38Venue();
 <!-- END PHASE 38 VENUE PORTAL -->
 
 <!-- PHASE 39 VENUE PORTAL: Computer Vision & Graph Analytics -->
-<div id="phase39-venue" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+<div id="phase39-venue" style="display:none;background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
   <h2 style="color:#06b6d4;font-size:1.3rem;margin-bottom:4px;">🧠 Phase 39 — CV & Smart Venue Intelligence</h2>
   <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Crowd density AI · Safety monitoring · Ticket validation CV · Venue flow graph analysis</p>
 
@@ -3201,7 +3201,7 @@ loadAllP39Venue();
 <!-- END PHASE 39 VENUE PORTAL -->
 
 <!-- PHASE 40 VENUE PORTAL: Payments at Venue -->
-<div id="phase40-venue" style="background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
+<div id="phase40-venue" style="display:none;background:#0f172a;color:#e2e8f0;padding:22px;margin-top:22px;border-radius:12px;font-family:system-ui,sans-serif;">
   <h2 style="color:#10b981;font-size:1.3rem;margin-bottom:4px;">💳 Phase 40 — Venue Payment Terminals</h2>
   <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Tap-to-pay · UPI QR · Biometric Aadhaar Pay · Wallet top-ups · F&B cashless payments</p>
 
