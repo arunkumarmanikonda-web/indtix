@@ -1,6 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script id="ix-api-client">
+/* INDTIX Global API Client v2 — JWT + auto-refresh + retry + toast */
+(function(){
+'use strict';
+const TK='ix_access_token', RK='ix_refresh_token', UK='ix_user';
+const TS={
+  get:()=>sessionStorage.getItem(TK),
+  set:(t)=>sessionStorage.setItem(TK,t),
+  getRf:()=>sessionStorage.getItem(RK),
+  setRf:(t)=>sessionStorage.setItem(RK,t),
+  getUser:()=>{try{return JSON.parse(sessionStorage.getItem(UK)||'null')}catch{return null}},
+  setUser:(u)=>sessionStorage.setItem(UK,JSON.stringify(u)),
+  clear:()=>{sessionStorage.removeItem(TK);sessionStorage.removeItem(RK);sessionStorage.removeItem(UK)},
+  expiringSoon:()=>{
+    const t=TS.get();if(!t)return true;
+    try{const p=JSON.parse(atob(t.split('.')[1]));return(p.exp-Math.floor(Date.now()/1000))<300}
+    catch{return true}
+  }
+};
+let _refreshing=null;
+async function refreshToken(){
+  if(_refreshing)return _refreshing;
+  _refreshing=(async()=>{
+    const rf=TS.getRf();if(!rf){_refreshing=null;return false;}
+    try{
+      const r=await fetch('/api/auth/refresh',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({refreshToken:rf})});
+      if(!r.ok){TS.clear();_refreshing=null;return false;}
+      const d=await r.json();
+      if(d.accessToken){TS.set(d.accessToken);_refreshing=null;return true;}
+      _refreshing=null;return false;
+    }catch{_refreshing=null;return false;}
+  })();
+  return _refreshing;
+}
+const INFLIGHT=new Map();
+async function apiFetch(url,opts={}){
+  const{retries=2,retryDelay=500,silent=false,dedupe=true,timeout=15000,...fOpts}=opts;
+  if(TS.expiringSoon()&&TS.getRf())await refreshToken();
+  const hdrs={'Content-Type':'application/json','X-Request-ID':crypto.randomUUID(),...(fOpts.headers||{})};
+  const tk=TS.get();if(tk)hdrs['Authorization']='Bearer '+tk;
+  let body=null;
+  if(opts.body!==undefined&&opts.body!==null)body=typeof opts.body==='string'?opts.body:JSON.stringify(opts.body);
+  const finalOpts={...fOpts,headers:hdrs,body:body??fOpts.body};
+  const method=(finalOpts.method||'GET').toUpperCase();
+  const dk=`${method}:${url}`;
+  if(dedupe&&method==='GET'&&INFLIGHT.has(dk))return INFLIGHT.get(dk);
+  async function exec(attempt){
+    if(!navigator.onLine){if(!silent)ixToast('No internet connection','warning');return{data:null,error:'offline',status:0,ok:false};}
+    const ctrl=new AbortController();const timer=setTimeout(()=>ctrl.abort(),timeout);
+    try{
+      const res=await fetch(url,{...finalOpts,signal:ctrl.signal});
+      clearTimeout(timer);
+      if(res.status===401&&attempt===0){
+        const rfd=await refreshToken();
+        if(rfd){const nt=TS.get();if(nt)(finalOpts.headers)['Authorization']='Bearer '+nt;return exec(1);}
+        else{TS.clear();if(!silent)ixToast('Session expired — please log in again','warning');window.dispatchEvent(new CustomEvent('ix:session-expired'));return{data:null,error:'Session expired',status:401,ok:false};}
+      }
+      let data=null;
+      if(res.status!==204){try{data=res.headers.get('Content-Type')?.includes('json')?await res.json():await res.text()}catch{}}
+      if(!res.ok){const em=(data?.error||data?.message||`HTTP ${res.status}`);if(!silent)ixToast(em,res.status>=500?'error':'warning');return{data:null,error:em,status:res.status,ok:false};}
+      return{data,error:null,status:res.status,ok:true};
+    }catch(e){
+      clearTimeout(timer);
+      if(e.name==='AbortError'){if(!silent)ixToast('Request timed out','warning');return{data:null,error:'timeout',status:408,ok:false};}
+      if(attempt<retries){await new Promise(r=>setTimeout(r,retryDelay*Math.pow(2,attempt)));return exec(attempt+1);}
+      if(!silent)ixToast(e.message||'Network error','error');
+      return{data:null,error:e.message,status:0,ok:false};
+    }
+  }
+  const p=exec(0).finally(()=>{if(method==='GET')INFLIGHT.delete(dk);});
+  if(dedupe&&method==='GET')INFLIGHT.set(dk,p);
+  return p;
+}
+function ixToast(msg,type='info',dur=4000){
+  const ef=window.showToast||window.ixToastFn;if(typeof ef==='function'){ef(msg,type);return;}
+  let c=document.getElementById('ix-tc');
+  if(!c){c=document.createElement('div');c.id='ix-tc';c.style.cssText='position:fixed;bottom:24px;right:24px;z-index:99999;display:flex;flex-direction:column;gap:8px;pointer-events:none';document.body.appendChild(c);}
+  const cl={'success':'#10b981','error':'#ef4444','warning':'#f59e0b','info':'#3b82f6'};
+  const ic={'success':'✅','error':'❌','warning':'⚠️','info':'ℹ️'};
+  const t=document.createElement('div');
+  t.style.cssText=`background:${cl[type]};color:#fff;padding:12px 16px;border-radius:8px;font-size:14px;font-weight:500;pointer-events:auto;box-shadow:0 4px 12px rgba(0,0,0,.3);max-width:360px`;
+  t.textContent=`${ic[type]} ${msg}`;c.appendChild(t);setTimeout(()=>t.remove(),dur);
+}
+const api={
+  get:(url,o)=>apiFetch(url,{...o,method:'GET'}),
+  post:(url,b,o)=>apiFetch(url,{...o,method:'POST',body:b}),
+  put:(url,b,o)=>apiFetch(url,{...o,method:'PUT',body:b}),
+  patch:(url,b,o)=>apiFetch(url,{...o,method:'PATCH',body:b}),
+  delete:(url,o)=>apiFetch(url,{...o,method:'DELETE'})
+};
+const IxAuth={
+  async login(email,password){
+    const r=await api.post('/api/auth/login',{email,password},{silent:true});
+    if(r.ok&&r.data?.accessToken){
+      TS.set(r.data.accessToken);
+      if(r.data.refreshToken)TS.setRf(r.data.refreshToken);
+      if(r.data.user)TS.setUser(r.data.user);
+      window.CURRENT_USER_ID=r.data.user?.userId||'';
+      window._ixAuthUser=r.data.user;
+    }
+    return r;
+  },
+  logout(){
+    api.post('/api/auth/logout',{},{silent:true}).catch(()=>{});
+    TS.clear();window.CURRENT_USER_ID='';window._ixAuthUser=null;
+    window.dispatchEvent(new CustomEvent('ix:logout'));
+  },
+  getUser(){return TS.getUser()||window._ixAuthUser||null;},
+  isLoggedIn(){
+    const t=TS.get();if(!t)return false;
+    try{const p=JSON.parse(atob(t.split('.')[1]));return p.exp>Math.floor(Date.now()/1000);}
+    catch{return false;}
+  }
+};
+window.apiFetch=apiFetch;window.api=api;window.IxAuth=IxAuth;window.TokenStore=TS;window.ixToast=ixToast;
+window.addEventListener('ix:session-expired',()=>{
+  const m=document.getElementById('loginModal')||document.getElementById('ix-auth-gate');
+  if(m)m.style.display='flex';
+});
+/* Replace old fetch calls that don't have .catch — use apiFetch instead */
+window.CURRENT_USER_ID=TS.getUser()?.userId||window.CURRENT_USER_ID||'';
+})();
+</script>
+<div id="ix-user-badge" style="position:fixed;top:12px;right:16px;z-index:9998;display:none;align-items:center;gap:8px;background:rgba(108,60,247,0.15);backdrop-filter:blur(10px);border:1px solid rgba(108,60,247,0.3);border-radius:50px;padding:6px 12px">
+  <span id="ix-badge-avatar" style="font-size:16px">👤</span>
+  <span id="ix-badge-name" style="color:#e2d9f3;font-size:13px;font-weight:500;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
+  <span id="ix-badge-role" style="color:#a78bfa;font-size:11px;background:rgba(108,60,247,0.3);border-radius:50px;padding:2px 8px;font-weight:600"></span>
+  <button onclick="IxAuth&&IxAuth.logout?IxAuth.logout():sessionStorage.clear()||location.reload()" 
+    style="background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);color:#fca5a5;border-radius:50px;padding:4px 10px;font-size:11px;cursor:pointer;font-weight:600">Logout</button>
+</div>
+<script>
+(function(){
+  function showBadge(){
+    const u=window._ixAuthUser||(()=>{try{return JSON.parse(sessionStorage.getItem('ix_user')||'null')}catch{return null}})();
+    if(!u)return;
+    const b=document.getElementById('ix-user-badge');
+    if(!b)return;
+    document.getElementById('ix-badge-avatar').textContent=u.avatar||'👤';
+    document.getElementById('ix-badge-name').textContent=u.name||u.email||'';
+    document.getElementById('ix-badge-role').textContent=(u.badge||u.role||'').replace(/_/g,' ');
+    b.style.display='flex';
+  }
+  document.addEventListener('DOMContentLoaded',showBadge);
+  window.addEventListener('ix:logout',()=>{
+    const b=document.getElementById('ix-user-badge');
+    if(b)b.style.display='none';
+    document.getElementById('ix-auth-gate').style.display='flex';
+  });
+  setTimeout(showBadge,500);
+})();
+</script>
 <style id="_ix_fouc_base">
 /* INDTIX Anti-FOUC — panels hidden until JS activates them */
 .panel{display:none!important}
@@ -545,190 +696,90 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
 </script>
 </head>
 <body>
+<div id="ix-auth-gate" style="position:fixed;inset:0;background:linear-gradient(135deg,#0a0a0f 0%,#1a0533 50%,#0d1b2a 100%);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;font-family:Inter,system-ui,sans-serif">
+<div style="background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:40px;width:100%;max-width:420px;box-shadow:0 25px 50px rgba(0,0,0,0.5)">
+  <div style="text-align:center;margin-bottom:28px">
+    <div style="font-size:48px;margin-bottom:8px">🎵</div>
+    <div style="color:#fff;font-size:24px;font-weight:700;margin-bottom:4px">INDTIX</div>
+    <div style="color:rgba(255,255,255,0.6);font-size:14px">Fan Portal</div>
+  </div>
+  <div id="ix-gate-error" style="display:none;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);border-radius:8px;padding:10px 14px;color:#fca5a5;font-size:13px;margin-bottom:16px;text-align:center"></div>
+  <form id="ix-gate-form" onsubmit="return false" style="display:flex;flex-direction:column;gap:14px">
+    <div>
+      <label style="color:rgba(255,255,255,0.7);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px">Email</label>
+      <input id="ix-gate-email" type="email" value="fan@demo.indtix.com" autocomplete="email" placeholder="Enter your email"
+        style="width:100%;padding:12px 14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:15px;outline:none;box-sizing:border-box;transition:border .2s"
+        onfocus="this.style.borderColor='#6C3CF7'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'"/>
+    </div>
+    <div>
+      <label style="color:rgba(255,255,255,0.7);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px">Password</label>
+      <input id="ix-gate-password" type="password" value="Fan@Demo2024" autocomplete="current-password" placeholder="Enter your password"
+        style="width:100%;padding:12px 14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:15px;outline:none;box-sizing:border-box;transition:border .2s"
+        onfocus="this.style.borderColor='#6C3CF7'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'"/>
+    </div>
+    <button id="ix-gate-submit" type="button" onclick="ixGateLogin()"
+      style="padding:14px;background:linear-gradient(135deg,#6C3CF7,#a855f7);border:none;border-radius:10px;color:#fff;font-size:16px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-top:4px"
+      onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='1'">
+      Sign In to Fan Portal
+    </button>
+  </form>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08);text-align:center">
+    <div style="color:rgba(255,255,255,0.4);font-size:11px;margin-bottom:8px">DEMO CREDENTIALS (pre-filled)</div>
+    <div style="color:rgba(255,255,255,0.6);font-size:12px;font-family:monospace">fan@demo.indtix.com</div>
+    <div style="color:rgba(255,255,255,0.6);font-size:12px;font-family:monospace">Fan@Demo2024</div>
+  </div>
+  <div style="text-align:center;margin-top:16px">
+    <a href="/portals.html" style="color:#a78bfa;font-size:12px;text-decoration:none">← All Portals</a>
+  </div>
+</div>
+</div>
+<script>
+(function(){
+const ALLOWED_ROLES=["fan", "organiser", "venue_manager", "event_manager", "ops_admin", "superadmin"];
+// Check existing session
+const existingToken=sessionStorage.getItem('ix_access_token');
+if(existingToken){
+  try{
+    const p=JSON.parse(atob(existingToken.split('.')[1]));
+    if(p.exp>Math.floor(Date.now()/1000)&&ALLOWED_ROLES.includes(p.role)){
+      document.getElementById('ix-auth-gate').style.display='none';
+      window.CURRENT_USER_ID=p.sub||'';
+      const u=sessionStorage.getItem('ix_user');
+      if(u)window._ixAuthUser=JSON.parse(u);
+      return;
+    }
+  }catch{}
+}
+async function ixGateLogin(){
+  const btn=document.getElementById('ix-gate-submit');
+  const errEl=document.getElementById('ix-gate-error');
+  const email=document.getElementById('ix-gate-email').value.trim();
+  const pw=document.getElementById('ix-gate-password').value;
+  if(!email||!pw){errEl.textContent='Email and password required';errEl.style.display='block';return;}
+  btn.textContent='Signing in…';btn.disabled=true;errEl.style.display='none';
+  try{
+    const r=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pw})});
+    const d=await r.json();
+    if(!d.success||!d.accessToken){errEl.textContent=d.error||'Login failed';errEl.style.display='block';btn.textContent='Sign In to Fan Portal';btn.disabled=false;return;}
+    if(!ALLOWED_ROLES.includes(d.user?.role)){errEl.textContent='Access denied: your role ('+d.user?.role+') cannot access this portal';errEl.style.display='block';btn.textContent='Sign In to Fan Portal';btn.disabled=false;return;}
+    sessionStorage.setItem('ix_access_token',d.accessToken);
+    if(d.refreshToken)sessionStorage.setItem('ix_refresh_token',d.refreshToken);
+    if(d.user)sessionStorage.setItem('ix_user',JSON.stringify(d.user));
+    window.CURRENT_USER_ID=d.user?.userId||'';
+    window._ixAuthUser=d.user;
+    document.getElementById('ix-auth-gate').style.display='none';
+    if(typeof window.onIxAuthSuccess==='function')window.onIxAuthSuccess(d.user);
+  }catch(e){errEl.textContent='Network error: '+e.message;errEl.style.display='block';btn.textContent='Sign In to Fan Portal';btn.disabled=false;}
+}
+window.ixGateLogin=ixGateLogin;
+document.getElementById('ix-gate-password').addEventListener('keydown',function(e){if(e.key==='Enter')ixGateLogin();});
+})();
+</script>
+
 <!-- ╔══════════════════════════════════════════════════════╗ -->
 <!-- ║  INDTIX AUTH GATE — Fan Portal                      ║ -->
 <!-- ╚══════════════════════════════════════════════════════╝ -->
-<div id="ix-auth-gate" style="position:fixed;inset:0;background:#0a0a0f;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif">
-  <div style="width:100%;max-width:440px;padding:24px;margin:0 auto">
-    <!-- Logo -->
-    <div style="text-align:center;margin-bottom:32px">
-      <div style="width:64px;height:64px;background:linear-gradient(135deg,#6C3CF7,#3B82F6);border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;font-weight:900;color:#fff;font-family:'Space Grotesk',sans-serif;box-shadow:0 8px 32px rgba(108,60,247,.4)">IX</div>
-      <div style="font-size:24px;font-weight:700;color:#f1f5f9;font-family:'Space Grotesk',sans-serif">INDTIX</div>
-      <div style="font-size:13px;color:#64748b;margin-top:4px">Fan Portal</div>
-    </div>
-    <!-- Card -->
-    <div style="background:#0f172a;border:1px solid #1e293b;border-radius:20px;padding:32px">
-      <h2 style="font-size:20px;font-weight:700;color:#f1f5f9;margin:0 0 6px;font-family:'Space Grotesk',sans-serif">Sign In</h2>
-      <p style="font-size:13px;color:#64748b;margin:0 0 24px">Access your fan portal</p>
-      <!-- Demo credentials hint -->
-      <div id="ix-demo-hint" style="background:rgba(108,60,247,.12);border:1px solid rgba(108,60,247,.3);border-radius:10px;padding:12px 14px;margin-bottom:20px;cursor:pointer" onclick="ix_fillDemo()">
-        <div style="font-size:11px;color:#7c3aed;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">⚡ Demo Credentials (click to fill)</div>
-        <div style="font-size:12px;color:#a78bfa">🎵 <strong>Arjun Sharma</strong> — Gold Fan</div>
-        <div style="font-size:11px;color:#64748b;margin-top:3px">fan@demo.indtix.com / Fan@Demo2024</div>
-      </div>
-      <!-- Email -->
-      <div style="margin-bottom:16px">
-        <label style="font-size:12px;color:#94a3b8;font-weight:600;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:6px">Email</label>
-        <input id="ix-login-email" type="email" value="" placeholder="fan@demo.indtix.com" style="width:100%;padding:12px 14px;background:#1e293b;border:1px solid #334155;border-radius:10px;color:#f1f5f9;font-size:14px;outline:none;box-sizing:border-box;font-family:inherit" onfocus="this.style.borderColor='#6C3CF7'" onblur="this.style.borderColor='#334155'">
-      </div>
-      <!-- Password -->
-      <div style="margin-bottom:8px">
-        <label style="font-size:12px;color:#94a3b8;font-weight:600;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:6px">Password</label>
-        <div style="position:relative">
-          <input id="ix-login-pass" type="password" value="" placeholder="••••••••••" style="width:100%;padding:12px 14px;background:#1e293b;border:1px solid #334155;border-radius:10px;color:#f1f5f9;font-size:14px;outline:none;box-sizing:border-box;font-family:inherit" onfocus="this.style.borderColor='#6C3CF7'" onblur="this.style.borderColor='#334155'" onkeydown="if(event.key==='Enter')ix_doLogin()">
-          <button onclick="var i=document.getElementById('ix-login-pass');i.type=i.type==='password'?'text':'password'" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:16px">👁</button>
-        </div>
-      </div>
-      <!-- Error -->
-      <div id="ix-login-error" style="display:none;color:#f87171;font-size:12px;margin:8px 0;padding:8px 12px;background:rgba(248,113,113,.1);border-radius:8px;border:1px solid rgba(248,113,113,.2)"></div>
-      <!-- Submit -->
-      <button id="ix-login-btn" onclick="ix_doLogin()" style="width:100%;padding:14px;background:linear-gradient(135deg,#6C3CF7,#3B82F6);border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px;font-family:inherit;letter-spacing:.3px;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
-        Sign In →
-      </button>
-      <!-- Forgot -->
-      <div style="text-align:center;margin-top:16px">
-        <a href="#" onclick="ix_showForgot(event)" style="font-size:12px;color:#6C3CF7;text-decoration:none">Forgot password?</a>
-        <span style="color:#334155;margin:0 8px">·</span>
-        <a href="/portals.html" style="font-size:12px;color:#64748b;text-decoration:none">← All Portals</a>
-      </div>
-    </div>
-    <!-- Footer note -->
-    <div style="text-align:center;margin-top:20px;font-size:11px;color:#334155">
-      🔒 Secured by INDTIX Auth · Role: <span style="color:#6C3CF7;font-weight:600">Gold Fan</span>
-    </div>
-  </div>
-</div>
-<!-- ─── AUTH GATE SCRIPT ─────────────────────────────────────────────── -->
-<script>
-(function(){
-  var VALID_EMAIL = 'fan@demo.indtix.com';
-  var VALID_PASS  = 'Fan@Demo2024';
-  var DEMO_USER   = {"email": "fan@demo.indtix.com", "password": "Fan@Demo2024", "name": "Arjun Sharma", "role": "fan", "userId": "USR-FAN-001", "avatar": "\ud83c\udfb5", "portal": "fan.html", "badge": "Gold Fan", "city": "Mumbai"};
-  var SESSION_KEY = 'ix_session_fan';
-  
-  // Check existing session
-  try {
-    var sess = JSON.parse(sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY) || 'null');
-    if (sess && sess.userId && sess.expiresAt > Date.now()) {
-      window.ixUser = sess;
-      window.getCurrentUserId = function() { return sess.userId; };
-      ix_hideGate();
-      ix_applyUser(sess);
-      return;
-    }
-  } catch(e) {}
-  
-  // Fill demo credentials helper
-  window.ix_fillDemo = function() {
-    document.getElementById('ix-login-email').value = VALID_EMAIL;
-    document.getElementById('ix-login-pass').value = VALID_PASS;
-    document.getElementById('ix-login-error').style.display = 'none';
-  };
-  
-  // Show forgot password
-  window.ix_showForgot = function(e) {
-    e.preventDefault();
-    alert('Demo Mode: Use the demo credentials shown above.\n\nEmail: ' + VALID_EMAIL + '\nPassword: ' + VALID_PASS);
-  };
-  
-  // Do login
-  window.ix_doLogin = async function() {
-    var email = (document.getElementById('ix-login-email').value || '').trim().toLowerCase();
-    var pass  = (document.getElementById('ix-login-pass').value || '').trim();
-    var btn   = document.getElementById('ix-login-btn');
-    var err   = document.getElementById('ix-login-error');
-    
-    err.style.display = 'none';
-    btn.disabled = true;
-    btn.textContent = 'Signing in...';
-    
-    // Simulate network call
-    await new Promise(r => setTimeout(r, 600));
-    
-    var emailOk = email === VALID_EMAIL || email === '';
-    var passOk  = pass  === VALID_PASS  || pass === '';
-    
-    // Also try API auth
-    var apiOk = false;
-    try {
-      var res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ email: email || VALID_EMAIL, password: pass || VALID_PASS, role: DEMO_USER.role })
-      });
-      var d = await res.json();
-      if (d.success) { apiOk = true; Object.assign(DEMO_USER, d.user || {}); }
-    } catch(_) {}
-    
-    if (emailOk && passOk || apiOk) {
-      var session = Object.assign({}, DEMO_USER, {
-        loginAt: Date.now(),
-        expiresAt: Date.now() + 8 * 3600 * 1000, // 8 hour session
-        token: 'demo_' + Math.random().toString(36).substr(2)
-      });
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
-      localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-      window.ixUser = session;
-      window.getCurrentUserId = function() { return session.userId; };
-      ix_hideGate();
-      ix_applyUser(session);
-    } else {
-      err.textContent = '❌ Invalid credentials. Try the demo credentials above.';
-      err.style.display = 'block';
-      btn.disabled = false;
-      btn.textContent = 'Sign In →';
-    }
-  };
-  
-  // Hide gate + show portal
-  window.ix_hideGate = function() {
-    var gate = document.getElementById('ix-auth-gate');
-    if (gate) {
-      gate.style.transition = 'opacity .4s';
-      gate.style.opacity = '0';
-      setTimeout(function() { gate.style.display = 'none'; }, 400);
-    }
-    document.body.style.overflow = '';
-  };
-  
-  // Apply user context to page
-  window.ix_applyUser = function(user) {
-    // Set global user for all API calls
-    window.CURRENT_USER_ID = user.userId;
-    window.CURRENT_USER    = user;
-    window.getCurrentUserId = function() { return user.userId; };
-    
-    // Update nav user display if exists
-    var navUser = document.getElementById('nav-user-name') || document.getElementById('user-name');
-    if (navUser) navUser.textContent = user.name;
-    var navAvatar = document.getElementById('nav-user-avatar') || document.getElementById('user-avatar');
-    if (navAvatar) navAvatar.textContent = user.avatar || '👤';
-    
-    // Dispatch auth ready event
-    document.dispatchEvent(new CustomEvent('ix:auth:ready', { detail: user }));
-  };
-  
-  // Logout function
-  window.ix_logout = function() {
-    sessionStorage.removeItem(SESSION_KEY);
-    localStorage.removeItem(SESSION_KEY);
-    window.ixUser = null;
-    location.reload();
-  };
-  
-  // Block body scroll while gate visible
-  document.body.style.overflow = 'hidden';
-  
-  // Enter key on email → focus password
-  document.addEventListener('DOMContentLoaded', function() {
-    var emailInput = document.getElementById('ix-login-email');
-    var passInput  = document.getElementById('ix-login-pass');
-    if (emailInput) emailInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') { passInput && passInput.focus(); }
-    });
-  });
-})();
-</script>
+
 <!-- ─── END AUTH GATE ─────────────────────────────────────────────────── -->
 
 

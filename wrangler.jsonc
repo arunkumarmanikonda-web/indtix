@@ -5,5 +5,83 @@
   "pages_build_output_dir": "./dist",
   "compatibility_flags": [
     "nodejs_compat"
-  ]
+  ],
+
+  "// D1_DATABASE": "Create with: wrangler d1 create INDTIX_DB",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "INDTIX_DB",
+      "database_id": "YOUR_D1_DATABASE_ID_HERE",
+      "preview_database_id": "YOUR_D1_PREVIEW_DATABASE_ID_HERE",
+      "migrations_dir": "db"
+    }
+  ],
+
+  "// KV_NAMESPACES": "Create with: wrangler kv namespace create CACHE",
+  "kv_namespaces": [
+    {
+      "binding": "CACHE",
+      "id": "YOUR_KV_NAMESPACE_ID_HERE",
+      "preview_id": "YOUR_KV_PREVIEW_NAMESPACE_ID_HERE"
+    }
+  ],
+
+  "// VARS": "Non-secret environment variables (use wrangler secret for secrets)",
+  "vars": {
+    "ENV": "production",
+    "PLATFORM_NAME": "INDTIX",
+    "CMS_PROVIDER": "d1",
+    "LOG_LEVEL": "warn"
+  },
+
+  "// SECRETS": "Set with: wrangler secret put JWT_SECRET",
+  "// SECRET_LIST": [
+    "JWT_SECRET",
+    "RAZORPAY_KEY_ID",
+    "RAZORPAY_KEY_SECRET",
+    "CONTENTFUL_DELIVERY_TOKEN",
+    "CONTENTFUL_SPACE_ID",
+    "SANITY_API_TOKEN",
+    "SENDGRID_API_KEY",
+    "TWILIO_AUTH_TOKEN",
+    "SENTRY_DSN"
+  ],
+
+  "// ANALYTICS": "Cloudflare Analytics Engine (optional)",
+  "analytics_engine_datasets": [
+    {
+      "binding": "ANALYTICS",
+      "dataset": "INDTIX_EVENTS"
+    }
+  ],
+
+  "// RATE_LIMITING": "Cloudflare rate limiting (Workers Enterprise)",
+  "// rate_limiting": [
+    {
+      "binding": "RATE_LIMITER",
+      "namespace_id": "YOUR_RATE_LIMITER_NAMESPACE_ID"
+    }
+  ],
+
+  "// QUEUES": "Cloudflare Queues for async jobs",
+  "// queues": {
+    "producers": [
+      {
+        "binding": "EMAIL_QUEUE",
+        "queue": "email-notifications"
+      },
+      {
+        "binding": "BOOKING_QUEUE",
+        "queue": "booking-confirmations"
+      }
+    ],
+    "consumers": [
+      {
+        "queue": "email-notifications",
+        "max_batch_size": 10,
+        "max_retries": 3
+      }
+    ]
+  }
 }

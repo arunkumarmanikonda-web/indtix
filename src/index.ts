@@ -2,112 +2,40 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 
-// ─── Inline SVG avatar — eliminates all external ui-avatars.com requests ──────
-// Returns a data-URI SVG with initials; zero network round-trips, no 404 risk.
+// ─── Production Modules ───────────────────────────────────────────────────
+import { registerAuthRoutes } from './auth-routes'
+import { db } from './db'
+import { cmsRoutes } from './cms'
+import {
+  securityHeaders, generalRateLimit, apiRateLimit,
+  globalErrorHandler, requestId, structuredLogger, cacheFor,
+} from './middleware'
+
+// ─── Inline SVG avatar — eliminates all external ui-avatars.com requests ─────
 function avatarUrl(name: string, bg = '6C3CF7', fg = 'fff'): string {
   const initials = name.trim().split(/\s+/).slice(0,2).map(w => w[0]?.toUpperCase() || '').join('')
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect width="80" height="80" rx="40" fill="#${bg}"/><text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-family="Inter,sans-serif" font-size="28" font-weight="700" fill="#${fg}">${initials}</text></svg>`
   return `data:image/svg+xml;base64,${btoa(svg)}`
 }
 
-const app = new Hono()
+const app = new Hono<{ Bindings: { DB?: any; CACHE?: any; JWT_SECRET?: string; ENV?: string; CMS_PROVIDER?: string; CONTENTFUL_SPACE_ID?: string; CONTENTFUL_DELIVERY_TOKEN?: string; SANITY_PROJECT_ID?: string; SANITY_DATASET?: string; SANITY_API_TOKEN?: string } }>()
 
-// ─── Middleware ───────────────────────────────────────────
-app.use('*', cors())
-app.use('*', logger())
+// ─── Global Middleware ────────────────────────────────────────────────────
+app.use('*', requestId)
+app.use('*', cors({ origin: ['https://indtix.pages.dev', 'https://www.indtix.com', 'http://localhost:3000', 'http://localhost:5173'], credentials: true }))
+app.use('*', securityHeaders)
+app.use('/api/*', apiRateLimit)
 
-// ─── Lightweight auth helper (validates Bearer token format) ─
-// In production this would verify JWT signature; here we accept any tok_* token
-app.use('/api/admin/*', async (c, next) => {
-  // Allow through – token checked client-side; full JWT in production
-  await next()
-})
+// ─── Error Handler ────────────────────────────────────────────────────────
+app.onError(globalErrorHandler)
 
-// ─── Portal Routes ─────────────────────────────────────────
+// ─── Production Auth Routes (JWT + PBKDF2) ────────────────────────────────
+registerAuthRoutes(app)
 
-// ════════════════════════════════════════════════════════════════════════════
-// AUTH ROUTES — INDTIX Portal Authentication
-// ════════════════════════════════════════════════════════════════════════════
+// ─── CMS Routes ───────────────────────────────────────────────────────────
+cmsRoutes(app)
 
-const DEMO_USERS: Record<string, any> = {
-  'fan@demo.indtix.com':          { userId: 'USR-FAN-001', name: 'Arjun Sharma',   role: 'fan',           badge: 'Gold Fan',           avatar: '🎵', orgId: null,    venueId: null },
-  'admin@demo.indtix.com':        { userId: 'USR-ADM-001', name: 'Priya Kapoor',   role: 'superadmin',    badge: 'Super Admin',        avatar: '👑', orgId: null,    venueId: null },
-  'organiser@demo.indtix.com':    { userId: 'USR-ORG-001', name: 'Rahul Verma',    role: 'organiser',     badge: 'Verified Organiser', avatar: '🎪', orgId: 'ORG-001', venueId: null },
-  'venue@demo.indtix.com':        { userId: 'USR-VEN-001', name: 'Sneha Pillai',   role: 'venue_manager', badge: 'Venue Manager',      avatar: '🏟️', orgId: null,    venueId: 'VEN-001' },
-  'eventmgr@demo.indtix.com':     { userId: 'USR-EM-001',  name: 'Vikram Nair',    role: 'event_manager', badge: 'Event Manager',      avatar: '🎭', orgId: null,    venueId: null },
-  'ops@demo.indtix.com':          { userId: 'USR-OPS-001', name: 'Meera Joshi',    role: 'ops_admin',     badge: 'Operations Admin',   avatar: '⚙️', orgId: null,    venueId: null },
-};
-
-const DEMO_PASSWORDS: Record<string, string> = {
-  'fan@demo.indtix.com':          'Fan@Demo2024',
-  'admin@demo.indtix.com':        'Admin@Demo2024',
-  'organiser@demo.indtix.com':    'Org@Demo2024',
-  'venue@demo.indtix.com':        'Venue@Demo2024',
-  'eventmgr@demo.indtix.com':     'EventMgr@Demo2024',
-  'ops@demo.indtix.com':          'Ops@Demo2024',
-};
-
-// POST /api/auth/login
-app.post('/api/auth/login', async (c: any) => {
-  try {
-    const body = await c.req.json();
-    const email = (body.email || '').toLowerCase().trim();
-    const password = body.password || '';
-    const user = DEMO_USERS[email];
-    
-    if (!user || DEMO_PASSWORDS[email] !== password) {
-      // Demo mode: also accept empty password with valid email
-      if (user && password === '') {
-        const token = 'demo_' + Date.now() + '_' + Math.random().toString(36).substr(2);
-        return c.json({ success: true, token, user: { ...user, email, loginAt: Date.now() } });
-      }
-      return c.json({ success: false, error: 'Invalid credentials', hint: 'Use demo credentials from the login page' }, 401);
-    }
-    
-    const token = 'demo_' + Date.now() + '_' + Math.random().toString(36).substr(2);
-    return c.json({
-      success: true,
-      token,
-      user: { ...user, email, loginAt: Date.now() },
-      message: `Welcome back, ${user.name}!`
-    });
-  } catch (e: any) {
-    return c.json({ success: false, error: 'Login failed' }, 500);
-  }
-});
-
-// GET /api/auth/me
-app.get('/api/auth/me', async (c: any) => {
-  const auth = c.req.header('Authorization') || c.req.query('token') || '';
-  const email = c.req.query('email') || '';
-  const user = DEMO_USERS[email.toLowerCase()] || DEMO_USERS['fan@demo.indtix.com'];
-  return c.json({ success: true, user: { ...user, email: email || 'fan@demo.indtix.com' } });
-});
-
-// POST /api/auth/logout
-app.post('/api/auth/logout', async (c: any) => {
-  return c.json({ success: true, message: 'Logged out successfully' });
-});
-
-// POST /api/auth/refresh
-app.post('/api/auth/refresh', async (c: any) => {
-  const token = 'demo_' + Date.now() + '_' + Math.random().toString(36).substr(2);
-  return c.json({ success: true, token, expiresAt: Date.now() + 8 * 3600 * 1000 });
-});
-
-// GET /api/auth/portals — List all portals user has access to
-app.get('/api/auth/portals', async (c: any) => {
-  return c.json({
-    portals: [
-      { id: 'fan',          name: 'Fan Portal',          url: '/fan.html',           icon: '🎵', description: 'Discover events, buy tickets, manage your fan life' },
-      { id: 'admin',        name: 'Super Admin Console', url: '/admin.html',          icon: '👑', description: 'Full platform control, approvals, analytics' },
-      { id: 'organiser',    name: 'Organiser Dashboard', url: '/organiser.html',      icon: '🎪', description: 'Create and manage your events' },
-      { id: 'venue',        name: 'Venue Manager',       url: '/venue.html',          icon: '🏟️', description: 'Manage your venue, bookings and operations' },
-      { id: 'event_manager',name: 'Event Manager',       url: '/event-manager.html',  icon: '🎭', description: 'Runsheets, lineups, on-ground operations' },
-      { id: 'ops',          name: 'Operations Centre',   url: '/ops.html',            icon: '⚙️', description: 'Payments, fraud, compliance, system health' },
-    ]
-  });
-});
+// ─── Portal Routes ────────────────────────────────────────────────────────
 
 app.get('/', (c) => c.redirect('/fan'))
 app.get('/index', (c) => c.redirect('/fan'))
