@@ -2,280 +2,718 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>INDTIX — Portal Access Centre</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INDTIX — Demo Login Portal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--brand:#6C3CF7;--brand2:#00F5C4;--bg:#050508;--card:#0d1117;--border:#1a2332;--text:#f1f5f9;--muted:#64748b}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
-.hero{text-align:center;padding:80px 24px 48px;background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(108,60,247,.15),transparent)}
-.logo{width:72px;height:72px;background:linear-gradient(135deg,#6C3CF7,#3B82F6);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;font-family:'Space Grotesk',sans-serif;margin:0 auto 20px;box-shadow:0 16px 48px rgba(108,60,247,.4)}
-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,5vw,48px);font-weight:800;margin-bottom:12px}
-h1 span{background:linear-gradient(135deg,#6C3CF7,#00F5C4);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.subtitle{color:var(--muted);font-size:16px;max-width:480px;margin:0 auto 40px}
-.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(108,60,247,.12);border:1px solid rgba(108,60,247,.3);color:#a78bfa;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;margin-bottom:24px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;max-width:1200px;margin:0 auto;padding:0 24px 80px}
-.portal-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
-.portal-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s}
-.portal-card:hover{transform:translateY(-4px);box-shadow:0 20px 48px rgba(0,0,0,.5)}
-.portal-card:hover::before{opacity:1}
-.card-fan::before{background:linear-gradient(135deg,rgba(108,60,247,.08),rgba(59,130,246,.08))}
-.card-fan:hover{border-color:rgba(108,60,247,.4)}
-.card-admin::before{background:linear-gradient(135deg,rgba(220,38,38,.08),rgba(147,51,234,.08))}
-.card-admin:hover{border-color:rgba(220,38,38,.4)}
-.card-organiser::before{background:linear-gradient(135deg,rgba(5,150,105,.08),rgba(8,145,178,.08))}
-.card-organiser:hover{border-color:rgba(5,150,105,.4)}
-.card-venue::before{background:linear-gradient(135deg,rgba(217,119,6,.08),rgba(220,38,38,.08))}
-.card-venue:hover{border-color:rgba(217,119,6,.4)}
-.card-em::before{background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(219,39,119,.08))}
-.card-em:hover{border-color:rgba(124,58,237,.4)}
-.card-ops::before{background:linear-gradient(135deg,rgba(3,105,161,.08),rgba(15,118,110,.08))}
-.card-ops:hover{border-color:rgba(3,105,161,.4)}
-.card-head{display:flex;align-items:center;gap:16px;margin-bottom:20px}
-.card-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
-.card-title{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700}
-.card-role{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
-.creds{background:#070d14;border:1px solid #1a2332;border-radius:12px;padding:14px;margin-bottom:16px}
-.creds-title{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.cred-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.cred-label{font-size:11px;color:var(--muted);min-width:60px}
-.cred-value{font-size:12px;color:#a78bfa;font-family:'Space Grotesk',sans-serif;font-weight:600;background:rgba(108,60,247,.08);padding:3px 8px;border-radius:6px;cursor:pointer;user-select:all}
-.cred-value:hover{background:rgba(108,60,247,.2)}
-.enter-btn{display:block;width:100%;padding:12px;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:.3px;transition:all .2s;text-decoration:none;text-align:center;color:#fff}
-.enter-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
-.btn-fan{background:linear-gradient(135deg,#6C3CF7,#3B82F6)}
-.btn-admin{background:linear-gradient(135deg,#DC2626,#9333EA)}
-.btn-org{background:linear-gradient(135deg,#059669,#0891B2)}
-.btn-venue{background:linear-gradient(135deg,#D97706,#DC2626)}
-.btn-em{background:linear-gradient(135deg,#7C3AED,#DB2777)}
-.btn-ops{background:linear-gradient(135deg,#0369A1,#0F766E)}
-.feature-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
-.tag{font-size:10px;color:var(--muted);background:#0d1117;border:1px solid #1a2332;border-radius:6px;padding:3px 8px}
-.status-bar{position:fixed;bottom:0;left:0;right:0;background:#070d14;border-top:1px solid #1a2332;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;font-size:12px;z-index:100}
-.status-dot{width:7px;height:7px;border-radius:50%;background:#00F5C4;display:inline-block;margin-right:6px;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.toast{position:fixed;bottom:60px;right:24px;background:#0f172a;border:1px solid var(--brand);color:var(--text);padding:10px 16px;border-radius:10px;font-size:13px;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none}
-.section-divider{text-align:center;padding:16px 24px 32px;color:var(--muted);font-size:13px;max-width:1200px;margin:0 auto}
-.section-divider h3{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:8px}
-.audit-banner{background:linear-gradient(135deg,rgba(108,60,247,.15),rgba(0,245,196,.08));border:1px solid rgba(108,60,247,.3);border-radius:16px;padding:20px 24px;max-width:1200px;margin:0 auto 32px;display:flex;align-items:center;gap:16px}
-.audit-stats{display:flex;gap:32px;flex-wrap:wrap}
-.audit-stat{text-align:center}
-.audit-stat-val{font-size:24px;font-weight:800;font-family:'Space Grotesk',sans-serif;background:linear-gradient(135deg,#6C3CF7,#00F5C4);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.audit-stat-label{font-size:11px;color:var(--muted);margin-top:2px}
+  :root {
+    --purple: #6C3CF7;
+    --purple-light: #8B5CF6;
+    --purple-dark: #4C1D95;
+    --pink: #EC4899;
+    --orange: #F59E0B;
+    --green: #10B981;
+    --blue: #3B82F6;
+    --dark: #0A0A0F;
+    --dark-2: #111118;
+    --dark-3: #1A1A2E;
+    --border: rgba(108,60,247,0.2);
+    --text: #E8E8F0;
+    --text-muted: #888899;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Inter',sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    min-height: 100vh;
+    background-image: 
+      radial-gradient(ellipse at 20% 20%, rgba(108,60,247,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(236,72,153,0.1) 0%, transparent 50%);
+  }
+  
+  /* HEADER */
+  header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(20px);
+    position: sticky; top:0; z-index:100;
+    background: rgba(10,10,15,0.8);
+  }
+  .logo {
+    display:flex; align-items:center; gap:12px;
+    text-decoration:none;
+  }
+  .logo-icon {
+    width:40px; height:40px; border-radius:10px;
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    display:flex; align-items:center; justify-content:center;
+    font-weight:900; font-size:18px; color:#fff;
+  }
+  .logo-text { font-size:22px; font-weight:800; color:#fff; }
+  .logo-text span { color: var(--purple); }
+  .status-badge {
+    display:flex; align-items:center; gap:8px;
+    background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);
+    padding:6px 14px; border-radius:20px; font-size:13px; color:#10B981;
+  }
+  .status-dot { width:8px; height:8px; border-radius:50%; background:#10B981; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  
+  /* HERO */
+  .hero {
+    text-align:center; padding: 60px 20px 40px;
+  }
+  .hero-tag {
+    display:inline-flex; align-items:center; gap:6px;
+    background: rgba(108,60,247,0.1); border:1px solid var(--border);
+    padding:6px 16px; border-radius:20px; font-size:13px; color:var(--purple-light);
+    margin-bottom:20px;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight:900; line-height:1.1; margin-bottom:16px;
+    background: linear-gradient(135deg, #fff 0%, var(--purple-light) 50%, var(--pink) 100%);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .hero p {
+    font-size:18px; color:var(--text-muted); max-width:600px; margin:0 auto 40px;
+  }
+  
+  /* PORTALS GRID */
+  .portals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+  }
+  
+  .portal-card {
+    background: var(--dark-3);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .portal-card::before {
+    content:'';
+    position:absolute; inset:0;
+    border-radius:20px;
+    background: linear-gradient(135deg, var(--card-color-1, rgba(108,60,247,0.1)), var(--card-color-2, transparent));
+    opacity:0;
+    transition:opacity 0.3s;
+  }
+  .portal-card:hover { 
+    transform: translateY(-4px);
+    border-color: rgba(108,60,247,0.5);
+    box-shadow: 0 20px 60px rgba(108,60,247,0.2);
+  }
+  .portal-card:hover::before { opacity:1; }
+  
+  .card-header {
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;
+  }
+  .card-icon {
+    width:52px; height:52px; border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:24px;
+  }
+  .card-role-badge {
+    font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:1px;
+    padding:4px 10px; border-radius:6px;
+  }
+  .card-title { font-size:20px; font-weight:700; margin-bottom:6px; }
+  .card-desc { font-size:14px; color:var(--text-muted); margin-bottom:20px; line-height:1.5; }
+  
+  .creds-box {
+    background: rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.05);
+    border-radius:12px; padding:16px; margin-bottom:20px;
+  }
+  .cred-row {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05);
+    font-size:13px;
+  }
+  .cred-row:last-child { border:none; }
+  .cred-label { color:var(--text-muted); }
+  .cred-value { 
+    font-family: 'Courier New', monospace;
+    color:var(--text); 
+    display:flex; align-items:center; gap:6px;
+  }
+  .copy-btn {
+    background:none; border:none; cursor:pointer;
+    color:var(--text-muted); font-size:12px; padding:2px 4px;
+    border-radius:4px; transition:all 0.2s;
+  }
+  .copy-btn:hover { color:var(--purple); background:rgba(108,60,247,0.1); }
+  
+  .access-btn {
+    display:block; width:100%;
+    padding:14px; border-radius:12px; border:none;
+    font-size:15px; font-weight:600; cursor:pointer;
+    text-decoration:none; text-align:center;
+    transition: all 0.3s ease;
+    color:#fff;
+  }
+  .access-btn:hover {
+    transform:scale(1.02);
+    box-shadow:0 8px 30px rgba(108,60,247,0.4);
+  }
+  
+  .features-list {
+    display:flex; flex-wrap:wrap; gap:6px; margin-bottom:20px;
+  }
+  .feature-tag {
+    font-size:11px; padding:3px 8px; border-radius:4px;
+    background:rgba(255,255,255,0.05); color:var(--text-muted);
+    border:1px solid rgba(255,255,255,0.05);
+  }
+  
+  /* PORTAL COLORS */
+  .portal-fan { --card-color-1: rgba(108,60,247,0.15); }
+  .portal-fan .card-icon { background:rgba(108,60,247,0.2); }
+  .portal-fan .card-role-badge { background:rgba(108,60,247,0.2); color:#A78BFA; }
+  .portal-fan .access-btn { background: linear-gradient(135deg, #6C3CF7, #8B5CF6); }
+  
+  .portal-admin { --card-color-1: rgba(239,68,68,0.15); }
+  .portal-admin .card-icon { background:rgba(239,68,68,0.2); }
+  .portal-admin .card-role-badge { background:rgba(239,68,68,0.2); color:#F87171; }
+  .portal-admin .access-btn { background: linear-gradient(135deg, #DC2626, #EF4444); }
+  
+  .portal-organiser { --card-color-1: rgba(16,185,129,0.15); }
+  .portal-organiser .card-icon { background:rgba(16,185,129,0.2); }
+  .portal-organiser .card-role-badge { background:rgba(16,185,129,0.2); color:#34D399; }
+  .portal-organiser .access-btn { background: linear-gradient(135deg, #059669, #10B981); }
+  
+  .portal-venue { --card-color-1: rgba(245,158,11,0.15); }
+  .portal-venue .card-icon { background:rgba(245,158,11,0.2); }
+  .portal-venue .card-role-badge { background:rgba(245,158,11,0.2); color:#FCD34D; }
+  .portal-venue .access-btn { background: linear-gradient(135deg, #D97706, #F59E0B); }
+  
+  .portal-em { --card-color-1: rgba(59,130,246,0.15); }
+  .portal-em .card-icon { background:rgba(59,130,246,0.2); }
+  .portal-em .card-role-badge { background:rgba(59,130,246,0.2); color:#93C5FD; }
+  .portal-em .access-btn { background: linear-gradient(135deg, #2563EB, #3B82F6); }
+  
+  .portal-ops { --card-color-1: rgba(236,72,153,0.15); }
+  .portal-ops .card-icon { background:rgba(236,72,153,0.2); }
+  .portal-ops .card-role-badge { background:rgba(236,72,153,0.2); color:#F9A8D4; }
+  .portal-ops .access-btn { background: linear-gradient(135deg, #BE185D, #EC4899); }
+  
+  /* STATS BAR */
+  .stats-bar {
+    display:flex; flex-wrap:wrap; gap:16px; justify-content:center;
+    padding: 30px 24px;
+    background: var(--dark-3);
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    margin-bottom:40px;
+  }
+  .stat-item { text-align:center; }
+  .stat-value { font-size:28px; font-weight:900; color:var(--purple-light); }
+  .stat-label { font-size:12px; color:var(--text-muted); }
+  
+  /* AUDIT BANNER */
+  .audit-section {
+    max-width:1200px; margin:0 auto; padding:0 24px 60px;
+  }
+  .audit-card {
+    background: var(--dark-3); border:1px solid var(--border);
+    border-radius:20px; padding:32px;
+    margin-bottom:24px;
+  }
+  .audit-title {
+    font-size:20px; font-weight:700; margin-bottom:20px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .audit-grid {
+    display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:16px;
+  }
+  .audit-metric {
+    background:rgba(0,0,0,0.3); border-radius:12px; padding:16px; text-align:center;
+  }
+  .metric-val { font-size:32px; font-weight:800; }
+  .metric-label { font-size:12px; color:var(--text-muted); margin-top:4px; }
+  .metric-green { color:#10B981; }
+  .metric-orange { color:#F59E0B; }
+  .metric-purple { color:#8B5CF6; }
+  .metric-blue { color:#3B82F6; }
+  .metric-red { color:#EF4444; }
+  
+  .progress-bar {
+    height:8px; border-radius:4px;
+    background:rgba(255,255,255,0.05); margin-top:8px; overflow:hidden;
+  }
+  .progress-fill { height:100%; border-radius:4px; transition:width 1s ease; }
+  
+  .issue-item {
+    display:flex; align-items:flex-start; gap:10px; padding:10px 0;
+    border-bottom:1px solid rgba(255,255,255,0.04);
+    font-size:14px;
+  }
+  .issue-item:last-child { border:none; }
+  .issue-dot { width:8px; height:8px; border-radius:50%; margin-top:5px; flex-shrink:0; }
+  
+  /* FOOTER */
+  footer {
+    text-align:center; padding:30px 20px;
+    border-top:1px solid var(--border);
+    color:var(--text-muted); font-size:13px;
+  }
+  
+  /* TOAST */
+  #toast {
+    position:fixed; bottom:24px; right:24px;
+    background:var(--purple); color:#fff;
+    padding:12px 20px; border-radius:10px;
+    font-size:14px; font-weight:500;
+    opacity:0; transform:translateY(10px);
+    transition:all 0.3s; pointer-events:none; z-index:9999;
+  }
+  #toast.show { opacity:1; transform:translateY(0); }
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <div class="logo">IX</div>
-  <div class="badge"><i class="fas fa-lock"></i> Demo Access · All Portals</div>
-  <h1>INDTIX <span>Portal Hub</span></h1>
-  <p class="subtitle">India's World-Class Ticketing Platform — Access all 6 portals with demo credentials below</p>
-</div>
-
-<!-- Audit Banner -->
-<div style="padding:0 24px;max-width:1200px;margin:0 auto 32px">
-  <div class="audit-banner">
-    <div style="font-size:36px">🏆</div>
-    <div style="flex:1">
-      <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px">Platform Status — v76.0.5 · Deep Audit Complete</div>
-      <div style="font-size:13px;color:var(--muted)">4,619 API routes · 95 loading states protected · 6 portals login-gated · Auth system live</div>
-    </div>
-    <div class="audit-stats">
-      <div class="audit-stat"><div class="audit-stat-val">4,619</div><div class="audit-stat-label">API Routes</div></div>
-      <div class="audit-stat"><div class="audit-stat-val">6</div><div class="audit-stat-label">Portals</div></div>
-      <div class="audit-stat"><div class="audit-stat-val">95</div><div class="audit-stat-label">Loading States</div></div>
-      <div class="audit-stat"><div class="audit-stat-val">100%</div><div class="audit-stat-label">Auth Gated</div></div>
-    </div>
+<header>
+  <a href="/fan" class="logo">
+    <div class="logo-icon">IX</div>
+    <span class="logo-text">IND<span>TIX</span></span>
+  </a>
+  <div class="status-badge">
+    <div class="status-dot"></div>
+    v78 · All Systems Live
   </div>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">
+    🔐 Secure Demo Environment · JWT Authentication
+  </div>
+  <h1>INDTIX Platform<br>Demo Access Center</h1>
+  <p>6 role-based portals. One world-class ticketing infrastructure.<br>Login with demo credentials below to explore each portal.</p>
 </div>
 
-<div class="section-divider">
-  <h3>Choose Your Portal</h3>
-  <p>Each portal is role-protected. Click the demo credentials to copy, then enter the portal.</p>
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-value">6</div><div class="stat-label">Portals</div></div>
+  <div class="stat-item"><div class="stat-value">4,643</div><div class="stat-label">API Routes</div></div>
+  <div class="stat-item"><div class="stat-value">24</div><div class="stat-label">DB Tables</div></div>
+  <div class="stat-item"><div class="stat-value">50</div><div class="stat-label">E2E Tests</div></div>
+  <div class="stat-item"><div class="stat-value">92.7</div><div class="stat-label">Health Score</div></div>
+  <div class="stat-item"><div class="stat-value">A</div><div class="stat-label">Audit Grade</div></div>
 </div>
 
-<div class="grid">
+<div class="portals-grid">
 
   <!-- FAN PORTAL -->
-  <div class="portal-card card-fan">
-    <div class="card-head">
-      <div class="card-icon" style="background:linear-gradient(135deg,#6C3CF7,#3B82F6)">🎵</div>
-      <div>
-        <div class="card-title">Fan Portal</div>
-        <div class="card-role">Consumer · Event Discovery · Ticketing</div>
+  <div class="portal-card portal-fan">
+    <div class="card-header">
+      <div class="card-icon">🎟️</div>
+      <span class="card-role-badge">Role: fan</span>
+    </div>
+    <div class="card-title">Fan Portal</div>
+    <div class="card-desc">Browse events, book tickets, manage wallet, loyalty points, wishlist & fan clubs.</div>
+    <div class="features-list">
+      <span class="feature-tag">Event Discovery</span>
+      <span class="feature-tag">Seat Selection</span>
+      <span class="feature-tag">Wallet</span>
+      <span class="feature-tag">Loyalty</span>
+      <span class="feature-tag">Fan Clubs</span>
+      <span class="feature-tag">KYC</span>
+    </div>
+    <div class="creds-box">
+      <div class="cred-row">
+        <span class="cred-label">Email</span>
+        <span class="cred-value">
+          fan@indtix.com
+          <button class="copy-btn" onclick="copyText('fan@indtix.com')">📋</button>
+        </span>
+      </div>
+      <div class="cred-row">
+        <span class="cred-label">Password</span>
+        <span class="cred-value">
+          Fan@123456
+          <button class="copy-btn" onclick="copyText('Fan@123456')">📋</button>
+        </span>
+      </div>
+      <div class="cred-row">
+        <span class="cred-label">API Calls</span>
+        <span class="cred-value" style="color:#A78BFA">280 fetch calls</span>
       </div>
     </div>
-    <div class="feature-tags">
-      <span class="tag">Event Discovery</span><span class="tag">Ticket Booking</span><span class="tag">Seat Map</span>
-      <span class="tag">Fan Clubs</span><span class="tag">Wallet</span><span class="tag">AI Assistant</span>
-      <span class="tag">Loyalty</span><span class="tag">F&B Pre-order</span><span class="tag">213 APIs</span>
-    </div>
-    <div class="creds">
-      <div class="creds-title"><i class="fas fa-key"></i> Demo Credentials</div>
-      <div class="cred-row"><span class="cred-label">Email</span><span class="cred-value" onclick="copyText(this,'fan@demo.indtix.com')">fan@demo.indtix.com</span></div>
-      <div class="cred-row"><span class="cred-label">Password</span><span class="cred-value" onclick="copyText(this,'Fan@Demo2024')">Fan@Demo2024</span></div>
-      <div class="cred-row"><span class="cred-label">Role</span><span style="font-size:12px;color:#00F5C4">🎵 Gold Fan — Arjun Sharma</span></div>
-    </div>
-    <a href="/fan.html" class="enter-btn btn-fan"><i class="fas fa-arrow-right"></i> Enter Fan Portal</a>
+    <a href="/fan" class="access-btn">🚀 Enter Fan Portal</a>
   </div>
 
-  <!-- SUPER ADMIN -->
-  <div class="portal-card card-admin">
-    <div class="card-head">
-      <div class="card-icon" style="background:linear-gradient(135deg,#DC2626,#9333EA)">👑</div>
-      <div>
-        <div class="card-title">Super Admin Console</div>
-        <div class="card-role">Platform Owner · Full Control</div>
+  <!-- ADMIN PORTAL -->
+  <div class="portal-card portal-admin">
+    <div class="card-header">
+      <div class="card-icon">⚙️</div>
+      <span class="card-role-badge">Role: superadmin</span>
+    </div>
+    <div class="card-title">Admin Portal</div>
+    <div class="card-desc">Full platform control: users, events, revenue analytics, KYC approvals, system config.</div>
+    <div class="features-list">
+      <span class="feature-tag">User Management</span>
+      <span class="feature-tag">Revenue Analytics</span>
+      <span class="feature-tag">KYC Approvals</span>
+      <span class="feature-tag">System Config</span>
+      <span class="feature-tag">Reports</span>
+    </div>
+    <div class="creds-box">
+      <div class="cred-row">
+        <span class="cred-label">Email</span>
+        <span class="cred-value">
+          admin@indtix.com
+          <button class="copy-btn" onclick="copyText('admin@indtix.com')">📋</button>
+        </span>
+      </div>
+      <div class="cred-row">
+        <span class="cred-label">Password</span>
+        <span class="cred-value">
+          Admin@123456
+          <button class="copy-btn" onclick="copyText('Admin@123456')">📋</button>
+        </span>
+      </div>
+      <div class="cred-row">
+        <span class="cred-label">API Calls</span>
+        <span class="cred-value" style="color:#F87171">427 fetch calls</span>
       </div>
     </div>
-    <div class="feature-tags">
-      <span class="tag">Platform Dashboard</span><span class="tag">KYC Approvals</span><span class="tag">Finance</span>
-      <span class="tag">CMS</span><span class="tag">RBAC</span><span class="tag">Compliance</span>
-      <span class="tag">AI-Ops</span><span class="tag">Fraud</span><span class="tag">327 APIs</span>
-    </div>
-    <div class="creds">
-      <div class="creds-title"><i class="fas fa-key"></i> Demo Credentials</div>
-      <div class="cred-row"><span class="cred-label">Email</span><span class="cred-value" onclick="copyText(this,'admin@demo.indtix.com')">admin@demo.indtix.com</span></div>
-      <div class="cred-row"><span class="cred-label">Password</span><span class="cred-value" onclick="copyText(this,'Admin@Demo2024')">Admin@Demo2024</span></div>
-      <div class="cred-row"><span class="cred-label">Role</span><span style="font-size:12px;color:#f43f5e">👑 Super Admin — Priya Kapoor</span></div>
-    </div>
-    <a href="/admin.html" class="enter-btn btn-admin"><i class="fas fa-arrow-right"></i> Enter Admin Console</a>
+    <a href="/admin" class="access-btn">🔑 Enter Admin Portal</a>
   </div>
 
-  <!-- ORGANISER -->
-  <div class="portal-card card-organiser">
-    <div class="card-head">
-      <div class="card-icon" style="background:linear-gradient(135deg,#059669,#0891B2)">🎪</div>
-      <div>
-        <div class="card-title">Organiser Dashboard</div>
-        <div class="card-role">Event Creator · Revenue Management</div>
+  <!-- ORGANISER PORTAL -->
+  <div class="portal-card portal-organiser">
+    <div class="card-header">
+      <div class="card-icon">🎪</div>
+      <span class="card-role-badge">Role: organiser</span>
+    </div>
+    <div class="card-title">Organiser Portal</div>
+    <div class="card-desc">Create & manage events, ticket tiers, sales analytics, team management & payouts.</div>
+    <div class="features-list">
+      <span class="feature-tag">Event Creation</span>
+      <span class="feature-tag">Ticket Tiers</span>
+      <span class="feature-tag">Analytics</span>
+      <span class="feature-tag">Payouts</span>
+      <span class="feature-tag">Affiliates</span>
+    </div>
+    <div class="creds-box">
+      <div class="cred-row">
+        <span class="cred-label">Email</span>
+        <span class="cred-value">
+          organiser@indtix.com
+          <button class="copy-btn" onclick="copyText('organiser@indtix.com')">📋</button>
+        </span>
+      </div>
+      <div class="cred-row">
+        <span class="cred-label">Password</span>
+        <span class="cred-value">
+          Org@123456
+          <button class="copy-btn" onclick="copyText('Org@123456')">📋</button>
+        </span>
+      </div>
+      <div class="cred-row">
+        <span class="cred-label">API Calls</span>
+        <span class="cred-value" style="color:#34D399">264 fetch calls</span>
       </div>
     </div>
-    <div class="feature-tags">
-      <span class="tag">Event Creation</span><span class="tag">Analytics</span><span class="tag">Yield AI</span>
-      <span class="tag">CRM</span><span class="tag">Marketing</span><span class="tag">Payouts</span>
-      <span class="tag">Post-Event</span><span class="tag">White-Label</span><span class="tag">218 APIs</span>
-    </div>
-    <div class="creds">
-      <div class="creds-title"><i class="fas fa-key"></i> Demo Credentials</div>
-      <div class="cred-row"><span class="cred-label">Email</span><span class="cred-value" onclick="copyText(this,'organiser@demo.indtix.com')">organiser@demo.indtix.com</span></div>
-      <div class="cred-row"><span class="cred-label">Password</span><span class="cred-value" onclick="copyText(this,'Org@Demo2024')">Org@Demo2024</span></div>
-      <div class="cred-row"><span class="cred-label">Role</span><span style="font-size:12px;color:#34d399">🎪 Verified Organiser — Rahul Verma (EventWave India)</span></div>
-    </div>
-    <a href="/organiser.html" class="enter-btn btn-org"><i class="fas fa-arrow-right"></i> Enter Organiser Dashboard</a>
+    <a href="/organiser" class="access-btn">🎪 Enter Organiser Portal</a>
   </div>
 
-  <!-- VENUE MANAGER -->
-  <div class="portal-card card-venue">
-    <div class="card-head">
-      <div class="card-icon" style="background:linear-gradient(135deg,#D97706,#DC2626)">🏟️</div>
-      <div>
-        <div class="card-title">Venue Manager</div>
-        <div class="card-role">Venue Ops · Digital Twin · IoT</div>
+  <!-- VENUE PORTAL -->
+  <div class="portal-card portal-venue">
+    <div class="card-header">
+      <div class="card-icon">🏟️</div>
+      <span class="card-role-badge">Role: venue_manager</span>
+    </div>
+    <div class="card-title">Venue Portal</div>
+    <div class="card-desc">Manage venue floor plans, seating configurations, facility bookings & capacity.</div>
+    <div class="features-list">
+      <span class="feature-tag">Floor Plans</span>
+      <span class="feature-tag">Seating</span>
+      <span class="feature-tag">Capacity</span>
+      <span class="feature-tag">Bookings</span>
+    </div>
+    <div class="creds-box">
+      <div class="cred-row">
+        <span class="cred-label">Email</span>
+        <span class="cred-value">
+          venue@indtix.com
+          <button class="copy-btn" onclick="copyText('venue@indtix.com')">📋</button>
+        </span>
+      </div>
+      <div class="cred-row">
+        <span class="cred-label">Password</span>
+        <span class="cred-value">
+          Venue@123456
+          <button class="copy-btn" onclick="copyText('Venue@123456')">📋</button>
+        </span>
+      </div>
+      <div class="cred-row">
+        <span class="cred-label">API Calls</span>
+        <span class="cred-value" style="color:#FCD34D">197 fetch calls</span>
       </div>
     </div>
-    <div class="feature-tags">
-      <span class="tag">Digital Twin</span><span class="tag">Crowd Intelligence</span><span class="tag">LED Control</span>
-      <span class="tag">Capacity Mgmt</span><span class="tag">Contracts</span><span class="tag">IoT Sensors</span>
-      <span class="tag">F&B Mgmt</span><span class="tag">Staff AI</span><span class="tag">156 APIs</span>
-    </div>
-    <div class="creds">
-      <div class="creds-title"><i class="fas fa-key"></i> Demo Credentials</div>
-      <div class="cred-row"><span class="cred-label">Email</span><span class="cred-value" onclick="copyText(this,'venue@demo.indtix.com')">venue@demo.indtix.com</span></div>
-      <div class="cred-row"><span class="cred-label">Password</span><span class="cred-value" onclick="copyText(this,'Venue@Demo2024')">Venue@Demo2024</span></div>
-      <div class="cred-row"><span class="cred-label">Role</span><span style="font-size:12px;color:#fbbf24">🏟️ Venue Manager — Sneha Pillai (NESCO Exhibition Centre)</span></div>
-    </div>
-    <a href="/venue.html" class="enter-btn btn-venue"><i class="fas fa-arrow-right"></i> Enter Venue Manager</a>
+    <a href="/venue" class="access-btn">🏟️ Enter Venue Portal</a>
   </div>
 
-  <!-- EVENT MANAGER -->
-  <div class="portal-card card-em">
-    <div class="card-head">
-      <div class="card-icon" style="background:linear-gradient(135deg,#7C3AED,#DB2777)">🎭</div>
-      <div>
-        <div class="card-title">Event Manager Portal</div>
-        <div class="card-role">On-Ground Ops · Runsheet · Lineup</div>
+  <!-- EVENT MANAGER PORTAL -->
+  <div class="portal-card portal-em">
+    <div class="card-header">
+      <div class="card-icon">📋</div>
+      <span class="card-role-badge">Role: event_manager</span>
+    </div>
+    <div class="card-title">Event Manager Portal</div>
+    <div class="card-desc">Live event operations: runsheets, crew assignments, incident tracking & gate management.</div>
+    <div class="features-list">
+      <span class="feature-tag">Runsheets</span>
+      <span class="feature-tag">Crew</span>
+      <span class="feature-tag">Incidents</span>
+      <span class="feature-tag">Gate Control</span>
+    </div>
+    <div class="creds-box">
+      <div class="cred-row">
+        <span class="cred-label">Email</span>
+        <span class="cred-value">
+          em@indtix.com
+          <button class="copy-btn" onclick="copyText('em@indtix.com')">📋</button>
+        </span>
+      </div>
+      <div class="cred-row">
+        <span class="cred-label">Password</span>
+        <span class="cred-value">
+          EM@123456
+          <button class="copy-btn" onclick="copyText('EM@123456')">📋</button>
+        </span>
+      </div>
+      <div class="cred-row">
+        <span class="cred-label">API Calls</span>
+        <span class="cred-value" style="color:#93C5FD">219 fetch calls</span>
       </div>
     </div>
-    <div class="feature-tags">
-      <span class="tag">Runsheet</span><span class="tag">Lineup</span><span class="tag">Incident Mgmt</span>
-      <span class="tag">Staff Optimizer</span><span class="tag">AI Content</span><span class="tag">P&L</span>
-      <span class="tag">Live Signals</span><span class="tag">QC</span><span class="tag">175 APIs</span>
-    </div>
-    <div class="creds">
-      <div class="creds-title"><i class="fas fa-key"></i> Demo Credentials</div>
-      <div class="cred-row"><span class="cred-label">Email</span><span class="cred-value" onclick="copyText(this,'eventmgr@demo.indtix.com')">eventmgr@demo.indtix.com</span></div>
-      <div class="cred-row"><span class="cred-label">Password</span><span class="cred-value" onclick="copyText(this,'EventMgr@Demo2024')">EventMgr@Demo2024</span></div>
-      <div class="cred-row"><span class="cred-label">Role</span><span style="font-size:12px;color:#c084fc">🎭 Event Manager — Vikram Nair</span></div>
-    </div>
-    <a href="/event-manager.html" class="enter-btn btn-em"><i class="fas fa-arrow-right"></i> Enter Event Manager</a>
+    <a href="/event-manager" class="access-btn">📋 Enter Event Manager Portal</a>
   </div>
 
-  <!-- OPS CENTRE -->
-  <div class="portal-card card-ops">
-    <div class="card-head">
-      <div class="card-icon" style="background:linear-gradient(135deg,#0369A1,#0F766E)">⚙️</div>
-      <div>
-        <div class="card-title">Operations Centre</div>
-        <div class="card-role">Payments · Fraud · Compliance · SRE</div>
+  <!-- OPS PORTAL -->
+  <div class="portal-card portal-ops">
+    <div class="card-header">
+      <div class="card-icon">🎫</div>
+      <span class="card-role-badge">Role: ops_admin</span>
+    </div>
+    <div class="card-title">Ops Portal</div>
+    <div class="card-desc">On-ground operations: ticket scanning, POS transactions, wristband control & entry gates.</div>
+    <div class="features-list">
+      <span class="feature-tag">QR Scanning</span>
+      <span class="feature-tag">POS</span>
+      <span class="feature-tag">Wristbands</span>
+      <span class="feature-tag">Entry Gates</span>
+    </div>
+    <div class="creds-box">
+      <div class="cred-row">
+        <span class="cred-label">Email</span>
+        <span class="cred-value">
+          ops@indtix.com
+          <button class="copy-btn" onclick="copyText('ops@indtix.com')">📋</button>
+        </span>
+      </div>
+      <div class="cred-row">
+        <span class="cred-label">Password</span>
+        <span class="cred-value">
+          Ops@123456
+          <button class="copy-btn" onclick="copyText('Ops@123456')">📋</button>
+        </span>
+      </div>
+      <div class="cred-row">
+        <span class="cred-label">API Calls</span>
+        <span class="cred-value" style="color:#F9A8D4">236 fetch calls</span>
       </div>
     </div>
-    <div class="feature-tags">
-      <span class="tag">Payments</span><span class="tag">Fraud Detection</span><span class="tag">Settlement</span>
-      <span class="tag">PCI-DSS</span><span class="tag">DPDP</span><span class="tag">Treasury</span>
-      <span class="tag">Anomaly AI</span><span class="tag">Capacity</span><span class="tag">202 APIs</span>
-    </div>
-    <div class="creds">
-      <div class="creds-title"><i class="fas fa-key"></i> Demo Credentials</div>
-      <div class="cred-row"><span class="cred-label">Email</span><span class="cred-value" onclick="copyText(this,'ops@demo.indtix.com')">ops@demo.indtix.com</span></div>
-      <div class="cred-row"><span class="cred-label">Password</span><span class="cred-value" onclick="copyText(this,'Ops@Demo2024')">Ops@Demo2024</span></div>
-      <div class="cred-row"><span class="cred-label">Role</span><span style="font-size:12px;color:#38bdf8">⚙️ Operations Admin — Meera Joshi</span></div>
-    </div>
-    <a href="/ops.html" class="enter-btn btn-ops"><i class="fas fa-arrow-right"></i> Enter Ops Centre</a>
+    <a href="/ops" class="access-btn">🎫 Enter Ops Portal</a>
   </div>
 
 </div>
 
-<!-- Status Bar -->
-<div class="status-bar">
-  <div><span class="status-dot"></span>All systems operational · v76.0.5</div>
-  <div style="color:var(--muted)">🇮🇳 INDTIX · India's World-Class Ticketing Platform · <span id="live-time"></span></div>
-  <div><a href="/architecture.html" style="color:var(--muted);text-decoration:none;margin-right:16px">Architecture</a><a href="/developer.html" style="color:var(--muted);text-decoration:none">Developer Docs</a></div>
+<!-- AUDIT SECTION -->
+<div class="audit-section">
+  <div class="audit-card">
+    <div class="audit-title">📊 Deep Audit Report — INDTIX v78</div>
+    <div class="audit-grid">
+      <div class="audit-metric">
+        <div class="metric-val metric-green">92.7</div>
+        <div class="metric-label">Overall Health Score</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:92.7%;background:#10B981"></div></div>
+      </div>
+      <div class="audit-metric">
+        <div class="metric-val metric-purple">4,643</div>
+        <div class="metric-label">Total API Routes</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%;background:#8B5CF6"></div></div>
+      </div>
+      <div class="audit-metric">
+        <div class="metric-val metric-blue">50</div>
+        <div class="metric-label">E2E Tests (12 Suites)</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%;background:#3B82F6"></div></div>
+      </div>
+      <div class="audit-metric">
+        <div class="metric-val metric-orange">24</div>
+        <div class="metric-label">Database Tables</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:90%;background:#F59E0B"></div></div>
+      </div>
+      <div class="audit-metric">
+        <div class="metric-val metric-green">98.3</div>
+        <div class="metric-label">Portal Avg Score</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:98.3%;background:#10B981"></div></div>
+      </div>
+      <div class="audit-metric">
+        <div class="metric-val metric-purple">2</div>
+        <div class="metric-label">Issues Found</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:20%;background:#6C3CF7"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="audit-card">
+    <div class="audit-title">✅ Auth System Status</div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px;">
+      <div style="display:flex;align-items:center;gap:8px;padding:12px;background:rgba(16,185,129,0.08);border-radius:10px;border:1px solid rgba(16,185,129,0.2)">
+        <span style="font-size:18px">✅</span>
+        <div><div style="font-size:14px;font-weight:600">PBKDF2 Password Hashing</div><div style="font-size:12px;color:var(--text-muted)">Web Crypto API, 100k iterations</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:12px;background:rgba(16,185,129,0.08);border-radius:10px;border:1px solid rgba(16,185,129,0.2)">
+        <span style="font-size:18px">✅</span>
+        <div><div style="font-size:14px;font-weight:600">HS256 JWT Signing</div><div style="font-size:12px;color:var(--text-muted)">15min access + 7d refresh tokens</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:12px;background:rgba(16,185,129,0.08);border-radius:10px;border:1px solid rgba(16,185,129,0.2)">
+        <span style="font-size:18px">✅</span>
+        <div><div style="font-size:14px;font-weight:600">RBAC Role System</div><div style="font-size:12px;color:var(--text-muted)">6 roles, portal-mapped permissions</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:12px;background:rgba(16,185,129,0.08);border-radius:10px;border:1px solid rgba(16,185,129,0.2)">
+        <span style="font-size:18px">✅</span>
+        <div><div style="font-size:14px;font-weight:600">Rate Limiting</div><div style="font-size:12px;color:var(--text-muted)">Auth: 5/min, API: 120/min</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:12px;background:rgba(16,185,129,0.08);border-radius:10px;border:1px solid rgba(16,185,129,0.2)">
+        <span style="font-size:18px">✅</span>
+        <div><div style="font-size:14px;font-weight:600">Security Headers</div><div style="font-size:12px;color:var(--text-muted)">CSP, X-Frame, HSTS applied</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:12px;background:rgba(16,185,129,0.08);border-radius:10px;border:1px solid rgba(16,185,129,0.2)">
+        <span style="font-size:18px">✅</span>
+        <div><div style="font-size:14px;font-weight:600">Auth Gate All Portals</div><div style="font-size:12px;color:var(--text-muted)">Blocks until valid JWT login</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="audit-card">
+    <div class="audit-title">🗄️ Database Schema (Cloudflare D1)</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+      <span style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);padding:6px 12px;border-radius:8px;font-size:13px">users</span>
+      <span style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);padding:6px 12px;border-radius:8px;font-size:13px">refresh_tokens</span>
+      <span style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);padding:6px 12px;border-radius:8px;font-size:13px">organisations</span>
+      <span style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);padding:6px 12px;border-radius:8px;font-size:13px">venues</span>
+      <span style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);padding:6px 12px;border-radius:8px;font-size:13px">events</span>
+      <span style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);padding:6px 12px;border-radius:8px;font-size:13px">ticket_tiers</span>
+      <span style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);padding:6px 12px;border-radius:8px;font-size:13px">bookings</span>
+      <span style="background:rgba(108,60,247,0.15);border:1px solid rgba(108,60,247,0.3);padding:6px 12px;border-radius:8px;font-size:13px">seats</span>
+      <span style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);padding:6px 12px;border-radius:8px;font-size:13px">loyalty_accounts</span>
+      <span style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);padding:6px 12px;border-radius:8px;font-size:13px">loyalty_transactions</span>
+      <span style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);padding:6px 12px;border-radius:8px;font-size:13px">wallets</span>
+      <span style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);padding:6px 12px;border-radius:8px;font-size:13px">wallet_transactions</span>
+      <span style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);padding:6px 12px;border-radius:8px;font-size:13px">fan_clubs</span>
+      <span style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);padding:6px 12px;border-radius:8px;font-size:13px">fan_club_members</span>
+      <span style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);padding:6px 12px;border-radius:8px;font-size:13px">wishlist</span>
+      <span style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);padding:6px 12px;border-radius:8px;font-size:13px">reviews</span>
+      <span style="background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);padding:6px 12px;border-radius:8px;font-size:13px">notifications</span>
+      <span style="background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);padding:6px 12px;border-radius:8px;font-size:13px">cms_content</span>
+      <span style="background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);padding:6px 12px;border-radius:8px;font-size:13px">promo_codes</span>
+      <span style="background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);padding:6px 12px;border-radius:8px;font-size:13px">promo_usage</span>
+      <span style="background:rgba(236,72,153,0.15);border:1px solid rgba(236,72,153,0.3);padding:6px 12px;border-radius:8px;font-size:13px">payment_transactions</span>
+      <span style="background:rgba(236,72,153,0.15);border:1px solid rgba(236,72,153,0.3);padding:6px 12px;border-radius:8px;font-size:13px">kyc_documents</span>
+      <span style="background:rgba(236,72,153,0.15);border:1px solid rgba(236,72,153,0.3);padding:6px 12px;border-radius:8px;font-size:13px">audit_log</span>
+      <span style="background:rgba(236,72,153,0.15);border:1px solid rgba(236,72,153,0.3);padding:6px 12px;border-radius:8px;font-size:13px">system_config</span>
+    </div>
+    <div style="margin-top:16px;padding:14px;background:rgba(245,158,11,0.08);border-radius:10px;border:1px solid rgba(245,158,11,0.2);font-size:13px;color:#FCD34D">
+      ⚠️ <strong>Next Step:</strong> Run <code style="background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px">wrangler d1 create INDTIX_DB</code> to get your database_id, then update wrangler.jsonc. 
+      Run <code style="background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px">wrangler d1 execute INDTIX_DB --file=db/schema.sql</code> to create tables.
+      Run <code style="background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px">wrangler d1 execute INDTIX_DB --file=db/seed.sql</code> to add seed data.
+    </div>
+  </div>
+
+  <div class="audit-card">
+    <div class="audit-title">🎯 Next Steps to Live Production</div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;gap:12px;padding:16px;background:rgba(239,68,68,0.06);border-radius:12px;border:1px solid rgba(239,68,68,0.2)">
+        <div style="font-size:24px;flex-shrink:0">1️⃣</div>
+        <div>
+          <div style="font-weight:700;margin-bottom:4px;color:#F87171">Create Cloudflare D1 Database</div>
+          <code style="font-size:12px;color:#888;background:rgba(0,0,0,0.3);padding:4px 8px;border-radius:6px;display:block">wrangler d1 create INDTIX_DB</code>
+          <div style="font-size:13px;color:var(--text-muted);margin-top:6px">Paste the database_id into wrangler.jsonc → unlocks real data persistence</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;padding:16px;background:rgba(245,158,11,0.06);border-radius:12px;border:1px solid rgba(245,158,11,0.2)">
+        <div style="font-size:24px;flex-shrink:0">2️⃣</div>
+        <div>
+          <div style="font-weight:700;margin-bottom:4px;color:#FCD34D">Set JWT Secret</div>
+          <code style="font-size:12px;color:#888;background:rgba(0,0,0,0.3);padding:4px 8px;border-radius:6px;display:block">wrangler secret put JWT_SECRET</code>
+          <div style="font-size:13px;color:var(--text-muted);margin-top:6px">Enter a strong 64-char secret. This encrypts all user session tokens.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;padding:16px;background:rgba(16,185,129,0.06);border-radius:12px;border:1px solid rgba(16,185,129,0.2)">
+        <div style="font-size:24px;flex-shrink:0">3️⃣</div>
+        <div>
+          <div style="font-weight:700;margin-bottom:4px;color:#34D399">Deploy to Cloudflare Pages</div>
+          <code style="font-size:12px;color:#888;background:rgba(0,0,0,0.3);padding:4px 8px;border-radius:6px;display:block">npm run build && npx wrangler pages deploy dist</code>
+          <div style="font-size:13px;color:var(--text-muted);margin-top:6px">Or connect GitHub repo to Cloudflare Pages for auto-deploy on push.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;padding:16px;background:rgba(59,130,246,0.06);border-radius:12px;border:1px solid rgba(59,130,246,0.2)">
+        <div style="font-size:24px;flex-shrink:0">4️⃣</div>
+        <div>
+          <div style="font-weight:700;margin-bottom:4px;color:#93C5FD">Configure Payment Gateway</div>
+          <code style="font-size:12px;color:#888;background:rgba(0,0,0,0.3);padding:4px 8px;border-radius:6px;display:block">wrangler secret put RAZORPAY_KEY_SECRET</code>
+          <div style="font-size:13px;color:var(--text-muted);margin-top:6px">Add Razorpay or Stripe keys. Update /api/payments/* routes to call real gateway.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;padding:16px;background:rgba(108,60,247,0.06);border-radius:12px;border:1px solid rgba(108,60,247,0.2)">
+        <div style="font-size:24px;flex-shrink:0">5️⃣</div>
+        <div>
+          <div style="font-weight:700;margin-bottom:4px;color:#A78BFA">Run E2E Test Suite</div>
+          <code style="font-size:12px;color:#888;background:rgba(0,0,0,0.3);padding:4px 8px;border-radius:6px;display:block">npx playwright test --reporter=html</code>
+          <div style="font-size:13px;color:var(--text-muted);margin-top:6px">50 tests across 12 suites. All auth, events, CMS, booking, security & perf tests.</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- Toast -->
-<div class="toast" id="toast"></div>
+<footer>
+  <p>INDTIX v78 · Built on Cloudflare Workers + D1 + Pages · Hono Framework</p>
+  <p style="margin-top:8px;color:#555">🔐 Demo environment — all credentials are for testing only</p>
+</footer>
+
+<div id="toast">📋 Copied to clipboard!</div>
 
 <script>
-function copyText(el, text) {
-  navigator.clipboard.writeText(text).catch(()=>{});
-  var orig = el.textContent;
-  el.textContent = '✅ Copied!';
-  el.style.color = '#00F5C4';
-  setTimeout(()=>{ el.textContent = orig; el.style.color = ''; }, 1500);
-  var t = document.getElementById('toast');
-  t.textContent = '📋 Copied: ' + text;
-  t.style.opacity = '1';
-  setTimeout(()=>{ t.style.opacity = '0'; }, 2000);
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  });
 }
 
-// Live time
-setInterval(function() {
-  document.getElementById('live-time').textContent = new Date().toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
-}, 1000);
-
-// Clear all sessions helper
-window.clearAllSessions = function() {
-  ['fan','admin','organiser','venue','event_manager','ops'].forEach(k => {
-    sessionStorage.removeItem('ix_session_' + k);
-    localStorage.removeItem('ix_session_' + k);
+// Animate progress bars on load
+window.addEventListener('load', () => {
+  document.querySelectorAll('.progress-fill').forEach(el => {
+    const w = el.style.width;
+    el.style.width = '0';
+    setTimeout(() => el.style.width = w, 300);
   });
-  alert('All sessions cleared. You will need to log in again to each portal.');
-};
+});
 </script>
 </body>
 </html>

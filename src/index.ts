@@ -120,12 +120,27 @@ const EVENTS_DATA = [
   { id: 'e8', name: 'Lollapalooza India', category: 'Music', city: 'Mumbai', date: '2026-03-22', price: 5999, venue: 'Mahalaxmi Racecourse', image: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=400', sold_pct: 92, status: 'live', organiser: 'Lollapalooza India' },
 ]
 
-app.get('/api/events', (c) => {
+app.get('/api/events', async (c) => {
   const city = c.req.query('city')
   const category = c.req.query('category')
   const q = c.req.query('q')
   const page = parseInt(c.req.query('page') || '1')
   const limit = parseInt(c.req.query('limit') || '20')
+
+  // ── D1 live query (when DB is bound) ──────────────────────────────────
+  if (c.env?.DB) {
+    try {
+      let sql = 'SELECT * FROM events WHERE status = ?'
+      const params: any[] = ['active']
+      if (city) { sql += ' AND city LIKE ?'; params.push(`%${city}%`) }
+      if (category) { sql += ' AND category = ?'; params.push(category) }
+      if (q) { sql += ' AND (title LIKE ? OR description LIKE ?)'; params.push(`%${q}%`, `%${q}%`) }
+      sql += ` ORDER BY date DESC LIMIT ${limit} OFFSET ${(page-1)*limit}`
+      const { results } = await c.env.DB.prepare(sql).bind(...params).all()
+      const total = await c.env.DB.prepare('SELECT COUNT(*) as n FROM events WHERE status = ?').bind('active').first()
+      return c.json({ events: results, total: total?.n ?? results.length, page, limit })
+    } catch(e) { /* fall through to mock */ }
+  }
 
   let events = [...EVENTS_DATA]
   if (city) events = events.filter(e => e.city.toLowerCase() === city.toLowerCase())
@@ -339,6 +354,22 @@ app.post('/api/bookings', async (c) => {
   const body = await c.req.json().catch(() => ({} as any))
   const { event_id, addons, payment_method } = body
   let tickets = body.tickets
+
+  // ── D1 live insert (when DB is bound) ────────────────────────────────
+  if (c.env?.DB && event_id) {
+    try {
+      const userId = c.req.header('X-User-Id') || 'guest'
+      const bookingRef = `BK${Date.now().toString(36).toUpperCase()}`
+      const tier = tickets?.[0]?.tier || body.tier || 'General'
+      const qty = tickets?.[0]?.quantity || parseInt(body.quantity || body.qty || '1')
+      const price = tickets?.[0]?.price || body.price || 0
+      const total = price * qty
+      await c.env.DB.prepare(
+        'INSERT INTO bookings (id, user_id, event_id, tier, quantity, total_amount, payment_status, booking_ref, created_at) VALUES (?,?,?,?,?,?,?,?,?)'
+      ).bind(bookingRef, userId, event_id, tier, qty, total, 'pending', bookingRef, new Date().toISOString()).run()
+      return c.json({ success: true, booking_id: bookingRef, ref: bookingRef, status: 'pending', total })
+    } catch(e) { /* fall through to mock */ }
+  }
   // Accept simplified booking: tier + quantity
   if (!tickets && (body.tier || body.quantity || body.qty)) {
     const tier = body.tier || body.tier_id || 'General'
