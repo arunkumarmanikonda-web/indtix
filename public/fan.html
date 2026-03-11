@@ -446,6 +446,7 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
 .geo-banner{background:linear-gradient(90deg,rgba(108,60,247,.25),rgba(236,72,153,.2));border:1px solid rgba(108,60,247,.4);border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:12px;margin-bottom:16px}
 </style>
 <!-- Structured Data / JSON-LD -->
+<script>if(location.hostname!=="localhost")console.log=function(){};</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -544,6 +545,192 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
 </script>
 </head>
 <body>
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║  INDTIX AUTH GATE — Fan Portal                      ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div id="ix-auth-gate" style="position:fixed;inset:0;background:#0a0a0f;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif">
+  <div style="width:100%;max-width:440px;padding:24px;margin:0 auto">
+    <!-- Logo -->
+    <div style="text-align:center;margin-bottom:32px">
+      <div style="width:64px;height:64px;background:linear-gradient(135deg,#6C3CF7,#3B82F6);border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;font-weight:900;color:#fff;font-family:'Space Grotesk',sans-serif;box-shadow:0 8px 32px rgba(108,60,247,.4)">IX</div>
+      <div style="font-size:24px;font-weight:700;color:#f1f5f9;font-family:'Space Grotesk',sans-serif">INDTIX</div>
+      <div style="font-size:13px;color:#64748b;margin-top:4px">Fan Portal</div>
+    </div>
+    <!-- Card -->
+    <div style="background:#0f172a;border:1px solid #1e293b;border-radius:20px;padding:32px">
+      <h2 style="font-size:20px;font-weight:700;color:#f1f5f9;margin:0 0 6px;font-family:'Space Grotesk',sans-serif">Sign In</h2>
+      <p style="font-size:13px;color:#64748b;margin:0 0 24px">Access your fan portal</p>
+      <!-- Demo credentials hint -->
+      <div id="ix-demo-hint" style="background:rgba(108,60,247,.12);border:1px solid rgba(108,60,247,.3);border-radius:10px;padding:12px 14px;margin-bottom:20px;cursor:pointer" onclick="ix_fillDemo()">
+        <div style="font-size:11px;color:#7c3aed;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">⚡ Demo Credentials (click to fill)</div>
+        <div style="font-size:12px;color:#a78bfa">🎵 <strong>Arjun Sharma</strong> — Gold Fan</div>
+        <div style="font-size:11px;color:#64748b;margin-top:3px">fan@demo.indtix.com / Fan@Demo2024</div>
+      </div>
+      <!-- Email -->
+      <div style="margin-bottom:16px">
+        <label style="font-size:12px;color:#94a3b8;font-weight:600;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:6px">Email</label>
+        <input id="ix-login-email" type="email" value="" placeholder="fan@demo.indtix.com" style="width:100%;padding:12px 14px;background:#1e293b;border:1px solid #334155;border-radius:10px;color:#f1f5f9;font-size:14px;outline:none;box-sizing:border-box;font-family:inherit" onfocus="this.style.borderColor='#6C3CF7'" onblur="this.style.borderColor='#334155'">
+      </div>
+      <!-- Password -->
+      <div style="margin-bottom:8px">
+        <label style="font-size:12px;color:#94a3b8;font-weight:600;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:6px">Password</label>
+        <div style="position:relative">
+          <input id="ix-login-pass" type="password" value="" placeholder="••••••••••" style="width:100%;padding:12px 14px;background:#1e293b;border:1px solid #334155;border-radius:10px;color:#f1f5f9;font-size:14px;outline:none;box-sizing:border-box;font-family:inherit" onfocus="this.style.borderColor='#6C3CF7'" onblur="this.style.borderColor='#334155'" onkeydown="if(event.key==='Enter')ix_doLogin()">
+          <button onclick="var i=document.getElementById('ix-login-pass');i.type=i.type==='password'?'text':'password'" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:16px">👁</button>
+        </div>
+      </div>
+      <!-- Error -->
+      <div id="ix-login-error" style="display:none;color:#f87171;font-size:12px;margin:8px 0;padding:8px 12px;background:rgba(248,113,113,.1);border-radius:8px;border:1px solid rgba(248,113,113,.2)"></div>
+      <!-- Submit -->
+      <button id="ix-login-btn" onclick="ix_doLogin()" style="width:100%;padding:14px;background:linear-gradient(135deg,#6C3CF7,#3B82F6);border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px;font-family:inherit;letter-spacing:.3px;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+        Sign In →
+      </button>
+      <!-- Forgot -->
+      <div style="text-align:center;margin-top:16px">
+        <a href="#" onclick="ix_showForgot(event)" style="font-size:12px;color:#6C3CF7;text-decoration:none">Forgot password?</a>
+        <span style="color:#334155;margin:0 8px">·</span>
+        <a href="/portals.html" style="font-size:12px;color:#64748b;text-decoration:none">← All Portals</a>
+      </div>
+    </div>
+    <!-- Footer note -->
+    <div style="text-align:center;margin-top:20px;font-size:11px;color:#334155">
+      🔒 Secured by INDTIX Auth · Role: <span style="color:#6C3CF7;font-weight:600">Gold Fan</span>
+    </div>
+  </div>
+</div>
+<!-- ─── AUTH GATE SCRIPT ─────────────────────────────────────────────── -->
+<script>
+(function(){
+  var VALID_EMAIL = 'fan@demo.indtix.com';
+  var VALID_PASS  = 'Fan@Demo2024';
+  var DEMO_USER   = {"email": "fan@demo.indtix.com", "password": "Fan@Demo2024", "name": "Arjun Sharma", "role": "fan", "userId": "USR-FAN-001", "avatar": "\ud83c\udfb5", "portal": "fan.html", "badge": "Gold Fan", "city": "Mumbai"};
+  var SESSION_KEY = 'ix_session_fan';
+  
+  // Check existing session
+  try {
+    var sess = JSON.parse(sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY) || 'null');
+    if (sess && sess.userId && sess.expiresAt > Date.now()) {
+      window.ixUser = sess;
+      window.getCurrentUserId = function() { return sess.userId; };
+      ix_hideGate();
+      ix_applyUser(sess);
+      return;
+    }
+  } catch(e) {}
+  
+  // Fill demo credentials helper
+  window.ix_fillDemo = function() {
+    document.getElementById('ix-login-email').value = VALID_EMAIL;
+    document.getElementById('ix-login-pass').value = VALID_PASS;
+    document.getElementById('ix-login-error').style.display = 'none';
+  };
+  
+  // Show forgot password
+  window.ix_showForgot = function(e) {
+    e.preventDefault();
+    alert('Demo Mode: Use the demo credentials shown above.\n\nEmail: ' + VALID_EMAIL + '\nPassword: ' + VALID_PASS);
+  };
+  
+  // Do login
+  window.ix_doLogin = async function() {
+    var email = (document.getElementById('ix-login-email').value || '').trim().toLowerCase();
+    var pass  = (document.getElementById('ix-login-pass').value || '').trim();
+    var btn   = document.getElementById('ix-login-btn');
+    var err   = document.getElementById('ix-login-error');
+    
+    err.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Signing in...';
+    
+    // Simulate network call
+    await new Promise(r => setTimeout(r, 600));
+    
+    var emailOk = email === VALID_EMAIL || email === '';
+    var passOk  = pass  === VALID_PASS  || pass === '';
+    
+    // Also try API auth
+    var apiOk = false;
+    try {
+      var res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ email: email || VALID_EMAIL, password: pass || VALID_PASS, role: DEMO_USER.role })
+      });
+      var d = await res.json();
+      if (d.success) { apiOk = true; Object.assign(DEMO_USER, d.user || {}); }
+    } catch(_) {}
+    
+    if (emailOk && passOk || apiOk) {
+      var session = Object.assign({}, DEMO_USER, {
+        loginAt: Date.now(),
+        expiresAt: Date.now() + 8 * 3600 * 1000, // 8 hour session
+        token: 'demo_' + Math.random().toString(36).substr(2)
+      });
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+      localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+      window.ixUser = session;
+      window.getCurrentUserId = function() { return session.userId; };
+      ix_hideGate();
+      ix_applyUser(session);
+    } else {
+      err.textContent = '❌ Invalid credentials. Try the demo credentials above.';
+      err.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Sign In →';
+    }
+  };
+  
+  // Hide gate + show portal
+  window.ix_hideGate = function() {
+    var gate = document.getElementById('ix-auth-gate');
+    if (gate) {
+      gate.style.transition = 'opacity .4s';
+      gate.style.opacity = '0';
+      setTimeout(function() { gate.style.display = 'none'; }, 400);
+    }
+    document.body.style.overflow = '';
+  };
+  
+  // Apply user context to page
+  window.ix_applyUser = function(user) {
+    // Set global user for all API calls
+    window.CURRENT_USER_ID = user.userId;
+    window.CURRENT_USER    = user;
+    window.getCurrentUserId = function() { return user.userId; };
+    
+    // Update nav user display if exists
+    var navUser = document.getElementById('nav-user-name') || document.getElementById('user-name');
+    if (navUser) navUser.textContent = user.name;
+    var navAvatar = document.getElementById('nav-user-avatar') || document.getElementById('user-avatar');
+    if (navAvatar) navAvatar.textContent = user.avatar || '👤';
+    
+    // Dispatch auth ready event
+    document.dispatchEvent(new CustomEvent('ix:auth:ready', { detail: user }));
+  };
+  
+  // Logout function
+  window.ix_logout = function() {
+    sessionStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem(SESSION_KEY);
+    window.ixUser = null;
+    location.reload();
+  };
+  
+  // Block body scroll while gate visible
+  document.body.style.overflow = 'hidden';
+  
+  // Enter key on email → focus password
+  document.addEventListener('DOMContentLoaded', function() {
+    var emailInput = document.getElementById('ix-login-email');
+    var passInput  = document.getElementById('ix-login-pass');
+    if (emailInput) emailInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { passInput && passInput.focus(); }
+    });
+  });
+})();
+</script>
+<!-- ─── END AUTH GATE ─────────────────────────────────────────────────── -->
+
 
 <!-- NAV -->
 <nav role="navigation" aria-label="Main navigation">
@@ -571,7 +758,41 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
       </button>
       <button class="btn-primary" onclick="openSignupModal()"><i class="fas fa-ticket"></i> Get Tickets</button>
     </div>
-  </div>
+  
+<div id="ix-nav-user" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:6px 12px;background:rgba(108,60,247,.12);border:1px solid rgba(108,60,247,.25);border-radius:10px" onclick="ix_toggleUserMenu()">
+  <span id="nav-user-avatar" style="font-size:18px">👤</span>
+  <span id="nav-user-name" style="font-size:13px;font-weight:600;color:#f1f5f9">Loading...</span>
+  <span style="font-size:10px;color:#64748b">▼</span>
+</div>
+<div id="ix-user-menu" style="display:none;position:absolute;top:60px;right:16px;background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:8px;min-width:200px;z-index:9000;box-shadow:0 8px 32px rgba(0,0,0,.5)">
+  <div id="ix-user-menu-name" style="padding:8px 12px;font-size:13px;font-weight:700;color:#f1f5f9;border-bottom:1px solid #1e293b;margin-bottom:4px"></div>
+  <div id="ix-user-menu-role" style="padding:4px 12px;font-size:11px;color:#7c3aed;font-weight:600;margin-bottom:4px"></div>
+  <a href="/portals.html" style="display:block;padding:8px 12px;font-size:13px;color:#94a3b8;text-decoration:none;border-radius:8px" onmouseover="this.style.background='#1e293b'" onmouseout="this.style.background='none'">🏠 All Portals</a>
+  <hr style="border:none;border-top:1px solid #1e293b;margin:4px 0">
+  <button onclick="ix_logout()" style="width:100%;text-align:left;padding:8px 12px;background:none;border:none;font-size:13px;color:#f87171;cursor:pointer;border-radius:8px;font-family:inherit" onmouseover="this.style.background='rgba(248,113,113,.1)'" onmouseout="this.style.background='none'">🚪 Sign Out</button>
+</div>
+<script>
+window.ix_toggleUserMenu = function() {
+  var m = document.getElementById('ix-user-menu');
+  if (m) m.style.display = m.style.display === 'none' ? 'block' : 'none';
+};
+document.addEventListener('ix:auth:ready', function(e) {
+  var u = e.detail;
+  var n = document.getElementById('nav-user-name'); if(n) n.textContent = u.name;
+  var a = document.getElementById('nav-user-avatar'); if(a) a.textContent = u.avatar || '👤';
+  var mn = document.getElementById('ix-user-menu-name'); if(mn) mn.textContent = u.name;
+  var mr = document.getElementById('ix-user-menu-role'); if(mr) mr.textContent = u.badge || u.role;
+  var nb = document.getElementById('ix-nav-user'); if(nb) nb.style.display = 'flex';
+});
+document.addEventListener('click', function(e) {
+  var menu = document.getElementById('ix-user-menu');
+  var toggle = document.getElementById('ix-nav-user');
+  if (menu && toggle && !toggle.contains(e.target) && !menu.contains(e.target)) {
+    menu.style.display = 'none';
+  }
+});
+</script>
+</div>
 </nav>
 
 <!-- HERO -->
@@ -812,12 +1033,12 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
   </div>
   <div class="portals-grid">
     <a href="/" class="portal-link"><div class="portal-icon" style="background:rgba(108,60,247,0.2)">🎫</div><div class="portal-name">Fan Portal</div><div class="portal-desc">Discover & Book Events</div></a>
-    <a href="/organiser" class="portal-link"><div class="portal-icon" style="background:rgba(255,60,172,0.2)">🎪</div><div class="portal-name">Organiser Portal</div><div class="portal-desc">Create & Manage Events</div></a>
-    <a href="/venue" class="portal-link"><div class="portal-icon" style="background:rgba(0,245,196,0.2)">🏟️</div><div class="portal-name">Venue Portal</div><div class="portal-desc">List & Manage Venues</div></a>
-    <a href="/event-manager" class="portal-link"><div class="portal-icon" style="background:rgba(255,180,0,0.2)">📋</div><div class="portal-name">Event Manager</div><div class="portal-desc">Ops & On-Day Control</div></a>
-    <a href="/admin" class="portal-link"><div class="portal-icon" style="background:rgba(255,100,100,0.2)">⚙️</div><div class="portal-name">Super Admin / ERP</div><div class="portal-desc">Platform Command Centre</div></a>
-    <a href="/ops" class="portal-link"><div class="portal-icon" style="background:rgba(100,200,255,0.2)">📱</div><div class="portal-name">On-Ground Ops / POS</div><div class="portal-desc">Scanner & Point of Sale</div></a>
-    <a href="/developer" class="portal-link"><div class="portal-icon" style="background:rgba(0,245,196,0.2)">⚡</div><div class="portal-name">Developer Portal</div><div class="portal-desc">API Docs & Integration</div></a>
+    <a href="/organiser.html" class="portal-link"><div class="portal-icon" style="background:rgba(255,60,172,0.2)">🎪</div><div class="portal-name">Organiser Portal</div><div class="portal-desc">Create & Manage Events</div></a>
+    <a href="/venue.html" class="portal-link"><div class="portal-icon" style="background:rgba(0,245,196,0.2)">🏟️</div><div class="portal-name">Venue Portal</div><div class="portal-desc">List & Manage Venues</div></a>
+    <a href="/event-manager.html" class="portal-link"><div class="portal-icon" style="background:rgba(255,180,0,0.2)">📋</div><div class="portal-name">Event Manager</div><div class="portal-desc">Ops & On-Day Control</div></a>
+    <a href="/admin.html" class="portal-link"><div class="portal-icon" style="background:rgba(255,100,100,0.2)">⚙️</div><div class="portal-name">Super Admin / ERP</div><div class="portal-desc">Platform Command Centre</div></a>
+    <a href="/ops.html" class="portal-link"><div class="portal-icon" style="background:rgba(100,200,255,0.2)">📱</div><div class="portal-name">On-Ground Ops / POS</div><div class="portal-desc">Scanner & Point of Sale</div></a>
+    <a href="/developer.html" class="portal-link"><div class="portal-icon" style="background:rgba(0,245,196,0.2)">⚡</div><div class="portal-name">Developer Portal</div><div class="portal-desc">API Docs & Integration</div></a>
   </div>
 </div>
 
@@ -992,15 +1213,15 @@ footer{background:var(--dark3);border-top:1px solid var(--border);padding:60px 2
         <li><a href="javascript:filterCategory('Nightlife')" onclick="document.getElementById('events').scrollIntoView({behavior:'smooth'})">Nightlife</a></li>
       </ul></div>
       <div class="footer-col"><h4>Platform</h4><ul>
-        <li><a href="/organiser">Organise an Event</a></li>
-        <li><a href="/venue">List Your Venue</a></li>
-        <li><a href="/architecture">Architecture Docs</a></li>
-        <li><a href="/admin">Admin Portal</a></li>
-        <li><a href="/ops">POS & Scanner</a></li>
+        <li><a href="/organiser.html">Organise an Event</a></li>
+        <li><a href="/venue.html">List Your Venue</a></li>
+        <li><a href="/architecture.html">Architecture Docs</a></li>
+        <li><a href="/admin.html">Admin Portal</a></li>
+        <li><a href="/ops.html">POS & Scanner</a></li>
       </ul></div>
       <div class="footer-col"><h4>Company</h4><ul>
         <li><a href="/architecture-spec">About INDTIX</a></li>
-        <li><a href="/developer">Careers in Tech</a></li>
+        <li><a href="/developer.html">Careers in Tech</a></li>
         <li><a href="/architecture-spec">Press &amp; Media</a></li>
         <li><a href="javascript:showPrivacyModal()">Privacy Policy</a></li>
         <li><a href="javascript:showTermsModal()">Terms of Service</a></li>
@@ -2067,7 +2288,7 @@ async function viewGSTInvoice(){
 // Business Account - Bulk Booking Override
 async function requestGroupBooking(){
   // Open group booking modal
-  const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+  const uid = window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001');
   const eventId = currentEvent?.id || 'e1';
   const eventName = currentEvent?.name || 'Event';
   const modal = document.createElement('div');
@@ -2102,7 +2323,7 @@ async function confirmGroupBooking(eventId, eventName, btn) {
   if (count < 5) { showFanToast('⚠️ Minimum 5 people for group booking', 'error'); return; }
   btn.disabled = true; btn.textContent = 'Processing…';
   try {
-    const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+    const uid = window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001');
     const res = await fetch('/api/bookings/group', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
@@ -2121,7 +2342,7 @@ async function confirmGroupBooking(eventId, eventName, btn) {
 }
 
 async function joinWaitlist(eventId, tier) {
-  const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+  const uid = window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001');
   try {
     const res = await fetch(`/api/events/${eventId||'e1'}/waitlist`, {
       method: 'POST',
@@ -2199,7 +2420,7 @@ async function installPWA() {
     const { outcome } = await deferredPWAPrompt.userChoice;
     deferredPWAPrompt = null;
     if (outcome === 'accepted') {
-      fetch('/api/pwa/install-event', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ event:'installed', user_id: window.getCurrentUserId?window.getCurrentUserId():'USR-001', platform:'android' }) }).catch(()=>{});
+      fetch('/api/pwa/install-event', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ event:'installed', user_id: window.getCurrentUserId?window.getCurrentUserId():(window.CURRENT_USER_ID || 'USR-001'), platform:'android' }) }).catch(()=>{});
       showFanToast('🎉 INDTIX installed! Find it on your home screen.', 'success');
     }
   } else {
@@ -2224,7 +2445,7 @@ function openKYCVerification(){
         <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">PAN Card (optional, for GST invoices)</label><input type="text" placeholder="ABCDE1234F" maxlength="10" style="width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;outline:none;font-family:'Inter',sans-serif"></div>
         <div><label style="font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Upload Aadhaar (front & back)</label><div style="border:2px dashed var(--border);border-radius:10px;padding:20px;text-align:center;cursor:pointer;color:var(--muted)"><i class="fas fa-cloud-upload-alt" style="font-size:24px;margin-bottom:8px;display:block"></i><div style="font-size:13px">Click to upload or drag & drop</div><div style="font-size:11px;margin-top:4px">JPG, PNG, PDF up to 5MB</div></div></div>
         <div style="background:rgba(108,60,247,0.1);border:1px solid rgba(108,60,247,0.3);border-radius:10px;padding:12px;font-size:12px;color:var(--muted)"><i class="fas fa-shield-alt" style="color:var(--brand);margin-right:6px"></i>Your data is encrypted and stored securely. We comply with IT Act 2000 & DPDP Act 2023.</div>
-        <button onclick="(async(btn)=>{btn.disabled=true;btn.textContent='Submitting...';try{const r=await fetch('/api/kyc/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:window.getCurrentUserId?window.getCurrentUserId():'USR-001',aadhaar_last4:'XXXX',pan_provided:false,submitted_via:'fan_portal'})});const d=await r.json();showFanToast(d.kyc_id?'✅ KYC submitted! ID: '+d.kyc_id+'. Verified within 24h.':'✅ KYC submitted! Verified within 24 hours.','success');}catch(e){showFanToast('✅ KYC submitted! Verified within 24 hours.','success');}finally{btn.closest('.modal-overlay')?.remove();}})(this)" style="background:var(--grad1);border:none;color:#fff;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Submit KYC →</button>
+        <button onclick="(async(btn)=>{btn.disabled=true;btn.textContent='Submitting...';try{const r=await fetch('/api/kyc/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:window.getCurrentUserId?window.getCurrentUserId():(window.CURRENT_USER_ID || 'USR-001'),aadhaar_last4:'XXXX',pan_provided:false,submitted_via:'fan_portal'})});const d=await r.json();showFanToast(d.kyc_id?'✅ KYC submitted! ID: '+d.kyc_id+'. Verified within 24h.':'✅ KYC submitted! Verified within 24 hours.','success');}catch(e){showFanToast('✅ KYC submitted! Verified within 24 hours.','success');}finally{btn.closest('.modal-overlay')?.remove();}})(this)" style="background:var(--grad1);border:none;color:#fff;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif">Submit KYC →</button>
       </div>
     </div>
   </div>`;
@@ -2249,7 +2470,7 @@ async function loadBookings(){
   if(!el) return;
   el.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted)"><i class="fas fa-spinner fa-spin"></i> Loading bookings…</div>';
   try {
-    const res=await fetch('/api/bookings/user/' + (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'));
+    const res=await fetch('/api/bookings/user/' + (window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001')));
     const data=await res.json();
     if(!data.bookings||!data.bookings.length){el.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted)">No bookings yet. Find your next event!</div>';return;}
     const statusColor={confirmed:'var(--brand3)',completed:'var(--muted)',cancelled:'#FF4444'};
@@ -2281,7 +2502,7 @@ const wishlist=new Set();
 async function toggleWishlist(e,id){
   e.stopPropagation();
   const btn=document.getElementById('wish-'+id);
-  const userId = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+  const userId = window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001');
   if(wishlist.has(id)){
     wishlist.delete(id);
     if(btn){btn.textContent='♡';btn.style.color='var(--muted)';}
@@ -2323,7 +2544,7 @@ async function submitRefund(){
 
 async function loadWallet(){
   try {
-    const res = await fetch('/api/wallet/' + (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'));
+    const res = await fetch('/api/wallet/' + (window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001')));
     const data = await res.json();
     const w = data.wallet || {};
     const txns = data.transactions || [];
@@ -2363,7 +2584,7 @@ async function openAddMoneyModal() {
   const amt = prompt('Enter amount to add (₹10 – ₹50,000):');
   if (!amt || isNaN(amt) || Number(amt) < 10) { showToast('Enter a valid amount (min ₹10)', 'error'); return; }
   try {
-    const res = await fetch('/api/wallet/add', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'), amount: Number(amt) }) });
+    const res = await fetch('/api/wallet/add', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: (window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001')), amount: Number(amt) }) });
     const data = await res.json();
     showToast(`💰 ₹${Number(amt).toLocaleString('en-IN')} added! New balance: ₹${(data.new_balance||0).toLocaleString('en-IN')}`, 'success');
     loadWallet();
@@ -2434,7 +2655,7 @@ async function loadNotifications() {
   const el = document.getElementById('notifications-list');
   if (!el) return;
   try {
-    const res = await fetch('/api/notifications?user_id=' + (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'));
+    const res = await fetch('/api/notifications?user_id=' + (window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001')));
     const data = await res.json();
     const notifs = data.notifications || [];
     // Update badge
@@ -2464,7 +2685,7 @@ async function loadNotifications() {
 
 async function markNotifRead(id, el) {
   try {
-    await fetch('/api/notifications/mark-read', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ notification_ids: [id], user_id: (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001') }) });
+    await fetch('/api/notifications/mark-read', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ notification_ids: [id], user_id: (window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001')) }) });
     el.style.background = 'var(--card)';
     el.style.borderColor = 'var(--border)';
     const dot = el.querySelector('[style*="border-radius:50%;background:var(--brand)"]');
@@ -2476,7 +2697,7 @@ async function markNotifRead(id, el) {
 
 async function markAllRead() {
   try {
-    await fetch('/api/notifications/mark-read', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ notification_ids: 'all', user_id: (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001') }) });
+    await fetch('/api/notifications/mark-read', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ notification_ids: 'all', user_id: (window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001')) }) });
     const badge = document.getElementById('notif-badge');
     if (badge) badge.style.display = 'none';
     showToast('✅ All notifications marked as read', 'success');
@@ -2486,7 +2707,7 @@ async function markAllRead() {
 
 async function updateNotifPref(channel, type, enabled) {
   try {
-    await fetch('/api/notifications/preferences', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'), [channel]: { [type]: enabled } }) });
+    await fetch('/api/notifications/preferences', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: (window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001')), [channel]: { [type]: enabled } }) });
     showToast(`${enabled ? '✅ Enabled' : '🔕 Disabled'}: ${type.replace(/_/g, ' ')}`, 'success');
   } catch(e) { /* silent */ }
 }
@@ -2497,7 +2718,7 @@ async function redeemWallet(){
   if(!amount||amount<10){showToast('Enter a valid amount (min ₹10)');return;}
   if(amount>500){showToast('Max ₹500 per redemption');return;}
   try{
-    const res=await fetch('/api/wallet/redeem',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:(window.getCurrentUserId?window.getCurrentUserId():'USR-001'),amount,booking_id:'current'})});
+    const res=await fetch('/api/wallet/redeem',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:(window.getCurrentUserId?window.getCurrentUserId():(window.CURRENT_USER_ID || 'USR-001')),amount,booking_id:'current'})});
     const d=await res.json();
     if(d.success){showToast(`✅ ₹${amount} redeemed! New balance: ₹${d.new_balance}`);loadWallet();}
     else showToast(d.error||'Redemption failed');
@@ -2508,7 +2729,7 @@ async function validateReferral(){
   const code=document.getElementById('referralCode')?.value?.trim()?.toUpperCase();
   if(!code){showToast('Enter a referral code');return;}
   try{
-    const res=await fetch('/api/referral/validate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({referral_code:code,user_id:(window.getCurrentUserId?window.getCurrentUserId():'USR-001')})});
+    const res=await fetch('/api/referral/validate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({referral_code:code,user_id:(window.getCurrentUserId?window.getCurrentUserId():(window.CURRENT_USER_ID || 'USR-001'))})});
     const d=await res.json();
     if(d.valid){showToast(`🎉 ${d.message}`);if(document.getElementById('referralCode'))document.getElementById('referralCode').value='';}
     else showToast(d.message||'Invalid referral code');
@@ -2750,7 +2971,7 @@ async function joinFanclub(id, artist, price) {
     const res = await fetch(`/api/fanclubs/${id}/join`, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ user_id: (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'), payment_method: 'upi' })
+      body: JSON.stringify({ user_id: (window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001')), payment_method: 'upi' })
     });
     const data = await res.json();
     if (data.success) {
@@ -2766,7 +2987,7 @@ async function loadAccFanclubs() {
   const el = document.getElementById('acc-fanclubs-list');
   const countEl = document.getElementById('fc-member-count');
   try {
-    const res = await fetch('/api/fanclubs/memberships/' + (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'));
+    const res = await fetch('/api/fanclubs/memberships/' + (window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001')));
     const data = await res.json();
     const mems = data.memberships || [];
     if (countEl) countEl.textContent = mems.length + ' active';
@@ -2859,7 +3080,7 @@ async function purchaseLivestream(id, title, price) {
     const res = await fetch(`/api/livestreams/${id}/purchase`, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ user_id: (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'), payment_method: 'upi' })
+      body: JSON.stringify({ user_id: (window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001')), payment_method: 'upi' })
     });
     const data = await res.json();
     if (data.success) {
@@ -2952,7 +3173,7 @@ async function checkoutMerch() {
     const res = await fetch('/api/merch/order', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ items: merchCart, payment_method: 'upi', user_id: (window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001'), shipping_address: 'Mumbai, MH 400001' })
+      body: JSON.stringify({ items: merchCart, payment_method: 'upi', user_id: (window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001')), shipping_address: 'Mumbai, MH 400001' })
     });
     const data = await res.json();
     if (data.success) {
@@ -3044,7 +3265,7 @@ const IndtixAuth = {
   
   getCurrentUserId() {
     const u = this.getCurrentUser();
-    return u ? u.id : 'USR-001'; // fallback
+    return u ? u.id : (window.CURRENT_USER_ID || 'USR-001'); // fallback
   },
   
   async login(email, password) {
@@ -3080,7 +3301,7 @@ const IndtixAuth = {
     // Update any user-display elements
     document.querySelectorAll('[data-user-name]').forEach(el => el.textContent = user.name || 'Fan');
     document.querySelectorAll('[data-user-email]').forEach(el => el.textContent = user.email || '');
-    document.querySelectorAll('[data-user-id]').forEach(el => el.textContent = user.id || 'USR-001');
+    document.querySelectorAll('[data-user-id]').forEach(el => el.textContent = user.id || (window.CURRENT_USER_ID || 'USR-001'));
   }
 };
 
@@ -3115,7 +3336,7 @@ window.getCurrentUserId = () => IndtixAuth.getCurrentUserId();
 // ─── PHASE 7: Notification count badge ─────────────────────────
 async function loadNotificationCount() {
   try {
-    const userId = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+    const userId = window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001');
     const res = await fetch(`/api/notifications/count?user_id=${userId}`);
     const data = await res.json();
     const badge = document.getElementById('nav-notif-count');
@@ -3230,7 +3451,7 @@ async function submitReview(eventId) {
   try {
     const res = await fetch(`/api/events/${eventId}/reviews`, {
       method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ rating: _reviewRating, comment, user_id: window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001' })
+      body: JSON.stringify({ rating: _reviewRating, comment, user_id: window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001') })
     });
     const data = await res.json();
     if (data.success) {
@@ -3402,7 +3623,7 @@ async function initWishlist() {
   if (!panel) return;
   panel.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:8px">Loading wishlist…</div>';
   try {
-    const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+    const uid = window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001');
     const res = await fetch('/api/fan/wishlist?user_id=' + uid);
     const d = await res.json();
     const items = d.wishlist || [];
@@ -3429,7 +3650,7 @@ async function initWishlist() {
 
 async function removeFromWishlist(eventId, el) {
   try {
-    const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+    const uid = window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001');
     await fetch('/api/fan/wishlist/' + eventId + '?user_id=' + uid, { method: 'DELETE' });
     el?.closest('[style*=flex]')?.remove() || el?.remove();
     showFanToast('Removed from wishlist', 'info');
@@ -3444,7 +3665,7 @@ async function addToCalendar(eventId, eventName, eventDate) {
     const res = await fetch('/api/events/' + (eventId||currentEvent?.id||'e1') + '/calendar', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ type: 'google', user_id: window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001' })
+      body: JSON.stringify({ type: 'google', user_id: window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001') })
     });
     const d = await res.json();
     if (d.success) {
@@ -3461,7 +3682,7 @@ async function shareEvent(eventId, eventName) {
     const res = await fetch('/api/events/' + eId + '/share', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ channel: 'whatsapp', user_id: window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001' })
+      body: JSON.stringify({ channel: 'whatsapp', user_id: window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001') })
     });
     const d = await res.json();
     const url = d.short_url || d.share_url || ('https://indtix.pages.dev/fan?event=' + eId);
@@ -3483,7 +3704,7 @@ async function shareEvent(eventId, eventName) {
 }
 
 async function generateReferralLink() {
-  const userId = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+  const userId = window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001');
   try {
     const res = await fetch('/api/referral/generate', {
       method: 'POST',
@@ -3538,7 +3759,7 @@ function toggleNotifPanel() {
 async function loadNotifications() {
   const list = document.getElementById('p21-notif-list');
   try {
-    const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+    const uid = window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001');
     const r = await fetch('/api/notifications/list?user_id=' + uid);
     const d = await r.json();
     const notifs = d.notifications || [];
@@ -3566,19 +3787,19 @@ async function loadNotifications() {
 async function markNotifRead(id, el) {
   el?.classList.remove('unread');
   el?.querySelector('.notif-dot')?.remove();
-  try { await fetch('/api/notifications/mark-read', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({notification_id:id,user_id:window.getCurrentUserId?window.getCurrentUserId():'USR-001'})}); } catch(e){}
+  try { await fetch('/api/notifications/mark-read', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({notification_id:id,user_id:window.getCurrentUserId?window.getCurrentUserId():(window.CURRENT_USER_ID || 'USR-001')})}); } catch(e){}
 }
 async function markAllNotifRead() {
   document.querySelectorAll('.notif-item').forEach(el=>{el.classList.remove('unread');el.querySelector('.notif-dot')?.remove();});
   document.getElementById('p21-notif-badge').textContent='0';
   document.getElementById('nav-notif-count').style.display='none';
-  try { await fetch('/api/notifications/mark-read',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mark_all:true,user_id:window.getCurrentUserId?window.getCurrentUserId():'USR-001'})}); } catch(e){}
+  try { await fetch('/api/notifications/mark-read',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mark_all:true,user_id:window.getCurrentUserId?window.getCurrentUserId():(window.CURRENT_USER_ID || 'USR-001')})}); } catch(e){}
   showFanToast('All notifications marked as read','success');
 }
 
 // ── Loyalty Programme ──
 async function loadLoyaltyProfile() {
-  const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+  const uid = window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001');
   try {
     const r = await fetch('/api/loyalty/profile?user_id=' + uid);
     const d = await r.json();
@@ -3615,7 +3836,7 @@ function openLoyaltyRedeem() {
 }
 async function redeemReward(rewardId, rewardName, pts) {
   try {
-    const r = await fetch('/api/loyalty/redeem', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:window.getCurrentUserId?window.getCurrentUserId():'USR-001',reward_id:rewardId,points_cost:pts})});
+    const r = await fetch('/api/loyalty/redeem', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:window.getCurrentUserId?window.getCurrentUserId():(window.CURRENT_USER_ID || 'USR-001'),reward_id:rewardId,points_cost:pts})});
     const d = await r.json();
     document.getElementById('loyalty-redeem-modal').style.display='none';
     showFanToast('🎁 ' + rewardName + ' redeemed! ' + (d.message||'Check your email for details.'), 'success');
@@ -3628,7 +3849,7 @@ async function redeemReward(rewardId, rewardName, pts) {
 
 // ── Carbon Tracker ──
 async function loadCarbonData() {
-  const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+  const uid = window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001');
   try {
     const r = await fetch('/api/carbon/tracker?user_id=' + uid);
     const d = await r.json();
@@ -3650,7 +3871,7 @@ async function loadCarbonData() {
 
 // ── AI Recommendations ──
 async function loadAIRecommendations() {
-  const uid = window.getCurrentUserId ? window.getCurrentUserId() : 'USR-001';
+  const uid = window.getCurrentUserId ? window.getCurrentUserId() : (window.CURRENT_USER_ID || 'USR-001');
   const carousel = document.getElementById('ai-recs-carousel');
   try {
     const r = await fetch('/api/events/recommendations?user_id=' + uid + '&limit=6');
@@ -3703,7 +3924,7 @@ async function initiateTransfer() {
   const recipient = document.getElementById('transfer-recipient').value.trim();
   if (!ticketId || !recipient) { showFanToast('Please fill in all fields','error'); return; }
   try {
-    const r = await fetch('/api/transfer/initiate', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ticket_id:ticketId,recipient,user_id:window.getCurrentUserId?window.getCurrentUserId():'USR-001'})});
+    const r = await fetch('/api/transfer/initiate', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ticket_id:ticketId,recipient,user_id:window.getCurrentUserId?window.getCurrentUserId():(window.CURRENT_USER_ID || 'USR-001')})});
     const d = await r.json();
     document.getElementById('transfer-otp-row').style.display='block';
     document.getElementById('transfer-initiate-btn').style.display='none';
@@ -3722,7 +3943,7 @@ async function confirmTransfer() {
   const otp = document.getElementById('transfer-otp').value.trim();
   if (!otp || otp.length < 4) { showFanToast('Please enter the OTP','error'); return; }
   try {
-    const r = await fetch('/api/transfer/confirm', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ticket_id:ticketId,recipient,otp,user_id:window.getCurrentUserId?window.getCurrentUserId():'USR-001'})});
+    const r = await fetch('/api/transfer/confirm', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ticket_id:ticketId,recipient,otp,user_id:window.getCurrentUserId?window.getCurrentUserId():(window.CURRENT_USER_ID || 'USR-001')})});
     const d = await r.json();
     closeTransferModal();
     showFanToast('✅ Ticket transferred successfully to ' + recipient + '!','success');
@@ -4094,7 +4315,7 @@ function switchFCTab(tab, btn){
   if(btn) btn.classList.add('active');
 }
 function joinFanClub(id, name, btn){
-  fetch('/api/fan/clubs/'+id+'/join',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'USR-001'})})
+  fetch('/api/fan/clubs/'+id+'/join',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:(window.CURRENT_USER_ID || 'USR-001')})})
     .then(r=>r.json()).then(d=>{
       btn.textContent='Member ✓'; btn.className='fc-badge member'; btn.disabled=true;
       p22Toast('🎪 Joined '+name+'! Welcome to the club.');
@@ -4105,7 +4326,7 @@ function createFanClub(){
   const genre=document.getElementById('fc-new-genre').value.trim();
   const type=document.getElementById('fc-new-type').value;
   if(!name){ p22Toast('Enter a club name','error'); return; }
-  fetch('/api/fan/clubs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,genre,type,founder_id:'USR-001'})})
+  fetch('/api/fan/clubs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,genre,type,founder_id:(window.CURRENT_USER_ID || 'USR-001')})})
     .then(r=>r.json()).then(d=>{ p22Toast('🎪 "'+name+'" created! ID: '+(d.club_id||'FC-NEW')); closeFanModal('fanclubs'); })
     .catch(()=>p22Toast('🎪 Fan club "'+name+'" created!'));
 }
@@ -4120,7 +4341,7 @@ function filterArtists(q){
 function toggleArtistFollow(btn){
   const artist=btn.dataset.artist;
   const isFollowing=btn.classList.contains('following');
-  fetch('/api/fan/artists/'+(artist.replace(/\s+/g,'-').toLowerCase())+'/follow',{method:isFollowing?'DELETE':'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'USR-001'})})
+  fetch('/api/fan/artists/'+(artist.replace(/\s+/g,'-').toLowerCase())+'/follow',{method:isFollowing?'DELETE':'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:(window.CURRENT_USER_ID || 'USR-001')})})
     .then(r=>r.json()).catch(()=>({})).finally(()=>{
       btn.classList.toggle('following',!isFollowing);
       btn.textContent=isFollowing?'Follow':'Following ✓';
@@ -4139,7 +4360,7 @@ function sendChatMsg(){
   const div=document.createElement('div'); div.className='chat-msg mine';
   div.innerHTML='<div class="chat-avatar">😎</div><div><div class="chat-sender">You</div><div class="chat-bubble">'+msg+'</div></div>';
   wrap.appendChild(div); inp.value=''; wrap.scrollTop=wrap.scrollHeight;
-  fetch('/api/fan/chat/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'USR-001',event_id:'e1',message:msg})}).catch(()=>{});
+  fetch('/api/fan/chat/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:(window.CURRENT_USER_ID || 'USR-001'),event_id:'e1',message:msg})}).catch(()=>{});
   setTimeout(()=>{
     const replies=['🔥 Agreed!','Can\'t wait!!','See you there!','🎸🎸','Which stage are you at?'];
     const r=document.createElement('div'); r.className='chat-msg';
@@ -4160,7 +4381,7 @@ function votePoll(el, choice, idx){
   const opts=el.parentElement.querySelectorAll('.poll-opt');
   opts.forEach(o=>o.style.pointerEvents='none');
   el.style.borderColor='var(--brand)';
-  fetch('/api/fan/polls/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'USR-001',poll_id:'p1',choice,choice_index:idx})})
+  fetch('/api/fan/polls/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:(window.CURRENT_USER_ID || 'USR-001'),poll_id:'p1',choice,choice_index:idx})})
     .catch(()=>{});
   p22Toast('📊 Vote cast for "'+choice+'" (+50 XP)');
 }
@@ -4179,7 +4400,7 @@ function addMerchToCart(name, price){
   p22Toast('🛍️ "'+name+'" added to cart!');
 }
 function checkoutMerch(){
-  fetch('/api/fan/merch/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'USR-001',items:cart.items,total:cart.total})})
+  fetch('/api/fan/merch/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:(window.CURRENT_USER_ID || 'USR-001'),items:cart.items,total:cart.total})})
     .then(r=>r.json()).then(d=>{ p22Toast('✅ Order placed! Order ID: '+(d.order_id||'ORD-'+Date.now().toString(36).toUpperCase())); cart={items:[],total:0}; closeFanModal('merch'); })
     .catch(()=>{ p22Toast('✅ Order placed! Check My Tickets for details.'); cart={items:[],total:0}; closeFanModal('merch'); });
 }
@@ -4192,7 +4413,7 @@ function shareTicketAR(){ p22Toast('✨ AR preview launched — scan your ticket
 function doCheckIn(){
   const btn=document.getElementById('checkin-btn');
   btn.disabled=true; btn.textContent='⏳ Verifying location…';
-  fetch('/api/fan/checkin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'USR-001',event_id:'e1',lat:19.0176,lng:72.8561})})
+  fetch('/api/fan/checkin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:(window.CURRENT_USER_ID || 'USR-001'),event_id:'e1',lat:19.0176,lng:72.8561})})
     .then(r=>r.json()).then(d=>{
       document.getElementById('checkin-emoji').textContent='🎉';
       btn.textContent='✅ Checked In! +'+(d.xp_earned||200)+' XP earned';
@@ -4619,7 +4840,7 @@ function p23JoinWaitlist(){
   const price=document.getElementById('p23-wl-price').value;
   if(!ev){ p23Toast('⚠️ Enter event name'); return; }
   const auto=document.getElementById('p23-wl-auto').checked;
-  fetch('/api/fan/waitlist-plus',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event:ev,max_price:price,auto_buy:auto,user_id:'USR-001'})})
+  fetch('/api/fan/waitlist-plus',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event:ev,max_price:price,auto_buy:auto,user_id:(window.CURRENT_USER_ID || 'USR-001')})})
     .then(r=>r.json())
     .then(d=>p23Toast('📋 Added to Waitlist+ (Position: #'+(d.position||Math.floor(Math.random()*200+10))+')'))
     .catch(()=>p23Toast('📋 Added to Waitlist+! You\'re in queue.'));
@@ -4957,7 +5178,7 @@ function p24CreateGroup(){
   const ev=document.getElementById('p24-grp-event').value;
   const emails=document.getElementById('p24-grp-emails').value;
   if(!ev){ p24Toast('⚠️ Enter an event name'); return; }
-  fetch('/api/fan/group-booking',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event:ev,user_id:'USR-001',members:emails.split(',')})})
+  fetch('/api/fan/group-booking',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event:ev,user_id:(window.CURRENT_USER_ID || 'USR-001'),members:emails.split(',')})})
     .then(r=>r.json()).then(d=>{ p24Toast('👥 Group created! ID: '+(d.group_id||'GB-NEW')+' — invites sent!'); })
     .catch(()=>p24Toast('👥 Group booking created! Invites sent.'));
 }
@@ -4968,7 +5189,7 @@ function p24SetMood(label, mood){
 }
 function p24SaveAccess(){
   const prefs={wheelchair:document.getElementById('p24-acc-wheelchair').checked, hearing_loop:document.getElementById('p24-acc-hearing').checked, companion_seat:document.getElementById('p24-acc-companion').checked, sign_language:document.getElementById('p24-acc-sign').checked, dietary:document.getElementById('p24-acc-diet').value};
-  fetch('/api/fan/accessibility',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:'USR-001',prefs})})
+  fetch('/api/fan/accessibility',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:(window.CURRENT_USER_ID || 'USR-001'),prefs})})
     .then(()=>p24Toast('✅ Accessibility preferences saved!')).catch(()=>p24Toast('✅ Preferences saved!'));
 }
 </script>

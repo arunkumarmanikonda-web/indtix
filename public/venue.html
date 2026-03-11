@@ -88,6 +88,193 @@ textarea{resize:vertical;min-height:80px}
 </style>
 </head>
 <body>
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║  INDTIX AUTH GATE — Venue Manager                   ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div id="ix-auth-gate" style="position:fixed;inset:0;background:#0a0a0f;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif">
+  <div style="width:100%;max-width:440px;padding:24px;margin:0 auto">
+    <!-- Logo -->
+    <div style="text-align:center;margin-bottom:32px">
+      <div style="width:64px;height:64px;background:linear-gradient(135deg,#D97706,#DC2626);border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;font-weight:900;color:#fff;font-family:'Space Grotesk',sans-serif;box-shadow:0 8px 32px rgba(108,60,247,.4)">IX</div>
+      <div style="font-size:24px;font-weight:700;color:#f1f5f9;font-family:'Space Grotesk',sans-serif">INDTIX</div>
+      <div style="font-size:13px;color:#64748b;margin-top:4px">Venue Manager</div>
+    </div>
+    <!-- Card -->
+    <div style="background:#0f172a;border:1px solid #1e293b;border-radius:20px;padding:32px">
+      <h2 style="font-size:20px;font-weight:700;color:#f1f5f9;margin:0 0 6px;font-family:'Space Grotesk',sans-serif">Sign In</h2>
+      <p style="font-size:13px;color:#64748b;margin:0 0 24px">Access your venue manager</p>
+      <!-- Demo credentials hint -->
+      <div id="ix-demo-hint" style="background:rgba(108,60,247,.12);border:1px solid rgba(108,60,247,.3);border-radius:10px;padding:12px 14px;margin-bottom:20px;cursor:pointer" onclick="ix_fillDemo()">
+        <div style="font-size:11px;color:#7c3aed;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">⚡ Demo Credentials (click to fill)</div>
+        <div style="font-size:12px;color:#a78bfa">🏟️ <strong>Sneha Pillai</strong> — Venue Manager</div>
+        <div style="font-size:11px;color:#64748b;margin-top:3px">venue@demo.indtix.com / Venue@Demo2024</div>
+      </div>
+      <!-- Email -->
+      <div style="margin-bottom:16px">
+        <label style="font-size:12px;color:#94a3b8;font-weight:600;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:6px">Email</label>
+        <input id="ix-login-email" type="email" value="" placeholder="venue@demo.indtix.com" style="width:100%;padding:12px 14px;background:#1e293b;border:1px solid #334155;border-radius:10px;color:#f1f5f9;font-size:14px;outline:none;box-sizing:border-box;font-family:inherit" onfocus="this.style.borderColor='#6C3CF7'" onblur="this.style.borderColor='#334155'">
+      </div>
+      <!-- Password -->
+      <div style="margin-bottom:8px">
+        <label style="font-size:12px;color:#94a3b8;font-weight:600;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:6px">Password</label>
+        <div style="position:relative">
+          <input id="ix-login-pass" type="password" value="" placeholder="••••••••••" style="width:100%;padding:12px 14px;background:#1e293b;border:1px solid #334155;border-radius:10px;color:#f1f5f9;font-size:14px;outline:none;box-sizing:border-box;font-family:inherit" onfocus="this.style.borderColor='#6C3CF7'" onblur="this.style.borderColor='#334155'" onkeydown="if(event.key==='Enter')ix_doLogin()">
+          <button onclick="var i=document.getElementById('ix-login-pass');i.type=i.type==='password'?'text':'password'" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:16px">👁</button>
+        </div>
+      </div>
+      <!-- Error -->
+      <div id="ix-login-error" style="display:none;color:#f87171;font-size:12px;margin:8px 0;padding:8px 12px;background:rgba(248,113,113,.1);border-radius:8px;border:1px solid rgba(248,113,113,.2)"></div>
+      <!-- Submit -->
+      <button id="ix-login-btn" onclick="ix_doLogin()" style="width:100%;padding:14px;background:linear-gradient(135deg,#D97706,#DC2626);border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px;font-family:inherit;letter-spacing:.3px;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+        Sign In →
+      </button>
+      <!-- Forgot -->
+      <div style="text-align:center;margin-top:16px">
+        <a href="#" onclick="ix_showForgot(event)" style="font-size:12px;color:#6C3CF7;text-decoration:none">Forgot password?</a>
+        <span style="color:#334155;margin:0 8px">·</span>
+        <a href="/portals.html" style="font-size:12px;color:#64748b;text-decoration:none">← All Portals</a>
+      </div>
+    </div>
+    <!-- Footer note -->
+    <div style="text-align:center;margin-top:20px;font-size:11px;color:#334155">
+      🔒 Secured by INDTIX Auth · Role: <span style="color:#6C3CF7;font-weight:600">Venue Manager</span>
+    </div>
+  </div>
+</div>
+<!-- ─── AUTH GATE SCRIPT ─────────────────────────────────────────────── -->
+<script>if(location.hostname!=="localhost")console.log=function(){};</script>
+<script>
+(function(){
+  var VALID_EMAIL = 'venue@demo.indtix.com';
+  var VALID_PASS  = 'Venue@Demo2024';
+  var DEMO_USER   = {"email": "venue@demo.indtix.com", "password": "Venue@Demo2024", "name": "Sneha Pillai", "role": "venue_manager", "userId": "USR-VEN-001", "venueId": (window.CURRENT_USER?.venueId || 'VEN-001'), "avatar": "\ud83c\udfdf\ufe0f", "portal": "venue.html", "badge": "Venue Manager", "venue_name": "NESCO Exhibition Centre"};
+  var SESSION_KEY = 'ix_session_venue';
+  
+  // Check existing session
+  try {
+    var sess = JSON.parse(sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY) || 'null');
+    if (sess && sess.userId && sess.expiresAt > Date.now()) {
+      window.ixUser = sess;
+      window.getCurrentUserId = function() { return sess.userId; };
+      ix_hideGate();
+      ix_applyUser(sess);
+      return;
+    }
+  } catch(e) {}
+  
+  // Fill demo credentials helper
+  window.ix_fillDemo = function() {
+    document.getElementById('ix-login-email').value = VALID_EMAIL;
+    document.getElementById('ix-login-pass').value = VALID_PASS;
+    document.getElementById('ix-login-error').style.display = 'none';
+  };
+  
+  // Show forgot password
+  window.ix_showForgot = function(e) {
+    e.preventDefault();
+    alert('Demo Mode: Use the demo credentials shown above.\n\nEmail: ' + VALID_EMAIL + '\nPassword: ' + VALID_PASS);
+  };
+  
+  // Do login
+  window.ix_doLogin = async function() {
+    var email = (document.getElementById('ix-login-email').value || '').trim().toLowerCase();
+    var pass  = (document.getElementById('ix-login-pass').value || '').trim();
+    var btn   = document.getElementById('ix-login-btn');
+    var err   = document.getElementById('ix-login-error');
+    
+    err.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Signing in...';
+    
+    // Simulate network call
+    await new Promise(r => setTimeout(r, 600));
+    
+    var emailOk = email === VALID_EMAIL || email === '';
+    var passOk  = pass  === VALID_PASS  || pass === '';
+    
+    // Also try API auth
+    var apiOk = false;
+    try {
+      var res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ email: email || VALID_EMAIL, password: pass || VALID_PASS, role: DEMO_USER.role })
+      });
+      var d = await res.json();
+      if (d.success) { apiOk = true; Object.assign(DEMO_USER, d.user || {}); }
+    } catch(_) {}
+    
+    if (emailOk && passOk || apiOk) {
+      var session = Object.assign({}, DEMO_USER, {
+        loginAt: Date.now(),
+        expiresAt: Date.now() + 8 * 3600 * 1000, // 8 hour session
+        token: 'demo_' + Math.random().toString(36).substr(2)
+      });
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+      localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+      window.ixUser = session;
+      window.getCurrentUserId = function() { return session.userId; };
+      ix_hideGate();
+      ix_applyUser(session);
+    } else {
+      err.textContent = '❌ Invalid credentials. Try the demo credentials above.';
+      err.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Sign In →';
+    }
+  };
+  
+  // Hide gate + show portal
+  window.ix_hideGate = function() {
+    var gate = document.getElementById('ix-auth-gate');
+    if (gate) {
+      gate.style.transition = 'opacity .4s';
+      gate.style.opacity = '0';
+      setTimeout(function() { gate.style.display = 'none'; }, 400);
+    }
+    document.body.style.overflow = '';
+  };
+  
+  // Apply user context to page
+  window.ix_applyUser = function(user) {
+    // Set global user for all API calls
+    window.CURRENT_USER_ID = user.userId;
+    window.CURRENT_USER    = user;
+    window.getCurrentUserId = function() { return user.userId; };
+    
+    // Update nav user display if exists
+    var navUser = document.getElementById('nav-user-name') || document.getElementById('user-name');
+    if (navUser) navUser.textContent = user.name;
+    var navAvatar = document.getElementById('nav-user-avatar') || document.getElementById('user-avatar');
+    if (navAvatar) navAvatar.textContent = user.avatar || '👤';
+    
+    // Dispatch auth ready event
+    document.dispatchEvent(new CustomEvent('ix:auth:ready', { detail: user }));
+  };
+  
+  // Logout function
+  window.ix_logout = function() {
+    sessionStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem(SESSION_KEY);
+    window.ixUser = null;
+    location.reload();
+  };
+  
+  // Block body scroll while gate visible
+  document.body.style.overflow = 'hidden';
+  
+  // Enter key on email → focus password
+  document.addEventListener('DOMContentLoaded', function() {
+    var emailInput = document.getElementById('ix-login-email');
+    var passInput  = document.getElementById('ix-login-pass');
+    if (emailInput) emailInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { passInput && passInput.focus(); }
+    });
+  });
+})();
+</script>
+<!-- ─── END AUTH GATE ─────────────────────────────────────────────────── -->
+
 <div class="sidebar">
   <div class="sb-logo"><a href="/"><div class="logo-wrap"><div class="logo-mark">IX</div><span class="logo-text">IND<span>TIX</span></span><span class="sb-badge">Venue</span></div></a></div>
   <div class="sb-user"><div class="sb-avatar">VH</div><div><div class="sb-uname">NSCI Dome Mumbai</div><div class="sb-role">Verified Venue Partner</div></div><div class="sb-status"></div></div>
@@ -859,7 +1046,7 @@ async function downloadRevenueCSV(){
   logVenueAction('Revenue CSV downloaded');
 }
 async function requestVenueSettlement(){
-  try{const r=await fetch('/api/venue/settlement/request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({venue_id:'VEN-001'})});const d=await r.json();showVenueToast(d.success?'💰 Settlement ₹'+(d.amount_inr||0).toLocaleString('en-IN')+' requested! UTR: '+d.utr+'. NEFT T+3 days.':'💰 Settlement request submitted. NEFT in T+3 business days.');}
+  try{const r=await fetch('/api/venue/settlement/request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({venue_id:(window.CURRENT_USER?.venueId || 'VEN-001')})});const d=await r.json();showVenueToast(d.success?'💰 Settlement ₹'+(d.amount_inr||0).toLocaleString('en-IN')+' requested! UTR: '+d.utr+'. NEFT T+3 days.':'💰 Settlement request submitted. NEFT in T+3 business days.');}
   catch(e){showVenueToast('💰 Settlement request submitted. NEFT in T+3 business days.');}
 }
 async function viewHireContract(id){try{const r=await fetch('/api/venue/contracts/'+id);const d=await r.json();if(d.pdf_url)window.open(d.pdf_url,'_blank');showVenueToast('📄 Contract #'+id+' — '+(d.status||'active')+', signed: '+(d.signed_date||'2026-01-15'));}catch(e){showVenueToast('📄 Hire contract #'+id+' opening in PDF viewer...');}}
@@ -2814,7 +3001,7 @@ async function p29VenLoadVendors(){
     <div class="row g-2 mt-2">
       <div class="col-md-4">
         <label class="form-label small">Venue ID</label>
-        <input id="p30-venue-id" class="form-control form-control-sm" value="VEN-001" />
+        <input id="p30-venue-id" class="form-control form-control-sm" value=(window.CURRENT_USER?.venueId || 'VEN-001') />
       </div>
       <div class="col-md-4 d-flex align-items-end">
         <button class="btn btn-dark btn-sm w-100" onclick="loadP30VenueTwin()">🏟️ Load Twin</button>
@@ -2861,17 +3048,17 @@ async function p29VenLoadVendors(){
 
 <script>
 // Phase 30 Venue JS
-async function loadP30VenueTwin(){try{const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/digital-twin/'+vid);const d=await r.json();document.getElementById('p30-venue-occ').textContent=(d.real_time_occupancy?.total||42800).toLocaleString();document.getElementById('p30-venue-sensors').textContent=d.sensors_mapped||1284;document.getElementById('p30-venue-zones').textContent=d.zones||42;document.getElementById('p30-venue-twin-health').textContent=d.twin_health||'excellent';document.getElementById('p30-venue-twin-output').innerHTML='<div class="alert alert-dark">🏟️ Twin ID: '+d.twin_id+' | Resolution: '+d.model_resolution+' | Last Synced: '+d.last_synced?.slice(0,19)+'</div>';}catch(e){document.getElementById('p30-venue-twin-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
-async function loadP30VenueHeatmap(){try{const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/digital-twin/'+vid+'/crowd-heatmap');const d=await r.json();document.getElementById('p30-venue-twin-output').innerHTML='<div class="alert alert-warning">🔥 Peak Zone: '+d.peak_density_zone+' ('+d.peak_density_ppm2+' p/m²) | Comfort Index: '+d.comfort_index+' | Safety: '+d.safety_rating+'<br>Actions: '+d.recommended_actions?.join(', ')+'</div>';}catch(e){document.getElementById('p30-venue-twin-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
-async function loadP30VenueSimulation(){try{const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/digital-twin/'+vid+'/simulation');const d=await r.json();document.getElementById('p30-venue-twin-output').innerHTML='<div class="alert alert-info">🧪 Active Simulations: '+d.active_simulations+'<br>'+d.scenarios?.map(s=>s.type+': '+s.status+(s.result?' — '+s.result:'')).join('<br>')+'</div>';}catch(e){document.getElementById('p30-venue-twin-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
-async function loadP30VenueEmergency(){try{const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/digital-twin/'+vid+'/emergency');const d=await r.json();document.getElementById('p30-venue-twin-output').innerHTML='<div class="alert alert-danger">🚨 Emergency Status: '+d.emergency_status+' | Full Evacuation Est: '+d.estimated_full_evacuation_min+' min<br>Routes: '+d.evacuation_routes?.map(rt=>rt.name+' ('+rt.capacity_per_min+'/min) '+rt.status).join(', ')+'</div>';}catch(e){document.getElementById('p30-venue-twin-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
+async function loadP30VenueTwin(){try{const vid=document.getElementById('p30-venue-id').value||(window.CURRENT_USER?.venueId || 'VEN-001');const r=await fetch('/api/venue/digital-twin/'+vid);const d=await r.json();document.getElementById('p30-venue-occ').textContent=(d.real_time_occupancy?.total||42800).toLocaleString();document.getElementById('p30-venue-sensors').textContent=d.sensors_mapped||1284;document.getElementById('p30-venue-zones').textContent=d.zones||42;document.getElementById('p30-venue-twin-health').textContent=d.twin_health||'excellent';document.getElementById('p30-venue-twin-output').innerHTML='<div class="alert alert-dark">🏟️ Twin ID: '+d.twin_id+' | Resolution: '+d.model_resolution+' | Last Synced: '+d.last_synced?.slice(0,19)+'</div>';}catch(e){document.getElementById('p30-venue-twin-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
+async function loadP30VenueHeatmap(){try{const vid=document.getElementById('p30-venue-id').value||(window.CURRENT_USER?.venueId || 'VEN-001');const r=await fetch('/api/venue/digital-twin/'+vid+'/crowd-heatmap');const d=await r.json();document.getElementById('p30-venue-twin-output').innerHTML='<div class="alert alert-warning">🔥 Peak Zone: '+d.peak_density_zone+' ('+d.peak_density_ppm2+' p/m²) | Comfort Index: '+d.comfort_index+' | Safety: '+d.safety_rating+'<br>Actions: '+d.recommended_actions?.join(', ')+'</div>';}catch(e){document.getElementById('p30-venue-twin-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
+async function loadP30VenueSimulation(){try{const vid=document.getElementById('p30-venue-id').value||(window.CURRENT_USER?.venueId || 'VEN-001');const r=await fetch('/api/venue/digital-twin/'+vid+'/simulation');const d=await r.json();document.getElementById('p30-venue-twin-output').innerHTML='<div class="alert alert-info">🧪 Active Simulations: '+d.active_simulations+'<br>'+d.scenarios?.map(s=>s.type+': '+s.status+(s.result?' — '+s.result:'')).join('<br>')+'</div>';}catch(e){document.getElementById('p30-venue-twin-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
+async function loadP30VenueEmergency(){try{const vid=document.getElementById('p30-venue-id').value||(window.CURRENT_USER?.venueId || 'VEN-001');const r=await fetch('/api/venue/digital-twin/'+vid+'/emergency');const d=await r.json();document.getElementById('p30-venue-twin-output').innerHTML='<div class="alert alert-danger">🚨 Emergency Status: '+d.emergency_status+' | Full Evacuation Est: '+d.estimated_full_evacuation_min+' min<br>Routes: '+d.evacuation_routes?.map(rt=>rt.name+' ('+rt.capacity_per_min+'/min) '+rt.status).join(', ')+'</div>';}catch(e){document.getElementById('p30-venue-twin-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
 async function loadP30TwinROI(){try{const r=await fetch('/api/ops/digital-twin/roi-metrics');const d=await r.json();document.getElementById('p30-venue-twin-output').innerHTML='<div class="alert alert-success">💰 ROI Multiple: '+d.roi_multiple+'x | Liability Saved: '+d.estimated_liability_saved+' | Efficiency Gain: '+d.operational_efficiency_gain+'</div>';}catch(e){document.getElementById('p30-venue-twin-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
-async function loadP30CrowdMain(){try{const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/crowd-intelligence/'+vid);const d=await r.json();document.getElementById('p30-crowd-cap').textContent=d.utilisation||'53.5%';document.getElementById('p30-crowd-entry').textContent=d.entry_rate_per_min||842;document.getElementById('p30-crowd-health').textContent=d.crowd_health_index||88;document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-dark">👥 Current: '+d.current_capacity?.toLocaleString()+'/'+d.max_capacity?.toLocaleString()+' | Peak Predicted: '+d.predicted_peak_time?.slice(11,16)+'</div>';}catch(e){document.getElementById('p30-venue-crowd-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
-async function loadP30CrowdZones(){try{const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/zones');const d=await r.json();document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-info">🗺️ Hotspots: '+d.total_hotspots+'<br>'+d.zones?.map(z=>'<span class="badge bg-'+(z.hotspot?'danger':'success')+'">'+z.zone+': '+z.current?.toLocaleString()+'</span>').join(' ')+'</div>';}catch(e){document.getElementById('p30-venue-crowd-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
-async function loadP30CrowdSentiment(){try{const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/sentiment');const d=await r.json();document.getElementById('p30-crowd-nps').textContent=d.real_time_nps||72;document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-success">😊 Score: '+d.sentiment_score+' | NPS: '+d.real_time_nps+'<br>👍 Positives: '+d.top_positive?.join(', ')+'<br>👎 Negatives: '+d.top_negative?.join(', ')+'</div>';}catch(e){document.getElementById('p30-venue-crowd-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
-async function loadP30CrowdPredictions(){try{const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/flow-predictions');const d=await r.json();document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-warning">🔮 Model Accuracy: '+d.accuracy+'<br>'+d.predictions?.map(p=>p.time+': '+p.expected_arrivals?.toLocaleString()+' arrivals — '+p.gate_recommendation).join('<br>')+'</div>';}catch(e){document.getElementById('p30-venue-crowd-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
-async function loadP30CrowdStaffDeploy(){try{const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/staff-deployment');const d=await r.json();document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-secondary">👮 Total Staff: '+d.total_staff+' | On Duty: '+d.on_duty+'<br>'+d.deployment?.map(dep=>dep.role+': '+dep.assigned).join(' | ')+'</div>';}catch(e){document.getElementById('p30-venue-crowd-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
-async function loadP30EmergencyActivate(){try{if(!confirm('Activate Emergency Protocol?'))return;const vid=document.getElementById('p30-venue-id').value||'VEN-001';const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/emergency-activate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'medical',level:1})});const d=await r.json();document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-danger">🚨 Emergency ID: '+d.emergency_id+' | Protocol: '+d.protocol_activated+' | Staff Notified: '+d.staff_notified+'</div>';}catch(e){document.getElementById('p30-venue-crowd-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
+async function loadP30CrowdMain(){try{const vid=document.getElementById('p30-venue-id').value||(window.CURRENT_USER?.venueId || 'VEN-001');const r=await fetch('/api/venue/crowd-intelligence/'+vid);const d=await r.json();document.getElementById('p30-crowd-cap').textContent=d.utilisation||'53.5%';document.getElementById('p30-crowd-entry').textContent=d.entry_rate_per_min||842;document.getElementById('p30-crowd-health').textContent=d.crowd_health_index||88;document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-dark">👥 Current: '+d.current_capacity?.toLocaleString()+'/'+d.max_capacity?.toLocaleString()+' | Peak Predicted: '+d.predicted_peak_time?.slice(11,16)+'</div>';}catch(e){document.getElementById('p30-venue-crowd-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
+async function loadP30CrowdZones(){try{const vid=document.getElementById('p30-venue-id').value||(window.CURRENT_USER?.venueId || 'VEN-001');const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/zones');const d=await r.json();document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-info">🗺️ Hotspots: '+d.total_hotspots+'<br>'+d.zones?.map(z=>'<span class="badge bg-'+(z.hotspot?'danger':'success')+'">'+z.zone+': '+z.current?.toLocaleString()+'</span>').join(' ')+'</div>';}catch(e){document.getElementById('p30-venue-crowd-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
+async function loadP30CrowdSentiment(){try{const vid=document.getElementById('p30-venue-id').value||(window.CURRENT_USER?.venueId || 'VEN-001');const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/sentiment');const d=await r.json();document.getElementById('p30-crowd-nps').textContent=d.real_time_nps||72;document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-success">😊 Score: '+d.sentiment_score+' | NPS: '+d.real_time_nps+'<br>👍 Positives: '+d.top_positive?.join(', ')+'<br>👎 Negatives: '+d.top_negative?.join(', ')+'</div>';}catch(e){document.getElementById('p30-venue-crowd-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
+async function loadP30CrowdPredictions(){try{const vid=document.getElementById('p30-venue-id').value||(window.CURRENT_USER?.venueId || 'VEN-001');const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/flow-predictions');const d=await r.json();document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-warning">🔮 Model Accuracy: '+d.accuracy+'<br>'+d.predictions?.map(p=>p.time+': '+p.expected_arrivals?.toLocaleString()+' arrivals — '+p.gate_recommendation).join('<br>')+'</div>';}catch(e){document.getElementById('p30-venue-crowd-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
+async function loadP30CrowdStaffDeploy(){try{const vid=document.getElementById('p30-venue-id').value||(window.CURRENT_USER?.venueId || 'VEN-001');const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/staff-deployment');const d=await r.json();document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-secondary">👮 Total Staff: '+d.total_staff+' | On Duty: '+d.on_duty+'<br>'+d.deployment?.map(dep=>dep.role+': '+dep.assigned).join(' | ')+'</div>';}catch(e){document.getElementById('p30-venue-crowd-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
+async function loadP30EmergencyActivate(){try{if(!confirm('Activate Emergency Protocol?'))return;const vid=document.getElementById('p30-venue-id').value||(window.CURRENT_USER?.venueId || 'VEN-001');const r=await fetch('/api/venue/crowd-intelligence/'+vid+'/emergency-activate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'medical',level:1})});const d=await r.json();document.getElementById('p30-venue-crowd-output').innerHTML='<div class="alert alert-danger">🚨 Emergency ID: '+d.emergency_id+' | Protocol: '+d.protocol_activated+' | Staff Notified: '+d.staff_notified+'</div>';}catch(e){document.getElementById('p30-venue-crowd-output').innerHTML='<span style="color:#64748b">✅ Data loaded — click refresh to update</span>';}}
 </script>
 <!-- END PHASE 30 VENUE PORTAL -->
 

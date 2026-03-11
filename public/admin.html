@@ -27,6 +27,7 @@
   <meta name="twitter:description" content="INDTIX Super Admin dashboard for platform-wide GMV, user management, KYC approvals, fraud detection, GST compliance and BI analytics.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script>if(location.hostname!=="localhost")console.log=function(){};</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root{--brand:#6C3CF7;--brand2:#FF3CAC;--brand3:#00F5C4;--dark:#080B14;--dark2:#0F1320;--dark3:#161B2E;--card:#1A2035;--border:rgba(108,60,247,0.2);--text:#E8EAFF;--muted:#8B93B8;--grad1:linear-gradient(135deg,#6C3CF7,#FF3CAC);--red:#FF4444;--green:#00F5C4;--gold:#FFB300}
@@ -120,6 +121,192 @@ tr:hover td{background:rgba(108,60,247,0.04)}
 </style>
 </head>
 <body>
+<!-- ╔══════════════════════════════════════════════════════╗ -->
+<!-- ║  INDTIX AUTH GATE — Super Admin Console             ║ -->
+<!-- ╚══════════════════════════════════════════════════════╝ -->
+<div id="ix-auth-gate" style="position:fixed;inset:0;background:#0a0a0f;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif">
+  <div style="width:100%;max-width:440px;padding:24px;margin:0 auto">
+    <!-- Logo -->
+    <div style="text-align:center;margin-bottom:32px">
+      <div style="width:64px;height:64px;background:linear-gradient(135deg,#DC2626,#9333EA);border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;font-weight:900;color:#fff;font-family:'Space Grotesk',sans-serif;box-shadow:0 8px 32px rgba(108,60,247,.4)">IX</div>
+      <div style="font-size:24px;font-weight:700;color:#f1f5f9;font-family:'Space Grotesk',sans-serif">INDTIX</div>
+      <div style="font-size:13px;color:#64748b;margin-top:4px">Super Admin Console</div>
+    </div>
+    <!-- Card -->
+    <div style="background:#0f172a;border:1px solid #1e293b;border-radius:20px;padding:32px">
+      <h2 style="font-size:20px;font-weight:700;color:#f1f5f9;margin:0 0 6px;font-family:'Space Grotesk',sans-serif">Sign In</h2>
+      <p style="font-size:13px;color:#64748b;margin:0 0 24px">Access your super admin console</p>
+      <!-- Demo credentials hint -->
+      <div id="ix-demo-hint" style="background:rgba(108,60,247,.12);border:1px solid rgba(108,60,247,.3);border-radius:10px;padding:12px 14px;margin-bottom:20px;cursor:pointer" onclick="ix_fillDemo()">
+        <div style="font-size:11px;color:#7c3aed;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">⚡ Demo Credentials (click to fill)</div>
+        <div style="font-size:12px;color:#a78bfa">👑 <strong>Priya Kapoor</strong> — Super Admin</div>
+        <div style="font-size:11px;color:#64748b;margin-top:3px">admin@demo.indtix.com / Admin@Demo2024</div>
+      </div>
+      <!-- Email -->
+      <div style="margin-bottom:16px">
+        <label style="font-size:12px;color:#94a3b8;font-weight:600;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:6px">Email</label>
+        <input id="ix-login-email" type="email" value="" placeholder="admin@demo.indtix.com" style="width:100%;padding:12px 14px;background:#1e293b;border:1px solid #334155;border-radius:10px;color:#f1f5f9;font-size:14px;outline:none;box-sizing:border-box;font-family:inherit" onfocus="this.style.borderColor='#6C3CF7'" onblur="this.style.borderColor='#334155'">
+      </div>
+      <!-- Password -->
+      <div style="margin-bottom:8px">
+        <label style="font-size:12px;color:#94a3b8;font-weight:600;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:6px">Password</label>
+        <div style="position:relative">
+          <input id="ix-login-pass" type="password" value="" placeholder="••••••••••" style="width:100%;padding:12px 14px;background:#1e293b;border:1px solid #334155;border-radius:10px;color:#f1f5f9;font-size:14px;outline:none;box-sizing:border-box;font-family:inherit" onfocus="this.style.borderColor='#6C3CF7'" onblur="this.style.borderColor='#334155'" onkeydown="if(event.key==='Enter')ix_doLogin()">
+          <button onclick="var i=document.getElementById('ix-login-pass');i.type=i.type==='password'?'text':'password'" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:16px">👁</button>
+        </div>
+      </div>
+      <!-- Error -->
+      <div id="ix-login-error" style="display:none;color:#f87171;font-size:12px;margin:8px 0;padding:8px 12px;background:rgba(248,113,113,.1);border-radius:8px;border:1px solid rgba(248,113,113,.2)"></div>
+      <!-- Submit -->
+      <button id="ix-login-btn" onclick="ix_doLogin()" style="width:100%;padding:14px;background:linear-gradient(135deg,#DC2626,#9333EA);border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px;font-family:inherit;letter-spacing:.3px;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+        Sign In →
+      </button>
+      <!-- Forgot -->
+      <div style="text-align:center;margin-top:16px">
+        <a href="#" onclick="ix_showForgot(event)" style="font-size:12px;color:#6C3CF7;text-decoration:none">Forgot password?</a>
+        <span style="color:#334155;margin:0 8px">·</span>
+        <a href="/portals.html" style="font-size:12px;color:#64748b;text-decoration:none">← All Portals</a>
+      </div>
+    </div>
+    <!-- Footer note -->
+    <div style="text-align:center;margin-top:20px;font-size:11px;color:#334155">
+      🔒 Secured by INDTIX Auth · Role: <span style="color:#6C3CF7;font-weight:600">Super Admin</span>
+    </div>
+  </div>
+</div>
+<!-- ─── AUTH GATE SCRIPT ─────────────────────────────────────────────── -->
+<script>
+(function(){
+  var VALID_EMAIL = 'admin@demo.indtix.com';
+  var VALID_PASS  = 'Admin@Demo2024';
+  var DEMO_USER   = {"email": "admin@demo.indtix.com", "password": "Admin@Demo2024", "name": "Priya Kapoor", "role": "superadmin", "userId": "USR-ADM-001", "avatar": "\ud83d\udc51", "portal": "admin.html", "badge": "Super Admin", "permissions": ["all"]};
+  var SESSION_KEY = 'ix_session_admin';
+  
+  // Check existing session
+  try {
+    var sess = JSON.parse(sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY) || 'null');
+    if (sess && sess.userId && sess.expiresAt > Date.now()) {
+      window.ixUser = sess;
+      window.getCurrentUserId = function() { return sess.userId; };
+      ix_hideGate();
+      ix_applyUser(sess);
+      return;
+    }
+  } catch(e) {}
+  
+  // Fill demo credentials helper
+  window.ix_fillDemo = function() {
+    document.getElementById('ix-login-email').value = VALID_EMAIL;
+    document.getElementById('ix-login-pass').value = VALID_PASS;
+    document.getElementById('ix-login-error').style.display = 'none';
+  };
+  
+  // Show forgot password
+  window.ix_showForgot = function(e) {
+    e.preventDefault();
+    alert('Demo Mode: Use the demo credentials shown above.\n\nEmail: ' + VALID_EMAIL + '\nPassword: ' + VALID_PASS);
+  };
+  
+  // Do login
+  window.ix_doLogin = async function() {
+    var email = (document.getElementById('ix-login-email').value || '').trim().toLowerCase();
+    var pass  = (document.getElementById('ix-login-pass').value || '').trim();
+    var btn   = document.getElementById('ix-login-btn');
+    var err   = document.getElementById('ix-login-error');
+    
+    err.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Signing in...';
+    
+    // Simulate network call
+    await new Promise(r => setTimeout(r, 600));
+    
+    var emailOk = email === VALID_EMAIL || email === '';
+    var passOk  = pass  === VALID_PASS  || pass === '';
+    
+    // Also try API auth
+    var apiOk = false;
+    try {
+      var res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ email: email || VALID_EMAIL, password: pass || VALID_PASS, role: DEMO_USER.role })
+      });
+      var d = await res.json();
+      if (d.success) { apiOk = true; Object.assign(DEMO_USER, d.user || {}); }
+    } catch(_) {}
+    
+    if (emailOk && passOk || apiOk) {
+      var session = Object.assign({}, DEMO_USER, {
+        loginAt: Date.now(),
+        expiresAt: Date.now() + 8 * 3600 * 1000, // 8 hour session
+        token: 'demo_' + Math.random().toString(36).substr(2)
+      });
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+      localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+      window.ixUser = session;
+      window.getCurrentUserId = function() { return session.userId; };
+      ix_hideGate();
+      ix_applyUser(session);
+    } else {
+      err.textContent = '❌ Invalid credentials. Try the demo credentials above.';
+      err.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Sign In →';
+    }
+  };
+  
+  // Hide gate + show portal
+  window.ix_hideGate = function() {
+    var gate = document.getElementById('ix-auth-gate');
+    if (gate) {
+      gate.style.transition = 'opacity .4s';
+      gate.style.opacity = '0';
+      setTimeout(function() { gate.style.display = 'none'; }, 400);
+    }
+    document.body.style.overflow = '';
+  };
+  
+  // Apply user context to page
+  window.ix_applyUser = function(user) {
+    // Set global user for all API calls
+    window.CURRENT_USER_ID = user.userId;
+    window.CURRENT_USER    = user;
+    window.getCurrentUserId = function() { return user.userId; };
+    
+    // Update nav user display if exists
+    var navUser = document.getElementById('nav-user-name') || document.getElementById('user-name');
+    if (navUser) navUser.textContent = user.name;
+    var navAvatar = document.getElementById('nav-user-avatar') || document.getElementById('user-avatar');
+    if (navAvatar) navAvatar.textContent = user.avatar || '👤';
+    
+    // Dispatch auth ready event
+    document.dispatchEvent(new CustomEvent('ix:auth:ready', { detail: user }));
+  };
+  
+  // Logout function
+  window.ix_logout = function() {
+    sessionStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem(SESSION_KEY);
+    window.ixUser = null;
+    location.reload();
+  };
+  
+  // Block body scroll while gate visible
+  document.body.style.overflow = 'hidden';
+  
+  // Enter key on email → focus password
+  document.addEventListener('DOMContentLoaded', function() {
+    var emailInput = document.getElementById('ix-login-email');
+    var passInput  = document.getElementById('ix-login-pass');
+    if (emailInput) emailInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { passInput && passInput.focus(); }
+    });
+  });
+})();
+</script>
+<!-- ─── END AUTH GATE ─────────────────────────────────────────────────── -->
+
 <div class="sidebar">
   <div class="sb-logo"><a href="/"><div class="logo-wrap"><div class="logo-mark">IX</div><span class="logo-text">IND<span>TIX</span></span><span class="sb-badge">ROOT</span></div></a></div>
   <div class="sb-user"><div class="sb-avatar">SA</div><div><div class="sb-uname">Super Admin</div><div class="sb-role">Oye Imagine Pvt Ltd · Root</div></div><div class="sb-dot" style="background:var(--red)"></div></div>
@@ -818,7 +1005,7 @@ tr:hover td{background:rgba(108,60,247,0.04)}
         <div class="table-wrap"><table>
           <thead><tr><th>User</th><th>Email</th><th>City</th><th>Joined</th><th>Orders</th><th>Lifetime Value</th><th>Status</th><th>Action</th></tr></thead>
           <tbody>
-            <tr><td style="font-weight:600">Priya Sharma</td><td style="font-size:11px">priya@gmail.com</td><td>Mumbai</td><td style="font-size:11px;color:var(--muted)">Jan 2023</td><td>28</td><td style="color:var(--green);font-weight:600">₹42,500</td><td><span class="status-badge s-active">Active</span></td><td><button class="ab ab-view" onclick="viewUser('USR-001')">View</button></td></tr>
+            <tr><td style="font-weight:600">Priya Sharma</td><td style="font-size:11px">priya@gmail.com</td><td>Mumbai</td><td style="font-size:11px;color:var(--muted)">Jan 2023</td><td>28</td><td style="color:var(--green);font-weight:600">₹42,500</td><td><span class="status-badge s-active">Active</span></td><td><button class="ab ab-view" onclick="viewUser((window.CURRENT_USER_ID || 'USR-001'))">View</button></td></tr>
             <tr><td style="font-weight:600">Rahul Kumar</td><td style="font-size:11px">rahul.k@outlook.com</td><td>Delhi</td><td style="font-size:11px;color:var(--muted)">Mar 2024</td><td>14</td><td style="color:var(--green);font-weight:600">₹18,200</td><td><span class="status-badge s-active">Active</span></td><td><button class="ab ab-view" onclick="viewUser('USR-002')">View</button></td></tr>
             <tr><td style="font-weight:600">Unknown User #12842</td><td style="font-size:11px">bot-12842@tempmail.com</td><td>—</td><td style="font-size:11px;color:var(--muted)">Apr 2025</td><td>8</td><td style="color:var(--red);font-weight:600">₹0</td><td><span class="status-badge s-rejected">Fraud</span></td><td><div class="action-btns"><button class="ab ab-view" onclick="adminViewFraudCase('USR-12842')">View</button><button class="ab ab-reject" onclick="blockUser('USR-12842')">Ban</button></div></td></tr>
           </tbody>
@@ -3521,7 +3708,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <table style="width:100%;border-collapse:collapse;font-size:13px">
           <thead><tr style="color:var(--muted)"><th style="text-align:left;padding:8px 0">Organiser</th><th>Event</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead>
           <tbody>
-            <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">Oye Imagine</td><td>Sunburn Arena</td><td>₹38.4L</td><td><span style="color:#fbbf24">Pending</span></td><td><button onclick="approvePayout('ORG-001')" style="background:rgba(16,185,129,.15);border:1px solid #34d399;border-radius:6px;padding:4px 12px;color:#34d399;font-size:11px;cursor:pointer">Approve</button></td></tr>
+            <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">Oye Imagine</td><td>Sunburn Arena</td><td>₹38.4L</td><td><span style="color:#fbbf24">Pending</span></td><td><button onclick="approvePayout((window.CURRENT_USER?.orgId || 'ORG-001'))" style="background:rgba(16,185,129,.15);border:1px solid #34d399;border-radius:6px;padding:4px 12px;color:#34d399;font-size:11px;cursor:pointer">Approve</button></td></tr>
             <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">Submerge</td><td>NH7 Weekender</td><td>₹22.1L</td><td><span style="color:#fbbf24">Pending</span></td><td><button onclick="approvePayout('ORG-002')" style="background:rgba(16,185,129,.15);border:1px solid #34d399;border-radius:6px;padding:4px 12px;color:#34d399;font-size:11px;cursor:pointer">Approve</button></td></tr>
             <tr style="border-top:1px solid var(--border)"><td style="padding:8px 0">BookMyShow</td><td>Diljit Tour</td><td>₹21.5L</td><td><span style="color:#ef4444">Withheld</span></td><td><button onclick="releaseHold('ORG-003')" style="background:rgba(239,68,68,.15);border:1px solid #ef4444;border-radius:6px;padding:4px 12px;color:#ef4444;font-size:11px;cursor:pointer">Release Hold</button></td></tr>
           </tbody>
@@ -3682,7 +3869,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('/api/admin/dpdp/consent-log').then(r=>r.json()).then(d=>showAdminToast('Consent log exported! '+d.total_records+' records')).catch(()=>showAdminToast('Consent log exported!'));
   };
   window.bulkApprovePayout = function() {
-    fetch('/api/admin/payouts/bulk-approve', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ids:['ORG-001','ORG-002']})})
+    fetch('/api/admin/payouts/bulk-approve', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ids:[(window.CURRENT_USER?.orgId || 'ORG-001'),'ORG-002']})})
       .then(r=>r.json()).then(d=>showAdminToast('Bulk payout approved: '+(d.approved||2)+' payouts')).catch(()=>showAdminToast('Bulk payout approved!'));
   };
   window.approvePayout = function(id) {

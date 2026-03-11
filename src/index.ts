@@ -24,6 +24,91 @@ app.use('/api/admin/*', async (c, next) => {
 })
 
 // ─── Portal Routes ─────────────────────────────────────────
+
+// ════════════════════════════════════════════════════════════════════════════
+// AUTH ROUTES — INDTIX Portal Authentication
+// ════════════════════════════════════════════════════════════════════════════
+
+const DEMO_USERS: Record<string, any> = {
+  'fan@demo.indtix.com':          { userId: 'USR-FAN-001', name: 'Arjun Sharma',   role: 'fan',           badge: 'Gold Fan',           avatar: '🎵', orgId: null,    venueId: null },
+  'admin@demo.indtix.com':        { userId: 'USR-ADM-001', name: 'Priya Kapoor',   role: 'superadmin',    badge: 'Super Admin',        avatar: '👑', orgId: null,    venueId: null },
+  'organiser@demo.indtix.com':    { userId: 'USR-ORG-001', name: 'Rahul Verma',    role: 'organiser',     badge: 'Verified Organiser', avatar: '🎪', orgId: 'ORG-001', venueId: null },
+  'venue@demo.indtix.com':        { userId: 'USR-VEN-001', name: 'Sneha Pillai',   role: 'venue_manager', badge: 'Venue Manager',      avatar: '🏟️', orgId: null,    venueId: 'VEN-001' },
+  'eventmgr@demo.indtix.com':     { userId: 'USR-EM-001',  name: 'Vikram Nair',    role: 'event_manager', badge: 'Event Manager',      avatar: '🎭', orgId: null,    venueId: null },
+  'ops@demo.indtix.com':          { userId: 'USR-OPS-001', name: 'Meera Joshi',    role: 'ops_admin',     badge: 'Operations Admin',   avatar: '⚙️', orgId: null,    venueId: null },
+};
+
+const DEMO_PASSWORDS: Record<string, string> = {
+  'fan@demo.indtix.com':          'Fan@Demo2024',
+  'admin@demo.indtix.com':        'Admin@Demo2024',
+  'organiser@demo.indtix.com':    'Org@Demo2024',
+  'venue@demo.indtix.com':        'Venue@Demo2024',
+  'eventmgr@demo.indtix.com':     'EventMgr@Demo2024',
+  'ops@demo.indtix.com':          'Ops@Demo2024',
+};
+
+// POST /api/auth/login
+app.post('/api/auth/login', async (c: any) => {
+  try {
+    const body = await c.req.json();
+    const email = (body.email || '').toLowerCase().trim();
+    const password = body.password || '';
+    const user = DEMO_USERS[email];
+    
+    if (!user || DEMO_PASSWORDS[email] !== password) {
+      // Demo mode: also accept empty password with valid email
+      if (user && password === '') {
+        const token = 'demo_' + Date.now() + '_' + Math.random().toString(36).substr(2);
+        return c.json({ success: true, token, user: { ...user, email, loginAt: Date.now() } });
+      }
+      return c.json({ success: false, error: 'Invalid credentials', hint: 'Use demo credentials from the login page' }, 401);
+    }
+    
+    const token = 'demo_' + Date.now() + '_' + Math.random().toString(36).substr(2);
+    return c.json({
+      success: true,
+      token,
+      user: { ...user, email, loginAt: Date.now() },
+      message: `Welcome back, ${user.name}!`
+    });
+  } catch (e: any) {
+    return c.json({ success: false, error: 'Login failed' }, 500);
+  }
+});
+
+// GET /api/auth/me
+app.get('/api/auth/me', async (c: any) => {
+  const auth = c.req.header('Authorization') || c.req.query('token') || '';
+  const email = c.req.query('email') || '';
+  const user = DEMO_USERS[email.toLowerCase()] || DEMO_USERS['fan@demo.indtix.com'];
+  return c.json({ success: true, user: { ...user, email: email || 'fan@demo.indtix.com' } });
+});
+
+// POST /api/auth/logout
+app.post('/api/auth/logout', async (c: any) => {
+  return c.json({ success: true, message: 'Logged out successfully' });
+});
+
+// POST /api/auth/refresh
+app.post('/api/auth/refresh', async (c: any) => {
+  const token = 'demo_' + Date.now() + '_' + Math.random().toString(36).substr(2);
+  return c.json({ success: true, token, expiresAt: Date.now() + 8 * 3600 * 1000 });
+});
+
+// GET /api/auth/portals — List all portals user has access to
+app.get('/api/auth/portals', async (c: any) => {
+  return c.json({
+    portals: [
+      { id: 'fan',          name: 'Fan Portal',          url: '/fan.html',           icon: '🎵', description: 'Discover events, buy tickets, manage your fan life' },
+      { id: 'admin',        name: 'Super Admin Console', url: '/admin.html',          icon: '👑', description: 'Full platform control, approvals, analytics' },
+      { id: 'organiser',    name: 'Organiser Dashboard', url: '/organiser.html',      icon: '🎪', description: 'Create and manage your events' },
+      { id: 'venue',        name: 'Venue Manager',       url: '/venue.html',          icon: '🏟️', description: 'Manage your venue, bookings and operations' },
+      { id: 'event_manager',name: 'Event Manager',       url: '/event-manager.html',  icon: '🎭', description: 'Runsheets, lineups, on-ground operations' },
+      { id: 'ops',          name: 'Operations Centre',   url: '/ops.html',            icon: '⚙️', description: 'Payments, fraud, compliance, system health' },
+    ]
+  });
+});
+
 app.get('/', (c) => c.redirect('/fan'))
 app.get('/index', (c) => c.redirect('/fan'))
 app.get('/index.html', (c) => c.redirect('/fan'))
