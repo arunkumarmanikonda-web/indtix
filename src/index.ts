@@ -10,6 +10,10 @@ import {
   securityHeaders, generalRateLimit, apiRateLimit,
   globalErrorHandler, requestId, structuredLogger, cacheFor,
 } from './middleware'
+import { registerRazorpayRoutes } from './razorpay'
+import { registerEmailRoutes } from './email'
+import { registerTurnstileRoutes } from './turnstile'
+import { registerImageRoutes } from './images'
 
 // ─── Inline SVG avatar — eliminates all external ui-avatars.com requests ─────
 function avatarUrl(name: string, bg = '6C3CF7', fg = 'fff'): string {
@@ -18,7 +22,39 @@ function avatarUrl(name: string, bg = '6C3CF7', fg = 'fff'): string {
   return `data:image/svg+xml;base64,${btoa(svg)}`
 }
 
-const app = new Hono<{ Bindings: { DB?: any; CACHE?: any; JWT_SECRET?: string; ENV?: string; CMS_PROVIDER?: string; CONTENTFUL_SPACE_ID?: string; CONTENTFUL_DELIVERY_TOKEN?: string; SANITY_PROJECT_ID?: string; SANITY_DATASET?: string; SANITY_API_TOKEN?: string } }>()
+const app = new Hono<{ Bindings: {
+  // ── Cloudflare D1 Database ──────────────────────────
+  DB?: any
+  // ── Cloudflare KV (cache, OTP store, sessions) ──────
+  CACHE?: any
+  // ── Auth ─────────────────────────────────────────────
+  JWT_SECRET?: string
+  // ── Platform config ──────────────────────────────────
+  ENV?: string
+  PLATFORM_NAME?: string
+  // ── CMS ──────────────────────────────────────────────
+  CMS_PROVIDER?: string
+  CONTENTFUL_SPACE_ID?: string
+  CONTENTFUL_DELIVERY_TOKEN?: string
+  SANITY_PROJECT_ID?: string
+  SANITY_DATASET?: string
+  SANITY_API_TOKEN?: string
+  // ── Razorpay (payments) ───────────────────────────────
+  RAZORPAY_KEY_ID?: string
+  RAZORPAY_KEY_SECRET?: string
+  RAZORPAY_WEBHOOK_SECRET?: string
+  // ── Email (SendGrid) ──────────────────────────────────
+  SENDGRID_API_KEY?: string
+  // ── Cloudflare Turnstile (CAPTCHA) ────────────────────
+  TURNSTILE_SITE_KEY?: string
+  TURNSTILE_SECRET_KEY?: string
+  // ── Cloudflare Images ────────────────────────────────
+  CF_ACCOUNT_ID?: string
+  CF_IMAGES_API_TOKEN?: string
+  CF_IMAGES_ACCOUNT_HASH?: string
+  // ── Analytics ────────────────────────────────────────
+  ANALYTICS?: any
+} }>()
 
 // ─── Global Middleware ────────────────────────────────────────────────────
 app.use('*', requestId)
@@ -34,6 +70,18 @@ registerAuthRoutes(app)
 
 // ─── CMS Routes ───────────────────────────────────────────────────────────
 cmsRoutes(app)
+
+// ─── Payment Routes (Razorpay) ────────────────────────────────────────────
+registerRazorpayRoutes(app)
+
+// ─── Email + OTP Routes (SendGrid) ────────────────────────────────────────
+registerEmailRoutes(app)
+
+// ─── Turnstile CAPTCHA Routes ─────────────────────────────────────────────
+registerTurnstileRoutes(app)
+
+// ─── Cloudflare Images Routes ─────────────────────────────────────────────
+registerImageRoutes(app)
 
 // ─── Portal Routes ────────────────────────────────────────────────────────
 

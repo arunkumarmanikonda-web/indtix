@@ -5334,5 +5334,155 @@ loadAllP52Ops();
 })();
 </script>
 
+
+<script>
+// ── OTP Login Tab Logic ──────────────────────────────────────────────────
+(function setupOTPLogin() {
+  document.addEventListener('DOMContentLoaded', function() {
+    const gate = document.getElementById('ix-auth-gate');
+    if (!gate) return;
+
+    // Find the login form container
+    const loginBox = gate.querySelector('form') || gate.querySelector('.login-box') || gate.querySelector('div[style*="max-width"]');
+    if (!loginBox) return;
+
+    // Inject tab switcher
+    const tabHTML = `
+    <div id="ix-login-tabs" style="display:flex;gap:0;margin-bottom:20px;border-radius:10px;overflow:hidden;border:1px solid rgba(108,60,247,0.2)">
+      <button id="ix-tab-pwd" onclick="ixSwitchTab('password')" style="flex:1;padding:10px;background:rgba(108,60,247,0.2);border:none;color:#A78BFA;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s">🔑 Password</button>
+      <button id="ix-tab-otp" onclick="ixSwitchTab('otp')" style="flex:1;padding:10px;background:transparent;border:none;color:#888899;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s">📧 Email OTP</button>
+    </div>
+    <div id="ix-otp-panel" style="display:none">
+      <div style="margin-bottom:12px">
+        <label style="display:block;font-size:13px;color:#888899;margin-bottom:6px">Email Address</label>
+        <input id="ix-otp-email" type="email" placeholder="your@email.com" style="width:100%;padding:12px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(108,60,247,0.2);border-radius:10px;color:#E8E8F0;font-size:14px;outline:none;box-sizing:border-box">
+      </div>
+      <div id="ix-otp-code-row" style="display:none;margin-bottom:12px">
+        <label style="display:block;font-size:13px;color:#888899;margin-bottom:6px">Enter OTP <span style="color:#888;font-size:11px">(check your email)</span></label>
+        <input id="ix-otp-code" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="123456" style="width:100%;padding:12px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(108,60,247,0.2);border-radius:10px;color:#E8E8F0;font-size:22px;letter-spacing:8px;text-align:center;outline:none;box-sizing:border-box">
+      </div>
+      <button id="ix-otp-btn" onclick="ixOTPAction()" style="width:100%;padding:14px;background:linear-gradient(135deg,#6C3CF7,#8B5CF6);border:none;border-radius:10px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;margin-bottom:10px">Send OTP →</button>
+      <div id="ix-otp-msg" style="font-size:13px;text-align:center;color:#888899;min-height:18px"></div>
+    </div>
+    `;
+
+    // Insert tabs before the form's first element
+    const firstChild = loginBox.firstElementChild;
+    const tabDiv = document.createElement('div');
+    tabDiv.innerHTML = tabHTML;
+    loginBox.insertBefore(tabDiv, firstChild);
+
+    // Add Turnstile to form
+    fetch('/api/turnstile/config').then(r=>r.json()).then(cfg=>{
+      if (cfg.site_key && !cfg._demo) {
+        const tsDiv = document.createElement('div');
+        tsDiv.id = 'ix-cf-turnstile';
+        tsDiv.setAttribute('data-sitekey', cfg.site_key);
+        tsDiv.setAttribute('data-theme', 'dark');
+        tsDiv.style.margin = '12px 0';
+        const submitBtn = loginBox.querySelector('button[type=submit]') || loginBox.querySelector('button');
+        if (submitBtn) loginBox.insertBefore(tsDiv, submitBtn);
+        if (typeof turnstile !== 'undefined') {
+          turnstile.render('#ix-cf-turnstile', { sitekey: cfg.site_key, theme:'dark' });
+        }
+      }
+    }).catch(()=>{});
+  });
+
+  window.ixSwitchTab = function(tab) {
+    const pwdTab = document.getElementById('ix-tab-pwd');
+    const otpTab = document.getElementById('ix-tab-otp');
+    const otpPanel = document.getElementById('ix-otp-panel');
+    const pwdFields = document.querySelectorAll('#ix-auth-gate input[type=password], #ix-auth-gate .pwd-field');
+
+    if (tab === 'otp') {
+      if (pwdTab) { pwdTab.style.background='transparent'; pwdTab.style.color='#888899'; }
+      if (otpTab) { otpTab.style.background='rgba(108,60,247,0.2)'; otpTab.style.color='#A78BFA'; }
+      if (otpPanel) otpPanel.style.display = 'block';
+      pwdFields.forEach(el => { if(el.closest && el.closest('.pwd-section')) el.closest('.pwd-section').style.display='none'; });
+    } else {
+      if (pwdTab) { pwdTab.style.background='rgba(108,60,247,0.2)'; pwdTab.style.color='#A78BFA'; }
+      if (otpTab) { otpTab.style.background='transparent'; otpTab.style.color='#888899'; }
+      if (otpPanel) otpPanel.style.display = 'none';
+      pwdFields.forEach(el => { if(el.closest && el.closest('.pwd-section')) el.closest('.pwd-section').style.display=''; });
+    }
+  };
+
+  let _otpSent = false;
+  window.ixOTPAction = async function() {
+    const emailEl = document.getElementById('ix-otp-email');
+    const codeEl = document.getElementById('ix-otp-code');
+    const btn = document.getElementById('ix-otp-btn');
+    const msg = document.getElementById('ix-otp-msg');
+    const codeRow = document.getElementById('ix-otp-code-row');
+
+    if (!_otpSent) {
+      // Send OTP
+      const email = emailEl.value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        msg.textContent = '⚠️ Enter a valid email address';
+        msg.style.color = '#EF4444';
+        return;
+      }
+      btn.disabled = true; btn.textContent = 'Sending...';
+      try {
+        const res = await fetch('/api/auth/send-otp', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (data.sent) {
+          _otpSent = true;
+          codeRow.style.display = 'block';
+          btn.textContent = '✅ Verify OTP →';
+          btn.disabled = false;
+          msg.textContent = `OTP sent to ${email}. Check your inbox.`;
+          msg.style.color = '#10B981';
+          if (data._dev_otp) msg.textContent += ` (DEV: ${data._dev_otp})`;
+        } else {
+          throw new Error(data.error || 'Failed to send OTP');
+        }
+      } catch(e) {
+        msg.textContent = '❌ ' + e.message;
+        msg.style.color = '#EF4444';
+        btn.disabled = false; btn.textContent = 'Send OTP →';
+      }
+    } else {
+      // Verify OTP
+      const email = emailEl.value.trim();
+      const otp = codeEl.value.trim();
+      if (otp.length !== 6) { msg.textContent = '⚠️ Enter 6-digit OTP'; msg.style.color='#EF4444'; return; }
+      btn.disabled = true; btn.textContent = 'Verifying...';
+      try {
+        const res = await fetch('/api/auth/verify-otp', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ email, otp })
+        });
+        const data = await res.json();
+        if (data.success && data.token) {
+          sessionStorage.setItem('ix_token', data.token);
+          sessionStorage.setItem('ix_user', JSON.stringify(data.user));
+          window.CURRENT_USER_ID = data.user.id;
+          msg.textContent = '✅ Logged in! Loading...';
+          msg.style.color = '#10B981';
+          const gate = document.getElementById('ix-auth-gate');
+          const main = document.getElementById('ix-main-content');
+          if (gate) gate.style.display = 'none';
+          if (main) main.style.display = 'block';
+          location.reload();
+        } else {
+          throw new Error(data.error || 'Invalid OTP');
+        }
+      } catch(e) {
+        msg.textContent = '❌ ' + e.message;
+        msg.style.color = '#EF4444';
+        btn.disabled = false; btn.textContent = '✅ Verify OTP →';
+      }
+    }
+  };
+})();
+</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 </body>
 </html>

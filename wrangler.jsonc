@@ -3,11 +3,16 @@
   "name": "webapp",
   "compatibility_date": "2026-03-07",
   "pages_build_output_dir": "./dist",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
+  "compatibility_flags": ["nodejs_compat"],
 
-  "// D1_DATABASE": "Create with: wrangler d1 create INDTIX_DB",
+  // ─────────────────────────────────────────────────────────────────────────
+  // STEP 1: Create D1 database:
+  //   wrangler d1 create INDTIX_DB
+  //   → Copy the "database_id" output below
+  // STEP 2: Apply schema:
+  //   wrangler d1 execute INDTIX_DB --file=db/schema.sql
+  //   wrangler d1 execute INDTIX_DB --file=db/seed.sql
+  // ─────────────────────────────────────────────────────────────────────────
   "d1_databases": [
     {
       "binding": "DB",
@@ -18,7 +23,11 @@
     }
   ],
 
-  "// KV_NAMESPACES": "Create with: wrangler kv namespace create CACHE",
+  // ─────────────────────────────────────────────────────────────────────────
+  // STEP 3: Create KV namespace:
+  //   wrangler kv namespace create CACHE
+  //   → Copy "id" below (preview: wrangler kv namespace create CACHE --preview)
+  // ─────────────────────────────────────────────────────────────────────────
   "kv_namespaces": [
     {
       "binding": "CACHE",
@@ -27,61 +36,63 @@
     }
   ],
 
-  "// VARS": "Non-secret environment variables (use wrangler secret for secrets)",
+  // ─────────────────────────────────────────────────────────────────────────
+  // Non-secret environment variables (safe to commit)
+  // ─────────────────────────────────────────────────────────────────────────
   "vars": {
     "ENV": "production",
     "PLATFORM_NAME": "INDTIX",
     "CMS_PROVIDER": "d1",
-    "LOG_LEVEL": "warn"
+    "LOG_LEVEL": "warn",
+    "TURNSTILE_SITE_KEY": "YOUR_TURNSTILE_SITE_KEY_HERE"
   },
 
-  "// SECRETS": "Set with: wrangler secret put JWT_SECRET",
-  "// SECRET_LIST": [
-    "JWT_SECRET",
-    "RAZORPAY_KEY_ID",
-    "RAZORPAY_KEY_SECRET",
-    "CONTENTFUL_DELIVERY_TOKEN",
-    "CONTENTFUL_SPACE_ID",
-    "SANITY_API_TOKEN",
-    "SENDGRID_API_KEY",
-    "TWILIO_AUTH_TOKEN",
-    "SENTRY_DSN"
-  ],
+  // ─────────────────────────────────────────────────────────────────────────
+  // SECRETS — set with: wrangler secret put <NAME>
+  //
+  // Required for production:
+  //   wrangler secret put JWT_SECRET
+  //     → Enter a 64-char random string (e.g. openssl rand -hex 32)
+  //
+  //   wrangler secret put RAZORPAY_KEY_ID
+  //     → Your Razorpay Key ID (rzp_live_xxx or rzp_test_xxx)
+  //
+  //   wrangler secret put RAZORPAY_KEY_SECRET
+  //     → Your Razorpay Key Secret
+  //
+  //   wrangler secret put RAZORPAY_WEBHOOK_SECRET
+  //     → From Razorpay Dashboard → Webhooks → Secret
+  //
+  //   wrangler secret put SENDGRID_API_KEY
+  //     → From SendGrid → Settings → API Keys
+  //
+  //   wrangler secret put TURNSTILE_SECRET_KEY
+  //     → From Cloudflare Dashboard → Turnstile → Your Widget → Secret Key
+  //
+  //   wrangler secret put CF_ACCOUNT_ID
+  //     → Your Cloudflare Account ID (from dashboard URL)
+  //
+  //   wrangler secret put CF_IMAGES_API_TOKEN
+  //     → Create at: CF Dashboard → My Profile → API Tokens → Create Token
+  //
+  //   wrangler secret put CF_IMAGES_ACCOUNT_HASH
+  //     → From: CF Dashboard → Images → Overview → Account Hash
+  //
+  // Optional:
+  //   wrangler secret put CONTENTFUL_SPACE_ID
+  //   wrangler secret put CONTENTFUL_DELIVERY_TOKEN
+  //   wrangler secret put SANITY_PROJECT_ID
+  //   wrangler secret put SANITY_DATASET
+  //   wrangler secret put SANITY_API_TOKEN
+  // ─────────────────────────────────────────────────────────────────────────
 
-  "// ANALYTICS": "Cloudflare Analytics Engine (optional)",
+  // ─────────────────────────────────────────────────────────────────────────
+  // Cloudflare Analytics Engine (for event tracking)
+  // ─────────────────────────────────────────────────────────────────────────
   "analytics_engine_datasets": [
     {
       "binding": "ANALYTICS",
       "dataset": "INDTIX_EVENTS"
     }
-  ],
-
-  "// RATE_LIMITING": "Cloudflare rate limiting (Workers Enterprise)",
-  "// rate_limiting": [
-    {
-      "binding": "RATE_LIMITER",
-      "namespace_id": "YOUR_RATE_LIMITER_NAMESPACE_ID"
-    }
-  ],
-
-  "// QUEUES": "Cloudflare Queues for async jobs",
-  "// queues": {
-    "producers": [
-      {
-        "binding": "EMAIL_QUEUE",
-        "queue": "email-notifications"
-      },
-      {
-        "binding": "BOOKING_QUEUE",
-        "queue": "booking-confirmations"
-      }
-    ],
-    "consumers": [
-      {
-        "queue": "email-notifications",
-        "max_batch_size": 10,
-        "max_retries": 3
-      }
-    ]
-  }
+  ]
 }
