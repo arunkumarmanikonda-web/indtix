@@ -1,14 +1,55 @@
-// Serve the public marketing homepage (no login) at /
-async function serveIndex(c: any) {
-  try {
-    const url = new URL(c.req.url)
-    url.pathname = '/index.html'
-    return await c.env.ASSETS.fetch(new Request(url.toString(), c.req.raw))
-  } catch (e) {
-    return c.html('<h1>INDTIX</h1><p>Homepage asset missing.</p>', 500)
-  }
-}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>INDTIX — Experience More</title>
+    <meta name="description" content="INDTIX — India’s Next‑Gen Event Platform. Discover concerts, festivals, comedy shows, sports and more." />
+    <style>
+      :root { color-scheme: dark; }
+      body {
+        margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+        background: radial-gradient(1200px 600px at 20% 10%, #3b1aa8 0%, rgba(59,26,168,0) 60%),
+                    radial-gradient(900px 500px at 80% 20%, #0aa6ff33 0%, rgba(10,166,255,0) 60%),
+                    #070712;
+        color: #eef;
+      }
+      .wrap { max-width: 1100px; margin: 0 auto; padding: 56px 18px; }
+      .badge { display:inline-block; padding:8px 12px; border:1px solid #2a2a45; border-radius:999px; background:#0e0e1c; }
+      h1 { margin: 14px 0 10px; font-size: 46px; line-height: 1.05; }
+      p { opacity: .9; font-size: 18px; line-height: 1.6; max-width: 720px; }
+      .cta { margin-top: 18px; display:flex; gap:12px; flex-wrap:wrap; }
+      a.btn {
+        display:inline-block; padding:12px 16px; border-radius:12px; text-decoration:none; font-weight:700;
+        background:#6c3cf7; color:white;
+      }
+      a.btn.secondary { background:transparent; border:1px solid #2a2a45; color:#eef; }
+      .grid { margin-top: 26px; display:grid; gap: 14px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .card { background: rgba(14,14,28,.75); border:1px solid #23233d; border-radius:16px; padding:16px; }
+      .k { font-size: 14px; opacity:.8 }
+      .v { font-size: 22px; font-weight: 800; margin-top: 6px }
+      @media (max-width: 900px){ .grid { grid-template-columns: 1fr; } h1{font-size:36px;} }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="badge">INDTIX</div>
+      <h1>India’s Next‑Gen Event Platform</h1>
+      <p>
+        Your ticket to unforgettable experiences — discover concerts, festivals, comedy shows, sports and more.
+        This homepage is public (no login). The Fan Portal login stays under <strong>/fan</strong>.
+      </p>
 
-app.get('/', serveIndex)
-app.get('/index', serveIndex)
-app.get('/index.html', serveIndex)
+      <div class="cta">
+        <a class="btn" href="/fan">Open Fan Portal</a>
+        <a class="btn secondary" href="/portals">All Portals</a>
+      </div>
+
+      <div class="grid">
+        <div class="card"><div class="k">Experience</div><div class="v">Discover events fast</div></div>
+        <div class="card"><div class="k">Tickets</div><div class="v">Digital QR tickets</div></div>
+        <div class="card"><div class="k">Trust</div><div class="v">Secure checkout</div></div>
+      </div>
+    </div>
+  </body>
+</html>
