@@ -85,9 +85,35 @@ registerImageRoutes(app)
 
 // ─── Portal Routes ────────────────────────────────────────────────────────
 
-app.get('/', (c) => c.redirect('/fan'))
-app.get('/index', (c) => c.redirect('/fan'))
-app.get('/index.html', (c) => c.redirect('/fan'))
+// Serve the public marketing homepage (no login) at /
+async function serveIndex(c: any) {
+  try {
+    const url = new URL(c.req.url)
+    url.pathname = '/index.html'
+    return await c.env.ASSETS.fetch(new Request(url.toString(), c.req.raw))
+  } catch (e) {
+    return c.html('<h1>INDTIX</h1><p>Homepage asset missing.</p>', 500)
+  }
+}
+
+app.get('/', serveIndex)
+app.get('/index', serveIndex)
+app.get('/index.html', serveIndex)
+// Serve the public marketing homepage (no login) at /
+async function serveIndex(c: any) {
+  try {
+    const url = new URL(c.req.url)
+    url.pathname = '/index.html'
+    return await c.env.ASSETS.fetch(new Request(url.toString(), c.req.raw))
+  } catch (e) {
+    return c.html('<h1>INDTIX</h1><p>Homepage asset missing.</p>', 500)
+  }
+}
+
+app.get('/', serveIndex)
+app.get('/index', serveIndex)
+app.get('/index.html', serveIndex)
+
 app.get('/developer', (c) => c.redirect('/developer.html'))
 app.get('/event-detail', (c) => c.redirect('/event-detail.html'))
 app.get('/event', (c) => c.redirect('/event-detail.html'))
