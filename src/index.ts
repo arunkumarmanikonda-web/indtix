@@ -111,7 +111,7 @@ app.get('/manifest.json', (c) => {
     name: 'INDTIX – India\'s Live Event Platform',
     short_name: 'INDTIX',
     description: 'Book tickets, manage events, track revenue — all in one platform.',
-    start_url: '/fan',
+    start_url: '/',
     display: 'standalone',
     background_color: '#0A0A0F',
     theme_color: '#6C3CF7',
