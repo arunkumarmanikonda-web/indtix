@@ -107,22 +107,14 @@ app.get('/event', (c) => c.redirect('/event-detail.html'))
 // manifest.json — served inline so wrangler dev + production both work
 app.get('/manifest.json', (c) => {
   c.header('Content-Type', 'application/manifest+json')
+  c.header('Cache-Control', 'no-store')   // <— IMPORTANT (prevents stale manifest)
   return c.json({
-    name: 'INDTIX – India\'s Live Event Platform',
-    short_name: 'INDTIX',
-    description: 'Book tickets, manage events, track revenue — all in one platform.',
-    start_url: '/',
-    display: 'standalone',
-    background_color: '#0A0A0F',
-    theme_color: '#6C3CF7',
-    icons: [
-      { src: '/favicon.ico', sizes: 'any', type: 'image/svg+xml', purpose: 'any maskable' },
-      { src: '/apple-touch-icon.png', sizes: '180x180', type: 'image/svg+xml', purpose: 'any' }
-    ],
-    categories: ['entertainment', 'lifestyle'],
-    lang: 'en-IN'
+    // ...
+    start_url: '/',                        // <— homepage
+    // ...
   })
 })
+
 
 // Favicon — return SVG inline to prevent 404
 app.get('/favicon.ico', (c) => {
